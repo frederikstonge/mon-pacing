@@ -1,48 +1,37 @@
-import 'package:localstore/localstore.dart';
-
-import '../models/pacing.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class PacingsRepository {
-  static const String collection = "Pacings";
-  final db = Localstore.instance;
+  static const String pacings = "Pacings";
+  static const String improvisations = "Improvisations";
 
-  Future<List<Pacing>> getPacings() async {
-    final items = await db.collection(collection).get();
-    if (items == null) {
-      return List.empty();
-    }
+  Future<Database> getDatabase() async {
+    var path = await getDatabasesPath();
+    return await openDatabase(
+      join(path, 'mon_pacing.db'),
+      onCreate: (db, version) async {
+        await db.execute('''
+              CREATE TABLE $pacings(
+              id integer primary key autoincrement,
+              name text not null,
+              createdDate text not null,
+              modifiedDate text)
+            ''');
 
-    return items.values.map((e) => Pacing.fromJson(e)).toList();
-  }
-
-  Future<Pacing?> getPacing(String name) async {
-    final item = await db.collection(collection).doc(name).get();
-    if (item == null) {
-      return null;
-    }
-
-    return Pacing.fromJson(item);
-  }
-
-  Future addPacing(Pacing pacing) async {
-    final item = await db.collection(collection).doc(pacing.name).get();
-    if (item != null) {
-      throw Exception("Item with name ${pacing.name} already exist");
-    }
-
-    db.collection(collection).doc(pacing.name).set(pacing.toJson());
-  }
-
-  Future editPacing(Pacing pacing) async {
-    final item = await db.collection(collection).doc(pacing.name).get();
-    if (item == null) {
-      throw Exception("Item with name ${pacing.name} doesn't exist");
-    }
-
-    db.collection(collection).doc(pacing.name).set(pacing.toJson());
-  }
-
-  Future deletePacing(String name) async {
-    await db.collection(collection).doc(name).delete();
+        await db.execute('''
+              CREATE TABLE $improvisations(
+              id integer primary key autoincrement,
+              name text not null,
+              type integer not null,
+              category text,
+              theme text,
+              duration text not null,
+              performers integer not null,
+              pacingId integer not null,
+              FOREIGN KEY(pacingid) REFERENCES $pacings(id))
+            ''');
+      },
+      version: 1,
+    );
   }
 }

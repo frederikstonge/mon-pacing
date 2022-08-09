@@ -1,27 +1,22 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'pacing.g.dart';
+
+@JsonSerializable()
 class Pacing {
+  final int? id;
   final String name;
   final DateTime createdDate;
   final DateTime? modifiedDate;
 
   const Pacing({
+    required this.id,
     required this.name,
     required this.createdDate,
-    this.modifiedDate,
+    required this.modifiedDate,
   });
 
-  factory Pacing.fromJson(Map<String, dynamic> json) {
-    return Pacing(
-      name: json['name'] as String,
-      createdDate: json['createdDate'] as DateTime,
-      modifiedDate: json['modifiedDate'] as DateTime,
-    );
-  }
+  factory Pacing.fromJson(Map<String, dynamic> json) => _$PacingFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['createdDate'] = createdDate;
-    data['modifiedDate'] = modifiedDate;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$PacingToJson(this);
 }
