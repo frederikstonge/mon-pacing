@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home_cubit.dart';
-import 'home_view.dart';
+import '../../cubits/home_cubit.dart';
+import '../views/home_view.dart';
 import 'ipage.dart';
 
 class HomePage extends StatelessWidget {

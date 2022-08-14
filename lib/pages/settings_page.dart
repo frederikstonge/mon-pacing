@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../home/ipage.dart';
-import 'settings_cubit.dart';
-import 'settings_view.dart';
+import 'ipage.dart';
+import '../cubits/settings_cubit.dart';
+import '../views/settings_view.dart';
 
 class SettingsPage extends StatelessWidget implements IPage {
   const SettingsPage({Key? key}) : super(key: key);

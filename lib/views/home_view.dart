@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home_cubit.dart';
-import 'ipage.dart';
+import '../cubits/home_cubit.dart';
+import '../pages/ipage.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key, required this.pages}) : super(key: key);

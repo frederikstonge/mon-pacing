@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../home/ipage.dart';
-import 'matches_cubit.dart';
-import 'matches_view.dart';
+import '../views/matches_view.dart';
+import 'ipage.dart';
+import '../cubits/matches_cubit.dart';
 
 class MatchesPage extends StatelessWidget implements IPage {
   const MatchesPage({Key? key}) : super(key: key);

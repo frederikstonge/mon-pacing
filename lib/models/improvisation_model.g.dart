@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'improvisation.dart';
+part of 'improvisation_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Improvisation _$ImprovisationFromJson(Map<String, dynamic> json) =>
-    Improvisation(
+ImprovisationModel _$ImprovisationModelFromJson(Map<String, dynamic> json) =>
+    ImprovisationModel(
       id: json['id'] as int?,
       name: json['name'] as String,
       type: json['type'] as int,
@@ -18,7 +18,7 @@ Improvisation _$ImprovisationFromJson(Map<String, dynamic> json) =>
       pacingId: json['pacingId'] as int,
     );
 
-Map<String, dynamic> _$ImprovisationToJson(Improvisation instance) =>
+Map<String, dynamic> _$ImprovisationModelToJson(ImprovisationModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
