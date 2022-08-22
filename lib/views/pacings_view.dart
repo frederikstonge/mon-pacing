@@ -18,6 +18,7 @@ class PacingsView extends StatelessWidget {
     return Center(
       child: BlocConsumer<PacingBloc, PacingState>(
         listener: (context, state) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           if (state is PacingLoadingState) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));
@@ -38,7 +39,6 @@ class PacingsView extends StatelessWidget {
           } else if (state is PacingSuccessState) {
             _pacings.addAll(state.pacings);
             context.read<PacingBloc>().isFetching = false;
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
           } else if (state is PacingErrorState && _pacings.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
