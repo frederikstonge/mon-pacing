@@ -11,10 +11,8 @@ class ListItem extends StatelessWidget {
     return Card(
       elevation: 2,
       child: ListTile(
-        title: Text(entity.name),
-        subtitle: entity.modifiedDate != null
-            ? Text("Modified on ${entity.modifiedDate}")
-            : Text("Created on ${entity.createdDate}"),
+        title: Text(entity.name!),
+        subtitle: entity.modifiedDate != null ? Text("Modified on ${entity.modifiedDate}") : Text("Created on ${entity.createdDate}"),
       ),
     );
   }

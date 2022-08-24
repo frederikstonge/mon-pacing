@@ -1,16 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'base_model.dart';
+import 'improvisation_model.dart';
 
 part 'pacing_model.g.dart';
 
 @JsonSerializable()
 class PacingModel extends BaseModel {
+  List<ImprovisationModel>? improvisations;
   PacingModel({
-    required int? id,
-    required String name,
-    required DateTime? createdDate,
-    required DateTime? modifiedDate,
+    int? id,
+    String? name,
+    DateTime? createdDate,
+    DateTime? modifiedDate,
+    this.improvisations,
   }) : super(
           id: id,
           name: name,
@@ -18,8 +21,7 @@ class PacingModel extends BaseModel {
           modifiedDate: modifiedDate,
         );
 
-  factory PacingModel.fromJson(Map<String, dynamic> json) =>
-      _$PacingModelFromJson(json);
+  factory PacingModel.fromJson(Map<String, dynamic> json) => _$PacingModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PacingModelToJson(this);
 }

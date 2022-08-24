@@ -20,21 +20,19 @@ class PacingsView extends StatelessWidget {
         listener: (context, state) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           if (state is PacingLoadingState) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
           } else if (state is PacingSuccessState && state.pacings.isEmpty) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const SnackBar(content: Text('No more pacing')));
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No more pacing')));
           } else if (state is PacingErrorState) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
             context.read<PacingBloc>().isFetching = false;
           }
           return;
         },
         builder: (context, state) {
-          if (state is PacingInitialState ||
-              state is PacingLoadingState && _pacings.isEmpty) {
+          if (state is PacingInitialState) {
+            _pacings.clear();
+          } else if (state is PacingLoadingState && _pacings.isEmpty) {
             return const CircularProgressIndicator();
           } else if (state is PacingSuccessState) {
             _pacings.addAll(state.pacings);
@@ -67,16 +65,13 @@ class PacingsView extends StatelessWidget {
             child: ListView.separated(
               controller: _scrollController
                 ..addListener(() {
-                  if (_scrollController.offset ==
-                          _scrollController.position.maxScrollExtent &&
-                      !context.read<PacingBloc>().isFetching) {
+                  if (_scrollController.offset == _scrollController.position.maxScrollExtent && !context.read<PacingBloc>().isFetching) {
                     context.read<PacingBloc>()
                       ..isFetching = true
                       ..add(const PacingFetchEvent());
                   }
                 }),
-              itemBuilder: (context, index) =>
-                  ListItem(entity: _pacings[index]),
+              itemBuilder: (context, index) => ListItem(entity: _pacings[index]),
               separatorBuilder: (context, index) => const SizedBox(height: 20),
               itemCount: _pacings.length,
             ),

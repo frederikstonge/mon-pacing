@@ -25,8 +25,8 @@ class PacingBloc extends Bloc<PacingEvent, PacingState> {
     }
   }
 
-  _onPacingRefreshEvent(
-      PacingRefreshEvent event, Emitter<PacingState> emit) async {
+  _onPacingRefreshEvent(PacingRefreshEvent event, Emitter<PacingState> emit) async {
+    emit(const PacingInitialState());
     emit(const PacingLoadingState(message: 'Loading Pacings'));
     try {
       page = 1;

@@ -4,7 +4,7 @@ part 'improvisation_model.g.dart';
 
 @JsonSerializable()
 class ImprovisationModel {
-  int? id;
+  int order;
   String name;
   int type;
   String? category;
@@ -14,18 +14,17 @@ class ImprovisationModel {
   int pacingId;
 
   ImprovisationModel({
-    required this.id,
+    required this.order,
     required this.name,
     required this.type,
-    required this.category,
-    required this.theme,
+    this.category,
+    this.theme,
     required this.duration,
     required this.performers,
     required this.pacingId,
   });
 
-  factory ImprovisationModel.fromJson(Map<String, dynamic> json) =>
-      _$ImprovisationModelFromJson(json);
+  factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ImprovisationModelToJson(this);
 }

@@ -7,12 +7,7 @@ const String idField = "id";
 const String nameField = "name";
 const String createdDateField = "createdDate";
 const String modifiedDateField = "modifiedDate";
-const String typeField = "type";
-const String categoryField = "category";
-const String themeField = "theme";
-const String durationField = "duration";
-const String performersField = "performers";
-const String pacingIdField = "pacingId";
+const String improvisationsField = "improvisations";
 
 Database? _database;
 
@@ -40,19 +35,7 @@ Future<void> _onCreate(Database db, int version) async {
               $idField integer primary key autoincrement,
               $nameField text not null,
               $createdDateField text not null,
-              $modifiedDateField text)
-            ''');
-
-  await db.execute('''
-              CREATE TABLE $improvisationsTable(
-              $idField integer primary key autoincrement,
-              $nameField text not null,
-              $typeField integer not null,
-              $categoryField text,
-              $themeField text,
-              $durationField text not null,
-              $performersField integer not null,
-              $pacingIdField integer not null,
-              FOREIGN KEY($pacingIdField) REFERENCES $pacingsTable(id))
+              $modifiedDateField text,
+              $improvisationsField text)
             ''');
 }

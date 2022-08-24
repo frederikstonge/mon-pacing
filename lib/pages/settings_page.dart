@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'ipage.dart';
+import 'ibottom_nav_page.dart';
 import '../cubits/settings_cubit.dart';
 import '../views/settings_view.dart';
 
-class SettingsPage extends StatelessWidget implements IPage {
+class SettingsPage extends StatelessWidget implements IBottomNavPage {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class SettingsPage extends StatelessWidget implements IPage {
   String get title => "Settings";
 
   @override
-  FloatingActionButton? get floatingActionButton => null;
+  FloatingActionButton? getFloatingActionButton(BuildContext context) => null;
 
   @override
   Widget build(BuildContext context) {
