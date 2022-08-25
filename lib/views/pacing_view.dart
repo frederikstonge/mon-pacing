@@ -18,6 +18,7 @@ class PacingView extends StatelessWidget {
     return BlocBuilder<PacingCubit, PacingModel>(
       builder: (context, state) {
         var nameController = TextEditingController(text: state.name);
+        nameController.selection = TextSelection.collapsed(offset: state.name?.length ?? 0);
         return Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -44,22 +45,18 @@ class PacingView extends StatelessWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   expandedTitleScale: 1,
                   titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, kBottomHeight),
-                  title: Focus(
-                    onFocusChange: (value) {
-                      if (!value && state.name != nameController.text) {
-                        context.read<PacingCubit>().editName(nameController.text);
-                      }
-                    },
-                    child: TextField(
-                      key: ValueKey(state.id),
-                      controller: nameController,
-                      decoration: const InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Name',
-                        border: OutlineInputBorder(),
-                      ),
+                  title: TextField(
+                    key: ValueKey(state.id),
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Name',
+                      border: OutlineInputBorder(),
                     ),
+                    onChanged: (value) {
+                      context.read<PacingCubit>().editName(nameController.text);
+                    },
                   ),
                 ),
                 bottom: PreferredSize(
@@ -122,8 +119,11 @@ class PacingView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var item = state.improvisations![index];
                   var categoryController = TextEditingController(text: item.category);
+                  categoryController.selection = TextSelection.collapsed(offset: item.category?.length ?? 0);
                   var themeController = TextEditingController(text: item.theme);
+                  themeController.selection = TextSelection.collapsed(offset: item.theme?.length ?? 0);
                   var performersController = TextEditingController(text: item.performers?.toString() ?? '');
+                  performersController.selection = TextSelection.collapsed(offset: item.performers?.toString().length ?? 0);
                   return ExpansionTileCard(
                     key: Key("${item.order}"),
                     leading: ReorderableDelayedDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
@@ -156,58 +156,46 @@ class PacingView extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Focus(
-                          onFocusChange: (value) {
-                            if (!value && item.category != categoryController.text) {
-                              item.category = categoryController.text;
-                              context.read<PacingCubit>().editImprovisation(item);
-                            }
-                          },
-                          child: TextField(
-                            controller: categoryController,
-                            decoration: const InputDecoration(
-                              hintText: 'Category',
-                              border: OutlineInputBorder(),
-                            ),
+                        child: TextField(
+                          controller: categoryController,
+                          decoration: const InputDecoration(
+                            hintText: 'Category',
+                            border: OutlineInputBorder(),
                           ),
+                          onChanged: (value) {
+                            item.category = categoryController.text;
+                            context.read<PacingCubit>().editImprovisation(item);
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Focus(
-                          onFocusChange: (value) {
-                            if (!value && item.theme != themeController.text) {
-                              item.theme = themeController.text;
-                              context.read<PacingCubit>().editImprovisation(item);
-                            }
-                          },
-                          child: TextField(
-                            controller: themeController,
-                            decoration: const InputDecoration(
-                              hintText: 'Theme',
-                              border: OutlineInputBorder(),
-                            ),
+                        child: TextField(
+                          controller: themeController,
+                          decoration: const InputDecoration(
+                            hintText: 'Theme',
+                            border: OutlineInputBorder(),
                           ),
+                          onChanged: (value) {
+                            item.theme = themeController.text;
+                            context.read<PacingCubit>().editImprovisation(item);
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Focus(
-                          onFocusChange: (value) {
+                        child: TextField(
+                          controller: performersController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            hintText: '# of participant',
+                            border: OutlineInputBorder(),
+                          ),
+                          onChanged: (value) {
                             var performers = performersController.text.isEmpty ? null : int.parse(performersController.text);
-                            if (!value && item.performers != performers) {
-                              item.performers = performers;
-                              context.read<PacingCubit>().editImprovisation(item);
-                            }
+                            item.performers = performers;
+                            context.read<PacingCubit>().editImprovisation(item);
                           },
-                          child: TextField(
-                            controller: performersController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintText: '# of participant',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
                         ),
                       ),
                       Padding(
