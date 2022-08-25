@@ -6,24 +6,27 @@ part of 'improvisation_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ImprovisationModel _$ImprovisationModelFromJson(Map<String, dynamic> json) => ImprovisationModel(
+ImprovisationModel _$ImprovisationModelFromJson(Map<String, dynamic> json) =>
+    ImprovisationModel(
       order: json['order'] as int,
-      name: json['name'] as String,
-      type: json['type'] as int,
+      type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
+      duration: Duration(microseconds: json['duration'] as int),
       category: json['category'] as String?,
       theme: json['theme'] as String?,
-      duration: Duration(microseconds: json['duration'] as int),
-      performers: json['performers'] as int,
-      pacingId: json['pacingId'] as int,
+      performers: json['performers'] as int?,
     );
 
-Map<String, dynamic> _$ImprovisationModelToJson(ImprovisationModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ImprovisationModelToJson(ImprovisationModel instance) =>
+    <String, dynamic>{
       'order': instance.order,
-      'name': instance.name,
-      'type': instance.type,
+      'type': _$ImprovisationTypeEnumMap[instance.type]!,
       'category': instance.category,
       'theme': instance.theme,
       'duration': instance.duration.inMicroseconds,
       'performers': instance.performers,
-      'pacingId': instance.pacingId,
     };
+
+const _$ImprovisationTypeEnumMap = {
+  ImprovisationType.mixed: 'mixed',
+  ImprovisationType.compared: 'compared',
+};

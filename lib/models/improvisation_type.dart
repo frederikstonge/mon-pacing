@@ -1,0 +1,4 @@
+enum ImprovisationType {
+  mixed,
+  compared,
+}

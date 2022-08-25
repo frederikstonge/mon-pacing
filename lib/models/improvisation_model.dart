@@ -1,27 +1,25 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'improvisation_type.dart';
+
 part 'improvisation_model.g.dart';
 
 @JsonSerializable()
 class ImprovisationModel {
   int order;
-  String name;
-  int type;
+  ImprovisationType type;
   String? category;
   String? theme;
   Duration duration;
-  int performers;
-  int pacingId;
+  int? performers;
 
   ImprovisationModel({
     required this.order,
-    required this.name,
     required this.type,
+    required this.duration,
     this.category,
     this.theme,
-    required this.duration,
-    required this.performers,
-    required this.pacingId,
+    this.performers,
   });
 
   factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);
