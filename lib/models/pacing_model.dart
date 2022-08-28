@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import 'base_model.dart';
@@ -23,5 +25,17 @@ class PacingModel extends BaseModel {
 
   factory PacingModel.fromJson(Map<String, dynamic> json) => _$PacingModelFromJson(json);
 
+  factory PacingModel.fromDatabase(Map<String, dynamic> json) {
+    var newValues = Map<String, dynamic>.from(json);
+    newValues.update("improvisations", (value) => jsonDecode(value));
+    return PacingModel.fromJson(newValues);
+  }
+
   Map<String, dynamic> toJson() => _$PacingModelToJson(this);
+
+  Map<String, dynamic> toDatabase() {
+    var items = toJson();
+    items["improvisations"] = jsonEncode(items["improvisations"]);
+    return items;
+  }
 }

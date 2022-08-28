@@ -17,7 +17,8 @@ class PacingRepository extends BaseRepository<PacingModel> {
     entity.modifiedDate = now;
 
     var db = await database;
-    var id = await db.insert(pacingsTable, entity.toJson());
+    var serializedEntity = entity.toDatabase();
+    var id = await db.insert(pacingsTable, serializedEntity);
 
     entity.id = id;
     return entity;
@@ -44,7 +45,7 @@ class PacingRepository extends BaseRepository<PacingModel> {
     var db = await database;
     await db.update(
       pacingsTable,
-      entity.toJson(),
+      entity.toDatabase(),
       where: '$idField = ?',
       whereArgs: [entity.id!],
     );
@@ -64,7 +65,7 @@ class PacingRepository extends BaseRepository<PacingModel> {
       return null;
     }
 
-    return PacingModel.fromJson(items.first);
+    return PacingModel.fromDatabase(items.first);
   }
 
   @override
@@ -77,6 +78,6 @@ class PacingRepository extends BaseRepository<PacingModel> {
       orderBy: "$modifiedDateField DESC",
     );
 
-    return items.map(((e) => PacingModel.fromJson(e))).toList();
+    return items.map(((e) => PacingModel.fromDatabase(e))).toList();
   }
 }

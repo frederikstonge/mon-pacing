@@ -9,11 +9,7 @@ class PacingInitialState extends PacingState {
 }
 
 class PacingLoadingState extends PacingState {
-  final String message;
-
-  const PacingLoadingState({
-    required this.message,
-  });
+  const PacingLoadingState();
 }
 
 class PacingSuccessState extends PacingState {

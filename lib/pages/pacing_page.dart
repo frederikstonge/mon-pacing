@@ -13,7 +13,7 @@ class PacingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => PacingCubit(
-        model ??
+        model: model ??
             PacingModel(
               createdDate: null,
               id: null,

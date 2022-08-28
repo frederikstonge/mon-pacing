@@ -41,6 +41,7 @@ dependencies:
   json_serializable: ^6.3.1
   expansion_tile_card: ^2.0.0
   flutter_picker: ^2.0.5
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

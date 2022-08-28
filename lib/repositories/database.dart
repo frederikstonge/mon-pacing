@@ -1,8 +1,9 @@
+//import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 const String pacingsTable = "Pacings";
-const String improvisationsTable = "Improvisations";
 const String idField = "id";
 const String nameField = "name";
 const String createdDateField = "createdDate";
@@ -22,6 +23,12 @@ Future<Database> get database async {
 
 Future<Database> _getDatabase() async {
   var path = await getDatabasesPath();
+
+  // var file = File('$path/mon_pacing.db');
+  // if (await file.exists()) {
+  //   await file.delete(recursive: true);
+  // }
+
   return await openDatabase(
     join(path, 'mon_pacing.db'),
     onCreate: _onCreate,

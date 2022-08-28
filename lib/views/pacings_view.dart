@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/pacing_bloc.dart';
-import '../events/pacing_event.dart';
+import '../cubits/pacings_cubit.dart';
 import '../models/pacing_model.dart';
 import '../states/pacing_state.dart';
 import '../widgets/list_item.dart';
@@ -16,27 +15,23 @@ class PacingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: BlocConsumer<PacingBloc, PacingState>(
+      child: BlocConsumer<PacingsCubit, PacingState?>(
         listener: (context, state) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          if (state is PacingLoadingState) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
-          } else if (state is PacingSuccessState && state.pacings.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No more pacing')));
-          } else if (state is PacingErrorState) {
+          if (state is PacingErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
-            context.read<PacingBloc>().isFetching = false;
           }
           return;
         },
         builder: (context, state) {
-          if (state is PacingInitialState) {
+          if (state == null) {
+            context.read<PacingsCubit>().refresh();
+          } else if (state is PacingInitialState) {
             _pacings.clear();
           } else if (state is PacingLoadingState && _pacings.isEmpty) {
             return const CircularProgressIndicator();
           } else if (state is PacingSuccessState) {
             _pacings.addAll(state.pacings);
-            context.read<PacingBloc>().isFetching = false;
           } else if (state is PacingErrorState && _pacings.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,9 +39,7 @@ class PacingsView extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    context.read<PacingBloc>()
-                      ..isFetching = true
-                      ..add(const PacingFetchEvent());
+                    context.read<PacingsCubit>().fetch();
                   },
                   icon: const Icon(Icons.refresh),
                 ),
@@ -58,21 +51,17 @@ class PacingsView extends StatelessWidget {
           return RefreshIndicator(
             onRefresh: () async {
               _pacings.clear();
-              context.read<PacingBloc>()
-                ..isFetching = true
-                ..add(const PacingRefreshEvent());
+              context.read<PacingsCubit>().refresh();
             },
-            child: ListView.separated(
+            child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
               controller: _scrollController
                 ..addListener(() {
-                  if (_scrollController.offset == _scrollController.position.maxScrollExtent && !context.read<PacingBloc>().isFetching) {
-                    context.read<PacingBloc>()
-                      ..isFetching = true
-                      ..add(const PacingFetchEvent());
+                  if (_scrollController.offset == _scrollController.position.maxScrollExtent && !context.read<PacingsCubit>().isFetching) {
+                    context.read<PacingsCubit>().fetch();
                   }
                 }),
               itemBuilder: (context, index) => ListItem(entity: _pacings[index]),
-              separatorBuilder: (context, index) => const SizedBox(height: 20),
               itemCount: _pacings.length,
             ),
           );

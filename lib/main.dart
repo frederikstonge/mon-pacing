@@ -4,6 +4,7 @@ import 'package:monpacing/pages/matches_page.dart';
 import 'package:monpacing/pages/pacings_page.dart';
 import 'package:monpacing/pages/settings_page.dart';
 
+import 'cubits/pacings_cubit.dart';
 import 'pages/home_page.dart';
 import 'repositories/pacing_repository.dart';
 
@@ -23,15 +24,22 @@ class MyApp extends StatelessWidget {
           create: (_) => PacingRepository(),
         ),
       ],
-      child: MaterialApp(
-        title: 'MonPacing',
-        theme: ThemeData(primarySwatch: Colors.indigo),
-        home: const HomePage(
-          pages: [
-            PacingsPage(),
-            MatchesPage(),
-            SettingsPage(),
-          ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (blocContext) => PacingsCubit(repository: blocContext.read<PacingRepository>()),
+          )
+        ],
+        child: MaterialApp(
+          title: 'MonPacing',
+          theme: ThemeData(primarySwatch: Colors.indigo),
+          home: const HomePage(
+            pages: [
+              PacingsPage(),
+              MatchesPage(),
+              SettingsPage(),
+            ],
+          ),
         ),
       ),
     );
