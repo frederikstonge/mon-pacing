@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:monpacing/pages/matches_page.dart';
-import 'package:monpacing/pages/pacings_page.dart';
-import 'package:monpacing/pages/settings_page.dart';
 
+import 'cubits/matches_cubit.dart';
+import 'cubits/settings_cubit.dart';
+import 'pages/matches_page.dart';
+import 'pages/pacings_page.dart';
+import 'pages/settings_page.dart';
 import 'cubits/pacings_cubit.dart';
 import 'pages/home_page.dart';
-import 'repositories/pacing_repository.dart';
+import 'repositories/pacings_repository.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,14 +23,20 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (_) => PacingRepository(),
+          create: (_) => PacingsRepository(),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (blocContext) => PacingsCubit(repository: blocContext.read<PacingRepository>()),
-          )
+            create: (blocContext) => PacingsCubit(repository: blocContext.read<PacingsRepository>()),
+          ),
+          BlocProvider(
+            create: (blocContext) => MatchesCubit(),
+          ),
+          BlocProvider(
+            create: (blocContext) => SettingsCubit(),
+          ),
         ],
         child: MaterialApp(
           title: 'MonPacing',

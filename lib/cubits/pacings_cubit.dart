@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monpacing/models/pacing_model.dart';
-import 'package:monpacing/repositories/pacing_repository.dart';
+import 'package:monpacing/repositories/pacings_repository.dart';
 
 import '../states/pacing_state.dart';
 
 class PacingsCubit extends Cubit<PacingState?> {
-  final PacingRepository repository;
+  final PacingsRepository repository;
   int _page = 1;
   bool _isFetching = false;
 

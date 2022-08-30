@@ -1,4 +1,4 @@
-import 'package:monpacing/models/pacing_model.dart';
+import '../models/pacing_model.dart';
 
 abstract class PacingState {
   const PacingState();

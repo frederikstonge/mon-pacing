@@ -24,5 +24,14 @@ class ImprovisationModel {
 
   factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);
 
+  factory ImprovisationModel.fromCopy(ImprovisationModel model) => ImprovisationModel(
+        duration: model.duration,
+        order: model.order,
+        type: model.type,
+        category: model.category,
+        performers: model.performers,
+        theme: model.theme,
+      );
+
   Map<String, dynamic> toJson() => _$ImprovisationModelToJson(this);
 }

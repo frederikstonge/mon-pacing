@@ -2,11 +2,12 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:monpacing/cubits/pacings_cubit.dart';
-import 'package:monpacing/models/improvisation_type.dart';
 
+import '../cubits/pacings_cubit.dart';
+import '../models/improvisation_type.dart';
 import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
+import '../widgets/delete_dialog.dart';
 
 class PacingView extends StatelessWidget {
   static const double kExpandedHeight = 150.0;
@@ -137,13 +138,16 @@ class PacingView extends StatelessWidget {
               },
               itemBuilder: (context, index) {
                 var item = state.improvisations![index];
+                var title = "Improvisation #${item.order + 1}";
+                var subTitle =
+                    "${item.type == ImprovisationType.mixed ? 'M' : 'C'} | ${item.category ?? '-'} | ${item.theme ?? '-'} | ${item.performers ?? '-'} | ${item.duration.inMinutes} min ${item.duration.inSeconds % 60} sec";
+
                 var controllers = context.read<PacingCubit>().controllers[index];
                 return ExpansionTileCard(
                   key: ValueKey(index),
                   leading: ReorderableDelayedDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
-                  title: Text("Improvisation #${item.order + 1}"),
-                  subtitle: Text(
-                      "${item.type == ImprovisationType.mixed ? 'M' : 'C'} | ${item.category ?? '-'} | ${item.theme ?? '-'} | ${item.performers ?? '-'} | ${item.duration.inMinutes} min ${item.duration.inSeconds % 60} sec"),
+                  title: Text(title),
+                  subtitle: Text(subTitle),
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -274,7 +278,9 @@ class PacingView extends StatelessWidget {
                       children: <Widget>[
                         TextButton(
                           onPressed: () {
-                            context.read<PacingCubit>().removeImprovisation(index);
+                            DeleteDialog.showDeleteDialog(context, title, () {
+                              context.read<PacingCubit>().removeImprovisation(index);
+                            });
                           },
                           child: Column(
                             children: const [

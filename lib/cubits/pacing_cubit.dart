@@ -11,8 +11,9 @@ class PacingCubit extends Cubit<PacingModel> {
   List<List<TextEditingController>> controllers = [];
 
   PacingCubit({required PacingModel model}) : super(model) {
-    nameController.text = state.name ?? "";
-    controllers = state.improvisations
+    var entity = PacingModel.fromCopy(state);
+    nameController.text = entity.name ?? "";
+    controllers = entity.improvisations
             ?.map(
               (e) => [
                 TextEditingController(text: e.category ?? ""),
@@ -25,12 +26,14 @@ class PacingCubit extends Cubit<PacingModel> {
   }
 
   void editName(String name) {
-    state.name = name;
-    emit(_clone(state));
+    var entity = PacingModel.fromCopy(state);
+    entity.name = name;
+    emit(entity);
   }
 
   void addImprovisation() {
-    var improvisations = state.improvisations ?? [];
+    var entity = PacingModel.fromCopy(state);
+    var improvisations = entity.improvisations ?? [];
     var nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
     var nextType = ImprovisationType.values[improvisations.length % 2];
 
@@ -42,7 +45,7 @@ class PacingCubit extends Cubit<PacingModel> {
 
     improvisations.add(newImprovisation);
 
-    state.improvisations = improvisations;
+    entity.improvisations = improvisations;
     controllers.add(
       [
         TextEditingController(text: newImprovisation.category ?? ""),
@@ -51,55 +54,48 @@ class PacingCubit extends Cubit<PacingModel> {
       ],
     );
 
-    emit(_clone(state));
+    emit(entity);
   }
 
   void moveImprovisation(int oldOrder, int newOrder) {
-    var improvisation = state.improvisations!.removeAt(oldOrder);
+    var entity = PacingModel.fromCopy(state);
+    var improvisation = entity.improvisations!.removeAt(oldOrder);
     var controller = controllers.removeAt(oldOrder);
 
     if (oldOrder < newOrder) {
       newOrder--;
     }
 
-    state.improvisations!.insert(newOrder, improvisation);
+    entity.improvisations!.insert(newOrder, improvisation);
     controllers.insert(newOrder, controller);
-    for (var i = 0; i < state.improvisations!.length; i++) {
-      state.improvisations![i].order = i;
+    for (var i = 0; i < entity.improvisations!.length; i++) {
+      entity.improvisations![i].order = i;
     }
 
-    emit(_clone(state));
+    emit(entity);
   }
 
   void removeImprovisation(int order) {
-    state.improvisations!.removeAt(order);
+    var entity = PacingModel.fromCopy(state);
+    entity.improvisations!.removeAt(order);
     controllers.removeAt(order);
 
-    for (var i = 0; i < state.improvisations!.length; i++) {
-      state.improvisations![i].order = i;
+    for (var i = 0; i < entity.improvisations!.length; i++) {
+      entity.improvisations![i].order = i;
     }
 
-    emit(_clone(state));
+    emit(entity);
   }
 
   void editImprovisation(ImprovisationModel model) {
-    var improvisation = state.improvisations!.firstWhere((element) => element.order == model.order);
+    var entity = PacingModel.fromCopy(state);
+    var improvisation = entity.improvisations!.firstWhere((element) => element.order == model.order);
     improvisation.category = model.category;
     improvisation.duration = model.duration;
     improvisation.performers = model.performers;
     improvisation.theme = model.theme;
     improvisation.type = model.type;
 
-    emit(_clone(state));
-  }
-
-  PacingModel _clone(PacingModel model) {
-    return PacingModel(
-      id: model.id,
-      name: model.name,
-      createdDate: model.createdDate,
-      modifiedDate: model.modifiedDate,
-      improvisations: model.improvisations,
-    );
+    emit(entity);
   }
 }

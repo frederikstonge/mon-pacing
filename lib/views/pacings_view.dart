@@ -18,16 +18,17 @@ class PacingsView extends StatelessWidget {
       child: BlocConsumer<PacingsCubit, PacingState?>(
         listener: (context, state) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          if (state is PacingErrorState) {
+          if (state is PacingInitialState) {
+            _pacings.clear();
+          } else if (state is PacingErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
           }
+
           return;
         },
         builder: (context, state) {
           if (state == null) {
             context.read<PacingsCubit>().refresh();
-          } else if (state is PacingInitialState) {
-            _pacings.clear();
           } else if (state is PacingLoadingState && _pacings.isEmpty) {
             return const CircularProgressIndicator();
           } else if (state is PacingSuccessState) {

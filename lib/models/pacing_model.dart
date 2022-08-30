@@ -31,6 +31,18 @@ class PacingModel extends BaseModel {
     return PacingModel.fromJson(newValues);
   }
 
+  factory PacingModel.fromCopy(PacingModel model) => PacingModel(
+        id: model.id,
+        name: model.name,
+        createdDate: model.createdDate,
+        modifiedDate: model.modifiedDate,
+        improvisations: model.improvisations
+            ?.map(
+              (e) => ImprovisationModel.fromCopy(e),
+            )
+            .toList(),
+      );
+
   Map<String, dynamic> toJson() => _$PacingModelToJson(this);
 
   Map<String, dynamic> toDatabase() {

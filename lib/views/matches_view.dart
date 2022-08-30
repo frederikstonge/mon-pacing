@@ -6,5 +6,9 @@ class MatchesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text("Matches");
+    // When creating a match from a pacing:
+    // select # of teams
+    // select each team's name
+    // select each teams's color
   }
 }

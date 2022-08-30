@@ -3,7 +3,7 @@ import 'package:monpacing/repositories/base_repository.dart';
 import '../models/pacing_model.dart';
 import 'database.dart';
 
-class PacingRepository extends BaseRepository<PacingModel> {
+class PacingsRepository extends BaseRepository<PacingModel> {
   static const int _pageSize = 20;
 
   @override
