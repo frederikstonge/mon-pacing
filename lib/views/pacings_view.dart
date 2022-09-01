@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/pacings_cubit.dart';
 import '../models/pacing_model.dart';
-import '../states/pacing_state.dart';
+import '../states/pacings_state.dart';
 import '../widgets/list_item.dart';
 
 class PacingsView extends StatelessWidget {
@@ -15,12 +15,12 @@ class PacingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: BlocConsumer<PacingsCubit, PacingState?>(
+      child: BlocConsumer<PacingsCubit, PacingsState?>(
         listener: (context, state) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          if (state is PacingInitialState) {
+          if (state is PacingsInitialState) {
             _pacings.clear();
-          } else if (state is PacingErrorState) {
+          } else if (state is PacingsErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
           }
 
@@ -29,11 +29,11 @@ class PacingsView extends StatelessWidget {
         builder: (context, state) {
           if (state == null) {
             context.read<PacingsCubit>().refresh();
-          } else if (state is PacingLoadingState && _pacings.isEmpty) {
+          } else if (state is PacingsLoadingState && _pacings.isEmpty) {
             return const CircularProgressIndicator();
-          } else if (state is PacingSuccessState) {
+          } else if (state is PacingsSuccessState) {
             _pacings.addAll(state.pacings);
-          } else if (state is PacingErrorState && _pacings.isEmpty) {
+          } else if (state is PacingsErrorState && _pacings.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,7 +51,6 @@ class PacingsView extends StatelessWidget {
           }
           return RefreshIndicator(
             onRefresh: () async {
-              _pacings.clear();
               context.read<PacingsCubit>().refresh();
             },
             child: ListView.builder(

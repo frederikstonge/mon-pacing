@@ -18,7 +18,6 @@ class DeleteDialog {
             child: const Text("Delete", style: TextStyle(color: Colors.red)),
             onPressed: () {
               onDelete();
-
               Navigator.of(alertContext).pop();
             },
           ),

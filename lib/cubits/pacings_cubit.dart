@@ -2,9 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monpacing/models/pacing_model.dart';
 import 'package:monpacing/repositories/pacings_repository.dart';
 
-import '../states/pacing_state.dart';
+import '../states/pacings_state.dart';
 
-class PacingsCubit extends Cubit<PacingState?> {
+class PacingsCubit extends Cubit<PacingsState?> {
   final PacingsRepository repository;
   int _page = 1;
   bool _isFetching = false;
@@ -39,28 +39,28 @@ class PacingsCubit extends Cubit<PacingState?> {
 
   Future fetch() async {
     _isFetching = true;
-    emit(const PacingLoadingState());
+    emit(const PacingsLoadingState());
     try {
       final response = await repository.getList(_page);
-      emit(PacingSuccessState(pacings: response));
+      emit(PacingsSuccessState(pacings: response));
       _page++;
     } catch (exception) {
-      emit(PacingErrorState(error: exception.toString()));
+      emit(PacingsErrorState(error: exception.toString()));
     }
     _isFetching = false;
   }
 
   Future refresh() async {
-    emit(const PacingInitialState());
+    emit(const PacingsInitialState());
     _isFetching = true;
-    emit(const PacingLoadingState());
+    emit(const PacingsLoadingState());
     try {
       _page = 1;
       final response = await repository.getList(_page);
-      emit(PacingSuccessState(pacings: response));
+      emit(PacingsSuccessState(pacings: response));
       _page++;
     } catch (exception) {
-      emit(PacingErrorState(error: exception.toString()));
+      emit(PacingsErrorState(error: exception.toString()));
     }
     _isFetching = false;
   }

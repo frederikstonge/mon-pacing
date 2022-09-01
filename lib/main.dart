@@ -8,6 +8,7 @@ import 'pages/pacings_page.dart';
 import 'pages/settings_page.dart';
 import 'cubits/pacings_cubit.dart';
 import 'pages/home_page.dart';
+import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 
 void main() {
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (_) => PacingsRepository(),
         ),
+        RepositoryProvider(
+          create: (_) => MatchesRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -32,7 +36,7 @@ class MyApp extends StatelessWidget {
             create: (blocContext) => PacingsCubit(repository: blocContext.read<PacingsRepository>()),
           ),
           BlocProvider(
-            create: (blocContext) => MatchesCubit(),
+            create: (blocContext) => MatchesCubit(repository: blocContext.read<MatchesRepository>()),
           ),
           BlocProvider(
             create: (blocContext) => SettingsCubit(),

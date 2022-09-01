@@ -4,10 +4,10 @@ abstract class BaseModel {
   DateTime? createdDate;
   DateTime? modifiedDate;
 
-  BaseModel({
-    required this.id,
-    required this.name,
-    required this.createdDate,
-    required this.modifiedDate,
-  });
+  BaseModel(
+    this.id,
+    this.name,
+    this.createdDate,
+    this.modifiedDate,
+  );
 }

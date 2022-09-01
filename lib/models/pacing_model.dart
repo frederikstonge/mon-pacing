@@ -16,12 +16,7 @@ class PacingModel extends BaseModel {
     DateTime? createdDate,
     DateTime? modifiedDate,
     this.improvisations,
-  }) : super(
-          id: id,
-          name: name,
-          createdDate: createdDate,
-          modifiedDate: modifiedDate,
-        );
+  }) : super(id, name, createdDate, modifiedDate);
 
   factory PacingModel.fromJson(Map<String, dynamic> json) => _$PacingModelFromJson(json);
 

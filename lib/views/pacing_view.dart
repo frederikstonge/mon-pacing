@@ -1,4 +1,3 @@
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_picker/flutter_picker.dart';
@@ -7,7 +6,8 @@ import '../cubits/pacings_cubit.dart';
 import '../models/improvisation_type.dart';
 import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
-import '../widgets/delete_dialog.dart';
+import '../dialogs/delete_dialog.dart';
+import '../widgets/expansion_tile_card.dart';
 
 class PacingView extends StatelessWidget {
   static const double kExpandedHeight = 150.0;
@@ -144,7 +144,7 @@ class PacingView extends StatelessWidget {
 
                 var controllers = context.read<PacingCubit>().controllers[index];
                 return ExpansionTileCard(
-                  key: ValueKey(index),
+                  key: ValueKey("$index of ${state.improvisations!.length}"),
                   leading: ReorderableDelayedDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
                   title: Text(title),
                   subtitle: Text(subTitle),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:monpacing/models/match_model.dart';
 
+import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
 import '../models/base_model.dart';
 import '../models/pacing_model.dart';
+import '../pages/match_page.dart';
 import '../pages/pacing_page.dart';
-import 'delete_dialog.dart';
+import '../dialogs/delete_dialog.dart';
 
 class ListItem extends StatelessWidget {
   final BaseModel entity;
@@ -28,6 +31,14 @@ class ListItem extends StatelessWidget {
                 MaterialPageRoute(
                   builder: ((context) => PacingPage(model: copy)),
                 ));
+          } else if (entity is MatchModel) {
+            var model = entity as MatchModel;
+            var copy = MatchModel.fromCopy(model);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => MatchPage(model: copy)),
+                ));
           }
         },
         trailing: Row(
@@ -40,14 +51,18 @@ class ListItem extends StatelessWidget {
                   if (entity is PacingModel) {
                     var model = entity as PacingModel;
                     context.read<PacingsCubit>().delete(model);
+                  } else if (entity is MatchModel) {
+                    var model = entity as MatchModel;
+                    context.read<MatchesCubit>().delete(model);
                   }
                 });
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.play_arrow),
-              onPressed: () {},
-            ),
+            if (entity is PacingModel)
+              IconButton(
+                icon: const Icon(Icons.play_arrow),
+                onPressed: () {},
+              ),
           ],
         ),
       ),
