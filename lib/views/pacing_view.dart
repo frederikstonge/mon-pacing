@@ -8,6 +8,7 @@ import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
 import '../dialogs/delete_dialog.dart';
 import '../widgets/expansion_tile_card.dart';
+import '../widgets/leading_dirty_iconbutton.dart';
 
 class PacingView extends StatelessWidget {
   static const double kExpandedHeight = 150.0;
@@ -17,6 +18,8 @@ class PacingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var foregroundColor =
+        Theme.of(context).brightness == Brightness.light ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -32,6 +35,7 @@ class PacingView extends StatelessWidget {
             pinned: true,
             snap: true,
             floating: true,
+            leading: const LeadingDirtyIconButton(dirty: true),
             title: BlocBuilder<PacingCubit, PacingModel>(
               builder: (context, state) => Text(state.name ?? "New pacing"),
             ),
@@ -60,12 +64,13 @@ class PacingView extends StatelessWidget {
                 builder: (context, state) {
                   var controller = context.read<PacingCubit>().nameController;
                   return TextField(
+                    style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
                     controller: controller,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Theme.of(context).cardColor,
                       hintText: 'Name',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                     ),
                     onChanged: (value) {
                       context.read<PacingCubit>().editName(controller.text);
@@ -85,14 +90,14 @@ class PacingView extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              const Text(
+                              Text(
                                 "Improvisations: ",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: foregroundColor),
                               ),
                               BlocBuilder<PacingCubit, PacingModel>(
                                 builder: (context, state) => Text(
                                   (state.improvisations?.length ?? 0).toString(),
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(color: foregroundColor),
                                 ),
                               ),
                             ],
@@ -106,20 +111,20 @@ class PacingView extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              const Text(
+                              Text(
                                 "Time: ",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: foregroundColor),
                               ),
                               BlocBuilder<PacingCubit, PacingModel>(
                                 builder: (context, state) => Text(
                                   ((state.improvisations?.fold(Duration.zero, (Duration p, v) => p + v.duration) ?? Duration.zero).inSeconds / 60.0)
                                       .toString(),
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(color: foregroundColor),
                                 ),
                               ),
-                              const Text(
+                              Text(
                                 " min",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: foregroundColor),
                               ),
                             ],
                           ),
