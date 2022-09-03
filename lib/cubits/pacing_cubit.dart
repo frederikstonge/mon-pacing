@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:monpacing/models/improvisation_model.dart';
-import 'package:monpacing/models/pacing_model.dart';
+import '../models/improvisation_model.dart';
+import '../models/pacing_model.dart';
 
 import '../models/improvisation_type.dart';
 
