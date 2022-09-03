@@ -22,7 +22,7 @@ class PacingPage extends StatelessWidget {
               improvisations: [],
             ),
       ),
-      child: const PacingView(),
+      child: PacingView(model: model),
     );
   }
 }

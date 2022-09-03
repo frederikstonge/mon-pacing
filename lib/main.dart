@@ -53,11 +53,6 @@ class MyApp extends StatelessWidget {
               primarySwatch: generateMaterialColor(color: Color(state.color)),
               brightness: Brightness.light,
             ),
-            darkTheme: ThemeData(
-              primaryColor: generateMaterialColor(color: Color(state.color)),
-              brightness: Brightness.dark,
-            ),
-            themeMode: state.enableDarkTheme ? ThemeMode.dark : ThemeMode.light,
             debugShowCheckedModeBanner: false,
             home: const HomePage(
               pages: [

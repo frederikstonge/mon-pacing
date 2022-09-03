@@ -21,7 +21,6 @@ SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SettingsModel {
   int get color => throw _privateConstructorUsedError;
-  bool get enableDarkTheme => throw _privateConstructorUsedError;
   bool get enablePaddingDuration => throw _privateConstructorUsedError;
   Duration get paddingDuration => throw _privateConstructorUsedError;
 
@@ -36,11 +35,7 @@ abstract class $SettingsModelCopyWith<$Res> {
   factory $SettingsModelCopyWith(
           SettingsModel value, $Res Function(SettingsModel) then) =
       _$SettingsModelCopyWithImpl<$Res>;
-  $Res call(
-      {int color,
-      bool enableDarkTheme,
-      bool enablePaddingDuration,
-      Duration paddingDuration});
+  $Res call({int color, bool enablePaddingDuration, Duration paddingDuration});
 }
 
 /// @nodoc
@@ -55,7 +50,6 @@ class _$SettingsModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? color = freezed,
-    Object? enableDarkTheme = freezed,
     Object? enablePaddingDuration = freezed,
     Object? paddingDuration = freezed,
   }) {
@@ -64,10 +58,6 @@ class _$SettingsModelCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      enableDarkTheme: enableDarkTheme == freezed
-          ? _value.enableDarkTheme
-          : enableDarkTheme // ignore: cast_nullable_to_non_nullable
-              as bool,
       enablePaddingDuration: enablePaddingDuration == freezed
           ? _value.enablePaddingDuration
           : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
@@ -87,11 +77,7 @@ abstract class _$$_SettingsModelCopyWith<$Res>
           _$_SettingsModel value, $Res Function(_$_SettingsModel) then) =
       __$$_SettingsModelCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {int color,
-      bool enableDarkTheme,
-      bool enablePaddingDuration,
-      Duration paddingDuration});
+  $Res call({int color, bool enablePaddingDuration, Duration paddingDuration});
 }
 
 /// @nodoc
@@ -108,7 +94,6 @@ class __$$_SettingsModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? color = freezed,
-    Object? enableDarkTheme = freezed,
     Object? enablePaddingDuration = freezed,
     Object? paddingDuration = freezed,
   }) {
@@ -117,10 +102,6 @@ class __$$_SettingsModelCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      enableDarkTheme: enableDarkTheme == freezed
-          ? _value.enableDarkTheme
-          : enableDarkTheme // ignore: cast_nullable_to_non_nullable
-              as bool,
       enablePaddingDuration: enablePaddingDuration == freezed
           ? _value.enablePaddingDuration
           : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
@@ -138,7 +119,6 @@ class __$$_SettingsModelCopyWithImpl<$Res>
 class _$_SettingsModel implements _SettingsModel {
   const _$_SettingsModel(
       {required this.color,
-      required this.enableDarkTheme,
       required this.enablePaddingDuration,
       required this.paddingDuration});
 
@@ -148,15 +128,13 @@ class _$_SettingsModel implements _SettingsModel {
   @override
   final int color;
   @override
-  final bool enableDarkTheme;
-  @override
   final bool enablePaddingDuration;
   @override
   final Duration paddingDuration;
 
   @override
   String toString() {
-    return 'SettingsModel(color: $color, enableDarkTheme: $enableDarkTheme, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration)';
+    return 'SettingsModel(color: $color, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration)';
   }
 
   @override
@@ -165,8 +143,6 @@ class _$_SettingsModel implements _SettingsModel {
         (other.runtimeType == runtimeType &&
             other is _$_SettingsModel &&
             const DeepCollectionEquality().equals(other.color, color) &&
-            const DeepCollectionEquality()
-                .equals(other.enableDarkTheme, enableDarkTheme) &&
             const DeepCollectionEquality()
                 .equals(other.enablePaddingDuration, enablePaddingDuration) &&
             const DeepCollectionEquality()
@@ -178,7 +154,6 @@ class _$_SettingsModel implements _SettingsModel {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(color),
-      const DeepCollectionEquality().hash(enableDarkTheme),
       const DeepCollectionEquality().hash(enablePaddingDuration),
       const DeepCollectionEquality().hash(paddingDuration));
 
@@ -198,7 +173,6 @@ class _$_SettingsModel implements _SettingsModel {
 abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
       {required final int color,
-      required final bool enableDarkTheme,
       required final bool enablePaddingDuration,
       required final Duration paddingDuration}) = _$_SettingsModel;
 
@@ -207,8 +181,6 @@ abstract class _SettingsModel implements SettingsModel {
 
   @override
   int get color;
-  @override
-  bool get enableDarkTheme;
   @override
   bool get enablePaddingDuration;
   @override

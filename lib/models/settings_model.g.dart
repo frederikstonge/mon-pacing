@@ -9,7 +9,6 @@ part of 'settings_model.dart';
 _$_SettingsModel _$$_SettingsModelFromJson(Map<String, dynamic> json) =>
     _$_SettingsModel(
       color: json['color'] as int,
-      enableDarkTheme: json['enableDarkTheme'] as bool,
       enablePaddingDuration: json['enablePaddingDuration'] as bool,
       paddingDuration: Duration(microseconds: json['paddingDuration'] as int),
     );
@@ -17,7 +16,6 @@ _$_SettingsModel _$$_SettingsModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_SettingsModelToJson(_$_SettingsModel instance) =>
     <String, dynamic>{
       'color': instance.color,
-      'enableDarkTheme': instance.enableDarkTheme,
       'enablePaddingDuration': instance.enablePaddingDuration,
       'paddingDuration': instance.paddingDuration.inMicroseconds,
     };

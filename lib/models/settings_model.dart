@@ -7,7 +7,6 @@ part 'settings_model.g.dart';
 class SettingsModel with _$SettingsModel {
   const factory SettingsModel({
     required int color,
-    required bool enableDarkTheme,
     required bool enablePaddingDuration,
     required Duration paddingDuration,
   }) = _SettingsModel;

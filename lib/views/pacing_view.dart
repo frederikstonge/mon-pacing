@@ -15,8 +15,8 @@ import '../widgets/leading_dirty_iconbutton.dart';
 class PacingView extends StatelessWidget {
   static const double kExpandedHeight = 150.0;
   static const double kBottomHeight = 36.0;
-
-  const PacingView({Key? key}) : super(key: key);
+  final PacingModel? model;
+  const PacingView({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,9 @@ class PacingView extends StatelessWidget {
             pinned: true,
             snap: true,
             floating: true,
-            leading: const LeadingDirtyIconButton(dirty: true),
+            leading: BlocBuilder<PacingCubit, PacingModel>(
+              builder: (context, state) => LeadingDirtyIconButton(dirty: state != model),
+            ),
             title: BlocBuilder<PacingCubit, PacingModel>(
               builder: (context, state) => Text(state.name ?? "New pacing"),
             ),
@@ -88,56 +90,31 @@ class PacingView extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Improvisations: ",
-                                style: TextStyle(color: foregroundColor),
-                              ),
-                              BlocBuilder<PacingCubit, PacingModel>(
-                                builder: (context, state) => Text(
-                                  (state.improvisations.length).toString(),
-                                  style: TextStyle(color: foregroundColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      child: BlocBuilder<PacingCubit, PacingModel>(
+                        builder: (context, state) => Text(
+                          "Improvisations: ${(state.improvisations.length).toString()}",
+                          style: TextStyle(color: foregroundColor),
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Time: ",
-                                style: TextStyle(color: foregroundColor),
-                              ),
-                              BlocBuilder<PacingCubit, PacingModel>(
-                                builder: (pacingContext, pacingState) => BlocBuilder<SettingsCubit, SettingsModel>(
-                                  builder: (settingsContext, settingsState) {
-                                    var totalDuration = pacingState.improvisations.fold(Duration.zero, (Duration p, v) => p + v.duration);
+                      child: BlocBuilder<PacingCubit, PacingModel>(
+                        builder: (pacingContext, pacingState) => BlocBuilder<SettingsCubit, SettingsModel>(
+                          builder: (settingsContext, settingsState) {
+                            var totalDuration = pacingState.improvisations.fold(Duration.zero, (Duration p, v) => p + v.duration);
 
-                                    if (settingsState.enablePaddingDuration) {
-                                      totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations.length));
-                                    }
+                            if (settingsState.enablePaddingDuration) {
+                              totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations.length));
+                            }
 
-                                    var totalDurationInSeconds = totalDuration.inSeconds / 60.0;
-                                    return Text(totalDurationInSeconds.toString(), style: TextStyle(color: foregroundColor));
-                                  },
-                                ),
-                              ),
-                              Text(
-                                " min",
-                                style: TextStyle(color: foregroundColor),
-                              ),
-                            ],
-                          ),
-                        ],
+                            var totalDurationInSeconds = totalDuration.inSeconds / 60.0;
+                            return Text(
+                              "Time: ${totalDurationInSeconds.toString()} min",
+                              style: TextStyle(color: foregroundColor),
+                              textAlign: TextAlign.end,
+                            );
+                          },
+                        ),
                       ),
                     )
                   ],
