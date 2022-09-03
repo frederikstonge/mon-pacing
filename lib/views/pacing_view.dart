@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
 import '../cubits/pacings_cubit.dart';
+import '../cubits/settings_cubit.dart';
 import '../models/improvisation_type.dart';
 import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
 import '../dialogs/delete_dialog.dart';
+import '../models/settings_model.dart';
 import '../widgets/expansion_tile_card.dart';
 import '../widgets/leading_dirty_iconbutton.dart';
 
@@ -116,10 +118,18 @@ class PacingView extends StatelessWidget {
                                 style: TextStyle(color: foregroundColor),
                               ),
                               BlocBuilder<PacingCubit, PacingModel>(
-                                builder: (context, state) => Text(
-                                  ((state.improvisations?.fold(Duration.zero, (Duration p, v) => p + v.duration) ?? Duration.zero).inSeconds / 60.0)
-                                      .toString(),
-                                  style: TextStyle(color: foregroundColor),
+                                builder: (pacingContext, pacingState) => BlocBuilder<SettingsCubit, SettingsModel>(
+                                  builder: (settingsContext, settingsState) {
+                                    var totalDuration =
+                                        pacingState.improvisations?.fold(Duration.zero, (Duration p, v) => p + v.duration) ?? Duration.zero;
+
+                                    if (settingsState.enablePaddingDuration) {
+                                      totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations?.length ?? 0));
+                                    }
+
+                                    var totalDurationInSeconds = totalDuration.inSeconds / 60.0;
+                                    return Text(totalDurationInSeconds.toString(), style: TextStyle(color: foregroundColor));
+                                  },
                                 ),
                               ),
                               Text(

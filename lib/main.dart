@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
               primaryColor: generateMaterialColor(color: Color(state.color)),
               brightness: Brightness.dark,
             ),
-            themeMode: state.darkTheme ? ThemeMode.dark : ThemeMode.light,
+            themeMode: state.enableDarkTheme ? ThemeMode.dark : ThemeMode.light,
             debugShowCheckedModeBanner: false,
             home: const HomePage(
               pages: [
