@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'generated/l10n.dart';
 import 'cubits/matches_cubit.dart';
@@ -15,13 +18,34 @@ import 'pages/home_page.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 
-void main() {
+String settingsModelKey = "SettingsModel";
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  var settingsModel = await getSettingsModel();
+  runApp(MyApp(model: settingsModel));
+}
+
+Future<SettingsModel> getSettingsModel() async {
+  final prefs = await SharedPreferences.getInstance();
+  final String? settingsModelValue = prefs.getString(settingsModelKey);
+  if (settingsModelValue == null) {
+    var settings = SettingsModel(
+      color: Colors.indigo.value,
+      enablePaddingDuration: false,
+      paddingDuration: const Duration(minutes: 1),
+    );
+
+    await prefs.setString(settingsModelKey, jsonEncode(settings.toJson()));
+    return settings;
+  }
+
+  return SettingsModel.fromJson(jsonDecode(settingsModelValue));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final SettingsModel model;
+  const MyApp({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +67,7 @@ class MyApp extends StatelessWidget {
             create: (blocContext) => MatchesCubit(repository: blocContext.read<MatchesRepository>()),
           ),
           BlocProvider(
-            create: (blocContext) => SettingsCubit(),
+            create: (blocContext) => SettingsCubit(model: model),
           ),
         ],
         child: BlocBuilder<SettingsCubit, SettingsModel>(

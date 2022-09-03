@@ -30,9 +30,10 @@ class SettingsView extends StatelessWidget {
                                 child: BlockPicker(
                                   useInShowDialog: true,
                                   pickerColor: Color(state.color),
-                                  onColorChanged: (value) {
-                                    context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
-                                    Navigator.of(dialogContext).pop();
+                                  onColorChanged: (value) async {
+                                    var navigator = Navigator.of(dialogContext);
+                                    await context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
+                                    navigator.pop();
                                   },
                                 ),
                               ),
@@ -48,7 +49,7 @@ class SettingsView extends StatelessWidget {
                   tiles: [
                     SettingsTile.switchTile(
                       initialValue: state.enablePaddingDuration,
-                      onToggle: (value) => context.read<SettingsCubit>().edit(state.copyWith(enablePaddingDuration: value)),
+                      onToggle: (value) async => await context.read<SettingsCubit>().edit(state.copyWith(enablePaddingDuration: value)),
                       title: const Text("Enable padding duration"),
                     ),
                     SettingsTile(
@@ -82,12 +83,12 @@ class SettingsView extends StatelessWidget {
                           hideHeader: true,
                           confirmText: 'OK',
                           title: const Text('Select duration'),
-                          onConfirm: (Picker picker, List<int> value) {
+                          onConfirm: (Picker picker, List<int> value) async {
                             var duration = Duration(
                               minutes: picker.getSelectedValues()[0],
                               seconds: picker.getSelectedValues()[1],
                             );
-                            context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: duration));
+                            await context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: duration));
                           },
                         ).showDialog(context);
                       },

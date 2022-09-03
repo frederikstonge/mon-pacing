@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:convert';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 import '../models/settings_model.dart';
 
 class SettingsCubit extends Cubit<SettingsModel> {
-  SettingsCubit()
-      : super(SettingsModel(
-          color: Colors.indigo.value,
-          enablePaddingDuration: false,
-          paddingDuration: const Duration(minutes: 1),
-        ));
+  SettingsCubit({required SettingsModel model}) : super(model);
 
-  void edit(SettingsModel model) {
+  Future edit(SettingsModel model) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(settingsModelKey, jsonEncode(model.toJson()));
     emit(model);
   }
 }
