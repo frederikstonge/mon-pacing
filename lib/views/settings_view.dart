@@ -28,7 +28,6 @@ class SettingsView extends StatelessWidget {
                               title: const Text('Select theme color'),
                               content: SingleChildScrollView(
                                 child: BlockPicker(
-                                  useInShowDialog: true,
                                   pickerColor: Color(state.color),
                                   onColorChanged: (value) async {
                                     var navigator = Navigator.of(dialogContext);
