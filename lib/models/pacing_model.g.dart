@@ -6,7 +6,8 @@ part of 'pacing_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PacingModel _$PacingModelFromJson(Map<String, dynamic> json) => PacingModel(
+_$_PacingModel _$$_PacingModelFromJson(Map<String, dynamic> json) =>
+    _$_PacingModel(
       id: json['id'] as int?,
       name: json['name'] as String?,
       createdDate: json['createdDate'] == null
@@ -15,12 +16,12 @@ PacingModel _$PacingModelFromJson(Map<String, dynamic> json) => PacingModel(
       modifiedDate: json['modifiedDate'] == null
           ? null
           : DateTime.parse(json['modifiedDate'] as String),
-      improvisations: (json['improvisations'] as List<dynamic>?)
-          ?.map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))
+      improvisations: (json['improvisations'] as List<dynamic>)
+          .map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$PacingModelToJson(PacingModel instance) =>
+Map<String, dynamic> _$$_PacingModelToJson(_$_PacingModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

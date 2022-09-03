@@ -14,11 +14,12 @@ class PacingPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => PacingCubit(
         model: model ??
-            PacingModel(
+            const PacingModel(
               createdDate: null,
               id: null,
               modifiedDate: null,
               name: null,
+              improvisations: [],
             ),
       ),
       child: const PacingView(),

@@ -1,5 +1,6 @@
-import 'package:monpacing/repositories/base_repository.dart';
+import 'dart:convert';
 
+import 'base_repository.dart';
 import '../models/match_model.dart';
 import 'database.dart';
 
@@ -13,15 +14,13 @@ class MatchesRepository extends BaseRepository<MatchModel> {
     }
 
     var now = DateTime.now();
-    entity.createdDate = now;
-    entity.modifiedDate = now;
+    var model = entity.copyWith(createdDate: now, modifiedDate: now);
 
     var db = await database;
-    var serializedEntity = entity.toDatabase();
+    var serializedEntity = _toDatabase(model);
     var id = await db.insert(matchesTable, serializedEntity);
 
-    entity.id = id;
-    return entity;
+    return model.copyWith(id: id);
   }
 
   @override
@@ -40,12 +39,12 @@ class MatchesRepository extends BaseRepository<MatchModel> {
       throw Exception("id must not be null");
     }
 
-    entity.modifiedDate = DateTime.now();
+    var model = entity.copyWith(modifiedDate: DateTime.now());
 
     var db = await database;
     await db.update(
       matchesTable,
-      entity.toDatabase(),
+      _toDatabase(model),
       where: '$idField = ?',
       whereArgs: [entity.id!],
     );
@@ -65,7 +64,7 @@ class MatchesRepository extends BaseRepository<MatchModel> {
       return null;
     }
 
-    return MatchModel.fromDatabase(items.first);
+    return _fromDatabase(items.first);
   }
 
   @override
@@ -78,6 +77,22 @@ class MatchesRepository extends BaseRepository<MatchModel> {
       orderBy: "$modifiedDateField DESC",
     );
 
-    return items.map(((e) => MatchModel.fromDatabase(e))).toList();
+    return items.map(((e) => _fromDatabase(e))).toList();
+  }
+
+  MatchModel _fromDatabase(Map<String, dynamic> json) {
+    var newValues = Map<String, dynamic>.from(json);
+    newValues.update("improvisations", (value) => jsonDecode(value));
+    newValues.update("teams", (value) => jsonDecode(value));
+    newValues.update("penalties", (value) => jsonDecode(value));
+    return MatchModel.fromJson(newValues);
+  }
+
+  Map<String, dynamic> _toDatabase(MatchModel model) {
+    var items = model.toJson();
+    items["improvisations"] = jsonEncode(items["improvisations"]);
+    items["teams"] = jsonEncode(items["teams"]);
+    items["penalties"] = jsonEncode(items["penalties"]);
+    return items;
   }
 }

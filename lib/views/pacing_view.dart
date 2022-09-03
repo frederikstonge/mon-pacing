@@ -98,7 +98,7 @@ class PacingView extends StatelessWidget {
                               ),
                               BlocBuilder<PacingCubit, PacingModel>(
                                 builder: (context, state) => Text(
-                                  (state.improvisations?.length ?? 0).toString(),
+                                  (state.improvisations.length).toString(),
                                   style: TextStyle(color: foregroundColor),
                                 ),
                               ),
@@ -120,11 +120,10 @@ class PacingView extends StatelessWidget {
                               BlocBuilder<PacingCubit, PacingModel>(
                                 builder: (pacingContext, pacingState) => BlocBuilder<SettingsCubit, SettingsModel>(
                                   builder: (settingsContext, settingsState) {
-                                    var totalDuration =
-                                        pacingState.improvisations?.fold(Duration.zero, (Duration p, v) => p + v.duration) ?? Duration.zero;
+                                    var totalDuration = pacingState.improvisations.fold(Duration.zero, (Duration p, v) => p + v.duration);
 
                                     if (settingsState.enablePaddingDuration) {
-                                      totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations?.length ?? 0));
+                                      totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations.length));
                                     }
 
                                     var totalDurationInSeconds = totalDuration.inSeconds / 60.0;
@@ -152,14 +151,14 @@ class PacingView extends StatelessWidget {
                 context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex);
               },
               itemBuilder: (context, index) {
-                var item = state.improvisations![index];
+                var item = state.improvisations[index];
                 var title = "Improvisation #${item.order + 1}";
                 var subTitle =
                     "${item.type == ImprovisationType.mixed ? 'M' : 'C'} | ${item.category ?? '-'} | ${item.theme ?? '-'} | ${item.performers ?? '-'} | ${item.duration.inMinutes} min ${item.duration.inSeconds % 60} sec";
 
                 var controllers = context.read<PacingCubit>().controllers[index];
                 return ExpansionTileCard(
-                  key: ValueKey("$index of ${state.improvisations!.length}"),
+                  key: ValueKey("$index of ${state.improvisations.length}"),
                   leading: ReorderableDelayedDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
                   title: Text(title),
                   subtitle: Text(subTitle),
@@ -174,8 +173,7 @@ class PacingView extends StatelessWidget {
                         value: item.type,
                         icon: const Icon(Icons.arrow_downward),
                         onChanged: (value) {
-                          item.type = value!;
-                          context.read<PacingCubit>().editImprovisation(item);
+                          context.read<PacingCubit>().editImprovisation(item.copyWith(type: value!));
                         },
                         items: ImprovisationType.values
                             .map(
@@ -197,8 +195,7 @@ class PacingView extends StatelessWidget {
                         ),
                         onChanged: (value) {
                           if (controllers[0].text != item.category) {
-                            item.category = controllers[0].text;
-                            context.read<PacingCubit>().editImprovisation(item);
+                            context.read<PacingCubit>().editImprovisation(item.copyWith(category: controllers[0].text));
                           }
                         },
                       ),
@@ -213,8 +210,7 @@ class PacingView extends StatelessWidget {
                         ),
                         onChanged: (value) {
                           if (controllers[1].text != item.theme) {
-                            item.theme = controllers[1].text;
-                            context.read<PacingCubit>().editImprovisation(item);
+                            context.read<PacingCubit>().editImprovisation(item.copyWith(theme: controllers[1].text));
                           }
                         },
                       ),
@@ -231,8 +227,7 @@ class PacingView extends StatelessWidget {
                         onChanged: (value) {
                           var performers = controllers[2].text.isEmpty ? null : int.parse(controllers[2].text);
                           if (performers != item.performers) {
-                            item.performers = performers;
-                            context.read<PacingCubit>().editImprovisation(item);
+                            context.read<PacingCubit>().editImprovisation(item.copyWith(performers: performers));
                           }
                         },
                       ),
@@ -275,8 +270,7 @@ class PacingView extends StatelessWidget {
                                 minutes: picker.getSelectedValues()[0],
                                 seconds: picker.getSelectedValues()[1],
                               );
-                              item.duration = duration;
-                              context.read<PacingCubit>().editImprovisation(item);
+                              context.read<PacingCubit>().editImprovisation(item.copyWith(duration: duration));
                             },
                           ).showDialog(context);
                         },
@@ -318,7 +312,7 @@ class PacingView extends StatelessWidget {
                   ],
                 );
               },
-              itemCount: state.improvisations?.length ?? 0,
+              itemCount: state.improvisations.length,
             ),
           ),
         ],

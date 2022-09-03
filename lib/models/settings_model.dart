@@ -1,13 +1,16 @@
-class SettingsModel {
-  int color;
-  bool enableDarkTheme;
-  bool enablePaddingDuration;
-  Duration paddingDuration;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  SettingsModel({
-    required this.color,
-    required this.enableDarkTheme,
-    required this.enablePaddingDuration,
-    required this.paddingDuration,
-  });
+part 'settings_model.freezed.dart';
+part 'settings_model.g.dart';
+
+@freezed
+class SettingsModel with _$SettingsModel {
+  const factory SettingsModel({
+    required int color,
+    required bool enableDarkTheme,
+    required bool enablePaddingDuration,
+    required Duration paddingDuration,
+  }) = _SettingsModel;
+
+  factory SettingsModel.fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);
 }

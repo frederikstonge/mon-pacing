@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:monpacing/models/pacing_model.dart';
-import 'package:monpacing/repositories/pacings_repository.dart';
 
+import '../models/pacing_model.dart';
+import '../repositories/pacings_repository.dart';
 import '../states/pacings_state.dart';
 
 class PacingsCubit extends Cubit<PacingsState?> {

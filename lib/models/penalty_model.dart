@@ -1,24 +1,16 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'penalty_model.freezed.dart';
 part 'penalty_model.g.dart';
 
-@JsonSerializable()
-class PenaltyModel {
-  bool major;
-  String? player;
-  int teamId;
-  int improvisationId;
-
-  PenaltyModel({required this.major, required this.teamId, required this.improvisationId, this.player});
+@freezed
+class PenaltyModel with _$PenaltyModel {
+  const factory PenaltyModel({
+    required bool major,
+    required String? player,
+    required int teamId,
+    required int improvisationId,
+  }) = _PenaltyModel;
 
   factory PenaltyModel.fromJson(Map<String, dynamic> json) => _$PenaltyModelFromJson(json);
-
-  factory PenaltyModel.fromCopy(PenaltyModel model) => PenaltyModel(
-        major: model.major,
-        teamId: model.teamId,
-        improvisationId: model.improvisationId,
-        player: model.player,
-      );
-
-  Map<String, dynamic> toJson() => _$PenaltyModelToJson(this);
 }

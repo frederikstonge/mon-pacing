@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:monpacing/models/match_model.dart';
 
+import '../models/match_model.dart';
 import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
 import '../models/base_model.dart';
@@ -25,7 +25,7 @@ class ListItem extends StatelessWidget {
         onTap: () {
           if (entity is PacingModel) {
             var model = entity as PacingModel;
-            var copy = PacingModel.fromCopy(model);
+            var copy = model.copyWith();
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -33,7 +33,7 @@ class ListItem extends StatelessWidget {
                 ));
           } else if (entity is MatchModel) {
             var model = entity as MatchModel;
-            var copy = MatchModel.fromCopy(model);
+            var copy = model.copyWith();
             Navigator.push(
                 context,
                 MaterialPageRoute(

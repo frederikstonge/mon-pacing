@@ -6,7 +6,8 @@ part of 'match_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MatchModel _$MatchModelFromJson(Map<String, dynamic> json) => MatchModel(
+_$_MatchModel _$$_MatchModelFromJson(Map<String, dynamic> json) =>
+    _$_MatchModel(
       id: json['id'] as int?,
       name: json['name'] as String?,
       createdDate: json['createdDate'] == null
@@ -15,19 +16,19 @@ MatchModel _$MatchModelFromJson(Map<String, dynamic> json) => MatchModel(
       modifiedDate: json['modifiedDate'] == null
           ? null
           : DateTime.parse(json['modifiedDate'] as String),
-      teams: (json['teams'] as List<dynamic>?)
-          ?.map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
+      teams: (json['teams'] as List<dynamic>)
+          .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      improvisations: (json['improvisations'] as List<dynamic>?)
-          ?.map((e) =>
+      improvisations: (json['improvisations'] as List<dynamic>)
+          .map((e) =>
               MatchImprovisationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      penalties: (json['penalties'] as List<dynamic>?)
-          ?.map((e) => PenaltyModel.fromJson(e as Map<String, dynamic>))
+      penalties: (json['penalties'] as List<dynamic>)
+          .map((e) => PenaltyModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$MatchModelToJson(MatchModel instance) =>
+Map<String, dynamic> _$$_MatchModelToJson(_$_MatchModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

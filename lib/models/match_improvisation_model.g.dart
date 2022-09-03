@@ -6,20 +6,20 @@ part of 'match_improvisation_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MatchImprovisationModel _$MatchImprovisationModelFromJson(
+_$_MatchImprovisationModel _$$_MatchImprovisationModelFromJson(
         Map<String, dynamic> json) =>
-    MatchImprovisationModel(
-      order: json['order'],
-      type: json['type'],
-      duration: json['duration'],
-      category: json['category'],
-      theme: json['theme'],
-      performers: json['performers'],
+    _$_MatchImprovisationModel(
+      order: json['order'] as int,
+      type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
+      category: json['category'] as String?,
+      theme: json['theme'] as String?,
+      duration: Duration(microseconds: json['duration'] as int),
+      performers: json['performers'] as int?,
       wonByTeam: json['wonByTeam'] as int?,
     );
 
-Map<String, dynamic> _$MatchImprovisationModelToJson(
-        MatchImprovisationModel instance) =>
+Map<String, dynamic> _$$_MatchImprovisationModelToJson(
+        _$_MatchImprovisationModel instance) =>
     <String, dynamic>{
       'order': instance.order,
       'type': _$ImprovisationTypeEnumMap[instance.type]!,
