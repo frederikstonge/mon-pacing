@@ -1,1 +1,10 @@
-{}
+{
+  "DeleteDialog_Content": "Are you sure you want to delete {itemName}?",
+  "DeleteDialog_Title": "Delete",
+  "Dialog_Cancel": "Cancel",
+  "Dialog_Ok": "OK",
+  "ImprovisationType_compared": "Compared",
+  "ImprovisationType_mixed": "Mixed",
+  "WillPopDialog_Content": "Are you sure you want to go back? You will lose all unsaved changes.",
+  "WillPopDialog_Title": "Changes"
+}

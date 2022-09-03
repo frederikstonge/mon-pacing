@@ -5,6 +5,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import '../cubits/pacings_cubit.dart';
 import '../cubits/settings_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
+import '../generated/l10n.dart';
 import '../models/improvisation_type.dart';
 import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
@@ -158,14 +159,16 @@ class PacingView extends StatelessWidget {
                           onChanged: (value) {
                             context.read<PacingCubit>().editImprovisation(item.copyWith(type: value!));
                           },
-                          items: ImprovisationType.values
-                              .map(
-                                (e) => DropdownMenuItem<ImprovisationType>(
-                                  value: e,
-                                  child: Text(e.name),
-                                ),
-                              )
-                              .toList(),
+                          items: ImprovisationType.values.map(
+                            (e) {
+                              var display =
+                                  e == ImprovisationType.mixed ? S.of(context).ImprovisationType_mixed : S.of(context).ImprovisationType_compared;
+                              return DropdownMenuItem<ImprovisationType>(
+                                value: e,
+                                child: Text(display),
+                              );
+                            },
+                          ).toList(),
                         ),
                       ),
                       Padding(

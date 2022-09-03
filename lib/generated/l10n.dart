@@ -49,6 +49,86 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Are you sure you want to delete {itemName}?`
+  String DeleteDialog_Content(Object itemName) {
+    return Intl.message(
+      'Are you sure you want to delete $itemName?',
+      name: 'DeleteDialog_Content',
+      desc: '',
+      args: [itemName],
+    );
+  }
+
+  /// `Delete`
+  String get DeleteDialog_Title {
+    return Intl.message(
+      'Delete',
+      name: 'DeleteDialog_Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get Dialog_Cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'Dialog_Cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get Dialog_Ok {
+    return Intl.message(
+      'OK',
+      name: 'Dialog_Ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compared`
+  String get ImprovisationType_compared {
+    return Intl.message(
+      'Compared',
+      name: 'ImprovisationType_compared',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mixed`
+  String get ImprovisationType_mixed {
+    return Intl.message(
+      'Mixed',
+      name: 'ImprovisationType_mixed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to go back? You will lose all unsaved changes.`
+  String get WillPopDialog_Content {
+    return Intl.message(
+      'Are you sure you want to go back? You will lose all unsaved changes.',
+      name: 'WillPopDialog_Content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changes`
+  String get WillPopDialog_Title {
+    return Intl.message(
+      'Changes',
+      name: 'WillPopDialog_Title',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

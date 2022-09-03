@@ -20,6 +20,22 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'fr';
 
+  static String m0(itemName) =>
+      "Êtes-vous sûr de vouloir supprimer ${itemName}?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "DeleteDialog_Content": m0,
+        "DeleteDialog_Title": MessageLookupByLibrary.simpleMessage("Supprimer"),
+        "Dialog_Cancel": MessageLookupByLibrary.simpleMessage("Annuler"),
+        "Dialog_Ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "ImprovisationType_compared":
+            MessageLookupByLibrary.simpleMessage("Comparée"),
+        "ImprovisationType_mixed":
+            MessageLookupByLibrary.simpleMessage("Mixte"),
+        "WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
+            "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés."),
+        "WillPopDialog_Title":
+            MessageLookupByLibrary.simpleMessage("Changements")
+      };
 }

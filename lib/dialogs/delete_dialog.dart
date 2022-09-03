@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
+import '../generated/l10n.dart';
+
 class DeleteDialog {
   static showDeleteDialog(BuildContext context, String itemName, Function onDelete) {
     showDialog(
       context: context,
       builder: (BuildContext alertContext) => AlertDialog(
-        title: const Text("Delete"),
-        content: Text("Are you sure you want to delete $itemName?"),
+        title: Text(S.of(context).DeleteDialog_Title),
+        content: Text(S.of(context).DeleteDialog_Content(itemName)),
         actions: [
           TextButton(
-            child: const Text("Cancel"),
+            child: Text(S.of(context).Dialog_Cancel),
             onPressed: () {
               Navigator.of(alertContext).pop();
             },
           ),
           TextButton(
-            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            child: Text(S.of(context).DeleteDialog_Title, style: const TextStyle(color: Colors.red)),
             onPressed: () {
               onDelete();
               Navigator.of(alertContext).pop();

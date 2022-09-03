@@ -1,1 +1,10 @@
-{}
+{
+  "DeleteDialog_Content": "Êtes-vous sûr de vouloir supprimer {itemName}?",
+  "DeleteDialog_Title": "Supprimer",
+  "Dialog_Cancel": "Annuler",
+  "Dialog_Ok": "OK",
+  "ImprovisationType_compared": "Comparée",
+  "ImprovisationType_mixed": "Mixte",
+  "WillPopDialog_Content": "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés.",
+  "WillPopDialog_Title": "Changements"
+}
