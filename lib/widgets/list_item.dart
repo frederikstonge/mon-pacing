@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../generated/l10n.dart';
 import '../models/match_model.dart';
 import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
@@ -21,7 +22,7 @@ class ListItem extends StatelessWidget {
       elevation: 2,
       child: ListTile(
         title: Text(entity.name!),
-        subtitle: Text("Modified on ${DateFormat.yMd().add_jm().format(entity.modifiedDate!)}"),
+        subtitle: Text(S.of(context).ListTile_Modified(DateFormat.yMd().add_jm().format(entity.modifiedDate!))),
         onTap: () {
           if (entity is PacingModel) {
             var model = entity as PacingModel;

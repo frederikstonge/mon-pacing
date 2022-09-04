@@ -5,6 +5,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../cubits/settings_cubit.dart';
+import '../generated/l10n.dart';
 import '../models/settings_model.dart';
 
 class SettingsView extends StatelessWidget {
@@ -16,16 +17,17 @@ class SettingsView extends StatelessWidget {
         builder: (context, state) => SettingsList(
               sections: [
                 SettingsSection(
-                  title: const Text("Theme"),
+                  title: Text(S.of(context).SettingsView_Section_Application),
                   tiles: [
                     SettingsTile(
-                      title: const Text("Select theme color"),
+                      leading: const Icon(Icons.color_lens),
+                      title: Text(S.of(context).SettingsView_ThemeTitle),
                       onPressed: (context) {
                         showDialog(
                           context: context,
                           builder: (dialogContext) {
                             return AlertDialog(
-                              title: const Text('Select theme color'),
+                              title: Text(S.of(context).SettingsView_ThemeTitle),
                               content: SingleChildScrollView(
                                 child: BlockPicker(
                                   pickerColor: Color(state.color),
@@ -41,32 +43,57 @@ class SettingsView extends StatelessWidget {
                         );
                       },
                     ),
+                    SettingsTile(
+                      title: Text(S.of(context).SettingsView_LanguageTitle),
+                      value: Text(state.language),
+                      leading: const Icon(Icons.language),
+                      trailing: DropdownButton<String>(
+                        items: [
+                          DropdownMenuItem(
+                            value: "en",
+                            child: Text(S.of(context).SettingsView_Language_English),
+                          ),
+                          DropdownMenuItem(
+                            value: "fr",
+                            child: Text(S.of(context).SettingsView_Language_French),
+                          )
+                        ],
+                        value: state.language,
+                        onChanged: (value) async {
+                          if (value != null) {
+                            var cubit = context.read<SettingsCubit>();
+                            await S.load(Locale(value));
+                            await cubit.edit(state.copyWith(language: value));
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 SettingsSection(
-                  title: const Text("Pacings"),
+                  title: Text(S.of(context).SettingsView_Section_Pacings),
                   tiles: [
                     SettingsTile.switchTile(
                       initialValue: state.enablePaddingDuration,
                       onToggle: (value) async => await context.read<SettingsCubit>().edit(state.copyWith(enablePaddingDuration: value)),
-                      title: const Text("Enable padding duration"),
+                      title: Text(S.of(context).SettingsView_EnablePaddingDuration),
                     ),
                     SettingsTile(
-                      title: const Text("Padding duration"),
-                      value: Text("${state.paddingDuration.inSeconds / 60.0} min"),
+                      title: Text(S.of(context).SettingsView_PaddingDuration),
+                      value: Text(S.of(context).PacingView_TotalTime(state.paddingDuration.inSeconds / 60.0)),
                       onPressed: (context) {
                         Picker(
                           adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
                             NumberPickerColumn(
                               begin: 0,
                               end: 20,
-                              suffix: const Text(' minutes'),
+                              suffix: Text(S.of(context).PacingView_ImprovisationDurationMinutes),
                               initValue: state.paddingDuration.inMinutes,
                             ),
                             NumberPickerColumn(
                               begin: 0,
                               end: 60,
-                              suffix: const Text(' seconds'),
+                              suffix: Text(S.of(context).PacingView_ImprovisationDurationSeconds),
                               initValue: (state.paddingDuration.inSeconds % 60),
                               jump: 15,
                             ),
@@ -80,8 +107,8 @@ class SettingsView extends StatelessWidget {
                             )
                           ],
                           hideHeader: true,
-                          confirmText: 'OK',
-                          title: const Text('Select duration'),
+                          confirmText: S.of(context).Dialog_Ok,
+                          title: Text(S.of(context).PacingView_ImprovisationDurationTitle),
                           onConfirm: (Picker picker, List<int> value) async {
                             var duration = Duration(
                               minutes: picker.getSelectedValues()[0],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../generated/l10n.dart';
 import 'ibottom_nav_page.dart';
 import '../views/settings_view.dart';
 
@@ -10,7 +11,7 @@ class SettingsPage extends StatelessWidget implements IBottomNavPage {
   Icon get icon => const Icon(Icons.settings);
 
   @override
-  String get title => "Settings";
+  String get title => S.current.SettingsPage_Title;
 
   @override
   FloatingActionButton? getFloatingActionButton(BuildContext context) => null;

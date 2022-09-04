@@ -22,6 +22,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(itemName) => "Are you sure you want to delete ${itemName}?";
 
+  static String m1(modifiedDate) => "Modified on ${modifiedDate}";
+
+  static String m2(minutes, seconds) => "${minutes} min ${seconds} sec";
+
+  static String m3(type, category, theme, performers, durationMinutes,
+          durationSeconds) =>
+      "${type} | ${category} | ${theme} | ${performers} | ${durationMinutes} min ${durationSeconds} sec";
+
+  static String m4(order) => "Improvisation #${order}";
+
+  static String m5(count) => "Improvisations: ${count}";
+
+  static String m6(min) => "Time: ${min} min";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "DeleteDialog_Content": m0,
@@ -32,6 +46,53 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Compared"),
         "ImprovisationType_mixed":
             MessageLookupByLibrary.simpleMessage("Mixed"),
+        "ListTile_Modified": m1,
+        "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matches"),
+        "PacingView_AddImprovisation":
+            MessageLookupByLibrary.simpleMessage("Add Improvisation"),
+        "PacingView_ImprovisationCategory":
+            MessageLookupByLibrary.simpleMessage("Category"),
+        "PacingView_ImprovisationDuration": m2,
+        "PacingView_ImprovisationDurationHint":
+            MessageLookupByLibrary.simpleMessage("Duration"),
+        "PacingView_ImprovisationDurationMinutes":
+            MessageLookupByLibrary.simpleMessage(" minutes"),
+        "PacingView_ImprovisationDurationSeconds":
+            MessageLookupByLibrary.simpleMessage(" seconds"),
+        "PacingView_ImprovisationDurationTitle":
+            MessageLookupByLibrary.simpleMessage("Select duration"),
+        "PacingView_ImprovisationParticipants":
+            MessageLookupByLibrary.simpleMessage("# of participant"),
+        "PacingView_ImprovisationSubtitle": m3,
+        "PacingView_ImprovisationTheme":
+            MessageLookupByLibrary.simpleMessage("Theme"),
+        "PacingView_ImprovisationTitle": m4,
+        "PacingView_ImprovisationType":
+            MessageLookupByLibrary.simpleMessage("Type"),
+        "PacingView_Name": MessageLookupByLibrary.simpleMessage("Name"),
+        "PacingView_NewPacing":
+            MessageLookupByLibrary.simpleMessage("New Pacing"),
+        "PacingView_Save": MessageLookupByLibrary.simpleMessage("Save"),
+        "PacingView_TotalImprovisations": m5,
+        "PacingView_TotalTime": m6,
+        "PacingsPage_Title": MessageLookupByLibrary.simpleMessage("Pacings"),
+        "SettingsPage_Title": MessageLookupByLibrary.simpleMessage("Settings"),
+        "SettingsView_EnablePaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Enable padding duration"),
+        "SettingsView_LanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Language"),
+        "SettingsView_Language_English":
+            MessageLookupByLibrary.simpleMessage("English"),
+        "SettingsView_Language_French":
+            MessageLookupByLibrary.simpleMessage("French"),
+        "SettingsView_PaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Padding duration"),
+        "SettingsView_Section_Application":
+            MessageLookupByLibrary.simpleMessage("Application"),
+        "SettingsView_Section_Pacings":
+            MessageLookupByLibrary.simpleMessage("Pacings"),
+        "SettingsView_ThemeTitle":
+            MessageLookupByLibrary.simpleMessage("Select theme color"),
         "WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to go back? You will lose all unsaved changes."),
         "WillPopDialog_Title": MessageLookupByLibrary.simpleMessage("Changes")

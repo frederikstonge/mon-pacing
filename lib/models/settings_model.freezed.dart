@@ -23,6 +23,7 @@ mixin _$SettingsModel {
   int get color => throw _privateConstructorUsedError;
   bool get enablePaddingDuration => throw _privateConstructorUsedError;
   Duration get paddingDuration => throw _privateConstructorUsedError;
+  String get language => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,11 @@ abstract class $SettingsModelCopyWith<$Res> {
   factory $SettingsModelCopyWith(
           SettingsModel value, $Res Function(SettingsModel) then) =
       _$SettingsModelCopyWithImpl<$Res>;
-  $Res call({int color, bool enablePaddingDuration, Duration paddingDuration});
+  $Res call(
+      {int color,
+      bool enablePaddingDuration,
+      Duration paddingDuration,
+      String language});
 }
 
 /// @nodoc
@@ -52,6 +57,7 @@ class _$SettingsModelCopyWithImpl<$Res>
     Object? color = freezed,
     Object? enablePaddingDuration = freezed,
     Object? paddingDuration = freezed,
+    Object? language = freezed,
   }) {
     return _then(_value.copyWith(
       color: color == freezed
@@ -66,6 +72,10 @@ class _$SettingsModelCopyWithImpl<$Res>
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      language: language == freezed
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -77,7 +87,11 @@ abstract class _$$_SettingsModelCopyWith<$Res>
           _$_SettingsModel value, $Res Function(_$_SettingsModel) then) =
       __$$_SettingsModelCopyWithImpl<$Res>;
   @override
-  $Res call({int color, bool enablePaddingDuration, Duration paddingDuration});
+  $Res call(
+      {int color,
+      bool enablePaddingDuration,
+      Duration paddingDuration,
+      String language});
 }
 
 /// @nodoc
@@ -96,6 +110,7 @@ class __$$_SettingsModelCopyWithImpl<$Res>
     Object? color = freezed,
     Object? enablePaddingDuration = freezed,
     Object? paddingDuration = freezed,
+    Object? language = freezed,
   }) {
     return _then(_$_SettingsModel(
       color: color == freezed
@@ -110,6 +125,10 @@ class __$$_SettingsModelCopyWithImpl<$Res>
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      language: language == freezed
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -120,7 +139,8 @@ class _$_SettingsModel implements _SettingsModel {
   const _$_SettingsModel(
       {required this.color,
       required this.enablePaddingDuration,
-      required this.paddingDuration});
+      required this.paddingDuration,
+      required this.language});
 
   factory _$_SettingsModel.fromJson(Map<String, dynamic> json) =>
       _$$_SettingsModelFromJson(json);
@@ -131,10 +151,12 @@ class _$_SettingsModel implements _SettingsModel {
   final bool enablePaddingDuration;
   @override
   final Duration paddingDuration;
+  @override
+  final String language;
 
   @override
   String toString() {
-    return 'SettingsModel(color: $color, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration)';
+    return 'SettingsModel(color: $color, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration, language: $language)';
   }
 
   @override
@@ -146,7 +168,8 @@ class _$_SettingsModel implements _SettingsModel {
             const DeepCollectionEquality()
                 .equals(other.enablePaddingDuration, enablePaddingDuration) &&
             const DeepCollectionEquality()
-                .equals(other.paddingDuration, paddingDuration));
+                .equals(other.paddingDuration, paddingDuration) &&
+            const DeepCollectionEquality().equals(other.language, language));
   }
 
   @JsonKey(ignore: true)
@@ -155,7 +178,8 @@ class _$_SettingsModel implements _SettingsModel {
       runtimeType,
       const DeepCollectionEquality().hash(color),
       const DeepCollectionEquality().hash(enablePaddingDuration),
-      const DeepCollectionEquality().hash(paddingDuration));
+      const DeepCollectionEquality().hash(paddingDuration),
+      const DeepCollectionEquality().hash(language));
 
   @JsonKey(ignore: true)
   @override
@@ -174,7 +198,8 @@ abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
       {required final int color,
       required final bool enablePaddingDuration,
-      required final Duration paddingDuration}) = _$_SettingsModel;
+      required final Duration paddingDuration,
+      required final String language}) = _$_SettingsModel;
 
   factory _SettingsModel.fromJson(Map<String, dynamic> json) =
       _$_SettingsModel.fromJson;
@@ -185,6 +210,8 @@ abstract class _SettingsModel implements SettingsModel {
   bool get enablePaddingDuration;
   @override
   Duration get paddingDuration;
+  @override
+  String get language;
   @override
   @JsonKey(ignore: true)
   _$$_SettingsModelCopyWith<_$_SettingsModel> get copyWith =>

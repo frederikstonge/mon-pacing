@@ -11,6 +11,7 @@ _$_SettingsModel _$$_SettingsModelFromJson(Map<String, dynamic> json) =>
       color: json['color'] as int,
       enablePaddingDuration: json['enablePaddingDuration'] as bool,
       paddingDuration: Duration(microseconds: json['paddingDuration'] as int),
+      language: json['language'] as String,
     );
 
 Map<String, dynamic> _$$_SettingsModelToJson(_$_SettingsModel instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$_SettingsModelToJson(_$_SettingsModel instance) =>
       'color': instance.color,
       'enablePaddingDuration': instance.enablePaddingDuration,
       'paddingDuration': instance.paddingDuration.inMicroseconds,
+      'language': instance.language,
     };

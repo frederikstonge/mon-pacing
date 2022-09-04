@@ -9,6 +9,7 @@ class SettingsModel with _$SettingsModel {
     required int color,
     required bool enablePaddingDuration,
     required Duration paddingDuration,
+    required String language,
   }) = _SettingsModel;
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);

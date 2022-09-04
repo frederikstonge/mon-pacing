@@ -37,7 +37,7 @@ class PacingView extends StatelessWidget {
           onPressed: () {
             context.read<PacingCubit>().addImprovisation();
           },
-          tooltip: "Add improvisation",
+          tooltip: S.of(context).PacingView_AddImprovisation,
           child: const Icon(Icons.add),
         ),
         body: CustomScrollView(
@@ -48,7 +48,7 @@ class PacingView extends StatelessWidget {
               snap: true,
               floating: true,
               title: BlocBuilder<PacingCubit, PacingModel>(
-                builder: (context, state) => Text(state.name ?? "New pacing"),
+                builder: (context, state) => Text(state.name ?? S.of(context).PacingView_NewPacing),
               ),
               actions: [
                 BlocBuilder<PacingCubit, PacingModel>(
@@ -64,7 +64,7 @@ class PacingView extends StatelessWidget {
                       navigator.pop();
                     },
                     icon: const Icon(Icons.save),
-                    tooltip: 'Save',
+                    tooltip: S.of(context).PacingView_Save,
                   ),
                 ),
               ],
@@ -80,7 +80,7 @@ class PacingView extends StatelessWidget {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Theme.of(context).cardColor,
-                        hintText: 'Name',
+                        hintText: S.of(context).PacingView_Name,
                         border: const OutlineInputBorder(),
                       ),
                       onChanged: (value) {
@@ -99,7 +99,7 @@ class PacingView extends StatelessWidget {
                       Expanded(
                         child: BlocBuilder<PacingCubit, PacingModel>(
                           builder: (context, state) => Text(
-                            "Improvisations: ${(state.improvisations.length).toString()}",
+                            S.of(context).PacingView_TotalImprovisations(state.improvisations.length),
                             style: TextStyle(color: foregroundColor),
                           ),
                         ),
@@ -116,7 +116,7 @@ class PacingView extends StatelessWidget {
 
                               var totalDurationInSeconds = totalDuration.inSeconds / 60.0;
                               return Text(
-                                "Time: ${totalDurationInSeconds.toString()} min",
+                                S.of(context).PacingView_TotalTime(totalDurationInSeconds),
                                 style: TextStyle(color: foregroundColor),
                                 textAlign: TextAlign.end,
                               );
@@ -136,9 +136,15 @@ class PacingView extends StatelessWidget {
                 },
                 itemBuilder: (context, index) {
                   var item = state.improvisations[index];
-                  var title = "Improvisation #${item.order + 1}";
-                  var subTitle =
-                      "${item.type == ImprovisationType.mixed ? 'M' : 'C'} | ${item.category ?? '-'} | ${item.theme ?? '-'} | ${item.performers ?? '-'} | ${item.duration.inMinutes} min ${item.duration.inSeconds % 60} sec";
+                  var title = S.of(context).PacingView_ImprovisationTitle(item.order + 1);
+                  var subTitle = S.of(context).PacingView_ImprovisationSubtitle(
+                        item.type == ImprovisationType.mixed ? 'M' : 'C',
+                        item.category ?? '-',
+                        item.theme ?? '-',
+                        item.performers ?? '-',
+                        item.duration.inMinutes,
+                        item.duration.inSeconds % 60,
+                      );
 
                   var controllers = context.read<PacingCubit>().controllers[index];
                   return ExpansionTileCard(
@@ -150,9 +156,9 @@ class PacingView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: DropdownButtonFormField<ImprovisationType>(
-                          decoration: const InputDecoration(
-                            hintText: 'Type',
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            hintText: S.of(context).PacingView_ImprovisationType,
+                            border: const OutlineInputBorder(),
                           ),
                           value: item.type,
                           icon: const Icon(Icons.arrow_downward),
@@ -175,9 +181,9 @@ class PacingView extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           controller: controllers[0],
-                          decoration: const InputDecoration(
-                            hintText: 'Category',
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            hintText: S.of(context).PacingView_ImprovisationCategory,
+                            border: const OutlineInputBorder(),
                           ),
                           onChanged: (value) {
                             if (controllers[0].text != item.category) {
@@ -190,9 +196,9 @@ class PacingView extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           controller: controllers[1],
-                          decoration: const InputDecoration(
-                            hintText: 'Theme',
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            hintText: S.of(context).PacingView_ImprovisationTheme,
+                            border: const OutlineInputBorder(),
                           ),
                           onChanged: (value) {
                             if (controllers[1].text != item.theme) {
@@ -206,9 +212,9 @@ class PacingView extends StatelessWidget {
                         child: TextField(
                           controller: controllers[2],
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            hintText: '# of participant',
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            hintText: S.of(context).PacingView_ImprovisationParticipants,
+                            border: const OutlineInputBorder(),
                           ),
                           onChanged: (value) {
                             var performers = controllers[2].text.isEmpty ? null : int.parse(controllers[2].text);
@@ -222,20 +228,24 @@ class PacingView extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           readOnly: true,
-                          controller: TextEditingController(text: "${item.duration.inMinutes} min ${item.duration.inSeconds % 60} sec"),
+                          controller: TextEditingController(
+                              text: S.of(context).PacingView_ImprovisationDuration(
+                                    item.duration.inMinutes,
+                                    item.duration.inSeconds % 60,
+                                  )),
                           onTap: () async {
                             Picker(
                               adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
                                 NumberPickerColumn(
                                   begin: 0,
                                   end: 20,
-                                  suffix: const Text(' minutes'),
+                                  suffix: Text(S.of(context).PacingView_ImprovisationDurationMinutes),
                                   initValue: item.duration.inMinutes,
                                 ),
                                 NumberPickerColumn(
                                   begin: 0,
                                   end: 60,
-                                  suffix: const Text(' seconds'),
+                                  suffix: Text(S.of(context).PacingView_ImprovisationDurationSeconds),
                                   initValue: (item.duration.inSeconds % 60),
                                   jump: 15,
                                 ),
@@ -249,8 +259,8 @@ class PacingView extends StatelessWidget {
                                 )
                               ],
                               hideHeader: true,
-                              confirmText: 'OK',
-                              title: const Text('Select duration'),
+                              confirmText: S.of(context).Dialog_Ok,
+                              title: Text(S.of(context).PacingView_ImprovisationDurationTitle),
                               onConfirm: (Picker picker, List<int> value) {
                                 var duration = Duration(
                                   minutes: picker.getSelectedValues()[0],
@@ -260,9 +270,9 @@ class PacingView extends StatelessWidget {
                               },
                             ).showDialog(context);
                           },
-                          decoration: const InputDecoration(
-                            hintText: 'Duration',
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            hintText: S.of(context).PacingView_ImprovisationDurationHint,
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       ),
@@ -278,17 +288,17 @@ class PacingView extends StatelessWidget {
                               });
                             },
                             child: Column(
-                              children: const [
-                                Icon(
+                              children: [
+                                const Icon(
                                   Icons.delete,
                                   color: Colors.red,
                                 ),
-                                Padding(
+                                const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 2.0),
                                 ),
                                 Text(
-                                  'Delete',
-                                  style: TextStyle(color: Colors.red),
+                                  S.of(context).DeleteDialog_Title,
+                                  style: const TextStyle(color: Colors.red),
                                 ),
                               ],
                             ),

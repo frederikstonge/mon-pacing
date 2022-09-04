@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'generated/l10n.dart';
@@ -27,20 +28,32 @@ void main() async {
 }
 
 Future<SettingsModel> getSettingsModel() async {
+  SettingsModel settings;
   final prefs = await SharedPreferences.getInstance();
   final String? settingsModelValue = prefs.getString(settingsModelKey);
-  if (settingsModelValue == null) {
-    var settings = SettingsModel(
-      color: Colors.indigo.value,
-      enablePaddingDuration: false,
-      paddingDuration: const Duration(minutes: 1),
-    );
-
-    await prefs.setString(settingsModelKey, jsonEncode(settings.toJson()));
-    return settings;
+  if (settingsModelValue != null) {
+    try {
+      settings = SettingsModel.fromJson(jsonDecode(settingsModelValue));
+      return settings;
+    } catch (ex) {
+      // Global catch
+    }
   }
 
-  return SettingsModel.fromJson(jsonDecode(settingsModelValue));
+  var currentLanguage = Intl.getCurrentLocale().substring(0, 2);
+  if (currentLanguage != 'en' && currentLanguage != 'fr') {
+    currentLanguage = 'en';
+  }
+
+  settings = SettingsModel(
+    color: Colors.indigo.value,
+    enablePaddingDuration: false,
+    paddingDuration: const Duration(minutes: 1),
+    language: currentLanguage,
+  );
+
+  await prefs.setString(settingsModelKey, jsonEncode(settings.toJson()));
+  return settings;
 }
 
 class MyApp extends StatelessWidget {
@@ -78,8 +91,9 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
             ),
             debugShowCheckedModeBanner: false,
-            home: const HomePage(
-              pages: [
+            // ignore: prefer_const_constructors
+            home: HomePage(
+              pages: const [
                 PacingsPage(),
                 MatchesPage(),
                 SettingsPage(),
@@ -92,6 +106,7 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
+            locale: Locale(model.language),
           ),
         ),
       ),

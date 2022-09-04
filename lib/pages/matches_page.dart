@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../generated/l10n.dart';
 import '../views/matches_view.dart';
 import 'ibottom_nav_page.dart';
 
@@ -10,7 +11,7 @@ class MatchesPage extends StatelessWidget implements IBottomNavPage {
   Icon get icon => const Icon(Icons.list_alt);
 
   @override
-  String get title => "Matches";
+  String get title => S.current.MatchesPage_Title;
 
   @override
   FloatingActionButton? getFloatingActionButton(BuildContext context) => null;

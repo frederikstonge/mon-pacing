@@ -23,6 +23,20 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(itemName) =>
       "Êtes-vous sûr de vouloir supprimer ${itemName}?";
 
+  static String m1(modifiedDate) => "Modifié le ${modifiedDate}";
+
+  static String m2(minutes, seconds) => "${minutes} min ${seconds} sec";
+
+  static String m3(type, category, theme, performers, durationMinutes,
+          durationSeconds) =>
+      "${type} | ${category} | ${theme} | ${performers} | ${durationMinutes} min ${durationSeconds} sec";
+
+  static String m4(order) => "Improvisation #${order}";
+
+  static String m5(count) => "Improvisations: ${count}";
+
+  static String m6(min) => "Temps: ${min} min";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "DeleteDialog_Content": m0,
@@ -33,6 +47,54 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Comparée"),
         "ImprovisationType_mixed":
             MessageLookupByLibrary.simpleMessage("Mixte"),
+        "ListTile_Modified": m1,
+        "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matchs"),
+        "PacingView_AddImprovisation":
+            MessageLookupByLibrary.simpleMessage("Ajouter une improvisation"),
+        "PacingView_ImprovisationCategory":
+            MessageLookupByLibrary.simpleMessage("Catégorie"),
+        "PacingView_ImprovisationDuration": m2,
+        "PacingView_ImprovisationDurationHint":
+            MessageLookupByLibrary.simpleMessage("Durée"),
+        "PacingView_ImprovisationDurationMinutes":
+            MessageLookupByLibrary.simpleMessage(" minutes"),
+        "PacingView_ImprovisationDurationSeconds":
+            MessageLookupByLibrary.simpleMessage(" seconds"),
+        "PacingView_ImprovisationDurationTitle":
+            MessageLookupByLibrary.simpleMessage("Sélectionner la durée"),
+        "PacingView_ImprovisationParticipants":
+            MessageLookupByLibrary.simpleMessage("Nombre de joueur"),
+        "PacingView_ImprovisationSubtitle": m3,
+        "PacingView_ImprovisationTheme":
+            MessageLookupByLibrary.simpleMessage("Thème"),
+        "PacingView_ImprovisationTitle": m4,
+        "PacingView_ImprovisationType":
+            MessageLookupByLibrary.simpleMessage("Type"),
+        "PacingView_Name": MessageLookupByLibrary.simpleMessage("Nom"),
+        "PacingView_NewPacing":
+            MessageLookupByLibrary.simpleMessage("Nouveau Pacing"),
+        "PacingView_Save": MessageLookupByLibrary.simpleMessage("Sauvegarder"),
+        "PacingView_TotalImprovisations": m5,
+        "PacingView_TotalTime": m6,
+        "PacingsPage_Title": MessageLookupByLibrary.simpleMessage("Pacings"),
+        "SettingsPage_Title":
+            MessageLookupByLibrary.simpleMessage("Paramètres"),
+        "SettingsView_EnablePaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Activer la durée tampon"),
+        "SettingsView_LanguageTitle":
+            MessageLookupByLibrary.simpleMessage("Langue"),
+        "SettingsView_Language_English":
+            MessageLookupByLibrary.simpleMessage("Anglais"),
+        "SettingsView_Language_French":
+            MessageLookupByLibrary.simpleMessage("Français"),
+        "SettingsView_PaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Durée tampon"),
+        "SettingsView_Section_Application":
+            MessageLookupByLibrary.simpleMessage("Application"),
+        "SettingsView_Section_Pacings":
+            MessageLookupByLibrary.simpleMessage("Pacings"),
+        "SettingsView_ThemeTitle":
+            MessageLookupByLibrary.simpleMessage("Choisir la couleur du thème"),
         "WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
             "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés."),
         "WillPopDialog_Title":
