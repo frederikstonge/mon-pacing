@@ -22,6 +22,9 @@ class SettingsView extends StatelessWidget {
                     SettingsTile(
                       leading: const Icon(Icons.color_lens),
                       title: Text(S.of(context).SettingsView_ThemeTitle),
+                      trailing: CircleAvatar(
+                        backgroundColor: Color(state.color),
+                      ),
                       onPressed: (context) {
                         showDialog(
                           context: context,
