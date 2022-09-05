@@ -48,7 +48,6 @@ class SettingsView extends StatelessWidget {
                     ),
                     SettingsTile(
                       title: Text(S.of(context).SettingsView_LanguageTitle),
-                      value: Text(state.language),
                       leading: const Icon(Icons.language),
                       trailing: DropdownButton<String>(
                         items: [
