@@ -12,12 +12,12 @@ class PacingCubit extends Cubit<PacingModel> {
   List<List<TextEditingController>> controllers = [];
 
   PacingCubit({required PacingModel model}) : super(model) {
-    nameController.text = model.name ?? "";
+    nameController.text = model.name;
     controllers = model.improvisations
         .map(
           (e) => [
-            TextEditingController(text: e.category ?? ""),
-            TextEditingController(text: e.theme ?? ""),
+            TextEditingController(text: e.category),
+            TextEditingController(text: e.theme),
             TextEditingController(text: e.performers?.toString() ?? ""),
           ],
         )
@@ -37,16 +37,16 @@ class PacingCubit extends Cubit<PacingModel> {
       order: nextOrder,
       type: nextType,
       duration: const Duration(minutes: 2, seconds: 30),
-      category: null,
+      category: "",
       performers: null,
-      theme: null,
+      theme: "",
     );
 
     improvisations.add(newImprovisation);
     controllers.add(
       [
-        TextEditingController(text: newImprovisation.category ?? ""),
-        TextEditingController(text: newImprovisation.theme ?? ""),
+        TextEditingController(text: newImprovisation.category),
+        TextEditingController(text: newImprovisation.theme),
         TextEditingController(text: newImprovisation.performers?.toString() ?? ""),
       ],
     );

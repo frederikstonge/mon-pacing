@@ -1,6 +1,6 @@
 abstract class BaseModel {
   int? get id;
-  String? get name;
+  String get name;
   DateTime? get createdDate;
   DateTime? get modifiedDate;
 }

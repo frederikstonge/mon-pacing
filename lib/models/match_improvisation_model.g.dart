@@ -11,8 +11,8 @@ _$_MatchImprovisationModel _$$_MatchImprovisationModelFromJson(
     _$_MatchImprovisationModel(
       order: json['order'] as int,
       type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
-      category: json['category'] as String?,
-      theme: json['theme'] as String?,
+      category: json['category'] as String,
+      theme: json['theme'] as String,
       duration: Duration(microseconds: json['duration'] as int),
       performers: json['performers'] as int?,
       wonByTeam: json['wonByTeam'] as int?,

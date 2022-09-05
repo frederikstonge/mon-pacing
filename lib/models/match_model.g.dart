@@ -9,7 +9,7 @@ part of 'match_model.dart';
 _$_MatchModel _$$_MatchModelFromJson(Map<String, dynamic> json) =>
     _$_MatchModel(
       id: json['id'] as int?,
-      name: json['name'] as String?,
+      name: json['name'] as String,
       createdDate: json['createdDate'] == null
           ? null
           : DateTime.parse(json['createdDate'] as String),

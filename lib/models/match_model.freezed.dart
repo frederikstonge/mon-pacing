@@ -21,7 +21,7 @@ MatchModel _$MatchModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MatchModel {
   int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
   List<TeamModel> get teams => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $MatchModelCopyWith<$Res> {
       _$MatchModelCopyWithImpl<$Res>;
   $Res call(
       {int? id,
-      String? name,
+      String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
       List<TeamModel> teams,
@@ -76,7 +76,7 @@ class _$MatchModelCopyWithImpl<$Res> implements $MatchModelCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
@@ -110,7 +110,7 @@ abstract class _$$_MatchModelCopyWith<$Res>
   @override
   $Res call(
       {int? id,
-      String? name,
+      String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
       List<TeamModel> teams,
@@ -146,7 +146,7 @@ class __$$_MatchModelCopyWithImpl<$Res> extends _$MatchModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
@@ -192,7 +192,7 @@ class _$_MatchModel implements _MatchModel {
   @override
   final int? id;
   @override
-  final String? name;
+  final String name;
   @override
   final DateTime? createdDate;
   @override
@@ -269,7 +269,7 @@ class _$_MatchModel implements _MatchModel {
 abstract class _MatchModel implements MatchModel, BaseModel {
   const factory _MatchModel(
       {required final int? id,
-      required final String? name,
+      required final String name,
       required final DateTime? createdDate,
       required final DateTime? modifiedDate,
       required final List<TeamModel> teams,
@@ -282,7 +282,7 @@ abstract class _MatchModel implements MatchModel, BaseModel {
   @override
   int? get id;
   @override
-  String? get name;
+  String get name;
   @override
   DateTime? get createdDate;
   @override

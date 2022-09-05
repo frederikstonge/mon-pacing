@@ -18,7 +18,7 @@ class PacingPage extends StatelessWidget {
               createdDate: null,
               id: null,
               modifiedDate: null,
-              name: null,
+              name: "",
               improvisations: [],
             ),
       ),

@@ -9,7 +9,7 @@ part of 'pacing_model.dart';
 _$_PacingModel _$$_PacingModelFromJson(Map<String, dynamic> json) =>
     _$_PacingModel(
       id: json['id'] as int?,
-      name: json['name'] as String?,
+      name: json['name'] as String,
       createdDate: json['createdDate'] == null
           ? null
           : DateTime.parse(json['createdDate'] as String),

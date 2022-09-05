@@ -7,7 +7,7 @@ part 'penalty_model.g.dart';
 class PenaltyModel with _$PenaltyModel {
   const factory PenaltyModel({
     required bool major,
-    required String? player,
+    required String player,
     required int teamId,
     required int improvisationId,
   }) = _PenaltyModel;

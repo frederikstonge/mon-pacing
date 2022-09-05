@@ -10,8 +10,8 @@ class MatchImprovisationModel with _$MatchImprovisationModel {
   const factory MatchImprovisationModel({
     required int order,
     required ImprovisationType type,
-    required String? category,
-    required String? theme,
+    required String category,
+    required String theme,
     required Duration duration,
     required int? performers,
     required int? wonByTeam,

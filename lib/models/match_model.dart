@@ -13,7 +13,7 @@ class MatchModel with _$MatchModel implements BaseModel {
   @Implements<BaseModel>()
   const factory MatchModel({
     required int? id,
-    required String? name,
+    required String name,
     required DateTime? createdDate,
     required DateTime? modifiedDate,
     required List<TeamModel> teams,

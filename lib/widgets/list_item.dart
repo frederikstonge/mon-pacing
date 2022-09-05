@@ -21,7 +21,7 @@ class ListItem extends StatelessWidget {
     return Card(
       elevation: 2,
       child: ListTile(
-        title: Text(entity.name!),
+        title: Text(entity.name),
         subtitle: Text(S.of(context).ListTile_Modified(DateFormat.yMd().add_jm().format(entity.modifiedDate!))),
         onTap: () {
           if (entity is PacingModel) {
@@ -48,7 +48,7 @@ class ListItem extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
-                DeleteDialog.showDeleteDialog(context, entity.name ?? "", () {
+                DeleteDialog.showDeleteDialog(context, entity.name, () {
                   if (entity is PacingModel) {
                     var model = entity as PacingModel;
                     context.read<PacingsCubit>().delete(model);

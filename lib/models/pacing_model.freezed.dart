@@ -21,7 +21,7 @@ PacingModel _$PacingModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PacingModel {
   int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
   List<ImprovisationModel> get improvisations =>
@@ -40,7 +40,7 @@ abstract class $PacingModelCopyWith<$Res> {
       _$PacingModelCopyWithImpl<$Res>;
   $Res call(
       {int? id,
-      String? name,
+      String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
       List<ImprovisationModel> improvisations});
@@ -70,7 +70,7 @@ class _$PacingModelCopyWithImpl<$Res> implements $PacingModelCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
@@ -96,7 +96,7 @@ abstract class _$$_PacingModelCopyWith<$Res>
   @override
   $Res call(
       {int? id,
-      String? name,
+      String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
       List<ImprovisationModel> improvisations});
@@ -128,7 +128,7 @@ class __$$_PacingModelCopyWithImpl<$Res> extends _$PacingModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
@@ -162,7 +162,7 @@ class _$_PacingModel implements _PacingModel {
   @override
   final int? id;
   @override
-  final String? name;
+  final String name;
   @override
   final DateTime? createdDate;
   @override
@@ -220,7 +220,7 @@ class _$_PacingModel implements _PacingModel {
 abstract class _PacingModel implements PacingModel, BaseModel {
   const factory _PacingModel(
       {required final int? id,
-      required final String? name,
+      required final String name,
       required final DateTime? createdDate,
       required final DateTime? modifiedDate,
       required final List<ImprovisationModel> improvisations}) = _$_PacingModel;
@@ -231,7 +231,7 @@ abstract class _PacingModel implements PacingModel, BaseModel {
   @override
   int? get id;
   @override
-  String? get name;
+  String get name;
   @override
   DateTime? get createdDate;
   @override

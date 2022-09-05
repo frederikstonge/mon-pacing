@@ -10,8 +10,8 @@ class ImprovisationModel with _$ImprovisationModel {
   const factory ImprovisationModel({
     required int order,
     required ImprovisationType type,
-    required String? category,
-    required String? theme,
+    required String category,
+    required String theme,
     required Duration duration,
     required int? performers,
   }) = _ImprovisationModel;

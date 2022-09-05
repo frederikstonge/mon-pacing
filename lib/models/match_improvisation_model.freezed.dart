@@ -23,8 +23,8 @@ MatchImprovisationModel _$MatchImprovisationModelFromJson(
 mixin _$MatchImprovisationModel {
   int get order => throw _privateConstructorUsedError;
   ImprovisationType get type => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
-  String? get theme => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
+  String get theme => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
   int? get performers => throw _privateConstructorUsedError;
   int? get wonByTeam => throw _privateConstructorUsedError;
@@ -43,8 +43,8 @@ abstract class $MatchImprovisationModelCopyWith<$Res> {
   $Res call(
       {int order,
       ImprovisationType type,
-      String? category,
-      String? theme,
+      String category,
+      String theme,
       Duration duration,
       int? performers,
       int? wonByTeam});
@@ -81,11 +81,11 @@ class _$MatchImprovisationModelCopyWithImpl<$Res>
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -112,8 +112,8 @@ abstract class _$$_MatchImprovisationModelCopyWith<$Res>
   $Res call(
       {int order,
       ImprovisationType type,
-      String? category,
-      String? theme,
+      String category,
+      String theme,
       Duration duration,
       int? performers,
       int? wonByTeam});
@@ -153,11 +153,11 @@ class __$$_MatchImprovisationModelCopyWithImpl<$Res>
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -194,9 +194,9 @@ class _$_MatchImprovisationModel implements _MatchImprovisationModel {
   @override
   final ImprovisationType type;
   @override
-  final String? category;
+  final String category;
   @override
-  final String? theme;
+  final String theme;
   @override
   final Duration duration;
   @override
@@ -255,8 +255,8 @@ abstract class _MatchImprovisationModel implements MatchImprovisationModel {
   const factory _MatchImprovisationModel(
       {required final int order,
       required final ImprovisationType type,
-      required final String? category,
-      required final String? theme,
+      required final String category,
+      required final String theme,
       required final Duration duration,
       required final int? performers,
       required final int? wonByTeam}) = _$_MatchImprovisationModel;
@@ -269,9 +269,9 @@ abstract class _MatchImprovisationModel implements MatchImprovisationModel {
   @override
   ImprovisationType get type;
   @override
-  String? get category;
+  String get category;
   @override
-  String? get theme;
+  String get theme;
   @override
   Duration get duration;
   @override

@@ -48,7 +48,7 @@ class PacingView extends StatelessWidget {
               snap: true,
               floating: true,
               title: BlocBuilder<PacingCubit, PacingModel>(
-                builder: (context, state) => Text(state.name ?? S.of(context).PacingView_NewPacing),
+                builder: (context, state) => Text(state.name.isNotEmpty ? state.name : S.of(context).PacingView_NewPacing),
               ),
               actions: [
                 BlocBuilder<PacingCubit, PacingModel>(
@@ -139,8 +139,8 @@ class PacingView extends StatelessWidget {
                   var title = S.of(context).PacingView_ImprovisationTitle(item.order + 1);
                   var subTitle = S.of(context).PacingView_ImprovisationSubtitle(
                         item.type == ImprovisationType.mixed ? 'M' : 'C',
-                        item.category ?? '-',
-                        item.theme ?? '-',
+                        item.category.isNotEmpty ? item.category : '-',
+                        item.theme.isNotEmpty ? item.theme : '-',
                         item.performers ?? '-',
                         item.duration.inMinutes,
                         item.duration.inSeconds % 60,

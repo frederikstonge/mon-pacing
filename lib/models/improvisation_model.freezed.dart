@@ -22,8 +22,8 @@ ImprovisationModel _$ImprovisationModelFromJson(Map<String, dynamic> json) {
 mixin _$ImprovisationModel {
   int get order => throw _privateConstructorUsedError;
   ImprovisationType get type => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
-  String? get theme => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
+  String get theme => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
   int? get performers => throw _privateConstructorUsedError;
 
@@ -41,8 +41,8 @@ abstract class $ImprovisationModelCopyWith<$Res> {
   $Res call(
       {int order,
       ImprovisationType type,
-      String? category,
-      String? theme,
+      String category,
+      String theme,
       Duration duration,
       int? performers});
 }
@@ -77,11 +77,11 @@ class _$ImprovisationModelCopyWithImpl<$Res>
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -104,8 +104,8 @@ abstract class _$$_ImprovisationModelCopyWith<$Res>
   $Res call(
       {int order,
       ImprovisationType type,
-      String? category,
-      String? theme,
+      String category,
+      String theme,
       Duration duration,
       int? performers});
 }
@@ -142,11 +142,11 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -178,9 +178,9 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   @override
   final ImprovisationType type;
   @override
-  final String? category;
+  final String category;
   @override
-  final String? theme;
+  final String theme;
   @override
   final Duration duration;
   @override
@@ -234,8 +234,8 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   const factory _ImprovisationModel(
       {required final int order,
       required final ImprovisationType type,
-      required final String? category,
-      required final String? theme,
+      required final String category,
+      required final String theme,
       required final Duration duration,
       required final int? performers}) = _$_ImprovisationModel;
 
@@ -247,9 +247,9 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   @override
   ImprovisationType get type;
   @override
-  String? get category;
+  String get category;
   @override
-  String? get theme;
+  String get theme;
   @override
   Duration get duration;
   @override

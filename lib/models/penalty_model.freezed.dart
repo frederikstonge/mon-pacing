@@ -21,7 +21,7 @@ PenaltyModel _$PenaltyModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PenaltyModel {
   bool get major => throw _privateConstructorUsedError;
-  String? get player => throw _privateConstructorUsedError;
+  String get player => throw _privateConstructorUsedError;
   int get teamId => throw _privateConstructorUsedError;
   int get improvisationId => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $PenaltyModelCopyWith<$Res> {
   factory $PenaltyModelCopyWith(
           PenaltyModel value, $Res Function(PenaltyModel) then) =
       _$PenaltyModelCopyWithImpl<$Res>;
-  $Res call({bool major, String? player, int teamId, int improvisationId});
+  $Res call({bool major, String player, int teamId, int improvisationId});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$PenaltyModelCopyWithImpl<$Res> implements $PenaltyModelCopyWith<$Res> {
       player: player == freezed
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       teamId: teamId == freezed
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
@@ -82,7 +82,7 @@ abstract class _$$_PenaltyModelCopyWith<$Res>
           _$_PenaltyModel value, $Res Function(_$_PenaltyModel) then) =
       __$$_PenaltyModelCopyWithImpl<$Res>;
   @override
-  $Res call({bool major, String? player, int teamId, int improvisationId});
+  $Res call({bool major, String player, int teamId, int improvisationId});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$_PenaltyModelCopyWithImpl<$Res>
       player: player == freezed
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       teamId: teamId == freezed
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
@@ -139,7 +139,7 @@ class _$_PenaltyModel implements _PenaltyModel {
   @override
   final bool major;
   @override
-  final String? player;
+  final String player;
   @override
   final int teamId;
   @override
@@ -187,7 +187,7 @@ class _$_PenaltyModel implements _PenaltyModel {
 abstract class _PenaltyModel implements PenaltyModel {
   const factory _PenaltyModel(
       {required final bool major,
-      required final String? player,
+      required final String player,
       required final int teamId,
       required final int improvisationId}) = _$_PenaltyModel;
 
@@ -197,7 +197,7 @@ abstract class _PenaltyModel implements PenaltyModel {
   @override
   bool get major;
   @override
-  String? get player;
+  String get player;
   @override
   int get teamId;
   @override

@@ -9,7 +9,7 @@ part of 'penalty_model.dart';
 _$_PenaltyModel _$$_PenaltyModelFromJson(Map<String, dynamic> json) =>
     _$_PenaltyModel(
       major: json['major'] as bool,
-      player: json['player'] as String?,
+      player: json['player'] as String,
       teamId: json['teamId'] as int,
       improvisationId: json['improvisationId'] as int,
     );
