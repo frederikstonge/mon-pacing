@@ -29,9 +29,9 @@ class PacingCubit extends Cubit<PacingModel> {
   }
 
   void addImprovisation() {
-    var entity = state.copyWith();
-    var nextOrder = entity.improvisations.isNotEmpty ? entity.improvisations.map((e) => e.order).reduce(max) + 1 : 0;
-    var nextType = ImprovisationType.values[entity.improvisations.length % 2];
+    var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
+    var nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
+    var nextType = ImprovisationType.values[improvisations.length % 2];
 
     var newImprovisation = ImprovisationModel(
       order: nextOrder,
@@ -42,7 +42,7 @@ class PacingCubit extends Cubit<PacingModel> {
       theme: null,
     );
 
-    entity.improvisations.add(newImprovisation);
+    improvisations.add(newImprovisation);
     controllers.add(
       [
         TextEditingController(text: newImprovisation.category ?? ""),
@@ -51,7 +51,7 @@ class PacingCubit extends Cubit<PacingModel> {
       ],
     );
 
-    emit(entity);
+    emit(state.copyWith(improvisations: improvisations));
   }
 
   void moveImprovisation(int oldOrder, int newOrder) {
