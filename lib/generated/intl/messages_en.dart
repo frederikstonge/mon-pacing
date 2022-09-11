@@ -34,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m5(count) => "Improvisations: ${count}";
 
-  static String m6(min) => "Time: ${min} min";
+  static String m6(min) => "Total time: ${min} min";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -93,6 +93,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsView_ThemeTitle":
             MessageLookupByLibrary.simpleMessage("Select theme color"),
+        "Settings_View_EnablePaddingDurationDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Extra time to add for each improvisation in the total"),
         "WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to go back? You will lose all unsaved changes."),
         "WillPopDialog_Title": MessageLookupByLibrary.simpleMessage("Changes")

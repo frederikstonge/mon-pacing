@@ -303,10 +303,10 @@ class S {
     );
   }
 
-  /// `Time: {min} min`
+  /// `Total time: {min} min`
   String PacingView_TotalTime(Object min) {
     return Intl.message(
-      'Time: $min min',
+      'Total time: $min min',
       name: 'PacingView_TotalTime',
       desc: '',
       args: [min],
@@ -408,6 +408,16 @@ class S {
     return Intl.message(
       'Select theme color',
       name: 'SettingsView_ThemeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra time to add for each improvisation in the total`
+  String get Settings_View_EnablePaddingDurationDescription {
+    return Intl.message(
+      'Extra time to add for each improvisation in the total',
+      name: 'Settings_View_EnablePaddingDurationDescription',
       desc: '',
       args: [],
     );

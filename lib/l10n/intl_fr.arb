@@ -23,7 +23,7 @@
   "PacingView_NewPacing": "Nouveau Pacing",
   "PacingView_Save": "Sauvegarder",
   "PacingView_TotalImprovisations": "Improvisations: {count}",
-  "PacingView_TotalTime": "Temps: {min} min",
+  "PacingView_TotalTime": "Temps total: {min} min",
   "PacingsPage_Title": "Pacings",
   "SettingsPage_Title": "Paramètres",
   "SettingsView_EnablePaddingDuration": "Activer la durée tampon",
@@ -34,6 +34,7 @@
   "SettingsView_Section_Application": "Application",
   "SettingsView_Section_Pacings": "Pacings",
   "SettingsView_ThemeTitle": "Choisir la couleur du thème",
+  "Settings_View_EnablePaddingDurationDescription": "Temps d'extra à ajouter pour chaque improvisation dans le total",
   "WillPopDialog_Content": "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés.",
   "WillPopDialog_Title": "Changements"
 }

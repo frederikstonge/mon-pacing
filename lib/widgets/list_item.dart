@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../generated/l10n.dart';
-import '../models/match_model.dart';
 import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
+import '../dialogs/message_dialog.dart';
+import '../generated/l10n.dart';
+import '../models/match_model.dart';
 import '../models/base_model.dart';
 import '../models/pacing_model.dart';
 import '../pages/match_page.dart';
@@ -62,7 +63,9 @@ class ListItem extends StatelessWidget {
             if (entity is PacingModel)
               IconButton(
                 icon: const Icon(Icons.play_arrow),
-                onPressed: () {},
+                onPressed: () {
+                  MessageDialog.showMessageDialog(context, "Not implemented", "Matches are not yet implemented.");
+                },
               ),
           ],
         ),

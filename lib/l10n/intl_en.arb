@@ -23,7 +23,7 @@
   "PacingView_NewPacing": "New Pacing",
   "PacingView_Save": "Save",
   "PacingView_TotalImprovisations": "Improvisations: {count}",
-  "PacingView_TotalTime": "Time: {min} min",
+  "PacingView_TotalTime": "Total time: {min} min",
   "PacingsPage_Title": "Pacings",
   "SettingsPage_Title": "Settings",
   "SettingsView_EnablePaddingDuration": "Enable padding duration",
@@ -34,6 +34,7 @@
   "SettingsView_Section_Application": "Application",
   "SettingsView_Section_Pacings": "Pacings",
   "SettingsView_ThemeTitle": "Select theme color",
+  "Settings_View_EnablePaddingDurationDescription": "Extra time to add for each improvisation in the total",
   "WillPopDialog_Content": "Are you sure you want to go back? You will lose all unsaved changes.",
   "WillPopDialog_Title": "Changes"
 }

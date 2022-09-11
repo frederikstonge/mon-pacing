@@ -79,6 +79,7 @@ class SettingsView extends StatelessWidget {
                       initialValue: state.enablePaddingDuration,
                       onToggle: (value) async => await context.read<SettingsCubit>().edit(state.copyWith(enablePaddingDuration: value)),
                       title: Text(S.of(context).SettingsView_EnablePaddingDuration),
+                      description: Text(S.of(context).Settings_View_EnablePaddingDurationDescription),
                     ),
                     SettingsTile(
                       title: Text(S.of(context).SettingsView_PaddingDuration),
