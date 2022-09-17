@@ -108,7 +108,16 @@ class PacingView extends StatelessWidget {
                         child: BlocBuilder<PacingCubit, PacingModel>(
                           builder: (pacingContext, pacingState) => BlocBuilder<SettingsCubit, SettingsModel>(
                             builder: (settingsContext, settingsState) {
-                              var totalDuration = pacingState.improvisations.fold(Duration.zero, (Duration p, v) => p + v.duration);
+                              var totalDuration = pacingState.improvisations.fold(
+                                Duration.zero,
+                                (d, i) {
+                                  if (i.type == ImprovisationType.mixed) {
+                                    return d + i.duration;
+                                  } else {
+                                    return d + (i.duration * 2);
+                                  }
+                                },
+                              );
 
                               if (settingsState.enablePaddingDuration) {
                                 totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations.length));
