@@ -24,17 +24,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(modifiedDate) => "Modified on ${modifiedDate}";
 
-  static String m2(minutes, seconds) => "${minutes} min ${seconds} sec";
+  static String m2(type, category, theme, performers, duration) =>
+      "${type} | ${category} | ${theme} | ${performers} | ${duration}";
 
-  static String m3(type, category, theme, performers, durationMinutes,
-          durationSeconds) =>
-      "${type} | ${category} | ${theme} | ${performers} | ${durationMinutes} min ${durationSeconds} sec";
+  static String m3(order) => "Improvisation #${order}";
 
-  static String m4(order) => "Improvisation #${order}";
+  static String m4(duration) => "Total time: ${duration}";
 
   static String m5(count) => "Improvisations: ${count}";
-
-  static String m6(min) => "Total time: ${min} min";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -52,7 +49,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Add Improvisation"),
         "PacingView_ImprovisationCategory":
             MessageLookupByLibrary.simpleMessage("Category"),
-        "PacingView_ImprovisationDuration": m2,
         "PacingView_ImprovisationDurationHint":
             MessageLookupByLibrary.simpleMessage("Duration"),
         "PacingView_ImprovisationDurationMinutes":
@@ -63,18 +59,18 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select duration"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("# of participant"),
-        "PacingView_ImprovisationSubtitle": m3,
+        "PacingView_ImprovisationSubtitle": m2,
         "PacingView_ImprovisationTheme":
             MessageLookupByLibrary.simpleMessage("Theme"),
-        "PacingView_ImprovisationTitle": m4,
+        "PacingView_ImprovisationTitle": m3,
         "PacingView_ImprovisationType":
             MessageLookupByLibrary.simpleMessage("Type"),
         "PacingView_Name": MessageLookupByLibrary.simpleMessage("Name"),
         "PacingView_NewPacing":
             MessageLookupByLibrary.simpleMessage("New Pacing"),
         "PacingView_Save": MessageLookupByLibrary.simpleMessage("Save"),
+        "PacingView_TotalDuration": m4,
         "PacingView_TotalImprovisations": m5,
-        "PacingView_TotalTime": m6,
         "PacingsPage_Title": MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsPage_Title": MessageLookupByLibrary.simpleMessage("Settings"),
         "SettingsView_EnablePaddingDuration":

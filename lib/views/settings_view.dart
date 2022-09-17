@@ -6,6 +6,7 @@ import 'package:settings_ui/settings_ui.dart';
 
 import '../cubits/settings_cubit.dart';
 import '../generated/l10n.dart';
+import '../helpers/duration_helper.dart';
 import '../models/settings_model.dart';
 
 class SettingsView extends StatelessWidget {
@@ -83,7 +84,7 @@ class SettingsView extends StatelessWidget {
                     ),
                     SettingsTile(
                       title: Text(S.of(context).SettingsView_PaddingDuration),
-                      value: Text(S.of(context).PacingView_TotalTime(state.paddingDuration.inSeconds / 60.0)),
+                      value: Text(getDurationString(state.paddingDuration)),
                       onPressed: (context) {
                         Picker(
                           adapter: NumberPickerAdapter(data: <NumberPickerColumn>[

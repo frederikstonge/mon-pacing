@@ -6,6 +6,7 @@ import '../cubits/pacings_cubit.dart';
 import '../cubits/settings_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
 import '../generated/l10n.dart';
+import '../helpers/duration_helper.dart';
 import '../models/improvisation_type.dart';
 import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
@@ -123,9 +124,8 @@ class PacingView extends StatelessWidget {
                                 totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations.length));
                               }
 
-                              var totalDurationInSeconds = totalDuration.inSeconds / 60.0;
                               return Text(
-                                S.of(context).PacingView_TotalTime(totalDurationInSeconds),
+                                S.of(context).PacingView_TotalDuration(getDurationString(totalDuration)),
                                 style: TextStyle(color: foregroundColor),
                                 textAlign: TextAlign.end,
                               );
@@ -151,8 +151,7 @@ class PacingView extends StatelessWidget {
                         item.category.isNotEmpty ? item.category : '-',
                         item.theme.isNotEmpty ? item.theme : '-',
                         item.performers ?? '-',
-                        item.duration.inMinutes,
-                        item.duration.inSeconds % 60,
+                        getDurationString(item.duration),
                       );
 
                   var controllers = context.read<PacingCubit>().controllers[index];
@@ -237,11 +236,7 @@ class PacingView extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           readOnly: true,
-                          controller: TextEditingController(
-                              text: S.of(context).PacingView_ImprovisationDuration(
-                                    item.duration.inMinutes,
-                                    item.duration.inSeconds % 60,
-                                  )),
+                          controller: TextEditingController(text: getDurationString(item.duration)),
                           onTap: () async {
                             Picker(
                               adapter: NumberPickerAdapter(data: <NumberPickerColumn>[

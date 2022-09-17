@@ -150,16 +150,6 @@ class S {
     );
   }
 
-  /// `{minutes} min {seconds} sec`
-  String PacingView_ImprovisationDuration(Object minutes, Object seconds) {
-    return Intl.message(
-      '$minutes min $seconds sec',
-      name: 'PacingView_ImprovisationDuration',
-      desc: '',
-      args: [minutes, seconds],
-    );
-  }
-
   /// `Duration`
   String get PacingView_ImprovisationDurationHint {
     return Intl.message(
@@ -210,26 +200,14 @@ class S {
     );
   }
 
-  /// `{type} | {category} | {theme} | {performers} | {durationMinutes} min {durationSeconds} sec`
-  String PacingView_ImprovisationSubtitle(
-      Object type,
-      Object category,
-      Object theme,
-      Object performers,
-      Object durationMinutes,
-      Object durationSeconds) {
+  /// `{type} | {category} | {theme} | {performers} | {duration}`
+  String PacingView_ImprovisationSubtitle(Object type, Object category,
+      Object theme, Object performers, Object duration) {
     return Intl.message(
-      '$type | $category | $theme | $performers | $durationMinutes min $durationSeconds sec',
+      '$type | $category | $theme | $performers | $duration',
       name: 'PacingView_ImprovisationSubtitle',
       desc: '',
-      args: [
-        type,
-        category,
-        theme,
-        performers,
-        durationMinutes,
-        durationSeconds
-      ],
+      args: [type, category, theme, performers, duration],
     );
   }
 
@@ -293,6 +271,16 @@ class S {
     );
   }
 
+  /// `Total time: {duration}`
+  String PacingView_TotalDuration(Object duration) {
+    return Intl.message(
+      'Total time: $duration',
+      name: 'PacingView_TotalDuration',
+      desc: '',
+      args: [duration],
+    );
+  }
+
   /// `Improvisations: {count}`
   String PacingView_TotalImprovisations(Object count) {
     return Intl.message(
@@ -300,16 +288,6 @@ class S {
       name: 'PacingView_TotalImprovisations',
       desc: '',
       args: [count],
-    );
-  }
-
-  /// `Total time: {min} min`
-  String PacingView_TotalTime(Object min) {
-    return Intl.message(
-      'Total time: $min min',
-      name: 'PacingView_TotalTime',
-      desc: '',
-      args: [min],
     );
   }
 
