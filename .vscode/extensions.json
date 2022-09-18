@@ -3,6 +3,7 @@
         "dart-code.flutter",
         "dart-code.dart-code",
         "localizely.flutter-intl",
-        "innwin.i18n-arb-editor"
+        "innwin.i18n-arb-editor",
+        "kaiqun.build-runner"
     ]
 }
