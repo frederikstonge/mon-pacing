@@ -11,4 +11,6 @@ abstract class IBottomNavPage extends Widget {
   final Icon icon;
 
   FloatingActionButton? getFloatingActionButton(BuildContext context);
+
+  List<Widget>? getActions(BuildContext context);
 }

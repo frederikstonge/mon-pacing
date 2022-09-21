@@ -157,7 +157,7 @@ class PacingView extends StatelessWidget {
                   var controllers = context.read<PacingCubit>().controllers[index];
                   return ExpansionTileCard(
                     key: ValueKey("$index of ${state.improvisations.length}"),
-                    leading: ReorderableDelayedDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
+                    leading: ReorderableDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
                     title: Text(title),
                     subtitle: Text(subTitle),
                     children: [

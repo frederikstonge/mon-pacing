@@ -110,11 +110,21 @@ class S {
     );
   }
 
+  /// `File exported {filePath}/{fileName}`
+  String ListItem_ExportSuccess(Object filePath, Object fileName) {
+    return Intl.message(
+      'File exported $filePath/$fileName',
+      name: 'ListItem_ExportSuccess',
+      desc: '',
+      args: [filePath, fileName],
+    );
+  }
+
   /// `Modified on {modifiedDate}`
-  String ListTile_Modified(Object modifiedDate) {
+  String ListItem_Modified(Object modifiedDate) {
     return Intl.message(
       'Modified on $modifiedDate',
-      name: 'ListTile_Modified',
+      name: 'ListItem_Modified',
       desc: '',
       args: [modifiedDate],
     );
@@ -288,6 +298,36 @@ class S {
       name: 'PacingView_TotalImprovisations',
       desc: '',
       args: [count],
+    );
+  }
+
+  /// `Add pacing`
+  String get PacingsPage_AddPacingTooltip {
+    return Intl.message(
+      'Add pacing',
+      name: 'PacingsPage_AddPacingTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while importing the pacing`
+  String get PacingsPage_ImportError {
+    return Intl.message(
+      'An error occurred while importing the pacing',
+      name: 'PacingsPage_ImportError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import`
+  String get PacingsPage_ImportTooltip {
+    return Intl.message(
+      'Import',
+      name: 'PacingsPage_ImportTooltip',
+      desc: '',
+      args: [],
     );
   }
 

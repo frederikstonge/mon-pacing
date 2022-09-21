@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
 import '../cubits/matches_cubit.dart';
@@ -23,7 +27,7 @@ class ListItem extends StatelessWidget {
       elevation: 2,
       child: ListTile(
         title: Text(entity.name),
-        subtitle: Text(S.of(context).ListTile_Modified(DateFormat.yMd().add_jm().format(entity.modifiedDate!))),
+        subtitle: Text(S.of(context).ListItem_Modified(DateFormat.yMd().add_jm().format(entity.modifiedDate!))),
         onTap: () {
           if (entity is PacingModel) {
             var model = entity as PacingModel;
@@ -60,6 +64,22 @@ class ListItem extends StatelessWidget {
                 });
               },
             ),
+            if (entity is PacingModel)
+              IconButton(
+                icon: const Icon(Icons.upload),
+                onPressed: () async {
+                  var localizer = S.of(context);
+                  var messenger = ScaffoldMessenger.of(context);
+                  var model = entity as PacingModel;
+                  var data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+                  var fileName = "${model.name}.json";
+                  var params = SaveFileDialogParams(data: data, fileName: fileName);
+                  final filePath = await FlutterFileDialog.saveFile(params: params);
+                  if (filePath != null) {
+                    messenger.showSnackBar(SnackBar(content: Text(localizer.ListItem_ExportSuccess(filePath, fileName))));
+                  }
+                },
+              ),
             if (entity is PacingModel)
               IconButton(
                 icon: const Icon(Icons.play_arrow),

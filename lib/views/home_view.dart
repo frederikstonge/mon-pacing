@@ -17,6 +17,7 @@ class HomeView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(pages.elementAt(state).title),
+            actions: pages.elementAt(state).getActions(context),
           ),
           body: PageView(
             controller: pageController,

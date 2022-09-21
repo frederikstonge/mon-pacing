@@ -22,16 +22,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(itemName) => "Are you sure you want to delete ${itemName}?";
 
-  static String m1(modifiedDate) => "Modified on ${modifiedDate}";
+  static String m1(filePath, fileName) =>
+      "File exported ${filePath}/${fileName}";
 
-  static String m2(type, category, theme, performers, duration) =>
+  static String m2(modifiedDate) => "Modified on ${modifiedDate}";
+
+  static String m3(type, category, theme, performers, duration) =>
       "${type} | ${category} | ${theme} | ${performers} | ${duration}";
 
-  static String m3(order) => "Improvisation #${order}";
+  static String m4(order) => "Improvisation #${order}";
 
-  static String m4(duration) => "Total time: ${duration}";
+  static String m5(duration) => "Total time: ${duration}";
 
-  static String m5(count) => "Improvisations: ${count}";
+  static String m6(count) => "Improvisations: ${count}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -43,7 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Compared"),
         "ImprovisationType_mixed":
             MessageLookupByLibrary.simpleMessage("Mixed"),
-        "ListTile_Modified": m1,
+        "ListItem_ExportSuccess": m1,
+        "ListItem_Modified": m2,
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matches"),
         "PacingView_AddImprovisation":
             MessageLookupByLibrary.simpleMessage("Add Improvisation"),
@@ -59,18 +63,24 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select duration"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("# of participant"),
-        "PacingView_ImprovisationSubtitle": m2,
+        "PacingView_ImprovisationSubtitle": m3,
         "PacingView_ImprovisationTheme":
             MessageLookupByLibrary.simpleMessage("Theme"),
-        "PacingView_ImprovisationTitle": m3,
+        "PacingView_ImprovisationTitle": m4,
         "PacingView_ImprovisationType":
             MessageLookupByLibrary.simpleMessage("Type"),
         "PacingView_Name": MessageLookupByLibrary.simpleMessage("Name"),
         "PacingView_NewPacing":
             MessageLookupByLibrary.simpleMessage("New Pacing"),
         "PacingView_Save": MessageLookupByLibrary.simpleMessage("Save"),
-        "PacingView_TotalDuration": m4,
-        "PacingView_TotalImprovisations": m5,
+        "PacingView_TotalDuration": m5,
+        "PacingView_TotalImprovisations": m6,
+        "PacingsPage_AddPacingTooltip":
+            MessageLookupByLibrary.simpleMessage("Add pacing"),
+        "PacingsPage_ImportError": MessageLookupByLibrary.simpleMessage(
+            "An error occurred while importing the pacing"),
+        "PacingsPage_ImportTooltip":
+            MessageLookupByLibrary.simpleMessage("Import"),
         "PacingsPage_Title": MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsPage_Title": MessageLookupByLibrary.simpleMessage("Settings"),
         "SettingsView_EnablePaddingDuration":

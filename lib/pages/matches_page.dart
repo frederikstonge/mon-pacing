@@ -17,6 +17,9 @@ class MatchesPage extends StatelessWidget implements IBottomNavPage {
   FloatingActionButton? getFloatingActionButton(BuildContext context) => null;
 
   @override
+  List<Widget>? getActions(BuildContext context) => null;
+
+  @override
   Widget build(BuildContext context) {
     return MatchesView();
   }
