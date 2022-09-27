@@ -85,6 +85,7 @@ class MatchesRepository extends BaseRepository<MatchModel> {
     newValues.update("improvisations", (value) => jsonDecode(value));
     newValues.update("teams", (value) => jsonDecode(value));
     newValues.update("penalties", (value) => jsonDecode(value));
+    newValues.update("points", (value) => jsonDecode(value));
     return MatchModel.fromJson(newValues);
   }
 
@@ -93,6 +94,7 @@ class MatchesRepository extends BaseRepository<MatchModel> {
     items["improvisations"] = jsonEncode(items["improvisations"]);
     items["teams"] = jsonEncode(items["teams"]);
     items["penalties"] = jsonEncode(items["penalties"]);
+    items["points"] = jsonEncode(items["points"]);
     return items;
   }
 }

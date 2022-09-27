@@ -25,9 +25,10 @@ mixin _$MatchModel {
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
   List<TeamModel> get teams => throw _privateConstructorUsedError;
-  List<MatchImprovisationModel> get improvisations =>
+  List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
   List<PenaltyModel> get penalties => throw _privateConstructorUsedError;
+  List<PointModel> get points => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,8 +47,9 @@ abstract class $MatchModelCopyWith<$Res> {
       DateTime? createdDate,
       DateTime? modifiedDate,
       List<TeamModel> teams,
-      List<MatchImprovisationModel> improvisations,
-      List<PenaltyModel> penalties});
+      List<ImprovisationModel> improvisations,
+      List<PenaltyModel> penalties,
+      List<PointModel> points});
 }
 
 /// @nodoc
@@ -67,6 +69,7 @@ class _$MatchModelCopyWithImpl<$Res> implements $MatchModelCopyWith<$Res> {
     Object? teams = freezed,
     Object? improvisations = freezed,
     Object? penalties = freezed,
+    Object? points = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -92,11 +95,15 @@ class _$MatchModelCopyWithImpl<$Res> implements $MatchModelCopyWith<$Res> {
       improvisations: improvisations == freezed
           ? _value.improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
-              as List<MatchImprovisationModel>,
+              as List<ImprovisationModel>,
       penalties: penalties == freezed
           ? _value.penalties
           : penalties // ignore: cast_nullable_to_non_nullable
               as List<PenaltyModel>,
+      points: points == freezed
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as List<PointModel>,
     ));
   }
 }
@@ -114,8 +121,9 @@ abstract class _$$_MatchModelCopyWith<$Res>
       DateTime? createdDate,
       DateTime? modifiedDate,
       List<TeamModel> teams,
-      List<MatchImprovisationModel> improvisations,
-      List<PenaltyModel> penalties});
+      List<ImprovisationModel> improvisations,
+      List<PenaltyModel> penalties,
+      List<PointModel> points});
 }
 
 /// @nodoc
@@ -137,6 +145,7 @@ class __$$_MatchModelCopyWithImpl<$Res> extends _$MatchModelCopyWithImpl<$Res>
     Object? teams = freezed,
     Object? improvisations = freezed,
     Object? penalties = freezed,
+    Object? points = freezed,
   }) {
     return _then(_$_MatchModel(
       id: id == freezed
@@ -162,11 +171,15 @@ class __$$_MatchModelCopyWithImpl<$Res> extends _$MatchModelCopyWithImpl<$Res>
       improvisations: improvisations == freezed
           ? _value._improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
-              as List<MatchImprovisationModel>,
+              as List<ImprovisationModel>,
       penalties: penalties == freezed
           ? _value._penalties
           : penalties // ignore: cast_nullable_to_non_nullable
               as List<PenaltyModel>,
+      points: points == freezed
+          ? _value._points
+          : points // ignore: cast_nullable_to_non_nullable
+              as List<PointModel>,
     ));
   }
 }
@@ -180,11 +193,13 @@ class _$_MatchModel implements _MatchModel {
       required this.createdDate,
       required this.modifiedDate,
       required final List<TeamModel> teams,
-      required final List<MatchImprovisationModel> improvisations,
-      required final List<PenaltyModel> penalties})
+      required final List<ImprovisationModel> improvisations,
+      required final List<PenaltyModel> penalties,
+      required final List<PointModel> points})
       : _teams = teams,
         _improvisations = improvisations,
-        _penalties = penalties;
+        _penalties = penalties,
+        _points = points;
 
   factory _$_MatchModel.fromJson(Map<String, dynamic> json) =>
       _$$_MatchModelFromJson(json);
@@ -204,9 +219,9 @@ class _$_MatchModel implements _MatchModel {
     return EqualUnmodifiableListView(_teams);
   }
 
-  final List<MatchImprovisationModel> _improvisations;
+  final List<ImprovisationModel> _improvisations;
   @override
-  List<MatchImprovisationModel> get improvisations {
+  List<ImprovisationModel> get improvisations {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_improvisations);
   }
@@ -218,9 +233,16 @@ class _$_MatchModel implements _MatchModel {
     return EqualUnmodifiableListView(_penalties);
   }
 
+  final List<PointModel> _points;
+  @override
+  List<PointModel> get points {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_points);
+  }
+
   @override
   String toString() {
-    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties)';
+    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points)';
   }
 
   @override
@@ -238,7 +260,8 @@ class _$_MatchModel implements _MatchModel {
             const DeepCollectionEquality()
                 .equals(other._improvisations, _improvisations) &&
             const DeepCollectionEquality()
-                .equals(other._penalties, _penalties));
+                .equals(other._penalties, _penalties) &&
+            const DeepCollectionEquality().equals(other._points, _points));
   }
 
   @JsonKey(ignore: true)
@@ -251,7 +274,8 @@ class _$_MatchModel implements _MatchModel {
       const DeepCollectionEquality().hash(modifiedDate),
       const DeepCollectionEquality().hash(_teams),
       const DeepCollectionEquality().hash(_improvisations),
-      const DeepCollectionEquality().hash(_penalties));
+      const DeepCollectionEquality().hash(_penalties),
+      const DeepCollectionEquality().hash(_points));
 
   @JsonKey(ignore: true)
   @override
@@ -273,8 +297,9 @@ abstract class _MatchModel implements MatchModel, BaseModel {
       required final DateTime? createdDate,
       required final DateTime? modifiedDate,
       required final List<TeamModel> teams,
-      required final List<MatchImprovisationModel> improvisations,
-      required final List<PenaltyModel> penalties}) = _$_MatchModel;
+      required final List<ImprovisationModel> improvisations,
+      required final List<PenaltyModel> penalties,
+      required final List<PointModel> points}) = _$_MatchModel;
 
   factory _MatchModel.fromJson(Map<String, dynamic> json) =
       _$_MatchModel.fromJson;
@@ -290,9 +315,11 @@ abstract class _MatchModel implements MatchModel, BaseModel {
   @override
   List<TeamModel> get teams;
   @override
-  List<MatchImprovisationModel> get improvisations;
+  List<ImprovisationModel> get improvisations;
   @override
   List<PenaltyModel> get penalties;
+  @override
+  List<PointModel> get points;
   @override
   @JsonKey(ignore: true)
   _$$_MatchModelCopyWith<_$_MatchModel> get copyWith =>

@@ -13,9 +13,9 @@ class PacingsCubit extends Cubit<PacingsState?> {
 
   bool get isFetching => _isFetching;
 
-  Future add(PacingModel model) async {
+  Future<PacingModel> add(PacingModel model) async {
     try {
-      await repository.add(model);
+      return await repository.add(model);
     } finally {
       await refresh();
     }

@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
+import '../cubits/home_cubit.dart';
 import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
-import '../dialogs/message_dialog.dart';
 import '../generated/l10n.dart';
 import '../models/match_model.dart';
 import '../models/base_model.dart';
@@ -83,8 +83,26 @@ class ListItem extends StatelessWidget {
             if (entity is PacingModel)
               IconButton(
                 icon: const Icon(Icons.play_arrow),
-                onPressed: () {
-                  MessageDialog.showMessageDialog(context, "Not implemented", "Matches are not yet implemented.");
+                onPressed: () async {
+                  var navigator = Navigator.of(context);
+                  var homeCubit = context.read<HomeCubit>();
+                  var model = entity as PacingModel;
+                  var matchModel = await context.read<MatchesCubit>().add(MatchModel(
+                        createdDate: null,
+                        modifiedDate: null,
+                        id: null,
+                        name: model.name,
+                        improvisations: model.copyWith().improvisations,
+                        penalties: [],
+                        teams: [],
+                        points: [],
+                      ));
+                  homeCubit.setPage(1);
+                  navigator.push(
+                    MaterialPageRoute(
+                      builder: ((context) => MatchPage(model: matchModel)),
+                    ),
+                  );
                 },
               ),
           ],

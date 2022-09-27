@@ -13,9 +13,9 @@ class MatchesCubit extends Cubit<MatchesState?> {
 
   bool get isFetching => _isFetching;
 
-  Future add(MatchModel model) async {
+  Future<MatchModel> add(MatchModel model) async {
     try {
-      await repository.add(model);
+      return await repository.add(model);
     } finally {
       await refresh();
     }

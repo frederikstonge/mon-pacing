@@ -20,11 +20,13 @@ _$_MatchModel _$$_MatchModelFromJson(Map<String, dynamic> json) =>
           .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       improvisations: (json['improvisations'] as List<dynamic>)
-          .map((e) =>
-              MatchImprovisationModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       penalties: (json['penalties'] as List<dynamic>)
           .map((e) => PenaltyModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      points: (json['points'] as List<dynamic>)
+          .map((e) => PointModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -37,4 +39,5 @@ Map<String, dynamic> _$$_MatchModelToJson(_$_MatchModel instance) =>
       'teams': instance.teams,
       'improvisations': instance.improvisations,
       'penalties': instance.penalties,
+      'points': instance.points,
     };

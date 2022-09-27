@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MatchCubit extends Cubit<int> {
-  MatchCubit() : super(0);
+import '../models/match_model.dart';
+
+class MatchCubit extends Cubit<MatchModel> {
+  MatchCubit({required MatchModel model}) : super(model);
 }

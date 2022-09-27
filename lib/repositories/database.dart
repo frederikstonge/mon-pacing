@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -10,6 +12,7 @@ const String modifiedDateField = "modifiedDate";
 const String improvisationsField = "improvisations";
 const String teamsField = "teams";
 const String penaltiesField = "penalties";
+const String pointsField = "points";
 
 Database? _database;
 
@@ -25,10 +28,10 @@ Future<Database> get database async {
 Future<Database> _getDatabase() async {
   var path = await getDatabasesPath();
 
-  // var file = File('$path/mon_pacing.db');
-  // if (await file.exists()) {
-  //   await file.delete(recursive: true);
-  // }
+  var file = File('$path/mon_pacing.db');
+  if (await file.exists()) {
+    await file.delete(recursive: true);
+  }
 
   return await openDatabase(
     join(path, 'mon_pacing.db'),
@@ -69,6 +72,7 @@ Future<void> _onCreate(Database db, int version) async {
     $modifiedDateField text,
     $improvisationsField text,
     $teamsField text,
-    $penaltiesField text)
+    $penaltiesField text,
+    $pointsField text)
   ''');
 }
