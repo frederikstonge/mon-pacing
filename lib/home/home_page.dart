@@ -36,6 +36,8 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               _page = value;
             });
+
+            _pageController.jumpToPage(value);
           },
           currentIndex: _page,
           items: widget.pages.map((p) => BottomNavigationBarItem(icon: p.icon, label: p.title)).toList()),

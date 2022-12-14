@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'match_cubit.dart';
-import '../match_improvisations/match_improvisations_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
 import '../models/match_model.dart';
-import '../widgets/improvisation.dart';
+import 'improvisation.dart';
 import 'match_options_view.dart';
 import 'match_summary_view.dart';
 
-class MatchView extends StatelessWidget {
-  final PageController _pageController = PageController();
-  MatchView({Key? key}) : super(key: key);
+class MatchView extends StatefulWidget {
+  const MatchView({Key? key}) : super(key: key);
+
+  @override
+  State<MatchView> createState() => _MatchViewState();
+}
+
+class _MatchViewState extends State<MatchView> {
+  final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +24,7 @@ class MatchView extends StatelessWidget {
     if (matchCubit.state.teams.isEmpty) {
       Future.microtask(() => openMatchOptions(context, matchCubit));
     }
+
     return WillPopScope(
       onWillPop: () async {
         var result = await WillPopDialog.showWillPopDialog(context);
@@ -51,24 +57,9 @@ class MatchView extends StatelessWidget {
             ),
           ],
         ),
-        body: BlocListener<MatchImprovisationsCubit, int>(
-          listener: (context, state) {
-            _pageController.animateToPage(
-              state,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOutQuint,
-            );
-          },
-          listenWhen: (previous, current) {
-            return _pageController.page == _pageController.page?.toInt() && _pageController.page != current;
-          },
-          child: PageView(
-            controller: _pageController,
-            children: matchCubit.state.improvisations.map((e) => ImprovisationView(improvisation: e)).toList(),
-            onPageChanged: (value) {
-              context.read<MatchImprovisationsCubit>().setPage(value);
-            },
-          ),
+        body: PageView(
+          controller: _pageController,
+          children: matchCubit.state.improvisations.map((e) => ImprovisationView(improvisation: e)).toList(),
         ),
       ),
     );
