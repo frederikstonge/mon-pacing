@@ -1,19 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/match_model.dart';
-import '../repositories/matches_repository.dart';
-import '../states/matches_state.dart';
+import '../models/pacing_model.dart';
+import '../repositories/pacings_repository.dart';
+import 'pacings_state.dart';
 
-class MatchesCubit extends Cubit<MatchesState?> {
-  final MatchesRepository repository;
+class PacingsCubit extends Cubit<PacingsState?> {
+  final PacingsRepository repository;
   int _page = 1;
   bool _isFetching = false;
 
-  MatchesCubit({required this.repository}) : super(null);
+  PacingsCubit({required this.repository}) : super(null);
 
   bool get isFetching => _isFetching;
 
-  Future<MatchModel> add(MatchModel model) async {
+  Future<PacingModel> add(PacingModel model) async {
     try {
       return await repository.add(model);
     } finally {
@@ -21,7 +21,7 @@ class MatchesCubit extends Cubit<MatchesState?> {
     }
   }
 
-  Future edit(MatchModel model) async {
+  Future edit(PacingModel model) async {
     try {
       await repository.edit(model);
     } finally {
@@ -29,7 +29,7 @@ class MatchesCubit extends Cubit<MatchesState?> {
     }
   }
 
-  Future delete(MatchModel model) async {
+  Future delete(PacingModel model) async {
     try {
       await repository.delete(model.id!);
     } finally {
@@ -39,28 +39,28 @@ class MatchesCubit extends Cubit<MatchesState?> {
 
   Future fetch() async {
     _isFetching = true;
-    emit(const MatchesLoadingState());
+    emit(const PacingsLoadingState());
     try {
       final response = await repository.getList(_page);
-      emit(MatchesSuccessState(matches: response));
+      emit(PacingsSuccessState(pacings: response));
       _page++;
     } catch (exception) {
-      emit(MatchesErrorState(error: exception.toString()));
+      emit(PacingsErrorState(error: exception.toString()));
     }
     _isFetching = false;
   }
 
   Future refresh() async {
-    emit(const MatchesInitialState());
+    emit(const PacingsInitialState());
     _isFetching = true;
-    emit(const MatchesLoadingState());
+    emit(const PacingsLoadingState());
     try {
       _page = 1;
       final response = await repository.getList(_page);
-      emit(MatchesSuccessState(matches: response));
+      emit(PacingsSuccessState(pacings: response));
       _page++;
     } catch (exception) {
-      emit(MatchesErrorState(error: exception.toString()));
+      emit(PacingsErrorState(error: exception.toString()));
     }
     _isFetching = false;
   }

@@ -4,7 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../cubits/settings_cubit.dart';
+import 'settings_cubit.dart';
 import '../generated/l10n.dart';
 import '../helpers/duration_helper.dart';
 import '../models/settings_model.dart';

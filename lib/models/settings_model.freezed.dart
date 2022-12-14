@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'settings_model.dart';
 
@@ -35,7 +35,8 @@ mixin _$SettingsModel {
 abstract class $SettingsModelCopyWith<$Res> {
   factory $SettingsModelCopyWith(
           SettingsModel value, $Res Function(SettingsModel) then) =
-      _$SettingsModelCopyWithImpl<$Res>;
+      _$SettingsModelCopyWithImpl<$Res, SettingsModel>;
+  @useResult
   $Res call(
       {int color,
       bool enablePaddingDuration,
@@ -44,39 +45,41 @@ abstract class $SettingsModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SettingsModelCopyWithImpl<$Res>
+class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
     implements $SettingsModelCopyWith<$Res> {
   _$SettingsModelCopyWithImpl(this._value, this._then);
 
-  final SettingsModel _value;
   // ignore: unused_field
-  final $Res Function(SettingsModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? color = freezed,
-    Object? enablePaddingDuration = freezed,
-    Object? paddingDuration = freezed,
-    Object? language = freezed,
+    Object? color = null,
+    Object? enablePaddingDuration = null,
+    Object? paddingDuration = null,
+    Object? language = null,
   }) {
     return _then(_value.copyWith(
-      color: color == freezed
+      color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      enablePaddingDuration: enablePaddingDuration == freezed
+      enablePaddingDuration: null == enablePaddingDuration
           ? _value.enablePaddingDuration
           : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
               as bool,
-      paddingDuration: paddingDuration == freezed
+      paddingDuration: null == paddingDuration
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      language: language == freezed
+      language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -87,6 +90,7 @@ abstract class _$$_SettingsModelCopyWith<$Res>
           _$_SettingsModel value, $Res Function(_$_SettingsModel) then) =
       __$$_SettingsModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int color,
       bool enablePaddingDuration,
@@ -96,36 +100,34 @@ abstract class _$$_SettingsModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_SettingsModelCopyWithImpl<$Res>
-    extends _$SettingsModelCopyWithImpl<$Res>
+    extends _$SettingsModelCopyWithImpl<$Res, _$_SettingsModel>
     implements _$$_SettingsModelCopyWith<$Res> {
   __$$_SettingsModelCopyWithImpl(
       _$_SettingsModel _value, $Res Function(_$_SettingsModel) _then)
-      : super(_value, (v) => _then(v as _$_SettingsModel));
+      : super(_value, _then);
 
-  @override
-  _$_SettingsModel get _value => super._value as _$_SettingsModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? color = freezed,
-    Object? enablePaddingDuration = freezed,
-    Object? paddingDuration = freezed,
-    Object? language = freezed,
+    Object? color = null,
+    Object? enablePaddingDuration = null,
+    Object? paddingDuration = null,
+    Object? language = null,
   }) {
     return _then(_$_SettingsModel(
-      color: color == freezed
+      color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      enablePaddingDuration: enablePaddingDuration == freezed
+      enablePaddingDuration: null == enablePaddingDuration
           ? _value.enablePaddingDuration
           : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
               as bool,
-      paddingDuration: paddingDuration == freezed
+      paddingDuration: null == paddingDuration
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      language: language == freezed
+      language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String,
@@ -164,25 +166,23 @@ class _$_SettingsModel implements _SettingsModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SettingsModel &&
-            const DeepCollectionEquality().equals(other.color, color) &&
-            const DeepCollectionEquality()
-                .equals(other.enablePaddingDuration, enablePaddingDuration) &&
-            const DeepCollectionEquality()
-                .equals(other.paddingDuration, paddingDuration) &&
-            const DeepCollectionEquality().equals(other.language, language));
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.enablePaddingDuration, enablePaddingDuration) ||
+                other.enablePaddingDuration == enablePaddingDuration) &&
+            (identical(other.paddingDuration, paddingDuration) ||
+                other.paddingDuration == paddingDuration) &&
+            (identical(other.language, language) ||
+                other.language == language));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(color),
-      const DeepCollectionEquality().hash(enablePaddingDuration),
-      const DeepCollectionEquality().hash(paddingDuration),
-      const DeepCollectionEquality().hash(language));
+      runtimeType, color, enablePaddingDuration, paddingDuration, language);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SettingsModelCopyWith<_$_SettingsModel> get copyWith =>
       __$$_SettingsModelCopyWithImpl<_$_SettingsModel>(this, _$identity);
 

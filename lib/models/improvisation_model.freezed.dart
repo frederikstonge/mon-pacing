@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'improvisation_model.dart';
 
@@ -37,7 +37,8 @@ mixin _$ImprovisationModel {
 abstract class $ImprovisationModelCopyWith<$Res> {
   factory $ImprovisationModelCopyWith(
           ImprovisationModel value, $Res Function(ImprovisationModel) then) =
-      _$ImprovisationModelCopyWithImpl<$Res>;
+      _$ImprovisationModelCopyWithImpl<$Res, ImprovisationModel>;
+  @useResult
   $Res call(
       {int order,
       ImprovisationType type,
@@ -48,49 +49,51 @@ abstract class $ImprovisationModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ImprovisationModelCopyWithImpl<$Res>
+class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
     implements $ImprovisationModelCopyWith<$Res> {
   _$ImprovisationModelCopyWithImpl(this._value, this._then);
 
-  final ImprovisationModel _value;
   // ignore: unused_field
-  final $Res Function(ImprovisationModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? order = freezed,
-    Object? type = freezed,
-    Object? category = freezed,
-    Object? theme = freezed,
-    Object? duration = freezed,
+    Object? order = null,
+    Object? type = null,
+    Object? category = null,
+    Object? theme = null,
+    Object? duration = null,
     Object? performers = freezed,
   }) {
     return _then(_value.copyWith(
-      order: order == freezed
+      order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
               as int,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ImprovisationType,
-      category: category == freezed
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
-      theme: theme == freezed
+      theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as String,
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      performers: performers == freezed
+      performers: freezed == performers
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -101,6 +104,7 @@ abstract class _$$_ImprovisationModelCopyWith<$Res>
           $Res Function(_$_ImprovisationModel) then) =
       __$$_ImprovisationModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int order,
       ImprovisationType type,
@@ -112,46 +116,44 @@ abstract class _$$_ImprovisationModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_ImprovisationModelCopyWithImpl<$Res>
-    extends _$ImprovisationModelCopyWithImpl<$Res>
+    extends _$ImprovisationModelCopyWithImpl<$Res, _$_ImprovisationModel>
     implements _$$_ImprovisationModelCopyWith<$Res> {
   __$$_ImprovisationModelCopyWithImpl(
       _$_ImprovisationModel _value, $Res Function(_$_ImprovisationModel) _then)
-      : super(_value, (v) => _then(v as _$_ImprovisationModel));
+      : super(_value, _then);
 
-  @override
-  _$_ImprovisationModel get _value => super._value as _$_ImprovisationModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? order = freezed,
-    Object? type = freezed,
-    Object? category = freezed,
-    Object? theme = freezed,
-    Object? duration = freezed,
+    Object? order = null,
+    Object? type = null,
+    Object? category = null,
+    Object? theme = null,
+    Object? duration = null,
     Object? performers = freezed,
   }) {
     return _then(_$_ImprovisationModel(
-      order: order == freezed
+      order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
               as int,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ImprovisationType,
-      category: category == freezed
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
-      theme: theme == freezed
+      theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as String,
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      performers: performers == freezed
+      performers: freezed == performers
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -196,28 +198,25 @@ class _$_ImprovisationModel implements _ImprovisationModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ImprovisationModel &&
-            const DeepCollectionEquality().equals(other.order, order) &&
-            const DeepCollectionEquality().equals(other.type, type) &&
-            const DeepCollectionEquality().equals(other.category, category) &&
-            const DeepCollectionEquality().equals(other.theme, theme) &&
-            const DeepCollectionEquality().equals(other.duration, duration) &&
-            const DeepCollectionEquality()
-                .equals(other.performers, performers));
+            (identical(other.order, order) || other.order == order) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.theme, theme) || other.theme == theme) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.performers, performers) ||
+                other.performers == performers));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(order),
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(category),
-      const DeepCollectionEquality().hash(theme),
-      const DeepCollectionEquality().hash(duration),
-      const DeepCollectionEquality().hash(performers));
+      runtimeType, order, type, category, theme, duration, performers);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ImprovisationModelCopyWith<_$_ImprovisationModel> get copyWith =>
       __$$_ImprovisationModelCopyWithImpl<_$_ImprovisationModel>(
           this, _$identity);

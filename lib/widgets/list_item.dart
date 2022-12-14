@@ -6,15 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
-import '../cubits/home_cubit.dart';
-import '../cubits/matches_cubit.dart';
-import '../cubits/pacings_cubit.dart';
+import '../matches/matches_cubit.dart';
+import '../pacings/pacings_cubit.dart';
 import '../generated/l10n.dart';
 import '../models/match_model.dart';
 import '../models/base_model.dart';
 import '../models/pacing_model.dart';
-import '../pages/match_page.dart';
-import '../pages/pacing_page.dart';
+import '../match/match_page.dart';
+import '../pacing/pacing_page.dart';
 import '../dialogs/delete_dialog.dart';
 
 class ListItem extends StatelessWidget {
@@ -85,7 +84,6 @@ class ListItem extends StatelessWidget {
                 icon: const Icon(Icons.play_arrow),
                 onPressed: () async {
                   var navigator = Navigator.of(context);
-                  var homeCubit = context.read<HomeCubit>();
                   var model = entity as PacingModel;
                   var matchModel = await context.read<MatchesCubit>().add(MatchModel(
                         createdDate: null,
@@ -97,7 +95,6 @@ class ListItem extends StatelessWidget {
                         teams: [],
                         points: [],
                       ));
-                  homeCubit.setPage(1);
                   navigator.push(
                     MaterialPageRoute(
                       builder: ((context) => MatchPage(model: matchModel)),

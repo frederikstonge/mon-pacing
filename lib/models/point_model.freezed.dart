@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'point_model.dart';
 
@@ -33,33 +33,37 @@ mixin _$PointModel {
 abstract class $PointModelCopyWith<$Res> {
   factory $PointModelCopyWith(
           PointModel value, $Res Function(PointModel) then) =
-      _$PointModelCopyWithImpl<$Res>;
+      _$PointModelCopyWithImpl<$Res, PointModel>;
+  @useResult
   $Res call({int teamId, int improvisationId});
 }
 
 /// @nodoc
-class _$PointModelCopyWithImpl<$Res> implements $PointModelCopyWith<$Res> {
+class _$PointModelCopyWithImpl<$Res, $Val extends PointModel>
+    implements $PointModelCopyWith<$Res> {
   _$PointModelCopyWithImpl(this._value, this._then);
 
-  final PointModel _value;
   // ignore: unused_field
-  final $Res Function(PointModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? teamId = freezed,
-    Object? improvisationId = freezed,
+    Object? teamId = null,
+    Object? improvisationId = null,
   }) {
     return _then(_value.copyWith(
-      teamId: teamId == freezed
+      teamId: null == teamId
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as int,
-      improvisationId: improvisationId == freezed
+      improvisationId: null == improvisationId
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -70,30 +74,30 @@ abstract class _$$_PointModelCopyWith<$Res>
           _$_PointModel value, $Res Function(_$_PointModel) then) =
       __$$_PointModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int teamId, int improvisationId});
 }
 
 /// @nodoc
-class __$$_PointModelCopyWithImpl<$Res> extends _$PointModelCopyWithImpl<$Res>
+class __$$_PointModelCopyWithImpl<$Res>
+    extends _$PointModelCopyWithImpl<$Res, _$_PointModel>
     implements _$$_PointModelCopyWith<$Res> {
   __$$_PointModelCopyWithImpl(
       _$_PointModel _value, $Res Function(_$_PointModel) _then)
-      : super(_value, (v) => _then(v as _$_PointModel));
+      : super(_value, _then);
 
-  @override
-  _$_PointModel get _value => super._value as _$_PointModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? teamId = freezed,
-    Object? improvisationId = freezed,
+    Object? teamId = null,
+    Object? improvisationId = null,
   }) {
     return _then(_$_PointModel(
-      teamId: teamId == freezed
+      teamId: null == teamId
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as int,
-      improvisationId: improvisationId == freezed
+      improvisationId: null == improvisationId
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -124,20 +128,18 @@ class _$_PointModel implements _PointModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PointModel &&
-            const DeepCollectionEquality().equals(other.teamId, teamId) &&
-            const DeepCollectionEquality()
-                .equals(other.improvisationId, improvisationId));
+            (identical(other.teamId, teamId) || other.teamId == teamId) &&
+            (identical(other.improvisationId, improvisationId) ||
+                other.improvisationId == improvisationId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(teamId),
-      const DeepCollectionEquality().hash(improvisationId));
+  int get hashCode => Object.hash(runtimeType, teamId, improvisationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PointModelCopyWith<_$_PointModel> get copyWith =>
       __$$_PointModelCopyWithImpl<_$_PointModel>(this, _$identity);
 

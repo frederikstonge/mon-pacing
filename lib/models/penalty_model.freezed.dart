@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'penalty_model.dart';
 
@@ -35,43 +35,47 @@ mixin _$PenaltyModel {
 abstract class $PenaltyModelCopyWith<$Res> {
   factory $PenaltyModelCopyWith(
           PenaltyModel value, $Res Function(PenaltyModel) then) =
-      _$PenaltyModelCopyWithImpl<$Res>;
+      _$PenaltyModelCopyWithImpl<$Res, PenaltyModel>;
+  @useResult
   $Res call({bool major, String player, int teamId, int improvisationId});
 }
 
 /// @nodoc
-class _$PenaltyModelCopyWithImpl<$Res> implements $PenaltyModelCopyWith<$Res> {
+class _$PenaltyModelCopyWithImpl<$Res, $Val extends PenaltyModel>
+    implements $PenaltyModelCopyWith<$Res> {
   _$PenaltyModelCopyWithImpl(this._value, this._then);
 
-  final PenaltyModel _value;
   // ignore: unused_field
-  final $Res Function(PenaltyModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? major = freezed,
-    Object? player = freezed,
-    Object? teamId = freezed,
-    Object? improvisationId = freezed,
+    Object? major = null,
+    Object? player = null,
+    Object? teamId = null,
+    Object? improvisationId = null,
   }) {
     return _then(_value.copyWith(
-      major: major == freezed
+      major: null == major
           ? _value.major
           : major // ignore: cast_nullable_to_non_nullable
               as bool,
-      player: player == freezed
+      player: null == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as String,
-      teamId: teamId == freezed
+      teamId: null == teamId
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as int,
-      improvisationId: improvisationId == freezed
+      improvisationId: null == improvisationId
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -82,41 +86,40 @@ abstract class _$$_PenaltyModelCopyWith<$Res>
           _$_PenaltyModel value, $Res Function(_$_PenaltyModel) then) =
       __$$_PenaltyModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool major, String player, int teamId, int improvisationId});
 }
 
 /// @nodoc
 class __$$_PenaltyModelCopyWithImpl<$Res>
-    extends _$PenaltyModelCopyWithImpl<$Res>
+    extends _$PenaltyModelCopyWithImpl<$Res, _$_PenaltyModel>
     implements _$$_PenaltyModelCopyWith<$Res> {
   __$$_PenaltyModelCopyWithImpl(
       _$_PenaltyModel _value, $Res Function(_$_PenaltyModel) _then)
-      : super(_value, (v) => _then(v as _$_PenaltyModel));
+      : super(_value, _then);
 
-  @override
-  _$_PenaltyModel get _value => super._value as _$_PenaltyModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? major = freezed,
-    Object? player = freezed,
-    Object? teamId = freezed,
-    Object? improvisationId = freezed,
+    Object? major = null,
+    Object? player = null,
+    Object? teamId = null,
+    Object? improvisationId = null,
   }) {
     return _then(_$_PenaltyModel(
-      major: major == freezed
+      major: null == major
           ? _value.major
           : major // ignore: cast_nullable_to_non_nullable
               as bool,
-      player: player == freezed
+      player: null == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as String,
-      teamId: teamId == freezed
+      teamId: null == teamId
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as int,
-      improvisationId: improvisationId == freezed
+      improvisationId: null == improvisationId
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -155,24 +158,21 @@ class _$_PenaltyModel implements _PenaltyModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PenaltyModel &&
-            const DeepCollectionEquality().equals(other.major, major) &&
-            const DeepCollectionEquality().equals(other.player, player) &&
-            const DeepCollectionEquality().equals(other.teamId, teamId) &&
-            const DeepCollectionEquality()
-                .equals(other.improvisationId, improvisationId));
+            (identical(other.major, major) || other.major == major) &&
+            (identical(other.player, player) || other.player == player) &&
+            (identical(other.teamId, teamId) || other.teamId == teamId) &&
+            (identical(other.improvisationId, improvisationId) ||
+                other.improvisationId == improvisationId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(major),
-      const DeepCollectionEquality().hash(player),
-      const DeepCollectionEquality().hash(teamId),
-      const DeepCollectionEquality().hash(improvisationId));
+  int get hashCode =>
+      Object.hash(runtimeType, major, player, teamId, improvisationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PenaltyModelCopyWith<_$_PenaltyModel> get copyWith =>
       __$$_PenaltyModelCopyWithImpl<_$_PenaltyModel>(this, _$identity);
 

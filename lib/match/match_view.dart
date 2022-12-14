@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubits/match_cubit.dart';
-import '../cubits/match_improvisations_cubit.dart';
+import 'match_cubit.dart';
+import '../match_improvisations/match_improvisations_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
 import '../models/match_model.dart';
-import 'improvisation_view.dart';
+import '../widgets/improvisation.dart';
 import 'match_options_view.dart';
 import 'match_summary_view.dart';
 

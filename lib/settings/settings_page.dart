@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
-import 'ibottom_nav_page.dart';
-import '../views/settings_view.dart';
+import '../home/ibottom_nav_page.dart';
+import 'settings_view.dart';
 
 class SettingsPage extends StatelessWidget implements IBottomNavPage {
   const SettingsPage({Key? key}) : super(key: key);

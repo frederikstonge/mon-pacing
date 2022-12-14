@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'match_model.dart';
 
@@ -40,7 +40,8 @@ mixin _$MatchModel {
 abstract class $MatchModelCopyWith<$Res> {
   factory $MatchModelCopyWith(
           MatchModel value, $Res Function(MatchModel) then) =
-      _$MatchModelCopyWithImpl<$Res>;
+      _$MatchModelCopyWithImpl<$Res, MatchModel>;
+  @useResult
   $Res call(
       {int? id,
       String name,
@@ -53,58 +54,61 @@ abstract class $MatchModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MatchModelCopyWithImpl<$Res> implements $MatchModelCopyWith<$Res> {
+class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
+    implements $MatchModelCopyWith<$Res> {
   _$MatchModelCopyWithImpl(this._value, this._then);
 
-  final MatchModel _value;
   // ignore: unused_field
-  final $Res Function(MatchModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? teams = freezed,
-    Object? improvisations = freezed,
-    Object? penalties = freezed,
-    Object? points = freezed,
+    Object? teams = null,
+    Object? improvisations = null,
+    Object? penalties = null,
+    Object? points = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      createdDate: createdDate == freezed
+      createdDate: freezed == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      modifiedDate: modifiedDate == freezed
+      modifiedDate: freezed == modifiedDate
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      teams: teams == freezed
+      teams: null == teams
           ? _value.teams
           : teams // ignore: cast_nullable_to_non_nullable
               as List<TeamModel>,
-      improvisations: improvisations == freezed
+      improvisations: null == improvisations
           ? _value.improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
               as List<ImprovisationModel>,
-      penalties: penalties == freezed
+      penalties: null == penalties
           ? _value.penalties
           : penalties // ignore: cast_nullable_to_non_nullable
               as List<PenaltyModel>,
-      points: points == freezed
+      points: null == points
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -115,6 +119,7 @@ abstract class _$$_MatchModelCopyWith<$Res>
           _$_MatchModel value, $Res Function(_$_MatchModel) then) =
       __$$_MatchModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String name,
@@ -127,56 +132,55 @@ abstract class _$$_MatchModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MatchModelCopyWithImpl<$Res> extends _$MatchModelCopyWithImpl<$Res>
+class __$$_MatchModelCopyWithImpl<$Res>
+    extends _$MatchModelCopyWithImpl<$Res, _$_MatchModel>
     implements _$$_MatchModelCopyWith<$Res> {
   __$$_MatchModelCopyWithImpl(
       _$_MatchModel _value, $Res Function(_$_MatchModel) _then)
-      : super(_value, (v) => _then(v as _$_MatchModel));
+      : super(_value, _then);
 
-  @override
-  _$_MatchModel get _value => super._value as _$_MatchModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? teams = freezed,
-    Object? improvisations = freezed,
-    Object? penalties = freezed,
-    Object? points = freezed,
+    Object? teams = null,
+    Object? improvisations = null,
+    Object? penalties = null,
+    Object? points = null,
   }) {
     return _then(_$_MatchModel(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      createdDate: createdDate == freezed
+      createdDate: freezed == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      modifiedDate: modifiedDate == freezed
+      modifiedDate: freezed == modifiedDate
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      teams: teams == freezed
+      teams: null == teams
           ? _value._teams
           : teams // ignore: cast_nullable_to_non_nullable
               as List<TeamModel>,
-      improvisations: improvisations == freezed
+      improvisations: null == improvisations
           ? _value._improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
               as List<ImprovisationModel>,
-      penalties: penalties == freezed
+      penalties: null == penalties
           ? _value._penalties
           : penalties // ignore: cast_nullable_to_non_nullable
               as List<PenaltyModel>,
-      points: points == freezed
+      points: null == points
           ? _value._points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
@@ -215,6 +219,7 @@ class _$_MatchModel implements _MatchModel {
   final List<TeamModel> _teams;
   @override
   List<TeamModel> get teams {
+    if (_teams is EqualUnmodifiableListView) return _teams;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_teams);
   }
@@ -222,6 +227,7 @@ class _$_MatchModel implements _MatchModel {
   final List<ImprovisationModel> _improvisations;
   @override
   List<ImprovisationModel> get improvisations {
+    if (_improvisations is EqualUnmodifiableListView) return _improvisations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_improvisations);
   }
@@ -229,6 +235,7 @@ class _$_MatchModel implements _MatchModel {
   final List<PenaltyModel> _penalties;
   @override
   List<PenaltyModel> get penalties {
+    if (_penalties is EqualUnmodifiableListView) return _penalties;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_penalties);
   }
@@ -236,6 +243,7 @@ class _$_MatchModel implements _MatchModel {
   final List<PointModel> _points;
   @override
   List<PointModel> get points {
+    if (_points is EqualUnmodifiableListView) return _points;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_points);
   }
@@ -250,12 +258,12 @@ class _$_MatchModel implements _MatchModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MatchModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.createdDate, createdDate) &&
-            const DeepCollectionEquality()
-                .equals(other.modifiedDate, modifiedDate) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.createdDate, createdDate) ||
+                other.createdDate == createdDate) &&
+            (identical(other.modifiedDate, modifiedDate) ||
+                other.modifiedDate == modifiedDate) &&
             const DeepCollectionEquality().equals(other._teams, _teams) &&
             const DeepCollectionEquality()
                 .equals(other._improvisations, _improvisations) &&
@@ -268,10 +276,10 @@ class _$_MatchModel implements _MatchModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(createdDate),
-      const DeepCollectionEquality().hash(modifiedDate),
+      id,
+      name,
+      createdDate,
+      modifiedDate,
       const DeepCollectionEquality().hash(_teams),
       const DeepCollectionEquality().hash(_improvisations),
       const DeepCollectionEquality().hash(_penalties),
@@ -279,6 +287,7 @@ class _$_MatchModel implements _MatchModel {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MatchModelCopyWith<_$_MatchModel> get copyWith =>
       __$$_MatchModelCopyWithImpl<_$_MatchModel>(this, _$identity);
 

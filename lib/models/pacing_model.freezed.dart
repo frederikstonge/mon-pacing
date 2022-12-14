@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'pacing_model.dart';
 
@@ -37,7 +37,8 @@ mixin _$PacingModel {
 abstract class $PacingModelCopyWith<$Res> {
   factory $PacingModelCopyWith(
           PacingModel value, $Res Function(PacingModel) then) =
-      _$PacingModelCopyWithImpl<$Res>;
+      _$PacingModelCopyWithImpl<$Res, PacingModel>;
+  @useResult
   $Res call(
       {int? id,
       String name,
@@ -47,43 +48,46 @@ abstract class $PacingModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PacingModelCopyWithImpl<$Res> implements $PacingModelCopyWith<$Res> {
+class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
+    implements $PacingModelCopyWith<$Res> {
   _$PacingModelCopyWithImpl(this._value, this._then);
 
-  final PacingModel _value;
   // ignore: unused_field
-  final $Res Function(PacingModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? improvisations = freezed,
+    Object? improvisations = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      createdDate: createdDate == freezed
+      createdDate: freezed == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      modifiedDate: modifiedDate == freezed
+      modifiedDate: freezed == modifiedDate
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      improvisations: improvisations == freezed
+      improvisations: null == improvisations
           ? _value.improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
               as List<ImprovisationModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -94,6 +98,7 @@ abstract class _$$_PacingModelCopyWith<$Res>
           _$_PacingModel value, $Res Function(_$_PacingModel) then) =
       __$$_PacingModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String name,
@@ -103,41 +108,40 @@ abstract class _$$_PacingModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PacingModelCopyWithImpl<$Res> extends _$PacingModelCopyWithImpl<$Res>
+class __$$_PacingModelCopyWithImpl<$Res>
+    extends _$PacingModelCopyWithImpl<$Res, _$_PacingModel>
     implements _$$_PacingModelCopyWith<$Res> {
   __$$_PacingModelCopyWithImpl(
       _$_PacingModel _value, $Res Function(_$_PacingModel) _then)
-      : super(_value, (v) => _then(v as _$_PacingModel));
+      : super(_value, _then);
 
-  @override
-  _$_PacingModel get _value => super._value as _$_PacingModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? improvisations = freezed,
+    Object? improvisations = null,
   }) {
     return _then(_$_PacingModel(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      createdDate: createdDate == freezed
+      createdDate: freezed == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      modifiedDate: modifiedDate == freezed
+      modifiedDate: freezed == modifiedDate
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      improvisations: improvisations == freezed
+      improvisations: null == improvisations
           ? _value._improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
               as List<ImprovisationModel>,
@@ -170,6 +174,7 @@ class _$_PacingModel implements _PacingModel {
   final List<ImprovisationModel> _improvisations;
   @override
   List<ImprovisationModel> get improvisations {
+    if (_improvisations is EqualUnmodifiableListView) return _improvisations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_improvisations);
   }
@@ -184,28 +189,24 @@ class _$_PacingModel implements _PacingModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PacingModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.createdDate, createdDate) &&
-            const DeepCollectionEquality()
-                .equals(other.modifiedDate, modifiedDate) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.createdDate, createdDate) ||
+                other.createdDate == createdDate) &&
+            (identical(other.modifiedDate, modifiedDate) ||
+                other.modifiedDate == modifiedDate) &&
             const DeepCollectionEquality()
                 .equals(other._improvisations, _improvisations));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(createdDate),
-      const DeepCollectionEquality().hash(modifiedDate),
-      const DeepCollectionEquality().hash(_improvisations));
+  int get hashCode => Object.hash(runtimeType, id, name, createdDate,
+      modifiedDate, const DeepCollectionEquality().hash(_improvisations));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PacingModelCopyWith<_$_PacingModel> get copyWith =>
       __$$_PacingModelCopyWithImpl<_$_PacingModel>(this, _$identity);
 
