@@ -18,7 +18,7 @@ class PacingView extends StatelessWidget {
   static const double kExpandedHeight = 150.0;
   static const double kBottomHeight = 36.0;
   final PacingModel? model;
-  const PacingView({Key? key, required this.model}) : super(key: key);
+  const PacingView({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {

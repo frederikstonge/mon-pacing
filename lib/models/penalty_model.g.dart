@@ -8,6 +8,7 @@ part of 'penalty_model.dart';
 
 _$_PenaltyModel _$$_PenaltyModelFromJson(Map<String, dynamic> json) =>
     _$_PenaltyModel(
+      id: json['id'] as int,
       major: json['major'] as bool,
       player: json['player'] as String,
       teamId: json['teamId'] as int,
@@ -16,6 +17,7 @@ _$_PenaltyModel _$$_PenaltyModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_PenaltyModelToJson(_$_PenaltyModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'major': instance.major,
       'player': instance.player,
       'teamId': instance.teamId,

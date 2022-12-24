@@ -5,7 +5,7 @@ import '../home/ibottom_nav_page.dart';
 import 'settings_view.dart';
 
 class SettingsPage extends StatelessWidget implements IBottomNavPage {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   Icon get icon => const Icon(Icons.settings);

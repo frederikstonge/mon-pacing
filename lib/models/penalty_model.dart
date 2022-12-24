@@ -6,6 +6,7 @@ part 'penalty_model.g.dart';
 @freezed
 class PenaltyModel with _$PenaltyModel {
   const factory PenaltyModel({
+    required int id,
     required bool major,
     required String player,
     required int teamId,

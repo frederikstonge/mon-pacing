@@ -18,15 +18,21 @@ import '../dialogs/delete_dialog.dart';
 
 class ListItem extends StatelessWidget {
   final BaseModel entity;
-  const ListItem({Key? key, required this.entity}) : super(key: key);
+  const ListItem({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
       child: ListTile(
-        title: Text(entity.name),
-        subtitle: Text(S.of(context).ListItem_Modified(DateFormat.yMd().add_jm().format(entity.modifiedDate!))),
+        title: Text(
+          entity.name,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          S.of(context).ListItem_Modified(DateFormat.yMd().add_jm().format(entity.modifiedDate!)),
+          overflow: TextOverflow.ellipsis,
+        ),
         onTap: () {
           if (entity is PacingModel) {
             var model = entity as PacingModel;
@@ -85,16 +91,7 @@ class ListItem extends StatelessWidget {
                 onPressed: () async {
                   var navigator = Navigator.of(context);
                   var model = entity as PacingModel;
-                  var matchModel = await context.read<MatchesCubit>().add(MatchModel(
-                        createdDate: null,
-                        modifiedDate: null,
-                        id: null,
-                        name: model.name,
-                        improvisations: model.copyWith().improvisations,
-                        penalties: [],
-                        teams: [],
-                        points: [],
-                      ));
+                  var matchModel = await context.read<MatchesCubit>().add(model);
                   navigator.push(
                     MaterialPageRoute(
                       builder: ((context) => MatchPage(model: matchModel)),

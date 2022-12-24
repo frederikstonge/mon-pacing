@@ -13,7 +13,7 @@ import '../home/ibottom_nav_page.dart';
 import '../pacing/pacing_page.dart';
 
 class PacingsPage extends StatelessWidget implements IBottomNavPage {
-  const PacingsPage({Key? key}) : super(key: key);
+  const PacingsPage({super.key});
 
   @override
   Icon get icon => const Icon(Icons.list);

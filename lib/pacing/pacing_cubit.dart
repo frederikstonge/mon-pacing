@@ -31,9 +31,11 @@ class PacingCubit extends Cubit<PacingModel> {
   void addImprovisation() {
     var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
     var nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
+    var nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
     var nextType = ImprovisationType.values[improvisations.length % 2];
 
     var newImprovisation = ImprovisationModel(
+      id: nextId,
       order: nextOrder,
       type: nextType,
       duration: const Duration(minutes: 2, seconds: 30),
@@ -65,9 +67,7 @@ class PacingCubit extends Cubit<PacingModel> {
 
     improvisations.insert(newOrder, improvisation);
     controllers.insert(newOrder, controller);
-    for (var i = 0; i < improvisations.length; i++) {
-      improvisations[i] = improvisations[i].copyWith(order: i);
-    }
+    _reOrderImprovisations(improvisations);
 
     emit(state.copyWith(improvisations: improvisations));
   }
@@ -76,10 +76,7 @@ class PacingCubit extends Cubit<PacingModel> {
     var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
     improvisations.removeAt(order);
     controllers.removeAt(order);
-
-    for (var i = 0; i < improvisations.length; i++) {
-      improvisations[i] = improvisations[i].copyWith(order: i);
-    }
+    _reOrderImprovisations(improvisations);
 
     emit(state.copyWith(improvisations: improvisations));
   }
@@ -89,5 +86,13 @@ class PacingCubit extends Cubit<PacingModel> {
     improvisations[model.order] = model;
 
     emit(state.copyWith(improvisations: improvisations));
+  }
+
+  List<ImprovisationModel> _reOrderImprovisations(List<ImprovisationModel> improvisations) {
+    for (var i = 0; i < improvisations.length; i++) {
+      improvisations[i] = improvisations[i].copyWith(order: i);
+    }
+
+    return improvisations;
   }
 }

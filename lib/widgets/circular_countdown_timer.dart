@@ -59,7 +59,7 @@ class CircularCountDownTimer extends StatefulWidget {
   final bool autoStart;
 
   const CircularCountDownTimer({
-    Key? key,
+    super.key,
     required this.duration,
     required this.fillColor,
     required this.ringColor,
@@ -78,8 +78,7 @@ class CircularCountDownTimer extends StatefulWidget {
     this.autoStart = true,
     this.textFormat,
     this.controller,
-  })  : assert(initialDuration <= duration),
-        super(key: key);
+  }) : assert(initialDuration <= duration);
 
   @override
   State<CircularCountDownTimer> createState() => CircularCountDownTimerState();

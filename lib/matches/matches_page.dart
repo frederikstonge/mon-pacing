@@ -5,7 +5,7 @@ import 'matches_view.dart';
 import '../home/ibottom_nav_page.dart';
 
 class MatchesPage extends StatelessWidget implements IBottomNavPage {
-  const MatchesPage({Key? key}) : super(key: key);
+  const MatchesPage({super.key});
 
   @override
   Icon get icon => const Icon(Icons.list_alt);

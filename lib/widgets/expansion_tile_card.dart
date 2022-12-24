@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ExpansionTileCard extends StatefulWidget {
   const ExpansionTileCard({
-    Key? key,
+    super.key,
     this.leading,
     required this.title,
     this.subtitle,
@@ -28,7 +28,7 @@ class ExpansionTileCard extends StatefulWidget {
     this.isThreeLine = false,
     this.shadowColor = const Color(0xffaaaaaa),
     this.animateTrailing = false,
-  }) : super(key: key);
+  });
 
   final bool isThreeLine;
 

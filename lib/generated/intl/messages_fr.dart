@@ -28,14 +28,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(modifiedDate) => "Modifié le ${modifiedDate}";
 
-  static String m3(type, category, theme, performers, duration) =>
+  static String m3(title) => "Options de ${title}";
+
+  static String m4(type, category, theme, performers, duration) =>
       "${type} | ${category} | ${theme} | ${performers} | ${duration}";
 
-  static String m4(order) => "Improvisation #${order}";
+  static String m5(order) => "Improvisation #${order}";
 
-  static String m5(duration) => "Temps total: ${duration}";
+  static String m6(duration) => "Temps total: ${duration}";
 
-  static String m6(count) => "Improvisations: ${count}";
+  static String m7(count) => "Improvisations: ${count}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -49,6 +51,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mixte"),
         "ListItem_ExportSuccess": m1,
         "ListItem_Modified": m2,
+        "MatchOptionsView_Name": MessageLookupByLibrary.simpleMessage("Nom"),
+        "MatchOptionsView_Team": MessageLookupByLibrary.simpleMessage("Équipe"),
+        "MatchOptionsView_TeamColor":
+            MessageLookupByLibrary.simpleMessage("Couleur d\'équipe"),
+        "MatchOptionsView_Teams":
+            MessageLookupByLibrary.simpleMessage("Équipes"),
+        "MatchOptionsView_Title": m3,
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matchs"),
         "PacingView_AddImprovisation":
             MessageLookupByLibrary.simpleMessage("Ajouter une improvisation"),
@@ -64,18 +73,18 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sélectionner la durée"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("Nombre de joueur"),
-        "PacingView_ImprovisationSubtitle": m3,
+        "PacingView_ImprovisationSubtitle": m4,
         "PacingView_ImprovisationTheme":
             MessageLookupByLibrary.simpleMessage("Thème"),
-        "PacingView_ImprovisationTitle": m4,
+        "PacingView_ImprovisationTitle": m5,
         "PacingView_ImprovisationType":
             MessageLookupByLibrary.simpleMessage("Type"),
         "PacingView_Name": MessageLookupByLibrary.simpleMessage("Nom"),
         "PacingView_NewPacing":
             MessageLookupByLibrary.simpleMessage("Nouveau Pacing"),
         "PacingView_Save": MessageLookupByLibrary.simpleMessage("Sauvegarder"),
-        "PacingView_TotalDuration": m5,
-        "PacingView_TotalImprovisations": m6,
+        "PacingView_TotalDuration": m6,
+        "PacingView_TotalImprovisations": m7,
         "PacingsPage_AddPacingTooltip":
             MessageLookupByLibrary.simpleMessage("Ajouter un pacing"),
         "PacingsPage_ImportError": MessageLookupByLibrary.simpleMessage(

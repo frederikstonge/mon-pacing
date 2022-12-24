@@ -8,6 +8,7 @@ part 'improvisation_model.g.dart';
 @freezed
 class ImprovisationModel with _$ImprovisationModel {
   const factory ImprovisationModel({
+    required int id,
     required int order,
     required ImprovisationType type,
     required String category,

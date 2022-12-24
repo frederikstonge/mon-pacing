@@ -130,6 +130,56 @@ class S {
     );
   }
 
+  /// `Name`
+  String get MatchOptionsView_Name {
+    return Intl.message(
+      'Name',
+      name: 'MatchOptionsView_Name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Team`
+  String get MatchOptionsView_Team {
+    return Intl.message(
+      'Team',
+      name: 'MatchOptionsView_Team',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Team Color`
+  String get MatchOptionsView_TeamColor {
+    return Intl.message(
+      'Team Color',
+      name: 'MatchOptionsView_TeamColor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Teams`
+  String get MatchOptionsView_Teams {
+    return Intl.message(
+      'Teams',
+      name: 'MatchOptionsView_Teams',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{title} Options`
+  String MatchOptionsView_Title(Object title) {
+    return Intl.message(
+      '$title Options',
+      name: 'MatchOptionsView_Title',
+      desc: '',
+      args: [title],
+    );
+  }
+
   /// `Matches`
   String get MatchesPage_Title {
     return Intl.message(

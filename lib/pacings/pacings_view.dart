@@ -10,7 +10,7 @@ class PacingsView extends StatelessWidget {
   final List<PacingModel> _pacings = [];
   final ScrollController _scrollController = ScrollController();
 
-  PacingsView({Key? key}) : super(key: key);
+  PacingsView({super.key});
 
   @override
   Widget build(BuildContext context) {

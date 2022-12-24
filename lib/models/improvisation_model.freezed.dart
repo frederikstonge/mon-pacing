@@ -20,6 +20,7 @@ ImprovisationModel _$ImprovisationModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ImprovisationModel {
+  int get id => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   ImprovisationType get type => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
@@ -40,7 +41,8 @@ abstract class $ImprovisationModelCopyWith<$Res> {
       _$ImprovisationModelCopyWithImpl<$Res, ImprovisationModel>;
   @useResult
   $Res call(
-      {int order,
+      {int id,
+      int order,
       ImprovisationType type,
       String category,
       String theme,
@@ -61,6 +63,7 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? order = null,
     Object? type = null,
     Object? category = null,
@@ -69,6 +72,10 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
     Object? performers = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -106,7 +113,8 @@ abstract class _$$_ImprovisationModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int order,
+      {int id,
+      int order,
       ImprovisationType type,
       String category,
       String theme,
@@ -125,6 +133,7 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? order = null,
     Object? type = null,
     Object? category = null,
@@ -133,6 +142,10 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
     Object? performers = freezed,
   }) {
     return _then(_$_ImprovisationModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -165,7 +178,8 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ImprovisationModel implements _ImprovisationModel {
   const _$_ImprovisationModel(
-      {required this.order,
+      {required this.id,
+      required this.order,
       required this.type,
       required this.category,
       required this.theme,
@@ -175,6 +189,8 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   factory _$_ImprovisationModel.fromJson(Map<String, dynamic> json) =>
       _$$_ImprovisationModelFromJson(json);
 
+  @override
+  final int id;
   @override
   final int order;
   @override
@@ -190,7 +206,7 @@ class _$_ImprovisationModel implements _ImprovisationModel {
 
   @override
   String toString() {
-    return 'ImprovisationModel(order: $order, type: $type, category: $category, theme: $theme, duration: $duration, performers: $performers)';
+    return 'ImprovisationModel(id: $id, order: $order, type: $type, category: $category, theme: $theme, duration: $duration, performers: $performers)';
   }
 
   @override
@@ -198,6 +214,7 @@ class _$_ImprovisationModel implements _ImprovisationModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ImprovisationModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.category, category) ||
@@ -212,7 +229,7 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, order, type, category, theme, duration, performers);
+      runtimeType, id, order, type, category, theme, duration, performers);
 
   @JsonKey(ignore: true)
   @override
@@ -231,7 +248,8 @@ class _$_ImprovisationModel implements _ImprovisationModel {
 
 abstract class _ImprovisationModel implements ImprovisationModel {
   const factory _ImprovisationModel(
-      {required final int order,
+      {required final int id,
+      required final int order,
       required final ImprovisationType type,
       required final String category,
       required final String theme,
@@ -241,6 +259,8 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   factory _ImprovisationModel.fromJson(Map<String, dynamic> json) =
       _$_ImprovisationModel.fromJson;
 
+  @override
+  int get id;
   @override
   int get order;
   @override

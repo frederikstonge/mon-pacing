@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 abstract class IBottomNavPage extends Widget {
   const IBottomNavPage({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
-  }) : super(key: key);
+  });
 
   final String title;
   final Icon icon;

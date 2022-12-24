@@ -7,7 +7,7 @@ import 'pacing_view.dart';
 
 class PacingPage extends StatelessWidget {
   final PacingModel? model;
-  const PacingPage({Key? key, this.model}) : super(key: key);
+  const PacingPage({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {

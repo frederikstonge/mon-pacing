@@ -20,6 +20,8 @@ TeamModel _$TeamModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TeamModel {
+  int get id => throw _privateConstructorUsedError;
+  int get order => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get color => throw _privateConstructorUsedError;
 
@@ -34,7 +36,7 @@ abstract class $TeamModelCopyWith<$Res> {
   factory $TeamModelCopyWith(TeamModel value, $Res Function(TeamModel) then) =
       _$TeamModelCopyWithImpl<$Res, TeamModel>;
   @useResult
-  $Res call({String name, int color});
+  $Res call({int id, int order, String name, int color});
 }
 
 /// @nodoc
@@ -50,10 +52,20 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? order = null,
     Object? name = null,
     Object? color = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -73,7 +85,7 @@ abstract class _$$_TeamModelCopyWith<$Res> implements $TeamModelCopyWith<$Res> {
       __$$_TeamModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int color});
+  $Res call({int id, int order, String name, int color});
 }
 
 /// @nodoc
@@ -87,10 +99,20 @@ class __$$_TeamModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? order = null,
     Object? name = null,
     Object? color = null,
   }) {
     return _then(_$_TeamModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -106,11 +128,19 @@ class __$$_TeamModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TeamModel implements _TeamModel {
-  const _$_TeamModel({required this.name, required this.color});
+  const _$_TeamModel(
+      {required this.id,
+      required this.order,
+      required this.name,
+      required this.color});
 
   factory _$_TeamModel.fromJson(Map<String, dynamic> json) =>
       _$$_TeamModelFromJson(json);
 
+  @override
+  final int id;
+  @override
+  final int order;
   @override
   final String name;
   @override
@@ -118,7 +148,7 @@ class _$_TeamModel implements _TeamModel {
 
   @override
   String toString() {
-    return 'TeamModel(name: $name, color: $color)';
+    return 'TeamModel(id: $id, order: $order, name: $name, color: $color)';
   }
 
   @override
@@ -126,13 +156,15 @@ class _$_TeamModel implements _TeamModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TeamModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.order, order) || other.order == order) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.color, color) || other.color == color));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, color);
+  int get hashCode => Object.hash(runtimeType, id, order, name, color);
 
   @JsonKey(ignore: true)
   @override
@@ -150,11 +182,18 @@ class _$_TeamModel implements _TeamModel {
 
 abstract class _TeamModel implements TeamModel {
   const factory _TeamModel(
-      {required final String name, required final int color}) = _$_TeamModel;
+      {required final int id,
+      required final int order,
+      required final String name,
+      required final int color}) = _$_TeamModel;
 
   factory _TeamModel.fromJson(Map<String, dynamic> json) =
       _$_TeamModel.fromJson;
 
+  @override
+  int get id;
+  @override
+  int get order;
   @override
   String get name;
   @override

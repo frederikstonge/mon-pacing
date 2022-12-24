@@ -6,6 +6,7 @@ part 'point_model.g.dart';
 @freezed
 class PointModel with _$PointModel {
   const factory PointModel({
+    required int id,
     required int teamId,
     required int improvisationId,
   }) = _PointModel;

@@ -8,7 +8,7 @@ import 'match_view.dart';
 class MatchPage extends StatelessWidget {
   final MatchModel model;
 
-  const MatchPage({Key? key, required this.model}) : super(key: key);
+  const MatchPage({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {

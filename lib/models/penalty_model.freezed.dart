@@ -20,6 +20,7 @@ PenaltyModel _$PenaltyModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PenaltyModel {
+  int get id => throw _privateConstructorUsedError;
   bool get major => throw _privateConstructorUsedError;
   String get player => throw _privateConstructorUsedError;
   int get teamId => throw _privateConstructorUsedError;
@@ -37,7 +38,8 @@ abstract class $PenaltyModelCopyWith<$Res> {
           PenaltyModel value, $Res Function(PenaltyModel) then) =
       _$PenaltyModelCopyWithImpl<$Res, PenaltyModel>;
   @useResult
-  $Res call({bool major, String player, int teamId, int improvisationId});
+  $Res call(
+      {int id, bool major, String player, int teamId, int improvisationId});
 }
 
 /// @nodoc
@@ -53,12 +55,17 @@ class _$PenaltyModelCopyWithImpl<$Res, $Val extends PenaltyModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? major = null,
     Object? player = null,
     Object? teamId = null,
     Object? improvisationId = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       major: null == major
           ? _value.major
           : major // ignore: cast_nullable_to_non_nullable
@@ -87,7 +94,8 @@ abstract class _$$_PenaltyModelCopyWith<$Res>
       __$$_PenaltyModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool major, String player, int teamId, int improvisationId});
+  $Res call(
+      {int id, bool major, String player, int teamId, int improvisationId});
 }
 
 /// @nodoc
@@ -101,12 +109,17 @@ class __$$_PenaltyModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? major = null,
     Object? player = null,
     Object? teamId = null,
     Object? improvisationId = null,
   }) {
     return _then(_$_PenaltyModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       major: null == major
           ? _value.major
           : major // ignore: cast_nullable_to_non_nullable
@@ -131,7 +144,8 @@ class __$$_PenaltyModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PenaltyModel implements _PenaltyModel {
   const _$_PenaltyModel(
-      {required this.major,
+      {required this.id,
+      required this.major,
       required this.player,
       required this.teamId,
       required this.improvisationId});
@@ -139,6 +153,8 @@ class _$_PenaltyModel implements _PenaltyModel {
   factory _$_PenaltyModel.fromJson(Map<String, dynamic> json) =>
       _$$_PenaltyModelFromJson(json);
 
+  @override
+  final int id;
   @override
   final bool major;
   @override
@@ -150,7 +166,7 @@ class _$_PenaltyModel implements _PenaltyModel {
 
   @override
   String toString() {
-    return 'PenaltyModel(major: $major, player: $player, teamId: $teamId, improvisationId: $improvisationId)';
+    return 'PenaltyModel(id: $id, major: $major, player: $player, teamId: $teamId, improvisationId: $improvisationId)';
   }
 
   @override
@@ -158,6 +174,7 @@ class _$_PenaltyModel implements _PenaltyModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PenaltyModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.major, major) || other.major == major) &&
             (identical(other.player, player) || other.player == player) &&
             (identical(other.teamId, teamId) || other.teamId == teamId) &&
@@ -168,7 +185,7 @@ class _$_PenaltyModel implements _PenaltyModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, major, player, teamId, improvisationId);
+      Object.hash(runtimeType, id, major, player, teamId, improvisationId);
 
   @JsonKey(ignore: true)
   @override
@@ -186,7 +203,8 @@ class _$_PenaltyModel implements _PenaltyModel {
 
 abstract class _PenaltyModel implements PenaltyModel {
   const factory _PenaltyModel(
-      {required final bool major,
+      {required final int id,
+      required final bool major,
       required final String player,
       required final int teamId,
       required final int improvisationId}) = _$_PenaltyModel;
@@ -194,6 +212,8 @@ abstract class _PenaltyModel implements PenaltyModel {
   factory _PenaltyModel.fromJson(Map<String, dynamic> json) =
       _$_PenaltyModel.fromJson;
 
+  @override
+  int get id;
   @override
   bool get major;
   @override

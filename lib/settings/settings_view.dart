@@ -10,7 +10,7 @@ import '../helpers/duration_helper.dart';
 import '../models/settings_model.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({Key? key}) : super(key: key);
+  const SettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'match_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
 import '../models/match_model.dart';
-import 'improvisation.dart';
-import 'match_options_view.dart';
+import 'improvisation_view.dart';
+import 'match_options_page.dart';
 import 'match_summary_view.dart';
 
 class MatchView extends StatefulWidget {
-  const MatchView({Key? key}) : super(key: key);
+  const MatchView({super.key});
 
   @override
   State<MatchView> createState() => _MatchViewState();
@@ -22,7 +22,10 @@ class _MatchViewState extends State<MatchView> {
   Widget build(BuildContext context) {
     var matchCubit = context.read<MatchCubit>();
     if (matchCubit.state.teams.isEmpty) {
-      Future.microtask(() => openMatchOptions(context, matchCubit));
+      Future.microtask(() {
+        matchCubit.initialize();
+        openMatchOptions(context, matchCubit);
+      });
     }
 
     return WillPopScope(
@@ -36,14 +39,7 @@ class _MatchViewState extends State<MatchView> {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => MatchSummaryView(
-                          bloc: matchCubit,
-                        )),
-                  ),
-                );
+                openMatchSummary(context, matchCubit);
               },
               icon: const Icon(Icons.summarize),
               tooltip: "View match summary",
@@ -69,7 +65,18 @@ class _MatchViewState extends State<MatchView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: ((context) => MatchOptionsView(
+        builder: ((context) => MatchOptionsPage(
+              bloc: matchCubit,
+            )),
+      ),
+    );
+  }
+
+  openMatchSummary(BuildContext context, MatchCubit matchCubit) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: ((context) => MatchSummaryView(
               bloc: matchCubit,
             )),
       ),

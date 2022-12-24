@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.15
   flutter_file_dialog: ^2.3.2
   flutter_vibrate: ^1.3.0
+  syncfusion_flutter_xlsio: ^20.4.38-beta
 
 dev_dependencies:
   flutter_test:

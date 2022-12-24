@@ -10,7 +10,7 @@ class MatchesView extends StatelessWidget {
   final List<MatchModel> _matches = [];
   final ScrollController _scrollController = ScrollController();
 
-  MatchesView({Key? key}) : super(key: key);
+  MatchesView({super.key});
 
   @override
   Widget build(BuildContext context) {

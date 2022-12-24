@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'ibottom_nav_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.pages}) : super(key: key);
+  const HomePage({super.key, required this.pages});
 
   final List<IBottomNavPage> pages;
 

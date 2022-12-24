@@ -58,7 +58,7 @@ Future<SettingsModel> getSettingsModel() async {
 
 class MyApp extends StatelessWidget {
   final SettingsModel model;
-  const MyApp({Key? key, required this.model}) : super(key: key);
+  const MyApp({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
