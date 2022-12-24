@@ -11,5 +11,17 @@ A project used by referees for Gravel's Improv style matches.
 - [sqflite](https://pub.dev/packages/sqflite)
 - [Intl](https://pub.dev/packages/intl)
 
-### TODO: 
-Remove cubit and convert to stateful widgets : MatchImprovisation, Pacing, Match
+
+## Development
+
+Use Visual Studio Code, and install recommended extensions.
+
+
+### Models
+
+To regenerate models with freezed, under `Explorer`, `Build Runner`, click the play icon.
+
+
+### Resources
+
+To update resources, right click on the `I10n` folder, then click on `i18n arb editor`. Once you click on saved, open one of the .arb file and save it manually.
