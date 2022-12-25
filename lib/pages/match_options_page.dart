@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'match_cubit.dart';
-import 'match_options_view.dart';
+import '../cubits/match_cubit.dart';
+import '../views/match_options_view.dart';
 
 class MatchOptionsPage extends StatelessWidget {
   final MatchCubit bloc;

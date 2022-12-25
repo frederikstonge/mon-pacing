@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
 import '../repositories/matches_repository.dart';
-import 'matches_state.dart';
+import '../states/matches_state.dart';
 
 class MatchesCubit extends Cubit<MatchesState?> {
   final MatchesRepository repository;

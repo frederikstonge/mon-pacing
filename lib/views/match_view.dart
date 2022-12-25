@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'match_cubit.dart';
+import '../cubits/match_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
 import '../models/match_model.dart';
-import 'improvisation_view.dart';
-import 'match_options_page.dart';
+import '../widgets/match_improvisation.dart';
+import '../pages/match_options_page.dart';
 import 'match_summary_view.dart';
 
 class MatchView extends StatefulWidget {
@@ -55,7 +55,7 @@ class _MatchViewState extends State<MatchView> {
         ),
         body: PageView(
           controller: _pageController,
-          children: matchCubit.state.improvisations.map((e) => ImprovisationView(improvisation: e)).toList(),
+          children: matchCubit.state.improvisations.map((e) => MatchImprovisation(improvisation: e)).toList(),
         ),
       ),
     );

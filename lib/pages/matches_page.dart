@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
-import 'matches_view.dart';
-import '../home/ibottom_nav_page.dart';
+import '../views/matches_view.dart';
+import 'ibottom_nav_page.dart';
 
 class MatchesPage extends StatelessWidget implements IBottomNavPage {
   const MatchesPage({super.key});

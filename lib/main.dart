@@ -7,15 +7,15 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'generated/l10n.dart';
-import 'matches/matches_cubit.dart';
-import 'settings/settings_cubit.dart';
+import 'cubits/matches_cubit.dart';
+import 'cubits/settings_cubit.dart';
 import 'helpers/material_color_helper.dart';
 import 'models/settings_model.dart';
-import 'matches/matches_page.dart';
-import 'pacings/pacings_page.dart';
-import 'settings/settings_page.dart';
-import 'pacings/pacings_cubit.dart';
-import 'home/home_page.dart';
+import 'pages/home_page.dart';
+import 'pages/matches_page.dart';
+import 'pages/pacings_page.dart';
+import 'pages/settings_page.dart';
+import 'cubits/pacings_cubit.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 

@@ -4,11 +4,11 @@ import '../generated/l10n.dart';
 import '../helpers/duration_helper.dart';
 import '../models/improvisation_model.dart';
 import '../models/improvisation_type.dart';
-import '../widgets/improvisation_timer.dart';
+import 'improvisation_timer.dart';
 
-class ImprovisationView extends StatelessWidget {
+class MatchImprovisation extends StatelessWidget {
   final ImprovisationModel improvisation;
-  const ImprovisationView({super.key, required this.improvisation});
+  const MatchImprovisation({super.key, required this.improvisation});
 
   @override
   Widget build(BuildContext context) {

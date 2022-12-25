@@ -6,14 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
-import '../matches/matches_cubit.dart';
-import '../pacings/pacings_cubit.dart';
+import '../cubits/matches_cubit.dart';
+import '../cubits/pacings_cubit.dart';
 import '../generated/l10n.dart';
 import '../models/match_model.dart';
 import '../models/base_model.dart';
 import '../models/pacing_model.dart';
-import '../match/match_page.dart';
-import '../pacing/pacing_page.dart';
+import '../pages/match_page.dart';
+import '../pages/pacing_page.dart';
 import '../dialogs/delete_dialog.dart';
 
 class ListItem extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../generated/l10n.dart';
-import '../match/match_cubit.dart';
+import '../cubits/match_cubit.dart';
 import '../models/match_model.dart';
 
 class MatchOptionsView extends StatelessWidget {

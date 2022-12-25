@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
-import '../pacings/pacings_cubit.dart';
-import '../settings/settings_cubit.dart';
+import '../cubits/pacings_cubit.dart';
+import '../cubits/settings_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
 import '../generated/l10n.dart';
 import '../helpers/duration_helper.dart';
 import '../models/improvisation_type.dart';
-import 'pacing_cubit.dart';
+import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
 import '../dialogs/delete_dialog.dart';
 import '../models/settings_model.dart';

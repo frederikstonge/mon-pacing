@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/pacing_model.dart';
 import '../repositories/pacings_repository.dart';
-import 'pacings_state.dart';
+import '../states/pacings_state.dart';
 
 class PacingsCubit extends Cubit<PacingsState?> {
   final PacingsRepository repository;
