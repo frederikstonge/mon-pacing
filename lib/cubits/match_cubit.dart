@@ -5,12 +5,14 @@ import 'dart:math';
 import '../generated/l10n.dart';
 import '../models/match_model.dart';
 import '../models/team_model.dart';
+import 'matches_cubit.dart';
 
 class MatchCubit extends Cubit<MatchModel> {
+  final MatchesCubit matchesCubit;
   TextEditingController nameController = TextEditingController();
   List<TextEditingController> controllers = [];
 
-  MatchCubit({required MatchModel model}) : super(model) {
+  MatchCubit({required MatchModel model, required this.matchesCubit}) : super(model) {
     nameController.text = model.name;
     controllers = model.teams
         .map(
@@ -19,42 +21,60 @@ class MatchCubit extends Cubit<MatchModel> {
         .toList();
   }
 
-  void initialize() {
+  Future initialize() async {
     if (state.teams.isEmpty) {
-      addTeam();
-      addTeam();
+      var teams = List<TeamModel>.from(state.copyWith().teams);
+
+      var team1 = _createRandomTeam(teams);
+      teams.add(team1);
+      controllers.add(TextEditingController(text: team1.name));
+
+      var team2 = _createRandomTeam(teams);
+      teams.add(team2);
+      controllers.add(TextEditingController(text: team2.name));
+
+      var match = state.copyWith(teams: teams);
+      emit(match);
+      await matchesCubit.edit(match);
     }
   }
 
-  void editName(String name) {
-    emit(state.copyWith(name: name));
+  Future editName(String name) async {
+    var match = state.copyWith(name: name);
+    emit(match);
+    await matchesCubit.edit(match);
   }
 
-  void editTeam(TeamModel team) {
+  Future editTeam(TeamModel team) async {
     var teams = List<TeamModel>.from(state.copyWith().teams);
     teams[team.order] = team;
 
-    emit(state.copyWith(teams: teams));
+    var match = state.copyWith(teams: teams);
+    emit(match);
+    await matchesCubit.edit(match);
   }
 
-  void removeTeam(TeamModel team) {
+  Future removeTeam(TeamModel team) async {
     var teams = List<TeamModel>.from(state.copyWith().teams);
     teams.removeAt(team.order);
     controllers.removeAt(team.order);
     _reOrderTeams(teams);
 
-    emit(state.copyWith(teams: teams));
+    var match = state.copyWith(teams: teams);
+    emit(match);
+    await matchesCubit.edit(match);
   }
 
-  void addTeam() {
+  Future addTeam() async {
     var teams = List<TeamModel>.from(state.copyWith().teams);
-    var nextOrder = teams.isNotEmpty ? teams.map((e) => e.order).toList().reduce(max) + 1 : 0;
-    var nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
-    var team = _createRandomTeam(nextId, nextOrder);
+    var team = _createRandomTeam(teams);
 
     teams.add(team);
     controllers.add(TextEditingController(text: team.name));
-    emit(state.copyWith(teams: teams));
+    var match = state.copyWith(teams: teams);
+
+    emit(match);
+    await matchesCubit.edit(match);
   }
 
   List<TeamModel> _reOrderTeams(List<TeamModel> teams) {
@@ -65,12 +85,14 @@ class MatchCubit extends Cubit<MatchModel> {
     return teams;
   }
 
-  TeamModel _createRandomTeam(int id, int order) {
+  TeamModel _createRandomTeam(List<TeamModel> teams) {
+    var nextOrder = teams.isNotEmpty ? teams.map((e) => e.order).toList().reduce(max) + 1 : 0;
+    var nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
     var random = Random();
     return TeamModel(
-      id: id,
-      order: order,
-      name: '${S.current.MatchOptionsView_Team} ${order + 1}',
+      id: nextId,
+      order: nextOrder,
+      name: '${S.current.MatchOptionsView_Team} ${nextOrder + 1}',
       color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
     );
   }
