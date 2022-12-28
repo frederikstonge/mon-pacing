@@ -1,4 +1,4 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -28,10 +28,10 @@ Future<Database> get database async {
 Future<Database> _getDatabase() async {
   var path = await getDatabasesPath();
 
-  var file = File('$path/mon_pacing.db');
-  if (await file.exists()) {
-    await file.delete(recursive: true);
-  }
+  // var file = File('$path/mon_pacing.db');
+  // if (await file.exists()) {
+  //   await file.delete(recursive: true);
+  // }
 
   return await openDatabase(
     join(path, 'mon_pacing.db'),
