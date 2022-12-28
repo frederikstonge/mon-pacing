@@ -180,6 +180,46 @@ class S {
     );
   }
 
+  /// `Edit details`
+  String get MatchView_EditDetails {
+    return Intl.message(
+      'Edit details',
+      name: 'MatchView_EditDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View match summary`
+  String get MatchView_ViewMatchSummary {
+    return Intl.message(
+      'View match summary',
+      name: 'MatchView_ViewMatchSummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to go back? You might lose match data.`
+  String get MatchView_WillPopDialog_Content {
+    return Intl.message(
+      'Are you sure you want to go back? You might lose match data.',
+      name: 'MatchView_WillPopDialog_Content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match in progress`
+  String get MatchView_WillPopDialog_Title {
+    return Intl.message(
+      'Match in progress',
+      name: 'MatchView_WillPopDialog_Title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Matches`
   String get MatchesPage_Title {
     return Intl.message(
@@ -351,6 +391,26 @@ class S {
     );
   }
 
+  /// `Are you sure you want to go back? You will lose all unsaved changes.`
+  String get PacingView_WillPopDialog_Content {
+    return Intl.message(
+      'Are you sure you want to go back? You will lose all unsaved changes.',
+      name: 'PacingView_WillPopDialog_Content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changes`
+  String get PacingView_WillPopDialog_Title {
+    return Intl.message(
+      'Changes',
+      name: 'PacingView_WillPopDialog_Title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add pacing`
   String get PacingsPage_AddPacingTooltip {
     return Intl.message(
@@ -486,26 +546,6 @@ class S {
     return Intl.message(
       'Extra time to add for each improvisation in the total',
       name: 'Settings_View_EnablePaddingDurationDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Are you sure you want to go back? You will lose all unsaved changes.`
-  String get WillPopDialog_Content {
-    return Intl.message(
-      'Are you sure you want to go back? You will lose all unsaved changes.',
-      name: 'WillPopDialog_Content',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Changes`
-  String get WillPopDialog_Title {
-    return Intl.message(
-      'Changes',
-      name: 'WillPopDialog_Title',
       desc: '',
       args: [],
     );

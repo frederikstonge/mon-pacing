@@ -12,6 +12,10 @@
   "MatchOptionsView_TeamColor": "Couleur d'équipe",
   "MatchOptionsView_Teams": "Équipes",
   "MatchOptionsView_Title": "Options de {title}",
+  "MatchView_EditDetails": "Modifier les détails",
+  "MatchView_ViewMatchSummary": "Voir le sommaire du match",
+  "MatchView_WillPopDialog_Content": "Êtes-vous sûr de vouloir revenir en arrière? Vous pourriez perdre des informations du match.",
+  "MatchView_WillPopDialog_Title": "Match en cours",
   "MatchesPage_Title": "Matchs",
   "PacingView_AddImprovisation": "Ajouter une improvisation",
   "PacingView_ImprovisationCategory": "Catégorie",
@@ -29,6 +33,8 @@
   "PacingView_Save": "Sauvegarder",
   "PacingView_TotalDuration": "Temps total: {duration}",
   "PacingView_TotalImprovisations": "Improvisations: {count}",
+  "PacingView_WillPopDialog_Content": "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés.",
+  "PacingView_WillPopDialog_Title": "Changements",
   "PacingsPage_AddPacingTooltip": "Ajouter un pacing",
   "PacingsPage_ImportError": "Une erreur est survenue en important le pacing",
   "PacingsPage_ImportTooltip": "Importer",
@@ -42,7 +48,5 @@
   "SettingsView_Section_Application": "Application",
   "SettingsView_Section_Pacings": "Pacings",
   "SettingsView_ThemeTitle": "Choisir la couleur du thème",
-  "Settings_View_EnablePaddingDurationDescription": "Temps d'extra à ajouter pour chaque improvisation dans le total",
-  "WillPopDialog_Content": "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés.",
-  "WillPopDialog_Title": "Changements"
+  "Settings_View_EnablePaddingDurationDescription": "Temps d'extra à ajouter pour chaque improvisation dans le total"
 }

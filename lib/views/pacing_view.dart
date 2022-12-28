@@ -27,7 +27,11 @@ class PacingView extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         if (context.read<PacingCubit>().state != model) {
-          var result = await WillPopDialog.showWillPopDialog(context);
+          var result = await WillPopDialog.showWillPopDialog(
+            context,
+            S.of(context).PacingView_WillPopDialog_Title,
+            S.of(context).PacingView_WillPopDialog_Title,
+          );
           return result ?? false;
         }
 

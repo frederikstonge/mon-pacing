@@ -56,6 +56,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Team Color"),
         "MatchOptionsView_Teams": MessageLookupByLibrary.simpleMessage("Teams"),
         "MatchOptionsView_Title": m3,
+        "MatchView_EditDetails":
+            MessageLookupByLibrary.simpleMessage("Edit details"),
+        "MatchView_ViewMatchSummary":
+            MessageLookupByLibrary.simpleMessage("View match summary"),
+        "MatchView_WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to go back? You might lose match data."),
+        "MatchView_WillPopDialog_Title":
+            MessageLookupByLibrary.simpleMessage("Match in progress"),
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matches"),
         "PacingView_AddImprovisation":
             MessageLookupByLibrary.simpleMessage("Add Improvisation"),
@@ -83,6 +91,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "PacingView_Save": MessageLookupByLibrary.simpleMessage("Save"),
         "PacingView_TotalDuration": m6,
         "PacingView_TotalImprovisations": m7,
+        "PacingView_WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to go back? You will lose all unsaved changes."),
+        "PacingView_WillPopDialog_Title":
+            MessageLookupByLibrary.simpleMessage("Changes"),
         "PacingsPage_AddPacingTooltip":
             MessageLookupByLibrary.simpleMessage("Add pacing"),
         "PacingsPage_ImportError": MessageLookupByLibrary.simpleMessage(
@@ -109,9 +121,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select theme color"),
         "Settings_View_EnablePaddingDurationDescription":
             MessageLookupByLibrary.simpleMessage(
-                "Extra time to add for each improvisation in the total"),
-        "WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
-            "Are you sure you want to go back? You will lose all unsaved changes."),
-        "WillPopDialog_Title": MessageLookupByLibrary.simpleMessage("Changes")
+                "Extra time to add for each improvisation in the total")
       };
 }

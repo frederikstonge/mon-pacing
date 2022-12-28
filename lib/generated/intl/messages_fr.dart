@@ -58,6 +58,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "MatchOptionsView_Teams":
             MessageLookupByLibrary.simpleMessage("Équipes"),
         "MatchOptionsView_Title": m3,
+        "MatchView_EditDetails":
+            MessageLookupByLibrary.simpleMessage("Modifier les détails"),
+        "MatchView_ViewMatchSummary":
+            MessageLookupByLibrary.simpleMessage("Voir le sommaire du match"),
+        "MatchView_WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
+            "Êtes-vous sûr de vouloir revenir en arrière? Vous pourriez perdre des informations du match."),
+        "MatchView_WillPopDialog_Title":
+            MessageLookupByLibrary.simpleMessage("Match en cours"),
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matchs"),
         "PacingView_AddImprovisation":
             MessageLookupByLibrary.simpleMessage("Ajouter une improvisation"),
@@ -85,6 +93,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "PacingView_Save": MessageLookupByLibrary.simpleMessage("Sauvegarder"),
         "PacingView_TotalDuration": m6,
         "PacingView_TotalImprovisations": m7,
+        "PacingView_WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
+            "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés."),
+        "PacingView_WillPopDialog_Title":
+            MessageLookupByLibrary.simpleMessage("Changements"),
         "PacingsPage_AddPacingTooltip":
             MessageLookupByLibrary.simpleMessage("Ajouter un pacing"),
         "PacingsPage_ImportError": MessageLookupByLibrary.simpleMessage(
@@ -112,10 +124,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choisir la couleur du thème"),
         "Settings_View_EnablePaddingDurationDescription":
             MessageLookupByLibrary.simpleMessage(
-                "Temps d\'extra à ajouter pour chaque improvisation dans le total"),
-        "WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
-            "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés."),
-        "WillPopDialog_Title":
-            MessageLookupByLibrary.simpleMessage("Changements")
+                "Temps d\'extra à ajouter pour chaque improvisation dans le total")
       };
 }

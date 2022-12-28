@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/match_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
+import '../generated/l10n.dart';
 import '../models/match_model.dart';
 import '../widgets/match_improvisation.dart';
 import '../pages/match_options_page.dart';
@@ -30,7 +31,11 @@ class _MatchViewState extends State<MatchView> {
 
     return WillPopScope(
       onWillPop: () async {
-        var result = await WillPopDialog.showWillPopDialog(context);
+        var result = await WillPopDialog.showWillPopDialog(
+          context,
+          S.of(context).MatchView_WillPopDialog_Title,
+          S.of(context).MatchView_WillPopDialog_Title,
+        );
         return result ?? false;
       },
       child: Scaffold(
@@ -42,14 +47,14 @@ class _MatchViewState extends State<MatchView> {
                 openMatchSummary(context, matchCubit);
               },
               icon: const Icon(Icons.summarize),
-              tooltip: "View match summary",
+              tooltip: S.of(context).MatchView_ViewMatchSummary,
             ),
             IconButton(
               onPressed: () {
                 openMatchOptions(context, matchCubit);
               },
               icon: const Icon(Icons.edit),
-              tooltip: "Edit details",
+              tooltip: S.of(context).MatchView_EditDetails,
             ),
           ],
         ),
