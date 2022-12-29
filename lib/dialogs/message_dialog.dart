@@ -7,7 +7,7 @@ class MessageDialog {
     showDialog(
       context: context,
       builder: (BuildContext alertContext) => AlertDialog(
-        title: Text(title),
+        title: Text(title, overflow: TextOverflow.ellipsis),
         content: Text(message),
         actions: [
           TextButton(

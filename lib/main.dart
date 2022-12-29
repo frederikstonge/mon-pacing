@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'cubits/home_cubit.dart';
 import 'generated/l10n.dart';
 import 'cubits/matches_cubit.dart';
 import 'cubits/settings_cubit.dart';
@@ -81,6 +82,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (blocContext) => SettingsCubit(model: model),
+          ),
+          BlocProvider(
+            create: (context) => HomeCubit(),
           ),
         ],
         child: BlocBuilder<SettingsCubit, SettingsModel>(

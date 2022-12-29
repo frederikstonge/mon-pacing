@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
+import '../cubits/home_cubit.dart';
 import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
 import '../generated/l10n.dart';
@@ -90,13 +91,16 @@ class ListItem extends StatelessWidget {
                 icon: const Icon(Icons.play_arrow),
                 onPressed: () async {
                   var navigator = Navigator.of(context);
+                  var matchCubit = context.read<MatchesCubit>();
+                  var homeCubit = context.read<HomeCubit>();
                   var model = entity as PacingModel;
-                  var matchModel = await context.read<MatchesCubit>().add(model);
+                  var matchModel = await matchCubit.add(model);
                   navigator.push(
                     MaterialPageRoute(
                       builder: ((context) => MatchPage(model: matchModel)),
                     ),
                   );
+                  homeCubit.setPage(1);
                 },
               ),
           ],

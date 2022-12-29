@@ -130,10 +130,10 @@ class S {
     );
   }
 
-  /// `Name`
+  /// `Match Name`
   String get MatchOptionsView_Name {
     return Intl.message(
-      'Name',
+      'Match Name',
       name: 'MatchOptionsView_Name',
       desc: '',
       args: [],
@@ -341,10 +341,10 @@ class S {
     );
   }
 
-  /// `Name`
+  /// `Pacing Name`
   String get PacingView_Name {
     return Intl.message(
-      'Name',
+      'Pacing Name',
       name: 'PacingView_Name',
       desc: '',
       args: [],

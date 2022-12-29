@@ -7,7 +7,7 @@ class WillPopDialog {
     return await showDialog<bool>(
       context: context,
       builder: (BuildContext alertContext) => AlertDialog(
-        title: Text(title),
+        title: Text(title, overflow: TextOverflow.ellipsis),
         content: Text(content),
         actions: [
           TextButton(

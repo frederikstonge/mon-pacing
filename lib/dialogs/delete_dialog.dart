@@ -7,7 +7,7 @@ class DeleteDialog {
     showDialog(
       context: context,
       builder: (BuildContext alertContext) => AlertDialog(
-        title: Text(S.of(context).DeleteDialog_Title),
+        title: Text(S.of(context).DeleteDialog_Title, overflow: TextOverflow.ellipsis),
         content: Text(S.of(context).DeleteDialog_Content(itemName)),
         actions: [
           TextButton(

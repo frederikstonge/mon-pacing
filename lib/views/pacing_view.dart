@@ -24,40 +24,41 @@ class PacingView extends StatelessWidget {
   Widget build(BuildContext context) {
     var foregroundColor =
         Theme.of(context).brightness == Brightness.light ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface;
-    return WillPopScope(
-      onWillPop: () async {
-        if (context.read<PacingCubit>().state != model) {
-          var result = await WillPopDialog.showWillPopDialog(
-            context,
-            S.of(context).PacingView_WillPopDialog_Title,
-            S.of(context).PacingView_WillPopDialog_Title,
-          );
-          return result ?? false;
-        }
+    return BlocBuilder<PacingCubit, PacingModel>(
+      builder: (context, state) => WillPopScope(
+        onWillPop: () async {
+          if (state != model) {
+            var result = await WillPopDialog.showWillPopDialog(
+              context,
+              S.of(context).PacingView_WillPopDialog_Title,
+              S.of(context).PacingView_WillPopDialog_Content,
+            );
+            return result ?? false;
+          }
 
-        return true;
-      },
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.read<PacingCubit>().addImprovisation();
-          },
-          tooltip: S.of(context).PacingView_AddImprovisation,
-          child: const Icon(Icons.add),
-        ),
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: kExpandedHeight,
-              pinned: true,
-              snap: true,
-              floating: true,
-              title: BlocBuilder<PacingCubit, PacingModel>(
-                builder: (context, state) => Text(state.name.isNotEmpty ? state.name : S.of(context).PacingView_NewPacing),
-              ),
-              actions: [
-                BlocBuilder<PacingCubit, PacingModel>(
-                  builder: (context, state) => IconButton(
+          return true;
+        },
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.read<PacingCubit>().addImprovisation();
+            },
+            tooltip: S.of(context).PacingView_AddImprovisation,
+            child: const Icon(Icons.add),
+          ),
+          body: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: kExpandedHeight,
+                pinned: true,
+                snap: true,
+                floating: true,
+                title: Text(
+                  state.name.isNotEmpty ? state.name : S.of(context).PacingView_NewPacing,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                actions: [
+                  IconButton(
                     onPressed: () async {
                       final navigator = Navigator.of(context);
                       if (state.id == null) {
@@ -71,49 +72,45 @@ class PacingView extends StatelessWidget {
                     icon: const Icon(Icons.save),
                     tooltip: S.of(context).PacingView_Save,
                   ),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  expandedTitleScale: 1,
+                  titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, kBottomHeight),
+                  title: Builder(
+                    builder: (context) {
+                      var controller = context.read<PacingCubit>().nameController;
+                      return TextField(
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+                        controller: controller,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Theme.of(context).cardColor,
+                          hintText: S.of(context).PacingView_Name,
+                          border: const OutlineInputBorder(),
+                        ),
+                        onChanged: (value) {
+                          context.read<PacingCubit>().editName(controller.text);
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ],
-              flexibleSpace: FlexibleSpaceBar(
-                expandedTitleScale: 1,
-                titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, kBottomHeight),
-                title: BlocBuilder<PacingCubit, PacingModel>(
-                  builder: (context, state) {
-                    var controller = context.read<PacingCubit>().nameController;
-                    return TextField(
-                      style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
-                      controller: controller,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).cardColor,
-                        hintText: S.of(context).PacingView_Name,
-                        border: const OutlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        context.read<PacingCubit>().editName(controller.text);
-                      },
-                    );
-                  },
-                ),
-              ),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(kBottomHeight),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: BlocBuilder<PacingCubit, PacingModel>(
-                          builder: (context, state) => Text(
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(kBottomHeight),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
                             S.of(context).PacingView_TotalImprovisations(state.improvisations.length),
                             style: TextStyle(color: foregroundColor),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: BlocBuilder<PacingCubit, PacingModel>(
-                          builder: (pacingContext, pacingState) => BlocBuilder<SettingsCubit, SettingsModel>(
+                        Expanded(
+                          child: BlocBuilder<SettingsCubit, SettingsModel>(
                             builder: (settingsContext, settingsState) {
-                              var totalDuration = pacingState.improvisations.fold(
+                              var totalDuration = state.improvisations.fold(
                                 Duration.zero,
                                 (d, i) {
                                   if (i.type == ImprovisationType.mixed) {
@@ -125,7 +122,7 @@ class PacingView extends StatelessWidget {
                               );
 
                               if (settingsState.enablePaddingDuration) {
-                                totalDuration = totalDuration + (settingsState.paddingDuration * (pacingState.improvisations.length));
+                                totalDuration = totalDuration + (settingsState.paddingDuration * (state.improvisations.length));
                               }
 
                               return Text(
@@ -136,14 +133,12 @@ class PacingView extends StatelessWidget {
                             },
                           ),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            BlocBuilder<PacingCubit, PacingModel>(
-              builder: (context, state) => SliverReorderableList(
+              SliverReorderableList(
                 onReorder: (oldIndex, newIndex) {
                   context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex);
                 },
@@ -162,8 +157,14 @@ class PacingView extends StatelessWidget {
                   return ExpansionTileCard(
                     key: ValueKey("$index of ${state.improvisations.length}"),
                     leading: ReorderableDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
-                    title: Text(title),
-                    subtitle: Text(subTitle),
+                    title: Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text(
+                      subTitle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -318,8 +319,8 @@ class PacingView extends StatelessWidget {
                 },
                 itemCount: state.improvisations.length,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

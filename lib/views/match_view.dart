@@ -9,15 +9,8 @@ import '../widgets/match_improvisation.dart';
 import '../pages/match_options_page.dart';
 import 'match_summary_view.dart';
 
-class MatchView extends StatefulWidget {
+class MatchView extends StatelessWidget {
   const MatchView({super.key});
-
-  @override
-  State<MatchView> createState() => _MatchViewState();
-}
-
-class _MatchViewState extends State<MatchView> {
-  final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,38 +22,40 @@ class _MatchViewState extends State<MatchView> {
       });
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        var result = await WillPopDialog.showWillPopDialog(
-          context,
-          S.of(context).MatchView_WillPopDialog_Title,
-          S.of(context).MatchView_WillPopDialog_Title,
-        );
-        return result ?? false;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: BlocBuilder<MatchCubit, MatchModel>(builder: (_, state) => Text(state.name)),
-          actions: [
-            IconButton(
-              onPressed: () {
-                openMatchSummary(context, matchCubit);
-              },
-              icon: const Icon(Icons.summarize),
-              tooltip: S.of(context).MatchView_ViewMatchSummary,
-            ),
-            IconButton(
-              onPressed: () {
-                openMatchOptions(context, matchCubit);
-              },
-              icon: const Icon(Icons.edit),
-              tooltip: S.of(context).MatchView_EditDetails,
-            ),
-          ],
-        ),
-        body: PageView(
-          controller: _pageController,
-          children: matchCubit.state.improvisations.map((e) => MatchImprovisation(improvisation: e)).toList(),
+    return BlocBuilder<MatchCubit, MatchModel>(
+      builder: (context, state) => WillPopScope(
+        onWillPop: () async {
+          var result = await WillPopDialog.showWillPopDialog(
+            context,
+            S.of(context).MatchView_WillPopDialog_Title,
+            S.of(context).MatchView_WillPopDialog_Content,
+          );
+          return result ?? false;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(state.name, overflow: TextOverflow.ellipsis),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  openMatchSummary(context, matchCubit);
+                },
+                icon: const Icon(Icons.summarize),
+                tooltip: S.of(context).MatchView_ViewMatchSummary,
+              ),
+              IconButton(
+                onPressed: () {
+                  openMatchOptions(context, matchCubit);
+                },
+                icon: const Icon(Icons.edit),
+                tooltip: S.of(context).MatchView_EditDetails,
+              ),
+            ],
+          ),
+          body: PageView(
+            controller: matchCubit.pageController,
+            children: matchCubit.state.improvisations.map((e) => MatchImprovisation(improvisation: e)).toList(),
+          ),
         ),
       ),
     );

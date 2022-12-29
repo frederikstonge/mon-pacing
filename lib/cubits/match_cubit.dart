@@ -9,7 +9,8 @@ import 'matches_cubit.dart';
 
 class MatchCubit extends Cubit<MatchModel> {
   final MatchesCubit matchesCubit;
-  TextEditingController nameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final PageController pageController = PageController();
   List<TextEditingController> controllers = [];
 
   MatchCubit({required MatchModel model, required this.matchesCubit}) : super(model) {
