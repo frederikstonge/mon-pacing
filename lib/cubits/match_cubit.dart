@@ -4,6 +4,7 @@ import 'dart:math';
 
 import '../generated/l10n.dart';
 import '../models/match_model.dart';
+import '../models/point_model.dart';
 import '../models/team_model.dart';
 import 'matches_cubit.dart';
 
@@ -73,6 +74,21 @@ class MatchCubit extends Cubit<MatchModel> {
     teams.add(team);
     controllers.add(TextEditingController(text: team.name));
     var match = state.copyWith(teams: teams);
+
+    emit(match);
+    await matchesCubit.edit(match);
+  }
+
+  Future setPoint(int improvisationId, int teamId) async {
+    var points = List<PointModel>.from(state.copyWith().points);
+    if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
+      points.removeWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
+    } else {
+      var nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
+      points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId));
+    }
+
+    var match = state.copyWith(points: points);
 
     emit(match);
     await matchesCubit.edit(match);

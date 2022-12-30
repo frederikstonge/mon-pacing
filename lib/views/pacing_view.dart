@@ -16,14 +16,13 @@ import '../widgets/expansion_tile_card.dart';
 
 class PacingView extends StatelessWidget {
   static const double kExpandedHeight = 150.0;
-  static const double kBottomHeight = 36.0;
+  static const double kBottomHeight = 40.0;
   final PacingModel? model;
   const PacingView({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
-    var foregroundColor =
-        Theme.of(context).brightness == Brightness.light ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface;
+    var theme = Theme.of(context);
     return BlocBuilder<PacingCubit, PacingModel>(
       builder: (context, state) => WillPopScope(
         onWillPop: () async {
@@ -80,11 +79,11 @@ class PacingView extends StatelessWidget {
                     builder: (context) {
                       var controller = context.read<PacingCubit>().nameController;
                       return TextField(
-                        style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+                        style: TextStyle(color: theme.textTheme.bodyText1!.color),
                         controller: controller,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Theme.of(context).cardColor,
+                          fillColor: theme.cardColor,
                           hintText: S.of(context).PacingView_Name,
                           border: const OutlineInputBorder(),
                         ),
@@ -104,7 +103,7 @@ class PacingView extends StatelessWidget {
                         Expanded(
                           child: Text(
                             S.of(context).PacingView_TotalImprovisations(state.improvisations.length),
-                            style: TextStyle(color: foregroundColor),
+                            style: TextStyle(color: theme.colorScheme.onPrimary),
                           ),
                         ),
                         Expanded(
@@ -127,7 +126,7 @@ class PacingView extends StatelessWidget {
 
                               return Text(
                                 S.of(context).PacingView_TotalDuration(getDurationString(totalDuration)),
-                                style: TextStyle(color: foregroundColor),
+                                style: TextStyle(color: theme.colorScheme.onPrimary),
                                 textAlign: TextAlign.end,
                               );
                             },
@@ -163,15 +162,13 @@ class PacingView extends StatelessWidget {
                     ),
                     subtitle: Text(
                       subTitle,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: DropdownButtonFormField<ImprovisationType>(
                           decoration: InputDecoration(
                             hintText: S.of(context).PacingView_ImprovisationType,
-                            border: const OutlineInputBorder(),
                           ),
                           value: item.type,
                           icon: const Icon(Icons.arrow_downward),
@@ -191,43 +188,38 @@ class PacingView extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: TextField(
-                          controller: controllers[0],
-                          decoration: InputDecoration(
-                            hintText: S.of(context).PacingView_ImprovisationCategory,
-                            border: const OutlineInputBorder(),
-                          ),
-                          onChanged: (value) {
-                            if (controllers[0].text != item.category) {
-                              context.read<PacingCubit>().editImprovisation(item.copyWith(category: controllers[0].text));
-                            }
-                          },
-                        ),
+                            controller: controllers[0],
+                            decoration: InputDecoration(
+                              hintText: S.of(context).PacingView_ImprovisationCategory,
+                            ),
+                            onChanged: (value) {
+                              if (controllers[0].text != item.category) {
+                                context.read<PacingCubit>().editImprovisation(item.copyWith(category: controllers[0].text));
+                              }
+                            }),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: TextField(
-                          controller: controllers[1],
-                          decoration: InputDecoration(
-                            hintText: S.of(context).PacingView_ImprovisationTheme,
-                            border: const OutlineInputBorder(),
-                          ),
-                          onChanged: (value) {
-                            if (controllers[1].text != item.theme) {
-                              context.read<PacingCubit>().editImprovisation(item.copyWith(theme: controllers[1].text));
-                            }
-                          },
-                        ),
+                            controller: controllers[1],
+                            decoration: InputDecoration(
+                              hintText: S.of(context).PacingView_ImprovisationTheme,
+                            ),
+                            onChanged: (value) {
+                              if (controllers[1].text != item.theme) {
+                                context.read<PacingCubit>().editImprovisation(item.copyWith(theme: controllers[1].text));
+                              }
+                            }),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: TextField(
                           controller: controllers[2],
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintText: S.of(context).PacingView_ImprovisationParticipants,
-                            border: const OutlineInputBorder(),
                           ),
                           onChanged: (value) {
                             var performers = controllers[2].text.isEmpty ? null : int.parse(controllers[2].text);
@@ -238,7 +230,7 @@ class PacingView extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: TextField(
                           readOnly: true,
                           controller: TextEditingController(text: getDurationString(item.duration)),
@@ -281,7 +273,6 @@ class PacingView extends StatelessWidget {
                           },
                           decoration: InputDecoration(
                             hintText: S.of(context).PacingView_ImprovisationDurationHint,
-                            border: const OutlineInputBorder(),
                           ),
                         ),
                       ),

@@ -32,7 +32,7 @@ class ListItem extends StatelessWidget {
         ),
         subtitle: Text(
           S.of(context).ListItem_Modified(DateFormat.yMd().add_jm().format(entity.modifiedDate!)),
-          overflow: TextOverflow.ellipsis,
+          overflow: TextOverflow.fade,
         ),
         onTap: () {
           if (entity is PacingModel) {

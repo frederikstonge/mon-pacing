@@ -54,7 +54,7 @@ class MatchView extends StatelessWidget {
           ),
           body: PageView(
             controller: matchCubit.pageController,
-            children: matchCubit.state.improvisations.map((e) => MatchImprovisation(improvisation: e)).toList(),
+            children: matchCubit.state.improvisations.map((e) => MatchImprovisation(improvisation: e, match: state)).toList(),
           ),
         ),
       ),

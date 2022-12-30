@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -8,6 +9,7 @@ import '../cubits/match_cubit.dart';
 import '../models/match_model.dart';
 
 class MatchOptionsView extends StatelessWidget {
+  static const int teamNameMaxLength = 20;
   const MatchOptionsView({super.key});
 
   @override
@@ -81,13 +83,20 @@ class MatchOptionsView extends StatelessWidget {
                           onChanged: (value) {
                             context.read<MatchCubit>().editTeam(e.copyWith(name: teamController.text));
                           },
+                          decoration: const InputDecoration(
+                            hintText: "Team name",
+                          ),
+                          maxLength: teamNameMaxLength,
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            context.read<MatchCubit>().removeTeam(e);
-                          },
-                        ),
+                        trailing: state.teams.length > 1
+                            ? IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  context.read<MatchCubit>().removeTeam(e);
+                                },
+                              )
+                            : null,
                       );
                     },
                   ).toList(),

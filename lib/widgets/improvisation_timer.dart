@@ -25,21 +25,22 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final ColorScheme colors = Theme.of(context).colorScheme;
     return Column(
       children: [
         CircularCountDownTimer(
           duration: widget.improvisation.duration.inSeconds,
           initialDuration: 0,
           controller: _controller,
-          ringColor: Theme.of(context).colorScheme.background,
+          ringColor: colors.onSurface.withOpacity(0.12),
           ringGradient: null,
-          fillColor: Theme.of(context).colorScheme.primary,
+          fillColor: colors.primary,
           fillGradient: null,
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: colors.onPrimary,
           backgroundGradient: null,
           strokeWidth: 20.0,
           strokeCap: StrokeCap.round,
-          textStyle: TextStyle(fontSize: 33.0, color: Theme.of(context).textTheme.bodyText1!.color, fontWeight: FontWeight.bold),
+          textStyle: TextStyle(fontSize: 33.0, color: colors.primary, fontWeight: FontWeight.bold),
           textFormat: CountdownTextFormat.minutesSeconds,
           isReverse: true,
           isReverseAnimation: true,
@@ -73,40 +74,46 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                child: IconButton(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  disabledColor: Theme.of(context).colorScheme.background,
-                  onPressed: isPaused || !isStarted ? _play : null,
-                  icon: const Icon(Icons.play_arrow),
+              child: IconButton(
+                onPressed: isPaused || !isStarted ? _play : null,
+                icon: const Icon(Icons.play_arrow),
+                style: IconButton.styleFrom(
+                  foregroundColor: colors.onPrimary,
+                  backgroundColor: colors.primary,
+                  disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
+                  hoverColor: colors.onPrimary.withOpacity(0.08),
+                  focusColor: colors.onPrimary.withOpacity(0.12),
+                  highlightColor: colors.onPrimary.withOpacity(0.12),
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                child: IconButton(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  disabledColor: Theme.of(context).colorScheme.background,
-                  onPressed: isStarted && !isPaused ? _pause : null,
-                  icon: const Icon(Icons.pause),
+              child: IconButton(
+                onPressed: isStarted && !isPaused ? _pause : null,
+                icon: const Icon(Icons.pause),
+                style: IconButton.styleFrom(
+                  foregroundColor: colors.onPrimary,
+                  backgroundColor: colors.primary,
+                  disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
+                  hoverColor: colors.onPrimary.withOpacity(0.08),
+                  focusColor: colors.onPrimary.withOpacity(0.12),
+                  highlightColor: colors.onPrimary.withOpacity(0.12),
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                child: IconButton(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  disabledColor: Theme.of(context).colorScheme.background,
-                  onPressed: isStarted ? _reset : null,
-                  icon: const Icon(Icons.undo),
+              child: IconButton(
+                onPressed: isStarted ? _reset : null,
+                icon: const Icon(Icons.undo),
+                style: IconButton.styleFrom(
+                  foregroundColor: colors.onPrimary,
+                  backgroundColor: colors.primary,
+                  disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
+                  hoverColor: colors.onPrimary.withOpacity(0.08),
+                  focusColor: colors.onPrimary.withOpacity(0.12),
+                  highlightColor: colors.onPrimary.withOpacity(0.12),
                 ),
               ),
             ),

@@ -20,7 +20,7 @@ import 'cubits/pacings_cubit.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 
-String settingsModelKey = "SettingsModel";
+const String settingsModelKey = "SettingsModel";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
