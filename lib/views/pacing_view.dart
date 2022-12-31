@@ -12,16 +12,23 @@ import '../cubits/pacing_cubit.dart';
 import '../models/pacing_model.dart';
 import '../dialogs/delete_dialog.dart';
 import '../models/settings_model.dart';
+import '../pages/pacing_options_page.dart';
 import '../widgets/expansion_tile_card.dart';
 
 class PacingView extends StatelessWidget {
-  static const double kExpandedHeight = 150.0;
   static const double kBottomHeight = 40.0;
   final PacingModel? model;
   const PacingView({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
+    var pacingCubit = context.read<PacingCubit>();
+    if (pacingCubit.state.id == null) {
+      Future.microtask(() {
+        _openPacingOptions(context, pacingCubit);
+      });
+    }
+
     var theme = Theme.of(context);
     return BlocBuilder<PacingCubit, PacingModel>(
       builder: (context, state) => WillPopScope(
@@ -48,7 +55,6 @@ class PacingView extends StatelessWidget {
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
-                expandedHeight: kExpandedHeight,
                 pinned: true,
                 snap: true,
                 floating: true,
@@ -58,42 +64,20 @@ class PacingView extends StatelessWidget {
                 ),
                 actions: [
                   IconButton(
+                    onPressed: () {
+                      _openPacingOptions(context, pacingCubit);
+                    },
+                    icon: const Icon(Icons.settings),
+                    tooltip: S.of(context).MatchView_EditDetails,
+                  ),
+                  IconButton(
                     onPressed: () async {
-                      final navigator = Navigator.of(context);
-                      if (state.id == null) {
-                        await context.read<PacingsCubit>().add(state);
-                      } else {
-                        await context.read<PacingsCubit>().edit(state);
-                      }
-
-                      navigator.pop();
+                      await _savePacing(context, state);
                     },
                     icon: const Icon(Icons.save),
                     tooltip: S.of(context).PacingView_Save,
                   ),
                 ],
-                flexibleSpace: FlexibleSpaceBar(
-                  expandedTitleScale: 1,
-                  titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, kBottomHeight),
-                  title: Builder(
-                    builder: (context) {
-                      var controller = context.read<PacingCubit>().nameController;
-                      return TextField(
-                        style: TextStyle(color: theme.textTheme.bodyText1!.color),
-                        controller: controller,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: theme.cardColor,
-                          hintText: S.of(context).PacingView_Name,
-                          border: const OutlineInputBorder(),
-                        ),
-                        onChanged: (value) {
-                          context.read<PacingCubit>().editName(controller.text);
-                        },
-                      );
-                    },
-                  ),
-                ),
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(kBottomHeight),
                   child: Padding(
@@ -315,5 +299,27 @@ class PacingView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _openPacingOptions(BuildContext context, PacingCubit pacingCubit) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: ((context) => PacingOptionsPage(
+              bloc: pacingCubit,
+            )),
+      ),
+    );
+  }
+
+  Future _savePacing(BuildContext context, PacingModel state) async {
+    final navigator = Navigator.of(context);
+    if (state.id == null) {
+      await context.read<PacingsCubit>().add(state);
+    } else {
+      await context.read<PacingsCubit>().edit(state);
+    }
+
+    navigator.pop();
   }
 }

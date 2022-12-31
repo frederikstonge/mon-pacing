@@ -18,7 +18,7 @@ class MatchView extends StatelessWidget {
     if (matchCubit.state.teams.isEmpty) {
       Future.microtask(() {
         matchCubit.initialize();
-        openMatchOptions(context, matchCubit);
+        _openMatchOptions(context, matchCubit);
       });
     }
 
@@ -38,16 +38,16 @@ class MatchView extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  openMatchSummary(context, matchCubit);
+                  _openMatchSummary(context, matchCubit);
                 },
                 icon: const Icon(Icons.summarize),
                 tooltip: S.of(context).MatchView_ViewMatchSummary,
               ),
               IconButton(
                 onPressed: () {
-                  openMatchOptions(context, matchCubit);
+                  _openMatchOptions(context, matchCubit);
                 },
-                icon: const Icon(Icons.edit),
+                icon: const Icon(Icons.settings),
                 tooltip: S.of(context).MatchView_EditDetails,
               ),
             ],
@@ -61,7 +61,7 @@ class MatchView extends StatelessWidget {
     );
   }
 
-  openMatchOptions(BuildContext context, MatchCubit matchCubit) {
+  _openMatchOptions(BuildContext context, MatchCubit matchCubit) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -72,7 +72,7 @@ class MatchView extends StatelessWidget {
     );
   }
 
-  openMatchSummary(BuildContext context, MatchCubit matchCubit) {
+  _openMatchSummary(BuildContext context, MatchCubit matchCubit) {
     Navigator.push(
       context,
       MaterialPageRoute(

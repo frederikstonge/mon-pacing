@@ -230,6 +230,26 @@ class S {
     );
   }
 
+  /// `Nom du pacing`
+  String get PacingOptionsView_Name {
+    return Intl.message(
+      'Nom du pacing',
+      name: 'PacingOptionsView_Name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{title} Options`
+  String PacingOptionsView_Title(Object title) {
+    return Intl.message(
+      '$title Options',
+      name: 'PacingOptionsView_Title',
+      desc: '',
+      args: [title],
+    );
+  }
+
   /// `Add Improvisation`
   String get PacingView_AddImprovisation {
     return Intl.message(
@@ -336,16 +356,6 @@ class S {
     return Intl.message(
       'Type',
       name: 'PacingView_ImprovisationType',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Pacing Name`
-  String get PacingView_Name {
-    return Intl.message(
-      'Pacing Name',
-      name: 'PacingView_Name',
       desc: '',
       args: [],
     );

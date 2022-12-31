@@ -29,14 +29,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(title) => "${title} Options";
 
-  static String m4(type, category, theme, performers, duration) =>
+  static String m4(title) => "${title} Options";
+
+  static String m5(type, category, theme, performers, duration) =>
       "${type} | ${category} | ${theme} | ${performers} | ${duration}";
 
-  static String m5(order) => "Improvisation #${order}";
+  static String m6(order) => "Improvisation #${order}";
 
-  static String m6(duration) => "Total time: ${duration}";
+  static String m7(duration) => "Total time: ${duration}";
 
-  static String m7(count) => "Improvisations: ${count}";
+  static String m8(count) => "Improvisations: ${count}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -66,6 +68,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "MatchView_WillPopDialog_Title":
             MessageLookupByLibrary.simpleMessage("Match in progress"),
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matches"),
+        "PacingOptionsView_Name":
+            MessageLookupByLibrary.simpleMessage("Nom du pacing"),
+        "PacingOptionsView_Title": m4,
         "PacingView_AddImprovisation":
             MessageLookupByLibrary.simpleMessage("Add Improvisation"),
         "PacingView_ImprovisationCategory":
@@ -80,18 +85,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select duration"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("# of participant"),
-        "PacingView_ImprovisationSubtitle": m4,
+        "PacingView_ImprovisationSubtitle": m5,
         "PacingView_ImprovisationTheme":
             MessageLookupByLibrary.simpleMessage("Theme"),
-        "PacingView_ImprovisationTitle": m5,
+        "PacingView_ImprovisationTitle": m6,
         "PacingView_ImprovisationType":
             MessageLookupByLibrary.simpleMessage("Type"),
-        "PacingView_Name": MessageLookupByLibrary.simpleMessage("Pacing Name"),
         "PacingView_NewPacing":
             MessageLookupByLibrary.simpleMessage("New Pacing"),
         "PacingView_Save": MessageLookupByLibrary.simpleMessage("Save"),
-        "PacingView_TotalDuration": m6,
-        "PacingView_TotalImprovisations": m7,
+        "PacingView_TotalDuration": m7,
+        "PacingView_TotalImprovisations": m8,
         "PacingView_WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to go back? You will lose all unsaved changes."),
         "PacingView_WillPopDialog_Title":
