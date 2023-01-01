@@ -109,7 +109,7 @@ class PacingView extends StatelessWidget {
                               }
 
                               return Text(
-                                S.of(context).PacingView_TotalDuration(getDurationString(totalDuration)),
+                                S.of(context).PacingView_TotalDuration(DurationHelper.getDurationString(totalDuration)),
                                 style: TextStyle(color: theme.colorScheme.onPrimary),
                                 textAlign: TextAlign.end,
                               );
@@ -133,7 +133,7 @@ class PacingView extends StatelessWidget {
                         item.category.isNotEmpty ? item.category : '-',
                         item.theme.isNotEmpty ? item.theme : '-',
                         item.performers ?? '-',
-                        getDurationString(item.duration),
+                        DurationHelper.getDurationString(item.duration),
                       );
 
                   var controllers = context.read<PacingCubit>().controllers[index];
@@ -217,7 +217,7 @@ class PacingView extends StatelessWidget {
                         padding: const EdgeInsets.all(12.0),
                         child: TextField(
                           readOnly: true,
-                          controller: TextEditingController(text: getDurationString(item.duration)),
+                          controller: TextEditingController(text: DurationHelper.getDurationString(item.duration)),
                           onTap: () async {
                             Picker(
                               adapter: NumberPickerAdapter(data: <NumberPickerColumn>[

@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => MaterialApp(
             title: 'Mon Pacing',
             theme: ThemeData(
-              primarySwatch: generateMaterialColor(color: Color(state.color)),
+              primarySwatch: MaterialColorHelper.generateMaterialColor(color: Color(state.color)),
               brightness: Brightness.light,
             ),
             debugShowCheckedModeBanner: false,

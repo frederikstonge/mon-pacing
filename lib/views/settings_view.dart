@@ -84,7 +84,7 @@ class SettingsView extends StatelessWidget {
               ),
               SettingsTile(
                 title: Text(S.of(context).SettingsView_PaddingDuration),
-                value: Text(getDurationString(state.paddingDuration)),
+                value: Text(DurationHelper.getDurationString(state.paddingDuration)),
                 onPressed: (context) {
                   Picker(
                     adapter: NumberPickerAdapter(data: <NumberPickerColumn>[

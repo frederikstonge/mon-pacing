@@ -37,7 +37,7 @@ class MatchImprovisation extends StatelessWidget {
                       improvisation.category.isNotEmpty ? improvisation.category : "-",
                       improvisation.theme.isNotEmpty ? improvisation.theme : "-",
                       improvisation.performers ?? "-",
-                      getDurationString(improvisation.duration),
+                      DurationHelper.getDurationString(improvisation.duration),
                     ),
               ),
             ),
