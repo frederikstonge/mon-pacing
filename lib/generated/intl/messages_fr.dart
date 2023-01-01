@@ -129,6 +129,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choisir la couleur du thème"),
         "Settings_View_EnablePaddingDurationDescription":
             MessageLookupByLibrary.simpleMessage(
-                "Temps d\'extra à ajouter pour chaque improvisation dans le total")
+                "Temps d\'extra à ajouter pour chaque improvisation dans le total"),
+        "ValidadatorHelper_FieldIsRequired":
+            MessageLookupByLibrary.simpleMessage("Le champ est obligatoire"),
+        "ValidadatorHelper_ValidationMessageDialog_Content":
+            MessageLookupByLibrary.simpleMessage(
+                "Veuillez régler toutes les erreurs de validation."),
+        "ValidadatorHelper_ValidationMessageDialog_Title":
+            MessageLookupByLibrary.simpleMessage("Erreur de validation")
       };
 }

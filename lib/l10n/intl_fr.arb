@@ -49,5 +49,8 @@
   "SettingsView_Section_Application": "Application",
   "SettingsView_Section_Pacings": "Pacings",
   "SettingsView_ThemeTitle": "Choisir la couleur du thème",
-  "Settings_View_EnablePaddingDurationDescription": "Temps d'extra à ajouter pour chaque improvisation dans le total"
+  "Settings_View_EnablePaddingDurationDescription": "Temps d'extra à ajouter pour chaque improvisation dans le total",
+  "ValidadatorHelper_FieldIsRequired": "Le champ est obligatoire",
+  "ValidadatorHelper_ValidationMessageDialog_Content": "Veuillez régler toutes les erreurs de validation.",
+  "ValidadatorHelper_ValidationMessageDialog_Title": "Erreur de validation"
 }

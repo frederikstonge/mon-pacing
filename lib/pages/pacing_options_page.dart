@@ -10,9 +10,10 @@ class PacingOptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var formKey = GlobalKey<FormState>();
     return BlocProvider.value(
       value: bloc,
-      child: const PacingOptionsView(),
+      child: PacingOptionsView(formKey: formKey),
     );
   }
 }

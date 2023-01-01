@@ -560,6 +560,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Field is required`
+  String get ValidadatorHelper_FieldIsRequired {
+    return Intl.message(
+      'Field is required',
+      name: 'ValidadatorHelper_FieldIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please resolve all validation errors.`
+  String get ValidadatorHelper_ValidationMessageDialog_Content {
+    return Intl.message(
+      'Please resolve all validation errors.',
+      name: 'ValidadatorHelper_ValidationMessageDialog_Content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation error`
+  String get ValidadatorHelper_ValidationMessageDialog_Title {
+    return Intl.message(
+      'Validation error',
+      name: 'ValidadatorHelper_ValidationMessageDialog_Title',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

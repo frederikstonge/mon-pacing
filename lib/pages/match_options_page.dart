@@ -6,13 +6,15 @@ import '../views/match_options_view.dart';
 
 class MatchOptionsPage extends StatelessWidget {
   final MatchCubit bloc;
+
   const MatchOptionsPage({super.key, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
+    var formKey = GlobalKey<FormState>();
     return BlocProvider.value(
       value: bloc,
-      child: const MatchOptionsView(),
+      child: MatchOptionsView(formKey: formKey),
     );
   }
 }
