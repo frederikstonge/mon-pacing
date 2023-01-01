@@ -13,8 +13,9 @@ class MatchOptionsView extends StatelessWidget {
   static const int teamNameMaxLength = 20;
 
   final GlobalKey<FormState> formKey;
+  final bool isNew;
 
-  const MatchOptionsView({super.key, required this.formKey});
+  const MatchOptionsView({super.key, required this.formKey, required this.isNew});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,17 @@ class MatchOptionsView extends StatelessWidget {
       child: BlocBuilder<MatchCubit, MatchModel>(
         builder: (context, state) => Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: !isNew,
+            actions: isNew
+                ? [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_forward),
+                      onPressed: () {
+                        Navigator.maybePop(context);
+                      },
+                    )
+                  ]
+                : null,
             title: Text(S.of(context).MatchOptionsView_Title(state.name), overflow: TextOverflow.ellipsis),
           ),
           body: Builder(
@@ -44,6 +56,7 @@ class MatchOptionsView extends StatelessWidget {
                         SettingsTile(
                           title: Text(S.of(context).MatchOptionsView_Name, overflow: TextOverflow.ellipsis),
                           value: TextFormField(
+                            autofocus: isNew,
                             onChanged: (value) {
                               context.read<MatchCubit>().editName(controller.text);
                             },
@@ -82,9 +95,8 @@ class MatchOptionsView extends StatelessWidget {
                                         child: BlockPicker(
                                           pickerColor: Color(e.color),
                                           onColorChanged: (value) async {
-                                            var navigator = Navigator.of(dialogContext);
                                             context.read<MatchCubit>().editTeam(e.copyWith(color: value.value));
-                                            navigator.pop();
+                                            Navigator.pop(dialogContext);
                                           },
                                         ),
                                       ),

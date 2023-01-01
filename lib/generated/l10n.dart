@@ -250,6 +250,16 @@ class S {
     );
   }
 
+  /// `New pacing {date}`
+  String PacingPage_NewPacingName(Object date) {
+    return Intl.message(
+      'New pacing $date',
+      name: 'PacingPage_NewPacingName',
+      desc: '',
+      args: [date],
+    );
+  }
+
   /// `Add Improvisation`
   String get PacingView_AddImprovisation {
     return Intl.message(
@@ -356,16 +366,6 @@ class S {
     return Intl.message(
       'Type',
       name: 'PacingView_ImprovisationType',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `New Pacing`
-  String get PacingView_NewPacing {
-    return Intl.message(
-      'New Pacing',
-      name: 'PacingView_NewPacing',
       desc: '',
       args: [],
     );

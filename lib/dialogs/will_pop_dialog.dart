@@ -13,13 +13,13 @@ class WillPopDialog {
           TextButton(
             child: Text(S.of(context).Dialog_Cancel),
             onPressed: () {
-              Navigator.of(alertContext).pop(false);
+              Navigator.pop(alertContext, false);
             },
           ),
           TextButton(
             child: Text(S.of(context).Dialog_Ok),
             onPressed: () {
-              Navigator.of(alertContext).pop(true);
+              Navigator.pop(alertContext, true);
             },
           ),
         ],

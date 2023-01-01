@@ -25,7 +25,7 @@ class PacingView extends StatelessWidget {
     var pacingCubit = context.read<PacingCubit>();
     if (pacingCubit.state.id == null) {
       Future.microtask(() {
-        _openPacingOptions(context, pacingCubit);
+        _openPacingOptions(context, pacingCubit, true);
       });
     }
 
@@ -59,13 +59,13 @@ class PacingView extends StatelessWidget {
                 snap: true,
                 floating: true,
                 title: Text(
-                  state.name.isNotEmpty ? state.name : S.of(context).PacingView_NewPacing,
+                  state.name,
                   overflow: TextOverflow.ellipsis,
                 ),
                 actions: [
                   IconButton(
                     onPressed: () {
-                      _openPacingOptions(context, pacingCubit);
+                      _openPacingOptions(context, pacingCubit, false);
                     },
                     icon: const Icon(Icons.settings),
                     tooltip: S.of(context).MatchView_EditDetails,
@@ -301,12 +301,13 @@ class PacingView extends StatelessWidget {
     );
   }
 
-  _openPacingOptions(BuildContext context, PacingCubit pacingCubit) {
+  _openPacingOptions(BuildContext context, PacingCubit pacingCubit, bool isNew) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: ((context) => PacingOptionsPage(
               bloc: pacingCubit,
+              isNew: isNew,
             )),
       ),
     );

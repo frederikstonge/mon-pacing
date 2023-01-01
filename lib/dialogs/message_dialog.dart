@@ -13,7 +13,7 @@ class MessageDialog {
           TextButton(
             child: Text(S.of(context).Dialog_Ok),
             onPressed: () {
-              Navigator.of(alertContext).pop();
+              Navigator.pop(alertContext);
             },
           ),
         ],

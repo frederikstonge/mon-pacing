@@ -13,14 +13,14 @@ class DeleteDialog {
           TextButton(
             child: Text(S.of(context).Dialog_Cancel),
             onPressed: () {
-              Navigator.of(alertContext).pop();
+              Navigator.pop(alertContext);
             },
           ),
           TextButton(
             child: Text(S.of(context).DeleteDialog_Title, style: const TextStyle(color: Colors.red)),
             onPressed: () {
               onDelete();
-              Navigator.of(alertContext).pop();
+              Navigator.pop(alertContext);
             },
           ),
         ],

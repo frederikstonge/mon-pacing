@@ -32,14 +32,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(title) => "Options de ${title}";
 
-  static String m5(type, category, theme, performers, duration) =>
+  static String m5(date) => "Nouveau pacing ${date}";
+
+  static String m6(type, category, theme, performers, duration) =>
       "${type} | ${category} | ${theme} | ${performers} | ${duration}";
 
-  static String m6(order) => "Improvisation #${order}";
+  static String m7(order) => "Improvisation #${order}";
 
-  static String m7(duration) => "Temps total: ${duration}";
+  static String m8(duration) => "Temps total: ${duration}";
 
-  static String m8(count) => "Improvisations: ${count}";
+  static String m9(count) => "Improvisations: ${count}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -73,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "PacingOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Pacing Name"),
         "PacingOptionsView_Title": m4,
+        "PacingPage_NewPacingName": m5,
         "PacingView_AddImprovisation":
             MessageLookupByLibrary.simpleMessage("Ajouter une improvisation"),
         "PacingView_ImprovisationCategory":
@@ -87,17 +90,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sélectionner la durée"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("Nombre de joueur"),
-        "PacingView_ImprovisationSubtitle": m5,
+        "PacingView_ImprovisationSubtitle": m6,
         "PacingView_ImprovisationTheme":
             MessageLookupByLibrary.simpleMessage("Thème"),
-        "PacingView_ImprovisationTitle": m6,
+        "PacingView_ImprovisationTitle": m7,
         "PacingView_ImprovisationType":
             MessageLookupByLibrary.simpleMessage("Type"),
-        "PacingView_NewPacing":
-            MessageLookupByLibrary.simpleMessage("Nouveau Pacing"),
         "PacingView_Save": MessageLookupByLibrary.simpleMessage("Sauvegarder"),
-        "PacingView_TotalDuration": m7,
-        "PacingView_TotalImprovisations": m8,
+        "PacingView_TotalDuration": m8,
+        "PacingView_TotalImprovisations": m9,
         "PacingView_WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(
             "Êtes-vous sûr de vouloir revenir en arrière? Vous allez perdre tous les changements non sauvegardés."),
         "PacingView_WillPopDialog_Title":

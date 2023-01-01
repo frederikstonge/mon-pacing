@@ -9,8 +9,9 @@ import '../models/pacing_model.dart';
 
 class PacingOptionsView extends StatelessWidget {
   final GlobalKey<FormState> formKey;
+  final bool isNew;
 
-  const PacingOptionsView({super.key, required this.formKey});
+  const PacingOptionsView({super.key, required this.formKey, required this.isNew});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,17 @@ class PacingOptionsView extends StatelessWidget {
       child: BlocBuilder<PacingCubit, PacingModel>(
         builder: (context, state) => Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: !isNew,
+            actions: isNew
+                ? [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_forward),
+                      onPressed: () {
+                        Navigator.maybePop(context);
+                      },
+                    )
+                  ]
+                : null,
             title: Text(S.of(context).PacingOptionsView_Title(state.name), overflow: TextOverflow.ellipsis),
           ),
           body: Builder(
@@ -40,6 +52,7 @@ class PacingOptionsView extends StatelessWidget {
                         SettingsTile(
                           title: Text(S.of(context).PacingOptionsView_Name, overflow: TextOverflow.ellipsis),
                           value: TextFormField(
+                            autofocus: isNew,
                             onChanged: (value) {
                               context.read<PacingCubit>().editName(controller.text);
                             },
