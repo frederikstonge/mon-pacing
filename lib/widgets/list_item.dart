@@ -10,6 +10,7 @@ import '../cubits/home_cubit.dart';
 import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
 import '../generated/l10n.dart';
+import '../helpers/path_helper.dart';
 import '../models/match_model.dart';
 import '../models/base_model.dart';
 import '../models/pacing_model.dart';
@@ -80,7 +81,7 @@ class ListItem extends StatelessWidget {
                   var messenger = ScaffoldMessenger.of(context);
                   var model = entity as PacingModel;
                   var data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
-                  var fileName = "${model.name}.json";
+                  var fileName = PathHelper.removeIllegalCharacters("${model.name}.json");
                   var params = SaveFileDialogParams(data: data, fileName: fileName);
                   final filePath = await FlutterFileDialog.saveFile(params: params);
                   if (filePath != null) {
