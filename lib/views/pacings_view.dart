@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/pacings_cubit.dart';
+import '../helpers/listview_helper.dart';
 import '../models/pacing_model.dart';
 import '../states/pacings_state.dart';
 import '../widgets/list_item.dart';
@@ -54,6 +55,7 @@ class PacingsView extends StatelessWidget {
               context.read<PacingsCubit>().refresh();
             },
             child: ListView.builder(
+              padding: ListViewHelper.getFloatingActionButtonPadding(context),
               physics: const AlwaysScrollableScrollPhysics(),
               controller: _scrollController
                 ..addListener(() {

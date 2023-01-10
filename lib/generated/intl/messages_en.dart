@@ -57,8 +57,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "MatchOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Match Name"),
         "MatchOptionsView_Team": MessageLookupByLibrary.simpleMessage("Team"),
-        "MatchOptionsView_TeamColor":
-            MessageLookupByLibrary.simpleMessage("Team Color"),
         "MatchOptionsView_Teams": MessageLookupByLibrary.simpleMessage("Teams"),
         "MatchOptionsView_Title": m3,
         "MatchView_EditDetails":

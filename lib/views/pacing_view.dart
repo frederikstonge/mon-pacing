@@ -267,7 +267,7 @@ class PacingView extends StatelessWidget {
                         children: <Widget>[
                           TextButton(
                             onPressed: () {
-                              DeleteDialog.showDeleteDialog(context, title, () {
+                              DeleteDialog.showDeleteDialog(context, title, () async {
                                 context.read<PacingCubit>().removeImprovisation(index);
                               });
                             },

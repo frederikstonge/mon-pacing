@@ -61,13 +61,13 @@ class ListItem extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
-                DeleteDialog.showDeleteDialog(context, entity.name, () {
+                DeleteDialog.showDeleteDialog(context, entity.name, () async {
                   if (entity is PacingModel) {
                     var model = entity as PacingModel;
-                    context.read<PacingsCubit>().delete(model);
+                    await context.read<PacingsCubit>().delete(model);
                   } else if (entity is MatchModel) {
                     var model = entity as MatchModel;
-                    context.read<MatchesCubit>().delete(model);
+                    await context.read<MatchesCubit>().delete(model);
                   }
                 });
               },

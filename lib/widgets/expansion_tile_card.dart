@@ -1,6 +1,32 @@
 import 'package:flutter/material.dart';
 
 class ExpansionTileCard extends StatefulWidget {
+  final bool isThreeLine;
+  final Widget? leading;
+  final Widget title;
+  final Widget? subtitle;
+  final ValueChanged<bool>? onExpansionChanged;
+  final List<Widget> children;
+  final Widget? trailing;
+  final bool animateTrailing;
+  final BorderRadiusGeometry borderRadius;
+  final double elevation;
+  final double initialElevation;
+  final Color shadowColor;
+  final bool initiallyExpanded;
+  final EdgeInsetsGeometry initialPadding;
+  final EdgeInsetsGeometry finalPadding;
+  final EdgeInsetsGeometry? contentPadding;
+  final Color? baseColor;
+  final Color? expandedColor;
+  final Color? expandedTextColor;
+  final Duration duration;
+  final Curve elevationCurve;
+  final Curve heightFactorCurve;
+  final Curve turnsCurve;
+  final Curve colorCurve;
+  final Curve paddingCurve;
+
   const ExpansionTileCard({
     super.key,
     this.leading,
@@ -29,56 +55,6 @@ class ExpansionTileCard extends StatefulWidget {
     this.shadowColor = const Color(0xffaaaaaa),
     this.animateTrailing = false,
   });
-
-  final bool isThreeLine;
-
-  final Widget? leading;
-
-  final Widget title;
-
-  final Widget? subtitle;
-
-  final ValueChanged<bool>? onExpansionChanged;
-
-  final List<Widget> children;
-
-  final Widget? trailing;
-
-  final bool animateTrailing;
-
-  final BorderRadiusGeometry borderRadius;
-
-  final double elevation;
-
-  final double initialElevation;
-
-  final Color shadowColor;
-
-  final bool initiallyExpanded;
-
-  final EdgeInsetsGeometry initialPadding;
-
-  final EdgeInsetsGeometry finalPadding;
-
-  final EdgeInsetsGeometry? contentPadding;
-
-  final Color? baseColor;
-
-  final Color? expandedColor;
-
-  final Color? expandedTextColor;
-
-  final Duration duration;
-
-  final Curve elevationCurve;
-
-  final Curve heightFactorCurve;
-
-  final Curve turnsCurve;
-
-  final Curve colorCurve;
-
-  final Curve paddingCurve;
 
   @override
   ExpansionTileCardState createState() => ExpansionTileCardState();
@@ -141,22 +117,29 @@ class ExpansionTileCardState extends State<ExpansionTileCard> with SingleTickerP
     super.dispose();
   }
 
-  void _setExpansion(bool shouldBeExpanded) {
-    if (shouldBeExpanded != _isExpanded) {
-      setState(() {
-        _isExpanded = shouldBeExpanded;
-        if (_isExpanded) {
-          _controller.forward();
-        } else {
-          _controller.reverse().then<void>((void value) {
-            if (!mounted) return;
-            setState(() {});
-          });
-        }
-        PageStorage.of(context)?.writeState(context, _isExpanded);
-      });
-      if (widget.onExpansionChanged != null) widget.onExpansionChanged!(_isExpanded);
-    }
+  @override
+  void didChangeDependencies() {
+    final ThemeData theme = Theme.of(context);
+    _headerColorTween
+      ..begin = theme.textTheme.subtitle1!.color
+      ..end = widget.expandedTextColor ?? theme.colorScheme.secondary;
+    _iconColorTween
+      ..begin = theme.unselectedWidgetColor
+      ..end = widget.expandedTextColor ?? theme.colorScheme.secondary;
+    _materialColorTween
+      ..begin = widget.baseColor ?? theme.canvasColor
+      ..end = widget.expandedColor ?? theme.cardColor;
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool closed = !_isExpanded && _controller.isDismissed;
+    return AnimatedBuilder(
+      animation: _controller.view,
+      builder: _buildChildren,
+      child: closed ? null : Column(children: widget.children),
+    );
   }
 
   void expand() {
@@ -217,28 +200,21 @@ class ExpansionTileCardState extends State<ExpansionTileCard> with SingleTickerP
     );
   }
 
-  @override
-  void didChangeDependencies() {
-    final ThemeData theme = Theme.of(context);
-    _headerColorTween
-      ..begin = theme.textTheme.subtitle1!.color
-      ..end = widget.expandedTextColor ?? theme.colorScheme.secondary;
-    _iconColorTween
-      ..begin = theme.unselectedWidgetColor
-      ..end = widget.expandedTextColor ?? theme.colorScheme.secondary;
-    _materialColorTween
-      ..begin = widget.baseColor ?? theme.canvasColor
-      ..end = widget.expandedColor ?? theme.cardColor;
-    super.didChangeDependencies();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bool closed = !_isExpanded && _controller.isDismissed;
-    return AnimatedBuilder(
-      animation: _controller.view,
-      builder: _buildChildren,
-      child: closed ? null : Column(children: widget.children),
-    );
+  void _setExpansion(bool shouldBeExpanded) {
+    if (shouldBeExpanded != _isExpanded) {
+      setState(() {
+        _isExpanded = shouldBeExpanded;
+        if (_isExpanded) {
+          _controller.forward();
+        } else {
+          _controller.reverse().then<void>((void value) {
+            if (!mounted) return;
+            setState(() {});
+          });
+        }
+        PageStorage.of(context)?.writeState(context, _isExpanded);
+      });
+      if (widget.onExpansionChanged != null) widget.onExpansionChanged!(_isExpanded);
+    }
   }
 }

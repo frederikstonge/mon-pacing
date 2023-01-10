@@ -150,16 +150,6 @@ class S {
     );
   }
 
-  /// `Team Color`
-  String get MatchOptionsView_TeamColor {
-    return Intl.message(
-      'Team Color',
-      name: 'MatchOptionsView_TeamColor',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Teams`
   String get MatchOptionsView_Teams {
     return Intl.message(

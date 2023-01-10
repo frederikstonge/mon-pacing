@@ -9,7 +9,6 @@
   "ListItem_Modified": "Modified on {modifiedDate}",
   "MatchOptionsView_Name": "Match Name",
   "MatchOptionsView_Team": "Team",
-  "MatchOptionsView_TeamColor": "Team Color",
   "MatchOptionsView_Teams": "Teams",
   "MatchOptionsView_Title": "{title} Options",
   "MatchView_EditDetails": "Edit details",

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../generated/l10n.dart';
 
 class DeleteDialog {
-  static showDeleteDialog(BuildContext context, String itemName, Function onDelete) {
+  static showDeleteDialog(BuildContext context, String itemName, Future<void> Function() onDelete) {
     showDialog(
       context: context,
       builder: (BuildContext alertContext) => AlertDialog(
@@ -13,14 +13,15 @@ class DeleteDialog {
           TextButton(
             child: Text(S.of(context).Dialog_Cancel),
             onPressed: () {
-              Navigator.pop(alertContext);
+              Navigator.pop(alertContext, false);
             },
           ),
           TextButton(
             child: Text(S.of(context).DeleteDialog_Title, style: const TextStyle(color: Colors.red)),
-            onPressed: () {
-              onDelete();
-              Navigator.pop(alertContext);
+            onPressed: () async {
+              var navigator = Navigator.of(alertContext);
+              await onDelete();
+              navigator.pop(true);
             },
           ),
         ],

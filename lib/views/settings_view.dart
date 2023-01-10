@@ -5,6 +5,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../cubits/settings_cubit.dart';
+import '../dialogs/colorpicker_dialog.dart';
 import '../generated/l10n.dart';
 import '../helpers/duration_helper.dart';
 import '../models/settings_model.dart';
@@ -27,6 +28,9 @@ class SettingsView extends StatelessWidget {
                   backgroundColor: Color(state.color),
                 ),
                 onPressed: (context) {
+                  ColorPickerDialog.showColorPickerDialog(context, Color(state.color), (value) async {
+                    await context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
+                  });
                   showDialog(
                     context: context,
                     builder: (dialogContext) {

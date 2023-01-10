@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../dialogs/colorpicker_dialog.dart';
 import '../generated/l10n.dart';
 import '../cubits/match_cubit.dart';
 import '../helpers/validator_helper.dart';
@@ -86,23 +86,9 @@ class MatchOptionsView extends StatelessWidget {
                           return SettingsTile(
                             leading: InkWell(
                               onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (dialogContext) {
-                                    return AlertDialog(
-                                      title: Text(S.of(context).MatchOptionsView_TeamColor, overflow: TextOverflow.ellipsis),
-                                      content: SingleChildScrollView(
-                                        child: BlockPicker(
-                                          pickerColor: Color(e.color),
-                                          onColorChanged: (value) async {
-                                            context.read<MatchCubit>().editTeam(e.copyWith(color: value.value));
-                                            Navigator.pop(dialogContext);
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
+                                ColorPickerDialog.showColorPickerDialog(context, Color(e.color), (value) async {
+                                  await context.read<MatchCubit>().editTeam(e.copyWith(color: value.value));
+                                });
                               },
                               child: CircleAvatar(
                                 backgroundColor: Color(e.color),
