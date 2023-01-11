@@ -24,8 +24,6 @@ class PacingsView extends StatelessWidget {
           } else if (state is PacingsErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
           }
-
-          return;
         },
         builder: (context, state) {
           if (state == null) {

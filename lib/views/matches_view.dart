@@ -24,8 +24,6 @@ class MatchesView extends StatelessWidget {
           } else if (state is MatchesErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
           }
-
-          return;
         },
         builder: (context, state) {
           if (state == null) {

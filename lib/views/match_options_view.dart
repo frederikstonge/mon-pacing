@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../cubits/match_cubit.dart';
 import '../dialogs/colorpicker_dialog.dart';
 import '../generated/l10n.dart';
-import '../cubits/match_cubit.dart';
 import '../helpers/validator_helper.dart';
 import '../models/match_model.dart';
 

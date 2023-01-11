@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'base_repository.dart';
 import '../models/match_model.dart';
+import 'base_repository.dart';
 import 'database.dart';
 
 class MatchesRepository extends BaseRepository<MatchModel> {

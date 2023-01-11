@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'base_repository.dart';
 import '../models/pacing_model.dart';
+import 'base_repository.dart';
 import 'database.dart';
 
 class PacingsRepository extends BaseRepository<PacingModel> {
