@@ -1,17 +1,31 @@
-import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:intl/intl.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../helpers/settings_helper.dart';
 import '../models/settings_model.dart';
 
-class SettingsCubit extends Cubit<SettingsModel> {
-  SettingsCubit({required SettingsModel model}) : super(model);
+class SettingsCubit extends HydratedCubit<SettingsModel> {
+  SettingsCubit()
+      : super(
+          SettingsModel(
+            color: Colors.indigo.value,
+            enablePaddingDuration: false,
+            paddingDuration: const Duration(minutes: 1),
+            language: Intl.getCurrentLocale().substring(0, 2) == 'fr' ? 'fr' : 'en',
+          ),
+        );
 
-  Future<void> edit(SettingsModel model) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(SettingsHelper.settingsModelKey, jsonEncode(model.toJson()));
+  void edit(SettingsModel model) {
     emit(model);
+  }
+
+  @override
+  SettingsModel? fromJson(Map<String, dynamic> json) {
+    return SettingsModel.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SettingsModel state) {
+    return state.toJson();
   }
 }

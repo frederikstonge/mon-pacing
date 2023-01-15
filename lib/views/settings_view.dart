@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -28,27 +27,9 @@ class SettingsView extends StatelessWidget {
                   backgroundColor: Color(state.color),
                 ),
                 onPressed: (context) {
-                  ColorPickerDialog.showColorPickerDialog(context, Color(state.color), (value) async {
-                    await context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
+                  ColorPickerDialog.showColorPickerDialog(context, Color(state.color), (value) {
+                    context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
                   });
-                  showDialog(
-                    context: context,
-                    builder: (dialogContext) {
-                      return AlertDialog(
-                        title: Text(S.of(context).SettingsView_ThemeTitle),
-                        content: SingleChildScrollView(
-                          child: BlockPicker(
-                            pickerColor: Color(state.color),
-                            onColorChanged: (value) async {
-                              var navigator = Navigator.of(dialogContext);
-                              await context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
-                              navigator.pop();
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  );
                 },
               ),
               SettingsTile(
@@ -70,7 +51,7 @@ class SettingsView extends StatelessWidget {
                     if (value != null) {
                       var cubit = context.read<SettingsCubit>();
                       await S.load(Locale(value));
-                      await cubit.edit(state.copyWith(language: value));
+                      cubit.edit(state.copyWith(language: value));
                     }
                   },
                 ),
@@ -82,7 +63,7 @@ class SettingsView extends StatelessWidget {
             tiles: [
               SettingsTile.switchTile(
                 initialValue: state.enablePaddingDuration,
-                onToggle: (value) async => await context.read<SettingsCubit>().edit(state.copyWith(enablePaddingDuration: value)),
+                onToggle: (value) => context.read<SettingsCubit>().edit(state.copyWith(enablePaddingDuration: value)),
                 title: Text(S.of(context).SettingsView_EnablePaddingDuration),
                 description: Text(S.of(context).Settings_View_EnablePaddingDurationDescription),
               ),
@@ -117,12 +98,12 @@ class SettingsView extends StatelessWidget {
                     hideHeader: true,
                     confirmText: S.of(context).Dialog_Ok,
                     title: Text(S.of(context).PacingView_ImprovisationDurationTitle),
-                    onConfirm: (Picker picker, List<int> value) async {
+                    onConfirm: (Picker picker, List<int> value) {
                       var duration = Duration(
                         minutes: picker.getSelectedValues()[0],
                         seconds: picker.getSelectedValues()[1],
                       );
-                      await context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: duration));
+                      context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: duration));
                     },
                   ).showDialog(context);
                 },

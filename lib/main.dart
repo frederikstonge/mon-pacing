@@ -1,13 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'cubits/home_cubit.dart';
 import 'generated/l10n.dart';
 import 'cubits/matches_cubit.dart';
 import 'cubits/settings_cubit.dart';
 import 'helpers/material_color_helper.dart';
-import 'helpers/settings_helper.dart';
 import 'models/settings_model.dart';
 import 'pages/home_page.dart';
 import 'pages/matches_page.dart';
@@ -19,13 +21,14 @@ import 'repositories/pacings_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var settingsModel = await SettingsHelper.getSettingsModel();
-  runApp(MyApp(model: settingsModel));
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb ? HydratedStorage.webStorageDirectory : await getTemporaryDirectory(),
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final SettingsModel model;
-  const MyApp({super.key, required this.model});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class MyApp extends StatelessWidget {
             create: (blocContext) => MatchesCubit(repository: blocContext.read<MatchesRepository>()),
           ),
           BlocProvider(
-            create: (blocContext) => SettingsCubit(model: model),
+            create: (blocContext) => SettingsCubit(),
           ),
           BlocProvider(
             create: (context) => HomeCubit(),
@@ -76,7 +79,7 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            locale: Locale(model.language),
+            locale: Locale(state.language),
           ),
         ),
       ),
