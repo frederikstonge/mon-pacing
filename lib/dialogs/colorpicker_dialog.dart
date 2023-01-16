@@ -11,8 +11,8 @@ class ColorPickerDialog {
             child: BlockPicker(
               pickerColor: pickerColor,
               onColorChanged: (value) {
-                onColorChanged(value);
                 Navigator.of(dialogContext).pop(true);
+                onColorChanged(value);
               },
             ),
           ),

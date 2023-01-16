@@ -55,9 +55,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mixte"),
         "ListItem_ExportSuccess": m1,
         "ListItem_Modified": m2,
+        "MatchOptionsView_Match": MessageLookupByLibrary.simpleMessage("Match"),
         "MatchOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Nom du match"),
         "MatchOptionsView_Team": MessageLookupByLibrary.simpleMessage("Équipe"),
+        "MatchOptionsView_TeamName":
+            MessageLookupByLibrary.simpleMessage("Nom de l\'équipe"),
         "MatchOptionsView_Teams":
             MessageLookupByLibrary.simpleMessage("Équipes"),
         "MatchOptionsView_Title": m3,
@@ -72,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matchs"),
         "PacingOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Pacing Name"),
+        "PacingOptionsView_Pacing":
+            MessageLookupByLibrary.simpleMessage("Pacing"),
         "PacingOptionsView_Title": m4,
         "PacingPage_NewPacingName": m5,
         "PacingView_AddImprovisation":

@@ -1,5 +1,5 @@
 abstract class BaseRepository<T> {
-  Future<List<T>> getList(int page);
+  Future<List<T>> getList(int skip, int take);
 
   Future<T?> get(int id);
 

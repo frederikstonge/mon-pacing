@@ -5,22 +5,22 @@ import '../models/pacing_model.dart';
 import '../repositories/matches_repository.dart';
 import '../states/matches_state.dart';
 
-class MatchesCubit extends Cubit<MatchesState?> {
+class MatchesCubit extends Cubit<MatchesState> {
+  static const int _pageSize = 20;
   final MatchesRepository repository;
-  int _page = 1;
   bool _isFetching = false;
 
-  MatchesCubit({required this.repository}) : super(null);
+  MatchesCubit({required this.repository}) : super(const MatchesState.initial());
 
   bool get isFetching => _isFetching;
 
-  Future<MatchModel> add(PacingModel model) async {
+  Future<MatchModel> add(PacingModel model, String name) async {
     try {
       var matchModel = MatchModel(
         createdDate: null,
         modifiedDate: null,
         id: null,
-        name: model.name,
+        name: name,
         improvisations: model.copyWith().improvisations,
         penalties: [],
         teams: [],
@@ -50,29 +50,30 @@ class MatchesCubit extends Cubit<MatchesState?> {
 
   Future fetch() async {
     _isFetching = true;
-    emit(const MatchesLoadingState());
     try {
-      final response = await repository.getList(_page);
-      emit(MatchesSuccessState(matches: response));
-      _page++;
+      state.when(
+        initial: () async {
+          final response = await repository.getList(0, _pageSize);
+          emit(MatchesState.success(response, response.length < _pageSize));
+        },
+        error: (error) async {
+          final response = await repository.getList(0, _pageSize);
+          emit(MatchesState.success(response, response.length < _pageSize));
+        },
+        success: (matches, hasReachedMax) async {
+          final response = await repository.getList(matches.length, _pageSize);
+          emit(MatchesState.success(matches + response, response.length < _pageSize));
+        },
+      );
     } catch (exception) {
-      emit(MatchesErrorState(error: exception.toString()));
+      emit(MatchesState.error(exception.toString()));
+    } finally {
+      _isFetching = false;
     }
-    _isFetching = false;
   }
 
   Future refresh() async {
-    emit(const MatchesInitialState());
-    _isFetching = true;
-    emit(const MatchesLoadingState());
-    try {
-      _page = 1;
-      final response = await repository.getList(_page);
-      emit(MatchesSuccessState(matches: response));
-      _page++;
-    } catch (exception) {
-      emit(MatchesErrorState(error: exception.toString()));
-    }
-    _isFetching = false;
+    emit(const MatchesState.initial());
+    await fetch();
   }
 }

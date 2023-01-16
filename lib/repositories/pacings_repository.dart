@@ -5,8 +5,6 @@ import 'base_repository.dart';
 import 'database.dart';
 
 class PacingsRepository extends BaseRepository<PacingModel> {
-  static const int _pageSize = 20;
-
   @override
   Future<PacingModel> add(PacingModel entity) async {
     if (entity.id != null) {
@@ -68,12 +66,12 @@ class PacingsRepository extends BaseRepository<PacingModel> {
   }
 
   @override
-  Future<List<PacingModel>> getList(int page) async {
+  Future<List<PacingModel>> getList(int skip, int take) async {
     var db = await database;
     var items = await db.query(
       pacingsTable,
-      offset: (page - 1) * _pageSize,
-      limit: _pageSize,
+      offset: skip,
+      limit: take,
       orderBy: "$modifiedDateField DESC",
     );
 

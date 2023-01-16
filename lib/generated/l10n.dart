@@ -130,6 +130,16 @@ class S {
     );
   }
 
+  /// `Match`
+  String get MatchOptionsView_Match {
+    return Intl.message(
+      'Match',
+      name: 'MatchOptionsView_Match',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Match Name`
   String get MatchOptionsView_Name {
     return Intl.message(
@@ -145,6 +155,16 @@ class S {
     return Intl.message(
       'Team',
       name: 'MatchOptionsView_Team',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Team Name`
+  String get MatchOptionsView_TeamName {
+    return Intl.message(
+      'Team Name',
+      name: 'MatchOptionsView_TeamName',
       desc: '',
       args: [],
     );
@@ -225,6 +245,16 @@ class S {
     return Intl.message(
       'Nom du pacing',
       name: 'PacingOptionsView_Name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pacing`
+  String get PacingOptionsView_Pacing {
+    return Intl.message(
+      'Pacing',
+      name: 'PacingOptionsView_Pacing',
       desc: '',
       args: [],
     );

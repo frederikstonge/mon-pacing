@@ -9,17 +9,21 @@ import '../widgets/match_improvisation.dart';
 import '../pages/match_options_page.dart';
 import 'match_summary_view.dart';
 
-class MatchView extends StatelessWidget {
+class MatchView extends StatefulWidget {
   const MatchView({super.key});
+
+  @override
+  State<MatchView> createState() => _MatchViewState();
+}
+
+class _MatchViewState extends State<MatchView> {
+  final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     var matchCubit = context.read<MatchCubit>();
     if (matchCubit.state.teams.isEmpty) {
-      Future.microtask(() {
-        matchCubit.initialize();
-        _openMatchOptions(context, matchCubit, true);
-      });
+      matchCubit.initialize();
     }
 
     return BlocBuilder<MatchCubit, MatchModel>(
@@ -45,7 +49,7 @@ class MatchView extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  _openMatchOptions(context, matchCubit, false);
+                  _openMatchOptions(context, matchCubit);
                 },
                 icon: const Icon(Icons.settings),
                 tooltip: S.of(context).MatchView_EditDetails,
@@ -53,7 +57,7 @@ class MatchView extends StatelessWidget {
             ],
           ),
           body: PageView(
-            controller: matchCubit.pageController,
+            controller: _pageController,
             children: matchCubit.state.improvisations.map((e) => MatchImprovisation(improvisation: e, match: state)).toList(),
           ),
         ),
@@ -61,13 +65,12 @@ class MatchView extends StatelessWidget {
     );
   }
 
-  _openMatchOptions(BuildContext context, MatchCubit matchCubit, bool isNew) {
+  _openMatchOptions(BuildContext context, MatchCubit matchCubit) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: ((context) => MatchOptionsPage(
               bloc: matchCubit,
-              isNew: isNew,
             )),
       ),
     );

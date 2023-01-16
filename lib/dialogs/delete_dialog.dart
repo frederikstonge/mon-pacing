@@ -20,8 +20,8 @@ class DeleteDialog {
             child: Text(S.of(context).DeleteDialog_Title, style: const TextStyle(color: Colors.red)),
             onPressed: () async {
               var navigator = Navigator.of(alertContext);
-              await onDelete();
               navigator.pop(true);
+              await onDelete();
             },
           ),
         ],

@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:intl/intl.dart';
 
 import '../cubits/pacings_cubit.dart';
+import '../dialogs/text_dialog.dart';
 import '../generated/l10n.dart';
 import '../models/pacing_model.dart';
 import '../views/pacings_view.dart';
@@ -24,7 +26,26 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
   @override
   FloatingActionButton? getFloatingActionButton(BuildContext context) => FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: ((context) => const PacingPage())));
+          TextDialog.showTextDialog(
+            context,
+            title,
+            S.of(context).PacingPage_NewPacingName(DateFormat.yMd().add_jm().format(DateTime.now())),
+            true,
+            (value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => PacingPage(
+                      model: PacingModel(
+                        createdDate: null,
+                        id: null,
+                        modifiedDate: null,
+                        name: value,
+                        improvisations: [],
+                      ),
+                    )),
+              ),
+            ),
+          );
         },
         tooltip: S.of(context).PacingsPage_AddPacingTooltip,
         child: const Icon(Icons.add),
@@ -60,6 +81,6 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
 
   @override
   Widget build(BuildContext context) {
-    return PacingsView();
+    return const PacingsView();
   }
 }

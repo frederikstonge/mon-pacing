@@ -1,29 +1,12 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../models/match_model.dart';
 
-abstract class MatchesState {
-  const MatchesState();
-}
+part 'matches_state.freezed.dart';
 
-class MatchesInitialState extends MatchesState {
-  const MatchesInitialState();
-}
-
-class MatchesLoadingState extends MatchesState {
-  const MatchesLoadingState();
-}
-
-class MatchesSuccessState extends MatchesState {
-  final List<MatchModel> matches;
-
-  const MatchesSuccessState({
-    required this.matches,
-  });
-}
-
-class MatchesErrorState extends MatchesState {
-  final String error;
-
-  const MatchesErrorState({
-    required this.error,
-  });
+@freezed
+class MatchesState with _$MatchesState {
+  const factory MatchesState.initial() = MatchesInitialState;
+  const factory MatchesState.error(String error) = MatchesErrorState;
+  const factory MatchesState.success(List<MatchModel> matches, bool hasReachedMax) = MatchesSuccessState;
 }

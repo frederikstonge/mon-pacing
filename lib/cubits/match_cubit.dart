@@ -10,18 +10,8 @@ import 'matches_cubit.dart';
 
 class MatchCubit extends Cubit<MatchModel> {
   final MatchesCubit matchesCubit;
-  final TextEditingController nameController = TextEditingController();
-  final PageController pageController = PageController();
-  List<TextEditingController> controllers = [];
 
-  MatchCubit({required MatchModel model, required this.matchesCubit}) : super(model) {
-    nameController.text = model.name;
-    controllers = model.teams
-        .map(
-          (e) => TextEditingController(text: e.name),
-        )
-        .toList();
-  }
+  MatchCubit({required MatchModel model, required this.matchesCubit}) : super(model);
 
   Future initialize() async {
     if (state.teams.isEmpty) {
@@ -29,11 +19,9 @@ class MatchCubit extends Cubit<MatchModel> {
 
       var team1 = _createRandomTeam(teams);
       teams.add(team1);
-      controllers.add(TextEditingController(text: team1.name));
 
       var team2 = _createRandomTeam(teams);
       teams.add(team2);
-      controllers.add(TextEditingController(text: team2.name));
 
       var match = state.copyWith(teams: teams);
       emit(match);
@@ -59,7 +47,6 @@ class MatchCubit extends Cubit<MatchModel> {
   Future removeTeam(TeamModel team) async {
     var teams = List<TeamModel>.from(state.copyWith().teams);
     teams.removeAt(team.order);
-    controllers.removeAt(team.order);
     _reOrderTeams(teams);
 
     var match = state.copyWith(teams: teams);
@@ -72,7 +59,6 @@ class MatchCubit extends Cubit<MatchModel> {
     var team = _createRandomTeam(teams);
 
     teams.add(team);
-    controllers.add(TextEditingController(text: team.name));
     var match = state.copyWith(teams: teams);
 
     emit(match);

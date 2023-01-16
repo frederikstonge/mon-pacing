@@ -1,29 +1,12 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../models/pacing_model.dart';
 
-abstract class PacingsState {
-  const PacingsState();
-}
+part 'pacings_state.freezed.dart';
 
-class PacingsInitialState extends PacingsState {
-  const PacingsInitialState();
-}
-
-class PacingsLoadingState extends PacingsState {
-  const PacingsLoadingState();
-}
-
-class PacingsSuccessState extends PacingsState {
-  final List<PacingModel> pacings;
-
-  const PacingsSuccessState({
-    required this.pacings,
-  });
-}
-
-class PacingsErrorState extends PacingsState {
-  final String error;
-
-  const PacingsErrorState({
-    required this.error,
-  });
+@freezed
+class PacingsState with _$PacingsState {
+  const factory PacingsState.initial() = PacingsInitialState;
+  const factory PacingsState.error(String error) = PacingsErrorState;
+  const factory PacingsState.success(List<PacingModel> pacings, bool hasReachedMax) = PacingsSuccessState;
 }

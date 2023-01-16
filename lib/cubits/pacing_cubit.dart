@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/improvisation_model.dart';
 import '../models/pacing_model.dart';
@@ -8,21 +7,7 @@ import '../models/pacing_model.dart';
 import '../models/improvisation_type.dart';
 
 class PacingCubit extends Cubit<PacingModel> {
-  TextEditingController nameController = TextEditingController();
-  List<List<TextEditingController>> controllers = [];
-
-  PacingCubit({required PacingModel model}) : super(model) {
-    nameController.text = model.name;
-    controllers = model.improvisations
-        .map(
-          (e) => [
-            TextEditingController(text: e.category),
-            TextEditingController(text: e.theme),
-            TextEditingController(text: e.performers?.toString() ?? ""),
-          ],
-        )
-        .toList();
-  }
+  PacingCubit({required PacingModel model}) : super(model);
 
   void editName(String name) {
     emit(state.copyWith(name: name));
@@ -45,13 +30,6 @@ class PacingCubit extends Cubit<PacingModel> {
     );
 
     improvisations.add(newImprovisation);
-    controllers.add(
-      [
-        TextEditingController(text: newImprovisation.category),
-        TextEditingController(text: newImprovisation.theme),
-        TextEditingController(text: newImprovisation.performers?.toString() ?? ""),
-      ],
-    );
 
     emit(state.copyWith(improvisations: improvisations));
   }
@@ -59,14 +37,12 @@ class PacingCubit extends Cubit<PacingModel> {
   void moveImprovisation(int oldOrder, int newOrder) {
     var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
     var improvisation = improvisations.removeAt(oldOrder);
-    var controller = controllers.removeAt(oldOrder);
 
     if (oldOrder < newOrder) {
       newOrder--;
     }
 
     improvisations.insert(newOrder, improvisation);
-    controllers.insert(newOrder, controller);
     _reOrderImprovisations(improvisations);
 
     emit(state.copyWith(improvisations: improvisations));
@@ -75,7 +51,6 @@ class PacingCubit extends Cubit<PacingModel> {
   void removeImprovisation(int order) {
     var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
     improvisations.removeAt(order);
-    controllers.removeAt(order);
     _reOrderImprovisations(improvisations);
 
     emit(state.copyWith(improvisations: improvisations));

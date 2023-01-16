@@ -10,6 +10,7 @@ import '../cubits/home_cubit.dart';
 import '../cubits/matches_cubit.dart';
 import '../cubits/pacings_cubit.dart';
 import '../dialogs/delete_dialog.dart';
+import '../dialogs/text_dialog.dart';
 import '../generated/l10n.dart';
 import '../helpers/path_helper.dart';
 import '../models/base_model.dart';
@@ -18,9 +19,9 @@ import '../models/pacing_model.dart';
 import '../pages/match_page.dart';
 import '../pages/pacing_page.dart';
 
-class ListItem extends StatelessWidget {
-  final BaseModel entity;
-  const ListItem({super.key, required this.entity});
+class Item<T extends BaseModel> extends StatelessWidget {
+  final T entity;
+  const Item({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context) {
@@ -89,21 +90,29 @@ class ListItem extends StatelessWidget {
                   }
                 },
               ),
-            if (entity is PacingModel)
+            if (entity is PacingModel && (entity as PacingModel).improvisations.isNotEmpty)
               IconButton(
                 icon: const Icon(Icons.play_arrow),
                 onPressed: () async {
-                  var navigator = Navigator.of(context);
-                  var matchCubit = context.read<MatchesCubit>();
-                  var homeCubit = context.read<HomeCubit>();
                   var model = entity as PacingModel;
-                  var matchModel = await matchCubit.add(model);
-                  navigator.push(
-                    MaterialPageRoute(
-                      builder: ((context) => MatchPage(model: matchModel)),
-                    ),
+                  TextDialog.showTextDialog(
+                    context,
+                    S.of(context).MatchOptionsView_Name,
+                    model.name,
+                    true,
+                    (value) async {
+                      var navigator = Navigator.of(context);
+                      var matchCubit = context.read<MatchesCubit>();
+                      var homeCubit = context.read<HomeCubit>();
+                      var matchModel = await matchCubit.add(model, value);
+                      navigator.push(
+                        MaterialPageRoute(
+                          builder: ((context) => MatchPage(model: matchModel)),
+                        ),
+                      );
+                      homeCubit.setPage(1);
+                    },
                   );
-                  homeCubit.setPage(1);
                 },
               ),
           ],

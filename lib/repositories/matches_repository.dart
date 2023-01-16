@@ -5,8 +5,6 @@ import 'base_repository.dart';
 import 'database.dart';
 
 class MatchesRepository extends BaseRepository<MatchModel> {
-  static const int _pageSize = 20;
-
   @override
   Future<MatchModel> add(MatchModel entity) async {
     if (entity.id != null) {
@@ -68,12 +66,12 @@ class MatchesRepository extends BaseRepository<MatchModel> {
   }
 
   @override
-  Future<List<MatchModel>> getList(int page) async {
+  Future<List<MatchModel>> getList(int skip, int take) async {
     var db = await database;
     var items = await db.query(
       matchesTable,
-      offset: (page - 1) * _pageSize,
-      limit: _pageSize,
+      offset: skip,
+      limit: take,
       orderBy: "$modifiedDateField DESC",
     );
 

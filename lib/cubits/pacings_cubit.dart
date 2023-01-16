@@ -4,12 +4,12 @@ import '../models/pacing_model.dart';
 import '../repositories/pacings_repository.dart';
 import '../states/pacings_state.dart';
 
-class PacingsCubit extends Cubit<PacingsState?> {
+class PacingsCubit extends Cubit<PacingsState> {
+  static const int _pageSize = 20;
   final PacingsRepository repository;
-  int _page = 1;
   bool _isFetching = false;
 
-  PacingsCubit({required this.repository}) : super(null);
+  PacingsCubit({required this.repository}) : super(const PacingsState.initial());
 
   bool get isFetching => _isFetching;
 
@@ -39,29 +39,30 @@ class PacingsCubit extends Cubit<PacingsState?> {
 
   Future fetch() async {
     _isFetching = true;
-    emit(const PacingsLoadingState());
     try {
-      final response = await repository.getList(_page);
-      emit(PacingsSuccessState(pacings: response));
-      _page++;
+      state.when(
+        initial: () async {
+          final response = await repository.getList(0, _pageSize);
+          emit(PacingsState.success(response, response.length < _pageSize));
+        },
+        error: (error) async {
+          final response = await repository.getList(0, _pageSize);
+          emit(PacingsState.success(response, response.length < _pageSize));
+        },
+        success: (pacings, hasReachedMax) async {
+          final response = await repository.getList(pacings.length, _pageSize);
+          emit(PacingsState.success(pacings + response, response.length < _pageSize));
+        },
+      );
     } catch (exception) {
-      emit(PacingsErrorState(error: exception.toString()));
+      emit(PacingsState.error(exception.toString()));
+    } finally {
+      _isFetching = false;
     }
-    _isFetching = false;
   }
 
   Future refresh() async {
-    emit(const PacingsInitialState());
-    _isFetching = true;
-    emit(const PacingsLoadingState());
-    try {
-      _page = 1;
-      final response = await repository.getList(_page);
-      emit(PacingsSuccessState(pacings: response));
-      _page++;
-    } catch (exception) {
-      emit(PacingsErrorState(error: exception.toString()));
-    }
-    _isFetching = false;
+    emit(const PacingsState.initial());
+    await fetch();
   }
 }

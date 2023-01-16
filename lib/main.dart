@@ -43,10 +43,10 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (blocContext) => PacingsCubit(repository: blocContext.read<PacingsRepository>()),
+            create: (blocContext) => PacingsCubit(repository: blocContext.read<PacingsRepository>())..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => MatchesCubit(repository: blocContext.read<MatchesRepository>()),
+            create: (blocContext) => MatchesCubit(repository: blocContext.read<MatchesRepository>())..fetch(),
           ),
           BlocProvider(
             create: (blocContext) => SettingsCubit(),

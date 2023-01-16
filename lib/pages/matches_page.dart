@@ -21,6 +21,6 @@ class MatchesPage extends StatelessWidget implements IBottomNavPage {
 
   @override
   Widget build(BuildContext context) {
-    return MatchesView();
+    return const MatchesView();
   }
 }
