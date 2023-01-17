@@ -31,20 +31,20 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
             title,
             S.of(context).PacingPage_NewPacingName(DateFormat.yMd().add_jm().format(DateTime.now())),
             true,
-            (value) => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) => PacingPage(
-                      model: PacingModel(
-                        createdDate: null,
-                        id: null,
-                        modifiedDate: null,
-                        name: value,
-                        improvisations: [],
-                      ),
-                    )),
-              ),
-            ),
+            (value) async {
+              var navitator = Navigator.of(context);
+              var model = PacingModel(
+                createdDate: null,
+                id: null,
+                modifiedDate: null,
+                name: value,
+                improvisations: [],
+              );
+              model = await context.read<PacingsCubit>().add(model);
+              navitator.push(
+                MaterialPageRoute(builder: ((context) => PacingPage(model: model))),
+              );
+            },
           );
         },
         tooltip: S.of(context).PacingsPage_AddPacingTooltip,

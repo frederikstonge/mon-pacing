@@ -142,12 +142,7 @@ class PacingView extends StatelessWidget {
 
   Future _savePacing(BuildContext context, PacingModel state) async {
     final navigator = Navigator.of(context);
-    if (state.id == null) {
-      await context.read<PacingsCubit>().add(state);
-    } else {
-      await context.read<PacingsCubit>().edit(state);
-    }
-
+    await context.read<PacingsCubit>().edit(state);
     navigator.pop();
   }
 }
