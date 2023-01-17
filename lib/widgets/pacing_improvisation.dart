@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_picker/flutter_picker.dart';
-
 import '../cubits/pacing_cubit.dart';
 import '../dialogs/delete_dialog.dart';
+import '../dialogs/duration_dialog.dart';
 import '../generated/l10n.dart';
 import '../helpers/duration_helper.dart';
 import '../models/improvisation_model.dart';
@@ -124,41 +123,11 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
             readOnly: true,
             controller: TextEditingController(text: DurationHelper.getDurationString(widget.improvisation.duration)),
             onTap: () async {
-              Picker(
-                adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
-                  NumberPickerColumn(
-                    begin: 0,
-                    end: 20,
-                    suffix: Text(S.of(context).PacingView_ImprovisationDurationMinutes),
-                    initValue: widget.improvisation.duration.inMinutes,
-                  ),
-                  NumberPickerColumn(
-                    begin: 0,
-                    end: 60,
-                    suffix: Text(S.of(context).PacingView_ImprovisationDurationSeconds),
-                    initValue: (widget.improvisation.duration.inSeconds % 60),
-                    jump: 15,
-                  ),
-                ]),
-                delimiter: <PickerDelimiter>[
-                  PickerDelimiter(
-                    child: Container(
-                      width: 10.0,
-                      alignment: Alignment.center,
-                    ),
-                  )
-                ],
-                hideHeader: true,
-                confirmText: S.of(context).Dialog_Ok,
-                title: Text(S.of(context).PacingView_ImprovisationDurationTitle),
-                onConfirm: (Picker picker, List<int> value) {
-                  var duration = Duration(
-                    minutes: picker.getSelectedValues()[0],
-                    seconds: picker.getSelectedValues()[1],
-                  );
-                  context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(duration: duration));
-                },
-              ).showDialog(context);
+              DurationDialog.showDurationDialog(
+                context,
+                widget.improvisation.duration,
+                (value) => context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(duration: value)),
+              );
             },
             decoration: InputDecoration(
               hintText: S.of(context).PacingView_ImprovisationDurationHint,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../cubits/settings_cubit.dart';
 import '../dialogs/colorpicker_dialog.dart';
+import '../dialogs/duration_dialog.dart';
 import '../generated/l10n.dart';
 import '../helpers/duration_helper.dart';
 import '../models/settings_model.dart';
@@ -71,41 +71,11 @@ class SettingsView extends StatelessWidget {
                 title: Text(S.of(context).SettingsView_PaddingDuration),
                 value: Text(DurationHelper.getDurationString(state.paddingDuration)),
                 onPressed: (context) {
-                  Picker(
-                    adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
-                      NumberPickerColumn(
-                        begin: 0,
-                        end: 20,
-                        suffix: Text(S.of(context).PacingView_ImprovisationDurationMinutes),
-                        initValue: state.paddingDuration.inMinutes,
-                      ),
-                      NumberPickerColumn(
-                        begin: 0,
-                        end: 60,
-                        suffix: Text(S.of(context).PacingView_ImprovisationDurationSeconds),
-                        initValue: (state.paddingDuration.inSeconds % 60),
-                        jump: 15,
-                      ),
-                    ]),
-                    delimiter: <PickerDelimiter>[
-                      PickerDelimiter(
-                        child: Container(
-                          width: 10.0,
-                          alignment: Alignment.center,
-                        ),
-                      )
-                    ],
-                    hideHeader: true,
-                    confirmText: S.of(context).Dialog_Ok,
-                    title: Text(S.of(context).PacingView_ImprovisationDurationTitle),
-                    onConfirm: (Picker picker, List<int> value) {
-                      var duration = Duration(
-                        minutes: picker.getSelectedValues()[0],
-                        seconds: picker.getSelectedValues()[1],
-                      );
-                      context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: duration));
-                    },
-                  ).showDialog(context);
+                  DurationDialog.showDurationDialog(
+                    context,
+                    state.paddingDuration,
+                    (value) => context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: value)),
+                  );
                 },
               )
             ],

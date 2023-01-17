@@ -49,6 +49,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "DeleteDialog_Title": MessageLookupByLibrary.simpleMessage("Supprimer"),
         "Dialog_Cancel": MessageLookupByLibrary.simpleMessage("Annuler"),
         "Dialog_Ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "DurationDialog_ImprovisationDurationMinutes":
+            MessageLookupByLibrary.simpleMessage(" minutes"),
+        "DurationDialog_ImprovisationDurationSeconds":
+            MessageLookupByLibrary.simpleMessage(" seconds"),
+        "DurationDialog_ImprovisationDurationTitle":
+            MessageLookupByLibrary.simpleMessage("Sélectionner la durée"),
         "ImprovisationType_compared":
             MessageLookupByLibrary.simpleMessage("Comparée"),
         "ImprovisationType_mixed":
@@ -85,12 +91,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Catégorie"),
         "PacingView_ImprovisationDurationHint":
             MessageLookupByLibrary.simpleMessage("Durée"),
-        "PacingView_ImprovisationDurationMinutes":
-            MessageLookupByLibrary.simpleMessage(" minutes"),
-        "PacingView_ImprovisationDurationSeconds":
-            MessageLookupByLibrary.simpleMessage(" seconds"),
-        "PacingView_ImprovisationDurationTitle":
-            MessageLookupByLibrary.simpleMessage("Sélectionner la durée"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("Nombre de joueur"),
         "PacingView_ImprovisationSubtitle": m6,

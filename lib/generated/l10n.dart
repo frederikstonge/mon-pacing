@@ -90,6 +90,36 @@ class S {
     );
   }
 
+  /// ` minutes`
+  String get DurationDialog_ImprovisationDurationMinutes {
+    return Intl.message(
+      ' minutes',
+      name: 'DurationDialog_ImprovisationDurationMinutes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` seconds`
+  String get DurationDialog_ImprovisationDurationSeconds {
+    return Intl.message(
+      ' seconds',
+      name: 'DurationDialog_ImprovisationDurationSeconds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select duration`
+  String get DurationDialog_ImprovisationDurationTitle {
+    return Intl.message(
+      'Select duration',
+      name: 'DurationDialog_ImprovisationDurationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Compared`
   String get ImprovisationType_compared {
     return Intl.message(
@@ -305,36 +335,6 @@ class S {
     return Intl.message(
       'Duration',
       name: 'PacingView_ImprovisationDurationHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// ` minutes`
-  String get PacingView_ImprovisationDurationMinutes {
-    return Intl.message(
-      ' minutes',
-      name: 'PacingView_ImprovisationDurationMinutes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// ` seconds`
-  String get PacingView_ImprovisationDurationSeconds {
-    return Intl.message(
-      ' seconds',
-      name: 'PacingView_ImprovisationDurationSeconds',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Select duration`
-  String get PacingView_ImprovisationDurationTitle {
-    return Intl.message(
-      'Select duration',
-      name: 'PacingView_ImprovisationDurationTitle',
       desc: '',
       args: [],
     );
