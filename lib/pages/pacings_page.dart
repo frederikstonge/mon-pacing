@@ -32,7 +32,6 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
             S.of(context).PacingPage_NewPacingName(DateFormat.yMd().add_jm().format(DateTime.now())),
             true,
             (value) async {
-              var navitator = Navigator.of(context);
               var model = PacingModel(
                 createdDate: null,
                 id: null,
@@ -40,10 +39,10 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
                 name: value,
                 improvisations: [],
               );
-              model = await context.read<PacingsCubit>().add(model);
-              navitator.push(
-                MaterialPageRoute(builder: ((context) => PacingPage(model: model))),
-              );
+              var navigator = Navigator.of(context);
+              var pacingsCubit = context.read<PacingsCubit>();
+              var pacingModel = await pacingsCubit.add(model);
+              navigator.push(MaterialPageRoute(builder: ((context) => PacingPage(model: pacingModel))));
             },
           );
         },

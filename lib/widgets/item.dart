@@ -105,11 +105,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
                       var matchCubit = context.read<MatchesCubit>();
                       var homeCubit = context.read<HomeCubit>();
                       var matchModel = await matchCubit.add(model, value);
-                      navigator.push(
-                        MaterialPageRoute(
-                          builder: ((context) => MatchPage(model: matchModel)),
-                        ),
-                      );
+                      navigator.push(MaterialPageRoute(builder: ((context) => MatchPage(model: matchModel))));
                       homeCubit.setPage(1);
                     },
                   );
