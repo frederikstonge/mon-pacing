@@ -1,6 +1,7 @@
-// import 'dart:io';
+import 'dart:io';
 
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 const String pacingsTable = "Pacings";
@@ -27,6 +28,10 @@ Future<Database> get database async {
 
 Future<Database> _getDatabase() async {
   var path = await getDatabasesPath();
+  if (Platform.isIOS) {
+    var directory = await getLibraryDirectory();
+    path = directory.path;
+  }
 
   // var file = File('$path/mon_pacing.db');
   // if (await file.exists()) {
