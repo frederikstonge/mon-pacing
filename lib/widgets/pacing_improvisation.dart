@@ -58,6 +58,9 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
           child: DropdownButtonFormField<ImprovisationType>(
             decoration: InputDecoration(
               hintText: S.of(context).PacingView_ImprovisationType,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6.0),
+              ),
             ),
             value: widget.improvisation.type,
             icon: const Icon(Icons.arrow_downward),
@@ -80,6 +83,9 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
           child: TextField(
               controller: _categoryController,
               decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
                 hintText: S.of(context).PacingView_ImprovisationCategory,
               ),
               onChanged: (value) {
@@ -93,6 +99,9 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
           child: TextField(
               controller: _themeController,
               decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
                 hintText: S.of(context).PacingView_ImprovisationTheme,
               ),
               onChanged: (value) {
@@ -107,6 +116,9 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
             controller: _performersController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6.0),
+              ),
               hintText: S.of(context).PacingView_ImprovisationParticipants,
             ),
             onChanged: (value) {
@@ -130,6 +142,9 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
               );
             },
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6.0),
+              ),
               hintText: S.of(context).PacingView_ImprovisationDurationHint,
             ),
           ),
