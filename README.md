@@ -30,6 +30,7 @@ To update resources, right click on the `I10n` folder, then click on `i18n arb e
 
 ## Roadmap
 
+- Add notes to improvisations
 - Handle points
 - Handle penalties
 - Match summaries

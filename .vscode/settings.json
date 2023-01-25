@@ -5,4 +5,10 @@
             150
         ],
     },
+    "files.exclude": {
+        ".*": true,
+        "build/": true,
+        "pubspec.lock": true,
+        "lib/generated": true
+    },
 }

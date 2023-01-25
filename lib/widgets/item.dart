@@ -26,7 +26,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
+      elevation: 1,
       child: ListTile(
         title: Text(
           entity.name,

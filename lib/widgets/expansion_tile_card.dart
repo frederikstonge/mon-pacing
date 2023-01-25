@@ -105,7 +105,7 @@ class ExpansionTileCardState extends State<ExpansionTileCard> with SingleTickerP
     _iconColor = _controller.drive(_iconColorTween.chain(_colorTween));
     _elevation = _controller.drive(Tween<double>(begin: widget.initialElevation, end: widget.elevation).chain(_elevationTween));
     _padding = _controller.drive(_edgeInsetsTween.chain(_paddingTween));
-    _isExpanded = PageStorage.of(context)?.readState(context) as bool? ?? widget.initiallyExpanded;
+    _isExpanded = PageStorage.of(context).readState(context) as bool? ?? widget.initiallyExpanded;
     if (_isExpanded) {
       _controller.value = 1.0;
     }
@@ -121,7 +121,7 @@ class ExpansionTileCardState extends State<ExpansionTileCard> with SingleTickerP
   void didChangeDependencies() {
     final ThemeData theme = Theme.of(context);
     _headerColorTween
-      ..begin = theme.textTheme.subtitle1!.color
+      ..begin = theme.textTheme.titleMedium!.color
       ..end = widget.expandedTextColor ?? theme.colorScheme.secondary;
     _iconColorTween
       ..begin = theme.unselectedWidgetColor
@@ -212,7 +212,7 @@ class ExpansionTileCardState extends State<ExpansionTileCard> with SingleTickerP
             setState(() {});
           });
         }
-        PageStorage.of(context)?.writeState(context, _isExpanded);
+        PageStorage.of(context).writeState(context, _isExpanded);
       });
       if (widget.onExpansionChanged != null) widget.onExpansionChanged!(_isExpanded);
     }

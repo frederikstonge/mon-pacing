@@ -24,7 +24,7 @@ class MatchImprovisation extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 "Improvisation #${improvisation.order + 1}",
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
             Padding(

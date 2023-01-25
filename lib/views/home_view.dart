@@ -20,7 +20,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return BlocListener<HomeCubit, int>(
       listener: (context, state) {
-        if (_pageController.hasClients && _pageController.page != state) {
+        if (_pageController.hasClients && _pageController.page == _pageController.page?.roundToDouble() && _pageController.page != state) {
           _pageController.jumpToPage(state);
         }
       },
