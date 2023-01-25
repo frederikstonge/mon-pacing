@@ -39,3 +39,8 @@ To update resources, right click on the `I10n` folder, then click on `i18n arb e
 - Move padding duration in pacings
 - Handle overtime
 - Handle multiple durations by improvisation
+
+## Update flutter/app
+- run `flutter upgrade` to get the latest Flutter/dart SDKs
+- run `flutter pub upgrade --major-versions` to update packages in pubspec.yaml
+- run `dart run flutter_migrate:flutter_migrate start` to migrate project to latest flutter template
