@@ -27,6 +27,7 @@ mixin _$ImprovisationModel {
   String get theme => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
   int? get performers => throw _privateConstructorUsedError;
+  String? get notes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $ImprovisationModelCopyWith<$Res> {
       String category,
       String theme,
       Duration duration,
-      int? performers});
+      int? performers,
+      String? notes});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
     Object? theme = null,
     Object? duration = null,
     Object? performers = freezed,
+    Object? notes = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -100,6 +103,10 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
               as int?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -119,7 +126,8 @@ abstract class _$$_ImprovisationModelCopyWith<$Res>
       String category,
       String theme,
       Duration duration,
-      int? performers});
+      int? performers,
+      String? notes});
 }
 
 /// @nodoc
@@ -140,6 +148,7 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
     Object? theme = null,
     Object? duration = null,
     Object? performers = freezed,
+    Object? notes = freezed,
   }) {
     return _then(_$_ImprovisationModel(
       id: null == id
@@ -170,6 +179,10 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
               as int?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -184,7 +197,8 @@ class _$_ImprovisationModel implements _ImprovisationModel {
       required this.category,
       required this.theme,
       required this.duration,
-      required this.performers});
+      required this.performers,
+      this.notes});
 
   factory _$_ImprovisationModel.fromJson(Map<String, dynamic> json) =>
       _$$_ImprovisationModelFromJson(json);
@@ -203,10 +217,12 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   final Duration duration;
   @override
   final int? performers;
+  @override
+  final String? notes;
 
   @override
   String toString() {
-    return 'ImprovisationModel(id: $id, order: $order, type: $type, category: $category, theme: $theme, duration: $duration, performers: $performers)';
+    return 'ImprovisationModel(id: $id, order: $order, type: $type, category: $category, theme: $theme, duration: $duration, performers: $performers, notes: $notes)';
   }
 
   @override
@@ -223,13 +239,14 @@ class _$_ImprovisationModel implements _ImprovisationModel {
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             (identical(other.performers, performers) ||
-                other.performers == performers));
+                other.performers == performers) &&
+            (identical(other.notes, notes) || other.notes == notes));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, order, type, category, theme, duration, performers);
+  int get hashCode => Object.hash(runtimeType, id, order, type, category, theme,
+      duration, performers, notes);
 
   @JsonKey(ignore: true)
   @override
@@ -254,7 +271,8 @@ abstract class _ImprovisationModel implements ImprovisationModel {
       required final String category,
       required final String theme,
       required final Duration duration,
-      required final int? performers}) = _$_ImprovisationModel;
+      required final int? performers,
+      final String? notes}) = _$_ImprovisationModel;
 
   factory _ImprovisationModel.fromJson(Map<String, dynamic> json) =
       _$_ImprovisationModel.fromJson;
@@ -273,6 +291,8 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   Duration get duration;
   @override
   int? get performers;
+  @override
+  String? get notes;
   @override
   @JsonKey(ignore: true)
   _$$_ImprovisationModelCopyWith<_$_ImprovisationModel> get copyWith =>

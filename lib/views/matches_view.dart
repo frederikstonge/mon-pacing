@@ -25,9 +25,9 @@ class MatchesView extends StatelessWidget {
             error: (error) => Center(
               child: Text(error),
             ),
-            success: (matches, hasReachedMax) => RefreshIndicator(
-              onRefresh: () async => await context.read<MatchesCubit>().refresh(),
-              child: ItemsList<MatchModel>(items: matches, hasReachedMax: hasReachedMax),
+            success: (matches, hasReachedMax) => ItemsList<MatchModel>(
+              items: matches,
+              hasReachedMax: hasReachedMax,
             ),
           );
         },

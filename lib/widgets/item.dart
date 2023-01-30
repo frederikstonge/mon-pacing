@@ -21,7 +21,15 @@ import '../pages/pacing_page.dart';
 
 class Item<T extends BaseModel> extends StatelessWidget {
   final T entity;
-  const Item({super.key, required this.entity});
+  final void Function()? onTap;
+  final List<Widget>? actions;
+
+  const Item({
+    super.key,
+    required this.entity,
+    this.onTap,
+    this.actions,
+  });
 
   @override
   Widget build(BuildContext context) {

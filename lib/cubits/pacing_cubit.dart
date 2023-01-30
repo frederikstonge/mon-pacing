@@ -27,6 +27,7 @@ class PacingCubit extends Cubit<PacingModel> {
       category: "",
       performers: null,
       theme: "",
+      notes: "",
     );
 
     improvisations.add(newImprovisation);

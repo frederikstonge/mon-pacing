@@ -28,6 +28,7 @@
   "PacingView_AddImprovisation": "Add Improvisation",
   "PacingView_ImprovisationCategory": "Category",
   "PacingView_ImprovisationDurationHint": "Duration",
+  "PacingView_ImprovisationNotes": "Notes",
   "PacingView_ImprovisationParticipants": "# of participant",
   "PacingView_ImprovisationSubtitle": "{type} | {category} | {theme} | {performers} | {duration}",
   "PacingView_ImprovisationTheme": "Theme",

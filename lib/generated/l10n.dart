@@ -340,6 +340,16 @@ class S {
     );
   }
 
+  /// `Notes`
+  String get PacingView_ImprovisationNotes {
+    return Intl.message(
+      'Notes',
+      name: 'PacingView_ImprovisationNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `# of participant`
   String get PacingView_ImprovisationParticipants {
     return Intl.message(

@@ -25,9 +25,9 @@ class PacingsView extends StatelessWidget {
             error: (error) => Center(
               child: Text(error),
             ),
-            success: (pacings, hasReachedMax) => RefreshIndicator(
-              onRefresh: () async => await context.read<PacingsCubit>().refresh(),
-              child: ItemsList<PacingModel>(items: pacings, hasReachedMax: hasReachedMax),
+            success: (pacings, hasReachedMax) => ItemsList<PacingModel>(
+              items: pacings,
+              hasReachedMax: hasReachedMax,
             ),
           );
         },

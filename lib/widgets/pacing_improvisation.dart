@@ -23,12 +23,14 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
   final _categoryController = TextEditingController();
   final _themeController = TextEditingController();
   final _performersController = TextEditingController();
+  final _notesController = TextEditingController();
 
   @override
   void initState() {
     _categoryController.text = widget.improvisation.category;
     _themeController.text = widget.improvisation.theme;
     _performersController.text = widget.improvisation.performers?.toString() ?? "";
+    _notesController.text = widget.improvisation.notes?.toString() ?? "";
     super.initState();
   }
 
@@ -148,6 +150,24 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
               hintText: S.of(context).PacingView_ImprovisationDurationHint,
             ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: TextField(
+              controller: _notesController,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
+                hintText: S.of(context).PacingView_ImprovisationNotes,
+              ),
+              onChanged: (value) {
+                if (_notesController.text != widget.improvisation.notes) {
+                  context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(notes: _notesController.text));
+                }
+              }),
         ),
         ButtonBar(
           alignment: MainAxisAlignment.spaceAround,

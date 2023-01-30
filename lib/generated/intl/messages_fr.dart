@@ -91,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Catégorie"),
         "PacingView_ImprovisationDurationHint":
             MessageLookupByLibrary.simpleMessage("Durée"),
+        "PacingView_ImprovisationNotes":
+            MessageLookupByLibrary.simpleMessage("Notes"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("Nombre de joueur"),
         "PacingView_ImprovisationSubtitle": m6,

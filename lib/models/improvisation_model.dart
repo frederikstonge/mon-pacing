@@ -15,6 +15,7 @@ class ImprovisationModel with _$ImprovisationModel {
     required String theme,
     required Duration duration,
     required int? performers,
+    String? notes,
   }) = _ImprovisationModel;
 
   factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);

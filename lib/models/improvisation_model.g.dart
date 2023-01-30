@@ -16,6 +16,7 @@ _$_ImprovisationModel _$$_ImprovisationModelFromJson(
       theme: json['theme'] as String,
       duration: Duration(microseconds: json['duration'] as int),
       performers: json['performers'] as int?,
+      notes: json['notes'] as String?,
     );
 
 Map<String, dynamic> _$$_ImprovisationModelToJson(
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$_ImprovisationModelToJson(
       'theme': instance.theme,
       'duration': instance.duration.inMicroseconds,
       'performers': instance.performers,
+      'notes': instance.notes,
     };
 
 const _$ImprovisationTypeEnumMap = {

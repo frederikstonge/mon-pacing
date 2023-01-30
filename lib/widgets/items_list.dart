@@ -33,37 +33,48 @@ class _ItemsListState extends State<ItemsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) {
-        return index >= widget.items.length
-            ? Container(
-                alignment: Alignment.center,
-                child: const Center(
-                  child: SizedBox(
-                    width: 33,
-                    height: 33,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 1.5,
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return index >= widget.items.length
+              ? Container(
+                  alignment: Alignment.center,
+                  child: const Center(
+                    child: SizedBox(
+                      width: 33,
+                      height: 33,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1.5,
+                      ),
                     ),
                   ),
-                ),
-              )
-            : Item(entity: widget.items[index]);
-      },
-      itemCount: widget.hasReachedMax ? widget.items.length : widget.items.length + 1,
-      controller: _scrollController,
+                )
+              : Item(entity: widget.items[index]);
+        },
+        itemCount: widget.hasReachedMax ? widget.items.length : widget.items.length + 1,
+        controller: _scrollController,
+      ),
     );
   }
 
-  void _onScroll() {
+  Future<void> _onRefresh() async {
+    if (widget.items is List<PacingModel>) {
+      await context.read<PacingsCubit>().refresh();
+    } else if (widget.items is List<MatchModel>) {
+      await context.read<MatchesCubit>().refresh();
+    }
+  }
+
+  Future<void> _onScroll() async {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
       if (widget.items is List<PacingModel>) {
-        context.read<PacingsCubit>().fetch();
+        await context.read<PacingsCubit>().fetch();
       } else if (widget.items is List<MatchModel>) {
-        context.read<MatchesCubit>().fetch();
+        await context.read<MatchesCubit>().fetch();
       }
     }
   }

@@ -40,7 +40,25 @@ To update resources, right click on the `I10n` folder, then click on `i18n arb e
 - Handle overtime
 - Handle multiple durations by improvisation
 
+
 ## Update flutter/app
-- run `flutter upgrade` to get the latest Flutter/dart SDKs
-- run `flutter pub upgrade --major-versions` to update packages in pubspec.yaml
-- run `dart run flutter_migrate:flutter_migrate start` to migrate project to latest flutter template
+- Get the latest Flutter/dart SDKs
+
+```bash
+flutter upgrade
+```
+
+- Update packages in pubspec.yaml
+
+```bash
+flutter pub upgrade --major-versions
+```
+
+- Migrate project to latest flutter template
+
+```bash
+# If you get "filename too long" error, run this with admin rights
+# git config --system core.longpaths true
+
+dart run flutter_migrate:flutter_migrate start
+```

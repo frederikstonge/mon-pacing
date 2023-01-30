@@ -89,6 +89,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Category"),
         "PacingView_ImprovisationDurationHint":
             MessageLookupByLibrary.simpleMessage("Duration"),
+        "PacingView_ImprovisationNotes":
+            MessageLookupByLibrary.simpleMessage("Notes"),
         "PacingView_ImprovisationParticipants":
             MessageLookupByLibrary.simpleMessage("# of participant"),
         "PacingView_ImprovisationSubtitle": m6,

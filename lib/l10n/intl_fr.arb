@@ -28,6 +28,7 @@
   "PacingView_AddImprovisation": "Ajouter une improvisation",
   "PacingView_ImprovisationCategory": "Catégorie",
   "PacingView_ImprovisationDurationHint": "Durée",
+  "PacingView_ImprovisationNotes": "Notes",
   "PacingView_ImprovisationParticipants": "Nombre de joueur",
   "PacingView_ImprovisationSubtitle": "{type} | {category} | {theme} | {performers} | {duration}",
   "PacingView_ImprovisationTheme": "Thème",
