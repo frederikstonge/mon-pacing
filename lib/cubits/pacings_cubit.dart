@@ -21,7 +21,7 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future edit(PacingModel model) async {
+  Future<void> edit(PacingModel model) async {
     try {
       await repository.edit(model);
     } finally {
@@ -29,7 +29,7 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future delete(PacingModel model) async {
+  Future<void> delete(PacingModel model) async {
     try {
       await repository.delete(model.id!);
     } finally {
@@ -37,7 +37,7 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future fetch() async {
+  Future<void> fetch() async {
     _isFetching = true;
     try {
       state.when(
@@ -61,7 +61,7 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future refresh() async {
+  Future<void> refresh() async {
     emit(const PacingsState.initial());
     await fetch();
   }

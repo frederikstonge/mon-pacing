@@ -100,76 +100,6 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
     return timeStamp;
   }
 
-  void _setAnimation() {
-    if (widget.autoStart) {
-      if (widget.isReverse) {
-        _controller!.reverse(from: 1);
-      } else {
-        _controller!.forward();
-      }
-    }
-  }
-
-  void _setAnimationDirection() {
-    if ((!widget.isReverse && widget.isReverseAnimation) || (widget.isReverse && !widget.isReverseAnimation)) {
-      _countDownAnimation = Tween<double>(begin: 1, end: 0).animate(_controller!);
-    }
-  }
-
-  void _setController() {
-    widget.controller?._state = this;
-    widget.controller?._isReverse = widget.isReverse;
-    widget.controller?._initialDuration = widget.initialDuration;
-    widget.controller?._duration = widget.duration;
-    widget.controller?.isStarted = widget.autoStart;
-
-    if (widget.initialDuration > 0 && widget.autoStart) {
-      if (widget.isReverse) {
-        _controller?.value = 1 - (widget.initialDuration / widget.duration);
-      } else {
-        _controller?.value = (widget.initialDuration / widget.duration);
-      }
-    }
-  }
-
-  String _getTime(Duration duration) {
-    // For HH:mm:ss format
-    if (widget.textFormat == CountdownTextFormat.hoursMinutesSeconds) {
-      return '${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-    }
-    // For mm:ss format
-    else if (widget.textFormat == CountdownTextFormat.minutesSeconds) {
-      return '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-    }
-    // For ss format
-    else if (widget.textFormat == CountdownTextFormat.seconds) {
-      return (duration.inSeconds).toString().padLeft(2, '0');
-    }
-    // For s format
-    else if (widget.textFormat == CountdownTextFormat.second) {
-      return '${(duration.inSeconds)}';
-    } else {
-      // Default format
-      return _defaultFormat(duration);
-    }
-  }
-
-  _defaultFormat(Duration duration) {
-    if (duration.inHours != 0) {
-      return '${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-    } else if (duration.inMinutes != 0) {
-      return '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-    } else {
-      return '${duration.inSeconds % 60}';
-    }
-  }
-
-  _onChange() {
-    if (widget.onChange != null) {
-      widget.onChange!(_controller!.duration! * _controller!.value);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -241,6 +171,76 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
     _controller!.stop();
     _controller!.dispose();
     super.dispose();
+  }
+
+  void _setAnimation() {
+    if (widget.autoStart) {
+      if (widget.isReverse) {
+        _controller!.reverse(from: 1);
+      } else {
+        _controller!.forward();
+      }
+    }
+  }
+
+  void _setAnimationDirection() {
+    if ((!widget.isReverse && widget.isReverseAnimation) || (widget.isReverse && !widget.isReverseAnimation)) {
+      _countDownAnimation = Tween<double>(begin: 1, end: 0).animate(_controller!);
+    }
+  }
+
+  void _setController() {
+    widget.controller?._state = this;
+    widget.controller?._isReverse = widget.isReverse;
+    widget.controller?._initialDuration = widget.initialDuration;
+    widget.controller?._duration = widget.duration;
+    widget.controller?.isStarted = widget.autoStart;
+
+    if (widget.initialDuration > 0 && widget.autoStart) {
+      if (widget.isReverse) {
+        _controller?.value = 1 - (widget.initialDuration / widget.duration);
+      } else {
+        _controller?.value = (widget.initialDuration / widget.duration);
+      }
+    }
+  }
+
+  String _getTime(Duration duration) {
+    // For HH:mm:ss format
+    if (widget.textFormat == CountdownTextFormat.hoursMinutesSeconds) {
+      return '${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    }
+    // For mm:ss format
+    else if (widget.textFormat == CountdownTextFormat.minutesSeconds) {
+      return '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    }
+    // For ss format
+    else if (widget.textFormat == CountdownTextFormat.seconds) {
+      return (duration.inSeconds).toString().padLeft(2, '0');
+    }
+    // For s format
+    else if (widget.textFormat == CountdownTextFormat.second) {
+      return '${(duration.inSeconds)}';
+    } else {
+      // Default format
+      return _defaultFormat(duration);
+    }
+  }
+
+  _defaultFormat(Duration duration) {
+    if (duration.inHours != 0) {
+      return '${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    } else if (duration.inMinutes != 0) {
+      return '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    } else {
+      return '${duration.inSeconds % 60}';
+    }
+  }
+
+  _onChange() {
+    if (widget.onChange != null) {
+      widget.onChange!(_controller!.duration! * _controller!.value);
+    }
   }
 }
 

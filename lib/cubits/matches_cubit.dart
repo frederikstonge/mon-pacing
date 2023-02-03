@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/match_model.dart';
-import '../models/pacing_model.dart';
 import '../repositories/matches_repository.dart';
 import '../states/matches_state.dart';
 
@@ -14,25 +13,15 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   bool get isFetching => _isFetching;
 
-  Future<MatchModel> add(PacingModel model, String name) async {
+  Future<MatchModel> add(MatchModel model) async {
     try {
-      var matchModel = MatchModel(
-        createdDate: null,
-        modifiedDate: null,
-        id: null,
-        name: name,
-        improvisations: model.copyWith().improvisations,
-        penalties: [],
-        teams: [],
-        points: [],
-      );
-      return await repository.add(matchModel);
+      return await repository.add(model);
     } finally {
       await refresh();
     }
   }
 
-  Future edit(MatchModel model) async {
+  Future<void> edit(MatchModel model) async {
     try {
       await repository.edit(model);
     } finally {
@@ -40,7 +29,7 @@ class MatchesCubit extends Cubit<MatchesState> {
     }
   }
 
-  Future delete(MatchModel model) async {
+  Future<void> delete(MatchModel model) async {
     try {
       await repository.delete(model.id!);
     } finally {
@@ -48,7 +37,7 @@ class MatchesCubit extends Cubit<MatchesState> {
     }
   }
 
-  Future fetch() async {
+  Future<void> fetch() async {
     _isFetching = true;
     try {
       state.when(
@@ -72,7 +61,7 @@ class MatchesCubit extends Cubit<MatchesState> {
     }
   }
 
-  Future refresh() async {
+  Future<void> refresh() async {
     emit(const MatchesState.initial());
     await fetch();
   }

@@ -112,7 +112,17 @@ class Item<T extends BaseModel> extends StatelessWidget {
                       var navigator = Navigator.of(context);
                       var matchCubit = context.read<MatchesCubit>();
                       var homeCubit = context.read<HomeCubit>();
-                      var matchModel = await matchCubit.add(model, value);
+                      var matchModel = MatchModel(
+                        createdDate: null,
+                        modifiedDate: null,
+                        id: null,
+                        name: value,
+                        improvisations: model.copyWith().improvisations,
+                        penalties: [],
+                        teams: [],
+                        points: [],
+                      );
+                      matchModel = await matchCubit.add(matchModel);
                       navigator.push(MaterialPageRoute(builder: ((context) => MatchPage(model: matchModel))));
                       homeCubit.setPage(1);
                     },

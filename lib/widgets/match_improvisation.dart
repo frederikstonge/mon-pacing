@@ -41,7 +41,10 @@ class MatchImprovisation extends StatelessWidget {
             ),
           ),
           if (improvisation.notes != null && improvisation.notes!.isNotEmpty)
-            Padding(padding: const EdgeInsets.all(8.0), child: Text(improvisation.notes!)),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(improvisation.notes!),
+            ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: LayoutBuilder(
