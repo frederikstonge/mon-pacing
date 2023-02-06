@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-import '../models/improvisation_model.dart';
+import '../../models/improvisation_model.dart';
 import 'circular_countdown_timer.dart';
 
 class ImprovisationTimer extends StatefulWidget {

@@ -11,7 +11,7 @@ import '../models/improvisation_type.dart';
 import '../models/pacing_model.dart';
 import '../models/settings_model.dart';
 import '../pages/pacing_options_page.dart';
-import '../widgets/pacing_improvisation.dart';
+import '../widgets/pacing/pacing_improvisation.dart';
 
 class PacingView extends StatelessWidget {
   static const double kBottomHeight = 40.0;

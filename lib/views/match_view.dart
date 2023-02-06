@@ -5,7 +5,7 @@ import '../cubits/match_cubit.dart';
 import '../dialogs/will_pop_dialog.dart';
 import '../generated/l10n.dart';
 import '../models/match_model.dart';
-import '../widgets/match_improvisation.dart';
+import '../widgets/match/match_improvisation.dart';
 import '../pages/match_options_page.dart';
 import 'match_summary_view.dart';
 

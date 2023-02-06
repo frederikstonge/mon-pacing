@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubits/pacing_cubit.dart';
-import '../dialogs/delete_dialog.dart';
-import '../dialogs/duration_dialog.dart';
-import '../generated/l10n.dart';
-import '../helpers/duration_helper.dart';
-import '../models/improvisation_model.dart';
-import '../models/improvisation_type.dart';
+import '../../cubits/pacing_cubit.dart';
+import '../../dialogs/delete_dialog.dart';
+import '../../generated/l10n.dart';
+import '../../helpers/duration_helper.dart';
+import '../../models/improvisation_model.dart';
+import '../../models/improvisation_type.dart';
 import 'expansion_tile_card.dart';
+import 'improvisation_duration.dart';
 
 class PacingImprovisation extends StatefulWidget {
   final ImprovisationModel improvisation;
@@ -133,22 +133,8 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
         ),
         Padding(
           padding: const EdgeInsets.all(12.0),
-          child: TextField(
-            readOnly: true,
-            controller: TextEditingController(text: DurationHelper.getDurationString(widget.improvisation.duration)),
-            onTap: () async {
-              DurationDialog.showDurationDialog(
-                context,
-                widget.improvisation.duration,
-                (value) => context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(duration: value)),
-              );
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-              hintText: S.of(context).PacingView_ImprovisationDurationHint,
-            ),
+          child: ImprovisationDuration(
+            improvisation: widget.improvisation,
           ),
         ),
         Padding(

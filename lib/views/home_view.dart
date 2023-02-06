@@ -18,39 +18,38 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedPage = context.select((HomeCubit cubit) => cubit.state);
     return BlocListener<HomeCubit, int>(
       listener: (context, state) {
         if (_pageController.hasClients && _pageController.page == _pageController.page?.roundToDouble() && _pageController.page != state) {
           _pageController.jumpToPage(state);
         }
       },
-      child: BlocBuilder<HomeCubit, int>(
-        builder: (context, state) => Scaffold(
-          appBar: AppBar(
-            title: Text(widget.pages.elementAt(state).title, overflow: TextOverflow.ellipsis),
-            actions: widget.pages.elementAt(state).getActions(context),
-          ),
-          body: PageView(
-            controller: _pageController,
-            onPageChanged: (value) {
-              context.read<HomeCubit>().setPage(value);
-            },
-            children: widget.pages,
-          ),
-          floatingActionButton: widget.pages.elementAt(state).getFloatingActionButton(context),
-          bottomNavigationBar: BottomNavigationBar(
-              onTap: (value) {
-                var cubit = context.read<HomeCubit>();
-                cubit.setPage(value);
-              },
-              currentIndex: state,
-              items: widget.pages
-                  .map((p) => BottomNavigationBarItem(
-                        icon: p.icon,
-                        label: p.title,
-                      ))
-                  .toList()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.pages.elementAt(selectedPage).title, overflow: TextOverflow.ellipsis),
+          actions: widget.pages.elementAt(selectedPage).getActions(context),
         ),
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (value) {
+            context.read<HomeCubit>().setPage(value);
+          },
+          children: widget.pages,
+        ),
+        floatingActionButton: widget.pages.elementAt(selectedPage).getFloatingActionButton(context),
+        bottomNavigationBar: BottomNavigationBar(
+            onTap: (value) {
+              var cubit = context.read<HomeCubit>();
+              cubit.setPage(value);
+            },
+            currentIndex: selectedPage,
+            items: widget.pages
+                .map((p) => BottomNavigationBarItem(
+                      icon: p.icon,
+                      label: p.title,
+                    ))
+                .toList()),
       ),
     );
   }
