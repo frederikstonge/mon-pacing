@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import '../models/match_model.dart';
-import 'base_repository.dart';
 import 'database.dart';
 
-class MatchesRepository extends BaseRepository<MatchModel> {
-  @override
+class MatchesRepository {
   Future<MatchModel> add(MatchModel entity) async {
     if (entity.id != null) {
       throw Exception("id must be null");
@@ -21,7 +19,6 @@ class MatchesRepository extends BaseRepository<MatchModel> {
     return model.copyWith(id: id);
   }
 
-  @override
   Future<void> delete(int id) async {
     var db = await database;
     await db.delete(
@@ -31,7 +28,6 @@ class MatchesRepository extends BaseRepository<MatchModel> {
     );
   }
 
-  @override
   Future<void> edit(MatchModel entity) async {
     if (entity.id == null) {
       throw Exception("id must not be null");
@@ -48,7 +44,6 @@ class MatchesRepository extends BaseRepository<MatchModel> {
     );
   }
 
-  @override
   Future<MatchModel?> get(int id) async {
     var db = await database;
     var items = await db.query(
@@ -65,7 +60,6 @@ class MatchesRepository extends BaseRepository<MatchModel> {
     return _fromDatabase(items.first);
   }
 
-  @override
   Future<List<MatchModel>> getList(int skip, int take) async {
     var db = await database;
     var items = await db.query(

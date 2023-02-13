@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'cubits/home_cubit.dart';
+import 'widgets/home/home_cubit.dart';
 import 'generated/l10n.dart';
-import 'cubits/matches_cubit.dart';
-import 'cubits/settings_cubit.dart';
+import 'widgets/matches/matches_cubit.dart';
+import 'widgets/settings/settings_cubit.dart';
 import 'helpers/material_color_helper.dart';
 import 'models/settings_model.dart';
-import 'pages/home_page.dart';
-import 'pages/matches_page.dart';
-import 'pages/pacings_page.dart';
-import 'pages/settings_page.dart';
-import 'cubits/pacings_cubit.dart';
+import 'widgets/home/home_page.dart';
+import 'widgets/matches/matches_page.dart';
+import 'widgets/pacings/pacings_page.dart';
+import 'widgets/settings/settings_page.dart';
+import 'widgets/pacings/pacings_cubit.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 
