@@ -18,15 +18,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsModel>(
       builder: (context, state) => MaterialApp(
-        title: 'Mon Pacing',
+        title: 'MonPacing',
         theme: ThemeData(
           primarySwatch: MaterialColorHelper.generateMaterialColor(color: Color(state.color)),
           brightness: Brightness.light,
         ),
         debugShowCheckedModeBanner: false,
-        // ignore: prefer_const_constructors
-        home: HomePage(
-          pages: const [
+        home: const HomePage(
+          pages: [
             PacingsPage(),
             MatchesPage(),
             SettingsPage(),
