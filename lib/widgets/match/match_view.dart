@@ -20,6 +20,12 @@ class _MatchViewState extends State<MatchView> {
   final _pageController = PageController();
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var matchCubit = context.read<MatchCubit>();
     if (matchCubit.state.teams.isEmpty) {

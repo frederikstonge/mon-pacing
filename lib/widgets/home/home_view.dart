@@ -17,6 +17,12 @@ class _HomeViewState extends State<HomeView> {
   final _pageController = PageController();
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final selectedPage = context.select((HomeCubit cubit) => cubit.state);
     return BlocListener<HomeCubit, int>(

@@ -32,6 +32,12 @@ class _ItemsListState extends State<ItemsList> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _onRefresh,

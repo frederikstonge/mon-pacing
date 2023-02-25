@@ -20,11 +20,25 @@ class ImprovisationDuration extends StatefulWidget {
 }
 
 class _ImprovisationDurationState extends State<ImprovisationDuration> {
+  final _textController = TextEditingController();
+
+  @override
+  void initState() {
+    _textController.text = DurationHelper.getDurationString(widget.improvisation.duration);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
       readOnly: true,
-      controller: TextEditingController(text: DurationHelper.getDurationString(widget.improvisation.duration)),
+      controller: _textController,
       onTap: () async {
         DurationDialog.showDurationDialog(
           context,

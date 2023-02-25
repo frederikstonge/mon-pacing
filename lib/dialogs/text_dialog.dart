@@ -31,6 +31,7 @@ class TextDialog {
             child: Text(S.of(context).Dialog_Cancel),
             onPressed: () {
               Navigator.pop(alertContext, false);
+              textController.dispose();
             },
           ),
           TextButton(
@@ -41,6 +42,7 @@ class TextDialog {
                 var navigator = Navigator.of(alertContext);
                 navigator.pop(true);
                 await onSave(textController.text);
+                textController.dispose();
               }
             },
           ),

@@ -35,6 +35,15 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
   }
 
   @override
+  void dispose() {
+    _categoryController.dispose();
+    _themeController.dispose();
+    _performersController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var title = S.of(context).PacingView_ImprovisationTitle(widget.improvisation.order + 1);
     var subTitle = S.of(context).PacingView_ImprovisationSubtitle(

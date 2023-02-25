@@ -113,6 +113,7 @@ class ExpansionTileCardState extends State<ExpansionTileCard> with SingleTickerP
 
   @override
   void dispose() {
+    _controller.stop();
     _controller.dispose();
     super.dispose();
   }
