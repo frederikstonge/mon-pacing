@@ -27,10 +27,15 @@ Future<Database> get database async {
 }
 
 Future<Database> _getDatabase() async {
-  var path = await getDatabasesPath();
-  if (Platform.isIOS) {
+  String path;
+  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+    var directory = await getApplicationDocumentsDirectory();
+    path = directory.path;
+  } else if (Platform.isIOS) {
     var directory = await getLibraryDirectory();
     path = directory.path;
+  } else {
+    path = await getDatabasesPath();
   }
 
   // var file = File('$path/mon_pacing.db');

@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -31,6 +32,8 @@ class App extends StatelessWidget {
             SettingsPage(),
           ],
         ),
+        useInheritedMediaQuery: true,
+        builder: DevicePreview.appBuilder,
         localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
