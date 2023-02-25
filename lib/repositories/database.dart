@@ -29,22 +29,24 @@ Future<Database> get database async {
 Future<Database> _getDatabase() async {
   String path;
   if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
-    var directory = await getApplicationDocumentsDirectory();
+    final directory = await getApplicationDocumentsDirectory();
     path = directory.path;
   } else if (Platform.isIOS) {
-    var directory = await getLibraryDirectory();
+    final directory = await getLibraryDirectory();
     path = directory.path;
   } else {
     path = await getDatabasesPath();
   }
 
-  // var file = File('$path/mon_pacing.db');
+  final filePath = join(path, 'mon_pacing.db');
+
+  // var file = File(filePath);
   // if (await file.exists()) {
   //   await file.delete(recursive: true);
   // }
 
   return await openDatabase(
-    join(path, 'mon_pacing.db'),
+    filePath,
     onCreate: _onCreate,
     onUpgrade: _onUpgrade,
     onDowngrade: _onUpgrade,
