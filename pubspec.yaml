@@ -65,7 +65,7 @@ dev_dependencies:
   build_runner: ^2.3.3
   flutter_migrate: ^0.1.0
   freezed: ^2.3.2
-  intl_utils: ^2.8.1
+  intl_utils: ^2.8.2
   json_serializable: ^6.6.1
 
 # For information on the generic Dart part of this file, see the
