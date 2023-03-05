@@ -49,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "DeleteDialog_Title": MessageLookupByLibrary.simpleMessage("Supprimer"),
         "Dialog_Cancel": MessageLookupByLibrary.simpleMessage("Annuler"),
         "Dialog_Ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "Dialog_Save": MessageLookupByLibrary.simpleMessage("Sauvegarder"),
         "ImprovisationType_compared":
             MessageLookupByLibrary.simpleMessage("Comparée"),
         "ImprovisationType_mixed":
@@ -95,7 +96,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "PacingView_ImprovisationTitle": m7,
         "PacingView_ImprovisationType":
             MessageLookupByLibrary.simpleMessage("Type"),
-        "PacingView_Save": MessageLookupByLibrary.simpleMessage("Sauvegarder"),
         "PacingView_TotalDuration": m8,
         "PacingView_TotalImprovisations": m9,
         "PacingView_WillPopDialog_Content": MessageLookupByLibrary.simpleMessage(

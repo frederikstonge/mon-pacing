@@ -90,6 +90,16 @@ class S {
     );
   }
 
+  /// `Save`
+  String get Dialog_Save {
+    return Intl.message(
+      'Save',
+      name: 'Dialog_Save',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Compared`
   String get ImprovisationType_compared {
     return Intl.message(
@@ -366,16 +376,6 @@ class S {
     return Intl.message(
       'Type',
       name: 'PacingView_ImprovisationType',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Save`
-  String get PacingView_Save {
-    return Intl.message(
-      'Save',
-      name: 'PacingView_Save',
       desc: '',
       args: [],
     );

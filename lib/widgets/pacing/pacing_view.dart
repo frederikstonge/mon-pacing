@@ -71,7 +71,7 @@ class _PacingViewState extends State<PacingView> {
                       await _savePacing(context, state);
                     },
                     icon: const Icon(Icons.save),
-                    tooltip: S.of(context).PacingView_Save,
+                    tooltip: S.of(context).Dialog_Save,
                   ),
                 ],
                 bottom: PreferredSize(
