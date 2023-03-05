@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'matches_cubit.dart';
 import 'matches_state.dart';
-import '../../models/match_model.dart';
 import '../common/items_list.dart';
 
 class MatchesView extends StatelessWidget {
@@ -14,21 +13,18 @@ class MatchesView extends StatelessWidget {
     return Center(
       child: BlocConsumer<MatchesCubit, MatchesState>(
         listener: (context, state) {
-          if (state is MatchesErrorState) {
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
-          }
+          state.whenOrNull(
+            error: (error) {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+            },
+          );
         },
         builder: (context, state) {
           return state.when(
             initial: () => const Center(child: CircularProgressIndicator()),
-            error: (error) => Center(
-              child: Text(error),
-            ),
-            success: (matches, hasReachedMax) => ItemsList<MatchModel>(
-              items: matches,
-              hasReachedMax: hasReachedMax,
-            ),
+            error: (error) => Center(child: Text(error)),
+            success: (matches, hasReachedMax) => ItemsList(items: matches, hasReachedMax: hasReachedMax),
           );
         },
       ),

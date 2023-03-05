@@ -6,7 +6,6 @@ import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
-import 'expansion_tile_card.dart';
 import 'improvisation_duration.dart';
 
 class PacingImprovisation extends StatefulWidget {
@@ -54,146 +53,148 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
           DurationHelper.getDurationString(widget.improvisation.duration),
         );
 
-    return ExpansionTileCard(
-      leading: ReorderableDragStartListener(index: widget.index, child: const Icon(Icons.drag_handle)),
-      title: Text(
-        title,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: Text(
-        subTitle,
-      ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: DropdownButtonFormField<ImprovisationType>(
-            decoration: InputDecoration(
-              hintText: S.of(context).PacingView_ImprovisationType,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.0),
+    return Material(
+      child: ExpansionTile(
+        leading: ReorderableDragStartListener(index: widget.index, child: const Icon(Icons.drag_handle)),
+        title: Text(
+          title,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          subTitle,
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: DropdownButtonFormField<ImprovisationType>(
+              decoration: InputDecoration(
+                hintText: S.of(context).PacingView_ImprovisationType,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
               ),
-            ),
-            value: widget.improvisation.type,
-            icon: const Icon(Icons.arrow_downward),
-            onChanged: (value) {
-              context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(type: value!));
-            },
-            items: ImprovisationType.values.map(
-              (e) {
-                var display = e == ImprovisationType.mixed ? S.of(context).ImprovisationType_mixed : S.of(context).ImprovisationType_compared;
-                return DropdownMenuItem<ImprovisationType>(
-                  value: e,
-                  child: Text(display),
-                );
+              value: widget.improvisation.type,
+              icon: const Icon(Icons.arrow_downward),
+              onChanged: (value) {
+                context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(type: value!));
               },
-            ).toList(),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: TextField(
-              controller: _categoryController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                hintText: S.of(context).PacingView_ImprovisationCategory,
-              ),
-              onChanged: (value) {
-                if (_categoryController.text != widget.improvisation.category) {
-                  context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(category: _categoryController.text));
-                }
-              }),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: TextField(
-              controller: _themeController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                hintText: S.of(context).PacingView_ImprovisationTheme,
-              ),
-              onChanged: (value) {
-                if (_themeController.text != widget.improvisation.theme) {
-                  context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(theme: _themeController.text));
-                }
-              }),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: TextField(
-            controller: _performersController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-              hintText: S.of(context).PacingView_ImprovisationParticipants,
+              items: ImprovisationType.values.map(
+                (e) {
+                  var display = e == ImprovisationType.mixed ? S.of(context).ImprovisationType_mixed : S.of(context).ImprovisationType_compared;
+                  return DropdownMenuItem<ImprovisationType>(
+                    value: e,
+                    child: Text(display),
+                  );
+                },
+              ).toList(),
             ),
-            onChanged: (value) {
-              var performers = _performersController.text.isEmpty ? null : int.parse(_performersController.text);
-              if (performers != widget.improvisation.performers) {
-                context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(performers: performers));
-              }
-            },
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ImprovisationDuration(
-            improvisation: widget.improvisation,
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+                controller: _categoryController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  hintText: S.of(context).PacingView_ImprovisationCategory,
+                ),
+                onChanged: (value) {
+                  if (_categoryController.text != widget.improvisation.category) {
+                    context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(category: _categoryController.text));
+                  }
+                }),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: TextField(
-              controller: _notesController,
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+                controller: _themeController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  hintText: S.of(context).PacingView_ImprovisationTheme,
+                ),
+                onChanged: (value) {
+                  if (_themeController.text != widget.improvisation.theme) {
+                    context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(theme: _themeController.text));
+                  }
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+              controller: _performersController,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6.0),
                 ),
-                hintText: S.of(context).PacingView_ImprovisationNotes,
+                hintText: S.of(context).PacingView_ImprovisationParticipants,
               ),
               onChanged: (value) {
-                if (_notesController.text != widget.improvisation.notes) {
-                  context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(notes: _notesController.text));
+                var performers = _performersController.text.isEmpty ? null : int.parse(_performersController.text);
+                if (performers != widget.improvisation.performers) {
+                  context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(performers: performers));
                 }
-              }),
-        ),
-        ButtonBar(
-          alignment: MainAxisAlignment.spaceAround,
-          buttonHeight: 52.0,
-          buttonMinWidth: 90.0,
-          children: <Widget>[
-            TextButton(
-              onPressed: () {
-                DeleteDialog.showDeleteDialog(context, title, () async {
-                  context.read<PacingCubit>().removeImprovisation(widget.index);
-                });
               },
-              child: Column(
-                children: [
-                  const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2.0),
-                  ),
-                  Text(
-                    S.of(context).DeleteDialog_Title,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ],
-              ),
             ),
-          ],
-        ),
-      ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ImprovisationDuration(
+              improvisation: widget.improvisation,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+                controller: _notesController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  hintText: S.of(context).PacingView_ImprovisationNotes,
+                ),
+                onChanged: (value) {
+                  if (_notesController.text != widget.improvisation.notes) {
+                    context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(notes: _notesController.text));
+                  }
+                }),
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.spaceAround,
+            buttonHeight: 52.0,
+            buttonMinWidth: 90.0,
+            children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  DeleteDialog.showDeleteDialog(context, title, () async {
+                    context.read<PacingCubit>().removeImprovisation(widget.index);
+                  });
+                },
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Text(
+                      S.of(context).DeleteDialog_Title,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

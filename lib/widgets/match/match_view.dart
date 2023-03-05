@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../match_summary/match_summary_page.dart';
 import 'match_cubit.dart';
 import '../../dialogs/will_pop_dialog.dart';
 import '../../generated/l10n.dart';
 import '../../models/match_model.dart';
 import 'match_improvisation.dart';
 import '../match_options/match_options_page.dart';
-import '../match_summary/match_summary_view.dart';
 
 class MatchView extends StatefulWidget {
   const MatchView({super.key});
@@ -27,35 +27,30 @@ class _MatchViewState extends State<MatchView> {
 
   @override
   Widget build(BuildContext context) {
-    var matchCubit = context.read<MatchCubit>();
-    if (matchCubit.state.teams.isEmpty) {
-      matchCubit.initialize();
-    }
-
-    return BlocBuilder<MatchCubit, MatchModel>(
-      builder: (context, state) => WillPopScope(
-        onWillPop: () async {
-          var result = await WillPopDialog.showWillPopDialog(
-            context,
-            S.of(context).MatchView_WillPopDialog_Title,
-            S.of(context).MatchView_WillPopDialog_Content,
-          );
-          return result ?? false;
-        },
-        child: Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        var result = await WillPopDialog.showWillPopDialog(
+          context,
+          S.of(context).MatchView_WillPopDialog_Title,
+          S.of(context).MatchView_WillPopDialog_Content,
+        );
+        return result ?? false;
+      },
+      child: BlocBuilder<MatchCubit, MatchModel>(
+        builder: (context, state) => Scaffold(
           appBar: AppBar(
             title: Text(state.name, overflow: TextOverflow.ellipsis),
             actions: [
               IconButton(
                 onPressed: () {
-                  _openMatchSummary(context, matchCubit);
+                  _openMatchSummary(context);
                 },
                 icon: const Icon(Icons.summarize),
                 tooltip: S.of(context).MatchView_ViewMatchSummary,
               ),
               IconButton(
                 onPressed: () {
-                  _openMatchOptions(context, matchCubit);
+                  _openMatchOptions(context);
                 },
                 icon: const Icon(Icons.settings),
                 tooltip: S.of(context).MatchView_EditDetails,
@@ -64,32 +59,24 @@ class _MatchViewState extends State<MatchView> {
           ),
           body: PageView(
             controller: _pageController,
-            children: matchCubit.state.improvisations.map((e) => MatchImprovisation(improvisation: e, match: state)).toList(),
+            children: state.improvisations.map((e) => MatchImprovisation(improvisation: e, match: state)).toList(),
           ),
         ),
       ),
     );
   }
 
-  _openMatchOptions(BuildContext context, MatchCubit matchCubit) {
+  _openMatchOptions(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: ((context) => MatchOptionsPage(
-              bloc: matchCubit,
-            )),
-      ),
+      MaterialPageRoute(builder: ((context) => MatchOptionsPage(bloc: context.read<MatchCubit>()))),
     );
   }
 
-  _openMatchSummary(BuildContext context, MatchCubit matchCubit) {
+  _openMatchSummary(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: ((context) => MatchSummaryView(
-              bloc: matchCubit,
-            )),
-      ),
+      MaterialPageRoute(builder: ((context) => MatchSummaryPage(bloc: context.read<MatchCubit>()))),
     );
   }
 }

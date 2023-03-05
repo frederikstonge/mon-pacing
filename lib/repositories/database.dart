@@ -28,10 +28,7 @@ Future<Database> get database async {
 
 Future<Database> _getDatabase() async {
   String path;
-  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
-    final directory = await getApplicationDocumentsDirectory();
-    path = directory.path;
-  } else if (Platform.isIOS) {
+  if (Platform.isIOS) {
     final directory = await getLibraryDirectory();
     path = directory.path;
   } else {

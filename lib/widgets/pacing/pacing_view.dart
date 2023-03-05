@@ -13,29 +13,34 @@ import '../../models/settings_model.dart';
 import '../pacing_options/pacing_options_page.dart';
 import 'pacing_improvisation.dart';
 
-class PacingView extends StatelessWidget {
+class PacingView extends StatefulWidget {
   static const double kBottomHeight = 40.0;
   final PacingModel model;
   const PacingView({super.key, required this.model});
 
   @override
+  State<PacingView> createState() => _PacingViewState();
+}
+
+class _PacingViewState extends State<PacingView> {
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return BlocBuilder<PacingCubit, PacingModel>(
-      builder: (context, state) => WillPopScope(
-        onWillPop: () async {
-          if (state != model) {
-            var result = await WillPopDialog.showWillPopDialog(
-              context,
-              S.of(context).PacingView_WillPopDialog_Title,
-              S.of(context).PacingView_WillPopDialog_Content,
-            );
-            return result ?? false;
-          }
+    return WillPopScope(
+      onWillPop: () async {
+        if (context.read<PacingCubit>().state != widget.model) {
+          var result = await WillPopDialog.showWillPopDialog(
+            context,
+            S.of(context).PacingView_WillPopDialog_Title,
+            S.of(context).PacingView_WillPopDialog_Content,
+          );
+          return result ?? false;
+        }
 
-          return true;
-        },
-        child: Scaffold(
+        return true;
+      },
+      child: BlocBuilder<PacingCubit, PacingModel>(
+        builder: (context, state) => Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               context.read<PacingCubit>().addImprovisation();
@@ -56,7 +61,7 @@ class PacingView extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      _openPacingOptions(context, context.read<PacingCubit>());
+                      _openPacingOptions(context);
                     },
                     icon: const Icon(Icons.settings),
                     tooltip: S.of(context).MatchView_EditDetails,
@@ -70,7 +75,7 @@ class PacingView extends StatelessWidget {
                   ),
                 ],
                 bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(kBottomHeight),
+                  preferredSize: const Size.fromHeight(PacingView.kBottomHeight),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
@@ -116,7 +121,7 @@ class PacingView extends StatelessWidget {
                 onReorder: (oldIndex, newIndex) {
                   context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex);
                 },
-                itemBuilder: (context, index) {
+                itemBuilder: (_, index) {
                   var item = state.improvisations[index];
                   return PacingImprovisation(key: ValueKey("${item.id}"), improvisation: item, index: index);
                 },
@@ -129,14 +134,10 @@ class PacingView extends StatelessWidget {
     );
   }
 
-  _openPacingOptions(BuildContext context, PacingCubit pacingCubit) {
+  _openPacingOptions(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: ((context) => PacingOptionsPage(
-              bloc: pacingCubit,
-            )),
-      ),
+      MaterialPageRoute(builder: ((context) => PacingOptionsPage(bloc: context.read<PacingCubit>()))),
     );
   }
 

@@ -23,11 +23,6 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
   bool get wantKeepAlive => true;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
     final ColorScheme colors = Theme.of(context).colorScheme;

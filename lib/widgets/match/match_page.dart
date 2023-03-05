@@ -16,7 +16,7 @@ class MatchPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => MatchCubit(model: model, matchesCubit: context.read<MatchesCubit>()),
+          create: (_) => MatchCubit(model: model, matchesCubit: context.read<MatchesCubit>())..initialize(),
         ),
       ],
       child: const MatchView(),
