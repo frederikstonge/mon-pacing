@@ -90,36 +90,6 @@ class S {
     );
   }
 
-  /// ` minutes`
-  String get DurationDialog_ImprovisationDurationMinutes {
-    return Intl.message(
-      ' minutes',
-      name: 'DurationDialog_ImprovisationDurationMinutes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// ` seconds`
-  String get DurationDialog_ImprovisationDurationSeconds {
-    return Intl.message(
-      ' seconds',
-      name: 'DurationDialog_ImprovisationDurationSeconds',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Select duration`
-  String get DurationDialog_ImprovisationDurationTitle {
-    return Intl.message(
-      'Select duration',
-      name: 'DurationDialog_ImprovisationDurationTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Compared`
   String get ImprovisationType_compared {
     return Intl.message(

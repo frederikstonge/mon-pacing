@@ -48,12 +48,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "DeleteDialog_Title": MessageLookupByLibrary.simpleMessage("Delete"),
         "Dialog_Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "Dialog_Ok": MessageLookupByLibrary.simpleMessage("OK"),
-        "DurationDialog_ImprovisationDurationMinutes":
-            MessageLookupByLibrary.simpleMessage(" minutes"),
-        "DurationDialog_ImprovisationDurationSeconds":
-            MessageLookupByLibrary.simpleMessage(" seconds"),
-        "DurationDialog_ImprovisationDurationTitle":
-            MessageLookupByLibrary.simpleMessage("Select duration"),
         "ImprovisationType_compared":
             MessageLookupByLibrary.simpleMessage("Compared"),
         "ImprovisationType_mixed":
