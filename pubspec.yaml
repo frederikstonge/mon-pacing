@@ -49,7 +49,7 @@ dependencies:
   path: ^1.8.2
   path_provider: ^2.0.11
   settings_ui: ^2.0.2
-  sqflite: ^2.2.2
+  sqflite: ^2.2.5
   syncfusion_flutter_xlsio: ^20.4.49-beta
 
 dev_dependencies:
