@@ -134,8 +134,8 @@ class _PacingViewState extends State<PacingView> {
     );
   }
 
-  _openPacingOptions(BuildContext context) {
-    Navigator.push(
+  Future<void> _openPacingOptions(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: ((_) => PacingOptionsPage(bloc: context.read<PacingCubit>()))),
     );

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../generated/l10n.dart';
 
 class DeleteDialog {
-  static showDeleteDialog(BuildContext context, String itemName, Future<void> Function() onDelete) {
-    showDialog(
+  static Future<void> showDeleteDialog(BuildContext context, String itemName, Future<void> Function() onDelete) async {
+    await showDialog(
       context: context,
       builder: (BuildContext alertContext) => AlertDialog(
         title: Text(S.of(context).DeleteDialog_Title, overflow: TextOverflow.ellipsis),

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../generated/l10n.dart';
 
 class DurationDialog {
-  static showDurationDialog(BuildContext context, Duration duration, void Function(Duration) onDurationChanged) {
-    showModalBottomSheet(
+  static Future<void> showDurationDialog(BuildContext context, Duration duration, void Function(Duration) onDurationChanged) async {
+    await showModalBottomSheet(
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
       context: context,
       isScrollControlled: true,

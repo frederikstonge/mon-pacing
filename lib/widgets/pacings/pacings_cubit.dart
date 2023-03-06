@@ -40,7 +40,7 @@ class PacingsCubit extends Cubit<PacingsState> {
   Future<void> fetch() async {
     _isFetching = true;
     try {
-      state.when(
+      await state.when(
         initial: () async {
           final response = await repository.getList(0, _pageSize);
           emit(PacingsState.success(response, response.length < _pageSize));

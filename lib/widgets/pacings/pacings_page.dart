@@ -25,8 +25,8 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
 
   @override
   FloatingActionButton? getFloatingActionButton(BuildContext context) => FloatingActionButton(
-        onPressed: () {
-          TextDialog.showTextDialog(
+        onPressed: () async {
+          await TextDialog.showTextDialog(
             context,
             title,
             S.of(context).PacingPage_NewPacingName(DateFormat.yMd().add_jm().format(DateTime.now())),
@@ -42,7 +42,7 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
               var navigator = Navigator.of(context);
               var pacingsCubit = context.read<PacingsCubit>();
               var pacingModel = await pacingsCubit.add(model);
-              navigator.push(MaterialPageRoute(builder: ((context) => PacingPage(model: pacingModel))));
+              await navigator.push(MaterialPageRoute(builder: ((context) => PacingPage(model: pacingModel))));
             },
           );
         },
@@ -66,7 +66,7 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
             if (filePath != null) {
               var pacingValue = await File(filePath).readAsString();
               var pacing = PacingModel.fromJson(jsonDecode(pacingValue));
-              cubit.add(pacing.copyWith(id: null));
+              await cubit.add(pacing.copyWith(id: null));
             }
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).PacingsPage_ImportError)));

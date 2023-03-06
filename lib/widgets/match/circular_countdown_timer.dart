@@ -227,7 +227,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
     }
   }
 
-  _defaultFormat(Duration duration) {
+  String _defaultFormat(Duration duration) {
     if (duration.inHours != 0) {
       return '${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
     } else if (duration.inMinutes != 0) {
@@ -237,7 +237,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
     }
   }
 
-  _onChange() {
+  void _onChange() {
     if (widget.onChange != null) {
       widget.onChange!(_controller!.duration! * _controller!.value);
     }

@@ -42,11 +42,11 @@ class Item<T extends BaseModel> extends StatelessWidget {
           overflow: TextOverflow.fade,
           maxLines: 2,
         ),
-        onTap: () {
+        onTap: () async {
           if (entity is PacingModel) {
             var model = entity as PacingModel;
             var copy = model.copyWith();
-            Navigator.push(
+            await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: ((context) => PacingPage(model: copy)),
@@ -54,7 +54,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
           } else if (entity is MatchModel) {
             var model = entity as MatchModel;
             var copy = model.copyWith();
-            Navigator.push(
+            await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: ((context) => MatchPage(model: copy)),
@@ -67,7 +67,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
-                DeleteDialog.showDeleteDialog(context, entity.name, () async {
+                await DeleteDialog.showDeleteDialog(context, entity.name, () async {
                   if (entity is PacingModel) {
                     var model = entity as PacingModel;
                     await context.read<PacingsCubit>().delete(model);
@@ -99,7 +99,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
                 icon: const Icon(Icons.play_arrow),
                 onPressed: () async {
                   var model = entity as PacingModel;
-                  TextDialog.showTextDialog(
+                  await TextDialog.showTextDialog(
                     context,
                     S.of(context).MatchOptionsView_Name,
                     model.name,
@@ -119,7 +119,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
                         points: [],
                       );
                       matchModel = await matchCubit.add(matchModel);
-                      navigator.push(MaterialPageRoute(builder: ((context) => MatchPage(model: matchModel))));
+                      await navigator.push(MaterialPageRoute(builder: ((context) => MatchPage(model: matchModel))));
                       homeCubit.setPage(1);
                     },
                   );

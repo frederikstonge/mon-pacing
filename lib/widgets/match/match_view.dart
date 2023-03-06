@@ -66,15 +66,15 @@ class _MatchViewState extends State<MatchView> {
     );
   }
 
-  _openMatchOptions(BuildContext context) {
-    Navigator.push(
+  Future<void> _openMatchOptions(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: ((_) => MatchOptionsPage(bloc: context.read<MatchCubit>()))),
     );
   }
 
-  _openMatchSummary(BuildContext context) {
-    Navigator.push(
+  Future<void> _openMatchSummary(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: ((_) => MatchSummaryPage(bloc: context.read<MatchCubit>()))),
     );

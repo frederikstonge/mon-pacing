@@ -26,56 +26,63 @@ class MatchOptionsView extends StatelessWidget {
                 SettingsTile(
                   title: Text(S.of(context).MatchOptionsView_Name, overflow: TextOverflow.ellipsis),
                   value: Text(state.name),
-                  onPressed: (context) => _openMatchNamePopup(context, state.name),
+                  onPressed: (context) async => await _openMatchNamePopup(context, state.name),
                 )
               ],
             ),
             SettingsSection(
-              title: ListTile(
-                title: Text(S.of(context).MatchOptionsView_Teams, overflow: TextOverflow.ellipsis),
-                trailing: state.teams.length < 3
-                    ? IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          context.read<MatchCubit>().addTeam();
+              title: Text(S.of(context).MatchOptionsView_Teams, overflow: TextOverflow.ellipsis),
+              tiles: [
+                ...state.teams.map(
+                  (e) {
+                    return SettingsTile(
+                      leading: InkWell(
+                        onTap: () async {
+                          await ColorPickerDialog.showColorPickerDialog(context, Color(e.color), (value) async {
+                            await context.read<MatchCubit>().editTeam(e.copyWith(color: value.value));
+                          });
                         },
-                      )
-                    : null,
-              ),
-              tiles: state.teams.map(
-                (e) {
-                  return SettingsTile(
-                    leading: InkWell(
-                      onTap: () {
-                        ColorPickerDialog.showColorPickerDialog(context, Color(e.color), (value) async {
-                          await context.read<MatchCubit>().editTeam(e.copyWith(color: value.value));
-                        });
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Color(e.color),
+                        child: CircleAvatar(
+                          backgroundColor: Color(e.color),
+                        ),
                       ),
+                      title: Text(e.name),
+                      onPressed: (context) async {
+                        await TextDialog.showTextDialog(
+                          context,
+                          S.of(context).MatchOptionsView_TeamName,
+                          e.name,
+                          false,
+                          (value) async => await context.read<MatchCubit>().editTeam(e.copyWith(name: value)),
+                        );
+                      },
+                      trailing: state.teams.length > 1
+                          ? IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                context.read<MatchCubit>().removeTeam(e);
+                              },
+                            )
+                          : null,
+                    );
+                  },
+                ).toList(),
+                if (state.teams.length < 3)
+                  SettingsTile(
+                    leading: IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () async {
+                        await _addTeam(context);
+                      },
                     ),
-                    title: Text(e.name),
-                    onPressed: (context) {
-                      TextDialog.showTextDialog(
-                        context,
-                        S.of(context).MatchOptionsView_TeamName,
-                        e.name,
-                        false,
-                        (value) async => await context.read<MatchCubit>().editTeam(e.copyWith(name: value)),
-                      );
-                    },
-                    trailing: state.teams.length > 1
-                        ? IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              context.read<MatchCubit>().removeTeam(e);
-                            },
-                          )
-                        : null,
-                  );
-                },
-              ).toList(),
+                    title: InkWell(
+                      child: const Text("Add team"),
+                      onTap: () async {
+                        await _addTeam(context);
+                      },
+                    ),
+                  ),
+              ],
             )
           ],
         ),
@@ -83,8 +90,12 @@ class MatchOptionsView extends StatelessWidget {
     );
   }
 
-  _openMatchNamePopup(BuildContext context, String name) {
-    TextDialog.showTextDialog(
+  Future<void> _addTeam(BuildContext context) async {
+    await context.read<MatchCubit>().addTeam();
+  }
+
+  Future<void> _openMatchNamePopup(BuildContext context, String name) async {
+    await TextDialog.showTextDialog(
       context,
       S.of(context).MatchOptionsView_Name,
       name,

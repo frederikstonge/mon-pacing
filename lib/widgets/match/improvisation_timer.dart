@@ -123,7 +123,7 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
     );
   }
 
-  _play() {
+  void _play() {
     if (!isStarted) {
       _controller.start();
       setState(() {
@@ -141,7 +141,7 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
     }
   }
 
-  _pause() {
+  void _pause() {
     _controller.pause();
     setState(() {
       isStarted = true;
@@ -150,7 +150,7 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
     });
   }
 
-  _reset() {
+  void _reset() {
     _controller.reset();
     setState(() {
       isStarted = false;

@@ -26,7 +26,7 @@ class PacingOptionsView extends StatelessWidget {
                 SettingsTile(
                   title: Text(S.of(context).PacingOptionsView_Name, overflow: TextOverflow.ellipsis),
                   value: Text(state.name),
-                  onPressed: (context) => _openPacingNamePopup(context, state.name),
+                  onPressed: (context) async => await _openPacingNamePopup(context, state.name),
                 )
               ],
             ),
@@ -36,8 +36,8 @@ class PacingOptionsView extends StatelessWidget {
     );
   }
 
-  _openPacingNamePopup(BuildContext context, String name) {
-    TextDialog.showTextDialog(
+  Future<void> _openPacingNamePopup(BuildContext context, String name) async {
+    await TextDialog.showTextDialog(
       context,
       S.of(context).PacingOptionsView_Name,
       name,

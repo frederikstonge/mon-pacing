@@ -40,7 +40,7 @@ class MatchesCubit extends Cubit<MatchesState> {
   Future<void> fetch() async {
     _isFetching = true;
     try {
-      state.when(
+      await state.when(
         initial: () async {
           final response = await repository.getList(0, _pageSize);
           emit(MatchesState.success(response, response.length < _pageSize));

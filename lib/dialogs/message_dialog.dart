@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../generated/l10n.dart';
 
 class MessageDialog {
-  static showMessageDialog(BuildContext context, String title, String message) {
-    showDialog(
+  static Future<void> showMessageDialog(BuildContext context, String title, String message) async {
+    await showDialog(
       context: context,
       builder: (BuildContext alertContext) => AlertDialog(
         title: Text(title, overflow: TextOverflow.ellipsis),

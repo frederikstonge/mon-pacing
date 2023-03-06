@@ -4,8 +4,14 @@ import '../generated/l10n.dart';
 import '../helpers/validator_helper.dart';
 
 class TextDialog {
-  static showTextDialog(BuildContext context, String title, String defaultValue, bool selectAll, Future<void> Function(String) onSave) {
-    showDialog(
+  static Future<void> showTextDialog(
+    BuildContext context,
+    String title,
+    String defaultValue,
+    bool selectAll,
+    Future<void> Function(String) onSave,
+  ) async {
+    await showDialog(
       context: context,
       builder: (BuildContext alertContext) => TextDialogContent(
         title: title,

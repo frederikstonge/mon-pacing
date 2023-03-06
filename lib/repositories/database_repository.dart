@@ -61,7 +61,7 @@ class DatabaseRepository {
     DROP TABLE IF EXISTS $matchesTable
   ''');
 
-    _onCreate(db, newVersion);
+    await _onCreate(db, newVersion);
   }
 
   Future<void> _onCreate(Database db, int version) async {

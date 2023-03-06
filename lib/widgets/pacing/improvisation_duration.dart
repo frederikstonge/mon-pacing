@@ -40,7 +40,7 @@ class _ImprovisationDurationState extends State<ImprovisationDuration> {
       readOnly: true,
       controller: _textController,
       onTap: () async {
-        DurationDialog.showDurationDialog(context, widget.improvisation.duration, (value) {
+        await DurationDialog.showDurationDialog(context, widget.improvisation.duration, (value) {
           context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(duration: value));
           _textController.text = DurationHelper.getDurationString(value);
         });

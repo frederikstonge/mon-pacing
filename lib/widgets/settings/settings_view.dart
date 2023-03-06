@@ -26,8 +26,8 @@ class SettingsView extends StatelessWidget {
                 trailing: CircleAvatar(
                   backgroundColor: Color(state.color),
                 ),
-                onPressed: (context) {
-                  ColorPickerDialog.showColorPickerDialog(context, Color(state.color), (value) {
+                onPressed: (context) async {
+                  await ColorPickerDialog.showColorPickerDialog(context, Color(state.color), (value) {
                     context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
                   });
                 },
@@ -70,8 +70,8 @@ class SettingsView extends StatelessWidget {
               SettingsTile(
                 title: Text(S.of(context).SettingsView_PaddingDuration),
                 value: Text(DurationHelper.getDurationString(state.paddingDuration)),
-                onPressed: (context) {
-                  DurationDialog.showDurationDialog(
+                onPressed: (context) async {
+                  await DurationDialog.showDurationDialog(
                     context,
                     state.paddingDuration,
                     (value) => context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: value)),

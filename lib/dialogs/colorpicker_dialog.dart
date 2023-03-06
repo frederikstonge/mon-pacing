@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class ColorPickerDialog {
-  static showColorPickerDialog(BuildContext context, Color pickerColor, void Function(Color) onColorChanged) {
-    showDialog(
+  static Future<void> showColorPickerDialog(BuildContext context, Color pickerColor, void Function(Color) onColorChanged) async {
+    await showDialog(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(

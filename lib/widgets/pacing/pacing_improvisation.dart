@@ -176,8 +176,8 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
             buttonMinWidth: 90.0,
             children: <Widget>[
               TextButton(
-                onPressed: () {
-                  DeleteDialog.showDeleteDialog(context, title, () async {
+                onPressed: () async {
+                  await DeleteDialog.showDeleteDialog(context, title, () async {
                     context.read<PacingCubit>().removeImprovisation(widget.index);
                   });
                 },
