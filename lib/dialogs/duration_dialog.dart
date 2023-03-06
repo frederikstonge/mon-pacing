@@ -18,7 +18,6 @@ class DurationDialog {
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              const Spacer(),
               ElevatedButton(
                   onPressed: () {
                     onDurationChanged(duration);

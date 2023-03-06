@@ -13,7 +13,7 @@ class MatchCubit extends Cubit<MatchModel> {
 
   MatchCubit({required MatchModel model, required this.matchesCubit}) : super(model);
 
-  Future initialize() async {
+  Future<void> initialize() async {
     if (state.teams.isEmpty) {
       var teams = List<TeamModel>.from(state.copyWith().teams);
 
@@ -29,13 +29,13 @@ class MatchCubit extends Cubit<MatchModel> {
     }
   }
 
-  Future editName(String name) async {
+  Future<void> editName(String name) async {
     var match = state.copyWith(name: name);
     emit(match);
     await matchesCubit.edit(match);
   }
 
-  Future editTeam(TeamModel team) async {
+  Future<void> editTeam(TeamModel team) async {
     var teams = List<TeamModel>.from(state.copyWith().teams);
     teams[team.order] = team;
 
@@ -44,7 +44,7 @@ class MatchCubit extends Cubit<MatchModel> {
     await matchesCubit.edit(match);
   }
 
-  Future removeTeam(TeamModel team) async {
+  Future<void> removeTeam(TeamModel team) async {
     var teams = List<TeamModel>.from(state.copyWith().teams);
     teams.removeAt(team.order);
     _reOrderTeams(teams);
@@ -54,7 +54,7 @@ class MatchCubit extends Cubit<MatchModel> {
     await matchesCubit.edit(match);
   }
 
-  Future addTeam() async {
+  Future<void> addTeam() async {
     var teams = List<TeamModel>.from(state.copyWith().teams);
     var team = _createRandomTeam(teams);
 
@@ -65,7 +65,7 @@ class MatchCubit extends Cubit<MatchModel> {
     await matchesCubit.edit(match);
   }
 
-  Future setPoint(int improvisationId, int teamId) async {
+  Future<void> setPoint(int improvisationId, int teamId) async {
     var points = List<PointModel>.from(state.copyWith().points);
     if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
       points.removeWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);

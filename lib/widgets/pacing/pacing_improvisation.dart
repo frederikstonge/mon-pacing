@@ -55,7 +55,13 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
 
     return Material(
       child: ExpansionTile(
-        leading: ReorderableDragStartListener(index: widget.index, child: const Icon(Icons.drag_handle)),
+        leading: ReorderableDragStartListener(
+          index: widget.index,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [Icon(Icons.drag_handle)],
+          ),
+        ),
         title: Text(
           title,
           overflow: TextOverflow.ellipsis,

@@ -137,11 +137,11 @@ class _PacingViewState extends State<PacingView> {
   _openPacingOptions(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: ((context) => PacingOptionsPage(bloc: context.read<PacingCubit>()))),
+      MaterialPageRoute(builder: ((_) => PacingOptionsPage(bloc: context.read<PacingCubit>()))),
     );
   }
 
-  Future _savePacing(BuildContext context, PacingModel state) async {
+  Future<void> _savePacing(BuildContext context, PacingModel state) async {
     final navigator = Navigator.of(context);
     await context.read<PacingsCubit>().edit(state);
     navigator.pop();

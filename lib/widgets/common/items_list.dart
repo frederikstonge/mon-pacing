@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../helpers/listview_helper.dart';
 import '../matches/matches_cubit.dart';
 import '../pacings/pacings_cubit.dart';
 import '../../models/base_model.dart';
@@ -42,6 +43,7 @@ class _ItemsListState extends State<ItemsList> {
     return RefreshIndicator(
       onRefresh: _onRefresh,
       child: ListView.builder(
+        padding: ListViewHelper.getFloatingActionButtonPadding(context),
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return index >= widget.items.length

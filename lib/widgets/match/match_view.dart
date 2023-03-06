@@ -69,14 +69,14 @@ class _MatchViewState extends State<MatchView> {
   _openMatchOptions(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: ((context) => MatchOptionsPage(bloc: context.read<MatchCubit>()))),
+      MaterialPageRoute(builder: ((_) => MatchOptionsPage(bloc: context.read<MatchCubit>()))),
     );
   }
 
   _openMatchSummary(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: ((context) => MatchSummaryPage(bloc: context.read<MatchCubit>()))),
+      MaterialPageRoute(builder: ((_) => MatchSummaryPage(bloc: context.read<MatchCubit>()))),
     );
   }
 }
