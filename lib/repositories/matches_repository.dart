@@ -1,9 +1,15 @@
 import 'dart:convert';
 
 import '../models/match_model.dart';
-import 'database.dart';
+import 'database_repository.dart';
 
 class MatchesRepository {
+  final DatabaseRepository databaseRepository;
+
+  const MatchesRepository({
+    required this.databaseRepository,
+  });
+
   Future<MatchModel> add(MatchModel entity) async {
     if (entity.id != null) {
       throw Exception("id must be null");
@@ -12,18 +18,18 @@ class MatchesRepository {
     var now = DateTime.now();
     var model = entity.copyWith(createdDate: now, modifiedDate: now);
 
-    var db = await database;
+    var db = await databaseRepository.database;
     var serializedEntity = _toDatabase(model);
-    var id = await db.insert(matchesTable, serializedEntity);
+    var id = await db.insert(DatabaseRepository.matchesTable, serializedEntity);
 
     return model.copyWith(id: id);
   }
 
   Future<void> delete(int id) async {
-    var db = await database;
+    var db = await databaseRepository.database;
     await db.delete(
-      matchesTable,
-      where: '$idField = ?',
+      DatabaseRepository.matchesTable,
+      where: '${DatabaseRepository.idField} = ?',
       whereArgs: [id],
     );
   }
@@ -35,20 +41,20 @@ class MatchesRepository {
 
     var model = entity.copyWith(modifiedDate: DateTime.now());
 
-    var db = await database;
+    var db = await databaseRepository.database;
     await db.update(
-      matchesTable,
+      DatabaseRepository.matchesTable,
       _toDatabase(model),
-      where: '$idField = ?',
+      where: '${DatabaseRepository.idField} = ?',
       whereArgs: [entity.id!],
     );
   }
 
   Future<MatchModel?> get(int id) async {
-    var db = await database;
+    var db = await databaseRepository.database;
     var items = await db.query(
-      matchesTable,
-      where: "$idField = ?",
+      DatabaseRepository.matchesTable,
+      where: "${DatabaseRepository.idField} = ?",
       whereArgs: [id],
       limit: 1,
     );
@@ -61,12 +67,12 @@ class MatchesRepository {
   }
 
   Future<List<MatchModel>> getList(int skip, int take) async {
-    var db = await database;
+    var db = await databaseRepository.database;
     var items = await db.query(
-      matchesTable,
+      DatabaseRepository.matchesTable,
       offset: skip,
       limit: take,
-      orderBy: "$modifiedDateField DESC",
+      orderBy: "${DatabaseRepository.modifiedDateField} DESC",
     );
 
     return items.map(((e) => _fromDatabase(e))).toList();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app.dart';
+import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 import 'widgets/home/home_cubit.dart';
@@ -19,10 +20,13 @@ class Bootstrapper extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (_) => PacingsRepository(),
+          create: (_) => DatabaseRepository(),
         ),
         RepositoryProvider(
-          create: (_) => MatchesRepository(),
+          create: (repositoryContext) => PacingsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => MatchesRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
       ],
       child: MultiBlocProvider(

@@ -1,9 +1,15 @@
 import 'dart:convert';
 
 import '../models/pacing_model.dart';
-import 'database.dart';
+import 'database_repository.dart';
 
 class PacingsRepository {
+  final DatabaseRepository databaseRepository;
+
+  const PacingsRepository({
+    required this.databaseRepository,
+  });
+
   Future<PacingModel> add(PacingModel entity) async {
     if (entity.id != null) {
       throw Exception("id must be null");
@@ -12,18 +18,18 @@ class PacingsRepository {
     var now = DateTime.now();
     var model = entity.copyWith(createdDate: now, modifiedDate: now);
 
-    var db = await database;
+    var db = await databaseRepository.database;
     var serializedEntity = _toDatabase(model);
-    var id = await db.insert(pacingsTable, serializedEntity);
+    var id = await db.insert(DatabaseRepository.pacingsTable, serializedEntity);
 
     return model.copyWith(id: id);
   }
 
   Future<void> delete(int id) async {
-    var db = await database;
+    var db = await databaseRepository.database;
     await db.delete(
-      pacingsTable,
-      where: '$idField = ?',
+      DatabaseRepository.pacingsTable,
+      where: '${DatabaseRepository.idField} = ?',
       whereArgs: [id],
     );
   }
@@ -35,20 +41,20 @@ class PacingsRepository {
 
     var model = entity.copyWith(modifiedDate: DateTime.now());
 
-    var db = await database;
+    var db = await databaseRepository.database;
     await db.update(
-      pacingsTable,
+      DatabaseRepository.pacingsTable,
       _toDatabase(model),
-      where: '$idField = ?',
+      where: '${DatabaseRepository.idField} = ?',
       whereArgs: [entity.id!],
     );
   }
 
   Future<PacingModel?> get(int id) async {
-    var db = await database;
+    var db = await databaseRepository.database;
     var items = await db.query(
-      pacingsTable,
-      where: "$idField = ?",
+      DatabaseRepository.pacingsTable,
+      where: "${DatabaseRepository.idField} = ?",
       whereArgs: [id],
       limit: 1,
     );
@@ -61,12 +67,12 @@ class PacingsRepository {
   }
 
   Future<List<PacingModel>> getList(int skip, int take) async {
-    var db = await database;
+    var db = await databaseRepository.database;
     var items = await db.query(
-      pacingsTable,
+      DatabaseRepository.pacingsTable,
       offset: skip,
       limit: take,
-      orderBy: "$modifiedDateField DESC",
+      orderBy: "${DatabaseRepository.modifiedDateField} DESC",
     );
 
     return items.map(((e) => _fromDatabase(e))).toList();
