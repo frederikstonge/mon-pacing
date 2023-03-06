@@ -60,8 +60,9 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.1
+  
   build_runner: ^2.3.3
+  flutter_lints: ^2.0.1
   flutter_migrate: ^0.1.0
   freezed: ^2.3.2
   intl_utils: ^2.8.1

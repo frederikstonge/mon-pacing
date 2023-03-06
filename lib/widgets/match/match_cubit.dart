@@ -15,66 +15,64 @@ class MatchCubit extends Cubit<MatchModel> {
 
   Future<void> initialize() async {
     if (state.teams.isEmpty) {
-      var teams = List<TeamModel>.from(state.copyWith().teams);
+      final teams = List<TeamModel>.from(state.copyWith().teams);
 
-      var team1 = _createRandomTeam(teams);
+      final team1 = _createRandomTeam(teams);
       teams.add(team1);
-
-      var team2 = _createRandomTeam(teams);
+      final team2 = _createRandomTeam(teams);
       teams.add(team2);
 
-      var match = state.copyWith(teams: teams);
+      final match = state.copyWith(teams: teams);
       emit(match);
       await matchesCubit.edit(match);
     }
   }
 
   Future<void> editName(String name) async {
-    var match = state.copyWith(name: name);
+    final match = state.copyWith(name: name);
     emit(match);
     await matchesCubit.edit(match);
   }
 
   Future<void> editTeam(TeamModel team) async {
-    var teams = List<TeamModel>.from(state.copyWith().teams);
+    final teams = List<TeamModel>.from(state.copyWith().teams);
     teams[team.order] = team;
 
-    var match = state.copyWith(teams: teams);
+    final match = state.copyWith(teams: teams);
     emit(match);
     await matchesCubit.edit(match);
   }
 
   Future<void> removeTeam(TeamModel team) async {
-    var teams = List<TeamModel>.from(state.copyWith().teams);
+    final teams = List<TeamModel>.from(state.copyWith().teams);
     teams.removeAt(team.order);
     _reOrderTeams(teams);
 
-    var match = state.copyWith(teams: teams);
+    final match = state.copyWith(teams: teams);
     emit(match);
     await matchesCubit.edit(match);
   }
 
   Future<void> addTeam() async {
-    var teams = List<TeamModel>.from(state.copyWith().teams);
-    var team = _createRandomTeam(teams);
-
+    final teams = List<TeamModel>.from(state.copyWith().teams);
+    final team = _createRandomTeam(teams);
     teams.add(team);
-    var match = state.copyWith(teams: teams);
+    final match = state.copyWith(teams: teams);
 
     emit(match);
     await matchesCubit.edit(match);
   }
 
   Future<void> setPoint(int improvisationId, int teamId) async {
-    var points = List<PointModel>.from(state.copyWith().points);
+    final points = List<PointModel>.from(state.copyWith().points);
     if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
       points.removeWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
     } else {
-      var nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
+      final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
       points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId));
     }
 
-    var match = state.copyWith(points: points);
+    final match = state.copyWith(points: points);
 
     emit(match);
     await matchesCubit.edit(match);
@@ -89,9 +87,9 @@ class MatchCubit extends Cubit<MatchModel> {
   }
 
   TeamModel _createRandomTeam(List<TeamModel> teams) {
-    var nextOrder = teams.isNotEmpty ? teams.map((e) => e.order).toList().reduce(max) + 1 : 0;
-    var nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
-    var random = Random();
+    final nextOrder = teams.isNotEmpty ? teams.map((e) => e.order).toList().reduce(max) + 1 : 0;
+    final nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
+    final random = Random();
     return TeamModel(
       id: nextId,
       order: nextOrder,

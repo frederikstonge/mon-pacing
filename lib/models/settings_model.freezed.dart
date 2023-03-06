@@ -21,8 +21,8 @@ SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SettingsModel {
   int get color => throw _privateConstructorUsedError;
-  bool get enablePaddingDuration => throw _privateConstructorUsedError;
-  Duration get paddingDuration => throw _privateConstructorUsedError;
+  bool get enableDefaultPaddingDuration => throw _privateConstructorUsedError;
+  Duration get defaultPaddingDuration => throw _privateConstructorUsedError;
   String get language => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,8 +39,8 @@ abstract class $SettingsModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int color,
-      bool enablePaddingDuration,
-      Duration paddingDuration,
+      bool enableDefaultPaddingDuration,
+      Duration defaultPaddingDuration,
       String language});
 }
 
@@ -58,8 +58,8 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
   @override
   $Res call({
     Object? color = null,
-    Object? enablePaddingDuration = null,
-    Object? paddingDuration = null,
+    Object? enableDefaultPaddingDuration = null,
+    Object? defaultPaddingDuration = null,
     Object? language = null,
   }) {
     return _then(_value.copyWith(
@@ -67,13 +67,13 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      enablePaddingDuration: null == enablePaddingDuration
-          ? _value.enablePaddingDuration
-          : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
+      enableDefaultPaddingDuration: null == enableDefaultPaddingDuration
+          ? _value.enableDefaultPaddingDuration
+          : enableDefaultPaddingDuration // ignore: cast_nullable_to_non_nullable
               as bool,
-      paddingDuration: null == paddingDuration
-          ? _value.paddingDuration
-          : paddingDuration // ignore: cast_nullable_to_non_nullable
+      defaultPaddingDuration: null == defaultPaddingDuration
+          ? _value.defaultPaddingDuration
+          : defaultPaddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
       language: null == language
           ? _value.language
@@ -93,8 +93,8 @@ abstract class _$$_SettingsModelCopyWith<$Res>
   @useResult
   $Res call(
       {int color,
-      bool enablePaddingDuration,
-      Duration paddingDuration,
+      bool enableDefaultPaddingDuration,
+      Duration defaultPaddingDuration,
       String language});
 }
 
@@ -110,8 +110,8 @@ class __$$_SettingsModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? color = null,
-    Object? enablePaddingDuration = null,
-    Object? paddingDuration = null,
+    Object? enableDefaultPaddingDuration = null,
+    Object? defaultPaddingDuration = null,
     Object? language = null,
   }) {
     return _then(_$_SettingsModel(
@@ -119,13 +119,13 @@ class __$$_SettingsModelCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      enablePaddingDuration: null == enablePaddingDuration
-          ? _value.enablePaddingDuration
-          : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
+      enableDefaultPaddingDuration: null == enableDefaultPaddingDuration
+          ? _value.enableDefaultPaddingDuration
+          : enableDefaultPaddingDuration // ignore: cast_nullable_to_non_nullable
               as bool,
-      paddingDuration: null == paddingDuration
-          ? _value.paddingDuration
-          : paddingDuration // ignore: cast_nullable_to_non_nullable
+      defaultPaddingDuration: null == defaultPaddingDuration
+          ? _value.defaultPaddingDuration
+          : defaultPaddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
       language: null == language
           ? _value.language
@@ -140,8 +140,8 @@ class __$$_SettingsModelCopyWithImpl<$Res>
 class _$_SettingsModel implements _SettingsModel {
   const _$_SettingsModel(
       {required this.color,
-      required this.enablePaddingDuration,
-      required this.paddingDuration,
+      required this.enableDefaultPaddingDuration,
+      required this.defaultPaddingDuration,
       required this.language});
 
   factory _$_SettingsModel.fromJson(Map<String, dynamic> json) =>
@@ -150,15 +150,15 @@ class _$_SettingsModel implements _SettingsModel {
   @override
   final int color;
   @override
-  final bool enablePaddingDuration;
+  final bool enableDefaultPaddingDuration;
   @override
-  final Duration paddingDuration;
+  final Duration defaultPaddingDuration;
   @override
   final String language;
 
   @override
   String toString() {
-    return 'SettingsModel(color: $color, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration, language: $language)';
+    return 'SettingsModel(color: $color, enableDefaultPaddingDuration: $enableDefaultPaddingDuration, defaultPaddingDuration: $defaultPaddingDuration, language: $language)';
   }
 
   @override
@@ -167,18 +167,20 @@ class _$_SettingsModel implements _SettingsModel {
         (other.runtimeType == runtimeType &&
             other is _$_SettingsModel &&
             (identical(other.color, color) || other.color == color) &&
-            (identical(other.enablePaddingDuration, enablePaddingDuration) ||
-                other.enablePaddingDuration == enablePaddingDuration) &&
-            (identical(other.paddingDuration, paddingDuration) ||
-                other.paddingDuration == paddingDuration) &&
+            (identical(other.enableDefaultPaddingDuration,
+                    enableDefaultPaddingDuration) ||
+                other.enableDefaultPaddingDuration ==
+                    enableDefaultPaddingDuration) &&
+            (identical(other.defaultPaddingDuration, defaultPaddingDuration) ||
+                other.defaultPaddingDuration == defaultPaddingDuration) &&
             (identical(other.language, language) ||
                 other.language == language));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, color, enablePaddingDuration, paddingDuration, language);
+  int get hashCode => Object.hash(runtimeType, color,
+      enableDefaultPaddingDuration, defaultPaddingDuration, language);
 
   @JsonKey(ignore: true)
   @override
@@ -197,8 +199,8 @@ class _$_SettingsModel implements _SettingsModel {
 abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
       {required final int color,
-      required final bool enablePaddingDuration,
-      required final Duration paddingDuration,
+      required final bool enableDefaultPaddingDuration,
+      required final Duration defaultPaddingDuration,
       required final String language}) = _$_SettingsModel;
 
   factory _SettingsModel.fromJson(Map<String, dynamic> json) =
@@ -207,9 +209,9 @@ abstract class _SettingsModel implements SettingsModel {
   @override
   int get color;
   @override
-  bool get enablePaddingDuration;
+  bool get enableDefaultPaddingDuration;
   @override
-  Duration get paddingDuration;
+  Duration get defaultPaddingDuration;
   @override
   String get language;
   @override

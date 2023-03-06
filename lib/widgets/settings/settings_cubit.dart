@@ -9,8 +9,8 @@ class SettingsCubit extends HydratedCubit<SettingsModel> {
       : super(
           SettingsModel(
             color: Colors.indigo.value,
-            enablePaddingDuration: false,
-            paddingDuration: const Duration(minutes: 1),
+            enableDefaultPaddingDuration: false,
+            defaultPaddingDuration: const Duration(minutes: 1),
             language: Intl.getCurrentLocale().substring(0, 2) == 'fr' ? 'fr' : 'en',
           ),
         );

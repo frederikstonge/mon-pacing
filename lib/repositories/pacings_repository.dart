@@ -15,18 +15,17 @@ class PacingsRepository {
       throw Exception("id must be null");
     }
 
-    var now = DateTime.now();
-    var model = entity.copyWith(createdDate: now, modifiedDate: now);
-
-    var db = await databaseRepository.database;
-    var serializedEntity = _toDatabase(model);
-    var id = await db.insert(DatabaseRepository.pacingsTable, serializedEntity);
+    final now = DateTime.now();
+    final model = entity.copyWith(createdDate: now, modifiedDate: now);
+    final db = await databaseRepository.database;
+    final serializedEntity = _toDatabase(model);
+    final id = await db.insert(DatabaseRepository.pacingsTable, serializedEntity);
 
     return model.copyWith(id: id);
   }
 
   Future<void> delete(int id) async {
-    var db = await databaseRepository.database;
+    final db = await databaseRepository.database;
     await db.delete(
       DatabaseRepository.pacingsTable,
       where: '${DatabaseRepository.idField} = ?',
@@ -39,9 +38,8 @@ class PacingsRepository {
       throw Exception("id must not be null");
     }
 
-    var model = entity.copyWith(modifiedDate: DateTime.now());
-
-    var db = await databaseRepository.database;
+    final model = entity.copyWith(modifiedDate: DateTime.now());
+    final db = await databaseRepository.database;
     await db.update(
       DatabaseRepository.pacingsTable,
       _toDatabase(model),
@@ -51,8 +49,8 @@ class PacingsRepository {
   }
 
   Future<PacingModel?> get(int id) async {
-    var db = await databaseRepository.database;
-    var items = await db.query(
+    final db = await databaseRepository.database;
+    final items = await db.query(
       DatabaseRepository.pacingsTable,
       where: "${DatabaseRepository.idField} = ?",
       whereArgs: [id],
@@ -67,8 +65,8 @@ class PacingsRepository {
   }
 
   Future<List<PacingModel>> getList(int skip, int take) async {
-    var db = await databaseRepository.database;
-    var items = await db.query(
+    final db = await databaseRepository.database;
+    final items = await db.query(
       DatabaseRepository.pacingsTable,
       offset: skip,
       limit: take,
@@ -79,14 +77,16 @@ class PacingsRepository {
   }
 
   PacingModel _fromDatabase(Map<String, dynamic> json) {
-    var newValues = Map<String, dynamic>.from(json);
-    newValues.update("improvisations", (value) => jsonDecode(value));
+    final newValues = Map<String, dynamic>.from(json);
+    newValues.update(DatabaseRepository.improvisationsField, (value) => jsonDecode(value));
+    newValues.update(DatabaseRepository.enablePaddingDurationField, (value) => value == 1);
     return PacingModel.fromJson(newValues);
   }
 
   Map<String, dynamic> _toDatabase(PacingModel model) {
-    var items = model.toJson();
-    items["improvisations"] = jsonEncode(items["improvisations"]);
+    final items = model.toJson();
+    items[DatabaseRepository.improvisationsField] = jsonEncode(items[DatabaseRepository.improvisationsField]);
+    items[DatabaseRepository.enablePaddingDurationField] = model.enablePaddingDuration ? 1 : 0;
     return items;
   }
 }

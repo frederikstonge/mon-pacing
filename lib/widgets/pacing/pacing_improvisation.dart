@@ -44,8 +44,8 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
 
   @override
   Widget build(BuildContext context) {
-    var title = S.of(context).PacingView_ImprovisationTitle(widget.improvisation.order + 1);
-    var subTitle = S.of(context).PacingView_ImprovisationSubtitle(
+    final title = S.of(context).PacingView_ImprovisationTitle(widget.improvisation.order + 1);
+    final subTitle = S.of(context).PacingView_ImprovisationSubtitle(
           widget.improvisation.type == ImprovisationType.mixed ? 'M' : 'C',
           widget.improvisation.category.isNotEmpty ? widget.improvisation.category : '-',
           widget.improvisation.theme.isNotEmpty ? widget.improvisation.theme : '-',
@@ -86,7 +86,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
               },
               items: ImprovisationType.values.map(
                 (e) {
-                  var display = e == ImprovisationType.mixed ? S.of(context).ImprovisationType_mixed : S.of(context).ImprovisationType_compared;
+                  final display = e == ImprovisationType.mixed ? S.of(context).ImprovisationType_mixed : S.of(context).ImprovisationType_compared;
                   return DropdownMenuItem<ImprovisationType>(
                     value: e,
                     child: Text(display),
@@ -139,7 +139,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
                 hintText: S.of(context).PacingView_ImprovisationParticipants,
               ),
               onChanged: (value) {
-                var performers = _performersController.text.isEmpty ? null : int.parse(_performersController.text);
+                final performers = _performersController.text.isEmpty ? null : int.parse(_performersController.text);
                 if (performers != widget.improvisation.performers) {
                   context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(performers: performers));
                 }

@@ -47,7 +47,7 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
           autoStart: false,
           isTimerTextShown: true,
           onChange: (Duration timeStamp) {
-            var valueInSeconds = timeStamp.inSeconds;
+            final valueInSeconds = timeStamp.inSeconds;
             if (valueInSeconds != lastTimeStamp) {
               if (valueInSeconds == 0) {
                 setState(() {

@@ -56,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mixte"),
         "ListItem_ExportSuccess": m1,
         "ListItem_Modified": m2,
+        "MatchOptionsView_AddTeam":
+            MessageLookupByLibrary.simpleMessage("Ajouter une équipe"),
         "MatchOptionsView_Match": MessageLookupByLibrary.simpleMessage("Match"),
         "MatchOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Nom du match"),
@@ -74,10 +76,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "MatchView_WillPopDialog_Title":
             MessageLookupByLibrary.simpleMessage("Match en cours"),
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matchs"),
+        "PacingOptionsView_EnablePaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Activer la durée tampon"),
+        "PacingOptionsView_EnablePaddingDurationDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Temps d\'extra à ajouter pour chaque improvisation dans le total"),
         "PacingOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Pacing Name"),
         "PacingOptionsView_Pacing":
             MessageLookupByLibrary.simpleMessage("Pacing"),
+        "PacingOptionsView_PaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Durée tampon"),
         "PacingOptionsView_Title": m4,
         "PacingPage_NewPacingName": m5,
         "PacingView_AddImprovisation":
@@ -111,25 +120,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "PacingsPage_Title": MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsPage_Title":
             MessageLookupByLibrary.simpleMessage("Paramètres"),
-        "SettingsView_EnablePaddingDuration":
-            MessageLookupByLibrary.simpleMessage("Activer la durée tampon"),
+        "SettingsView_DefaultPaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Durée tampon par défaut"),
+        "SettingsView_EnableDefaultPaddingDuration":
+            MessageLookupByLibrary.simpleMessage(
+                "Activer la durée tampon par défaut"),
+        "SettingsView_EnableDefaultPaddingDurationDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Temps d\'extra à ajouter pour chaque improvisation dans le total"),
         "SettingsView_LanguageTitle":
             MessageLookupByLibrary.simpleMessage("Langue"),
         "SettingsView_Language_English":
             MessageLookupByLibrary.simpleMessage("Anglais"),
         "SettingsView_Language_French":
             MessageLookupByLibrary.simpleMessage("Français"),
-        "SettingsView_PaddingDuration":
-            MessageLookupByLibrary.simpleMessage("Durée tampon"),
         "SettingsView_Section_Application":
             MessageLookupByLibrary.simpleMessage("Application"),
         "SettingsView_Section_Pacings":
             MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsView_ThemeTitle":
             MessageLookupByLibrary.simpleMessage("Choisir la couleur du thème"),
-        "Settings_View_EnablePaddingDurationDescription":
-            MessageLookupByLibrary.simpleMessage(
-                "Temps d\'extra à ajouter pour chaque improvisation dans le total"),
         "ValidadatorHelper_FieldIsRequired":
             MessageLookupByLibrary.simpleMessage("Le champ est obligatoire"),
         "ValidadatorHelper_ValidationMessageDialog_Content":

@@ -11,6 +11,8 @@ class DatabaseRepository {
   static String nameField = "name";
   static String createdDateField = "createdDate";
   static String modifiedDateField = "modifiedDate";
+  static String paddingDurationField = "paddingDuration";
+  static String enablePaddingDurationField = "enablePaddingDuration";
   static String improvisationsField = "improvisations";
   static String teamsField = "teams";
   static String penaltiesField = "penalties";
@@ -38,7 +40,7 @@ class DatabaseRepository {
 
     final filePath = join(path, 'mon_pacing.db');
 
-    // var file = File(filePath);
+    // final file = File(filePath);
     // if (await file.exists()) {
     //   await file.delete(recursive: true);
     // }
@@ -54,36 +56,38 @@ class DatabaseRepository {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     await db.execute(''' 
-    DROP TABLE IF EXISTS $pacingsTable
-  ''');
+      DROP TABLE IF EXISTS $pacingsTable
+    ''');
 
     await db.execute(''' 
-    DROP TABLE IF EXISTS $matchesTable
-  ''');
+      DROP TABLE IF EXISTS $matchesTable
+    ''');
 
     await _onCreate(db, newVersion);
   }
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-    CREATE TABLE $pacingsTable(
-    $idField integer primary key autoincrement,
-    $nameField text not null,
-    $createdDateField text not null,
-    $modifiedDateField text,
-    $improvisationsField text)
-  ''');
+      CREATE TABLE $pacingsTable(
+      $idField integer primary key autoincrement,
+      $nameField text not null,
+      $enablePaddingDurationField integer not null,
+      $paddingDurationField integer not null,
+      $createdDateField text not null,
+      $modifiedDateField text,
+      $improvisationsField text)
+    ''');
 
     await db.execute('''
-    CREATE TABLE $matchesTable(
-    $idField integer primary key autoincrement,
-    $nameField text not null,
-    $createdDateField text not null,
-    $modifiedDateField text,
-    $improvisationsField text,
-    $teamsField text,
-    $penaltiesField text,
-    $pointsField text)
-  ''');
+      CREATE TABLE $matchesTable(
+      $idField integer primary key autoincrement,
+      $nameField text not null,
+      $createdDateField text not null,
+      $modifiedDateField text,
+      $improvisationsField text,
+      $teamsField text,
+      $penaltiesField text,
+      $pointsField text)
+    ''');
   }
 }

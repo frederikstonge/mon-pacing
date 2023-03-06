@@ -15,18 +15,17 @@ class MatchesRepository {
       throw Exception("id must be null");
     }
 
-    var now = DateTime.now();
-    var model = entity.copyWith(createdDate: now, modifiedDate: now);
-
-    var db = await databaseRepository.database;
-    var serializedEntity = _toDatabase(model);
-    var id = await db.insert(DatabaseRepository.matchesTable, serializedEntity);
+    final now = DateTime.now();
+    final model = entity.copyWith(createdDate: now, modifiedDate: now);
+    final db = await databaseRepository.database;
+    final serializedEntity = _toDatabase(model);
+    final id = await db.insert(DatabaseRepository.matchesTable, serializedEntity);
 
     return model.copyWith(id: id);
   }
 
   Future<void> delete(int id) async {
-    var db = await databaseRepository.database;
+    final db = await databaseRepository.database;
     await db.delete(
       DatabaseRepository.matchesTable,
       where: '${DatabaseRepository.idField} = ?',
@@ -39,9 +38,8 @@ class MatchesRepository {
       throw Exception("id must not be null");
     }
 
-    var model = entity.copyWith(modifiedDate: DateTime.now());
-
-    var db = await databaseRepository.database;
+    final model = entity.copyWith(modifiedDate: DateTime.now());
+    final db = await databaseRepository.database;
     await db.update(
       DatabaseRepository.matchesTable,
       _toDatabase(model),
@@ -51,8 +49,8 @@ class MatchesRepository {
   }
 
   Future<MatchModel?> get(int id) async {
-    var db = await databaseRepository.database;
-    var items = await db.query(
+    final db = await databaseRepository.database;
+    final items = await db.query(
       DatabaseRepository.matchesTable,
       where: "${DatabaseRepository.idField} = ?",
       whereArgs: [id],
@@ -67,8 +65,8 @@ class MatchesRepository {
   }
 
   Future<List<MatchModel>> getList(int skip, int take) async {
-    var db = await databaseRepository.database;
-    var items = await db.query(
+    final db = await databaseRepository.database;
+    final items = await db.query(
       DatabaseRepository.matchesTable,
       offset: skip,
       limit: take,
@@ -79,20 +77,22 @@ class MatchesRepository {
   }
 
   MatchModel _fromDatabase(Map<String, dynamic> json) {
-    var newValues = Map<String, dynamic>.from(json);
-    newValues.update("improvisations", (value) => jsonDecode(value));
-    newValues.update("teams", (value) => jsonDecode(value));
-    newValues.update("penalties", (value) => jsonDecode(value));
-    newValues.update("points", (value) => jsonDecode(value));
+    final newValues = Map<String, dynamic>.from(json);
+    newValues.update(DatabaseRepository.improvisationsField, (value) => jsonDecode(value));
+    newValues.update(DatabaseRepository.teamsField, (value) => jsonDecode(value));
+    newValues.update(DatabaseRepository.penaltiesField, (value) => jsonDecode(value));
+    newValues.update(DatabaseRepository.pointsField, (value) => jsonDecode(value));
+
     return MatchModel.fromJson(newValues);
   }
 
   Map<String, dynamic> _toDatabase(MatchModel model) {
-    var items = model.toJson();
-    items["improvisations"] = jsonEncode(items["improvisations"]);
-    items["teams"] = jsonEncode(items["teams"]);
-    items["penalties"] = jsonEncode(items["penalties"]);
-    items["points"] = jsonEncode(items["points"]);
+    final items = model.toJson();
+    items[DatabaseRepository.improvisationsField] = jsonEncode(items[DatabaseRepository.improvisationsField]);
+    items[DatabaseRepository.teamsField] = jsonEncode(items[DatabaseRepository.teamsField]);
+    items[DatabaseRepository.penaltiesField] = jsonEncode(items[DatabaseRepository.penaltiesField]);
+    items[DatabaseRepository.pointsField] = jsonEncode(items[DatabaseRepository.pointsField]);
+
     return items;
   }
 }

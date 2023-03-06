@@ -38,9 +38,11 @@ class MatchOptionsView extends StatelessWidget {
                     return SettingsTile(
                       leading: InkWell(
                         onTap: () async {
-                          await ColorPickerDialog.showColorPickerDialog(context, Color(e.color), (value) async {
-                            await context.read<MatchCubit>().editTeam(e.copyWith(color: value.value));
-                          });
+                          await ColorPickerDialog.showColorPickerDialog(
+                            context,
+                            Color(e.color),
+                            (value) async => await context.read<MatchCubit>().editTeam(e.copyWith(color: value.value)),
+                          );
                         },
                         child: CircleAvatar(
                           backgroundColor: Color(e.color),
@@ -59,9 +61,7 @@ class MatchOptionsView extends StatelessWidget {
                       trailing: state.teams.length > 1
                           ? IconButton(
                               icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                context.read<MatchCubit>().removeTeam(e);
-                              },
+                              onPressed: () => context.read<MatchCubit>().removeTeam(e),
                             )
                           : null,
                     );
@@ -71,15 +71,11 @@ class MatchOptionsView extends StatelessWidget {
                   SettingsTile(
                     leading: IconButton(
                       icon: const Icon(Icons.add),
-                      onPressed: () async {
-                        await _addTeam(context);
-                      },
+                      onPressed: () async => await _addTeam(context),
                     ),
                     title: InkWell(
-                      child: const Text("Add team"),
-                      onTap: () async {
-                        await _addTeam(context);
-                      },
+                      child: Text(S.of(context).MatchOptionsView_AddTeam),
+                      onTap: () async => await _addTeam(context),
                     ),
                   ),
               ],

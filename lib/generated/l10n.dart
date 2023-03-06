@@ -140,6 +140,16 @@ class S {
     );
   }
 
+  /// `Add team`
+  String get MatchOptionsView_AddTeam {
+    return Intl.message(
+      'Add team',
+      name: 'MatchOptionsView_AddTeam',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Match`
   String get MatchOptionsView_Match {
     return Intl.message(
@@ -250,6 +260,26 @@ class S {
     );
   }
 
+  /// `Enable padding duration`
+  String get PacingOptionsView_EnablePaddingDuration {
+    return Intl.message(
+      'Enable padding duration',
+      name: 'PacingOptionsView_EnablePaddingDuration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra time to add for each improvisation in the total`
+  String get PacingOptionsView_EnablePaddingDurationDescription {
+    return Intl.message(
+      'Extra time to add for each improvisation in the total',
+      name: 'PacingOptionsView_EnablePaddingDurationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Nom du pacing`
   String get PacingOptionsView_Name {
     return Intl.message(
@@ -265,6 +295,16 @@ class S {
     return Intl.message(
       'Pacing',
       name: 'PacingOptionsView_Pacing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Padding duration`
+  String get PacingOptionsView_PaddingDuration {
+    return Intl.message(
+      'Padding duration',
+      name: 'PacingOptionsView_PaddingDuration',
       desc: '',
       args: [],
     );
@@ -471,11 +511,31 @@ class S {
     );
   }
 
-  /// `Enable padding duration`
-  String get SettingsView_EnablePaddingDuration {
+  /// `Default padding duration`
+  String get SettingsView_DefaultPaddingDuration {
     return Intl.message(
-      'Enable padding duration',
-      name: 'SettingsView_EnablePaddingDuration',
+      'Default padding duration',
+      name: 'SettingsView_DefaultPaddingDuration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable default padding duration`
+  String get SettingsView_EnableDefaultPaddingDuration {
+    return Intl.message(
+      'Enable default padding duration',
+      name: 'SettingsView_EnableDefaultPaddingDuration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra time to add for each improvisation in the total`
+  String get SettingsView_EnableDefaultPaddingDurationDescription {
+    return Intl.message(
+      'Extra time to add for each improvisation in the total',
+      name: 'SettingsView_EnableDefaultPaddingDurationDescription',
       desc: '',
       args: [],
     );
@@ -511,16 +571,6 @@ class S {
     );
   }
 
-  /// `Padding duration`
-  String get SettingsView_PaddingDuration {
-    return Intl.message(
-      'Padding duration',
-      name: 'SettingsView_PaddingDuration',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Application`
   String get SettingsView_Section_Application {
     return Intl.message(
@@ -546,16 +596,6 @@ class S {
     return Intl.message(
       'Select theme color',
       name: 'SettingsView_ThemeTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Extra time to add for each improvisation in the total`
-  String get Settings_View_EnablePaddingDurationDescription {
-    return Intl.message(
-      'Extra time to add for each improvisation in the total',
-      name: 'Settings_View_EnablePaddingDurationDescription',
       desc: '',
       args: [],
     );

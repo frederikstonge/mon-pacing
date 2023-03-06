@@ -44,21 +44,13 @@ class Item<T extends BaseModel> extends StatelessWidget {
         ),
         onTap: () async {
           if (entity is PacingModel) {
-            var model = entity as PacingModel;
-            var copy = model.copyWith();
-            await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => PacingPage(model: copy)),
-                ));
+            final model = entity as PacingModel;
+            final copy = model.copyWith();
+            await Navigator.push(context, MaterialPageRoute(builder: ((context) => PacingPage(model: copy))));
           } else if (entity is MatchModel) {
-            var model = entity as MatchModel;
-            var copy = model.copyWith();
-            await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => MatchPage(model: copy)),
-                ));
+            final model = entity as MatchModel;
+            final copy = model.copyWith();
+            await Navigator.push(context, MaterialPageRoute(builder: ((context) => MatchPage(model: copy))));
           }
         },
         trailing: Row(
@@ -69,10 +61,10 @@ class Item<T extends BaseModel> extends StatelessWidget {
               onPressed: () async {
                 await DeleteDialog.showDeleteDialog(context, entity.name, () async {
                   if (entity is PacingModel) {
-                    var model = entity as PacingModel;
+                    final model = entity as PacingModel;
                     await context.read<PacingsCubit>().delete(model);
                   } else if (entity is MatchModel) {
-                    var model = entity as MatchModel;
+                    final model = entity as MatchModel;
                     await context.read<MatchesCubit>().delete(model);
                   }
                 });
@@ -82,12 +74,12 @@ class Item<T extends BaseModel> extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.upload),
                 onPressed: () async {
-                  var localizer = S.of(context);
-                  var messenger = ScaffoldMessenger.of(context);
-                  var model = entity as PacingModel;
-                  var data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
-                  var fileName = PathHelper.removeIllegalCharacters("${model.name}.json");
-                  var params = SaveFileDialogParams(data: data, fileName: fileName);
+                  final localizer = S.of(context);
+                  final messenger = ScaffoldMessenger.of(context);
+                  final model = entity as PacingModel;
+                  final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+                  final fileName = PathHelper.removeIllegalCharacters("${model.name}.json");
+                  final params = SaveFileDialogParams(data: data, fileName: fileName);
                   final filePath = await FlutterFileDialog.saveFile(params: params);
                   if (filePath != null) {
                     messenger.showSnackBar(SnackBar(content: Text(localizer.ListItem_ExportSuccess(filePath, fileName))));
@@ -98,16 +90,16 @@ class Item<T extends BaseModel> extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.play_arrow),
                 onPressed: () async {
-                  var model = entity as PacingModel;
+                  final model = entity as PacingModel;
                   await TextDialog.showTextDialog(
                     context,
                     S.of(context).MatchOptionsView_Name,
                     model.name,
                     true,
                     (value) async {
-                      var navigator = Navigator.of(context);
-                      var matchCubit = context.read<MatchesCubit>();
-                      var homeCubit = context.read<HomeCubit>();
+                      final navigator = Navigator.of(context);
+                      final matchCubit = context.read<MatchesCubit>();
+                      final homeCubit = context.read<HomeCubit>();
                       var matchModel = MatchModel(
                         createdDate: null,
                         modifiedDate: null,

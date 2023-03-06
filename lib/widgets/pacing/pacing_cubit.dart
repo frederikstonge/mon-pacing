@@ -9,17 +9,17 @@ import '../../models/improvisation_type.dart';
 class PacingCubit extends Cubit<PacingModel> {
   PacingCubit({required PacingModel model}) : super(model);
 
-  void editName(String name) {
-    emit(state.copyWith(name: name));
+  void edit(PacingModel model) {
+    emit(model);
   }
 
   void addImprovisation() {
-    var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
-    var nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
-    var nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
-    var nextType = ImprovisationType.values[improvisations.length % 2];
+    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
+    final nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
+    final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
+    final nextType = ImprovisationType.values[improvisations.length % 2];
 
-    var newImprovisation = ImprovisationModel(
+    final newImprovisation = ImprovisationModel(
       id: nextId,
       order: nextOrder,
       type: nextType,
@@ -36,8 +36,8 @@ class PacingCubit extends Cubit<PacingModel> {
   }
 
   void moveImprovisation(int oldOrder, int newOrder) {
-    var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
-    var improvisation = improvisations.removeAt(oldOrder);
+    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
+    final improvisation = improvisations.removeAt(oldOrder);
 
     if (oldOrder < newOrder) {
       newOrder--;
@@ -50,7 +50,7 @@ class PacingCubit extends Cubit<PacingModel> {
   }
 
   void removeImprovisation(int order) {
-    var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
+    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
     improvisations.removeAt(order);
     _reOrderImprovisations(improvisations);
 
@@ -58,7 +58,7 @@ class PacingCubit extends Cubit<PacingModel> {
   }
 
   void editImprovisation(ImprovisationModel model) {
-    var improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
+    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
     improvisations[model.order] = model;
 
     emit(state.copyWith(improvisations: improvisations));

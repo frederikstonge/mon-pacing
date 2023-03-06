@@ -93,7 +93,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
     if (widget.isReverse && !widget.autoStart && !widget.controller!.isStarted) {
       timeStamp = _getTime(Duration(seconds: widget.duration));
     } else {
-      Duration? duration = _controller!.duration! * _controller!.value;
+      final duration = _controller!.duration! * _controller!.value;
       timeStamp = _getTime(duration);
     }
 
@@ -332,7 +332,7 @@ class CustomTimerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
+    final paint = Paint()
       ..color = ringColor!
       ..strokeWidth = strokeWidth!
       ..strokeCap = strokeCap!
@@ -346,8 +346,8 @@ class CustomTimerPainter extends CustomPainter {
     }
 
     canvas.drawCircle(size.center(Offset.zero), size.width / 2, paint);
-    double progress = (animation!.value) * 2 * math.pi;
-    double startAngle = math.pi * 1.5;
+    final progress = (animation!.value) * 2 * math.pi;
+    const startAngle = math.pi * 1.5;
 
     if (fillGradient != null) {
       final rect = Rect.fromCircle(center: size.center(Offset.zero), radius: size.width / 2);

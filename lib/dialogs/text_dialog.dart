@@ -86,9 +86,9 @@ class _TextDialogContentState extends State<TextDialogContent> {
         TextButton(
           child: Text(S.of(context).Dialog_Ok),
           onPressed: () async {
-            var result = formKey.currentState!.validate();
+            final result = formKey.currentState!.validate();
             if (result) {
-              var value = textController.text;
+              final value = textController.text;
               Navigator.of(context).pop(true);
               await widget.onSave(value);
             }

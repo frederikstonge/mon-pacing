@@ -3,13 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'pacing_cubit.dart';
 import '../pacings/pacings_cubit.dart';
-import '../settings/settings_cubit.dart';
 import '../../dialogs/will_pop_dialog.dart';
 import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
 import '../../models/improvisation_type.dart';
 import '../../models/pacing_model.dart';
-import '../../models/settings_model.dart';
 import '../pacing_options/pacing_options_page.dart';
 import 'pacing_improvisation.dart';
 
@@ -25,11 +23,11 @@ class PacingView extends StatefulWidget {
 class _PacingViewState extends State<PacingView> {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: () async {
         if (context.read<PacingCubit>().state != widget.model) {
-          var result = await WillPopDialog.showWillPopDialog(
+          final result = await WillPopDialog.showWillPopDialog(
             context,
             S.of(context).PacingView_WillPopDialog_Title,
             S.of(context).PacingView_WillPopDialog_Content,
@@ -87,8 +85,8 @@ class _PacingViewState extends State<PacingView> {
                           ),
                         ),
                         Expanded(
-                          child: BlocBuilder<SettingsCubit, SettingsModel>(
-                            builder: (settingsContext, settingsState) {
+                          child: Builder(
+                            builder: (context) {
                               var totalDuration = state.improvisations.fold(
                                 Duration.zero,
                                 (d, i) {
@@ -100,8 +98,8 @@ class _PacingViewState extends State<PacingView> {
                                 },
                               );
 
-                              if (settingsState.enablePaddingDuration) {
-                                totalDuration = totalDuration + (settingsState.paddingDuration * (state.improvisations.length));
+                              if (state.enablePaddingDuration) {
+                                totalDuration = totalDuration + (state.paddingDuration * (state.improvisations.length));
                               }
 
                               return Text(
@@ -122,7 +120,7 @@ class _PacingViewState extends State<PacingView> {
                   context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex);
                 },
                 itemBuilder: (_, index) {
-                  var item = state.improvisations[index];
+                  final item = state.improvisations[index];
                   return PacingImprovisation(key: ValueKey("${item.id}"), improvisation: item, index: index);
                 },
                 itemCount: state.improvisations.length,

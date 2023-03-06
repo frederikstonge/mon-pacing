@@ -55,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mixed"),
         "ListItem_ExportSuccess": m1,
         "ListItem_Modified": m2,
+        "MatchOptionsView_AddTeam":
+            MessageLookupByLibrary.simpleMessage("Add team"),
         "MatchOptionsView_Match": MessageLookupByLibrary.simpleMessage("Match"),
         "MatchOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Match Name"),
@@ -72,10 +74,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "MatchView_WillPopDialog_Title":
             MessageLookupByLibrary.simpleMessage("Match in progress"),
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matches"),
+        "PacingOptionsView_EnablePaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Enable padding duration"),
+        "PacingOptionsView_EnablePaddingDurationDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Extra time to add for each improvisation in the total"),
         "PacingOptionsView_Name":
             MessageLookupByLibrary.simpleMessage("Nom du pacing"),
         "PacingOptionsView_Pacing":
             MessageLookupByLibrary.simpleMessage("Pacing"),
+        "PacingOptionsView_PaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Padding duration"),
         "PacingOptionsView_Title": m4,
         "PacingPage_NewPacingName": m5,
         "PacingView_AddImprovisation":
@@ -108,25 +117,26 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Import"),
         "PacingsPage_Title": MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsPage_Title": MessageLookupByLibrary.simpleMessage("Settings"),
-        "SettingsView_EnablePaddingDuration":
-            MessageLookupByLibrary.simpleMessage("Enable padding duration"),
+        "SettingsView_DefaultPaddingDuration":
+            MessageLookupByLibrary.simpleMessage("Default padding duration"),
+        "SettingsView_EnableDefaultPaddingDuration":
+            MessageLookupByLibrary.simpleMessage(
+                "Enable default padding duration"),
+        "SettingsView_EnableDefaultPaddingDurationDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Extra time to add for each improvisation in the total"),
         "SettingsView_LanguageTitle":
             MessageLookupByLibrary.simpleMessage("Language"),
         "SettingsView_Language_English":
             MessageLookupByLibrary.simpleMessage("English"),
         "SettingsView_Language_French":
             MessageLookupByLibrary.simpleMessage("French"),
-        "SettingsView_PaddingDuration":
-            MessageLookupByLibrary.simpleMessage("Padding duration"),
         "SettingsView_Section_Application":
             MessageLookupByLibrary.simpleMessage("Application"),
         "SettingsView_Section_Pacings":
             MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsView_ThemeTitle":
             MessageLookupByLibrary.simpleMessage("Select theme color"),
-        "Settings_View_EnablePaddingDurationDescription":
-            MessageLookupByLibrary.simpleMessage(
-                "Extra time to add for each improvisation in the total"),
         "ValidadatorHelper_FieldIsRequired":
             MessageLookupByLibrary.simpleMessage("Field is required"),
         "ValidadatorHelper_ValidationMessageDialog_Content":

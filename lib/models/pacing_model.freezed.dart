@@ -24,6 +24,8 @@ mixin _$PacingModel {
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
+  bool get enablePaddingDuration => throw _privateConstructorUsedError;
+  Duration get paddingDuration => throw _privateConstructorUsedError;
   List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
 
@@ -44,6 +46,8 @@ abstract class $PacingModelCopyWith<$Res> {
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
+      bool enablePaddingDuration,
+      Duration paddingDuration,
       List<ImprovisationModel> improvisations});
 }
 
@@ -64,6 +68,8 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
+    Object? enablePaddingDuration = null,
+    Object? paddingDuration = null,
     Object? improvisations = null,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +89,14 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      enablePaddingDuration: null == enablePaddingDuration
+          ? _value.enablePaddingDuration
+          : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
+              as bool,
+      paddingDuration: null == paddingDuration
+          ? _value.paddingDuration
+          : paddingDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       improvisations: null == improvisations
           ? _value.improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
@@ -104,6 +118,8 @@ abstract class _$$_PacingModelCopyWith<$Res>
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
+      bool enablePaddingDuration,
+      Duration paddingDuration,
       List<ImprovisationModel> improvisations});
 }
 
@@ -122,6 +138,8 @@ class __$$_PacingModelCopyWithImpl<$Res>
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
+    Object? enablePaddingDuration = null,
+    Object? paddingDuration = null,
     Object? improvisations = null,
   }) {
     return _then(_$_PacingModel(
@@ -141,6 +159,14 @@ class __$$_PacingModelCopyWithImpl<$Res>
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      enablePaddingDuration: null == enablePaddingDuration
+          ? _value.enablePaddingDuration
+          : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
+              as bool,
+      paddingDuration: null == paddingDuration
+          ? _value.paddingDuration
+          : paddingDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       improvisations: null == improvisations
           ? _value._improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
@@ -157,6 +183,8 @@ class _$_PacingModel implements _PacingModel {
       required this.name,
       required this.createdDate,
       required this.modifiedDate,
+      required this.enablePaddingDuration,
+      required this.paddingDuration,
       required final List<ImprovisationModel> improvisations})
       : _improvisations = improvisations;
 
@@ -171,6 +199,10 @@ class _$_PacingModel implements _PacingModel {
   final DateTime? createdDate;
   @override
   final DateTime? modifiedDate;
+  @override
+  final bool enablePaddingDuration;
+  @override
+  final Duration paddingDuration;
   final List<ImprovisationModel> _improvisations;
   @override
   List<ImprovisationModel> get improvisations {
@@ -181,7 +213,7 @@ class _$_PacingModel implements _PacingModel {
 
   @override
   String toString() {
-    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations)';
+    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration, improvisations: $improvisations)';
   }
 
   @override
@@ -195,14 +227,25 @@ class _$_PacingModel implements _PacingModel {
                 other.createdDate == createdDate) &&
             (identical(other.modifiedDate, modifiedDate) ||
                 other.modifiedDate == modifiedDate) &&
+            (identical(other.enablePaddingDuration, enablePaddingDuration) ||
+                other.enablePaddingDuration == enablePaddingDuration) &&
+            (identical(other.paddingDuration, paddingDuration) ||
+                other.paddingDuration == paddingDuration) &&
             const DeepCollectionEquality()
                 .equals(other._improvisations, _improvisations));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, createdDate,
-      modifiedDate, const DeepCollectionEquality().hash(_improvisations));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      createdDate,
+      modifiedDate,
+      enablePaddingDuration,
+      paddingDuration,
+      const DeepCollectionEquality().hash(_improvisations));
 
   @JsonKey(ignore: true)
   @override
@@ -224,6 +267,8 @@ abstract class _PacingModel implements PacingModel, BaseModel {
       required final String name,
       required final DateTime? createdDate,
       required final DateTime? modifiedDate,
+      required final bool enablePaddingDuration,
+      required final Duration paddingDuration,
       required final List<ImprovisationModel> improvisations}) = _$_PacingModel;
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
@@ -237,6 +282,10 @@ abstract class _PacingModel implements PacingModel, BaseModel {
   DateTime? get createdDate;
   @override
   DateTime? get modifiedDate;
+  @override
+  bool get enablePaddingDuration;
+  @override
+  Duration get paddingDuration;
   @override
   List<ImprovisationModel> get improvisations;
   @override

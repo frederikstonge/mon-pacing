@@ -29,7 +29,7 @@ class _MatchViewState extends State<MatchView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        var result = await WillPopDialog.showWillPopDialog(
+        final result = await WillPopDialog.showWillPopDialog(
           context,
           S.of(context).MatchView_WillPopDialog_Title,
           S.of(context).MatchView_WillPopDialog_Content,

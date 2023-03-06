@@ -49,7 +49,7 @@ class SettingsView extends StatelessWidget {
                   value: state.language,
                   onChanged: (value) async {
                     if (value != null) {
-                      var cubit = context.read<SettingsCubit>();
+                      final cubit = context.read<SettingsCubit>();
                       await S.load(Locale(value));
                       cubit.edit(state.copyWith(language: value));
                     }
@@ -62,19 +62,19 @@ class SettingsView extends StatelessWidget {
             title: Text(S.of(context).SettingsView_Section_Pacings),
             tiles: [
               SettingsTile.switchTile(
-                initialValue: state.enablePaddingDuration,
-                onToggle: (value) => context.read<SettingsCubit>().edit(state.copyWith(enablePaddingDuration: value)),
-                title: Text(S.of(context).SettingsView_EnablePaddingDuration),
-                description: Text(S.of(context).Settings_View_EnablePaddingDurationDescription),
+                initialValue: state.enableDefaultPaddingDuration,
+                onToggle: (value) => context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPaddingDuration: value)),
+                title: Text(S.of(context).SettingsView_EnableDefaultPaddingDuration),
+                description: Text(S.of(context).SettingsView_EnableDefaultPaddingDurationDescription),
               ),
               SettingsTile(
-                title: Text(S.of(context).SettingsView_PaddingDuration),
-                value: Text(DurationHelper.getDurationString(state.paddingDuration)),
+                title: Text(S.of(context).SettingsView_DefaultPaddingDuration),
+                value: Text(DurationHelper.getDurationString(state.defaultPaddingDuration)),
                 onPressed: (context) async {
                   await DurationDialog.showDurationDialog(
                     context,
-                    state.paddingDuration,
-                    (value) => context.read<SettingsCubit>().edit(state.copyWith(paddingDuration: value)),
+                    state.defaultPaddingDuration,
+                    (value) => context.read<SettingsCubit>().edit(state.copyWith(defaultPaddingDuration: value)),
                   );
                 },
               )

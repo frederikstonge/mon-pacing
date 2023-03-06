@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
+import '../settings/settings_cubit.dart';
 import 'pacings_cubit.dart';
 import '../../dialogs/text_dialog.dart';
 import '../../generated/l10n.dart';
@@ -32,16 +33,21 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
             S.of(context).PacingPage_NewPacingName(DateFormat.yMd().add_jm().format(DateTime.now())),
             true,
             (value) async {
-              var model = PacingModel(
+              final navigator = Navigator.of(context);
+              final pacingsCubit = context.read<PacingsCubit>();
+              final settingsCubit = context.read<SettingsCubit>();
+
+              final model = PacingModel(
                 createdDate: null,
                 id: null,
                 modifiedDate: null,
                 name: value,
+                enablePaddingDuration: settingsCubit.state.enableDefaultPaddingDuration,
+                paddingDuration: settingsCubit.state.defaultPaddingDuration,
                 improvisations: [],
               );
-              var navigator = Navigator.of(context);
-              var pacingsCubit = context.read<PacingsCubit>();
-              var pacingModel = await pacingsCubit.add(model);
+
+              final pacingModel = await pacingsCubit.add(model);
               await navigator.push(MaterialPageRoute(builder: ((context) => PacingPage(model: pacingModel))));
             },
           );
@@ -55,7 +61,7 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
     return [
       IconButton(
         onPressed: (() async {
-          var cubit = context.read<PacingsCubit>();
+          final cubit = context.read<PacingsCubit>();
           const params = OpenFileDialogParams(
             dialogType: OpenFileDialogType.document,
             sourceType: SourceType.photoLibrary,
@@ -64,8 +70,8 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
           try {
             final filePath = await FlutterFileDialog.pickFile(params: params);
             if (filePath != null) {
-              var pacingValue = await File(filePath).readAsString();
-              var pacing = PacingModel.fromJson(jsonDecode(pacingValue));
+              final pacingValue = await File(filePath).readAsString();
+              final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
               await cubit.add(pacing.copyWith(id: null));
             }
           } catch (e) {

@@ -46,7 +46,7 @@ class _HomeViewState extends State<HomeView> {
         floatingActionButton: widget.pages.elementAt(selectedPage).getFloatingActionButton(context),
         bottomNavigationBar: BottomNavigationBar(
             onTap: (value) {
-              var cubit = context.read<HomeCubit>();
+              final cubit = context.read<HomeCubit>();
               cubit.setPage(value);
             },
             currentIndex: selectedPage,
