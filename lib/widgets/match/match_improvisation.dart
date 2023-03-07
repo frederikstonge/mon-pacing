@@ -36,7 +36,7 @@ class MatchImprovisation extends StatelessWidget {
                     improvisation.category.isNotEmpty ? improvisation.category : "-",
                     improvisation.theme.isNotEmpty ? improvisation.theme : "-",
                     improvisation.performers ?? "-",
-                    DurationHelper.getDurationString(improvisation.duration),
+                    DurationHelper.getDurationString(improvisation.durations.reduce((total, element) => total + element)),
                   ),
             ),
           ),
@@ -79,9 +79,10 @@ class MatchImprovisation extends StatelessWidget {
               ),
             ),
           ),
+          // TODO: Implement durations
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: ImprovisationTimer(improvisation: improvisation),
+            child: ImprovisationTimer(duration: improvisation.durations.first),
           ),
         ],
       ),

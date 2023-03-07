@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'improvisation_durations.dart';
 import 'pacing_cubit.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
-import 'improvisation_duration.dart';
 
 class PacingImprovisation extends StatefulWidget {
   final ImprovisationModel improvisation;
@@ -50,7 +51,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
           widget.improvisation.category.isNotEmpty ? widget.improvisation.category : '-',
           widget.improvisation.theme.isNotEmpty ? widget.improvisation.theme : '-',
           widget.improvisation.performers ?? '-',
-          DurationHelper.getDurationString(widget.improvisation.duration),
+          DurationHelper.getDurationString(widget.improvisation.durations.reduce((total, element) => total + element)),
         );
 
     return Material(
@@ -148,7 +149,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
-            child: ImprovisationDuration(
+            child: ImprovisationDurations(
               improvisation: widget.improvisation,
             ),
           ),

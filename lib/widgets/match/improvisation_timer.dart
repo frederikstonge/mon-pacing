@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-import '../../models/improvisation_model.dart';
 import 'circular_countdown_timer.dart';
 
 class ImprovisationTimer extends StatefulWidget {
-  final ImprovisationModel improvisation;
-  const ImprovisationTimer({super.key, required this.improvisation});
+  final Duration duration;
+  const ImprovisationTimer({super.key, required this.duration});
 
   @override
   State<ImprovisationTimer> createState() => _ImprovisationTimerState();
@@ -29,7 +28,7 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
     return Column(
       children: [
         CircularCountDownTimer(
-          duration: widget.improvisation.duration.inSeconds,
+          duration: widget.duration.inSeconds,
           initialDuration: 0,
           controller: _controller,
           ringColor: colors.primary.withOpacity(0.4),

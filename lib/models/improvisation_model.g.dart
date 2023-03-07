@@ -14,7 +14,9 @@ _$_ImprovisationModel _$$_ImprovisationModelFromJson(
       type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
       category: json['category'] as String,
       theme: json['theme'] as String,
-      duration: Duration(microseconds: json['duration'] as int),
+      durations: (json['durations'] as List<dynamic>)
+          .map((e) => Duration(microseconds: e as int))
+          .toList(),
       performers: json['performers'] as int?,
       notes: json['notes'] as String?,
     );
@@ -27,7 +29,7 @@ Map<String, dynamic> _$$_ImprovisationModelToJson(
       'type': _$ImprovisationTypeEnumMap[instance.type]!,
       'category': instance.category,
       'theme': instance.theme,
-      'duration': instance.duration.inMicroseconds,
+      'durations': instance.durations.map((e) => e.inMicroseconds).toList(),
       'performers': instance.performers,
       'notes': instance.notes,
     };

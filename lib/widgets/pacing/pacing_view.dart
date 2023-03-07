@@ -91,9 +91,9 @@ class _PacingViewState extends State<PacingView> {
                                 Duration.zero,
                                 (d, i) {
                                   if (i.type == ImprovisationType.mixed) {
-                                    return d + i.duration;
+                                    return d + i.durations.reduce((total, element) => total + element);
                                   } else {
-                                    return d + (i.duration * 2);
+                                    return d + (i.durations.reduce((total, element) => total + element) * 2);
                                   }
                                 },
                               );

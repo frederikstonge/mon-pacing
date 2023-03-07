@@ -25,7 +25,7 @@ mixin _$ImprovisationModel {
   ImprovisationType get type => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get theme => throw _privateConstructorUsedError;
-  Duration get duration => throw _privateConstructorUsedError;
+  List<Duration> get durations => throw _privateConstructorUsedError;
   int? get performers => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
 
@@ -47,7 +47,7 @@ abstract class $ImprovisationModelCopyWith<$Res> {
       ImprovisationType type,
       String category,
       String theme,
-      Duration duration,
+      List<Duration> durations,
       int? performers,
       String? notes});
 }
@@ -70,7 +70,7 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
     Object? type = null,
     Object? category = null,
     Object? theme = null,
-    Object? duration = null,
+    Object? durations = null,
     Object? performers = freezed,
     Object? notes = freezed,
   }) {
@@ -95,10 +95,10 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as String,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      durations: null == durations
+          ? _value.durations
+          : durations // ignore: cast_nullable_to_non_nullable
+              as List<Duration>,
       performers: freezed == performers
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
@@ -125,7 +125,7 @@ abstract class _$$_ImprovisationModelCopyWith<$Res>
       ImprovisationType type,
       String category,
       String theme,
-      Duration duration,
+      List<Duration> durations,
       int? performers,
       String? notes});
 }
@@ -146,7 +146,7 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
     Object? type = null,
     Object? category = null,
     Object? theme = null,
-    Object? duration = null,
+    Object? durations = null,
     Object? performers = freezed,
     Object? notes = freezed,
   }) {
@@ -171,10 +171,10 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as String,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      durations: null == durations
+          ? _value._durations
+          : durations // ignore: cast_nullable_to_non_nullable
+              as List<Duration>,
       performers: freezed == performers
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
@@ -196,9 +196,10 @@ class _$_ImprovisationModel implements _ImprovisationModel {
       required this.type,
       required this.category,
       required this.theme,
-      required this.duration,
+      required final List<Duration> durations,
       required this.performers,
-      this.notes});
+      this.notes})
+      : _durations = durations;
 
   factory _$_ImprovisationModel.fromJson(Map<String, dynamic> json) =>
       _$$_ImprovisationModelFromJson(json);
@@ -213,8 +214,14 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   final String category;
   @override
   final String theme;
+  final List<Duration> _durations;
   @override
-  final Duration duration;
+  List<Duration> get durations {
+    if (_durations is EqualUnmodifiableListView) return _durations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_durations);
+  }
+
   @override
   final int? performers;
   @override
@@ -222,7 +229,7 @@ class _$_ImprovisationModel implements _ImprovisationModel {
 
   @override
   String toString() {
-    return 'ImprovisationModel(id: $id, order: $order, type: $type, category: $category, theme: $theme, duration: $duration, performers: $performers, notes: $notes)';
+    return 'ImprovisationModel(id: $id, order: $order, type: $type, category: $category, theme: $theme, durations: $durations, performers: $performers, notes: $notes)';
   }
 
   @override
@@ -236,8 +243,8 @@ class _$_ImprovisationModel implements _ImprovisationModel {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.theme, theme) || other.theme == theme) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration) &&
+            const DeepCollectionEquality()
+                .equals(other._durations, _durations) &&
             (identical(other.performers, performers) ||
                 other.performers == performers) &&
             (identical(other.notes, notes) || other.notes == notes));
@@ -246,7 +253,7 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, order, type, category, theme,
-      duration, performers, notes);
+      const DeepCollectionEquality().hash(_durations), performers, notes);
 
   @JsonKey(ignore: true)
   @override
@@ -270,7 +277,7 @@ abstract class _ImprovisationModel implements ImprovisationModel {
       required final ImprovisationType type,
       required final String category,
       required final String theme,
-      required final Duration duration,
+      required final List<Duration> durations,
       required final int? performers,
       final String? notes}) = _$_ImprovisationModel;
 
@@ -288,7 +295,7 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   @override
   String get theme;
   @override
-  Duration get duration;
+  List<Duration> get durations;
   @override
   int? get performers;
   @override

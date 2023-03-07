@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'pacing_cubit.dart';
 import '../../dialogs/duration_dialog.dart';
 import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
-import '../../models/improvisation_model.dart';
 
 class ImprovisationDuration extends StatefulWidget {
-  final ImprovisationModel improvisation;
+  final Duration duration;
+  final ValueChanged<Duration> valueChanged;
 
   const ImprovisationDuration({
     super.key,
-    required this.improvisation,
+    required this.duration,
+    required this.valueChanged,
   });
 
   @override
@@ -24,7 +23,7 @@ class _ImprovisationDurationState extends State<ImprovisationDuration> {
 
   @override
   void initState() {
-    _textController.text = DurationHelper.getDurationString(widget.improvisation.duration);
+    _textController.text = DurationHelper.getDurationString(widget.duration);
     super.initState();
   }
 
@@ -40,9 +39,9 @@ class _ImprovisationDurationState extends State<ImprovisationDuration> {
       readOnly: true,
       controller: _textController,
       onTap: () async {
-        await DurationDialog.showDurationDialog(context, widget.improvisation.duration, (value) {
-          context.read<PacingCubit>().editImprovisation(widget.improvisation.copyWith(duration: value));
+        await DurationDialog.showDurationDialog(context, widget.duration, (value) {
           _textController.text = DurationHelper.getDurationString(value);
+          widget.valueChanged(value);
         });
       },
       decoration: InputDecoration(

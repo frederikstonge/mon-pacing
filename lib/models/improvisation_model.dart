@@ -13,7 +13,7 @@ class ImprovisationModel with _$ImprovisationModel {
     required ImprovisationType type,
     required String category,
     required String theme,
-    required Duration duration,
+    required List<Duration> durations,
     required int? performers,
     String? notes,
   }) = _ImprovisationModel;

@@ -23,7 +23,7 @@ class PacingCubit extends Cubit<PacingModel> {
       id: nextId,
       order: nextOrder,
       type: nextType,
-      duration: const Duration(minutes: 2, seconds: 30),
+      durations: const [Duration(minutes: 2, seconds: 30)],
       category: "",
       performers: null,
       theme: "",
