@@ -388,10 +388,10 @@ packages:
     dependency: "direct dev"
     description:
       name: intl_utils
-      sha256: "413699c0f7a1123a9306c1f2f5ea8662677d25bdebf22ba4f3960e0069be3be2"
+      sha256: db392393fbf891e3eb32f6beb1928b00cdb33e3c54597fd5f5dc5c43e5ba601c
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.1"
+    version: "2.8.2"
   io:
     dependency: transitive
     description:
@@ -508,10 +508,10 @@ packages:
     dependency: "direct main"
     description:
       name: path_provider
-      sha256: dcea5feb97d8abf90cab9e9030b497fb7c3cbf26b7a1fe9e3ef7dcb0a1ddec95
+      sha256: "04890b994ee89bfa80bf3080bfec40d5a92c5c7a785ebb02c13084a099d2b6f9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   path_provider_android:
     dependency: transitive
     description:
@@ -681,10 +681,10 @@ packages:
     dependency: "direct main"
     description:
       name: sqflite
-      sha256: "78324387dc81df14f78df06019175a86a2ee0437624166c382e145d0a7fd9a4f"
+      sha256: "851d5040552cf911f4cabda08d003eca76b27da3ed0002978272e27c8fbf8ecc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.4+1"
+    version: "2.2.5"
   sqflite_common:
     dependency: transitive
     description:
@@ -729,26 +729,26 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: b5cb2525beb38fae36a363f72f8a2db92ed3995d6f0695968412cc6836e3a7b7
+      sha256: ab3eac31638e80663eae19c71e362012e1e2f67dfd527dc5c07d9397cd4238f2
       url: "https://pub.dev"
     source: hosted
-    version: "20.4.49"
+    version: "20.4.53"
   syncfusion_flutter_xlsio:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_xlsio
-      sha256: f674d7832d130d7946713cf9f8ad3d4f8008abf3bfdf4274cbb0f70b7b57cd2f
+      sha256: "5f10939e4faf6d20225e792c9454aec8dfd1104ae46566c6eec67eb68ffba9db"
       url: "https://pub.dev"
     source: hosted
-    version: "20.4.49-beta"
+    version: "20.4.53-beta"
   syncfusion_officecore:
     dependency: transitive
     description:
       name: syncfusion_officecore
-      sha256: "0f7fe5334f79a68d9d959d5ece88de53d1bcc8a281db9ae99505928018bc0362"
+      sha256: "4fd1fb3c67e76ba02b76c04f5da3d217335383d5d9e1499d7a0610cdf6f96dbc"
       url: "https://pub.dev"
     source: hosted
-    version: "20.4.49-beta"
+    version: "20.4.53-beta"
   synchronized:
     dependency: transitive
     description:
