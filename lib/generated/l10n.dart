@@ -260,6 +260,16 @@ class S {
     );
   }
 
+  /// `Default number of teams`
+  String get PacingOptionsView_DefaultNumberOfTeams {
+    return Intl.message(
+      'Default number of teams',
+      name: 'PacingOptionsView_DefaultNumberOfTeams',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Enable padding duration`
   String get PacingOptionsView_EnablePaddingDuration {
     return Intl.message(
@@ -596,6 +606,16 @@ class S {
     return Intl.message(
       'Select theme color',
       name: 'SettingsView_ThemeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Field must be a number`
+  String get ValidadatorHelper_FieldIsNumber {
+    return Intl.message(
+      'Field must be a number',
+      name: 'ValidadatorHelper_FieldIsNumber',
       desc: '',
       args: [],
     );

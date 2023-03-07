@@ -26,6 +26,7 @@ mixin _$PacingModel {
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
   bool get enablePaddingDuration => throw _privateConstructorUsedError;
   Duration get paddingDuration => throw _privateConstructorUsedError;
+  int get defaultNumberOfTeams => throw _privateConstructorUsedError;
   List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
 
@@ -48,6 +49,7 @@ abstract class $PacingModelCopyWith<$Res> {
       DateTime? modifiedDate,
       bool enablePaddingDuration,
       Duration paddingDuration,
+      int defaultNumberOfTeams,
       List<ImprovisationModel> improvisations});
 }
 
@@ -70,6 +72,7 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? modifiedDate = freezed,
     Object? enablePaddingDuration = null,
     Object? paddingDuration = null,
+    Object? defaultNumberOfTeams = null,
     Object? improvisations = null,
   }) {
     return _then(_value.copyWith(
@@ -97,6 +100,10 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      defaultNumberOfTeams: null == defaultNumberOfTeams
+          ? _value.defaultNumberOfTeams
+          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
+              as int,
       improvisations: null == improvisations
           ? _value.improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
@@ -120,6 +127,7 @@ abstract class _$$_PacingModelCopyWith<$Res>
       DateTime? modifiedDate,
       bool enablePaddingDuration,
       Duration paddingDuration,
+      int defaultNumberOfTeams,
       List<ImprovisationModel> improvisations});
 }
 
@@ -140,6 +148,7 @@ class __$$_PacingModelCopyWithImpl<$Res>
     Object? modifiedDate = freezed,
     Object? enablePaddingDuration = null,
     Object? paddingDuration = null,
+    Object? defaultNumberOfTeams = null,
     Object? improvisations = null,
   }) {
     return _then(_$_PacingModel(
@@ -167,6 +176,10 @@ class __$$_PacingModelCopyWithImpl<$Res>
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      defaultNumberOfTeams: null == defaultNumberOfTeams
+          ? _value.defaultNumberOfTeams
+          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
+              as int,
       improvisations: null == improvisations
           ? _value._improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
@@ -185,6 +198,7 @@ class _$_PacingModel implements _PacingModel {
       required this.modifiedDate,
       required this.enablePaddingDuration,
       required this.paddingDuration,
+      required this.defaultNumberOfTeams,
       required final List<ImprovisationModel> improvisations})
       : _improvisations = improvisations;
 
@@ -203,6 +217,8 @@ class _$_PacingModel implements _PacingModel {
   final bool enablePaddingDuration;
   @override
   final Duration paddingDuration;
+  @override
+  final int defaultNumberOfTeams;
   final List<ImprovisationModel> _improvisations;
   @override
   List<ImprovisationModel> get improvisations {
@@ -213,7 +229,7 @@ class _$_PacingModel implements _PacingModel {
 
   @override
   String toString() {
-    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration, improvisations: $improvisations)';
+    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration, defaultNumberOfTeams: $defaultNumberOfTeams, improvisations: $improvisations)';
   }
 
   @override
@@ -231,6 +247,8 @@ class _$_PacingModel implements _PacingModel {
                 other.enablePaddingDuration == enablePaddingDuration) &&
             (identical(other.paddingDuration, paddingDuration) ||
                 other.paddingDuration == paddingDuration) &&
+            (identical(other.defaultNumberOfTeams, defaultNumberOfTeams) ||
+                other.defaultNumberOfTeams == defaultNumberOfTeams) &&
             const DeepCollectionEquality()
                 .equals(other._improvisations, _improvisations));
   }
@@ -245,6 +263,7 @@ class _$_PacingModel implements _PacingModel {
       modifiedDate,
       enablePaddingDuration,
       paddingDuration,
+      defaultNumberOfTeams,
       const DeepCollectionEquality().hash(_improvisations));
 
   @JsonKey(ignore: true)
@@ -269,6 +288,7 @@ abstract class _PacingModel implements PacingModel, BaseModel {
       required final DateTime? modifiedDate,
       required final bool enablePaddingDuration,
       required final Duration paddingDuration,
+      required final int defaultNumberOfTeams,
       required final List<ImprovisationModel> improvisations}) = _$_PacingModel;
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
@@ -286,6 +306,8 @@ abstract class _PacingModel implements PacingModel, BaseModel {
   bool get enablePaddingDuration;
   @override
   Duration get paddingDuration;
+  @override
+  int get defaultNumberOfTeams;
   @override
   List<ImprovisationModel> get improvisations;
   @override

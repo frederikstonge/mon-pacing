@@ -89,11 +89,11 @@ class _PacingViewState extends State<PacingView> {
                             builder: (context) {
                               var totalDuration = state.improvisations.fold(
                                 Duration.zero,
-                                (d, i) {
-                                  if (i.type == ImprovisationType.mixed) {
-                                    return d + i.durations.reduce((total, element) => total + element);
+                                (t, e) {
+                                  if (e.type == ImprovisationType.mixed) {
+                                    return t + e.durations.reduce((total, element) => total + element);
                                   } else {
-                                    return d + (i.durations.reduce((total, element) => total + element) * 2);
+                                    return t + (e.durations.reduce((total, element) => total + element) * state.defaultNumberOfTeams);
                                   }
                                 },
                               );

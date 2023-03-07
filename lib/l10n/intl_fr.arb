@@ -20,6 +20,7 @@
   "MatchView_WillPopDialog_Content": "Êtes-vous sûr de vouloir revenir en arrière? Vous pourriez perdre des informations du match.",
   "MatchView_WillPopDialog_Title": "Match en cours",
   "MatchesPage_Title": "Matchs",
+  "PacingOptionsView_DefaultNumberOfTeams": "Nombre d'équipe par défaut",
   "PacingOptionsView_EnablePaddingDuration": "Activer la durée tampon",
   "PacingOptionsView_EnablePaddingDurationDescription": "Temps d'extra à ajouter pour chaque improvisation dans le total",
   "PacingOptionsView_Name": "Nom du pacing",
@@ -54,6 +55,7 @@
   "SettingsView_Section_Application": "Application",
   "SettingsView_Section_Pacings": "Pacings",
   "SettingsView_ThemeTitle": "Choisir la couleur du thème",
+  "ValidadatorHelper_FieldIsNumber": "Le champ doit être un nombre",
   "ValidadatorHelper_FieldIsRequired": "Le champ est obligatoire",
   "ValidadatorHelper_ValidationMessageDialog_Content": "Veuillez régler toutes les erreurs de validation.",
   "ValidadatorHelper_ValidationMessageDialog_Title": "Erreur de validation"

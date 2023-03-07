@@ -13,6 +13,7 @@ class DatabaseRepository {
   static String modifiedDateField = "modifiedDate";
   static String paddingDurationField = "paddingDuration";
   static String enablePaddingDurationField = "enablePaddingDuration";
+  static String defaultNumberOfTeamsField = "defaultNumberOfTeams";
   static String improvisationsField = "improvisations";
   static String teamsField = "teams";
   static String penaltiesField = "penalties";
@@ -73,6 +74,7 @@ class DatabaseRepository {
       $nameField text not null,
       $enablePaddingDurationField integer not null,
       $paddingDurationField integer not null,
+      $defaultNumberOfTeamsField integer not null,
       $createdDateField text not null,
       $modifiedDateField text,
       $improvisationsField text)

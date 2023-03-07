@@ -30,15 +30,11 @@ To update resources, right click on the `I10n` folder, then click on `i18n arb e
 
 ## Roadmap
 
-- Add notes to improvisations
 - Handle points
 - Handle penalties
 - Match summaries
 - Export match summaries in excel
-- Add default number of teams in pacings
-- Move padding duration in pacings
 - Handle overtime
-- Handle multiple durations by improvisation
 
 
 ## Update flutter/app

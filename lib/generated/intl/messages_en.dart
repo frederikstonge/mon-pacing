@@ -74,6 +74,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "MatchView_WillPopDialog_Title":
             MessageLookupByLibrary.simpleMessage("Match in progress"),
         "MatchesPage_Title": MessageLookupByLibrary.simpleMessage("Matches"),
+        "PacingOptionsView_DefaultNumberOfTeams":
+            MessageLookupByLibrary.simpleMessage("Default number of teams"),
         "PacingOptionsView_EnablePaddingDuration":
             MessageLookupByLibrary.simpleMessage("Enable padding duration"),
         "PacingOptionsView_EnablePaddingDurationDescription":
@@ -137,6 +139,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsView_ThemeTitle":
             MessageLookupByLibrary.simpleMessage("Select theme color"),
+        "ValidadatorHelper_FieldIsNumber":
+            MessageLookupByLibrary.simpleMessage("Field must be a number"),
         "ValidadatorHelper_FieldIsRequired":
             MessageLookupByLibrary.simpleMessage("Field is required"),
         "ValidadatorHelper_ValidationMessageDialog_Content":

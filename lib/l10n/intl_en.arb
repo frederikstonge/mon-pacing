@@ -20,6 +20,7 @@
   "MatchView_WillPopDialog_Content": "Are you sure you want to go back? You might lose match data.",
   "MatchView_WillPopDialog_Title": "Match in progress",
   "MatchesPage_Title": "Matches",
+  "PacingOptionsView_DefaultNumberOfTeams": "Default number of teams",
   "PacingOptionsView_EnablePaddingDuration": "Enable padding duration",
   "PacingOptionsView_EnablePaddingDurationDescription": "Extra time to add for each improvisation in the total",
   "PacingOptionsView_Name": "Pacing Name",
@@ -54,6 +55,7 @@
   "SettingsView_Section_Application": "Application",
   "SettingsView_Section_Pacings": "Pacings",
   "SettingsView_ThemeTitle": "Select theme color",
+  "ValidadatorHelper_FieldIsNumber": "Field must be a number",
   "ValidadatorHelper_FieldIsRequired": "Field is required",
   "ValidadatorHelper_ValidationMessageDialog_Content": "Please resolve all validation errors.",
   "ValidadatorHelper_ValidationMessageDialog_Title": "Validation error"

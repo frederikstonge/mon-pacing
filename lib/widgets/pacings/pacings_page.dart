@@ -45,6 +45,7 @@ class PacingsPage extends StatelessWidget implements IBottomNavPage {
                 enablePaddingDuration: settingsCubit.state.enableDefaultPaddingDuration,
                 paddingDuration: settingsCubit.state.defaultPaddingDuration,
                 improvisations: [],
+                defaultNumberOfTeams: 2,
               );
 
               final pacingModel = await pacingsCubit.add(model);

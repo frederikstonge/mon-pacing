@@ -16,6 +16,7 @@ class PacingModel with _$PacingModel implements BaseModel {
     required DateTime? modifiedDate,
     required bool enablePaddingDuration,
     required Duration paddingDuration,
+    required int defaultNumberOfTeams,
     required List<ImprovisationModel> improvisations,
   }) = _PacingModel;
 

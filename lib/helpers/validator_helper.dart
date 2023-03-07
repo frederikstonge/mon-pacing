@@ -19,4 +19,12 @@ class ValidationHelper {
 
     return null;
   }
+
+  static String? fieldIsNumber(String value) {
+    if (int.tryParse(value) == null) {
+      return S.current.ValidadatorHelper_FieldIsNumber;
+    }
+
+    return null;
+  }
 }

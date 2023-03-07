@@ -62,12 +62,14 @@ class SettingsView extends StatelessWidget {
             title: Text(S.of(context).SettingsView_Section_Pacings),
             tiles: [
               SettingsTile.switchTile(
+                leading: Icon(state.enableDefaultPaddingDuration ? Icons.alarm_on : Icons.alarm_off),
                 initialValue: state.enableDefaultPaddingDuration,
                 onToggle: (value) => context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPaddingDuration: value)),
                 title: Text(S.of(context).SettingsView_EnableDefaultPaddingDuration),
                 description: Text(S.of(context).SettingsView_EnableDefaultPaddingDurationDescription),
               ),
               SettingsTile(
+                leading: const Icon(Icons.alarm),
                 title: Text(S.of(context).SettingsView_DefaultPaddingDuration),
                 value: Text(DurationHelper.getDurationString(state.defaultPaddingDuration)),
                 onPressed: (context) async {

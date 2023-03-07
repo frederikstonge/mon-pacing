@@ -24,6 +24,7 @@ class MatchOptionsView extends StatelessWidget {
               title: Text(S.of(context).MatchOptionsView_Match),
               tiles: [
                 SettingsTile(
+                  leading: const Icon(Icons.edit),
                   title: Text(S.of(context).MatchOptionsView_Name, overflow: TextOverflow.ellipsis),
                   value: Text(state.name),
                   onPressed: (context) async => await _openMatchNamePopup(context, state.name),

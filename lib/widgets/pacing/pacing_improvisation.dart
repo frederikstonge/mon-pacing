@@ -72,7 +72,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
         ),
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: DropdownButtonFormField<ImprovisationType>(
               decoration: InputDecoration(
                 hintText: S.of(context).PacingView_ImprovisationType,
@@ -97,7 +97,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: TextField(
                 controller: _categoryController,
                 decoration: InputDecoration(
@@ -113,7 +113,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
                 }),
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: TextField(
                 controller: _themeController,
                 decoration: InputDecoration(
@@ -129,7 +129,7 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
                 }),
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: TextField(
               controller: _performersController,
               keyboardType: TextInputType.number,
@@ -147,14 +147,11 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ImprovisationDurations(
-              improvisation: widget.improvisation,
-            ),
+          ImprovisationDurations(
+            improvisation: widget.improvisation,
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: TextField(
                 controller: _notesController,
                 keyboardType: TextInputType.multiline,

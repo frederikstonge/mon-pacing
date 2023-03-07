@@ -18,6 +18,7 @@ _$_PacingModel _$$_PacingModelFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['modifiedDate'] as String),
       enablePaddingDuration: json['enablePaddingDuration'] as bool,
       paddingDuration: Duration(microseconds: json['paddingDuration'] as int),
+      defaultNumberOfTeams: json['defaultNumberOfTeams'] as int,
       improvisations: (json['improvisations'] as List<dynamic>)
           .map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -31,5 +32,6 @@ Map<String, dynamic> _$$_PacingModelToJson(_$_PacingModel instance) =>
       'modifiedDate': instance.modifiedDate?.toIso8601String(),
       'enablePaddingDuration': instance.enablePaddingDuration,
       'paddingDuration': instance.paddingDuration.inMicroseconds,
+      'defaultNumberOfTeams': instance.defaultNumberOfTeams,
       'improvisations': instance.improvisations,
     };
