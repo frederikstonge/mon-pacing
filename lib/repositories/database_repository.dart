@@ -40,10 +40,10 @@ class DatabaseRepository {
 
     final filePath = join(path, 'mon_pacing.db');
 
-    final file = File(filePath);
-    if (await file.exists()) {
-      await file.delete(recursive: true);
-    }
+    // final file = File(filePath);
+    // if (await file.exists()) {
+    //   await file.delete(recursive: true);
+    // }
 
     return await openDatabase(
       filePath,

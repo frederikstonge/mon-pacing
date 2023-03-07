@@ -22,7 +22,7 @@
   "MatchesPage_Title": "Matches",
   "PacingOptionsView_EnablePaddingDuration": "Enable padding duration",
   "PacingOptionsView_EnablePaddingDurationDescription": "Extra time to add for each improvisation in the total",
-  "PacingOptionsView_Name": "Nom du pacing",
+  "PacingOptionsView_Name": "Pacing Name",
   "PacingOptionsView_Pacing": "Pacing",
   "PacingOptionsView_PaddingDuration": "Padding duration",
   "PacingOptionsView_Title": "{title} Options",

@@ -82,7 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Temps d\'extra à ajouter pour chaque improvisation dans le total"),
         "PacingOptionsView_Name":
-            MessageLookupByLibrary.simpleMessage("Pacing Name"),
+            MessageLookupByLibrary.simpleMessage("Nom du pacing"),
         "PacingOptionsView_Pacing":
             MessageLookupByLibrary.simpleMessage("Pacing"),
         "PacingOptionsView_PaddingDuration":

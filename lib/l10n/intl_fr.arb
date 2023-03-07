@@ -22,7 +22,7 @@
   "MatchesPage_Title": "Matchs",
   "PacingOptionsView_EnablePaddingDuration": "Activer la durée tampon",
   "PacingOptionsView_EnablePaddingDurationDescription": "Temps d'extra à ajouter pour chaque improvisation dans le total",
-  "PacingOptionsView_Name": "Pacing Name",
+  "PacingOptionsView_Name": "Nom du pacing",
   "PacingOptionsView_Pacing": "Pacing",
   "PacingOptionsView_PaddingDuration": "Durée tampon",
   "PacingOptionsView_Title": "Options de {title}",

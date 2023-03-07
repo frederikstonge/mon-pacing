@@ -280,10 +280,10 @@ class S {
     );
   }
 
-  /// `Nom du pacing`
+  /// `Pacing Name`
   String get PacingOptionsView_Name {
     return Intl.message(
-      'Nom du pacing',
+      'Pacing Name',
       name: 'PacingOptionsView_Name',
       desc: '',
       args: [],

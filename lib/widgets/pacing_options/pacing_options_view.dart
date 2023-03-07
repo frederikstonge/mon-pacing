@@ -33,12 +33,12 @@ class PacingOptionsView extends StatelessWidget {
                 SettingsTile.switchTile(
                   initialValue: state.enablePaddingDuration,
                   onToggle: (value) => context.read<PacingCubit>().edit(state.copyWith(enablePaddingDuration: value)),
-                  title: Text(S.of(context).PacingOptionsView_EnablePaddingDuration),
-                  description: Text(S.of(context).PacingOptionsView_EnablePaddingDurationDescription),
+                  title: Text(S.of(context).PacingOptionsView_EnablePaddingDuration, overflow: TextOverflow.ellipsis),
+                  description: Text(S.of(context).PacingOptionsView_EnablePaddingDurationDescription, overflow: TextOverflow.ellipsis),
                 ),
                 SettingsTile(
-                  title: Text(S.of(context).PacingOptionsView_PaddingDuration),
-                  value: Text(DurationHelper.getDurationString(state.paddingDuration)),
+                  title: Text(S.of(context).PacingOptionsView_PaddingDuration, overflow: TextOverflow.ellipsis),
+                  value: Text(DurationHelper.getDurationString(state.paddingDuration), overflow: TextOverflow.ellipsis),
                   onPressed: (context) async {
                     await DurationDialog.showDurationDialog(
                       context,
