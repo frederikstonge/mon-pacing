@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'match_cubit.dart';
 import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../../models/match_model.dart';
 import 'improvisation_timer.dart';
+import 'match_cubit.dart';
 
 class MatchImprovisation extends StatelessWidget {
   final ImprovisationModel improvisation;

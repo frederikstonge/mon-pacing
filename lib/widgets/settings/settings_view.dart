@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import 'settings_cubit.dart';
 import '../../dialogs/colorpicker_dialog.dart';
 import '../../dialogs/duration_dialog.dart';
 import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
 import '../../models/settings_model.dart';
+import 'settings_cubit.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});

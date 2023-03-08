@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../helpers/listview_helper.dart';
-import '../matches/matches_cubit.dart';
-import '../pacings/pacings_cubit.dart';
 import '../../models/base_model.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
+import '../matches/matches_cubit.dart';
+import '../pacings/pacings_cubit.dart';
 import 'item.dart';
 
 class ItemsList<T extends BaseModel> extends StatefulWidget {

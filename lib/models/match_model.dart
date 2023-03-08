@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'base_model.dart';
 import 'improvisation_model.dart';
 import 'penalty_model.dart';
 import 'point_model.dart';
-import 'base_model.dart';
 import 'team_model.dart';
 
 part 'match_model.freezed.dart';

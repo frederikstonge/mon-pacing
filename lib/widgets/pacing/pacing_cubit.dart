@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../models/improvisation_model.dart';
-import '../../models/pacing_model.dart';
 
+import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
+import '../../models/pacing_model.dart';
 
 class PacingCubit extends Cubit<PacingModel> {
   PacingCubit({required PacingModel model}) : super(model);

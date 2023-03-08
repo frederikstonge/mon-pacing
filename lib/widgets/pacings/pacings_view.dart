@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../common/items_list.dart';
 import 'pacings_cubit.dart';
 import 'pacings_state.dart';
-import '../common/items_list.dart';
 
 class PacingsView extends StatelessWidget {
   const PacingsView({super.key});

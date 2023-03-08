@@ -6,14 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
-import '../settings/settings_cubit.dart';
-import 'pacings_cubit.dart';
 import '../../dialogs/text_dialog.dart';
 import '../../generated/l10n.dart';
 import '../../models/pacing_model.dart';
-import 'pacings_view.dart';
 import '../home/ibottom_nav_page.dart';
 import '../pacing/pacing_page.dart';
+import '../settings/settings_cubit.dart';
+import 'pacings_cubit.dart';
+import 'pacings_view.dart';
 
 class PacingsPage extends StatelessWidget implements IBottomNavPage {
   const PacingsPage({super.key});

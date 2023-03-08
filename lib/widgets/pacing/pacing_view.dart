@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'pacing_cubit.dart';
-import '../pacings/pacings_cubit.dart';
 import '../../dialogs/will_pop_dialog.dart';
 import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
 import '../../models/improvisation_type.dart';
 import '../../models/pacing_model.dart';
 import '../pacing_options/pacing_options_page.dart';
+import '../pacings/pacings_cubit.dart';
+import 'pacing_cubit.dart';
 import 'pacing_improvisation.dart';
 
 class PacingView extends StatefulWidget {

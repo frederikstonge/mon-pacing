@@ -4,12 +4,11 @@ import 'package:settings_ui/settings_ui.dart';
 
 import '../../dialogs/duration_dialog.dart';
 import '../../dialogs/number_dialog.dart';
-import '../../helpers/duration_helper.dart';
-import '../pacing/pacing_cubit.dart';
 import '../../dialogs/text_dialog.dart';
 import '../../generated/l10n.dart';
-
+import '../../helpers/duration_helper.dart';
 import '../../models/pacing_model.dart';
+import '../pacing/pacing_cubit.dart';
 
 class PacingOptionsView extends StatelessWidget {
   const PacingOptionsView({super.key});
