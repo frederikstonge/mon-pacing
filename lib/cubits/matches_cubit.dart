@@ -1,19 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../models/pacing_model.dart';
-import '../../repositories/pacings_repository.dart';
-import 'pacings_state.dart';
+import '../models/match_model.dart';
+import '../repositories/matches_repository.dart';
+import '../states/matches_state.dart';
 
-class PacingsCubit extends Cubit<PacingsState> {
+class MatchesCubit extends Cubit<MatchesState> {
   static const int _pageSize = 20;
-  final PacingsRepository repository;
+  final MatchesRepository repository;
   bool _isFetching = false;
 
-  PacingsCubit({required this.repository}) : super(const PacingsState.initial());
+  MatchesCubit({required this.repository}) : super(const MatchesState.initial());
 
   bool get isFetching => _isFetching;
 
-  Future<PacingModel> add(PacingModel model) async {
+  Future<MatchModel> add(MatchModel model) async {
     try {
       return await repository.add(model);
     } finally {
@@ -21,7 +21,7 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future<void> edit(PacingModel model) async {
+  Future<void> edit(MatchModel model) async {
     try {
       await repository.edit(model);
     } finally {
@@ -29,7 +29,7 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future<void> delete(PacingModel model) async {
+  Future<void> delete(MatchModel model) async {
     try {
       await repository.delete(model.id!);
     } finally {
@@ -43,26 +43,26 @@ class PacingsCubit extends Cubit<PacingsState> {
       await state.when(
         initial: () async {
           final response = await repository.getList(0, _pageSize);
-          emit(PacingsState.success(response, response.length < _pageSize));
+          emit(MatchesState.success(response, response.length < _pageSize));
         },
         error: (error) async {
           final response = await repository.getList(0, _pageSize);
-          emit(PacingsState.success(response, response.length < _pageSize));
+          emit(MatchesState.success(response, response.length < _pageSize));
         },
-        success: (pacings, hasReachedMax) async {
-          final response = await repository.getList(pacings.length, _pageSize);
-          emit(PacingsState.success(pacings + response, response.length < _pageSize));
+        success: (matches, hasReachedMax) async {
+          final response = await repository.getList(matches.length, _pageSize);
+          emit(MatchesState.success(matches + response, response.length < _pageSize));
         },
       );
     } catch (exception) {
-      emit(PacingsState.error(exception.toString()));
+      emit(MatchesState.error(exception.toString()));
     } finally {
       _isFetching = false;
     }
   }
 
   Future<void> refresh() async {
-    emit(const PacingsState.initial());
+    emit(const MatchesState.initial());
     await fetch();
   }
 }

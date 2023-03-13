@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../generated/l10n.dart';
 import '../helpers/validator_helper.dart';
+import '../l10n/generated/l10n.dart';
 
 class TextDialog {
   static Future<void> showTextDialog(

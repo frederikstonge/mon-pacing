@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app.dart';
+import 'cubits/home_cubit.dart';
+import 'cubits/matches_cubit.dart';
+import 'cubits/pacings_cubit.dart';
+import 'cubits/settings_cubit.dart';
 import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
-import 'widgets/home/home_cubit.dart';
-import 'widgets/matches/matches_cubit.dart';
-import 'widgets/pacings/pacings_cubit.dart';
-import 'widgets/settings/settings_cubit.dart';
 
 class Bootstrapper extends StatelessWidget {
   const Bootstrapper({

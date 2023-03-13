@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../dialogs/message_dialog.dart';
-import '../generated/l10n.dart';
+import '../l10n/generated/l10n.dart';
 
 class ValidationHelper {
   static Future<void> showValidationMessageDialog(BuildContext context) async {

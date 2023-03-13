@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../generated/l10n.dart';
-import '../../models/match_model.dart';
-import '../../models/point_model.dart';
-import '../../models/team_model.dart';
-import '../matches/matches_cubit.dart';
+import '../l10n/generated/l10n.dart';
+import '../models/match_model.dart';
+import '../models/point_model.dart';
+import '../models/team_model.dart';
+import 'matches_cubit.dart';
 
 class MatchCubit extends Cubit<MatchModel> {
   final MatchesCubit matchesCubit;

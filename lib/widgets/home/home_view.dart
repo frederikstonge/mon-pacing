@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home_cubit.dart';
+import '../../cubits/home_cubit.dart';
 import 'ibottom_nav_page.dart';
 
 class HomeView extends StatefulWidget {

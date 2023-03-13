@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../cubits/pacing_cubit.dart';
 import '../../dialogs/delete_dialog.dart';
-import '../../generated/l10n.dart';
 import '../../helpers/duration_helper.dart';
+import '../../l10n/generated/l10n.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import 'improvisation_durations.dart';
-import 'pacing_cubit.dart';
 
 class PacingImprovisation extends StatefulWidget {
   final ImprovisationModel improvisation;

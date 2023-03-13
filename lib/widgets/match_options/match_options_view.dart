@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../../cubits/match_cubit.dart';
 import '../../dialogs/colorpicker_dialog.dart';
 import '../../dialogs/text_dialog.dart';
-import '../../generated/l10n.dart';
+import '../../l10n/generated/l10n.dart';
 import '../../models/match_model.dart';
-import '../match/match_cubit.dart';
 
 class MatchOptionsView extends StatelessWidget {
   const MatchOptionsView({super.key});

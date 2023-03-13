@@ -6,18 +6,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
+import '../../cubits/home_cubit.dart';
+import '../../cubits/matches_cubit.dart';
+import '../../cubits/pacings_cubit.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../dialogs/text_dialog.dart';
-import '../../generated/l10n.dart';
 import '../../helpers/path_helper.dart';
+import '../../l10n/generated/l10n.dart';
 import '../../models/base_model.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
-import '../home/home_cubit.dart';
 import '../match/match_page.dart';
-import '../matches/matches_cubit.dart';
 import '../pacing/pacing_page.dart';
-import '../pacings/pacings_cubit.dart';
 
 class Item<T extends BaseModel> extends StatelessWidget {
   final T entity;

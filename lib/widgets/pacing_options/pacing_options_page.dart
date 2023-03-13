@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../pacing/pacing_cubit.dart';
+import '../../cubits/pacing_cubit.dart';
 import 'pacing_options_view.dart';
 
 class PacingOptionsPage extends StatelessWidget {

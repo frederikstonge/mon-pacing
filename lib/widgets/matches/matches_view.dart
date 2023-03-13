@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../cubits/matches_cubit.dart';
+import '../../states/matches_state.dart';
 import '../common/items_list.dart';
-import 'matches_cubit.dart';
-import 'matches_state.dart';
 
 class MatchesView extends StatelessWidget {
   const MatchesView({super.key});

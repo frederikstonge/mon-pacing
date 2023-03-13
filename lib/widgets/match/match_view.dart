@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../cubits/match_cubit.dart';
 import '../../dialogs/will_pop_dialog.dart';
-import '../../generated/l10n.dart';
+import '../../l10n/generated/l10n.dart';
 import '../../models/match_model.dart';
 import '../match_options/match_options_page.dart';
 import '../match_summary/match_summary_page.dart';
-import 'match_cubit.dart';
 import 'match_improvisation.dart';
 
 class MatchView extends StatefulWidget {

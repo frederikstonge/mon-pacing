@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'generated/l10n.dart';
+import 'cubits/settings_cubit.dart';
 import 'helpers/material_color_helper.dart';
+import 'l10n/generated/l10n.dart';
 import 'models/settings_model.dart';
 import 'widgets/home/home_page.dart';
 import 'widgets/matches/matches_page.dart';
 import 'widgets/pacings/pacings_page.dart';
-import 'widgets/settings/settings_cubit.dart';
 import 'widgets/settings/settings_page.dart';
 
 class App extends StatelessWidget {
