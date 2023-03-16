@@ -140,6 +140,66 @@ class S {
     );
   }
 
+  /// `Category:`
+  String get MatchImprovisation_Category {
+    return Intl.message(
+      'Category:',
+      name: 'MatchImprovisation_Category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Durations:`
+  String get MatchImprovisation_Durations {
+    return Intl.message(
+      'Durations:',
+      name: 'MatchImprovisation_Durations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes:`
+  String get MatchImprovisation_Notes {
+    return Intl.message(
+      'Notes:',
+      name: 'MatchImprovisation_Notes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `# of participant:`
+  String get MatchImprovisation_Participants {
+    return Intl.message(
+      '# of participant:',
+      name: 'MatchImprovisation_Participants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme:`
+  String get MatchImprovisation_Theme {
+    return Intl.message(
+      'Theme:',
+      name: 'MatchImprovisation_Theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type:`
+  String get MatchImprovisation_Type {
+    return Intl.message(
+      'Type:',
+      name: 'MatchImprovisation_Type',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add team`
   String get MatchOptionsView_AddTeam {
     return Intl.message(

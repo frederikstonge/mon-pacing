@@ -21,6 +21,8 @@ class MatchImprovisation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final improvisationType =
+        improvisation.type == ImprovisationType.compared ? S.of(context).ImprovisationType_compared : S.of(context).ImprovisationType_mixed;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -33,23 +35,107 @@ class MatchImprovisation extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              S.of(context).PacingView_ImprovisationSubtitle(
-                    improvisation.type == ImprovisationType.compared
-                        ? S.of(context).ImprovisationType_compared
-                        : S.of(context).ImprovisationType_mixed,
-                    improvisation.category.isNotEmpty ? improvisation.category : "-",
-                    improvisation.theme.isNotEmpty ? improvisation.theme : "-",
-                    improvisation.performers ?? "-",
-                    DurationHelper.getDurationString(improvisation.durations.reduce((total, element) => total + element)),
-                  ),
+            child: ExpansionTile(
+              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+              title: Text(
+                S.of(context).PacingView_ImprovisationSubtitle(
+                      improvisationType,
+                      improvisation.category.isNotEmpty ? improvisation.category : "-",
+                      improvisation.theme.isNotEmpty ? improvisation.theme : "-",
+                      improvisation.performers ?? "-",
+                      DurationHelper.getDurationString(improvisation.durations.reduce((total, element) => total + element)),
+                    ),
+              ),
+              children: [
+                Table(
+                  columnWidths: const {
+                    0: IntrinsicColumnWidth(),
+                    1: FlexColumnWidth(),
+                  },
+                  children: [
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.of(context).MatchImprovisation_Type,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(improvisationType),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.of(context).MatchImprovisation_Category,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(improvisation.category),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.of(context).MatchImprovisation_Theme,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(improvisation.theme),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.of(context).MatchImprovisation_Participants,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text((improvisation.performers ?? 0).toString()),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.of(context).MatchImprovisation_Durations,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(improvisation.durations.map((e) => e.toString().substring(2, 7)).join(" - ")),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.of(context).MatchImprovisation_Notes,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(improvisation.notes ?? ''),
+                      ),
+                    ]),
+                  ],
+                )
+              ],
             ),
           ),
-          if (improvisation.notes != null && improvisation.notes!.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(improvisation.notes!),
-            ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: LayoutBuilder(

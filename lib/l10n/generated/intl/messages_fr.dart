@@ -56,6 +56,18 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mixte"),
         "ListItem_ExportSuccess": m1,
         "ListItem_Modified": m2,
+        "MatchImprovisation_Category":
+            MessageLookupByLibrary.simpleMessage("Catégorie:"),
+        "MatchImprovisation_Durations":
+            MessageLookupByLibrary.simpleMessage("Temps:"),
+        "MatchImprovisation_Notes":
+            MessageLookupByLibrary.simpleMessage("Notes:"),
+        "MatchImprovisation_Participants":
+            MessageLookupByLibrary.simpleMessage("Nombre de joueur:"),
+        "MatchImprovisation_Theme":
+            MessageLookupByLibrary.simpleMessage("Thème:"),
+        "MatchImprovisation_Type":
+            MessageLookupByLibrary.simpleMessage("Type:"),
         "MatchOptionsView_AddTeam":
             MessageLookupByLibrary.simpleMessage("Ajouter une équipe"),
         "MatchOptionsView_Match": MessageLookupByLibrary.simpleMessage("Match"),
