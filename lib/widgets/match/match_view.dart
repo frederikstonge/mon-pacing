@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../cubits/match_cubit.dart';
+import '../../dialogs/modal_bottom_sheet_dialog.dart';
 import '../../dialogs/will_pop_dialog.dart';
 import '../../l10n/generated/l10n.dart';
 import '../../models/match_model.dart';
@@ -18,9 +20,21 @@ class MatchView extends StatefulWidget {
 
 class _MatchViewState extends State<MatchView> {
   final _pageController = PageController();
+  bool _isDialOpen = false;
+  late final ValueNotifier<bool> _dialValueNotifier;
+  int _page = 0;
+
+  @override
+  void initState() {
+    _dialValueNotifier = ValueNotifier(_isDialOpen);
+    _dialValueNotifier.addListener(_onDialOpen);
+    super.initState();
+  }
 
   @override
   void dispose() {
+    _dialValueNotifier.removeListener(_onDialOpen);
+    _dialValueNotifier.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -29,6 +43,7 @@ class _MatchViewState extends State<MatchView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        _dialValueNotifier.value = false;
         final result = await WillPopDialog.showWillPopDialog(
           context,
           S.of(context).MatchView_WillPopDialog_Title,
@@ -60,6 +75,33 @@ class _MatchViewState extends State<MatchView> {
           body: PageView(
             controller: _pageController,
             children: state.improvisations.map((e) => MatchImprovisation(improvisation: e, match: state)).toList(),
+            onPageChanged: (value) => setState(() => _page = value),
+          ),
+          floatingActionButton: SpeedDial(
+            icon: _isDialOpen ? Icons.arrow_drop_down : Icons.arrow_drop_up,
+            openCloseDial: _dialValueNotifier,
+            children: [
+              SpeedDialChild(
+                child: FloatingActionButton(
+                  onPressed: () {
+                    _dialValueNotifier.value = false;
+                    _onScorePressed();
+                  },
+                  tooltip: 'Score',
+                  child: const Icon(Icons.scoreboard),
+                ),
+              ),
+              SpeedDialChild(
+                child: FloatingActionButton(
+                  onPressed: () {
+                    _dialValueNotifier.value = false;
+                    _onPenaltiesPressed();
+                  },
+                  tooltip: 'Penalties',
+                  child: const Icon(Icons.sports),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -78,5 +120,19 @@ class _MatchViewState extends State<MatchView> {
       context,
       MaterialPageRoute(builder: ((_) => MatchSummaryPage(bloc: context.read<MatchCubit>()))),
     );
+  }
+
+  void _onDialOpen() {
+    setState(() {
+      _isDialOpen = !_isDialOpen;
+    });
+  }
+
+  void _onPenaltiesPressed() {
+    ModalBottomSheetDialog.showDialog(context, const Text('penalties'), () => null, () => null, 'Confirm');
+  }
+
+  void _onScorePressed() {
+    ModalBottomSheetDialog.showDialog(context, const Text('score'), () => null, () => null, 'Confirm');
   }
 }

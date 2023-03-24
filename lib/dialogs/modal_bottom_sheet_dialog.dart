@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../l10n/generated/l10n.dart';
-
-class DurationDialog {
-  static Future<void> showDurationDialog(BuildContext context, Duration duration, void Function(Duration) onDurationChanged) async {
+class ModalBottomSheetDialog {
+  static Future<void> showDialog(BuildContext context, Widget child, Function() onConfirm, Function() onCancel, String confirmText) async {
     await showModalBottomSheet(
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
       context: context,
@@ -19,24 +16,21 @@ class DurationDialog {
               children: [
                 IconButton(
                   icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    onCancel();
+                    Navigator.of(context).pop();
+                  },
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
                     onPressed: () {
-                      onDurationChanged(duration);
+                      onConfirm();
                       Navigator.of(context).pop();
                     },
-                    child: Text(S.of(context).Dialog_Save))
+                    child: Text(confirmText))
               ],
             ),
-            CupertinoTimerPicker(
-              mode: CupertinoTimerPickerMode.ms,
-              initialTimerDuration: duration,
-              onTimerDurationChanged: (time) {
-                duration = time;
-              },
-            ),
+            child,
           ],
         ),
       ),

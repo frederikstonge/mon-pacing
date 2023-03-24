@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-import 'circular_countdown_timer.dart';
+import '../common/circular_countdown_timer.dart';
 
 class ImprovisationTimer extends StatefulWidget {
   final List<Duration> durations;
@@ -51,8 +51,8 @@ class _ImprovisationTimerState extends State<ImprovisationTimer> with AutomaticK
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.shortestSide / 1.5,
-          width: MediaQuery.of(context).size.shortestSide / 1.5,
+          height: MediaQuery.of(context).size.shortestSide / 1.2,
+          width: MediaQuery.of(context).size.shortestSide / 1.2,
           child: Stack(
             alignment: Alignment.center,
             children: [

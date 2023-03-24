@@ -50,6 +50,7 @@ dependencies:
   settings_ui: ^2.0.2
   sqflite: ^2.2.5
   syncfusion_flutter_xlsio: ^20.4.53-beta
+  flutter_speed_dial: ^6.2.0
 
 dev_dependencies:
   flutter_test:

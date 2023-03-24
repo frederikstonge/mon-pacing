@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/match_cubit.dart';
 import '../../helpers/duration_helper.dart';
 import '../../l10n/generated/l10n.dart';
 import '../../models/improvisation_model.dart';
@@ -134,40 +132,6 @@ class MatchImprovisation extends StatelessWidget {
                   ],
                 )
               ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: LayoutBuilder(
-              builder: (context, constraints) => ToggleButtons(
-                borderRadius: BorderRadius.circular(6),
-                constraints: BoxConstraints.expand(width: constraints.maxWidth / 4),
-                isSelected: match.teams
-                    .map((e) => match.points.any((element) => element.teamId == e.id && element.improvisationId == improvisation.id))
-                    .toList(),
-                children: match.teams
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Color(e.color),
-                            ),
-                            Text(
-                              textAlign: TextAlign.center,
-                              e.name,
-                              overflow: TextOverflow.fade,
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onPressed: (index) async {
-                  await context.read<MatchCubit>().setPoint(improvisation.id, match.teams[index].id);
-                },
-              ),
             ),
           ),
           Padding(
