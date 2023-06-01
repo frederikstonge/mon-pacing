@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app.dart';
-import 'cubits/home_cubit.dart';
-import 'cubits/matches_cubit.dart';
-import 'cubits/pacings_cubit.dart';
-import 'cubits/settings_cubit.dart';
+import 'cubits/home/home_cubit.dart';
+import 'cubits/matches/matches_cubit.dart';
+import 'cubits/pacings/pacings_cubit.dart';
+import 'cubits/settings/settings_cubit.dart';
 import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';

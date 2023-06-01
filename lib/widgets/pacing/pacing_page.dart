@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/pacing_cubit.dart';
+import '../../cubits/pacing/pacing_cubit.dart';
 import '../../models/pacing_model.dart';
 import 'pacing_view.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/matches_cubit.dart';
-import '../../cubits/pacings_cubit.dart';
+import '../../cubits/matches/matches_cubit.dart';
+import '../../cubits/pacings/pacings_cubit.dart';
 import '../../helpers/listview_helper.dart';
 import '../../models/base_model.dart';
 import '../../models/match_model.dart';

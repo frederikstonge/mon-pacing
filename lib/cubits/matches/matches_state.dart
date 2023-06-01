@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../models/match_model.dart';
+import '../../models/match_model.dart';
 
 part 'matches_state.freezed.dart';
 

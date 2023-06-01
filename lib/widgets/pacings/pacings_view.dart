@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/pacings_cubit.dart';
-import '../../states/pacings_state.dart';
+import '../../cubits/pacings/pacings_cubit.dart';
+import '../../cubits/pacings/pacings_state.dart';
 import '../common/items_list.dart';
 
 class PacingsView extends StatelessWidget {

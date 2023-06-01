@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/home_cubit.dart';
+import '../../cubits/home/home_cubit.dart';
 import 'ibottom_nav_page.dart';
 
 class HomeView extends StatefulWidget {
@@ -45,17 +45,17 @@ class _HomeViewState extends State<HomeView> {
         ),
         floatingActionButton: widget.pages.elementAt(selectedPage).getFloatingActionButton(context),
         bottomNavigationBar: BottomNavigationBar(
-            onTap: (value) {
-              final cubit = context.read<HomeCubit>();
-              cubit.setPage(value);
-            },
-            currentIndex: selectedPage,
-            items: widget.pages
-                .map((p) => BottomNavigationBarItem(
-                      icon: p.icon,
-                      label: p.title,
-                    ))
-                .toList()),
+          onTap: (value) {
+            context.read<HomeCubit>().setPage(value);
+          },
+          currentIndex: selectedPage,
+          items: widget.pages
+              .map((p) => BottomNavigationBarItem(
+                    icon: p.icon,
+                    label: p.title,
+                  ))
+              .toList(),
+        ),
       ),
     );
   }

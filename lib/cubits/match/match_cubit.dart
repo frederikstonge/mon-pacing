@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../l10n/generated/l10n.dart';
-import '../models/match_model.dart';
-import '../models/point_model.dart';
-import '../models/team_model.dart';
-import 'matches_cubit.dart';
+import '../../l10n/generated/l10n.dart';
+import '../../models/match_model.dart';
+import '../../models/point_model.dart';
+import '../../models/team_model.dart';
+import '../matches/matches_cubit.dart';
 
 class MatchCubit extends Cubit<MatchModel> {
   final MatchesCubit matchesCubit;
@@ -64,13 +64,13 @@ class MatchCubit extends Cubit<MatchModel> {
     await matchesCubit.edit(match);
   }
 
-  Future<void> setPoint(int improvisationId, int teamId) async {
+  Future<void> setPoint(int improvisationId, int teamId, int value) async {
     final points = List<PointModel>.from(state.copyWith().points);
     if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
       points.removeWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
     } else {
       final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
-      points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId));
+      points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));
     }
 
     final match = state.copyWith(points: points);

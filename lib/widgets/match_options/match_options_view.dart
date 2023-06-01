@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../../cubits/match_cubit.dart';
+import '../../cubits/match/match_cubit.dart';
 import '../../dialogs/colorpicker_dialog.dart';
 import '../../dialogs/text_dialog.dart';
 import '../../l10n/generated/l10n.dart';

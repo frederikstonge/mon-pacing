@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/pacing_cubit.dart';
-import '../../cubits/pacings_cubit.dart';
+import '../../cubits/pacing/pacing_cubit.dart';
+import '../../cubits/pacings/pacings_cubit.dart';
 import '../../dialogs/will_pop_dialog.dart';
 import '../../helpers/duration_helper.dart';
 import '../../l10n/generated/l10n.dart';

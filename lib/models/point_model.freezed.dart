@@ -23,6 +23,7 @@ mixin _$PointModel {
   int get id => throw _privateConstructorUsedError;
   int get teamId => throw _privateConstructorUsedError;
   int get improvisationId => throw _privateConstructorUsedError;
+  int get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $PointModelCopyWith<$Res> {
           PointModel value, $Res Function(PointModel) then) =
       _$PointModelCopyWithImpl<$Res, PointModel>;
   @useResult
-  $Res call({int id, int teamId, int improvisationId});
+  $Res call({int id, int teamId, int improvisationId, int value});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$PointModelCopyWithImpl<$Res, $Val extends PointModel>
     Object? id = null,
     Object? teamId = null,
     Object? improvisationId = null,
+    Object? value = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +71,10 @@ class _$PointModelCopyWithImpl<$Res, $Val extends PointModel>
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$_PointModelCopyWith<$Res>
       __$$_PointModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int teamId, int improvisationId});
+  $Res call({int id, int teamId, int improvisationId, int value});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class __$$_PointModelCopyWithImpl<$Res>
     Object? id = null,
     Object? teamId = null,
     Object? improvisationId = null,
+    Object? value = null,
   }) {
     return _then(_$_PointModel(
       id: null == id
@@ -112,6 +119,10 @@ class __$$_PointModelCopyWithImpl<$Res>
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -120,7 +131,10 @@ class __$$_PointModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PointModel implements _PointModel {
   const _$_PointModel(
-      {required this.id, required this.teamId, required this.improvisationId});
+      {required this.id,
+      required this.teamId,
+      required this.improvisationId,
+      required this.value});
 
   factory _$_PointModel.fromJson(Map<String, dynamic> json) =>
       _$$_PointModelFromJson(json);
@@ -131,10 +145,12 @@ class _$_PointModel implements _PointModel {
   final int teamId;
   @override
   final int improvisationId;
+  @override
+  final int value;
 
   @override
   String toString() {
-    return 'PointModel(id: $id, teamId: $teamId, improvisationId: $improvisationId)';
+    return 'PointModel(id: $id, teamId: $teamId, improvisationId: $improvisationId, value: $value)';
   }
 
   @override
@@ -145,12 +161,14 @@ class _$_PointModel implements _PointModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.teamId, teamId) || other.teamId == teamId) &&
             (identical(other.improvisationId, improvisationId) ||
-                other.improvisationId == improvisationId));
+                other.improvisationId == improvisationId) &&
+            (identical(other.value, value) || other.value == value));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, teamId, improvisationId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, teamId, improvisationId, value);
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +188,8 @@ abstract class _PointModel implements PointModel {
   const factory _PointModel(
       {required final int id,
       required final int teamId,
-      required final int improvisationId}) = _$_PointModel;
+      required final int improvisationId,
+      required final int value}) = _$_PointModel;
 
   factory _PointModel.fromJson(Map<String, dynamic> json) =
       _$_PointModel.fromJson;
@@ -181,6 +200,8 @@ abstract class _PointModel implements PointModel {
   int get teamId;
   @override
   int get improvisationId;
+  @override
+  int get value;
   @override
   @JsonKey(ignore: true)
   _$$_PointModelCopyWith<_$_PointModel> get copyWith =>

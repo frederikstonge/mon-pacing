@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../../cubits/settings_cubit.dart';
+import '../../cubits/settings/settings_cubit.dart';
 import '../../dialogs/colorpicker_dialog.dart';
 import '../../dialogs/duration_dialog.dart';
 import '../../helpers/duration_helper.dart';

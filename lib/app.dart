@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'cubits/settings_cubit.dart';
+import 'cubits/settings/settings_cubit.dart';
 import 'helpers/material_color_helper.dart';
 import 'l10n/generated/l10n.dart';
 import 'models/settings_model.dart';
@@ -18,6 +18,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsModel>(
       builder: (context, state) => MaterialApp(
+        key: ValueKey(state.language),
         title: 'MonPacing',
         theme: ThemeData(
           primarySwatch: MaterialColorHelper.generateMaterialColor(color: Color(state.color)),

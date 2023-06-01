@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-import '../../cubits/match_cubit.dart';
+import '../../cubits/match/match_cubit.dart';
 import '../../dialogs/modal_bottom_sheet_dialog.dart';
 import '../../dialogs/will_pop_dialog.dart';
 import '../../l10n/generated/l10n.dart';

@@ -9,6 +9,7 @@ class PointModel with _$PointModel {
     required int id,
     required int teamId,
     required int improvisationId,
+    required int value,
   }) = _PointModel;
 
   factory PointModel.fromJson(Map<String, dynamic> json) => _$PointModelFromJson(json);

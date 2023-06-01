@@ -11,6 +11,7 @@ _$_PointModel _$$_PointModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       teamId: json['teamId'] as int,
       improvisationId: json['improvisationId'] as int,
+      value: json['value'] as int,
     );
 
 Map<String, dynamic> _$$_PointModelToJson(_$_PointModel instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$_PointModelToJson(_$_PointModel instance) =>
       'id': instance.id,
       'teamId': instance.teamId,
       'improvisationId': instance.improvisationId,
+      'value': instance.value,
     };

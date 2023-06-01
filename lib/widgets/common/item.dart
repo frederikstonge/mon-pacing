@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:intl/intl.dart';
 
-import '../../cubits/home_cubit.dart';
-import '../../cubits/matches_cubit.dart';
-import '../../cubits/pacings_cubit.dart';
+import '../../cubits/home/home_cubit.dart';
+import '../../cubits/matches/matches_cubit.dart';
+import '../../cubits/pacings/pacings_cubit.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../dialogs/text_dialog.dart';
 import '../../helpers/path_helper.dart';

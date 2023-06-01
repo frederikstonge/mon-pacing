@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../../cubits/pacing_cubit.dart';
+import '../../cubits/pacing/pacing_cubit.dart';
 import '../../dialogs/duration_dialog.dart';
 import '../../dialogs/number_dialog.dart';
 import '../../dialogs/text_dialog.dart';

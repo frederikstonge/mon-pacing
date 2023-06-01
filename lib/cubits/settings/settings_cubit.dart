@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../models/settings_model.dart';
+import '../../models/settings_model.dart';
 
 class SettingsCubit extends HydratedCubit<SettingsModel> {
   SettingsCubit()
