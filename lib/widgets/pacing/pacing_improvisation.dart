@@ -58,9 +58,9 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
       child: ExpansionTile(
         leading: ReorderableDragStartListener(
           index: widget.index,
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [Icon(Icons.drag_handle)],
+            children: [Icon(Icons.drag_handle)],
           ),
         ),
         title: Text(

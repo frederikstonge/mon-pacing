@@ -16,6 +16,10 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsModel>(
       builder: (context, state) => SettingsList(
+        lightTheme: SettingsThemeData(
+          settingsListBackground: Theme.of(context).scaffoldBackgroundColor,
+          titleTextColor: Theme.of(context).primaryColor,
+        ),
         sections: [
           SettingsSection(
             title: Text(S.of(context).SettingsView_Section_Application),

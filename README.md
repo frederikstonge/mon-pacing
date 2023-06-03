@@ -50,11 +50,11 @@ flutter upgrade
 flutter pub upgrade --major-versions
 ```
 
-- Migrate project to latest flutter template
+<!-- - Migrate project to latest flutter template
 
 ```bash
 # If you get "filename too long" error, run this with admin rights
 # git config --system core.longpaths true
 
 dart run flutter_migrate:flutter_migrate start
-```
+``` -->

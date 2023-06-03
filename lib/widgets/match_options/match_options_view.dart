@@ -19,6 +19,10 @@ class MatchOptionsView extends StatelessWidget {
           title: Text(S.of(context).MatchOptionsView_Title(state.name), overflow: TextOverflow.ellipsis),
         ),
         body: SettingsList(
+          lightTheme: SettingsThemeData(
+            settingsListBackground: Theme.of(context).scaffoldBackgroundColor,
+            titleTextColor: Theme.of(context).primaryColor,
+          ),
           sections: [
             SettingsSection(
               title: Text(S.of(context).MatchOptionsView_Match),

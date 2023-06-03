@@ -23,7 +23,6 @@ class PacingView extends StatefulWidget {
 class _PacingViewState extends State<PacingView> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: () async {
         if (context.read<PacingCubit>().state != widget.model) {
@@ -81,7 +80,6 @@ class _PacingViewState extends State<PacingView> {
                         Expanded(
                           child: Text(
                             S.of(context).PacingView_TotalImprovisations(state.improvisations.length),
-                            style: TextStyle(color: theme.colorScheme.onPrimary),
                           ),
                         ),
                         Expanded(
@@ -104,7 +102,6 @@ class _PacingViewState extends State<PacingView> {
 
                               return Text(
                                 S.of(context).PacingView_TotalDuration(DurationHelper.getDurationString(totalDuration)),
-                                style: TextStyle(color: theme.colorScheme.onPrimary),
                                 textAlign: TextAlign.end,
                               );
                             },
