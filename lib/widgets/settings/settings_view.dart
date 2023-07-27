@@ -14,79 +14,82 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsModel>(
-      builder: (context, state) => SettingsList(
-        lightTheme: SettingsThemeData(
-          settingsListBackground: Theme.of(context).scaffoldBackgroundColor,
-          titleTextColor: Theme.of(context).primaryColor,
-        ),
-        sections: [
-          SettingsSection(
-            title: Text(S.of(context).SettingsView_Section_Application),
-            tiles: [
-              SettingsTile(
-                leading: const Icon(Icons.color_lens),
-                title: Text(S.of(context).SettingsView_ThemeTitle),
-                trailing: CircleAvatar(
-                  backgroundColor: Color(state.color),
-                ),
-                onPressed: (context) async {
-                  await ColorPickerDialog.showColorPickerDialog(context, Color(state.color), (value) {
-                    context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
-                  });
-                },
-              ),
-              SettingsTile(
-                title: Text(S.of(context).SettingsView_LanguageTitle),
-                leading: const Icon(Icons.language),
-                trailing: DropdownButton<String>(
-                  items: [
-                    DropdownMenuItem(
-                      value: "en",
-                      child: Text(S.of(context).SettingsView_Language_English),
-                    ),
-                    DropdownMenuItem(
-                      value: "fr",
-                      child: Text(S.of(context).SettingsView_Language_French),
-                    )
-                  ],
-                  value: state.language,
-                  onChanged: (value) async {
-                    if (value != null) {
-                      final cubit = context.read<SettingsCubit>();
-                      await S.load(Locale(value));
-                      cubit.edit(state.copyWith(language: value));
-                    }
+    return Scaffold(
+      appBar: AppBar(title: Text(S.of(context).SettingsPage_Title)),
+      body: BlocBuilder<SettingsCubit, SettingsModel>(
+        builder: (context, state) => SettingsList(
+          lightTheme: SettingsThemeData(
+            settingsListBackground: Theme.of(context).scaffoldBackgroundColor,
+            titleTextColor: Theme.of(context).primaryColor,
+          ),
+          sections: [
+            SettingsSection(
+              title: Text(S.of(context).SettingsView_Section_Application),
+              tiles: [
+                SettingsTile(
+                  leading: const Icon(Icons.color_lens),
+                  title: Text(S.of(context).SettingsView_ThemeTitle),
+                  trailing: CircleAvatar(
+                    backgroundColor: Color(state.color),
+                  ),
+                  onPressed: (context) async {
+                    await ColorPickerDialog.showColorPickerDialog(context, Color(state.color), (value) {
+                      context.read<SettingsCubit>().edit(state.copyWith(color: value.value));
+                    });
                   },
                 ),
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: Text(S.of(context).SettingsView_Section_Pacings),
-            tiles: [
-              SettingsTile.switchTile(
-                leading: Icon(state.enableDefaultPaddingDuration ? Icons.alarm_on : Icons.alarm_off),
-                initialValue: state.enableDefaultPaddingDuration,
-                onToggle: (value) => context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPaddingDuration: value)),
-                title: Text(S.of(context).SettingsView_EnableDefaultPaddingDuration),
-                description: Text(S.of(context).SettingsView_EnableDefaultPaddingDurationDescription),
-              ),
-              SettingsTile(
-                leading: const Icon(Icons.alarm),
-                title: Text(S.of(context).SettingsView_DefaultPaddingDuration),
-                value: Text(DurationHelper.getDurationString(state.defaultPaddingDuration)),
-                onPressed: (context) async {
-                  await DurationDialog.showDurationDialog(
-                    context,
-                    state.defaultPaddingDuration,
-                    (value) => context.read<SettingsCubit>().edit(state.copyWith(defaultPaddingDuration: value)),
-                  );
-                },
-              )
-            ],
-          )
-        ],
+                SettingsTile(
+                  title: Text(S.of(context).SettingsView_LanguageTitle),
+                  leading: const Icon(Icons.language),
+                  trailing: DropdownButton<String>(
+                    items: [
+                      DropdownMenuItem(
+                        value: "en",
+                        child: Text(S.of(context).SettingsView_Language_English),
+                      ),
+                      DropdownMenuItem(
+                        value: "fr",
+                        child: Text(S.of(context).SettingsView_Language_French),
+                      )
+                    ],
+                    value: state.language,
+                    onChanged: (value) async {
+                      if (value != null) {
+                        final cubit = context.read<SettingsCubit>();
+                        await S.load(Locale(value));
+                        cubit.edit(state.copyWith(language: value));
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: Text(S.of(context).SettingsView_Section_Pacings),
+              tiles: [
+                SettingsTile.switchTile(
+                  leading: Icon(state.enableDefaultPaddingDuration ? Icons.alarm_on : Icons.alarm_off),
+                  initialValue: state.enableDefaultPaddingDuration,
+                  onToggle: (value) => context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPaddingDuration: value)),
+                  title: Text(S.of(context).SettingsView_EnableDefaultPaddingDuration),
+                  description: Text(S.of(context).SettingsView_EnableDefaultPaddingDurationDescription),
+                ),
+                SettingsTile(
+                  leading: const Icon(Icons.alarm),
+                  title: Text(S.of(context).SettingsView_DefaultPaddingDuration),
+                  value: Text(DurationHelper.getDurationString(state.defaultPaddingDuration)),
+                  onPressed: (context) async {
+                    await DurationDialog.showDurationDialog(
+                      context,
+                      state.defaultPaddingDuration,
+                      (value) => context.read<SettingsCubit>().edit(state.copyWith(defaultPaddingDuration: value)),
+                    );
+                  },
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

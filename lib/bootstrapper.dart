@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app.dart';
-import 'cubits/home/home_cubit.dart';
 import 'cubits/matches/matches_cubit.dart';
 import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
@@ -39,9 +38,6 @@ class Bootstrapper extends StatelessWidget {
           ),
           BlocProvider(
             create: (_) => SettingsCubit(),
-          ),
-          BlocProvider(
-            create: (_) => HomeCubit(),
           ),
         ],
         child: const App(),

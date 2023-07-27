@@ -6,10 +6,7 @@ import 'cubits/settings/settings_cubit.dart';
 import 'helpers/material_color_helper.dart';
 import 'l10n/generated/l10n.dart';
 import 'models/settings_model.dart';
-import 'widgets/home/home_page.dart';
-import 'widgets/matches/matches_page.dart';
-import 'widgets/pacings/pacings_page.dart';
-import 'widgets/settings/settings_page.dart';
+import 'router/router.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -17,21 +14,16 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsModel>(
-      builder: (context, state) => MaterialApp(
+      builder: (context, state) => MaterialApp.router(
         key: ValueKey(state.language),
         title: 'MonPacing',
         theme: ThemeData(
+          useMaterial3: false,
           primarySwatch: MaterialColorHelper.generateMaterialColor(color: Color(state.color)),
           brightness: Brightness.light,
         ),
         debugShowCheckedModeBanner: false,
-        home: const HomePage(
-          pages: [
-            PacingsPage(),
-            MatchesPage(),
-            SettingsPage(),
-          ],
-        ),
+        routerConfig: router,
         localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,

@@ -5,63 +5,83 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../../models/pacing_model.dart';
+import '../../repositories/pacings_repository.dart';
+import 'pacing_state.dart';
 
-class PacingCubit extends Cubit<PacingModel> {
-  PacingCubit({required PacingModel model}) : super(model);
+class PacingCubit extends Cubit<PacingState> {
+  final int id;
+  final PacingsRepository pacingsRepository;
+
+  PacingCubit({required this.pacingsRepository, required this.id}) : super(const PacingState.initial());
+
+  Future<void> initialize() async {
+    final pacing = await pacingsRepository.get(id);
+    emit(PacingState.success(pacing!));
+  }
 
   void edit(PacingModel model) {
-    emit(model);
+    emit(PacingState.success(model));
   }
 
   void addImprovisation() {
-    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
-    final nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
-    final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
-    final nextType = ImprovisationType.values[improvisations.length % 2];
+    state.whenOrNull(
+      success: (pacing) {
+        final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
+        final nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
+        final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
+        final nextType = ImprovisationType.values[improvisations.length % 2];
 
-    final newImprovisation = ImprovisationModel(
-      id: nextId,
-      order: nextOrder,
-      type: nextType,
-      durations: const [Duration(minutes: 2, seconds: 30)],
-      category: "",
-      performers: null,
-      theme: "",
-      notes: "",
+        final newImprovisation = ImprovisationModel(
+          id: nextId,
+          order: nextOrder,
+          type: nextType,
+          durations: const [Duration(minutes: 2, seconds: 30)],
+          category: "",
+          performers: null,
+          theme: "",
+          notes: "",
+        );
+
+        improvisations.add(newImprovisation);
+
+        emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+      },
     );
-
-    improvisations.add(newImprovisation);
-
-    emit(state.copyWith(improvisations: improvisations));
   }
 
   void moveImprovisation(int oldOrder, int newOrder) {
-    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
-    final improvisation = improvisations.removeAt(oldOrder);
+    state.whenOrNull(success: (pacing) {
+      final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
+      final improvisation = improvisations.removeAt(oldOrder);
 
-    if (oldOrder < newOrder) {
-      newOrder--;
-    }
+      if (oldOrder < newOrder) {
+        newOrder--;
+      }
 
-    improvisations.insert(newOrder, improvisation);
-    _reOrderImprovisations(improvisations);
+      improvisations.insert(newOrder, improvisation);
+      _reOrderImprovisations(improvisations);
 
-    emit(state.copyWith(improvisations: improvisations));
+      emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+    });
   }
 
   void removeImprovisation(int order) {
-    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
-    improvisations.removeAt(order);
-    _reOrderImprovisations(improvisations);
+    state.whenOrNull(success: (pacing) {
+      final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
+      improvisations.removeAt(order);
+      _reOrderImprovisations(improvisations);
 
-    emit(state.copyWith(improvisations: improvisations));
+      emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+    });
   }
 
   void editImprovisation(ImprovisationModel model) {
-    final improvisations = List<ImprovisationModel>.from(state.copyWith().improvisations);
-    improvisations[model.order] = model;
+    state.whenOrNull(success: (pacing) {
+      final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
+      improvisations[model.order] = model;
 
-    emit(state.copyWith(improvisations: improvisations));
+      emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+    });
   }
 
   List<ImprovisationModel> _reOrderImprovisations(List<ImprovisationModel> improvisations) {

@@ -4,9 +4,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../cubits/home/home_cubit.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../dialogs/delete_dialog.dart';
@@ -16,8 +16,7 @@ import '../../l10n/generated/l10n.dart';
 import '../../models/base_model.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
-import '../match/match_page.dart';
-import '../pacing/pacing_page.dart';
+import '../../router/routes.dart';
 
 class Item<T extends BaseModel> extends StatelessWidget {
   final T entity;
@@ -45,12 +44,10 @@ class Item<T extends BaseModel> extends StatelessWidget {
         onTap: () async {
           if (entity is PacingModel) {
             final model = entity as PacingModel;
-            final copy = model.copyWith();
-            await Navigator.push(context, MaterialPageRoute(builder: ((context) => PacingPage(model: copy))));
+            context.goNamed(Routes.pacing, pathParameters: {'id': model.id.toString()});
           } else if (entity is MatchModel) {
             final model = entity as MatchModel;
-            final copy = model.copyWith();
-            await Navigator.push(context, MaterialPageRoute(builder: ((context) => MatchPage(model: copy))));
+            context.goNamed(Routes.match, pathParameters: {'id': model.id.toString()});
           }
         },
         trailing: Row(
@@ -97,9 +94,8 @@ class Item<T extends BaseModel> extends StatelessWidget {
                     model.name,
                     true,
                     (value) async {
-                      final navigator = Navigator.of(context);
+                      final router = GoRouter.of(context);
                       final matchCubit = context.read<MatchesCubit>();
-                      final homeCubit = context.read<HomeCubit>();
                       var matchModel = MatchModel(
                         createdDate: null,
                         modifiedDate: null,
@@ -111,8 +107,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
                         points: [],
                       );
                       matchModel = await matchCubit.add(matchModel);
-                      await navigator.push(MaterialPageRoute(builder: ((context) => MatchPage(model: matchModel))));
-                      homeCubit.setPage(1);
+                      router.goNamed(Routes.match, pathParameters: {'id': matchModel.id.toString()});
                     },
                   );
                 },

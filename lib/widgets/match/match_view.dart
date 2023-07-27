@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../cubits/match/match_cubit.dart';
+import '../../cubits/match/match_state.dart';
 import '../../dialogs/modal_bottom_sheet_dialog.dart';
 import '../../dialogs/will_pop_dialog.dart';
 import '../../l10n/generated/l10n.dart';
-import '../../models/match_model.dart';
 import '../match_options/match_options_page.dart';
 import '../match_summary/match_summary_page.dart';
 import 'match_improvisation.dart';
@@ -41,67 +41,71 @@ class _MatchViewState extends State<MatchView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        _dialValueNotifier.value = false;
-        final result = await WillPopDialog.showWillPopDialog(
-          context,
-          S.of(context).MatchView_WillPopDialog_Title,
-          S.of(context).MatchView_WillPopDialog_Content,
-        );
-        return result ?? false;
-      },
-      child: BlocBuilder<MatchCubit, MatchModel>(
-        builder: (context, state) => Scaffold(
-          appBar: AppBar(
-            title: Text(state.name, overflow: TextOverflow.ellipsis),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  _openMatchSummary(context);
-                },
-                icon: const Icon(Icons.summarize),
-                tooltip: S.of(context).MatchView_ViewMatchSummary,
-              ),
-              IconButton(
-                onPressed: () {
-                  _openMatchOptions(context);
-                },
-                icon: const Icon(Icons.settings),
-                tooltip: S.of(context).MatchView_EditDetails,
-              ),
-            ],
-          ),
-          body: PageView(
-            controller: _pageController,
-            children: state.improvisations.map((e) => MatchImprovisation(improvisation: e, match: state)).toList(),
-            onPageChanged: (value) => setState(() => _page = value),
-          ),
-          floatingActionButton: SpeedDial(
-            icon: _isDialOpen ? Icons.arrow_drop_down : Icons.arrow_drop_up,
-            openCloseDial: _dialValueNotifier,
-            children: [
-              SpeedDialChild(
-                child: FloatingActionButton(
+    return BlocBuilder<MatchCubit, MatchState>(
+      builder: (context, state) => state.when(
+        initial: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
+        error: (error) => Scaffold(body: Center(child: Text(error))),
+        success: (match) => WillPopScope(
+          onWillPop: () async {
+            _dialValueNotifier.value = false;
+            final result = await WillPopDialog.showWillPopDialog(
+              context,
+              S.of(context).MatchView_WillPopDialog_Title,
+              S.of(context).MatchView_WillPopDialog_Content,
+            );
+            return result ?? false;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(match.name, overflow: TextOverflow.ellipsis),
+              actions: [
+                IconButton(
                   onPressed: () {
-                    _dialValueNotifier.value = false;
-                    _onScorePressed();
+                    _openMatchSummary(context);
                   },
-                  tooltip: 'Score',
-                  child: const Icon(Icons.scoreboard),
+                  icon: const Icon(Icons.summarize),
+                  tooltip: S.of(context).MatchView_ViewMatchSummary,
                 ),
-              ),
-              SpeedDialChild(
-                child: FloatingActionButton(
+                IconButton(
                   onPressed: () {
-                    _dialValueNotifier.value = false;
-                    _onPenaltiesPressed();
+                    _openMatchOptions(context);
                   },
-                  tooltip: 'Penalties',
-                  child: const Icon(Icons.sports),
+                  icon: const Icon(Icons.settings),
+                  tooltip: S.of(context).MatchView_EditDetails,
                 ),
-              ),
-            ],
+              ],
+            ),
+            body: PageView(
+              controller: _pageController,
+              children: match.improvisations.map((e) => MatchImprovisation(improvisation: e, match: match)).toList(),
+              onPageChanged: (value) => setState(() => _page = value),
+            ),
+            floatingActionButton: SpeedDial(
+              icon: _isDialOpen ? Icons.arrow_drop_down : Icons.arrow_drop_up,
+              openCloseDial: _dialValueNotifier,
+              children: [
+                SpeedDialChild(
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      _dialValueNotifier.value = false;
+                      _onScorePressed();
+                    },
+                    tooltip: 'Score',
+                    child: const Icon(Icons.scoreboard),
+                  ),
+                ),
+                SpeedDialChild(
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      _dialValueNotifier.value = false;
+                      _onPenaltiesPressed();
+                    },
+                    tooltip: 'Penalties',
+                    child: const Icon(Icons.sports),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
