@@ -50,6 +50,16 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Mon Pacing`
+  String get App_Title {
+    return Intl.message(
+      'Mon Pacing',
+      name: 'App_Title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Are you sure you want to delete {itemName}?`
   String DeleteDialog_Content(Object itemName) {
     return Intl.message(
@@ -668,6 +678,16 @@ class S {
       name: 'SettingsView_ThemeTitle',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Remaining time: {duration}`
+  String Timer_RemainingTime(Object duration) {
+    return Intl.message(
+      'Remaining time: $duration',
+      name: 'Timer_RemainingTime',
+      desc: '',
+      args: [duration],
     );
   }
 

@@ -52,6 +52,11 @@ dependencies:
   syncfusion_flutter_xlsio: ^22.1.39
   flutter_speed_dial: ^7.0.0
   go_router: ^10.0.0
+  pausable_timer: ^2.0.0
+  flutter_background_service_android: ^4.0.1
+  flutter_background_service_ios: ^3.0.0
+  flutter_background_service: ^3.0.1
+  flutter_local_notifications: ^15.1.0+1
 
 dev_dependencies:
   flutter_test:
