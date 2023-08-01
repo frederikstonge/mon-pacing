@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../cubits/timer/timer_cubit.dart';
 import '../../helpers/duration_helper.dart';
 import '../../l10n/generated/l10n.dart';
 import '../../models/improvisation_model.dart';
@@ -139,6 +141,30 @@ class MatchImprovisation extends StatelessWidget {
             child: ImprovisationTimer(
               durations: improvisation.durations,
             ),
+          ),
+          FilledButton(
+            onPressed: () {
+              context.read<TimerCubit>().start(match, improvisation, improvisation.durations.first);
+            },
+            child: const Text("Start"),
+          ),
+          FilledButton(
+            onPressed: () {
+              context.read<TimerCubit>().pause();
+            },
+            child: const Text("Pause"),
+          ),
+          FilledButton(
+            onPressed: () {
+              context.read<TimerCubit>().resume();
+            },
+            child: const Text("Resume"),
+          ),
+          FilledButton(
+            onPressed: () {
+              context.read<TimerCubit>().stop();
+            },
+            child: const Text("Stop"),
           ),
         ],
       ),

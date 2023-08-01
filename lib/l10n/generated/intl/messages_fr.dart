@@ -43,8 +43,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m9(count) => "Improvisations: ${count}";
 
+  static String m10(duration) => "Remaining time: ${duration}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "App_Title": MessageLookupByLibrary.simpleMessage("Mon Pacing"),
         "DeleteDialog_Content": m0,
         "DeleteDialog_Title": MessageLookupByLibrary.simpleMessage("Supprimer"),
         "Dialog_Cancel": MessageLookupByLibrary.simpleMessage("Annuler"),
@@ -154,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pacings"),
         "SettingsView_ThemeTitle":
             MessageLookupByLibrary.simpleMessage("Choisir la couleur du thème"),
+        "Timer_RemainingTime": m10,
         "ValidadatorHelper_FieldIsNumber": MessageLookupByLibrary.simpleMessage(
             "Le champ doit être un nombre"),
         "ValidadatorHelper_FieldIsRequired":

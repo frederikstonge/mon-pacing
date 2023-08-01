@@ -1,4 +1,5 @@
 {
+  "App_Title": "Mon Pacing",
   "DeleteDialog_Content": "Êtes-vous sûr de vouloir supprimer {itemName}?",
   "DeleteDialog_Title": "Supprimer",
   "Dialog_Cancel": "Annuler",
@@ -61,6 +62,7 @@
   "SettingsView_Section_Application": "Application",
   "SettingsView_Section_Pacings": "Pacings",
   "SettingsView_ThemeTitle": "Choisir la couleur du thème",
+  "Timer_RemainingTime": "Remaining time: {duration}",
   "ValidadatorHelper_FieldIsNumber": "Le champ doit être un nombre",
   "ValidadatorHelper_FieldIsRequired": "Le champ est obligatoire",
   "ValidadatorHelper_ValidationMessageDialog_Content": "Veuillez régler toutes les erreurs de validation.",
