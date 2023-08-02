@@ -24,7 +24,7 @@ class ImprovisationDurations extends StatelessWidget {
           .map(
             (d) => ListTile(
               title: ImprovisationDurationItem(
-                key: ValueKey("${d.key}${d.value}"),
+                key: ValueKey('${d.key}${d.value}'),
                 duration: d.value,
                 valueChanged: (value) {
                   final newDurations = List<Duration>.from(improvisation.copyWith().durations);

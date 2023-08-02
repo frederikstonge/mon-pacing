@@ -89,7 +89,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
   Animation<double>? _countDownAnimation;
 
   String get time {
-    String timeStamp = "";
+    String timeStamp = '';
     if (widget.isReverse && !widget.autoStart && !widget.controller!.isStarted) {
       timeStamp = _getTime(Duration(seconds: widget.duration));
     } else {
@@ -239,7 +239,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
 
   void _onChange() {
     if (widget.onChange != null) {
-      widget.onChange!(_controller!.duration! * _controller!.value);
+      widget.onChange?.call(_controller!.duration! * _controller!.value);
     }
   }
 }
@@ -248,8 +248,11 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer> with Tic
 class CountDownController {
   late CircularCountDownTimerState _state;
   late bool _isReverse;
-  bool isStarted = false, isPaused = false, isResumed = false;
-  int? _initialDuration, _duration;
+  bool isStarted = false;
+  bool isPaused = false;
+  bool isResumed = false;
+  int? _initialDuration;
+  int? _duration;
 
   /// This Method Starts the Countdown Timer
   void start() {
@@ -302,10 +305,10 @@ class CountDownController {
 }
 
 class CountdownTextFormat {
-  static const String hoursMinutesSeconds = "HH:mm:ss";
-  static const String minutesSeconds = "mm:ss";
-  static const String seconds = "ss";
-  static const String second = "s";
+  static const String hoursMinutesSeconds = 'HH:mm:ss';
+  static const String minutesSeconds = 'mm:ss';
+  static const String seconds = 'ss';
+  static const String second = 's';
 }
 
 class CustomTimerPainter extends CustomPainter {
@@ -324,11 +327,16 @@ class CustomTimerPainter extends CustomPainter {
   }) : super(repaint: animation);
 
   final Animation<double>? animation;
-  final Color? fillColor, ringColor, backgroundColor;
+  final Color? fillColor;
+  final Color? ringColor;
+  final Color? backgroundColor;
   final double? strokeWidth;
   final StrokeCap? strokeCap;
-  final bool? isReverse, isReverseAnimation;
-  final Gradient? fillGradient, ringGradient, backgroundGradient;
+  final bool? isReverse;
+  final bool? isReverseAnimation;
+  final Gradient? fillGradient;
+  final Gradient? ringGradient;
+  final Gradient? backgroundGradient;
 
   @override
   void paint(Canvas canvas, Size size) {

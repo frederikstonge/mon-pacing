@@ -132,7 +132,7 @@ class _PacingViewState extends State<PacingView> {
                   },
                   itemBuilder: (_, index) {
                     final item = pacing.improvisations[index];
-                    return PacingImprovisation(key: ValueKey("${item.id}"), improvisation: item, index: index);
+                    return PacingImprovisation(key: ValueKey('${item.id}'), improvisation: item, index: index);
                   },
                   itemCount: pacing.improvisations.length,
                 ),

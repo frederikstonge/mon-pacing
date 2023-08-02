@@ -75,7 +75,7 @@ class Item<T extends BaseModel> extends StatelessWidget {
                   final messenger = ScaffoldMessenger.of(context);
                   final model = entity as PacingModel;
                   final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
-                  final fileName = PathHelper.removeIllegalCharacters("${model.name}.json");
+                  final fileName = PathHelper.removeIllegalCharacters('${model.name}.json');
                   final params = SaveFileDialogParams(data: data, fileName: fileName);
                   final filePath = await FlutterFileDialog.saveFile(params: params);
                   if (filePath != null) {

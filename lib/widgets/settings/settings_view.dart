@@ -44,11 +44,11 @@ class SettingsView extends StatelessWidget {
                   trailing: DropdownButton<String>(
                     items: [
                       DropdownMenuItem(
-                        value: "en",
+                        value: 'en',
                         child: Text(S.of(context).SettingsView_Language_English),
                       ),
                       DropdownMenuItem(
-                        value: "fr",
+                        value: 'fr',
                         child: Text(S.of(context).SettingsView_Language_French),
                       )
                     ],
