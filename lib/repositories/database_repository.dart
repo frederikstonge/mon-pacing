@@ -5,19 +5,19 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseRepository {
-  static String pacingsTable = "Pacings";
-  static String matchesTable = "Matches";
-  static String idField = "id";
-  static String nameField = "name";
-  static String createdDateField = "createdDate";
-  static String modifiedDateField = "modifiedDate";
-  static String paddingDurationField = "paddingDuration";
-  static String enablePaddingDurationField = "enablePaddingDuration";
-  static String defaultNumberOfTeamsField = "defaultNumberOfTeams";
-  static String improvisationsField = "improvisations";
-  static String teamsField = "teams";
-  static String penaltiesField = "penalties";
-  static String pointsField = "points";
+  static String pacingsTable = 'Pacings';
+  static String matchesTable = 'Matches';
+  static String idField = 'id';
+  static String nameField = 'name';
+  static String createdDateField = 'createdDate';
+  static String modifiedDateField = 'modifiedDate';
+  static String paddingDurationField = 'paddingDuration';
+  static String enablePaddingDurationField = 'enablePaddingDuration';
+  static String defaultNumberOfTeamsField = 'defaultNumberOfTeams';
+  static String improvisationsField = 'improvisations';
+  static String teamsField = 'teams';
+  static String penaltiesField = 'penalties';
+  static String pointsField = 'points';
 
   Database? _database;
 

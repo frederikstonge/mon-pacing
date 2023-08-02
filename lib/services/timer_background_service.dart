@@ -10,9 +10,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../models/improvisation_model.dart';
 import '../models/match_model.dart';
 
-const String _notificationChannelId = "monpacing_timer";
-const String _notificationChannelName = "Mon Pacing";
-const String _icon = "ic_bg_service_small";
+const String _notificationChannelId = 'monpacing_timer';
+const String _notificationChannelName = 'Mon Pacing';
+const String _icon = 'ic_bg_service_small';
 const int _notificationId = 888;
 
 MatchModel? match;
@@ -53,7 +53,7 @@ Future<void> initializeTimerBackgroundService() async {
       autoStart: false,
       isForegroundMode: true,
       notificationChannelId: _notificationChannelId,
-      initialNotificationTitle: "Mon Pacing",
+      initialNotificationTitle: 'Mon Pacing',
       foregroundServiceNotificationId: _notificationId,
     ),
     iosConfiguration: IosConfiguration(
@@ -147,7 +147,7 @@ Future<void> _onTick(ServiceInstance service) async {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   await flutterLocalNotificationsPlugin.show(
     _notificationId,
-    "Mon Pacing",
+    'Mon Pacing',
     remainingTime.toString(),
     const NotificationDetails(
       android: AndroidNotificationDetails(

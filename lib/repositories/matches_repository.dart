@@ -12,7 +12,7 @@ class MatchesRepository {
 
   Future<MatchModel> add(MatchModel entity) async {
     if (entity.id != null) {
-      throw Exception("id must be null");
+      throw Exception('id must be null');
     }
 
     final now = DateTime.now();
@@ -35,7 +35,7 @@ class MatchesRepository {
 
   Future<void> edit(MatchModel entity) async {
     if (entity.id == null) {
-      throw Exception("id must not be null");
+      throw Exception('id must not be null');
     }
 
     final model = entity.copyWith(modifiedDate: DateTime.now());
@@ -52,7 +52,7 @@ class MatchesRepository {
     final db = await databaseRepository.database;
     final items = await db.query(
       DatabaseRepository.matchesTable,
-      where: "${DatabaseRepository.idField} = ?",
+      where: '${DatabaseRepository.idField} = ?',
       whereArgs: [id],
       limit: 1,
     );
@@ -70,7 +70,7 @@ class MatchesRepository {
       DatabaseRepository.matchesTable,
       offset: skip,
       limit: take,
-      orderBy: "${DatabaseRepository.modifiedDateField} DESC",
+      orderBy: '${DatabaseRepository.modifiedDateField} DESC',
     );
 
     return items.map(((e) => _fromDatabase(e))).toList();

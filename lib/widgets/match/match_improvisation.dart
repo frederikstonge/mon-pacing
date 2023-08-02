@@ -29,7 +29,7 @@ class MatchImprovisation extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Improvisation #${improvisation.order + 1}",
+              'Improvisation #${improvisation.order + 1}',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
@@ -40,9 +40,9 @@ class MatchImprovisation extends StatelessWidget {
               title: Text(
                 S.of(context).PacingView_ImprovisationSubtitle(
                       improvisationType,
-                      improvisation.category.isNotEmpty ? improvisation.category : "-",
-                      improvisation.theme.isNotEmpty ? improvisation.theme : "-",
-                      improvisation.performers ?? "-",
+                      improvisation.category.isNotEmpty ? improvisation.category : '-',
+                      improvisation.theme.isNotEmpty ? improvisation.theme : '-',
+                      improvisation.performers ?? '-',
                       DurationHelper.getDurationString(improvisation.durations.reduce((total, element) => total + element)),
                     ),
               ),
@@ -115,7 +115,7 @@ class MatchImprovisation extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text(improvisation.durations.map((e) => e.toString().substring(2, 7)).join(" - ")),
+                        child: Text(improvisation.durations.map((e) => e.toString().substring(2, 7)).join(' - ')),
                       ),
                     ]),
                     TableRow(children: [
@@ -146,25 +146,25 @@ class MatchImprovisation extends StatelessWidget {
             onPressed: () {
               context.read<TimerCubit>().start(match, improvisation, improvisation.durations.first);
             },
-            child: const Text("Start"),
+            child: const Text('Start'),
           ),
           FilledButton(
             onPressed: () {
               context.read<TimerCubit>().pause();
             },
-            child: const Text("Pause"),
+            child: const Text('Pause'),
           ),
           FilledButton(
             onPressed: () {
               context.read<TimerCubit>().resume();
             },
-            child: const Text("Resume"),
+            child: const Text('Resume'),
           ),
           FilledButton(
             onPressed: () {
               context.read<TimerCubit>().stop();
             },
-            child: const Text("Stop"),
+            child: const Text('Stop'),
           ),
         ],
       ),

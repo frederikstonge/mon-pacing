@@ -36,10 +36,10 @@ class PacingCubit extends Cubit<PacingState> {
           order: nextOrder,
           type: nextType,
           durations: const [Duration(minutes: 2, seconds: 30)],
-          category: "",
+          category: '',
           performers: null,
-          theme: "",
-          notes: "",
+          theme: '',
+          notes: '',
         );
 
         improvisations.add(newImprovisation);

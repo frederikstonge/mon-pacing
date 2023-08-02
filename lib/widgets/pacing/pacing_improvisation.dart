@@ -29,8 +29,8 @@ class _PacingImprovisationState extends State<PacingImprovisation> {
   void initState() {
     _categoryController.text = widget.improvisation.category;
     _themeController.text = widget.improvisation.theme;
-    _performersController.text = widget.improvisation.performers?.toString() ?? "";
-    _notesController.text = widget.improvisation.notes?.toString() ?? "";
+    _performersController.text = widget.improvisation.performers?.toString() ?? '';
+    _notesController.text = widget.improvisation.notes?.toString() ?? '';
     super.initState();
   }
 

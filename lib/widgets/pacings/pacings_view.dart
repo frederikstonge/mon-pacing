@@ -62,7 +62,7 @@ class PacingsView extends StatelessWidget {
               const params = OpenFileDialogParams(
                 dialogType: OpenFileDialogType.document,
                 sourceType: SourceType.photoLibrary,
-                fileExtensionsFilter: ["json"],
+                fileExtensionsFilter: ['json'],
               );
               try {
                 final filePath = await FlutterFileDialog.pickFile(params: params);
