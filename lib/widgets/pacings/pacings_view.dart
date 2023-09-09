@@ -59,6 +59,8 @@ class PacingsView extends StatelessWidget {
           IconButton(
             onPressed: (() async {
               final cubit = context.read<PacingsCubit>();
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              final localizer = S.of(context);
               const params = OpenFileDialogParams(
                 dialogType: OpenFileDialogType.document,
                 sourceType: SourceType.photoLibrary,
@@ -72,7 +74,7 @@ class PacingsView extends StatelessWidget {
                   await cubit.add(pacing.copyWith(id: null));
                 }
               } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).PacingsPage_ImportError)));
+                scaffoldMessenger.showSnackBar(SnackBar(content: Text(localizer.PacingsPage_ImportError)));
               }
             }),
             icon: const Icon(Icons.download),
