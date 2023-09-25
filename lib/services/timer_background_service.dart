@@ -87,9 +87,9 @@ Future<void> onStart(ServiceInstance service) async {
   });
 
   service.on('pauseTimer').listen((_) {
-    timer!.cancel();
+    timer?.cancel();
     timer = null;
-    stopwatch!.stop();
+    stopwatch?.stop();
     service.invoke(
       'paused',
       {
@@ -102,14 +102,14 @@ Future<void> onStart(ServiceInstance service) async {
   });
 
   service.on('resumeTimer').listen((_) {
-    stopwatch!.start();
+    stopwatch?.start();
     _createTimer(service);
   });
 
   service.on('stopTimer').listen((_) {
-    timer!.cancel();
+    timer?.cancel();
     timer = null;
-    stopwatch!.stop();
+    stopwatch?.stop();
     stopwatch = null;
     match = null;
     improvisation = null;
