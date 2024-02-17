@@ -23,5 +23,6 @@ class MatchModel with _$MatchModel implements BaseModel {
     required List<PointModel> points,
   }) = _MatchModel;
 
-  factory MatchModel.fromJson(Map<String, Object?> json) => _$MatchModelFromJson(json);
+  factory MatchModel.fromJson(Map<String, Object?> json) =>
+      _$MatchModelFromJson(json);
 }

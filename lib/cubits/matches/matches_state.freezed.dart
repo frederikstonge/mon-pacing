@@ -12,7 +12,7 @@ part of 'matches_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MatchesState {
@@ -82,25 +82,25 @@ class _$MatchesStateCopyWithImpl<$Res, $Val extends MatchesState>
 }
 
 /// @nodoc
-abstract class _$$MatchesInitialStateCopyWith<$Res> {
-  factory _$$MatchesInitialStateCopyWith(_$MatchesInitialState value,
-          $Res Function(_$MatchesInitialState) then) =
-      __$$MatchesInitialStateCopyWithImpl<$Res>;
+abstract class _$$MatchesInitialStateImplCopyWith<$Res> {
+  factory _$$MatchesInitialStateImplCopyWith(_$MatchesInitialStateImpl value,
+          $Res Function(_$MatchesInitialStateImpl) then) =
+      __$$MatchesInitialStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$MatchesInitialStateCopyWithImpl<$Res>
-    extends _$MatchesStateCopyWithImpl<$Res, _$MatchesInitialState>
-    implements _$$MatchesInitialStateCopyWith<$Res> {
-  __$$MatchesInitialStateCopyWithImpl(
-      _$MatchesInitialState _value, $Res Function(_$MatchesInitialState) _then)
+class __$$MatchesInitialStateImplCopyWithImpl<$Res>
+    extends _$MatchesStateCopyWithImpl<$Res, _$MatchesInitialStateImpl>
+    implements _$$MatchesInitialStateImplCopyWith<$Res> {
+  __$$MatchesInitialStateImplCopyWithImpl(_$MatchesInitialStateImpl _value,
+      $Res Function(_$MatchesInitialStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$MatchesInitialState implements MatchesInitialState {
-  const _$MatchesInitialState();
+class _$MatchesInitialStateImpl implements MatchesInitialState {
+  const _$MatchesInitialStateImpl();
 
   @override
   String toString() {
@@ -108,9 +108,10 @@ class _$MatchesInitialState implements MatchesInitialState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$MatchesInitialState);
+        (other.runtimeType == runtimeType &&
+            other is _$MatchesInitialStateImpl);
   }
 
   @override
@@ -187,24 +188,24 @@ class _$MatchesInitialState implements MatchesInitialState {
 }
 
 abstract class MatchesInitialState implements MatchesState {
-  const factory MatchesInitialState() = _$MatchesInitialState;
+  const factory MatchesInitialState() = _$MatchesInitialStateImpl;
 }
 
 /// @nodoc
-abstract class _$$MatchesErrorStateCopyWith<$Res> {
-  factory _$$MatchesErrorStateCopyWith(
-          _$MatchesErrorState value, $Res Function(_$MatchesErrorState) then) =
-      __$$MatchesErrorStateCopyWithImpl<$Res>;
+abstract class _$$MatchesErrorStateImplCopyWith<$Res> {
+  factory _$$MatchesErrorStateImplCopyWith(_$MatchesErrorStateImpl value,
+          $Res Function(_$MatchesErrorStateImpl) then) =
+      __$$MatchesErrorStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$MatchesErrorStateCopyWithImpl<$Res>
-    extends _$MatchesStateCopyWithImpl<$Res, _$MatchesErrorState>
-    implements _$$MatchesErrorStateCopyWith<$Res> {
-  __$$MatchesErrorStateCopyWithImpl(
-      _$MatchesErrorState _value, $Res Function(_$MatchesErrorState) _then)
+class __$$MatchesErrorStateImplCopyWithImpl<$Res>
+    extends _$MatchesStateCopyWithImpl<$Res, _$MatchesErrorStateImpl>
+    implements _$$MatchesErrorStateImplCopyWith<$Res> {
+  __$$MatchesErrorStateImplCopyWithImpl(_$MatchesErrorStateImpl _value,
+      $Res Function(_$MatchesErrorStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -212,7 +213,7 @@ class __$$MatchesErrorStateCopyWithImpl<$Res>
   $Res call({
     Object? error = null,
   }) {
-    return _then(_$MatchesErrorState(
+    return _then(_$MatchesErrorStateImpl(
       null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -223,8 +224,8 @@ class __$$MatchesErrorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MatchesErrorState implements MatchesErrorState {
-  const _$MatchesErrorState(this.error);
+class _$MatchesErrorStateImpl implements MatchesErrorState {
+  const _$MatchesErrorStateImpl(this.error);
 
   @override
   final String error;
@@ -235,10 +236,10 @@ class _$MatchesErrorState implements MatchesErrorState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MatchesErrorState &&
+            other is _$MatchesErrorStateImpl &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -248,8 +249,9 @@ class _$MatchesErrorState implements MatchesErrorState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MatchesErrorStateCopyWith<_$MatchesErrorState> get copyWith =>
-      __$$MatchesErrorStateCopyWithImpl<_$MatchesErrorState>(this, _$identity);
+  _$$MatchesErrorStateImplCopyWith<_$MatchesErrorStateImpl> get copyWith =>
+      __$$MatchesErrorStateImplCopyWithImpl<_$MatchesErrorStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -322,29 +324,29 @@ class _$MatchesErrorState implements MatchesErrorState {
 }
 
 abstract class MatchesErrorState implements MatchesState {
-  const factory MatchesErrorState(final String error) = _$MatchesErrorState;
+  const factory MatchesErrorState(final String error) = _$MatchesErrorStateImpl;
 
   String get error;
   @JsonKey(ignore: true)
-  _$$MatchesErrorStateCopyWith<_$MatchesErrorState> get copyWith =>
+  _$$MatchesErrorStateImplCopyWith<_$MatchesErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$MatchesSuccessStateCopyWith<$Res> {
-  factory _$$MatchesSuccessStateCopyWith(_$MatchesSuccessState value,
-          $Res Function(_$MatchesSuccessState) then) =
-      __$$MatchesSuccessStateCopyWithImpl<$Res>;
+abstract class _$$MatchesSuccessStateImplCopyWith<$Res> {
+  factory _$$MatchesSuccessStateImplCopyWith(_$MatchesSuccessStateImpl value,
+          $Res Function(_$MatchesSuccessStateImpl) then) =
+      __$$MatchesSuccessStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<MatchModel> matches, bool hasReachedMax});
 }
 
 /// @nodoc
-class __$$MatchesSuccessStateCopyWithImpl<$Res>
-    extends _$MatchesStateCopyWithImpl<$Res, _$MatchesSuccessState>
-    implements _$$MatchesSuccessStateCopyWith<$Res> {
-  __$$MatchesSuccessStateCopyWithImpl(
-      _$MatchesSuccessState _value, $Res Function(_$MatchesSuccessState) _then)
+class __$$MatchesSuccessStateImplCopyWithImpl<$Res>
+    extends _$MatchesStateCopyWithImpl<$Res, _$MatchesSuccessStateImpl>
+    implements _$$MatchesSuccessStateImplCopyWith<$Res> {
+  __$$MatchesSuccessStateImplCopyWithImpl(_$MatchesSuccessStateImpl _value,
+      $Res Function(_$MatchesSuccessStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -353,7 +355,7 @@ class __$$MatchesSuccessStateCopyWithImpl<$Res>
     Object? matches = null,
     Object? hasReachedMax = null,
   }) {
-    return _then(_$MatchesSuccessState(
+    return _then(_$MatchesSuccessStateImpl(
       null == matches
           ? _value._matches
           : matches // ignore: cast_nullable_to_non_nullable
@@ -368,8 +370,8 @@ class __$$MatchesSuccessStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MatchesSuccessState implements MatchesSuccessState {
-  const _$MatchesSuccessState(
+class _$MatchesSuccessStateImpl implements MatchesSuccessState {
+  const _$MatchesSuccessStateImpl(
       final List<MatchModel> matches, this.hasReachedMax)
       : _matches = matches;
 
@@ -390,10 +392,10 @@ class _$MatchesSuccessState implements MatchesSuccessState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MatchesSuccessState &&
+            other is _$MatchesSuccessStateImpl &&
             const DeepCollectionEquality().equals(other._matches, _matches) &&
             (identical(other.hasReachedMax, hasReachedMax) ||
                 other.hasReachedMax == hasReachedMax));
@@ -406,8 +408,8 @@ class _$MatchesSuccessState implements MatchesSuccessState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MatchesSuccessStateCopyWith<_$MatchesSuccessState> get copyWith =>
-      __$$MatchesSuccessStateCopyWithImpl<_$MatchesSuccessState>(
+  _$$MatchesSuccessStateImplCopyWith<_$MatchesSuccessStateImpl> get copyWith =>
+      __$$MatchesSuccessStateImplCopyWithImpl<_$MatchesSuccessStateImpl>(
           this, _$identity);
 
   @override
@@ -483,11 +485,11 @@ class _$MatchesSuccessState implements MatchesSuccessState {
 abstract class MatchesSuccessState implements MatchesState {
   const factory MatchesSuccessState(
           final List<MatchModel> matches, final bool hasReachedMax) =
-      _$MatchesSuccessState;
+      _$MatchesSuccessStateImpl;
 
   List<MatchModel> get matches;
   bool get hasReachedMax;
   @JsonKey(ignore: true)
-  _$$MatchesSuccessStateCopyWith<_$MatchesSuccessState> get copyWith =>
+  _$$MatchesSuccessStateImplCopyWith<_$MatchesSuccessStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

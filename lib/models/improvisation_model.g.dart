@@ -6,9 +6,9 @@ part of 'improvisation_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ImprovisationModel _$$_ImprovisationModelFromJson(
+_$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_ImprovisationModel(
+    _$ImprovisationModelImpl(
       id: json['id'] as int,
       order: json['order'] as int,
       type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
@@ -21,8 +21,8 @@ _$_ImprovisationModel _$$_ImprovisationModelFromJson(
       notes: json['notes'] as String?,
     );
 
-Map<String, dynamic> _$$_ImprovisationModelToJson(
-        _$_ImprovisationModel instance) =>
+Map<String, dynamic> _$$ImprovisationModelImplToJson(
+        _$ImprovisationModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'order': instance.order,

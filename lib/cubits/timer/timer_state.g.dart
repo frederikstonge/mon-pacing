@@ -6,18 +6,21 @@ part of 'timer_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TimerStoppedState _$$TimerStoppedStateFromJson(Map<String, dynamic> json) =>
-    _$TimerStoppedState(
+_$TimerStoppedStateImpl _$$TimerStoppedStateImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TimerStoppedStateImpl(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TimerStoppedStateToJson(_$TimerStoppedState instance) =>
+Map<String, dynamic> _$$TimerStoppedStateImplToJson(
+        _$TimerStoppedStateImpl instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
 
-_$TimerRunningState _$$TimerRunningStateFromJson(Map<String, dynamic> json) =>
-    _$TimerRunningState(
+_$TimerRunningStateImpl _$$TimerRunningStateImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TimerRunningStateImpl(
       match: MatchModel.fromJson(json['match'] as Map<String, dynamic>),
       improvisation: ImprovisationModel.fromJson(
           json['improvisation'] as Map<String, dynamic>),
@@ -28,7 +31,8 @@ _$TimerRunningState _$$TimerRunningStateFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TimerRunningStateToJson(_$TimerRunningState instance) =>
+Map<String, dynamic> _$$TimerRunningStateImplToJson(
+        _$TimerRunningStateImpl instance) =>
     <String, dynamic>{
       'match': instance.match,
       'improvisation': instance.improvisation,
@@ -37,8 +41,9 @@ Map<String, dynamic> _$$TimerRunningStateToJson(_$TimerRunningState instance) =>
       'runtimeType': instance.$type,
     };
 
-_$TimerPausedState _$$TimerPausedStateFromJson(Map<String, dynamic> json) =>
-    _$TimerPausedState(
+_$TimerPausedStateImpl _$$TimerPausedStateImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TimerPausedStateImpl(
       match: MatchModel.fromJson(json['match'] as Map<String, dynamic>),
       improvisation: ImprovisationModel.fromJson(
           json['improvisation'] as Map<String, dynamic>),
@@ -49,7 +54,8 @@ _$TimerPausedState _$$TimerPausedStateFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TimerPausedStateToJson(_$TimerPausedState instance) =>
+Map<String, dynamic> _$$TimerPausedStateImplToJson(
+        _$TimerPausedStateImpl instance) =>
     <String, dynamic>{
       'match': instance.match,
       'improvisation': instance.improvisation,

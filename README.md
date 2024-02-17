@@ -23,11 +23,6 @@ Use Visual Studio Code, and install recommended extensions.
 To regenerate models with freezed, under `Explorer`, `Build Runner`, click the play icon.
 
 
-### Resources
-
-To update resources, right click on the `I10n` folder, then click on `i18n arb editor`. Once you click on saved, open one of the .arb file and save it manually.
-
-
 ## Roadmap
 
 - Handle points

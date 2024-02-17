@@ -12,5 +12,6 @@ class TeamModel with _$TeamModel {
     required int color,
   }) = _TeamModel;
 
-  factory TeamModel.fromJson(Map<String, dynamic> json) => _$TeamModelFromJson(json);
+  factory TeamModel.fromJson(Map<String, dynamic> json) =>
+      _$TeamModelFromJson(json);
 }

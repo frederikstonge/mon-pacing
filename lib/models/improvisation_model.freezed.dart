@@ -12,7 +12,7 @@ part of 'improvisation_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ImprovisationModel _$ImprovisationModelFromJson(Map<String, dynamic> json) {
   return _ImprovisationModel.fromJson(json);
@@ -112,11 +112,11 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
 }
 
 /// @nodoc
-abstract class _$$_ImprovisationModelCopyWith<$Res>
+abstract class _$$ImprovisationModelImplCopyWith<$Res>
     implements $ImprovisationModelCopyWith<$Res> {
-  factory _$$_ImprovisationModelCopyWith(_$_ImprovisationModel value,
-          $Res Function(_$_ImprovisationModel) then) =
-      __$$_ImprovisationModelCopyWithImpl<$Res>;
+  factory _$$ImprovisationModelImplCopyWith(_$ImprovisationModelImpl value,
+          $Res Function(_$ImprovisationModelImpl) then) =
+      __$$ImprovisationModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -131,11 +131,11 @@ abstract class _$$_ImprovisationModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ImprovisationModelCopyWithImpl<$Res>
-    extends _$ImprovisationModelCopyWithImpl<$Res, _$_ImprovisationModel>
-    implements _$$_ImprovisationModelCopyWith<$Res> {
-  __$$_ImprovisationModelCopyWithImpl(
-      _$_ImprovisationModel _value, $Res Function(_$_ImprovisationModel) _then)
+class __$$ImprovisationModelImplCopyWithImpl<$Res>
+    extends _$ImprovisationModelCopyWithImpl<$Res, _$ImprovisationModelImpl>
+    implements _$$ImprovisationModelImplCopyWith<$Res> {
+  __$$ImprovisationModelImplCopyWithImpl(_$ImprovisationModelImpl _value,
+      $Res Function(_$ImprovisationModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
     Object? performers = freezed,
     Object? notes = freezed,
   }) {
-    return _then(_$_ImprovisationModel(
+    return _then(_$ImprovisationModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ class __$$_ImprovisationModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ImprovisationModel implements _ImprovisationModel {
-  const _$_ImprovisationModel(
+class _$ImprovisationModelImpl implements _ImprovisationModel {
+  const _$ImprovisationModelImpl(
       {required this.id,
       required this.order,
       required this.type,
@@ -201,8 +201,8 @@ class _$_ImprovisationModel implements _ImprovisationModel {
       this.notes})
       : _durations = durations;
 
-  factory _$_ImprovisationModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ImprovisationModelFromJson(json);
+  factory _$ImprovisationModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ImprovisationModelImplFromJson(json);
 
   @override
   final int id;
@@ -233,10 +233,10 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ImprovisationModel &&
+            other is _$ImprovisationModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.type, type) || other.type == type) &&
@@ -258,13 +258,13 @@ class _$_ImprovisationModel implements _ImprovisationModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ImprovisationModelCopyWith<_$_ImprovisationModel> get copyWith =>
-      __$$_ImprovisationModelCopyWithImpl<_$_ImprovisationModel>(
+  _$$ImprovisationModelImplCopyWith<_$ImprovisationModelImpl> get copyWith =>
+      __$$ImprovisationModelImplCopyWithImpl<_$ImprovisationModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ImprovisationModelToJson(
+    return _$$ImprovisationModelImplToJson(
       this,
     );
   }
@@ -279,10 +279,10 @@ abstract class _ImprovisationModel implements ImprovisationModel {
       required final String theme,
       required final List<Duration> durations,
       required final int? performers,
-      final String? notes}) = _$_ImprovisationModel;
+      final String? notes}) = _$ImprovisationModelImpl;
 
   factory _ImprovisationModel.fromJson(Map<String, dynamic> json) =
-      _$_ImprovisationModel.fromJson;
+      _$ImprovisationModelImpl.fromJson;
 
   @override
   int get id;
@@ -302,6 +302,6 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   String? get notes;
   @override
   @JsonKey(ignore: true)
-  _$$_ImprovisationModelCopyWith<_$_ImprovisationModel> get copyWith =>
+  _$$ImprovisationModelImplCopyWith<_$ImprovisationModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

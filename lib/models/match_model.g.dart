@@ -6,8 +6,8 @@ part of 'match_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MatchModel _$$_MatchModelFromJson(Map<String, dynamic> json) =>
-    _$_MatchModel(
+_$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
+    _$MatchModelImpl(
       id: json['id'] as int?,
       name: json['name'] as String,
       createdDate: json['createdDate'] == null
@@ -30,7 +30,7 @@ _$_MatchModel _$$_MatchModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_MatchModelToJson(_$_MatchModel instance) =>
+Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

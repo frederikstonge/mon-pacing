@@ -12,7 +12,7 @@ part of 'penalty_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PenaltyModel _$PenaltyModelFromJson(Map<String, dynamic> json) {
   return _PenaltyModel.fromJson(json);
@@ -87,11 +87,11 @@ class _$PenaltyModelCopyWithImpl<$Res, $Val extends PenaltyModel>
 }
 
 /// @nodoc
-abstract class _$$_PenaltyModelCopyWith<$Res>
+abstract class _$$PenaltyModelImplCopyWith<$Res>
     implements $PenaltyModelCopyWith<$Res> {
-  factory _$$_PenaltyModelCopyWith(
-          _$_PenaltyModel value, $Res Function(_$_PenaltyModel) then) =
-      __$$_PenaltyModelCopyWithImpl<$Res>;
+  factory _$$PenaltyModelImplCopyWith(
+          _$PenaltyModelImpl value, $Res Function(_$PenaltyModelImpl) then) =
+      __$$PenaltyModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -99,11 +99,11 @@ abstract class _$$_PenaltyModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PenaltyModelCopyWithImpl<$Res>
-    extends _$PenaltyModelCopyWithImpl<$Res, _$_PenaltyModel>
-    implements _$$_PenaltyModelCopyWith<$Res> {
-  __$$_PenaltyModelCopyWithImpl(
-      _$_PenaltyModel _value, $Res Function(_$_PenaltyModel) _then)
+class __$$PenaltyModelImplCopyWithImpl<$Res>
+    extends _$PenaltyModelCopyWithImpl<$Res, _$PenaltyModelImpl>
+    implements _$$PenaltyModelImplCopyWith<$Res> {
+  __$$PenaltyModelImplCopyWithImpl(
+      _$PenaltyModelImpl _value, $Res Function(_$PenaltyModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -115,7 +115,7 @@ class __$$_PenaltyModelCopyWithImpl<$Res>
     Object? teamId = null,
     Object? improvisationId = null,
   }) {
-    return _then(_$_PenaltyModel(
+    return _then(_$PenaltyModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -142,16 +142,16 @@ class __$$_PenaltyModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PenaltyModel implements _PenaltyModel {
-  const _$_PenaltyModel(
+class _$PenaltyModelImpl implements _PenaltyModel {
+  const _$PenaltyModelImpl(
       {required this.id,
       required this.major,
       required this.player,
       required this.teamId,
       required this.improvisationId});
 
-  factory _$_PenaltyModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PenaltyModelFromJson(json);
+  factory _$PenaltyModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PenaltyModelImplFromJson(json);
 
   @override
   final int id;
@@ -170,10 +170,10 @@ class _$_PenaltyModel implements _PenaltyModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PenaltyModel &&
+            other is _$PenaltyModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.major, major) || other.major == major) &&
             (identical(other.player, player) || other.player == player) &&
@@ -190,12 +190,12 @@ class _$_PenaltyModel implements _PenaltyModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PenaltyModelCopyWith<_$_PenaltyModel> get copyWith =>
-      __$$_PenaltyModelCopyWithImpl<_$_PenaltyModel>(this, _$identity);
+  _$$PenaltyModelImplCopyWith<_$PenaltyModelImpl> get copyWith =>
+      __$$PenaltyModelImplCopyWithImpl<_$PenaltyModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PenaltyModelToJson(
+    return _$$PenaltyModelImplToJson(
       this,
     );
   }
@@ -207,10 +207,10 @@ abstract class _PenaltyModel implements PenaltyModel {
       required final bool major,
       required final String player,
       required final int teamId,
-      required final int improvisationId}) = _$_PenaltyModel;
+      required final int improvisationId}) = _$PenaltyModelImpl;
 
   factory _PenaltyModel.fromJson(Map<String, dynamic> json) =
-      _$_PenaltyModel.fromJson;
+      _$PenaltyModelImpl.fromJson;
 
   @override
   int get id;
@@ -224,6 +224,6 @@ abstract class _PenaltyModel implements PenaltyModel {
   int get improvisationId;
   @override
   @JsonKey(ignore: true)
-  _$$_PenaltyModelCopyWith<_$_PenaltyModel> get copyWith =>
+  _$$PenaltyModelImplCopyWith<_$PenaltyModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

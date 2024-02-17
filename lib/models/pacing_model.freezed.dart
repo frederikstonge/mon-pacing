@@ -12,7 +12,7 @@ part of 'pacing_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PacingModel _$PacingModelFromJson(Map<String, dynamic> json) {
   return _PacingModel.fromJson(json);
@@ -113,11 +113,11 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
 }
 
 /// @nodoc
-abstract class _$$_PacingModelCopyWith<$Res>
+abstract class _$$PacingModelImplCopyWith<$Res>
     implements $PacingModelCopyWith<$Res> {
-  factory _$$_PacingModelCopyWith(
-          _$_PacingModel value, $Res Function(_$_PacingModel) then) =
-      __$$_PacingModelCopyWithImpl<$Res>;
+  factory _$$PacingModelImplCopyWith(
+          _$PacingModelImpl value, $Res Function(_$PacingModelImpl) then) =
+      __$$PacingModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -132,11 +132,11 @@ abstract class _$$_PacingModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PacingModelCopyWithImpl<$Res>
-    extends _$PacingModelCopyWithImpl<$Res, _$_PacingModel>
-    implements _$$_PacingModelCopyWith<$Res> {
-  __$$_PacingModelCopyWithImpl(
-      _$_PacingModel _value, $Res Function(_$_PacingModel) _then)
+class __$$PacingModelImplCopyWithImpl<$Res>
+    extends _$PacingModelCopyWithImpl<$Res, _$PacingModelImpl>
+    implements _$$PacingModelImplCopyWith<$Res> {
+  __$$PacingModelImplCopyWithImpl(
+      _$PacingModelImpl _value, $Res Function(_$PacingModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -151,7 +151,7 @@ class __$$_PacingModelCopyWithImpl<$Res>
     Object? defaultNumberOfTeams = null,
     Object? improvisations = null,
   }) {
-    return _then(_$_PacingModel(
+    return _then(_$PacingModelImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -190,8 +190,8 @@ class __$$_PacingModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PacingModel implements _PacingModel {
-  const _$_PacingModel(
+class _$PacingModelImpl implements _PacingModel {
+  const _$PacingModelImpl(
       {required this.id,
       required this.name,
       required this.createdDate,
@@ -202,8 +202,8 @@ class _$_PacingModel implements _PacingModel {
       required final List<ImprovisationModel> improvisations})
       : _improvisations = improvisations;
 
-  factory _$_PacingModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PacingModelFromJson(json);
+  factory _$PacingModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PacingModelImplFromJson(json);
 
   @override
   final int? id;
@@ -233,10 +233,10 @@ class _$_PacingModel implements _PacingModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PacingModel &&
+            other is _$PacingModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.createdDate, createdDate) ||
@@ -269,12 +269,12 @@ class _$_PacingModel implements _PacingModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PacingModelCopyWith<_$_PacingModel> get copyWith =>
-      __$$_PacingModelCopyWithImpl<_$_PacingModel>(this, _$identity);
+  _$$PacingModelImplCopyWith<_$PacingModelImpl> get copyWith =>
+      __$$PacingModelImplCopyWithImpl<_$PacingModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PacingModelToJson(
+    return _$$PacingModelImplToJson(
       this,
     );
   }
@@ -282,17 +282,18 @@ class _$_PacingModel implements _PacingModel {
 
 abstract class _PacingModel implements PacingModel, BaseModel {
   const factory _PacingModel(
-      {required final int? id,
-      required final String name,
-      required final DateTime? createdDate,
-      required final DateTime? modifiedDate,
-      required final bool enablePaddingDuration,
-      required final Duration paddingDuration,
-      required final int defaultNumberOfTeams,
-      required final List<ImprovisationModel> improvisations}) = _$_PacingModel;
+          {required final int? id,
+          required final String name,
+          required final DateTime? createdDate,
+          required final DateTime? modifiedDate,
+          required final bool enablePaddingDuration,
+          required final Duration paddingDuration,
+          required final int defaultNumberOfTeams,
+          required final List<ImprovisationModel> improvisations}) =
+      _$PacingModelImpl;
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
-      _$_PacingModel.fromJson;
+      _$PacingModelImpl.fromJson;
 
   @override
   int? get id;
@@ -312,6 +313,6 @@ abstract class _PacingModel implements PacingModel, BaseModel {
   List<ImprovisationModel> get improvisations;
   @override
   @JsonKey(ignore: true)
-  _$$_PacingModelCopyWith<_$_PacingModel> get copyWith =>
+  _$$PacingModelImplCopyWith<_$PacingModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

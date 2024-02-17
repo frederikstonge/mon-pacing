@@ -18,5 +18,6 @@ class ImprovisationModel with _$ImprovisationModel {
     String? notes,
   }) = _ImprovisationModel;
 
-  factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);
+  factory ImprovisationModel.fromJson(Map<String, dynamic> json) =>
+      _$ImprovisationModelFromJson(json);
 }

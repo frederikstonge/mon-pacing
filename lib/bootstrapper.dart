@@ -11,9 +11,7 @@ import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 
 class Bootstrapper extends StatelessWidget {
-  const Bootstrapper({
-    super.key,
-  });
+  const Bootstrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,7 @@ class Bootstrapper extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (blocContext) => PacingsCubit(repository: blocContext.read<PacingsRepository>())..fetch(),
+            create: (blocContext) => PacingsCubit(pacingsRepository: blocContext.read<PacingsRepository>())..fetch(),
           ),
           BlocProvider(
             create: (blocContext) => MatchesCubit(repository: blocContext.read<MatchesRepository>())..fetch(),

@@ -12,7 +12,7 @@ part of 'pacing_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PacingState {
@@ -81,25 +81,25 @@ class _$PacingStateCopyWithImpl<$Res, $Val extends PacingState>
 }
 
 /// @nodoc
-abstract class _$$PacingInitialStateCopyWith<$Res> {
-  factory _$$PacingInitialStateCopyWith(_$PacingInitialState value,
-          $Res Function(_$PacingInitialState) then) =
-      __$$PacingInitialStateCopyWithImpl<$Res>;
+abstract class _$$PacingInitialStateImplCopyWith<$Res> {
+  factory _$$PacingInitialStateImplCopyWith(_$PacingInitialStateImpl value,
+          $Res Function(_$PacingInitialStateImpl) then) =
+      __$$PacingInitialStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PacingInitialStateCopyWithImpl<$Res>
-    extends _$PacingStateCopyWithImpl<$Res, _$PacingInitialState>
-    implements _$$PacingInitialStateCopyWith<$Res> {
-  __$$PacingInitialStateCopyWithImpl(
-      _$PacingInitialState _value, $Res Function(_$PacingInitialState) _then)
+class __$$PacingInitialStateImplCopyWithImpl<$Res>
+    extends _$PacingStateCopyWithImpl<$Res, _$PacingInitialStateImpl>
+    implements _$$PacingInitialStateImplCopyWith<$Res> {
+  __$$PacingInitialStateImplCopyWithImpl(_$PacingInitialStateImpl _value,
+      $Res Function(_$PacingInitialStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$PacingInitialState implements PacingInitialState {
-  const _$PacingInitialState();
+class _$PacingInitialStateImpl implements PacingInitialState {
+  const _$PacingInitialStateImpl();
 
   @override
   String toString() {
@@ -107,9 +107,9 @@ class _$PacingInitialState implements PacingInitialState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PacingInitialState);
+        (other.runtimeType == runtimeType && other is _$PacingInitialStateImpl);
   }
 
   @override
@@ -185,24 +185,24 @@ class _$PacingInitialState implements PacingInitialState {
 }
 
 abstract class PacingInitialState implements PacingState {
-  const factory PacingInitialState() = _$PacingInitialState;
+  const factory PacingInitialState() = _$PacingInitialStateImpl;
 }
 
 /// @nodoc
-abstract class _$$PacingErrorStateCopyWith<$Res> {
-  factory _$$PacingErrorStateCopyWith(
-          _$PacingErrorState value, $Res Function(_$PacingErrorState) then) =
-      __$$PacingErrorStateCopyWithImpl<$Res>;
+abstract class _$$PacingErrorStateImplCopyWith<$Res> {
+  factory _$$PacingErrorStateImplCopyWith(_$PacingErrorStateImpl value,
+          $Res Function(_$PacingErrorStateImpl) then) =
+      __$$PacingErrorStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$PacingErrorStateCopyWithImpl<$Res>
-    extends _$PacingStateCopyWithImpl<$Res, _$PacingErrorState>
-    implements _$$PacingErrorStateCopyWith<$Res> {
-  __$$PacingErrorStateCopyWithImpl(
-      _$PacingErrorState _value, $Res Function(_$PacingErrorState) _then)
+class __$$PacingErrorStateImplCopyWithImpl<$Res>
+    extends _$PacingStateCopyWithImpl<$Res, _$PacingErrorStateImpl>
+    implements _$$PacingErrorStateImplCopyWith<$Res> {
+  __$$PacingErrorStateImplCopyWithImpl(_$PacingErrorStateImpl _value,
+      $Res Function(_$PacingErrorStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -210,7 +210,7 @@ class __$$PacingErrorStateCopyWithImpl<$Res>
   $Res call({
     Object? error = null,
   }) {
-    return _then(_$PacingErrorState(
+    return _then(_$PacingErrorStateImpl(
       null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -221,8 +221,8 @@ class __$$PacingErrorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PacingErrorState implements PacingErrorState {
-  const _$PacingErrorState(this.error);
+class _$PacingErrorStateImpl implements PacingErrorState {
+  const _$PacingErrorStateImpl(this.error);
 
   @override
   final String error;
@@ -233,10 +233,10 @@ class _$PacingErrorState implements PacingErrorState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PacingErrorState &&
+            other is _$PacingErrorStateImpl &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -246,8 +246,9 @@ class _$PacingErrorState implements PacingErrorState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PacingErrorStateCopyWith<_$PacingErrorState> get copyWith =>
-      __$$PacingErrorStateCopyWithImpl<_$PacingErrorState>(this, _$identity);
+  _$$PacingErrorStateImplCopyWith<_$PacingErrorStateImpl> get copyWith =>
+      __$$PacingErrorStateImplCopyWithImpl<_$PacingErrorStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -319,19 +320,19 @@ class _$PacingErrorState implements PacingErrorState {
 }
 
 abstract class PacingErrorState implements PacingState {
-  const factory PacingErrorState(final String error) = _$PacingErrorState;
+  const factory PacingErrorState(final String error) = _$PacingErrorStateImpl;
 
   String get error;
   @JsonKey(ignore: true)
-  _$$PacingErrorStateCopyWith<_$PacingErrorState> get copyWith =>
+  _$$PacingErrorStateImplCopyWith<_$PacingErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PacingSuccessStateCopyWith<$Res> {
-  factory _$$PacingSuccessStateCopyWith(_$PacingSuccessState value,
-          $Res Function(_$PacingSuccessState) then) =
-      __$$PacingSuccessStateCopyWithImpl<$Res>;
+abstract class _$$PacingSuccessStateImplCopyWith<$Res> {
+  factory _$$PacingSuccessStateImplCopyWith(_$PacingSuccessStateImpl value,
+          $Res Function(_$PacingSuccessStateImpl) then) =
+      __$$PacingSuccessStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({PacingModel pacing});
 
@@ -339,11 +340,11 @@ abstract class _$$PacingSuccessStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$PacingSuccessStateCopyWithImpl<$Res>
-    extends _$PacingStateCopyWithImpl<$Res, _$PacingSuccessState>
-    implements _$$PacingSuccessStateCopyWith<$Res> {
-  __$$PacingSuccessStateCopyWithImpl(
-      _$PacingSuccessState _value, $Res Function(_$PacingSuccessState) _then)
+class __$$PacingSuccessStateImplCopyWithImpl<$Res>
+    extends _$PacingStateCopyWithImpl<$Res, _$PacingSuccessStateImpl>
+    implements _$$PacingSuccessStateImplCopyWith<$Res> {
+  __$$PacingSuccessStateImplCopyWithImpl(_$PacingSuccessStateImpl _value,
+      $Res Function(_$PacingSuccessStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -351,7 +352,7 @@ class __$$PacingSuccessStateCopyWithImpl<$Res>
   $Res call({
     Object? pacing = null,
   }) {
-    return _then(_$PacingSuccessState(
+    return _then(_$PacingSuccessStateImpl(
       null == pacing
           ? _value.pacing
           : pacing // ignore: cast_nullable_to_non_nullable
@@ -370,8 +371,8 @@ class __$$PacingSuccessStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PacingSuccessState implements PacingSuccessState {
-  const _$PacingSuccessState(this.pacing);
+class _$PacingSuccessStateImpl implements PacingSuccessState {
+  const _$PacingSuccessStateImpl(this.pacing);
 
   @override
   final PacingModel pacing;
@@ -382,10 +383,10 @@ class _$PacingSuccessState implements PacingSuccessState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PacingSuccessState &&
+            other is _$PacingSuccessStateImpl &&
             (identical(other.pacing, pacing) || other.pacing == pacing));
   }
 
@@ -395,8 +396,8 @@ class _$PacingSuccessState implements PacingSuccessState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PacingSuccessStateCopyWith<_$PacingSuccessState> get copyWith =>
-      __$$PacingSuccessStateCopyWithImpl<_$PacingSuccessState>(
+  _$$PacingSuccessStateImplCopyWith<_$PacingSuccessStateImpl> get copyWith =>
+      __$$PacingSuccessStateImplCopyWithImpl<_$PacingSuccessStateImpl>(
           this, _$identity);
 
   @override
@@ -470,10 +471,10 @@ class _$PacingSuccessState implements PacingSuccessState {
 
 abstract class PacingSuccessState implements PacingState {
   const factory PacingSuccessState(final PacingModel pacing) =
-      _$PacingSuccessState;
+      _$PacingSuccessStateImpl;
 
   PacingModel get pacing;
   @JsonKey(ignore: true)
-  _$$PacingSuccessStateCopyWith<_$PacingSuccessState> get copyWith =>
+  _$$PacingSuccessStateImplCopyWith<_$PacingSuccessStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

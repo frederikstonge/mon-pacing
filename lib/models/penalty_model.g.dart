@@ -6,8 +6,8 @@ part of 'penalty_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PenaltyModel _$$_PenaltyModelFromJson(Map<String, dynamic> json) =>
-    _$_PenaltyModel(
+_$PenaltyModelImpl _$$PenaltyModelImplFromJson(Map<String, dynamic> json) =>
+    _$PenaltyModelImpl(
       id: json['id'] as int,
       major: json['major'] as bool,
       player: json['player'] as String,
@@ -15,7 +15,7 @@ _$_PenaltyModel _$$_PenaltyModelFromJson(Map<String, dynamic> json) =>
       improvisationId: json['improvisationId'] as int,
     );
 
-Map<String, dynamic> _$$_PenaltyModelToJson(_$_PenaltyModel instance) =>
+Map<String, dynamic> _$$PenaltyModelImplToJson(_$PenaltyModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'major': instance.major,

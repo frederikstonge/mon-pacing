@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../l10n/generated/l10n.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/point_model.dart';
 import '../../models/team_model.dart';
 import '../../repositories/matches_repository.dart';
+import '../../router/router.dart';
 import '../matches/matches_cubit.dart';
 import 'match_state.dart';
 
@@ -112,7 +113,7 @@ class MatchCubit extends Cubit<MatchState> {
     return TeamModel(
       id: nextId,
       order: nextOrder,
-      name: '${S.current.MatchOptionsView_Team} ${nextOrder + 1}',
+      name: '${S.of(rootNavigatorKey.currentContext!).team} ${nextOrder + 1}',
       color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
     );
   }

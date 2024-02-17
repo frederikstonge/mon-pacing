@@ -12,7 +12,7 @@ part of 'timer_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TimerState _$TimerStateFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
@@ -115,28 +115,29 @@ class _$TimerStateCopyWithImpl<$Res, $Val extends TimerState>
 }
 
 /// @nodoc
-abstract class _$$TimerStoppedStateCopyWith<$Res> {
-  factory _$$TimerStoppedStateCopyWith(
-          _$TimerStoppedState value, $Res Function(_$TimerStoppedState) then) =
-      __$$TimerStoppedStateCopyWithImpl<$Res>;
+abstract class _$$TimerStoppedStateImplCopyWith<$Res> {
+  factory _$$TimerStoppedStateImplCopyWith(_$TimerStoppedStateImpl value,
+          $Res Function(_$TimerStoppedStateImpl) then) =
+      __$$TimerStoppedStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$TimerStoppedStateCopyWithImpl<$Res>
-    extends _$TimerStateCopyWithImpl<$Res, _$TimerStoppedState>
-    implements _$$TimerStoppedStateCopyWith<$Res> {
-  __$$TimerStoppedStateCopyWithImpl(
-      _$TimerStoppedState _value, $Res Function(_$TimerStoppedState) _then)
+class __$$TimerStoppedStateImplCopyWithImpl<$Res>
+    extends _$TimerStateCopyWithImpl<$Res, _$TimerStoppedStateImpl>
+    implements _$$TimerStoppedStateImplCopyWith<$Res> {
+  __$$TimerStoppedStateImplCopyWithImpl(_$TimerStoppedStateImpl _value,
+      $Res Function(_$TimerStoppedStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$TimerStoppedState implements TimerStoppedState {
-  const _$TimerStoppedState({final String? $type}) : $type = $type ?? 'stopped';
+class _$TimerStoppedStateImpl implements TimerStoppedState {
+  const _$TimerStoppedStateImpl({final String? $type})
+      : $type = $type ?? 'stopped';
 
-  factory _$TimerStoppedState.fromJson(Map<String, dynamic> json) =>
-      _$$TimerStoppedStateFromJson(json);
+  factory _$TimerStoppedStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimerStoppedStateImplFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -147,9 +148,9 @@ class _$TimerStoppedState implements TimerStoppedState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$TimerStoppedState);
+        (other.runtimeType == runtimeType && other is _$TimerStoppedStateImpl);
   }
 
   @JsonKey(ignore: true)
@@ -244,24 +245,24 @@ class _$TimerStoppedState implements TimerStoppedState {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TimerStoppedStateToJson(
+    return _$$TimerStoppedStateImplToJson(
       this,
     );
   }
 }
 
 abstract class TimerStoppedState implements TimerState {
-  const factory TimerStoppedState() = _$TimerStoppedState;
+  const factory TimerStoppedState() = _$TimerStoppedStateImpl;
 
   factory TimerStoppedState.fromJson(Map<String, dynamic> json) =
-      _$TimerStoppedState.fromJson;
+      _$TimerStoppedStateImpl.fromJson;
 }
 
 /// @nodoc
-abstract class _$$TimerRunningStateCopyWith<$Res> {
-  factory _$$TimerRunningStateCopyWith(
-          _$TimerRunningState value, $Res Function(_$TimerRunningState) then) =
-      __$$TimerRunningStateCopyWithImpl<$Res>;
+abstract class _$$TimerRunningStateImplCopyWith<$Res> {
+  factory _$$TimerRunningStateImplCopyWith(_$TimerRunningStateImpl value,
+          $Res Function(_$TimerRunningStateImpl) then) =
+      __$$TimerRunningStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {MatchModel match,
@@ -274,11 +275,11 @@ abstract class _$$TimerRunningStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$TimerRunningStateCopyWithImpl<$Res>
-    extends _$TimerStateCopyWithImpl<$Res, _$TimerRunningState>
-    implements _$$TimerRunningStateCopyWith<$Res> {
-  __$$TimerRunningStateCopyWithImpl(
-      _$TimerRunningState _value, $Res Function(_$TimerRunningState) _then)
+class __$$TimerRunningStateImplCopyWithImpl<$Res>
+    extends _$TimerStateCopyWithImpl<$Res, _$TimerRunningStateImpl>
+    implements _$$TimerRunningStateImplCopyWith<$Res> {
+  __$$TimerRunningStateImplCopyWithImpl(_$TimerRunningStateImpl _value,
+      $Res Function(_$TimerRunningStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -289,7 +290,7 @@ class __$$TimerRunningStateCopyWithImpl<$Res>
     Object? initialDuration = null,
     Object? elapsedTime = freezed,
   }) {
-    return _then(_$TimerRunningState(
+    return _then(_$TimerRunningStateImpl(
       match: null == match
           ? _value.match
           : match // ignore: cast_nullable_to_non_nullable
@@ -328,8 +329,8 @@ class __$$TimerRunningStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TimerRunningState implements TimerRunningState {
-  const _$TimerRunningState(
+class _$TimerRunningStateImpl implements TimerRunningState {
+  const _$TimerRunningStateImpl(
       {required this.match,
       required this.improvisation,
       required this.initialDuration,
@@ -337,8 +338,8 @@ class _$TimerRunningState implements TimerRunningState {
       final String? $type})
       : $type = $type ?? 'running';
 
-  factory _$TimerRunningState.fromJson(Map<String, dynamic> json) =>
-      _$$TimerRunningStateFromJson(json);
+  factory _$TimerRunningStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimerRunningStateImplFromJson(json);
 
   @override
   final MatchModel match;
@@ -358,10 +359,10 @@ class _$TimerRunningState implements TimerRunningState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TimerRunningState &&
+            other is _$TimerRunningStateImpl &&
             (identical(other.match, match) || other.match == match) &&
             (identical(other.improvisation, improvisation) ||
                 other.improvisation == improvisation) &&
@@ -379,8 +380,9 @@ class _$TimerRunningState implements TimerRunningState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TimerRunningStateCopyWith<_$TimerRunningState> get copyWith =>
-      __$$TimerRunningStateCopyWithImpl<_$TimerRunningState>(this, _$identity);
+  _$$TimerRunningStateImplCopyWith<_$TimerRunningStateImpl> get copyWith =>
+      __$$TimerRunningStateImplCopyWithImpl<_$TimerRunningStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -470,7 +472,7 @@ class _$TimerRunningState implements TimerRunningState {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TimerRunningStateToJson(
+    return _$$TimerRunningStateImplToJson(
       this,
     );
   }
@@ -481,25 +483,25 @@ abstract class TimerRunningState implements TimerState {
       {required final MatchModel match,
       required final ImprovisationModel improvisation,
       required final Duration initialDuration,
-      final Duration? elapsedTime}) = _$TimerRunningState;
+      final Duration? elapsedTime}) = _$TimerRunningStateImpl;
 
   factory TimerRunningState.fromJson(Map<String, dynamic> json) =
-      _$TimerRunningState.fromJson;
+      _$TimerRunningStateImpl.fromJson;
 
   MatchModel get match;
   ImprovisationModel get improvisation;
   Duration get initialDuration;
   Duration? get elapsedTime;
   @JsonKey(ignore: true)
-  _$$TimerRunningStateCopyWith<_$TimerRunningState> get copyWith =>
+  _$$TimerRunningStateImplCopyWith<_$TimerRunningStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TimerPausedStateCopyWith<$Res> {
-  factory _$$TimerPausedStateCopyWith(
-          _$TimerPausedState value, $Res Function(_$TimerPausedState) then) =
-      __$$TimerPausedStateCopyWithImpl<$Res>;
+abstract class _$$TimerPausedStateImplCopyWith<$Res> {
+  factory _$$TimerPausedStateImplCopyWith(_$TimerPausedStateImpl value,
+          $Res Function(_$TimerPausedStateImpl) then) =
+      __$$TimerPausedStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {MatchModel match,
@@ -512,11 +514,11 @@ abstract class _$$TimerPausedStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$TimerPausedStateCopyWithImpl<$Res>
-    extends _$TimerStateCopyWithImpl<$Res, _$TimerPausedState>
-    implements _$$TimerPausedStateCopyWith<$Res> {
-  __$$TimerPausedStateCopyWithImpl(
-      _$TimerPausedState _value, $Res Function(_$TimerPausedState) _then)
+class __$$TimerPausedStateImplCopyWithImpl<$Res>
+    extends _$TimerStateCopyWithImpl<$Res, _$TimerPausedStateImpl>
+    implements _$$TimerPausedStateImplCopyWith<$Res> {
+  __$$TimerPausedStateImplCopyWithImpl(_$TimerPausedStateImpl _value,
+      $Res Function(_$TimerPausedStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -527,7 +529,7 @@ class __$$TimerPausedStateCopyWithImpl<$Res>
     Object? initialDuration = null,
     Object? elapsedTime = freezed,
   }) {
-    return _then(_$TimerPausedState(
+    return _then(_$TimerPausedStateImpl(
       match: null == match
           ? _value.match
           : match // ignore: cast_nullable_to_non_nullable
@@ -566,8 +568,8 @@ class __$$TimerPausedStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TimerPausedState implements TimerPausedState {
-  const _$TimerPausedState(
+class _$TimerPausedStateImpl implements TimerPausedState {
+  const _$TimerPausedStateImpl(
       {required this.match,
       required this.improvisation,
       required this.initialDuration,
@@ -575,8 +577,8 @@ class _$TimerPausedState implements TimerPausedState {
       final String? $type})
       : $type = $type ?? 'paused';
 
-  factory _$TimerPausedState.fromJson(Map<String, dynamic> json) =>
-      _$$TimerPausedStateFromJson(json);
+  factory _$TimerPausedStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimerPausedStateImplFromJson(json);
 
   @override
   final MatchModel match;
@@ -596,10 +598,10 @@ class _$TimerPausedState implements TimerPausedState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TimerPausedState &&
+            other is _$TimerPausedStateImpl &&
             (identical(other.match, match) || other.match == match) &&
             (identical(other.improvisation, improvisation) ||
                 other.improvisation == improvisation) &&
@@ -617,8 +619,9 @@ class _$TimerPausedState implements TimerPausedState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TimerPausedStateCopyWith<_$TimerPausedState> get copyWith =>
-      __$$TimerPausedStateCopyWithImpl<_$TimerPausedState>(this, _$identity);
+  _$$TimerPausedStateImplCopyWith<_$TimerPausedStateImpl> get copyWith =>
+      __$$TimerPausedStateImplCopyWithImpl<_$TimerPausedStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -708,7 +711,7 @@ class _$TimerPausedState implements TimerPausedState {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TimerPausedStateToJson(
+    return _$$TimerPausedStateImplToJson(
       this,
     );
   }
@@ -719,16 +722,16 @@ abstract class TimerPausedState implements TimerState {
       {required final MatchModel match,
       required final ImprovisationModel improvisation,
       required final Duration initialDuration,
-      final Duration? elapsedTime}) = _$TimerPausedState;
+      final Duration? elapsedTime}) = _$TimerPausedStateImpl;
 
   factory TimerPausedState.fromJson(Map<String, dynamic> json) =
-      _$TimerPausedState.fromJson;
+      _$TimerPausedStateImpl.fromJson;
 
   MatchModel get match;
   ImprovisationModel get improvisation;
   Duration get initialDuration;
   Duration? get elapsedTime;
   @JsonKey(ignore: true)
-  _$$TimerPausedStateCopyWith<_$TimerPausedState> get copyWith =>
+  _$$TimerPausedStateImplCopyWith<_$TimerPausedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

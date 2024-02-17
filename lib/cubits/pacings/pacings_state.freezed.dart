@@ -12,7 +12,7 @@ part of 'pacings_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PacingsState {
@@ -20,22 +20,21 @@ mixin _$PacingsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(List<PacingModel> pacings, bool hasReachedMax)
-        success,
+    required TResult Function(List<PacingModel> pacings, bool hasMore) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult? Function(List<PacingModel> pacings, bool hasMore)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult Function(List<PacingModel> pacings, bool hasMore)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -82,25 +81,25 @@ class _$PacingsStateCopyWithImpl<$Res, $Val extends PacingsState>
 }
 
 /// @nodoc
-abstract class _$$PacingsInitialStateCopyWith<$Res> {
-  factory _$$PacingsInitialStateCopyWith(_$PacingsInitialState value,
-          $Res Function(_$PacingsInitialState) then) =
-      __$$PacingsInitialStateCopyWithImpl<$Res>;
+abstract class _$$PacingsInitialStateImplCopyWith<$Res> {
+  factory _$$PacingsInitialStateImplCopyWith(_$PacingsInitialStateImpl value,
+          $Res Function(_$PacingsInitialStateImpl) then) =
+      __$$PacingsInitialStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PacingsInitialStateCopyWithImpl<$Res>
-    extends _$PacingsStateCopyWithImpl<$Res, _$PacingsInitialState>
-    implements _$$PacingsInitialStateCopyWith<$Res> {
-  __$$PacingsInitialStateCopyWithImpl(
-      _$PacingsInitialState _value, $Res Function(_$PacingsInitialState) _then)
+class __$$PacingsInitialStateImplCopyWithImpl<$Res>
+    extends _$PacingsStateCopyWithImpl<$Res, _$PacingsInitialStateImpl>
+    implements _$$PacingsInitialStateImplCopyWith<$Res> {
+  __$$PacingsInitialStateImplCopyWithImpl(_$PacingsInitialStateImpl _value,
+      $Res Function(_$PacingsInitialStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$PacingsInitialState implements PacingsInitialState {
-  const _$PacingsInitialState();
+class _$PacingsInitialStateImpl implements PacingsInitialState {
+  const _$PacingsInitialStateImpl();
 
   @override
   String toString() {
@@ -108,9 +107,10 @@ class _$PacingsInitialState implements PacingsInitialState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PacingsInitialState);
+        (other.runtimeType == runtimeType &&
+            other is _$PacingsInitialStateImpl);
   }
 
   @override
@@ -121,8 +121,7 @@ class _$PacingsInitialState implements PacingsInitialState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(List<PacingModel> pacings, bool hasReachedMax)
-        success,
+    required TResult Function(List<PacingModel> pacings, bool hasMore) success,
   }) {
     return initial();
   }
@@ -132,7 +131,7 @@ class _$PacingsInitialState implements PacingsInitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult? Function(List<PacingModel> pacings, bool hasMore)? success,
   }) {
     return initial?.call();
   }
@@ -142,7 +141,7 @@ class _$PacingsInitialState implements PacingsInitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult Function(List<PacingModel> pacings, bool hasMore)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -187,24 +186,24 @@ class _$PacingsInitialState implements PacingsInitialState {
 }
 
 abstract class PacingsInitialState implements PacingsState {
-  const factory PacingsInitialState() = _$PacingsInitialState;
+  const factory PacingsInitialState() = _$PacingsInitialStateImpl;
 }
 
 /// @nodoc
-abstract class _$$PacingsErrorStateCopyWith<$Res> {
-  factory _$$PacingsErrorStateCopyWith(
-          _$PacingsErrorState value, $Res Function(_$PacingsErrorState) then) =
-      __$$PacingsErrorStateCopyWithImpl<$Res>;
+abstract class _$$PacingsErrorStateImplCopyWith<$Res> {
+  factory _$$PacingsErrorStateImplCopyWith(_$PacingsErrorStateImpl value,
+          $Res Function(_$PacingsErrorStateImpl) then) =
+      __$$PacingsErrorStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$PacingsErrorStateCopyWithImpl<$Res>
-    extends _$PacingsStateCopyWithImpl<$Res, _$PacingsErrorState>
-    implements _$$PacingsErrorStateCopyWith<$Res> {
-  __$$PacingsErrorStateCopyWithImpl(
-      _$PacingsErrorState _value, $Res Function(_$PacingsErrorState) _then)
+class __$$PacingsErrorStateImplCopyWithImpl<$Res>
+    extends _$PacingsStateCopyWithImpl<$Res, _$PacingsErrorStateImpl>
+    implements _$$PacingsErrorStateImplCopyWith<$Res> {
+  __$$PacingsErrorStateImplCopyWithImpl(_$PacingsErrorStateImpl _value,
+      $Res Function(_$PacingsErrorStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -212,7 +211,7 @@ class __$$PacingsErrorStateCopyWithImpl<$Res>
   $Res call({
     Object? error = null,
   }) {
-    return _then(_$PacingsErrorState(
+    return _then(_$PacingsErrorStateImpl(
       null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -223,8 +222,8 @@ class __$$PacingsErrorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PacingsErrorState implements PacingsErrorState {
-  const _$PacingsErrorState(this.error);
+class _$PacingsErrorStateImpl implements PacingsErrorState {
+  const _$PacingsErrorStateImpl(this.error);
 
   @override
   final String error;
@@ -235,10 +234,10 @@ class _$PacingsErrorState implements PacingsErrorState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PacingsErrorState &&
+            other is _$PacingsErrorStateImpl &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -248,16 +247,16 @@ class _$PacingsErrorState implements PacingsErrorState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PacingsErrorStateCopyWith<_$PacingsErrorState> get copyWith =>
-      __$$PacingsErrorStateCopyWithImpl<_$PacingsErrorState>(this, _$identity);
+  _$$PacingsErrorStateImplCopyWith<_$PacingsErrorStateImpl> get copyWith =>
+      __$$PacingsErrorStateImplCopyWithImpl<_$PacingsErrorStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(List<PacingModel> pacings, bool hasReachedMax)
-        success,
+    required TResult Function(List<PacingModel> pacings, bool hasMore) success,
   }) {
     return error(this.error);
   }
@@ -267,7 +266,7 @@ class _$PacingsErrorState implements PacingsErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult? Function(List<PacingModel> pacings, bool hasMore)? success,
   }) {
     return error?.call(this.error);
   }
@@ -277,7 +276,7 @@ class _$PacingsErrorState implements PacingsErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult Function(List<PacingModel> pacings, bool hasMore)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -322,45 +321,45 @@ class _$PacingsErrorState implements PacingsErrorState {
 }
 
 abstract class PacingsErrorState implements PacingsState {
-  const factory PacingsErrorState(final String error) = _$PacingsErrorState;
+  const factory PacingsErrorState(final String error) = _$PacingsErrorStateImpl;
 
   String get error;
   @JsonKey(ignore: true)
-  _$$PacingsErrorStateCopyWith<_$PacingsErrorState> get copyWith =>
+  _$$PacingsErrorStateImplCopyWith<_$PacingsErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PacingsSuccessStateCopyWith<$Res> {
-  factory _$$PacingsSuccessStateCopyWith(_$PacingsSuccessState value,
-          $Res Function(_$PacingsSuccessState) then) =
-      __$$PacingsSuccessStateCopyWithImpl<$Res>;
+abstract class _$$PacingsSuccessStateImplCopyWith<$Res> {
+  factory _$$PacingsSuccessStateImplCopyWith(_$PacingsSuccessStateImpl value,
+          $Res Function(_$PacingsSuccessStateImpl) then) =
+      __$$PacingsSuccessStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<PacingModel> pacings, bool hasReachedMax});
+  $Res call({List<PacingModel> pacings, bool hasMore});
 }
 
 /// @nodoc
-class __$$PacingsSuccessStateCopyWithImpl<$Res>
-    extends _$PacingsStateCopyWithImpl<$Res, _$PacingsSuccessState>
-    implements _$$PacingsSuccessStateCopyWith<$Res> {
-  __$$PacingsSuccessStateCopyWithImpl(
-      _$PacingsSuccessState _value, $Res Function(_$PacingsSuccessState) _then)
+class __$$PacingsSuccessStateImplCopyWithImpl<$Res>
+    extends _$PacingsStateCopyWithImpl<$Res, _$PacingsSuccessStateImpl>
+    implements _$$PacingsSuccessStateImplCopyWith<$Res> {
+  __$$PacingsSuccessStateImplCopyWithImpl(_$PacingsSuccessStateImpl _value,
+      $Res Function(_$PacingsSuccessStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? pacings = null,
-    Object? hasReachedMax = null,
+    Object? hasMore = null,
   }) {
-    return _then(_$PacingsSuccessState(
+    return _then(_$PacingsSuccessStateImpl(
       null == pacings
           ? _value._pacings
           : pacings // ignore: cast_nullable_to_non_nullable
               as List<PacingModel>,
-      null == hasReachedMax
-          ? _value.hasReachedMax
-          : hasReachedMax // ignore: cast_nullable_to_non_nullable
+      null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -368,9 +367,8 @@ class __$$PacingsSuccessStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PacingsSuccessState implements PacingsSuccessState {
-  const _$PacingsSuccessState(
-      final List<PacingModel> pacings, this.hasReachedMax)
+class _$PacingsSuccessStateImpl implements PacingsSuccessState {
+  const _$PacingsSuccessStateImpl(final List<PacingModel> pacings, this.hasMore)
       : _pacings = pacings;
 
   final List<PacingModel> _pacings;
@@ -382,32 +380,31 @@ class _$PacingsSuccessState implements PacingsSuccessState {
   }
 
   @override
-  final bool hasReachedMax;
+  final bool hasMore;
 
   @override
   String toString() {
-    return 'PacingsState.success(pacings: $pacings, hasReachedMax: $hasReachedMax)';
+    return 'PacingsState.success(pacings: $pacings, hasMore: $hasMore)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PacingsSuccessState &&
+            other is _$PacingsSuccessStateImpl &&
             const DeepCollectionEquality().equals(other._pacings, _pacings) &&
-            (identical(other.hasReachedMax, hasReachedMax) ||
-                other.hasReachedMax == hasReachedMax));
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_pacings), hasReachedMax);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_pacings), hasMore);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PacingsSuccessStateCopyWith<_$PacingsSuccessState> get copyWith =>
-      __$$PacingsSuccessStateCopyWithImpl<_$PacingsSuccessState>(
+  _$$PacingsSuccessStateImplCopyWith<_$PacingsSuccessStateImpl> get copyWith =>
+      __$$PacingsSuccessStateImplCopyWithImpl<_$PacingsSuccessStateImpl>(
           this, _$identity);
 
   @override
@@ -415,10 +412,9 @@ class _$PacingsSuccessState implements PacingsSuccessState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(List<PacingModel> pacings, bool hasReachedMax)
-        success,
+    required TResult Function(List<PacingModel> pacings, bool hasMore) success,
   }) {
-    return success(pacings, hasReachedMax);
+    return success(pacings, hasMore);
   }
 
   @override
@@ -426,9 +422,9 @@ class _$PacingsSuccessState implements PacingsSuccessState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult? Function(List<PacingModel> pacings, bool hasMore)? success,
   }) {
-    return success?.call(pacings, hasReachedMax);
+    return success?.call(pacings, hasMore);
   }
 
   @override
@@ -436,11 +432,11 @@ class _$PacingsSuccessState implements PacingsSuccessState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(List<PacingModel> pacings, bool hasReachedMax)? success,
+    TResult Function(List<PacingModel> pacings, bool hasMore)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(pacings, hasReachedMax);
+      return success(pacings, hasMore);
     }
     return orElse();
   }
@@ -482,12 +478,12 @@ class _$PacingsSuccessState implements PacingsSuccessState {
 
 abstract class PacingsSuccessState implements PacingsState {
   const factory PacingsSuccessState(
-          final List<PacingModel> pacings, final bool hasReachedMax) =
-      _$PacingsSuccessState;
+          final List<PacingModel> pacings, final bool hasMore) =
+      _$PacingsSuccessStateImpl;
 
   List<PacingModel> get pacings;
-  bool get hasReachedMax;
+  bool get hasMore;
   @JsonKey(ignore: true)
-  _$$PacingsSuccessStateCopyWith<_$PacingsSuccessState> get copyWith =>
+  _$$PacingsSuccessStateImplCopyWith<_$PacingsSuccessStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
