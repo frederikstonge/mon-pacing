@@ -13,5 +13,6 @@ class PenaltyModel with _$PenaltyModel {
     required int improvisationId,
   }) = _PenaltyModel;
 
-  factory PenaltyModel.fromJson(Map<String, dynamic> json) => _$PenaltyModelFromJson(json);
+  factory PenaltyModel.fromJson(Map<String, dynamic> json) =>
+      _$PenaltyModelFromJson(json);
 }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'cubits/settings/settings_cubit.dart';
-import 'helpers/material_color_helper.dart';
-import 'l10n/generated/l10n.dart';
-import 'models/settings_model.dart';
+import 'cubits/settings/settings_state.dart';
+import 'l10n/app_localizations.dart';
 import 'router/router.dart';
 
 class App extends StatelessWidget {
@@ -13,26 +14,40 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsModel>(
-      builder: (context, state) => MaterialApp.router(
-        key: ValueKey(state.language),
-        title: 'MonPacing',
-        theme: ThemeData(
-          useMaterial3: false,
-          primarySwatch: MaterialColorHelper.generateMaterialColor(color: Color(state.color)),
-          brightness: Brightness.light,
-        ),
-        debugShowCheckedModeBanner: false,
-        routerConfig: router,
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        locale: Locale(state.language),
-      ),
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarIconBrightness: switch (state.themeMode) {
+              ThemeMode.dark => Brightness.light,
+              ThemeMode.light => Brightness.dark,
+              ThemeMode.system => MediaQuery.of(context).platformBrightness != Brightness.dark ? Brightness.dark : Brightness.light,
+            },
+            statusBarColor: Colors.transparent,
+            systemNavigationBarColor: Colors.transparent,
+          ),
+          child: MaterialApp.router(
+            onGenerateTitle: (context) => S.of(context).appTitle,
+            // Theme
+            themeMode: state.themeMode,
+            // Locale
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'), // English
+              Locale('fr'), // Spanish
+            ],
+            locale: Locale(state.language),
+            // Router
+            routerConfig: router,
+            debugShowCheckedModeBanner: false,
+          ),
+        );
+      },
     );
   }
 }

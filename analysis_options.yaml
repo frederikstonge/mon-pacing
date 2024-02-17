@@ -35,7 +35,6 @@ linter:
     prefer_final_locals: true
     always_declare_return_types: true
     avoid_multiple_declarations_per_line: true
-    prefer_expression_function_bodies: false
     prefer_null_aware_method_calls: true
     unawaited_futures: true
     sized_box_for_whitespace: true
@@ -49,4 +48,4 @@ linter:
 # https://dart.dev/guides/language/analysis-options
 
 analyzer:
-  exclude: [build/**, lib/**.freezed.dart, lib/**.g.dart, "lib/**.swagger.dart", "lib/**/generated/**"]
+  exclude: [ build/**, lib/**.freezed.dart, lib/**.g.dart ]

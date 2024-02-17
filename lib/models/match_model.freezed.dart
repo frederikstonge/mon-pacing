@@ -12,7 +12,7 @@ part of 'match_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MatchModel _$MatchModelFromJson(Map<String, dynamic> json) {
   return _MatchModel.fromJson(json);
@@ -113,11 +113,11 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
 }
 
 /// @nodoc
-abstract class _$$_MatchModelCopyWith<$Res>
+abstract class _$$MatchModelImplCopyWith<$Res>
     implements $MatchModelCopyWith<$Res> {
-  factory _$$_MatchModelCopyWith(
-          _$_MatchModel value, $Res Function(_$_MatchModel) then) =
-      __$$_MatchModelCopyWithImpl<$Res>;
+  factory _$$MatchModelImplCopyWith(
+          _$MatchModelImpl value, $Res Function(_$MatchModelImpl) then) =
+      __$$MatchModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -132,11 +132,11 @@ abstract class _$$_MatchModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MatchModelCopyWithImpl<$Res>
-    extends _$MatchModelCopyWithImpl<$Res, _$_MatchModel>
-    implements _$$_MatchModelCopyWith<$Res> {
-  __$$_MatchModelCopyWithImpl(
-      _$_MatchModel _value, $Res Function(_$_MatchModel) _then)
+class __$$MatchModelImplCopyWithImpl<$Res>
+    extends _$MatchModelCopyWithImpl<$Res, _$MatchModelImpl>
+    implements _$$MatchModelImplCopyWith<$Res> {
+  __$$MatchModelImplCopyWithImpl(
+      _$MatchModelImpl _value, $Res Function(_$MatchModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -151,7 +151,7 @@ class __$$_MatchModelCopyWithImpl<$Res>
     Object? penalties = null,
     Object? points = null,
   }) {
-    return _then(_$_MatchModel(
+    return _then(_$MatchModelImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -190,8 +190,8 @@ class __$$_MatchModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MatchModel implements _MatchModel {
-  const _$_MatchModel(
+class _$MatchModelImpl implements _MatchModel {
+  const _$MatchModelImpl(
       {required this.id,
       required this.name,
       required this.createdDate,
@@ -205,8 +205,8 @@ class _$_MatchModel implements _MatchModel {
         _penalties = penalties,
         _points = points;
 
-  factory _$_MatchModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MatchModelFromJson(json);
+  factory _$MatchModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MatchModelImplFromJson(json);
 
   @override
   final int? id;
@@ -254,10 +254,10 @@ class _$_MatchModel implements _MatchModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MatchModel &&
+            other is _$MatchModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.createdDate, createdDate) ||
@@ -288,12 +288,12 @@ class _$_MatchModel implements _MatchModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MatchModelCopyWith<_$_MatchModel> get copyWith =>
-      __$$_MatchModelCopyWithImpl<_$_MatchModel>(this, _$identity);
+  _$$MatchModelImplCopyWith<_$MatchModelImpl> get copyWith =>
+      __$$MatchModelImplCopyWithImpl<_$MatchModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchModelToJson(
+    return _$$MatchModelImplToJson(
       this,
     );
   }
@@ -308,10 +308,10 @@ abstract class _MatchModel implements MatchModel, BaseModel {
       required final List<TeamModel> teams,
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
-      required final List<PointModel> points}) = _$_MatchModel;
+      required final List<PointModel> points}) = _$MatchModelImpl;
 
   factory _MatchModel.fromJson(Map<String, dynamic> json) =
-      _$_MatchModel.fromJson;
+      _$MatchModelImpl.fromJson;
 
   @override
   int? get id;
@@ -331,6 +331,6 @@ abstract class _MatchModel implements MatchModel, BaseModel {
   List<PointModel> get points;
   @override
   @JsonKey(ignore: true)
-  _$$_MatchModelCopyWith<_$_MatchModel> get copyWith =>
+  _$$MatchModelImplCopyWith<_$MatchModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,16 +6,16 @@ import 'pacings_state.dart';
 
 class PacingsCubit extends Cubit<PacingsState> {
   static const int _pageSize = 20;
-  final PacingsRepository repository;
+  final PacingsRepository pacingsRepository;
   bool _isFetching = false;
 
-  PacingsCubit({required this.repository}) : super(const PacingsState.initial());
+  PacingsCubit({required this.pacingsRepository}) : super(const PacingsState.initial());
 
   bool get isFetching => _isFetching;
 
   Future<PacingModel> add(PacingModel model) async {
     try {
-      return await repository.add(model);
+      return await pacingsRepository.add(model);
     } finally {
       await refresh();
     }
@@ -23,7 +23,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> edit(PacingModel model) async {
     try {
-      await repository.edit(model);
+      await pacingsRepository.edit(model);
     } finally {
       await refresh();
     }
@@ -31,7 +31,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> delete(PacingModel model) async {
     try {
-      await repository.delete(model.id!);
+      await pacingsRepository.delete(model.id!);
     } finally {
       await refresh();
     }
@@ -42,15 +42,15 @@ class PacingsCubit extends Cubit<PacingsState> {
     try {
       await state.when(
         initial: () async {
-          final response = await repository.getList(0, _pageSize);
+          final response = await pacingsRepository.getList(0, _pageSize);
           emit(PacingsState.success(response, response.length < _pageSize));
         },
         error: (error) async {
-          final response = await repository.getList(0, _pageSize);
+          final response = await pacingsRepository.getList(0, _pageSize);
           emit(PacingsState.success(response, response.length < _pageSize));
         },
         success: (pacings, hasReachedMax) async {
-          final response = await repository.getList(pacings.length, _pageSize);
+          final response = await pacingsRepository.getList(pacings.length, _pageSize);
           emit(PacingsState.success(pacings + response, response.length < _pageSize));
         },
       );

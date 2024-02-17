@@ -12,7 +12,7 @@ part of 'point_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PointModel _$PointModelFromJson(Map<String, dynamic> json) {
   return _PointModel.fromJson(json);
@@ -80,22 +80,22 @@ class _$PointModelCopyWithImpl<$Res, $Val extends PointModel>
 }
 
 /// @nodoc
-abstract class _$$_PointModelCopyWith<$Res>
+abstract class _$$PointModelImplCopyWith<$Res>
     implements $PointModelCopyWith<$Res> {
-  factory _$$_PointModelCopyWith(
-          _$_PointModel value, $Res Function(_$_PointModel) then) =
-      __$$_PointModelCopyWithImpl<$Res>;
+  factory _$$PointModelImplCopyWith(
+          _$PointModelImpl value, $Res Function(_$PointModelImpl) then) =
+      __$$PointModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, int teamId, int improvisationId, int value});
 }
 
 /// @nodoc
-class __$$_PointModelCopyWithImpl<$Res>
-    extends _$PointModelCopyWithImpl<$Res, _$_PointModel>
-    implements _$$_PointModelCopyWith<$Res> {
-  __$$_PointModelCopyWithImpl(
-      _$_PointModel _value, $Res Function(_$_PointModel) _then)
+class __$$PointModelImplCopyWithImpl<$Res>
+    extends _$PointModelCopyWithImpl<$Res, _$PointModelImpl>
+    implements _$$PointModelImplCopyWith<$Res> {
+  __$$PointModelImplCopyWithImpl(
+      _$PointModelImpl _value, $Res Function(_$PointModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_PointModelCopyWithImpl<$Res>
     Object? improvisationId = null,
     Object? value = null,
   }) {
-    return _then(_$_PointModel(
+    return _then(_$PointModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -129,15 +129,15 @@ class __$$_PointModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PointModel implements _PointModel {
-  const _$_PointModel(
+class _$PointModelImpl implements _PointModel {
+  const _$PointModelImpl(
       {required this.id,
       required this.teamId,
       required this.improvisationId,
       required this.value});
 
-  factory _$_PointModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PointModelFromJson(json);
+  factory _$PointModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PointModelImplFromJson(json);
 
   @override
   final int id;
@@ -154,10 +154,10 @@ class _$_PointModel implements _PointModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PointModel &&
+            other is _$PointModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.teamId, teamId) || other.teamId == teamId) &&
             (identical(other.improvisationId, improvisationId) ||
@@ -173,12 +173,12 @@ class _$_PointModel implements _PointModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PointModelCopyWith<_$_PointModel> get copyWith =>
-      __$$_PointModelCopyWithImpl<_$_PointModel>(this, _$identity);
+  _$$PointModelImplCopyWith<_$PointModelImpl> get copyWith =>
+      __$$PointModelImplCopyWithImpl<_$PointModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PointModelToJson(
+    return _$$PointModelImplToJson(
       this,
     );
   }
@@ -189,10 +189,10 @@ abstract class _PointModel implements PointModel {
       {required final int id,
       required final int teamId,
       required final int improvisationId,
-      required final int value}) = _$_PointModel;
+      required final int value}) = _$PointModelImpl;
 
   factory _PointModel.fromJson(Map<String, dynamic> json) =
-      _$_PointModel.fromJson;
+      _$PointModelImpl.fromJson;
 
   @override
   int get id;
@@ -204,6 +204,6 @@ abstract class _PointModel implements PointModel {
   int get value;
   @override
   @JsonKey(ignore: true)
-  _$$_PointModelCopyWith<_$_PointModel> get copyWith =>
+  _$$PointModelImplCopyWith<_$PointModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

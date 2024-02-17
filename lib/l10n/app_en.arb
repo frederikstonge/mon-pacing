@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "appTitle": "My Pacing",
+  "@appTitle": {
+    "context": "app"
+  },
+  "matches": "Matches",
+  "@matches": {
+  },
+  "pacings": "Pacings",
+  "@pacings": {
+  },
+  "settings": "Settings",
+  "@settings": {
+  },
+  "team": "Team",
+  "@team": {
+  }
+}

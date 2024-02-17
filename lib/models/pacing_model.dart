@@ -20,5 +20,6 @@ class PacingModel with _$PacingModel implements BaseModel {
     required List<ImprovisationModel> improvisations,
   }) = _PacingModel;
 
-  factory PacingModel.fromJson(Map<String, dynamic> json) => _$PacingModelFromJson(json);
+  factory PacingModel.fromJson(Map<String, dynamic> json) =>
+      _$PacingModelFromJson(json);
 }

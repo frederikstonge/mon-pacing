@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../models/settings_model.dart';
+import 'settings_state.dart';
 
-class SettingsCubit extends HydratedCubit<SettingsModel> {
+class SettingsCubit extends HydratedCubit<SettingsState> {
   SettingsCubit()
       : super(
-          SettingsModel(
-            color: Colors.indigo.value,
+          SettingsState(
+            themeMode: ThemeMode.light,
             enableDefaultPaddingDuration: false,
             defaultPaddingDuration: const Duration(minutes: 1),
             language: Intl.getCurrentLocale().substring(0, 2) == 'fr' ? 'fr' : 'en',
           ),
         );
 
-  void edit(SettingsModel model) {
+  void edit(SettingsState model) {
     emit(model);
   }
 
   @override
-  SettingsModel? fromJson(Map<String, dynamic> json) {
-    return SettingsModel.fromJson(json);
+  SettingsState? fromJson(Map<String, dynamic> json) {
+    return SettingsState.fromJson(json);
   }
 
   @override
-  Map<String, dynamic>? toJson(SettingsModel state) {
+  Map<String, dynamic>? toJson(SettingsState state) {
     return state.toJson();
   }
 }

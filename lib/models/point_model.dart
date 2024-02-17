@@ -12,5 +12,6 @@ class PointModel with _$PointModel {
     required int value,
   }) = _PointModel;
 
-  factory PointModel.fromJson(Map<String, dynamic> json) => _$PointModelFromJson(json);
+  factory PointModel.fromJson(Map<String, dynamic> json) =>
+      _$PointModelFromJson(json);
 }

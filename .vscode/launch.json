@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "mon-pacing",
+            "name": "mon_pacing",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "mon-pacing (profile mode)",
+            "name": "mon_pacing (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "mon-pacing (release mode)",
+            "name": "mon_pacing (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

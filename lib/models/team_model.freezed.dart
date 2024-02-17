@@ -12,7 +12,7 @@ part of 'team_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TeamModel _$TeamModelFromJson(Map<String, dynamic> json) {
   return _TeamModel.fromJson(json);
@@ -79,21 +79,22 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
 }
 
 /// @nodoc
-abstract class _$$_TeamModelCopyWith<$Res> implements $TeamModelCopyWith<$Res> {
-  factory _$$_TeamModelCopyWith(
-          _$_TeamModel value, $Res Function(_$_TeamModel) then) =
-      __$$_TeamModelCopyWithImpl<$Res>;
+abstract class _$$TeamModelImplCopyWith<$Res>
+    implements $TeamModelCopyWith<$Res> {
+  factory _$$TeamModelImplCopyWith(
+          _$TeamModelImpl value, $Res Function(_$TeamModelImpl) then) =
+      __$$TeamModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, int order, String name, int color});
 }
 
 /// @nodoc
-class __$$_TeamModelCopyWithImpl<$Res>
-    extends _$TeamModelCopyWithImpl<$Res, _$_TeamModel>
-    implements _$$_TeamModelCopyWith<$Res> {
-  __$$_TeamModelCopyWithImpl(
-      _$_TeamModel _value, $Res Function(_$_TeamModel) _then)
+class __$$TeamModelImplCopyWithImpl<$Res>
+    extends _$TeamModelCopyWithImpl<$Res, _$TeamModelImpl>
+    implements _$$TeamModelImplCopyWith<$Res> {
+  __$$TeamModelImplCopyWithImpl(
+      _$TeamModelImpl _value, $Res Function(_$TeamModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -104,7 +105,7 @@ class __$$_TeamModelCopyWithImpl<$Res>
     Object? name = null,
     Object? color = null,
   }) {
-    return _then(_$_TeamModel(
+    return _then(_$TeamModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -127,15 +128,15 @@ class __$$_TeamModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TeamModel implements _TeamModel {
-  const _$_TeamModel(
+class _$TeamModelImpl implements _TeamModel {
+  const _$TeamModelImpl(
       {required this.id,
       required this.order,
       required this.name,
       required this.color});
 
-  factory _$_TeamModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TeamModelFromJson(json);
+  factory _$TeamModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TeamModelImplFromJson(json);
 
   @override
   final int id;
@@ -152,10 +153,10 @@ class _$_TeamModel implements _TeamModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TeamModel &&
+            other is _$TeamModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.name, name) || other.name == name) &&
@@ -169,12 +170,12 @@ class _$_TeamModel implements _TeamModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TeamModelCopyWith<_$_TeamModel> get copyWith =>
-      __$$_TeamModelCopyWithImpl<_$_TeamModel>(this, _$identity);
+  _$$TeamModelImplCopyWith<_$TeamModelImpl> get copyWith =>
+      __$$TeamModelImplCopyWithImpl<_$TeamModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TeamModelToJson(
+    return _$$TeamModelImplToJson(
       this,
     );
   }
@@ -185,10 +186,10 @@ abstract class _TeamModel implements TeamModel {
       {required final int id,
       required final int order,
       required final String name,
-      required final int color}) = _$_TeamModel;
+      required final int color}) = _$TeamModelImpl;
 
   factory _TeamModel.fromJson(Map<String, dynamic> json) =
-      _$_TeamModel.fromJson;
+      _$TeamModelImpl.fromJson;
 
   @override
   int get id;
@@ -200,6 +201,6 @@ abstract class _TeamModel implements TeamModel {
   int get color;
   @override
   @JsonKey(ignore: true)
-  _$$_TeamModelCopyWith<_$_TeamModel> get copyWith =>
+  _$$TeamModelImplCopyWith<_$TeamModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
