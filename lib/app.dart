@@ -8,6 +8,7 @@ import 'cubits/settings/settings_cubit.dart';
 import 'cubits/settings/settings_state.dart';
 import 'l10n/app_localizations.dart';
 import 'router/router.dart';
+import 'themes/themes.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -30,6 +31,7 @@ class App extends StatelessWidget {
             onGenerateTitle: (context) => S.of(context).appTitle,
             // Theme
             themeMode: state.themeMode,
+            theme: Themes.light(),
             // Locale
             localizationsDelegates: const [
               S.delegate,
