@@ -30,8 +30,23 @@ class Themes {
       shadow: Colors.white,
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
-    return themeData.copyWith(
-      textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
-    );
+    return themeData
+        .copyWith(
+          textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
+        )
+        .copyWith(
+            cardTheme: const CardTheme(
+              clipBehavior: Clip.antiAlias,
+              color: Color(0xFFf2efe4),
+              margin: EdgeInsets.all(16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12),
+                ),
+                side: BorderSide(color: secondaryColor),
+              ),
+              elevation: 2,
+            ),
+            dividerTheme: const DividerThemeData(color: primaryColor));
   }
 }
