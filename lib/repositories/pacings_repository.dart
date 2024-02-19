@@ -15,28 +15,28 @@ class PacingsRepository {
     final id = db.pacingModels.autoIncrement();
     final now = DateTime.now();
     final model = entity.copyWith(id: id, createdDate: now, modifiedDate: now);
-    db.pacingModels.put(model);
+    await db.writeAsync((isar) => isar.pacingModels.put(model));
     return model;
   }
 
   Future<void> delete(int id) async {
     final db = await databaseRepository.database;
-    db.pacingModels.delete(id);
+    await db.writeAsync((isar) => isar.pacingModels.delete(id));
   }
 
   Future<void> edit(PacingModel entity) async {
     final model = entity.copyWith(modifiedDate: DateTime.now());
     final db = await databaseRepository.database;
-    db.pacingModels.put(model);
+    await db.writeAsync((isar) => isar.pacingModels.put(model));
   }
 
   Future<PacingModel?> get(int id) async {
     final db = await databaseRepository.database;
-    return db.pacingModels.get(id);
+    return await db.pacingModels.getAsync(id);
   }
 
   Future<List<PacingModel>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
-    return db.pacingModels.where().findAll(offset: skip, limit: take);
+    return await db.pacingModels.where().findAllAsync(offset: skip, limit: take);
   }
 }
