@@ -31,7 +31,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> delete(PacingModel model) async {
     try {
-      await pacingsRepository.delete(model.id!);
+      await pacingsRepository.delete(model.id);
     } finally {
       await refresh();
     }

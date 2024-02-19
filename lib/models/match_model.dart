@@ -1,7 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:isar/isar.dart';
 
 import 'base_model.dart';
 import 'improvisation_model.dart';
+import 'improvisation_type.dart';
 import 'penalty_model.dart';
 import 'point_model.dart';
 import 'team_model.dart';
@@ -10,10 +12,11 @@ part 'match_model.freezed.dart';
 part 'match_model.g.dart';
 
 @freezed
+@collection
 class MatchModel with _$MatchModel implements BaseModel {
   @Implements<BaseModel>()
   const factory MatchModel({
-    required int? id,
+    required int id,
     required String name,
     required DateTime? createdDate,
     required DateTime? modifiedDate,
@@ -23,6 +26,5 @@ class MatchModel with _$MatchModel implements BaseModel {
     required List<PointModel> points,
   }) = _MatchModel;
 
-  factory MatchModel.fromJson(Map<String, Object?> json) =>
-      _$MatchModelFromJson(json);
+  factory MatchModel.fromJson(Map<String, Object?> json) => _$MatchModelFromJson(json);
 }
