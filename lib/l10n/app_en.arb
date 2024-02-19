@@ -1,8 +1,7 @@
 {
   "@@locale": "en",
-  "appTitle": "My Pacing",
+  "appTitle": "Mon Pacing",
   "@appTitle": {
-    "context": "app"
   },
   "matches": "Matches",
   "@matches": {

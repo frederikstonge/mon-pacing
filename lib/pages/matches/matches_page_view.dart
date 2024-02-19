@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -9,10 +10,10 @@ class MatchesPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverScaffold(
-      appBar: SliverAppBar.large(
-        title: Text(S.of(context).matches),
-      ),
       slivers: [
+        SliverLogoAppbar(
+          title: S.of(context).matches,
+        ),
         SliverList.builder(itemBuilder: (context, index) {
           return ListTile(title: Text(index.toString()));
         })
