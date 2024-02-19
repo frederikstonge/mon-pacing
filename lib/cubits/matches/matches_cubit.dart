@@ -31,7 +31,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> delete(MatchModel model) async {
     try {
-      await repository.delete(model.id!);
+      await repository.delete(model.id);
     } finally {
       await refresh();
     }

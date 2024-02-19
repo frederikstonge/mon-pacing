@@ -25,7 +25,7 @@ mixin _$ImprovisationModel {
   ImprovisationType get type => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get theme => throw _privateConstructorUsedError;
-  List<Duration> get durations => throw _privateConstructorUsedError;
+  List<double> get durations => throw _privateConstructorUsedError;
   int? get performers => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
 
@@ -47,7 +47,7 @@ abstract class $ImprovisationModelCopyWith<$Res> {
       ImprovisationType type,
       String category,
       String theme,
-      List<Duration> durations,
+      List<double> durations,
       int? performers,
       String? notes});
 }
@@ -98,7 +98,7 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
       durations: null == durations
           ? _value.durations
           : durations // ignore: cast_nullable_to_non_nullable
-              as List<Duration>,
+              as List<double>,
       performers: freezed == performers
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
@@ -125,7 +125,7 @@ abstract class _$$ImprovisationModelImplCopyWith<$Res>
       ImprovisationType type,
       String category,
       String theme,
-      List<Duration> durations,
+      List<double> durations,
       int? performers,
       String? notes});
 }
@@ -174,7 +174,7 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
       durations: null == durations
           ? _value._durations
           : durations // ignore: cast_nullable_to_non_nullable
-              as List<Duration>,
+              as List<double>,
       performers: freezed == performers
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
@@ -196,7 +196,7 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
       required this.type,
       required this.category,
       required this.theme,
-      required final List<Duration> durations,
+      required final List<double> durations,
       required this.performers,
       this.notes})
       : _durations = durations;
@@ -214,9 +214,9 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
   final String category;
   @override
   final String theme;
-  final List<Duration> _durations;
+  final List<double> _durations;
   @override
-  List<Duration> get durations {
+  List<double> get durations {
     if (_durations is EqualUnmodifiableListView) return _durations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_durations);
@@ -277,7 +277,7 @@ abstract class _ImprovisationModel implements ImprovisationModel {
       required final ImprovisationType type,
       required final String category,
       required final String theme,
-      required final List<Duration> durations,
+      required final List<double> durations,
       required final int? performers,
       final String? notes}) = _$ImprovisationModelImpl;
 
@@ -295,7 +295,7 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   @override
   String get theme;
   @override
-  List<Duration> get durations;
+  List<double> get durations;
   @override
   int? get performers;
   @override

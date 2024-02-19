@@ -20,12 +20,12 @@ PacingModel _$PacingModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PacingModel {
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
   bool get enablePaddingDuration => throw _privateConstructorUsedError;
-  Duration get paddingDuration => throw _privateConstructorUsedError;
+  double get paddingDuration => throw _privateConstructorUsedError;
   int get defaultNumberOfTeams => throw _privateConstructorUsedError;
   List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
@@ -43,12 +43,12 @@ abstract class $PacingModelCopyWith<$Res> {
       _$PacingModelCopyWithImpl<$Res, PacingModel>;
   @useResult
   $Res call(
-      {int? id,
+      {int id,
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
       bool enablePaddingDuration,
-      Duration paddingDuration,
+      double paddingDuration,
       int defaultNumberOfTeams,
       List<ImprovisationModel> improvisations});
 }
@@ -66,7 +66,7 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
@@ -76,10 +76,10 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? improvisations = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -99,7 +99,7 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
       paddingDuration: null == paddingDuration
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+              as double,
       defaultNumberOfTeams: null == defaultNumberOfTeams
           ? _value.defaultNumberOfTeams
           : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
@@ -121,12 +121,12 @@ abstract class _$$PacingModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
+      {int id,
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
       bool enablePaddingDuration,
-      Duration paddingDuration,
+      double paddingDuration,
       int defaultNumberOfTeams,
       List<ImprovisationModel> improvisations});
 }
@@ -142,7 +142,7 @@ class __$$PacingModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
@@ -152,10 +152,10 @@ class __$$PacingModelImplCopyWithImpl<$Res>
     Object? improvisations = null,
   }) {
     return _then(_$PacingModelImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -175,7 +175,7 @@ class __$$PacingModelImplCopyWithImpl<$Res>
       paddingDuration: null == paddingDuration
           ? _value.paddingDuration
           : paddingDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+              as double,
       defaultNumberOfTeams: null == defaultNumberOfTeams
           ? _value.defaultNumberOfTeams
           : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
@@ -206,7 +206,7 @@ class _$PacingModelImpl implements _PacingModel {
       _$$PacingModelImplFromJson(json);
 
   @override
-  final int? id;
+  final int id;
   @override
   final String name;
   @override
@@ -216,7 +216,7 @@ class _$PacingModelImpl implements _PacingModel {
   @override
   final bool enablePaddingDuration;
   @override
-  final Duration paddingDuration;
+  final double paddingDuration;
   @override
   final int defaultNumberOfTeams;
   final List<ImprovisationModel> _improvisations;
@@ -282,12 +282,12 @@ class _$PacingModelImpl implements _PacingModel {
 
 abstract class _PacingModel implements PacingModel, BaseModel {
   const factory _PacingModel(
-          {required final int? id,
+          {required final int id,
           required final String name,
           required final DateTime? createdDate,
           required final DateTime? modifiedDate,
           required final bool enablePaddingDuration,
-          required final Duration paddingDuration,
+          required final double paddingDuration,
           required final int defaultNumberOfTeams,
           required final List<ImprovisationModel> improvisations}) =
       _$PacingModelImpl;
@@ -296,7 +296,7 @@ abstract class _PacingModel implements PacingModel, BaseModel {
       _$PacingModelImpl.fromJson;
 
   @override
-  int? get id;
+  int get id;
   @override
   String get name;
   @override
@@ -306,7 +306,7 @@ abstract class _PacingModel implements PacingModel, BaseModel {
   @override
   bool get enablePaddingDuration;
   @override
-  Duration get paddingDuration;
+  double get paddingDuration;
   @override
   int get defaultNumberOfTeams;
   @override

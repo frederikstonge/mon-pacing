@@ -20,7 +20,7 @@ MatchModel _$MatchModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MatchModel {
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $MatchModelCopyWith<$Res> {
       _$MatchModelCopyWithImpl<$Res, MatchModel>;
   @useResult
   $Res call(
-      {int? id,
+      {int id,
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
@@ -66,7 +66,7 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
@@ -76,10 +76,10 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? points = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -121,7 +121,7 @@ abstract class _$$MatchModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
+      {int id,
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
@@ -142,7 +142,7 @@ class __$$MatchModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
@@ -152,10 +152,10 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? points = null,
   }) {
     return _then(_$MatchModelImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -209,7 +209,7 @@ class _$MatchModelImpl implements _MatchModel {
       _$$MatchModelImplFromJson(json);
 
   @override
-  final int? id;
+  final int id;
   @override
   final String name;
   @override
@@ -301,7 +301,7 @@ class _$MatchModelImpl implements _MatchModel {
 
 abstract class _MatchModel implements MatchModel, BaseModel {
   const factory _MatchModel(
-      {required final int? id,
+      {required final int id,
       required final String name,
       required final DateTime? createdDate,
       required final DateTime? modifiedDate,
@@ -314,7 +314,7 @@ abstract class _MatchModel implements MatchModel, BaseModel {
       _$MatchModelImpl.fromJson;
 
   @override
-  int? get id;
+  int get id;
   @override
   String get name;
   @override
