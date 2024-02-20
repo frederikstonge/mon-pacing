@@ -20,7 +20,7 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SettingsState {
-  ThemeMode get themeMode => throw _privateConstructorUsedError;
+  ThemeType get theme => throw _privateConstructorUsedError;
   bool get enableDefaultPaddingDuration => throw _privateConstructorUsedError;
   Duration get defaultPaddingDuration => throw _privateConstructorUsedError;
   String get language => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       _$SettingsStateCopyWithImpl<$Res, SettingsState>;
   @useResult
   $Res call(
-      {ThemeMode themeMode,
+      {ThemeType theme,
       bool enableDefaultPaddingDuration,
       Duration defaultPaddingDuration,
       String language});
@@ -57,16 +57,16 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = null,
+    Object? theme = null,
     Object? enableDefaultPaddingDuration = null,
     Object? defaultPaddingDuration = null,
     Object? language = null,
   }) {
     return _then(_value.copyWith(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
+      theme: null == theme
+          ? _value.theme
+          : theme // ignore: cast_nullable_to_non_nullable
+              as ThemeType,
       enableDefaultPaddingDuration: null == enableDefaultPaddingDuration
           ? _value.enableDefaultPaddingDuration
           : enableDefaultPaddingDuration // ignore: cast_nullable_to_non_nullable
@@ -92,7 +92,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ThemeMode themeMode,
+      {ThemeType theme,
       bool enableDefaultPaddingDuration,
       Duration defaultPaddingDuration,
       String language});
@@ -109,16 +109,16 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = null,
+    Object? theme = null,
     Object? enableDefaultPaddingDuration = null,
     Object? defaultPaddingDuration = null,
     Object? language = null,
   }) {
     return _then(_$SettingsStateImpl(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
+      theme: null == theme
+          ? _value.theme
+          : theme // ignore: cast_nullable_to_non_nullable
+              as ThemeType,
       enableDefaultPaddingDuration: null == enableDefaultPaddingDuration
           ? _value.enableDefaultPaddingDuration
           : enableDefaultPaddingDuration // ignore: cast_nullable_to_non_nullable
@@ -139,7 +139,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SettingsStateImpl implements _SettingsState {
   const _$SettingsStateImpl(
-      {required this.themeMode,
+      {required this.theme,
       required this.enableDefaultPaddingDuration,
       required this.defaultPaddingDuration,
       required this.language});
@@ -148,7 +148,7 @@ class _$SettingsStateImpl implements _SettingsState {
       _$$SettingsStateImplFromJson(json);
 
   @override
-  final ThemeMode themeMode;
+  final ThemeType theme;
   @override
   final bool enableDefaultPaddingDuration;
   @override
@@ -158,7 +158,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(themeMode: $themeMode, enableDefaultPaddingDuration: $enableDefaultPaddingDuration, defaultPaddingDuration: $defaultPaddingDuration, language: $language)';
+    return 'SettingsState(theme: $theme, enableDefaultPaddingDuration: $enableDefaultPaddingDuration, defaultPaddingDuration: $defaultPaddingDuration, language: $language)';
   }
 
   @override
@@ -166,8 +166,7 @@ class _$SettingsStateImpl implements _SettingsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsStateImpl &&
-            (identical(other.themeMode, themeMode) ||
-                other.themeMode == themeMode) &&
+            (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.enableDefaultPaddingDuration,
                     enableDefaultPaddingDuration) ||
                 other.enableDefaultPaddingDuration ==
@@ -180,7 +179,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, themeMode,
+  int get hashCode => Object.hash(runtimeType, theme,
       enableDefaultPaddingDuration, defaultPaddingDuration, language);
 
   @JsonKey(ignore: true)
@@ -199,7 +198,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
 abstract class _SettingsState implements SettingsState {
   const factory _SettingsState(
-      {required final ThemeMode themeMode,
+      {required final ThemeType theme,
       required final bool enableDefaultPaddingDuration,
       required final Duration defaultPaddingDuration,
       required final String language}) = _$SettingsStateImpl;
@@ -208,7 +207,7 @@ abstract class _SettingsState implements SettingsState {
       _$SettingsStateImpl.fromJson;
 
   @override
-  ThemeMode get themeMode;
+  ThemeType get theme;
   @override
   bool get enableDefaultPaddingDuration;
   @override

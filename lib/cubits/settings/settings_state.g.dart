@@ -8,7 +8,7 @@ part of 'settings_state.dart';
 
 _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
     _$SettingsStateImpl(
-      themeMode: $enumDecode(_$ThemeModeEnumMap, json['themeMode']),
+      theme: $enumDecode(_$ThemeTypeEnumMap, json['theme']),
       enableDefaultPaddingDuration:
           json['enableDefaultPaddingDuration'] as bool,
       defaultPaddingDuration:
@@ -18,14 +18,14 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
     <String, dynamic>{
-      'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
+      'theme': _$ThemeTypeEnumMap[instance.theme]!,
       'enableDefaultPaddingDuration': instance.enableDefaultPaddingDuration,
       'defaultPaddingDuration': instance.defaultPaddingDuration.inMicroseconds,
       'language': instance.language,
     };
 
-const _$ThemeModeEnumMap = {
-  ThemeMode.system: 'system',
-  ThemeMode.light: 'light',
-  ThemeMode.dark: 'dark',
+const _$ThemeTypeEnumMap = {
+  ThemeType.light: 'light',
+  ThemeType.dark: 'dark',
+  ThemeType.lni: 'lni',
 };
