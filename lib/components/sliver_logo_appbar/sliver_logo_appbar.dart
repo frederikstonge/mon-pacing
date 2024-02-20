@@ -21,6 +21,7 @@ class SliverLogoAppbar extends StatefulWidget {
 
 class _SliverLogoAppbarState extends State<SliverLogoAppbar> with TickerProviderStateMixin {
   static const toolbarHeight = kToolbarHeight + 8;
+  static const logoWidth = 110.0;
   late final AnimationController animationController;
 
   @override
@@ -38,71 +39,65 @@ class _SliverLogoAppbarState extends State<SliverLogoAppbar> with TickerProvider
   @override
   Widget build(BuildContext context) {
     return SliverAppBar.medium(
+      leadingWidth: logoWidth,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: SizedBox(
+          height: toolbarHeight,
+          width: logoWidth,
+          child: BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, state) => switch (state.theme) {
+              ThemeType.lni => Image.asset(
+                  'assets/lni-logo.png',
+                  fit: BoxFit.contain,
+                ),
+              _ => Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: 'Mon',
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.secondary,
+                              letterSpacing: -2,
+                            ),
+                        children: [
+                          TextSpan(
+                            text: 'Pacing',
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: -1,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+            },
+          ),
+        ),
+      ),
       title: Text(widget.title),
       centerTitle: true,
       expandedHeight: widget.expandedHeight,
       flexibleSpace: LayoutBuilder(builder: (context, constraints) {
         final opacity = (constraints.maxHeight - toolbarHeight) / toolbarHeight;
         animationController.value = opacity;
-        return Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: toolbarHeight,
-                    child: BlocBuilder<SettingsCubit, SettingsState>(
-                      builder: (context, state) => switch (state.theme) {
-                        ThemeType.lni => Image.asset(
-                            'assets/lni-logo.png',
-                            fit: BoxFit.contain,
-                          ),
-                        _ => Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Mon',
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                        color: Theme.of(context).colorScheme.secondary,
-                                        letterSpacing: -2,
-                                      ),
-                                  children: [
-                                    TextSpan(
-                                      text: 'Pacing',
-                                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                            color: Theme.of(context).colorScheme.primary,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: -1,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                      },
-                    ),
-                  ),
-                ],
-              ),
+        return FadeTransition(
+          opacity: animationController,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
+              ],
             ),
-            FadeTransition(
-              opacity: animationController,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         );
       }),
     );
