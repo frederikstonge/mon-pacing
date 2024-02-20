@@ -29,6 +29,13 @@ class SettingsPageView extends StatelessWidget {
                     onTap: () {},
                   ),
                   SettingsTile(
+                    leading: const Icon(Icons.color_lens),
+                    title: 'Theme',
+                    subTitle: 'Light',
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () {},
+                  ),
+                  SettingsTile(
                     leading: const Icon(Icons.timer),
                     title: 'Enable padding duration',
                     subTitle: 'Extra time to take into account for each improvisation',
