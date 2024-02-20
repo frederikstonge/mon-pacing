@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../models/theme_type.dart';
 import 'settings_state.dart';
 
 class SettingsCubit extends HydratedCubit<SettingsState> {
   SettingsCubit()
       : super(
           SettingsState(
-            themeMode: ThemeMode.light,
+            theme: ThemeType.light,
             enableDefaultPaddingDuration: false,
             defaultPaddingDuration: const Duration(minutes: 1),
             language: Intl.getCurrentLocale().substring(0, 2) == 'fr' ? 'fr' : 'en',
