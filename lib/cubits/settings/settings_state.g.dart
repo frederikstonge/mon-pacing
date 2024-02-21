@@ -9,18 +9,16 @@ part of 'settings_state.dart';
 _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
     _$SettingsStateImpl(
       theme: $enumDecode(_$ThemeTypeEnumMap, json['theme']),
-      enableDefaultPaddingDuration:
-          json['enableDefaultPaddingDuration'] as bool,
-      defaultPaddingDuration:
-          Duration(microseconds: json['defaultPaddingDuration'] as int),
+      enableDefaultTimeBuffer: json['enableDefaultTimeBuffer'] as bool,
+      defaultTimeBufferInSeconds: json['defaultTimeBufferInSeconds'] as int,
       language: json['language'] as String,
     );
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
     <String, dynamic>{
       'theme': _$ThemeTypeEnumMap[instance.theme]!,
-      'enableDefaultPaddingDuration': instance.enableDefaultPaddingDuration,
-      'defaultPaddingDuration': instance.defaultPaddingDuration.inMicroseconds,
+      'enableDefaultTimeBuffer': instance.enableDefaultTimeBuffer,
+      'defaultTimeBufferInSeconds': instance.defaultTimeBufferInSeconds,
       'language': instance.language,
     };
 

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/settings/settings_state.dart';
 import 'l10n/app_localizations.dart';
@@ -36,16 +34,8 @@ class App extends StatelessWidget {
               ThemeType.lni => Themes.lni(),
             },
             // Locale
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en'), // English
-              Locale('fr'), // Spanish
-            ],
+            localizationsDelegates: S.localizationsDelegates,
+            supportedLocales: S.supportedLocales,
             locale: Locale(state.language),
             // Router
             routerConfig: router,

@@ -24,8 +24,8 @@ mixin _$PacingModel {
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
-  bool get enablePaddingDuration => throw _privateConstructorUsedError;
-  double get paddingDuration => throw _privateConstructorUsedError;
+  bool get enableTimeBuffer => throw _privateConstructorUsedError;
+  int get timeBufferInSeconds => throw _privateConstructorUsedError;
   int get defaultNumberOfTeams => throw _privateConstructorUsedError;
   List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
@@ -47,8 +47,8 @@ abstract class $PacingModelCopyWith<$Res> {
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
-      bool enablePaddingDuration,
-      double paddingDuration,
+      bool enableTimeBuffer,
+      int timeBufferInSeconds,
       int defaultNumberOfTeams,
       List<ImprovisationModel> improvisations});
 }
@@ -70,8 +70,8 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? enablePaddingDuration = null,
-    Object? paddingDuration = null,
+    Object? enableTimeBuffer = null,
+    Object? timeBufferInSeconds = null,
     Object? defaultNumberOfTeams = null,
     Object? improvisations = null,
   }) {
@@ -92,14 +92,14 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      enablePaddingDuration: null == enablePaddingDuration
-          ? _value.enablePaddingDuration
-          : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
+      enableTimeBuffer: null == enableTimeBuffer
+          ? _value.enableTimeBuffer
+          : enableTimeBuffer // ignore: cast_nullable_to_non_nullable
               as bool,
-      paddingDuration: null == paddingDuration
-          ? _value.paddingDuration
-          : paddingDuration // ignore: cast_nullable_to_non_nullable
-              as double,
+      timeBufferInSeconds: null == timeBufferInSeconds
+          ? _value.timeBufferInSeconds
+          : timeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       defaultNumberOfTeams: null == defaultNumberOfTeams
           ? _value.defaultNumberOfTeams
           : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
@@ -125,8 +125,8 @@ abstract class _$$PacingModelImplCopyWith<$Res>
       String name,
       DateTime? createdDate,
       DateTime? modifiedDate,
-      bool enablePaddingDuration,
-      double paddingDuration,
+      bool enableTimeBuffer,
+      int timeBufferInSeconds,
       int defaultNumberOfTeams,
       List<ImprovisationModel> improvisations});
 }
@@ -146,8 +146,8 @@ class __$$PacingModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? enablePaddingDuration = null,
-    Object? paddingDuration = null,
+    Object? enableTimeBuffer = null,
+    Object? timeBufferInSeconds = null,
     Object? defaultNumberOfTeams = null,
     Object? improvisations = null,
   }) {
@@ -168,14 +168,14 @@ class __$$PacingModelImplCopyWithImpl<$Res>
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      enablePaddingDuration: null == enablePaddingDuration
-          ? _value.enablePaddingDuration
-          : enablePaddingDuration // ignore: cast_nullable_to_non_nullable
+      enableTimeBuffer: null == enableTimeBuffer
+          ? _value.enableTimeBuffer
+          : enableTimeBuffer // ignore: cast_nullable_to_non_nullable
               as bool,
-      paddingDuration: null == paddingDuration
-          ? _value.paddingDuration
-          : paddingDuration // ignore: cast_nullable_to_non_nullable
-              as double,
+      timeBufferInSeconds: null == timeBufferInSeconds
+          ? _value.timeBufferInSeconds
+          : timeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       defaultNumberOfTeams: null == defaultNumberOfTeams
           ? _value.defaultNumberOfTeams
           : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
@@ -196,8 +196,8 @@ class _$PacingModelImpl implements _PacingModel {
       required this.name,
       required this.createdDate,
       required this.modifiedDate,
-      required this.enablePaddingDuration,
-      required this.paddingDuration,
+      required this.enableTimeBuffer,
+      required this.timeBufferInSeconds,
       required this.defaultNumberOfTeams,
       required final List<ImprovisationModel> improvisations})
       : _improvisations = improvisations;
@@ -214,9 +214,9 @@ class _$PacingModelImpl implements _PacingModel {
   @override
   final DateTime? modifiedDate;
   @override
-  final bool enablePaddingDuration;
+  final bool enableTimeBuffer;
   @override
-  final double paddingDuration;
+  final int timeBufferInSeconds;
   @override
   final int defaultNumberOfTeams;
   final List<ImprovisationModel> _improvisations;
@@ -229,7 +229,7 @@ class _$PacingModelImpl implements _PacingModel {
 
   @override
   String toString() {
-    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, enablePaddingDuration: $enablePaddingDuration, paddingDuration: $paddingDuration, defaultNumberOfTeams: $defaultNumberOfTeams, improvisations: $improvisations)';
+    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, enableTimeBuffer: $enableTimeBuffer, timeBufferInSeconds: $timeBufferInSeconds, defaultNumberOfTeams: $defaultNumberOfTeams, improvisations: $improvisations)';
   }
 
   @override
@@ -243,10 +243,10 @@ class _$PacingModelImpl implements _PacingModel {
                 other.createdDate == createdDate) &&
             (identical(other.modifiedDate, modifiedDate) ||
                 other.modifiedDate == modifiedDate) &&
-            (identical(other.enablePaddingDuration, enablePaddingDuration) ||
-                other.enablePaddingDuration == enablePaddingDuration) &&
-            (identical(other.paddingDuration, paddingDuration) ||
-                other.paddingDuration == paddingDuration) &&
+            (identical(other.enableTimeBuffer, enableTimeBuffer) ||
+                other.enableTimeBuffer == enableTimeBuffer) &&
+            (identical(other.timeBufferInSeconds, timeBufferInSeconds) ||
+                other.timeBufferInSeconds == timeBufferInSeconds) &&
             (identical(other.defaultNumberOfTeams, defaultNumberOfTeams) ||
                 other.defaultNumberOfTeams == defaultNumberOfTeams) &&
             const DeepCollectionEquality()
@@ -261,8 +261,8 @@ class _$PacingModelImpl implements _PacingModel {
       name,
       createdDate,
       modifiedDate,
-      enablePaddingDuration,
-      paddingDuration,
+      enableTimeBuffer,
+      timeBufferInSeconds,
       defaultNumberOfTeams,
       const DeepCollectionEquality().hash(_improvisations));
 
@@ -286,8 +286,8 @@ abstract class _PacingModel implements PacingModel, BaseModel {
           required final String name,
           required final DateTime? createdDate,
           required final DateTime? modifiedDate,
-          required final bool enablePaddingDuration,
-          required final double paddingDuration,
+          required final bool enableTimeBuffer,
+          required final int timeBufferInSeconds,
           required final int defaultNumberOfTeams,
           required final List<ImprovisationModel> improvisations}) =
       _$PacingModelImpl;
@@ -304,9 +304,9 @@ abstract class _PacingModel implements PacingModel, BaseModel {
   @override
   DateTime? get modifiedDate;
   @override
-  bool get enablePaddingDuration;
+  bool get enableTimeBuffer;
   @override
-  double get paddingDuration;
+  int get timeBufferInSeconds;
   @override
   int get defaultNumberOfTeams;
   @override

@@ -21,8 +21,8 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SettingsState {
   ThemeType get theme => throw _privateConstructorUsedError;
-  bool get enableDefaultPaddingDuration => throw _privateConstructorUsedError;
-  Duration get defaultPaddingDuration => throw _privateConstructorUsedError;
+  bool get enableDefaultTimeBuffer => throw _privateConstructorUsedError;
+  int get defaultTimeBufferInSeconds => throw _privateConstructorUsedError;
   String get language => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,8 +39,8 @@ abstract class $SettingsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ThemeType theme,
-      bool enableDefaultPaddingDuration,
-      Duration defaultPaddingDuration,
+      bool enableDefaultTimeBuffer,
+      int defaultTimeBufferInSeconds,
       String language});
 }
 
@@ -58,8 +58,8 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   @override
   $Res call({
     Object? theme = null,
-    Object? enableDefaultPaddingDuration = null,
-    Object? defaultPaddingDuration = null,
+    Object? enableDefaultTimeBuffer = null,
+    Object? defaultTimeBufferInSeconds = null,
     Object? language = null,
   }) {
     return _then(_value.copyWith(
@@ -67,14 +67,14 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
-      enableDefaultPaddingDuration: null == enableDefaultPaddingDuration
-          ? _value.enableDefaultPaddingDuration
-          : enableDefaultPaddingDuration // ignore: cast_nullable_to_non_nullable
+      enableDefaultTimeBuffer: null == enableDefaultTimeBuffer
+          ? _value.enableDefaultTimeBuffer
+          : enableDefaultTimeBuffer // ignore: cast_nullable_to_non_nullable
               as bool,
-      defaultPaddingDuration: null == defaultPaddingDuration
-          ? _value.defaultPaddingDuration
-          : defaultPaddingDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      defaultTimeBufferInSeconds: null == defaultTimeBufferInSeconds
+          ? _value.defaultTimeBufferInSeconds
+          : defaultTimeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -93,8 +93,8 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {ThemeType theme,
-      bool enableDefaultPaddingDuration,
-      Duration defaultPaddingDuration,
+      bool enableDefaultTimeBuffer,
+      int defaultTimeBufferInSeconds,
       String language});
 }
 
@@ -110,8 +110,8 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? theme = null,
-    Object? enableDefaultPaddingDuration = null,
-    Object? defaultPaddingDuration = null,
+    Object? enableDefaultTimeBuffer = null,
+    Object? defaultTimeBufferInSeconds = null,
     Object? language = null,
   }) {
     return _then(_$SettingsStateImpl(
@@ -119,14 +119,14 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
-      enableDefaultPaddingDuration: null == enableDefaultPaddingDuration
-          ? _value.enableDefaultPaddingDuration
-          : enableDefaultPaddingDuration // ignore: cast_nullable_to_non_nullable
+      enableDefaultTimeBuffer: null == enableDefaultTimeBuffer
+          ? _value.enableDefaultTimeBuffer
+          : enableDefaultTimeBuffer // ignore: cast_nullable_to_non_nullable
               as bool,
-      defaultPaddingDuration: null == defaultPaddingDuration
-          ? _value.defaultPaddingDuration
-          : defaultPaddingDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      defaultTimeBufferInSeconds: null == defaultTimeBufferInSeconds
+          ? _value.defaultTimeBufferInSeconds
+          : defaultTimeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -140,8 +140,8 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
 class _$SettingsStateImpl implements _SettingsState {
   const _$SettingsStateImpl(
       {required this.theme,
-      required this.enableDefaultPaddingDuration,
-      required this.defaultPaddingDuration,
+      required this.enableDefaultTimeBuffer,
+      required this.defaultTimeBufferInSeconds,
       required this.language});
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -150,15 +150,15 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   final ThemeType theme;
   @override
-  final bool enableDefaultPaddingDuration;
+  final bool enableDefaultTimeBuffer;
   @override
-  final Duration defaultPaddingDuration;
+  final int defaultTimeBufferInSeconds;
   @override
   final String language;
 
   @override
   String toString() {
-    return 'SettingsState(theme: $theme, enableDefaultPaddingDuration: $enableDefaultPaddingDuration, defaultPaddingDuration: $defaultPaddingDuration, language: $language)';
+    return 'SettingsState(theme: $theme, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, language: $language)';
   }
 
   @override
@@ -167,20 +167,21 @@ class _$SettingsStateImpl implements _SettingsState {
         (other.runtimeType == runtimeType &&
             other is _$SettingsStateImpl &&
             (identical(other.theme, theme) || other.theme == theme) &&
-            (identical(other.enableDefaultPaddingDuration,
-                    enableDefaultPaddingDuration) ||
-                other.enableDefaultPaddingDuration ==
-                    enableDefaultPaddingDuration) &&
-            (identical(other.defaultPaddingDuration, defaultPaddingDuration) ||
-                other.defaultPaddingDuration == defaultPaddingDuration) &&
+            (identical(
+                    other.enableDefaultTimeBuffer, enableDefaultTimeBuffer) ||
+                other.enableDefaultTimeBuffer == enableDefaultTimeBuffer) &&
+            (identical(other.defaultTimeBufferInSeconds,
+                    defaultTimeBufferInSeconds) ||
+                other.defaultTimeBufferInSeconds ==
+                    defaultTimeBufferInSeconds) &&
             (identical(other.language, language) ||
                 other.language == language));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, theme,
-      enableDefaultPaddingDuration, defaultPaddingDuration, language);
+  int get hashCode => Object.hash(runtimeType, theme, enableDefaultTimeBuffer,
+      defaultTimeBufferInSeconds, language);
 
   @JsonKey(ignore: true)
   @override
@@ -199,8 +200,8 @@ class _$SettingsStateImpl implements _SettingsState {
 abstract class _SettingsState implements SettingsState {
   const factory _SettingsState(
       {required final ThemeType theme,
-      required final bool enableDefaultPaddingDuration,
-      required final Duration defaultPaddingDuration,
+      required final bool enableDefaultTimeBuffer,
+      required final int defaultTimeBufferInSeconds,
       required final String language}) = _$SettingsStateImpl;
 
   factory _SettingsState.fromJson(Map<String, dynamic> json) =
@@ -209,9 +210,9 @@ abstract class _SettingsState implements SettingsState {
   @override
   ThemeType get theme;
   @override
-  bool get enableDefaultPaddingDuration;
+  bool get enableDefaultTimeBuffer;
   @override
-  Duration get defaultPaddingDuration;
+  int get defaultTimeBufferInSeconds;
   @override
   String get language;
   @override
