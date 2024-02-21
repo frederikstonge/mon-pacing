@@ -7,13 +7,11 @@ import '../../l10n/app_localizations.dart';
 class DurationPicker extends StatefulWidget {
   final Duration initialDuration;
   final String title;
-  final ValueSetter<Duration> onSave;
 
   const DurationPicker({
     super.key,
     required this.title,
     required this.initialDuration,
-    required this.onSave,
   });
 
   @override
@@ -90,8 +88,7 @@ class _DurationPickerState extends State<DurationPicker> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: FilledButton(
                   onPressed: () {
-                    widget.onSave(selectedDuration);
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(selectedDuration);
                   },
                   child: Text(S.of(context).save),
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BottomSheetAppbar extends StatelessWidget {
+class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
 
   const BottomSheetAppbar({
@@ -18,4 +18,7 @@ class BottomSheetAppbar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
