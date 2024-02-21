@@ -12,11 +12,22 @@ class PacingsPageView extends StatelessWidget {
     return SliverScaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
+        tooltip: S.of(context).createNewPacingTooltip,
         child: const Icon(Icons.add),
       ),
       slivers: [
         SliverLogoAppbar(
           title: S.of(context).pacings,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: IconButton(
+                icon: const Icon(Icons.download),
+                tooltip: S.of(context).importPacingTooltip,
+                onPressed: () {},
+              ),
+            )
+          ],
         ),
         SliverList.builder(
           itemBuilder: (context, index) {

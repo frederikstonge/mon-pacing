@@ -1,10 +1,12 @@
 {
   "@@locale": "fr",
   "appTitle": "Mon Pacing",
+  "createNewPacingTooltip": "Créer un nouveau pacing",
   "dark": "Sombre",
   "defaultTimeBuffer": "Temps tampon par défaut",
   "enableDefaultTimeBuffer": "Activer le temps tampon par défaut",
   "general": "Général",
+  "importPacingTooltip": "Importer un pacing",
   "language": "Langue",
   "light": "Clair",
   "lni": "LNI Vintage",

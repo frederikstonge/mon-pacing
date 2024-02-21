@@ -1,10 +1,12 @@
 {
   "@@locale": "en",
   "appTitle": "Mon Pacing",
+  "createNewPacingTooltip": "Create new pacing",
   "dark": "Dark",
   "defaultTimeBuffer": "Default time buffer",
   "enableDefaultTimeBuffer": "Enable default time buffer",
   "general": "General",
+  "importPacingTooltip": "Import pacing",
   "language": "Language",
   "light": "Light",
   "lni": "LNI Vintage",
