@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
+import '../../l10n/app_localizations.dart';
 
 class DurationPicker extends StatefulWidget {
   final Duration initialDuration;
@@ -35,35 +36,36 @@ class _DurationPickerState extends State<DurationPicker> {
       children: [
         BottomSheetAppbar(
           title: Text(widget.title),
-          leading: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CloseButton(),
-            ],
-          ),
-          trailing: IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: () {
-              widget.onSave(selectedDuration);
-            },
-          ),
         ),
         Wrap(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: CupertinoTimerPicker(
-                mode: CupertinoTimerPickerMode.ms,
-                initialTimerDuration: selectedDuration,
-                onTimerDurationChanged: (duration) {
-                  setState(() {
-                    selectedDuration = duration;
-                  });
-                },
-              ),
+            CupertinoTimerPicker(
+              mode: CupertinoTimerPickerMode.ms,
+              initialTimerDuration: selectedDuration,
+              onTimerDurationChanged: (duration) {
+                setState(() {
+                  selectedDuration = duration;
+                });
+              },
             ),
           ],
         ),
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: FilledButton(
+                  onPressed: () {
+                    widget.onSave(selectedDuration);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(S.of(context).save),
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }

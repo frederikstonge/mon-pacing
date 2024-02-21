@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 
 class BottomSheetAppbar extends StatelessWidget {
   final Widget title;
-  final Widget? leading;
-  final Widget? trailing;
 
   const BottomSheetAppbar({
     super.key,
     required this.title,
-    this.leading,
-    this.trailing,
   });
 
   @override
@@ -19,8 +15,7 @@ class BottomSheetAppbar extends StatelessWidget {
       child: NavigationToolbar(
         middle: title,
         centerMiddle: true,
-        leading: leading,
-        trailing: trailing,
+        trailing: const CloseButton(),
       ),
     );
   }
