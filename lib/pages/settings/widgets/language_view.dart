@@ -20,6 +20,7 @@ class LanguageView extends StatelessWidget {
             BottomSheetAppbar(title: Text(S.of(context).language)),
             Flexible(
               child: ListView(
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 children: [
                   InkWell(

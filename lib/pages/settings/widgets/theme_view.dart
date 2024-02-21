@@ -20,6 +20,7 @@ class ThemeView extends StatelessWidget {
             BottomSheetAppbar(title: Text(S.of(context).theme)),
             Flexible(
               child: ListView(
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 children: [
                   InkWell(
