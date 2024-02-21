@@ -32,8 +32,7 @@ class ThemeView extends StatelessWidget {
                       trailing: const Icon(Icons.check),
                     ),
                   ),
-                  // Remove dark theme condition once it is ready
-                  ...ThemeType.values.where((element) => element != state.theme && element != ThemeType.dark).map(
+                  ...ThemeType.values.where((element) => element != state.theme).map(
                         (e) => InkWell(
                           onTap: () {
                             context.read<SettingsCubit>().edit(state.copyWith(theme: e));
