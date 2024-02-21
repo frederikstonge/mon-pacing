@@ -11,8 +11,6 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   MatchesCubit({required this.repository}) : super(const MatchesState.initial());
 
-  bool get isFetching => _isFetching;
-
   Future<MatchModel> add(MatchModel model) async {
     try {
       return await repository.add(model);
@@ -38,20 +36,24 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   Future<void> fetch() async {
+    if (_isFetching) {
+      return;
+    }
+
     _isFetching = true;
     try {
       await state.when(
         initial: () async {
           final response = await repository.getList(0, _pageSize);
-          emit(MatchesState.success(response, response.length < _pageSize));
+          emit(MatchesState.success(response, response.length == _pageSize));
         },
         error: (error) async {
           final response = await repository.getList(0, _pageSize);
-          emit(MatchesState.success(response, response.length < _pageSize));
+          emit(MatchesState.success(response, response.length == _pageSize));
         },
         success: (matches, hasReachedMax) async {
           final response = await repository.getList(matches.length, _pageSize);
-          emit(MatchesState.success(matches + response, response.length < _pageSize));
+          emit(MatchesState.success(matches + response, response.length == _pageSize));
         },
       );
     } catch (exception) {

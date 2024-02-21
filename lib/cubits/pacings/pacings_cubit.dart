@@ -11,8 +11,6 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   PacingsCubit({required this.pacingsRepository}) : super(const PacingsState.initial());
 
-  bool get isFetching => _isFetching;
-
   Future<PacingModel> add(PacingModel model) async {
     try {
       return await pacingsRepository.add(model);
@@ -38,20 +36,24 @@ class PacingsCubit extends Cubit<PacingsState> {
   }
 
   Future<void> fetch() async {
+    if (_isFetching) {
+      return;
+    }
+
     _isFetching = true;
     try {
       await state.when(
         initial: () async {
           final response = await pacingsRepository.getList(0, _pageSize);
-          emit(PacingsState.success(response, response.length < _pageSize));
+          emit(PacingsState.success(response, response.length == _pageSize));
         },
         error: (error) async {
           final response = await pacingsRepository.getList(0, _pageSize);
-          emit(PacingsState.success(response, response.length < _pageSize));
+          emit(PacingsState.success(response, response.length == _pageSize));
         },
         success: (pacings, hasReachedMax) async {
           final response = await pacingsRepository.getList(pacings.length, _pageSize);
-          emit(PacingsState.success(pacings + response, response.length < _pageSize));
+          emit(PacingsState.success(pacings + response, response.length == _pageSize));
         },
       );
     } catch (exception) {
