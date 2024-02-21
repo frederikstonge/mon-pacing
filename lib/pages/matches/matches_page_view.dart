@@ -14,9 +14,11 @@ class MatchesPageView extends StatelessWidget {
         SliverLogoAppbar(
           title: S.of(context).matches,
         ),
-        SliverList.builder(itemBuilder: (context, index) {
-          return ListTile(title: Text(index.toString()));
-        })
+        SliverList.builder(
+          itemBuilder: (context, index) {
+            return ListTile(title: Text(index.toString()));
+          },
+        )
       ],
     );
   }

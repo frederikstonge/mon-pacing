@@ -22,10 +22,19 @@ class DurationPicker extends StatefulWidget {
 
 class _DurationPickerState extends State<DurationPicker> {
   late Duration selectedDuration;
+  late int secondInterval;
 
   @override
   void initState() {
     selectedDuration = widget.initialDuration;
+    if (widget.initialDuration.inSeconds % 30 == 0) {
+      secondInterval = 30;
+    } else if (widget.initialDuration.inSeconds % 10 == 0) {
+      secondInterval = 10;
+    } else {
+      secondInterval = 1;
+    }
+
     super.initState();
   }
 
@@ -37,10 +46,34 @@ class _DurationPickerState extends State<DurationPicker> {
         BottomSheetAppbar(
           title: Text(widget.title),
         ),
+        SegmentedButton(
+          segments: const [
+            ButtonSegment(value: 1, label: Text('1 sec')),
+            ButtonSegment(value: 10, label: Text('10 sec')),
+            ButtonSegment(value: 30, label: Text('30 sec')),
+          ],
+          selected: {secondInterval},
+          onSelectionChanged: (values) {
+            final value = values.first;
+            final difference = selectedDuration.inSeconds % value;
+            if (difference != 0) {
+              if (difference < (value / 2)) {
+                selectedDuration = Duration(seconds: selectedDuration.inSeconds - difference);
+              } else {
+                selectedDuration = Duration(seconds: selectedDuration.inSeconds + (value - difference));
+              }
+            }
+            setState(() {
+              secondInterval = value;
+            });
+          },
+        ),
         Wrap(
           children: [
             CupertinoTimerPicker(
+              key: ValueKey(secondInterval),
               mode: CupertinoTimerPickerMode.ms,
+              secondInterval: secondInterval,
               initialTimerDuration: selectedDuration,
               onTimerDurationChanged: (duration) {
                 setState(() {

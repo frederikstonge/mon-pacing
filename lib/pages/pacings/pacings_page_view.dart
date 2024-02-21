@@ -10,13 +10,19 @@ class PacingsPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverScaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
       slivers: [
         SliverLogoAppbar(
           title: S.of(context).pacings,
         ),
-        SliverList.builder(itemBuilder: (context, index) {
-          return ListTile(title: Text(index.toString()));
-        })
+        SliverList.builder(
+          itemBuilder: (context, index) {
+            return ListTile(title: Text(index.toString()));
+          },
+        )
       ],
     );
   }
