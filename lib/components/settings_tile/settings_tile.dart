@@ -4,13 +4,13 @@ class SettingsTile extends StatelessWidget {
   final Widget? leading;
   final Widget? trailing;
   final VoidCallback? onTap;
-  final String title;
-  final String subTitle;
+  final Widget title;
+  final Widget? subTitle;
 
   const SettingsTile({
     super.key,
     required this.title,
-    required this.subTitle,
+    this.subTitle,
     this.leading,
     this.trailing,
     this.onTap,
@@ -24,16 +24,18 @@ class SettingsTile extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         isThreeLine: false,
         leading: leading,
-        title: Text(
-          title,
+        title: DefaultTextStyle.merge(
+          child: title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        subtitle: Text(
-          subTitle,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
+        subtitle: subTitle == null
+            ? null
+            : DefaultTextStyle.merge(
+                child: subTitle!,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
         trailing: trailing,
       ),
     );

@@ -33,12 +33,12 @@ const PacingModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'enablePaddingDuration',
+        name: 'enableTimeBuffer',
         type: IsarType.bool,
       ),
       IsarPropertySchema(
-        name: 'paddingDuration',
-        type: IsarType.double,
+        name: 'timeBufferInSeconds',
+        type: IsarType.long,
       ),
       IsarPropertySchema(
         name: 'defaultNumberOfTeams',
@@ -73,8 +73,8 @@ int serializePacingModel(IsarWriter writer, PacingModel object) {
       object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
   IsarCore.writeString(writer, 3, object.name);
-  IsarCore.writeBool(writer, 4, object.enablePaddingDuration);
-  IsarCore.writeDouble(writer, 5, object.paddingDuration);
+  IsarCore.writeBool(writer, 4, object.enableTimeBuffer);
+  IsarCore.writeLong(writer, 5, object.timeBufferInSeconds);
   IsarCore.writeLong(writer, 6, object.defaultNumberOfTeams);
   {
     final list = object.improvisations;
@@ -118,10 +118,10 @@ PacingModel deserializePacingModel(IsarReader reader) {
   }
   final String _name;
   _name = IsarCore.readString(reader, 3) ?? '';
-  final bool _enablePaddingDuration;
-  _enablePaddingDuration = IsarCore.readBool(reader, 4);
-  final double _paddingDuration;
-  _paddingDuration = IsarCore.readDouble(reader, 5);
+  final bool _enableTimeBuffer;
+  _enableTimeBuffer = IsarCore.readBool(reader, 4);
+  final int _timeBufferInSeconds;
+  _timeBufferInSeconds = IsarCore.readLong(reader, 5);
   final int _defaultNumberOfTeams;
   _defaultNumberOfTeams = IsarCore.readLong(reader, 6);
   final List<ImprovisationModel> _improvisations;
@@ -174,8 +174,8 @@ PacingModel deserializePacingModel(IsarReader reader) {
     createdDate: _createdDate,
     modifiedDate: _modifiedDate,
     name: _name,
-    enablePaddingDuration: _enablePaddingDuration,
-    paddingDuration: _paddingDuration,
+    enableTimeBuffer: _enableTimeBuffer,
+    timeBufferInSeconds: _timeBufferInSeconds,
     defaultNumberOfTeams: _defaultNumberOfTeams,
     improvisations: _improvisations,
   );
@@ -212,7 +212,7 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
     case 4:
       return IsarCore.readBool(reader, 4);
     case 5:
-      return IsarCore.readDouble(reader, 5);
+      return IsarCore.readLong(reader, 5);
     case 6:
       return IsarCore.readLong(reader, 6);
     case 7:
@@ -271,8 +271,8 @@ sealed class _PacingModelUpdate {
     DateTime? createdDate,
     DateTime? modifiedDate,
     String? name,
-    bool? enablePaddingDuration,
-    double? paddingDuration,
+    bool? enableTimeBuffer,
+    int? timeBufferInSeconds,
     int? defaultNumberOfTeams,
   });
 }
@@ -288,8 +288,8 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enablePaddingDuration = ignore,
-    Object? paddingDuration = ignore,
+    Object? enableTimeBuffer = ignore,
+    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     return collection.updateProperties([
@@ -298,9 +298,8 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
           if (createdDate != ignore) 1: createdDate as DateTime?,
           if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
           if (name != ignore) 3: name as String?,
-          if (enablePaddingDuration != ignore)
-            4: enablePaddingDuration as bool?,
-          if (paddingDuration != ignore) 5: paddingDuration as double?,
+          if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
+          if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
           if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
         }) >
         0;
@@ -313,8 +312,8 @@ sealed class _PacingModelUpdateAll {
     DateTime? createdDate,
     DateTime? modifiedDate,
     String? name,
-    bool? enablePaddingDuration,
-    double? paddingDuration,
+    bool? enableTimeBuffer,
+    int? timeBufferInSeconds,
     int? defaultNumberOfTeams,
   });
 }
@@ -330,16 +329,16 @@ class _PacingModelUpdateAllImpl implements _PacingModelUpdateAll {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enablePaddingDuration = ignore,
-    Object? paddingDuration = ignore,
+    Object? enableTimeBuffer = ignore,
+    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     return collection.updateProperties(id, {
       if (createdDate != ignore) 1: createdDate as DateTime?,
       if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
       if (name != ignore) 3: name as String?,
-      if (enablePaddingDuration != ignore) 4: enablePaddingDuration as bool?,
-      if (paddingDuration != ignore) 5: paddingDuration as double?,
+      if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
+      if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
       if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
     });
   }
@@ -356,8 +355,8 @@ sealed class _PacingModelQueryUpdate {
     DateTime? createdDate,
     DateTime? modifiedDate,
     String? name,
-    bool? enablePaddingDuration,
-    double? paddingDuration,
+    bool? enableTimeBuffer,
+    int? timeBufferInSeconds,
     int? defaultNumberOfTeams,
   });
 }
@@ -373,16 +372,16 @@ class _PacingModelQueryUpdateImpl implements _PacingModelQueryUpdate {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enablePaddingDuration = ignore,
-    Object? paddingDuration = ignore,
+    Object? enableTimeBuffer = ignore,
+    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     return query.updateProperties(limit: limit, {
       if (createdDate != ignore) 1: createdDate as DateTime?,
       if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
       if (name != ignore) 3: name as String?,
-      if (enablePaddingDuration != ignore) 4: enablePaddingDuration as bool?,
-      if (paddingDuration != ignore) 5: paddingDuration as double?,
+      if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
+      if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
       if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
     });
   }
@@ -406,8 +405,8 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enablePaddingDuration = ignore,
-    Object? paddingDuration = ignore,
+    Object? enableTimeBuffer = ignore,
+    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     final q = query.build();
@@ -416,8 +415,8 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
         if (createdDate != ignore) 1: createdDate as DateTime?,
         if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
         if (name != ignore) 3: name as String?,
-        if (enablePaddingDuration != ignore) 4: enablePaddingDuration as bool?,
-        if (paddingDuration != ignore) 5: paddingDuration as double?,
+        if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
+        if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
         if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
       });
     } finally {
@@ -895,7 +894,7 @@ extension PacingModelQueryFilter
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      enablePaddingDurationEqualTo(
+      enableTimeBufferEqualTo(
     bool value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -909,98 +908,86 @@ extension PacingModelQueryFilter
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      paddingDurationEqualTo(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      timeBufferInSecondsEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
           property: 5,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      paddingDurationGreaterThan(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      timeBufferInSecondsGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
           property: 5,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      paddingDurationGreaterThanOrEqualTo(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      timeBufferInSecondsGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
           property: 5,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      paddingDurationLessThan(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      timeBufferInSecondsLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
           property: 5,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      paddingDurationLessThanOrEqualTo(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      timeBufferInSecondsLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
           property: 5,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      paddingDurationBetween(
-    double lower,
-    double upper, {
-    double epsilon = Filter.epsilon,
-  }) {
+      timeBufferInSecondsBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
           property: 5,
           lower: lower,
           upper: upper,
-          epsilon: epsilon,
         ),
       );
     });
@@ -1171,27 +1158,28 @@ extension PacingModelQuerySortBy
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByEnablePaddingDuration() {
+      sortByEnableTimeBuffer() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByEnablePaddingDurationDesc() {
+      sortByEnableTimeBufferDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4, sort: Sort.desc);
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByPaddingDuration() {
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      sortByTimeBufferInSeconds() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(5);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByPaddingDurationDesc() {
+      sortByTimeBufferInSecondsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(5, sort: Sort.desc);
     });
@@ -1266,27 +1254,28 @@ extension PacingModelQuerySortThenBy
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByEnablePaddingDuration() {
+      thenByEnableTimeBuffer() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByEnablePaddingDurationDesc() {
+      thenByEnableTimeBufferDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4, sort: Sort.desc);
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByPaddingDuration() {
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByTimeBufferInSeconds() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(5);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByPaddingDurationDesc() {
+      thenByTimeBufferInSecondsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(5, sort: Sort.desc);
     });
@@ -1331,14 +1320,14 @@ extension PacingModelQueryWhereDistinct
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
-      distinctByEnablePaddingDuration() {
+      distinctByEnableTimeBuffer() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(4);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
-      distinctByPaddingDuration() {
+      distinctByTimeBufferInSeconds() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(5);
     });
@@ -1378,14 +1367,13 @@ extension PacingModelQueryProperty1
     });
   }
 
-  QueryBuilder<PacingModel, bool, QAfterProperty>
-      enablePaddingDurationProperty() {
+  QueryBuilder<PacingModel, bool, QAfterProperty> enableTimeBufferProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
   }
 
-  QueryBuilder<PacingModel, double, QAfterProperty> paddingDurationProperty() {
+  QueryBuilder<PacingModel, int, QAfterProperty> timeBufferInSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
@@ -1435,14 +1423,14 @@ extension PacingModelQueryProperty2<R>
   }
 
   QueryBuilder<PacingModel, (R, bool), QAfterProperty>
-      enablePaddingDurationProperty() {
+      enableTimeBufferProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
   }
 
-  QueryBuilder<PacingModel, (R, double), QAfterProperty>
-      paddingDurationProperty() {
+  QueryBuilder<PacingModel, (R, int), QAfterProperty>
+      timeBufferInSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
@@ -1492,14 +1480,14 @@ extension PacingModelQueryProperty3<R1, R2>
   }
 
   QueryBuilder<PacingModel, (R1, R2, bool), QOperations>
-      enablePaddingDurationProperty() {
+      enableTimeBufferProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(4);
     });
   }
 
-  QueryBuilder<PacingModel, (R1, R2, double), QOperations>
-      paddingDurationProperty() {
+  QueryBuilder<PacingModel, (R1, R2, int), QOperations>
+      timeBufferInSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
@@ -1534,8 +1522,8 @@ _$PacingModelImpl _$$PacingModelImplFromJson(Map<String, dynamic> json) =>
       modifiedDate: json['modifiedDate'] == null
           ? null
           : DateTime.parse(json['modifiedDate'] as String),
-      enablePaddingDuration: json['enablePaddingDuration'] as bool,
-      paddingDuration: (json['paddingDuration'] as num).toDouble(),
+      enableTimeBuffer: json['enableTimeBuffer'] as bool,
+      timeBufferInSeconds: json['timeBufferInSeconds'] as int,
       defaultNumberOfTeams: json['defaultNumberOfTeams'] as int,
       improvisations: (json['improvisations'] as List<dynamic>)
           .map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))
@@ -1548,8 +1536,8 @@ Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
       'name': instance.name,
       'createdDate': instance.createdDate?.toIso8601String(),
       'modifiedDate': instance.modifiedDate?.toIso8601String(),
-      'enablePaddingDuration': instance.enablePaddingDuration,
-      'paddingDuration': instance.paddingDuration,
+      'enableTimeBuffer': instance.enableTimeBuffer,
+      'timeBufferInSeconds': instance.timeBufferInSeconds,
       'defaultNumberOfTeams': instance.defaultNumberOfTeams,
       'improvisations': instance.improvisations,
     };
