@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/display_language/display_language.dart';
+import '../../components/duration_picker/duration_picker.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
@@ -38,7 +39,10 @@ class SettingsPageView extends StatelessWidget {
                         subTitle: DisplayLanguage(locale: Locale(state.language)),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
-                          await BottomSheetDialog.showDialog(context: context, child: const LanguageView(), showDragHandle: false);
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: const LanguageView(),
+                          );
                         },
                       ),
                       SettingsTile(
@@ -53,7 +57,10 @@ class SettingsPageView extends StatelessWidget {
                         ),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
-                          await BottomSheetDialog.showDialog(context: context, child: const ThemeView(), showDragHandle: false);
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: const ThemeView(),
+                          );
                         },
                       ),
                     ],
@@ -80,7 +87,16 @@ class SettingsPageView extends StatelessWidget {
                         title: Text(S.of(context).defaultTimeBuffer),
                         subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
                         trailing: const Icon(Icons.chevron_right),
-                        onTap: () {},
+                        onTap: () async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: DurationPicker(
+                              title: S.of(context).defaultTimeBuffer,
+                              initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
+                              onSave: (value) => context.read<SettingsCubit>().edit(state.copyWith(defaultTimeBufferInSeconds: value.inSeconds)),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
