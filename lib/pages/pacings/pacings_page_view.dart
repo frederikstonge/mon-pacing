@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
+import '../pacing/widgets/pacing_detail_view.dart';
 import 'widgets/pacing_card.dart';
 
 class PacingsPageView extends StatefulWidget {
@@ -45,7 +47,14 @@ class _PacingsPageViewState extends State<PacingsPageView> {
             scrollController: _scrollController,
             scrollPhysics: const AlwaysScrollableScrollPhysics(),
             floatingActionButton: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                BottomSheetDialog.showDialog(
+                  context: context,
+                  child: PacingDetailView(
+                    onConfirm: (pacing) async {},
+                  ),
+                );
+              },
               tooltip: S.of(context).createNewPacingTooltip,
               child: const Icon(Icons.add),
             ),

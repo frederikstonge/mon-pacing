@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../router/router.dart';
 
 class BottomSheetDialog {
-  static Future<void> showDialog({
+  static Future<T?> showDialog<T>({
     required BuildContext context,
     required Widget child,
   }) async {
@@ -11,7 +11,7 @@ class BottomSheetDialog {
         ? MediaQuery.of(rootNavigatorKey.currentContext ?? context).viewInsets.bottom
         : MediaQuery.of(rootNavigatorKey.currentContext ?? context).padding.bottom;
 
-    await showModalBottomSheet(
+    return await showModalBottomSheet(
       context: context,
       useRootNavigator: true,
       useSafeArea: true,

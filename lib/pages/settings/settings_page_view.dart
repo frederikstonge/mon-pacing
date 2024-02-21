@@ -93,14 +93,18 @@ class SettingsPageView extends StatelessWidget {
                           subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () async {
-                            await BottomSheetDialog.showDialog(
+                            final settingsCubit = context.read<SettingsCubit>();
+                            final newDuration = await BottomSheetDialog.showDialog(
                               context: context,
                               child: DurationPicker(
                                 title: S.of(context).defaultTimeBuffer,
                                 initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
-                                onSave: (value) => context.read<SettingsCubit>().edit(state.copyWith(defaultTimeBufferInSeconds: value.inSeconds)),
                               ),
                             );
+
+                            if (newDuration != null) {
+                              settingsCubit.edit(state.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds));
+                            }
                           },
                         ),
                       ],

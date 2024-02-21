@@ -1,9 +1,12 @@
 {
   "@@locale": "en",
   "appTitle": "Mon Pacing",
+  "create": "Create",
   "createNewPacingTooltip": "Create new pacing",
+  "createPacing": "Create pacing",
   "dark": "Dark",
   "defaultTimeBuffer": "Default time buffer",
+  "editPacing": "Edit pacing",
   "enableDefaultTimeBuffer": "Enable default time buffer",
   "general": "General",
   "importPacingTooltip": "Import pacing",
@@ -14,6 +17,7 @@
   "pacings": "Pacings",
   "save": "Save",
   "settings": "Settings",
+  "stringIsRequired": "{fieldName} is required",
   "team": "Team",
   "theme": "Theme",
   "timeBufferTooltip": "Extra time that will be added on top of each improvisation's duration to compensate for the huddle, voting and more."
