@@ -93,7 +93,7 @@ class Themes {
       cardTheme: CardTheme(
         clipBehavior: Clip.antiAlias,
         color: cardBackgroundColor,
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.all(8),
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(
             Radius.circular(12),

@@ -11,10 +11,12 @@ class SliverLogoAppbar extends StatelessWidget {
   static const logoWidth = 110.0;
 
   final String title;
+  final List<Widget>? actions;
 
   const SliverLogoAppbar({
     super.key,
     required this.title,
+    this.actions,
   });
 
   @override
@@ -66,6 +68,7 @@ class SliverLogoAppbar extends StatelessWidget {
             ),
       title: Text(title),
       centerTitle: true,
+      actions: actions,
     );
   }
 }

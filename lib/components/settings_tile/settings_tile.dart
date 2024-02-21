@@ -26,7 +26,7 @@ class SettingsTile extends StatelessWidget {
         leading: leading,
         title: DefaultTextStyle.merge(
           child: title,
-          maxLines: 1,
+          maxLines: subTitle != null ? 1 : 2,
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: subTitle == null

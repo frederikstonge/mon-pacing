@@ -29,76 +29,82 @@ class SettingsPageView extends StatelessWidget {
           builder: (context, state) {
             return SliverList.list(
               children: [
-                CustomCard(
-                  child: Column(
-                    children: [
-                      TextHeader(title: S.of(context).general),
-                      SettingsTile(
-                        leading: const Icon(Icons.language),
-                        title: Text(S.of(context).language),
-                        subTitle: DisplayLanguage(locale: Locale(state.language)),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () async {
-                          await BottomSheetDialog.showDialog(
-                            context: context,
-                            child: const LanguageView(),
-                          );
-                        },
-                      ),
-                      SettingsTile(
-                        leading: const Icon(Icons.color_lens),
-                        title: Text(S.of(context).theme),
-                        subTitle: Text(
-                          switch (state.theme) {
-                            ThemeType.light => S.of(context).light,
-                            ThemeType.dark => S.of(context).dark,
-                            ThemeType.lni => S.of(context).lni,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CustomCard(
+                    child: Column(
+                      children: [
+                        TextHeader(title: S.of(context).general),
+                        SettingsTile(
+                          leading: const Icon(Icons.language),
+                          title: Text(S.of(context).language),
+                          subTitle: DisplayLanguage(locale: Locale(state.language)),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () async {
+                            await BottomSheetDialog.showDialog(
+                              context: context,
+                              child: const LanguageView(),
+                            );
                           },
                         ),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () async {
-                          await BottomSheetDialog.showDialog(
-                            context: context,
-                            child: const ThemeView(),
-                          );
-                        },
-                      ),
-                    ],
+                        SettingsTile(
+                          leading: const Icon(Icons.color_lens),
+                          title: Text(S.of(context).theme),
+                          subTitle: Text(
+                            switch (state.theme) {
+                              ThemeType.light => S.of(context).light,
+                              ThemeType.dark => S.of(context).dark,
+                              ThemeType.lni => S.of(context).lni,
+                            },
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () async {
+                            await BottomSheetDialog.showDialog(
+                              context: context,
+                              child: const ThemeView(),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                CustomCard(
-                  child: Column(
-                    children: [
-                      TextHeader(
-                        title: S.of(context).defaultTimeBuffer,
-                        tooltip: S.of(context).timeBufferTooltip,
-                      ),
-                      SettingsTile(
-                        leading: const Icon(Icons.timer),
-                        title: Text(S.of(context).enableDefaultTimeBuffer),
-                        trailing: Switch(
-                            value: state.enableDefaultTimeBuffer,
-                            onChanged: (value) {
-                              context.read<SettingsCubit>().edit(state.copyWith(enableDefaultTimeBuffer: value));
-                            }),
-                      ),
-                      SettingsTile(
-                        leading: const Icon(Icons.timer_outlined),
-                        title: Text(S.of(context).defaultTimeBuffer),
-                        subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () async {
-                          await BottomSheetDialog.showDialog(
-                            context: context,
-                            child: DurationPicker(
-                              title: S.of(context).defaultTimeBuffer,
-                              initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
-                              onSave: (value) => context.read<SettingsCubit>().edit(state.copyWith(defaultTimeBufferInSeconds: value.inSeconds)),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CustomCard(
+                    child: Column(
+                      children: [
+                        TextHeader(
+                          title: S.of(context).defaultTimeBuffer,
+                          tooltip: S.of(context).timeBufferTooltip,
+                        ),
+                        SettingsTile(
+                          leading: const Icon(Icons.timer),
+                          title: Text(S.of(context).enableDefaultTimeBuffer),
+                          trailing: Switch(
+                              value: state.enableDefaultTimeBuffer,
+                              onChanged: (value) {
+                                context.read<SettingsCubit>().edit(state.copyWith(enableDefaultTimeBuffer: value));
+                              }),
+                        ),
+                        SettingsTile(
+                          leading: const Icon(Icons.timer_outlined),
+                          title: Text(S.of(context).defaultTimeBuffer),
+                          subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () async {
+                            await BottomSheetDialog.showDialog(
+                              context: context,
+                              child: DurationPicker(
+                                title: S.of(context).defaultTimeBuffer,
+                                initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
+                                onSave: (value) => context.read<SettingsCubit>().edit(state.copyWith(defaultTimeBufferInSeconds: value.inSeconds)),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
