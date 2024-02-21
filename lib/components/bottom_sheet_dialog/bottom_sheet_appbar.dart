@@ -15,7 +15,6 @@ class BottomSheetAppbar extends StatelessWidget {
       child: NavigationToolbar(
         middle: title,
         centerMiddle: true,
-        trailing: const CloseButton(),
       ),
     );
   }

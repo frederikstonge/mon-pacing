@@ -32,29 +32,35 @@ class Themes {
       shadow: Colors.white,
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
-    return themeData
-        .copyWith(
-          textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
-        )
-        .copyWith(
-            cardTheme: const CardTheme(
-              clipBehavior: Clip.antiAlias,
-              color: cardBackgroundColor,
-              margin: EdgeInsets.all(16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                side: BorderSide(color: cardBorderColor),
-              ),
-              elevation: 2,
-            ),
-            dividerTheme: const DividerThemeData(color: dividerColor));
+    return themeData.copyWith(
+      textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
+      cardTheme: const CardTheme(
+        clipBehavior: Clip.antiAlias,
+        color: cardBackgroundColor,
+        margin: EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+          side: BorderSide(color: cardBorderColor),
+        ),
+        elevation: 2,
+      ),
+      dividerTheme: const DividerThemeData(color: dividerColor),
+      bottomSheetTheme: const BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
+        ),
+        showDragHandle: true,
+      ),
+    );
   }
 
   static ThemeData light() {
-    const primaryColor = Color(0xFF044b89);
-    const secondaryColor = Color(0xFFdc1a23);
+    const primaryColor = Colors.deepPurple;
+    const secondaryColor = Colors.lightGreen;
     final cardBackgroundColor = Colors.grey.shade100;
     final cardBorderColor = Colors.grey.shade300;
     final dividerColor = Colors.grey.shade300;
@@ -65,13 +71,13 @@ class Themes {
       primaryContainer: primaryColor,
       onPrimaryContainer: Colors.white,
       secondary: secondaryColor,
-      onSecondary: Colors.white,
+      onSecondary: Colors.black,
       secondaryContainer: secondaryColor,
-      onSecondaryContainer: Colors.white,
+      onSecondaryContainer: Colors.black,
       error: secondaryColor,
       onError: Colors.white,
       errorContainer: secondaryColor,
-      onErrorContainer: Colors.white,
+      onErrorContainer: Colors.black,
       background: Colors.white,
       onBackground: Colors.black,
       surface: Colors.white,
@@ -82,24 +88,30 @@ class Themes {
       shadow: Colors.white,
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
-    return themeData
-        .copyWith(
-          textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
-        )
-        .copyWith(
-            cardTheme: CardTheme(
-              clipBehavior: Clip.antiAlias,
-              color: cardBackgroundColor,
-              margin: const EdgeInsets.all(16),
-              shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                side: BorderSide(color: cardBorderColor),
-              ),
-              elevation: 2,
-            ),
-            dividerTheme: DividerThemeData(color: dividerColor));
+    return themeData.copyWith(
+      textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
+      cardTheme: CardTheme(
+        clipBehavior: Clip.antiAlias,
+        color: cardBackgroundColor,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+          side: BorderSide(color: cardBorderColor),
+        ),
+        elevation: 2,
+      ),
+      dividerTheme: DividerThemeData(color: dividerColor),
+      bottomSheetTheme: const BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
+        ),
+        showDragHandle: true,
+      ),
+    );
   }
 
   static ThemeData dark() {
@@ -132,23 +144,29 @@ class Themes {
       shadow: Colors.white,
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
-    return themeData
-        .copyWith(
-          textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
-        )
-        .copyWith(
-            cardTheme: CardTheme(
-              clipBehavior: Clip.antiAlias,
-              color: cardBackgroundColor,
-              margin: const EdgeInsets.all(16),
-              shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                side: BorderSide(color: cardBorderColor),
-              ),
-              elevation: 2,
-            ),
-            dividerTheme: DividerThemeData(color: dividerColor));
+    return themeData.copyWith(
+      textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
+      cardTheme: CardTheme(
+        clipBehavior: Clip.antiAlias,
+        color: cardBackgroundColor,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+          side: BorderSide(color: cardBorderColor),
+        ),
+        elevation: 2,
+      ),
+      dividerTheme: DividerThemeData(color: dividerColor),
+      bottomSheetTheme: const BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
+        ),
+        showDragHandle: true,
+      ),
+    );
   }
 }
