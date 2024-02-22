@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
+import '../../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/pacing_model.dart';
@@ -51,45 +52,43 @@ class _PacingDetailViewState extends State<PacingDetailView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BottomSheetScaffold(
       appBar: BottomSheetAppbar(
         title: Text(editMode ? S.of(context).editPacing : S.of(context).createPacing),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
+      body: Form(
+        key: formKey,
+        autovalidateMode: AutovalidateMode.always,
+        child: ListView(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            TextFormField(
+              controller: _nameController,
+              validator: (value) {
+                return Validators.stringRequired(context, 'Name', value);
+              },
+            ),
+          ],
+        ),
+      ),
+      bottom: Row(
         children: [
-          Flexible(
-            child: Form(
-              key: formKey,
-              autovalidateMode: AutovalidateMode.always,
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  TextFormField(
-                    controller: _nameController,
-                    validator: (value) {
-                      return Validators.stringRequired(context, 'Name', value);
-                    },
-                  ),
-                ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: FilledButton(
+                onPressed: () {
+                  if (formKey.currentState?.validate() ?? false) {
+                    widget.onConfirm(pacing);
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Text(editMode ? S.of(context).save : S.of(context).create),
               ),
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(left: 8, right: 8, bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: FilledButton(
-          onPressed: () {
-            if (formKey.currentState?.validate() ?? false) {
-              widget.onConfirm(pacing);
-              Navigator.of(context).pop();
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Errors in form')));
-            }
-          },
-          child: Text(editMode ? S.of(context).save : S.of(context).create),
-        ),
       ),
     );
   }
