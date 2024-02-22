@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../l10n/app_localizations.dart';
+import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 
 class DurationPicker extends StatefulWidget {
   final Duration initialDuration;
@@ -38,65 +39,63 @@ class _DurationPickerState extends State<DurationPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        BottomSheetAppbar(
-          title: Text(widget.title),
-        ),
-        SegmentedButton(
-          segments: const [
-            ButtonSegment(value: 1, label: Text('1 sec')),
-            ButtonSegment(value: 10, label: Text('10 sec')),
-            ButtonSegment(value: 30, label: Text('30 sec')),
-          ],
-          selected: {secondInterval},
-          onSelectionChanged: (values) {
-            final value = values.first;
-            final difference = selectedDuration.inSeconds % value;
-            if (difference != 0) {
-              if (difference < (value / 2)) {
-                selectedDuration = Duration(seconds: selectedDuration.inSeconds - difference);
-              } else {
-                selectedDuration = Duration(seconds: selectedDuration.inSeconds + (value - difference));
+    return BottomSheetScaffold(
+      appBar: BottomSheetAppbar(
+        title: Text(widget.title),
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SegmentedButton(
+            segments: const [
+              ButtonSegment(value: 1, label: Text('1 sec')),
+              ButtonSegment(value: 10, label: Text('10 sec')),
+              ButtonSegment(value: 30, label: Text('30 sec')),
+            ],
+            selected: {secondInterval},
+            onSelectionChanged: (values) {
+              final value = values.first;
+              final difference = selectedDuration.inSeconds % value;
+              if (difference != 0) {
+                if (difference < (value / 2)) {
+                  selectedDuration = Duration(seconds: selectedDuration.inSeconds - difference);
+                } else {
+                  selectedDuration = Duration(seconds: selectedDuration.inSeconds + (value - difference));
+                }
               }
-            }
-            setState(() {
-              secondInterval = value;
-            });
-          },
-        ),
-        Wrap(
-          children: [
-            CupertinoTimerPicker(
-              key: ValueKey(secondInterval),
-              mode: CupertinoTimerPickerMode.ms,
-              secondInterval: secondInterval,
-              initialTimerDuration: selectedDuration,
-              onTimerDurationChanged: (duration) {
-                setState(() {
-                  selectedDuration = duration;
-                });
-              },
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: FilledButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(selectedDuration);
-                  },
-                  child: Text(S.of(context).save),
-                ),
+              setState(() {
+                secondInterval = value;
+              });
+            },
+          ),
+          CupertinoTimerPicker(
+            key: ValueKey(secondInterval),
+            mode: CupertinoTimerPickerMode.ms,
+            secondInterval: secondInterval,
+            initialTimerDuration: selectedDuration,
+            onTimerDurationChanged: (duration) {
+              setState(() {
+                selectedDuration = duration;
+              });
+            },
+          ),
+        ],
+      ),
+      bottom: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: FilledButton(
+                onPressed: () {
+                  Navigator.of(context).pop(selectedDuration);
+                },
+                child: Text(S.of(context).save),
               ),
             ),
-          ],
-        )
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
