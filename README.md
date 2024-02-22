@@ -1,16 +1,7 @@
 # Mon Pacing
 
-A project used by referees for Gravel's Improv style matches.
+A project used by referees for Robert Gravel's Improvisation style matches.
 [Ligue Nationale d'Improvisation](https://en.wikipedia.org/wiki/Ligue_nationale_d%27improvisation)
-
-
-## Technologies
-
-- [flutter_bloc](https://pub.dev/packages/flutter_bloc)
-- [freezed](https://pub.dev/packages/freezed)
-- [sqflite](https://pub.dev/packages/sqflite)
-- [intl](https://pub.dev/packages/intl)
-- [syncfusion_flutter_xlsio](https://pub.dev/packages/syncfusion_flutter_xlsio)
 
 
 ## Development
@@ -21,15 +12,6 @@ Use Visual Studio Code, and install recommended extensions.
 ### Models
 
 To regenerate models with freezed, under `Explorer`, `Build Runner`, click the play icon.
-
-
-## Roadmap
-
-- Handle points
-- Handle penalties
-- Match summaries
-- Export match summaries in excel
-- Handle overtime
 
 
 ## Update flutter/app
@@ -58,3 +40,15 @@ flutter pub global activate flutter_migrate
 
 flutter pub global run flutter_migrate start
 ```
+
+# CI/CD
+
+- https://github.com/marketplace/actions/flutter-action
+
+## iOS
+- https://github.com/marketplace/actions/apple-provisioning-profile-action
+- https://github.com/marketplace/actions/apple-certificate-action
+- https://github.com/codemagic-ci-cd/cli-tools/blob/master/docs/xcode-project/use-profiles.md
+
+## Android
+- https://github.com/marketplace/actions/secret-to-file
