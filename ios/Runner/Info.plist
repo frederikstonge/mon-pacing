@@ -16,10 +16,6 @@
 	<string>monpacing</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
