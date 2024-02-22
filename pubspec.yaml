@@ -10,6 +10,10 @@ dependencies:
   collection: ^1.18.0
   country_flags: ^2.2.0
   cupertino_icons: ^1.0.6
+  firebase_analytics: ^10.8.6
+  firebase_core: ^2.24.2
+  firebase_crashlytics: ^3.4.15
+  firebase_performance: ^0.9.3+14
   flutter:
     sdk: flutter
   flutter_background_service: ^5.0.5

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037488175032",
+    "project_id": "mon-pacing",
+    "storage_bucket": "mon-pacing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037488175032:android:0bc109f8170511da31414d",
+        "android_client_info": {
+          "package_name": "com.stongef.monpacing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIP87UUyj_gmCdpjQEkvaP7F8Kr2y_RQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
