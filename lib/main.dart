@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 
 import 'bootstrapper.dart';
 import 'firebase_options.dart';
-import 'services/background_timer_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +31,5 @@ Future<void> main() async {
     storageDirectory: await getTemporaryDirectory(),
   );
 
-  await initializeTimerBackgroundService();
   runApp(const Bootstrapper());
 }
