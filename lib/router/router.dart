@@ -8,7 +8,6 @@ import '../pages/shell/shell_page_shell.dart';
 import 'routes.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
-
 final router = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: '/pacings',
