@@ -30,85 +30,87 @@ class SettingsPageView extends StatelessWidget {
             return SliverList.list(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: CustomCard(
-                    child: Column(
-                      children: [
-                        TextHeader(title: S.of(context).general),
-                        SettingsTile(
-                          leading: const Icon(Icons.language),
-                          title: Text(S.of(context).language),
-                          subTitle: DisplayLanguage(locale: Locale(state.language)),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () async {
-                            await BottomSheetDialog.showDialog(
-                              context: context,
-                              child: const LanguageView(),
-                            );
+                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                  child: TextHeader(title: S.of(context).general),
+                ),
+                CustomCard(
+                  child: Column(
+                    children: [
+                      SettingsTile(
+                        leading: const Icon(Icons.language),
+                        title: Text(S.of(context).language),
+                        subTitle: DisplayLanguage(locale: Locale(state.language)),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: const LanguageView(),
+                          );
+                        },
+                      ),
+                      SettingsTile(
+                        leading: const Icon(Icons.color_lens),
+                        title: Text(S.of(context).theme),
+                        subTitle: Text(
+                          switch (state.theme) {
+                            ThemeType.light => S.of(context).light,
+                            ThemeType.dark => S.of(context).dark,
+                            ThemeType.lni => S.of(context).lni,
                           },
                         ),
-                        SettingsTile(
-                          leading: const Icon(Icons.color_lens),
-                          title: Text(S.of(context).theme),
-                          subTitle: Text(
-                            switch (state.theme) {
-                              ThemeType.light => S.of(context).light,
-                              ThemeType.dark => S.of(context).dark,
-                              ThemeType.lni => S.of(context).lni,
-                            },
-                          ),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () async {
-                            await BottomSheetDialog.showDialog(
-                              context: context,
-                              child: const ThemeView(),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: const ThemeView(),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: CustomCard(
-                    child: Column(
-                      children: [
-                        TextHeader(
-                          title: S.of(context).defaultTimeBuffer,
-                          tooltip: S.of(context).timeBufferTooltip,
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.timer),
-                          title: Text(S.of(context).enableDefaultTimeBuffer),
-                          trailing: Switch(
-                              value: state.enableDefaultTimeBuffer,
-                              onChanged: (value) {
-                                context.read<SettingsCubit>().edit(state.copyWith(enableDefaultTimeBuffer: value));
-                              }),
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.timer_outlined),
-                          title: Text(S.of(context).defaultTimeBuffer),
-                          subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () async {
-                            final settingsCubit = context.read<SettingsCubit>();
-                            final newDuration = await BottomSheetDialog.showDialog(
-                              context: context,
-                              child: DurationPicker(
-                                title: S.of(context).defaultTimeBuffer,
-                                initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
-                              ),
-                            );
+                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                  child: TextHeader(
+                    title: S.of(context).defaultTimeBuffer,
+                    tooltip: S.of(context).timeBufferTooltip,
+                  ),
+                ),
+                CustomCard(
+                  child: Column(
+                    children: [
+                      SettingsTile(
+                        leading: const Icon(Icons.timer),
+                        title: Text(S.of(context).enableDefaultTimeBuffer),
+                        trailing: Switch(
+                            value: state.enableDefaultTimeBuffer,
+                            onChanged: (value) {
+                              context.read<SettingsCubit>().edit(state.copyWith(enableDefaultTimeBuffer: value));
+                            }),
+                      ),
+                      SettingsTile(
+                        leading: const Icon(Icons.timer_outlined),
+                        title: Text(S.of(context).defaultTimeBuffer),
+                        subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: state.enableDefaultTimeBuffer
+                            ? () async {
+                                final settingsCubit = context.read<SettingsCubit>();
+                                final newDuration = await BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: DurationPicker(
+                                    title: S.of(context).defaultTimeBuffer,
+                                    initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
+                                  ),
+                                );
 
-                            if (newDuration != null) {
-                              settingsCubit.edit(state.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds));
-                            }
-                          },
-                        ),
-                      ],
-                    ),
+                                if (newDuration != null) {
+                                  settingsCubit.edit(state.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds));
+                                }
+                              }
+                            : null,
+                      ),
+                    ],
                   ),
                 ),
               ],

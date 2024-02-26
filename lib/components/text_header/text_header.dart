@@ -12,26 +12,20 @@ class TextHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        Row(
-          children: [
-            Text(title, style: Theme.of(context).textTheme.titleMedium),
-            if (tooltip != null) ...[
-              Padding(
-                padding: const EdgeInsets.only(left: 4),
-                child: Tooltip(
-                  showDuration: const Duration(seconds: 6),
-                  message: tooltip,
-                  triggerMode: TooltipTriggerMode.tap,
-                  child: const Icon(Icons.info),
-                ),
-              )
-            ],
-          ],
-        ),
-        const Divider(),
+        Text(title, style: Theme.of(context).textTheme.headlineSmall),
+        if (tooltip != null) ...[
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Tooltip(
+              showDuration: const Duration(seconds: 6),
+              message: tooltip,
+              triggerMode: TooltipTriggerMode.tap,
+              child: const Icon(Icons.info),
+            ),
+          )
+        ],
       ],
     );
   }
