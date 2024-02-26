@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -8,6 +9,7 @@ import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../router/routes.dart';
 import '../pacing/widgets/pacing_detail_view.dart';
 import 'widgets/pacing_card.dart';
 
@@ -51,7 +53,11 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                 BottomSheetDialog.showDialog(
                   context: context,
                   child: PacingDetailView(
-                    onConfirm: (pacing) async {},
+                    onConfirm: (pacing) async {
+                      final router = GoRouter.of(context);
+                      final pacingModel = await context.read<PacingsCubit>().add(pacing);
+                      router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                    },
                   ),
                 );
               },

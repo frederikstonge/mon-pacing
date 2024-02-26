@@ -47,6 +47,7 @@ class _DurationPickerState extends State<DurationPicker> {
         mainAxisSize: MainAxisSize.min,
         children: [
           SegmentedButton(
+            style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
             segments: const [
               ButtonSegment(value: 1, label: Text('1 sec')),
               ButtonSegment(value: 10, label: Text('10 sec')),
@@ -85,7 +86,7 @@ class _DurationPickerState extends State<DurationPicker> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: FilledButton(
                 onPressed: () {
                   Navigator.of(context).pop(selectedDuration);

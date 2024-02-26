@@ -57,6 +57,10 @@ class Themes {
         showDragHandle: true,
         shadowColor: shadowColor,
       ),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+      ),
     );
   }
 
@@ -116,13 +120,17 @@ class Themes {
         modalBarrierColor: Colors.white.withAlpha(100),
         shadowColor: shadowColor,
       ),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+      ),
     );
   }
 
   static ThemeData lni() {
     const primaryColor = Color(0xFF044b89);
     const secondaryColor = Color(0xFFdc1a23);
-    const cardBackgroundColor = Color(0xFFf2efe4);
+    final cardBackgroundColor = Colors.grey.shade100;
     const cardBorderColor = secondaryColor;
     const dividerColor = primaryColor;
     final shadowColor = Colors.grey.shade300;
@@ -152,11 +160,11 @@ class Themes {
     final themeData = ThemeData.from(colorScheme: colorScheme);
     return themeData.copyWith(
       textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
-      cardTheme: const CardTheme(
+      cardTheme: CardTheme(
         clipBehavior: Clip.antiAlias,
         color: cardBackgroundColor,
-        margin: EdgeInsets.all(8),
-        shape: RoundedRectangleBorder(
+        margin: const EdgeInsets.all(8),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(12),
           ),
@@ -173,6 +181,10 @@ class Themes {
         ),
         showDragHandle: true,
         shadowColor: shadowColor,
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
     );
   }
