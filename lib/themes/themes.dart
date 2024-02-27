@@ -60,6 +60,7 @@ class Themes {
       inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(),
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        filled: true,
       ),
     );
   }
@@ -123,6 +124,7 @@ class Themes {
       inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(),
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        filled: true,
       ),
     );
   }
@@ -185,6 +187,7 @@ class Themes {
       inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(),
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        filled: true,
       ),
     );
   }

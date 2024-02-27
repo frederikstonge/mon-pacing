@@ -5,11 +5,13 @@ import 'package:go_router/go_router.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
+import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
+import '../match/widgets/create_match_view.dart';
 import '../pacing/widgets/pacing_detail_view.dart';
 import 'widgets/pacing_card.dart';
 
@@ -98,7 +100,25 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       );
                     }
 
-                    return PacingCard(pacing: pacings.elementAt(index));
+                    final pacing = pacings.elementAt(index);
+                    return PacingCard(
+                      pacing: pacing,
+                      shouldDelete: () => true,
+                      delete: () async => await context.read<PacingsCubit>().delete(pacing),
+                      edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
+                      export: () {},
+                      startMatch: () => BottomSheetDialog.showDialog(
+                        context: context,
+                        child: CreateMatchView(
+                          pacing: pacing,
+                          onConfirm: (match) async {
+                            final router = GoRouter.of(context);
+                            final matchModel = await context.read<MatchesCubit>().add(match);
+                            router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+                          },
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
