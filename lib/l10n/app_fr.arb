@@ -1,6 +1,8 @@
 {
   "@@locale": "fr",
   "appTitle": "Mon Pacing",
+  "areYouSure": "Êtes-vous sûr de vouloir {action} {name}?",
+  "cancel": "Annuler",
   "create": "Créer",
   "createNewPacingTooltip": "Créer un nouveau pacing",
   "createPacing": "Créer un pacing",

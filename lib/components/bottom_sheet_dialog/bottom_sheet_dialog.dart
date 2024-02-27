@@ -8,6 +8,7 @@ class BottomSheetDialog {
     required Widget child,
   }) async {
     return await showModalBottomSheet(
+      barrierColor: Theme.of(context).colorScheme.onBackground.withAlpha(100),
       context: context,
       useRootNavigator: true,
       useSafeArea: true,

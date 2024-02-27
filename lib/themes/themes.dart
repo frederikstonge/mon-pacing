@@ -118,7 +118,6 @@ class Themes {
           ),
         ),
         showDragHandle: true,
-        modalBarrierColor: Colors.white.withAlpha(100),
         shadowColor: shadowColor,
       ),
       inputDecorationTheme: const InputDecorationTheme(
