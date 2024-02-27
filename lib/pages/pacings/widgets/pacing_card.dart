@@ -51,8 +51,19 @@ class PacingCard extends StatelessWidget {
         ),
       ),
       key: ValueKey(pacing.id),
-      confirmDismiss: (direction) async => direction == DismissDirection.endToStart ? await shouldDelete.call() : true,
-      onDismissed: (direction) => direction == DismissDirection.endToStart ? delete.call() : startMatch.call(),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.endToStart) {
+          return await shouldDelete.call();
+        } else {
+          await startMatch.call();
+          return false;
+        }
+      },
+      onDismissed: (direction) async {
+        if (direction == DismissDirection.endToStart) {
+          await delete.call();
+        }
+      },
       child: InkWell(
         onLongPress: () {
           _openMenu(context);

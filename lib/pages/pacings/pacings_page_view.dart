@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../cubits/matches/matches_cubit.dart';
@@ -103,7 +104,12 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                     final pacing = pacings.elementAt(index);
                     return PacingCard(
                       pacing: pacing,
-                      shouldDelete: () => true,
+                      shouldDelete: () => MessageBoxDialog.questionShow(
+                        context,
+                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), pacing.name),
+                        S.of(context).delete,
+                        S.of(context).cancel,
+                      ),
                       delete: () async => await context.read<PacingsCubit>().delete(pacing),
                       edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
                       export: () {},
