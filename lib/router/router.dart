@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../pages/matches/matches_page_shell.dart';
+import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
 import '../pages/settings/settings_page_shell.dart';
 import '../pages/shell/shell_page_shell.dart';
@@ -26,6 +27,16 @@ final router = GoRouter(
               pageBuilder: (context, state) {
                 return const NoTransitionPage(child: PacingsPageShell());
               },
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: rootNavigatorKey,
+                  name: Routes.pacing,
+                  path: 'details/:id',
+                  builder: (context, state) => PacingPageShell(
+                    id: int.parse(state.pathParameters['id']!),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
