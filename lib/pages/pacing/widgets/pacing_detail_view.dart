@@ -41,7 +41,7 @@ class _PacingDetailViewState extends State<PacingDetailView> {
   void initState() {
     editMode = widget.pacing != null;
     pacing = editMode
-        ? widget.pacing!
+        ? widget.pacing!.copyWith()
         : PacingModel(
             id: 0,
             name: '',
