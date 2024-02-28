@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SliverScaffold extends StatelessWidget {
   final List<Widget> slivers;
   final Widget? floatingActionButton;
   final Alignment floatingActionButtonAlignment;
+  final double floatingActionButtonHeight;
   final ScrollController? scrollController;
   final ScrollPhysics? scrollPhysics;
 
@@ -12,6 +14,7 @@ class SliverScaffold extends StatelessWidget {
     required this.slivers,
     this.floatingActionButton,
     this.floatingActionButtonAlignment = Alignment.bottomRight,
+    this.floatingActionButtonHeight = 62,
     this.scrollController,
     this.scrollPhysics,
   });
@@ -26,6 +29,11 @@ class SliverScaffold extends StatelessWidget {
               physics: scrollPhysics,
               slivers: [
                 ...slivers,
+                if (floatingActionButton != null) ...[
+                  SliverPadding(
+                    padding: EdgeInsets.only(top: 16, bottom: floatingActionButtonHeight),
+                  ),
+                ],
               ],
             ),
             if (floatingActionButton != null) ...[

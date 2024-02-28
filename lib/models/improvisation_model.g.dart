@@ -37,8 +37,8 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'durations',
-        type: IsarType.doubleList,
+        name: 'durationsInSeconds',
+        type: IsarType.longList,
       ),
       IsarPropertySchema(
         name: 'performers',
@@ -65,10 +65,10 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
   IsarCore.writeString(writer, 4, object.category);
   IsarCore.writeString(writer, 5, object.theme);
   {
-    final list = object.durations;
+    final list = object.durationsInSeconds;
     final listWriter = IsarCore.beginList(writer, 6, list.length);
     for (var i = 0; i < list.length; i++) {
-      IsarCore.writeDouble(listWriter, i, list[i]);
+      IsarCore.writeLong(listWriter, i, list[i]);
     }
     IsarCore.endList(writer, listWriter);
   }
@@ -103,20 +103,21 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   _category = IsarCore.readString(reader, 4) ?? '';
   final String _theme;
   _theme = IsarCore.readString(reader, 5) ?? '';
-  final List<double> _durations;
+  final List<int> _durationsInSeconds;
   {
     final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
-        _durations = const <double>[];
+        _durationsInSeconds = const <int>[];
       } else {
-        final list = List<double>.filled(length, double.nan, growable: true);
+        final list =
+            List<int>.filled(length, -9223372036854775808, growable: true);
         for (var i = 0; i < length; i++) {
-          list[i] = IsarCore.readDouble(reader, i);
+          list[i] = IsarCore.readLong(reader, i);
         }
         IsarCore.freeReader(reader);
-        _durations = list;
+        _durationsInSeconds = list;
       }
     }
   }
@@ -137,7 +138,7 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
     type: _type,
     category: _category,
     theme: _theme,
-    durations: _durations,
+    durationsInSeconds: _durationsInSeconds,
     performers: _performers,
     notes: _notes,
   );
@@ -770,110 +771,98 @@ extension ImprovisationModelQueryFilter
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsElementEqualTo(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      durationsInSecondsElementEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
           property: 6,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsElementGreaterThan(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      durationsInSecondsElementGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
           property: 6,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsElementGreaterThanOrEqualTo(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      durationsInSecondsElementGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
           property: 6,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsElementLessThan(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      durationsInSecondsElementLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
           property: 6,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsElementLessThanOrEqualTo(
-    double value, {
-    double epsilon = Filter.epsilon,
-  }) {
+      durationsInSecondsElementLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
           property: 6,
           value: value,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsElementBetween(
-    double lower,
-    double upper, {
-    double epsilon = Filter.epsilon,
-  }) {
+      durationsInSecondsElementBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
           property: 6,
           lower: lower,
           upper: upper,
-          epsilon: epsilon,
         ),
       );
     });
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsIsEmpty() {
-    return not().durationsIsNotEmpty();
+      durationsInSecondsIsEmpty() {
+    return not().durationsInSecondsIsNotEmpty();
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      durationsIsNotEmpty() {
+      durationsInSecondsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterOrEqualCondition(property: 6, value: null),
@@ -1191,8 +1180,8 @@ _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
       type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
       category: json['category'] as String,
       theme: json['theme'] as String,
-      durations: (json['durations'] as List<dynamic>)
-          .map((e) => (e as num).toDouble())
+      durationsInSeconds: (json['durationsInSeconds'] as List<dynamic>)
+          .map((e) => e as int)
           .toList(),
       performers: json['performers'] as int?,
       notes: json['notes'] as String?,
@@ -1206,7 +1195,7 @@ Map<String, dynamic> _$$ImprovisationModelImplToJson(
       'type': _$ImprovisationTypeEnumMap[instance.type]!,
       'category': instance.category,
       'theme': instance.theme,
-      'durations': instance.durations,
+      'durationsInSeconds': instance.durationsInSeconds,
       'performers': instance.performers,
       'notes': instance.notes,
     };

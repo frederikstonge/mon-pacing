@@ -41,8 +41,8 @@ class SettingsPageView extends StatelessWidget {
                         title: Text(S.of(context).language),
                         subTitle: DisplayLanguage(locale: Locale(state.language)),
                         trailing: const Icon(Icons.chevron_right),
-                        onTap: () async {
-                          await BottomSheetDialog.showDialog(
+                        onTap: () {
+                          BottomSheetDialog.showDialog(
                             context: context,
                             child: const LanguageView(),
                           );
@@ -59,8 +59,8 @@ class SettingsPageView extends StatelessWidget {
                           },
                         ),
                         trailing: const Icon(Icons.chevron_right),
-                        onTap: () async {
-                          await BottomSheetDialog.showDialog(
+                        onTap: () {
+                          BottomSheetDialog.showDialog(
                             context: context,
                             child: const ThemeView(),
                           );

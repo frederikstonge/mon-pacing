@@ -22,7 +22,7 @@ class SliverLogoAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final canPop = GoRouter.of(context).canPop();
-    return SliverAppBar.medium(
+    return SliverAppBar.large(
       leadingWidth: canPop ? null : logoWidth,
       leading: canPop
           ? null

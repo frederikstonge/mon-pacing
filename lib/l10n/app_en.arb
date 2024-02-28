@@ -17,11 +17,21 @@
   "general": "General",
   "greaterThan": "Must be greater than {min}",
   "importPacingTooltip": "Import pacing",
+  "improvisationCount": "Improvisation count: {count}",
   "language": "Language",
   "lesserThan": "Must be lesser than {max}",
   "light": "Light",
   "lni": "LNI Vintage",
   "matches": "Matches",
+  "modifiedDate": "Modified date: {date}",
+  "@modifiedDate":{
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  },
   "multipleOf": "Must be a multiple of {multiple}",
   "name": "Name",
   "numberOfTeamsByDefault": "Number of teams by default",

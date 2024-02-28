@@ -9,59 +9,14 @@ class Themes {
     final cardBorderColor = Colors.grey.shade300;
     final dividerColor = Colors.grey.shade300;
     final shadowColor = Colors.grey.shade300;
-    final colorScheme = ColorScheme(
-      brightness: Brightness.light,
-      primary: primaryColor,
-      onPrimary: Colors.white,
-      primaryContainer: primaryColor,
-      onPrimaryContainer: Colors.white,
-      secondary: secondaryColor,
-      onSecondary: Colors.black,
-      secondaryContainer: secondaryColor,
-      onSecondaryContainer: Colors.black,
-      error: Colors.red,
-      onError: Colors.white,
-      errorContainer: secondaryColor,
-      onErrorContainer: Colors.black,
-      background: Colors.white,
-      onBackground: Colors.black,
-      surface: Colors.white,
-      onSurface: Colors.black,
-      surfaceTint: Colors.white,
-      surfaceVariant: Colors.white,
-      inverseSurface: Colors.black,
-      shadow: shadowColor,
-    );
-    final themeData = ThemeData.from(colorScheme: colorScheme);
-    return themeData.copyWith(
-      textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
-      cardTheme: CardTheme(
-        clipBehavior: Clip.antiAlias,
-        color: cardBackgroundColor,
-        margin: const EdgeInsets.all(8),
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(12),
-          ),
-          side: BorderSide(color: cardBorderColor),
-        ),
-        elevation: 2,
-      ),
-      dividerTheme: DividerThemeData(color: dividerColor),
-      bottomSheetTheme: BottomSheetThemeData(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(25.0),
-          ),
-        ),
-        showDragHandle: true,
-        shadowColor: shadowColor,
-      ),
-      inputDecorationTheme: const InputDecorationTheme(
-        border: OutlineInputBorder(),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        filled: true,
-      ),
+    return _generateTheme(
+      Brightness.light,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
     );
   }
 
@@ -72,27 +27,69 @@ class Themes {
     final cardBorderColor = Colors.grey.shade700;
     final dividerColor = Colors.grey.shade700;
     final shadowColor = Colors.grey.shade700;
+    return _generateTheme(
+      Brightness.dark,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
+    );
+  }
+
+  static ThemeData lni() {
+    const primaryColor = Color(0xFF044b89);
+    const secondaryColor = Color(0xFFdc1a23);
+    final cardBackgroundColor = Colors.grey.shade100;
+    const cardBorderColor = secondaryColor;
+    const dividerColor = primaryColor;
+    final shadowColor = Colors.grey.shade300;
+    return _generateTheme(
+      Brightness.light,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
+    );
+  }
+
+  static ThemeData _generateTheme(
+    Brightness brightness,
+    Color primaryColor,
+    Color secondaryColor,
+    Color cardBackgroundColor,
+    Color cardBorderColor,
+    Color dividerColor,
+    Color shadowColor,
+  ) {
+    final background = brightness == Brightness.light ? Colors.white : Colors.black;
+    final onBackground = brightness == Brightness.light ? Colors.black : Colors.white;
+    final onPrimary = ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.light ? Colors.black : Colors.white;
+    final onSecondary = ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light ? Colors.black : Colors.white;
     final colorScheme = ColorScheme(
-      brightness: Brightness.dark,
+      brightness: brightness,
       primary: primaryColor,
-      onPrimary: Colors.white,
+      onPrimary: onPrimary,
       primaryContainer: primaryColor,
-      onPrimaryContainer: Colors.white,
+      onPrimaryContainer: onPrimary,
       secondary: secondaryColor,
-      onSecondary: Colors.black,
+      onSecondary: onSecondary,
       secondaryContainer: secondaryColor,
-      onSecondaryContainer: Colors.black,
+      onSecondaryContainer: onSecondary,
       error: Colors.red,
-      onError: Colors.black,
+      onError: Colors.white,
       errorContainer: secondaryColor,
-      onErrorContainer: Colors.black,
-      background: Colors.black,
-      onBackground: Colors.white,
-      surface: Colors.black,
-      onSurface: Colors.white,
-      surfaceTint: Colors.black,
-      surfaceVariant: Colors.black,
-      inverseSurface: Colors.white,
+      onErrorContainer: onSecondary,
+      background: background,
+      onBackground: onBackground,
+      surface: background,
+      onSurface: onBackground,
+      surfaceTint: background,
+      surfaceVariant: background,
+      inverseSurface: onBackground,
       shadow: shadowColor,
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
@@ -111,69 +108,6 @@ class Themes {
         elevation: 2,
       ),
       dividerTheme: DividerThemeData(color: dividerColor),
-      bottomSheetTheme: BottomSheetThemeData(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(25.0),
-          ),
-        ),
-        showDragHandle: true,
-        shadowColor: shadowColor,
-      ),
-      inputDecorationTheme: const InputDecorationTheme(
-        border: OutlineInputBorder(),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        filled: true,
-      ),
-    );
-  }
-
-  static ThemeData lni() {
-    const primaryColor = Color(0xFF044b89);
-    const secondaryColor = Color(0xFFdc1a23);
-    final cardBackgroundColor = Colors.grey.shade100;
-    const cardBorderColor = secondaryColor;
-    const dividerColor = primaryColor;
-    final shadowColor = Colors.grey.shade300;
-    final colorScheme = ColorScheme(
-      brightness: Brightness.light,
-      primary: primaryColor,
-      onPrimary: Colors.white,
-      primaryContainer: primaryColor,
-      onPrimaryContainer: Colors.white,
-      secondary: secondaryColor,
-      onSecondary: Colors.white,
-      secondaryContainer: secondaryColor,
-      onSecondaryContainer: Colors.white,
-      error: Colors.red,
-      onError: Colors.white,
-      errorContainer: secondaryColor,
-      onErrorContainer: Colors.white,
-      background: Colors.white,
-      onBackground: Colors.black,
-      surface: Colors.white,
-      onSurface: Colors.black,
-      surfaceTint: Colors.white,
-      surfaceVariant: Colors.white,
-      inverseSurface: Colors.black,
-      shadow: shadowColor,
-    );
-    final themeData = ThemeData.from(colorScheme: colorScheme);
-    return themeData.copyWith(
-      textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
-      cardTheme: CardTheme(
-        clipBehavior: Clip.antiAlias,
-        color: cardBackgroundColor,
-        margin: const EdgeInsets.all(8),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
-          ),
-          side: BorderSide(color: cardBorderColor),
-        ),
-        elevation: 2,
-      ),
-      dividerTheme: const DividerThemeData(color: dividerColor),
       bottomSheetTheme: BottomSheetThemeData(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
