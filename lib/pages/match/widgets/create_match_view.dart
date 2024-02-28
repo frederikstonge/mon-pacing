@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
@@ -14,7 +15,7 @@ import '../../../validators/validator.dart';
 
 class CreateMatchView extends StatefulWidget {
   final PacingModel? pacing;
-  final AsyncValueSetter<MatchModel> onConfirm;
+  final FutureOr<void> Function(MatchModel value) onConfirm;
 
   const CreateMatchView({
     super.key,
@@ -119,10 +120,11 @@ class _CreateMatchViewState extends State<CreateMatchView> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: FilledButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState?.validate() ?? false) {
-                    widget.onConfirm(match);
-                    Navigator.of(context).pop();
+                    final navigator = Navigator.of(context);
+                    await widget.onConfirm(match);
+                    navigator.pop();
                   }
                 },
                 child: Text(S.of(context).create),

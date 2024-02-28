@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,7 @@ import '../../../validators/validator.dart';
 
 class PacingDetailView extends StatefulWidget {
   final PacingModel? pacing;
-  final AsyncValueSetter<PacingModel> onConfirm;
+  final FutureOr<void> Function(PacingModel value) onConfirm;
 
   const PacingDetailView({
     super.key,
@@ -177,10 +178,11 @@ class _PacingDetailViewState extends State<PacingDetailView> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: FilledButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState?.validate() ?? false) {
-                    widget.onConfirm(pacing);
-                    Navigator.of(context).pop();
+                    final navigator = Navigator.of(context);
+                    await widget.onConfirm(pacing);
+                    navigator.pop();
                   }
                 },
                 child: Text(editMode ? S.of(context).save : S.of(context).create),
