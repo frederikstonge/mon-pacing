@@ -140,7 +140,7 @@ PacingModel deserializePacingModel(IsarReader reader) {
               type: ImprovisationType.mixed,
               category: '',
               theme: '',
-              durations: const <double>[],
+              durationsInSeconds: const <int>[],
               performers: null,
             ),
             growable: true);
@@ -154,7 +154,7 @@ PacingModel deserializePacingModel(IsarReader reader) {
                 type: ImprovisationType.mixed,
                 category: '',
                 theme: '',
-                durations: const <double>[],
+                durationsInSeconds: const <int>[],
                 performers: null,
               );
             } else {
@@ -231,7 +231,7 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
                   type: ImprovisationType.mixed,
                   category: '',
                   theme: '',
-                  durations: const <double>[],
+                  durationsInSeconds: const <int>[],
                   performers: null,
                 ),
                 growable: true);
@@ -245,7 +245,7 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
                     type: ImprovisationType.mixed,
                     category: '',
                     theme: '',
-                    durations: const <double>[],
+                    durationsInSeconds: const <int>[],
                     performers: null,
                   );
                 } else {

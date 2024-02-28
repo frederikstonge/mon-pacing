@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/pacing_model.dart';
 import 'pacing_menu.dart';
 
@@ -75,14 +76,17 @@ class PacingCard extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(pacing.name),
-                  Text(pacing.improvisations.length.toString()),
-                  Text(pacing.modifiedDate.toString()),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(pacing.name, style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
+                    Text(S.of(context).improvisationCount(pacing.improvisations.length)),
+                    Text(S.of(context).modifiedDate(pacing.modifiedDate!)),
+                  ],
+                ),
               ),
+              IconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert))
             ],
           ),
         ),

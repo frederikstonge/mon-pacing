@@ -217,7 +217,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
               type: ImprovisationType.mixed,
               category: '',
               theme: '',
-              durations: const <double>[],
+              durationsInSeconds: const <int>[],
               performers: null,
             ),
             growable: true);
@@ -231,7 +231,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
                 type: ImprovisationType.mixed,
                 category: '',
                 theme: '',
-                durations: const <double>[],
+                durationsInSeconds: const <int>[],
                 performers: null,
               );
             } else {
@@ -421,7 +421,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                   type: ImprovisationType.mixed,
                   category: '',
                   theme: '',
-                  durations: const <double>[],
+                  durationsInSeconds: const <int>[],
                   performers: null,
                 ),
                 growable: true);
@@ -435,7 +435,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                     type: ImprovisationType.mixed,
                     category: '',
                     theme: '',
-                    durations: const <double>[],
+                    durationsInSeconds: const <int>[],
                     performers: null,
                   );
                 } else {
