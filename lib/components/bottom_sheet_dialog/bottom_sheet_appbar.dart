@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget title;
+  final String title;
 
   const BottomSheetAppbar({
     super.key,
@@ -13,7 +13,7 @@ class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
     return SizedBox(
       height: kToolbarHeight,
       child: NavigationToolbar(
-        middle: title,
+        middle: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         centerMiddle: true,
       ),
     );

@@ -41,7 +41,7 @@ class _DurationPickerState extends State<DurationPicker> {
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
       appBar: BottomSheetAppbar(
-        title: Text(widget.title),
+        title: widget.title,
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,

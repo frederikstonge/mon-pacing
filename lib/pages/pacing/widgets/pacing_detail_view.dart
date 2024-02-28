@@ -63,7 +63,7 @@ class _PacingDetailViewState extends State<PacingDetailView> {
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
       appBar: BottomSheetAppbar(
-        title: Text(editMode ? S.of(context).editPacing : S.of(context).createPacing),
+        title: editMode ? S.of(context).editPacing : S.of(context).createPacing,
       ),
       isBodyExpanded: true,
       body: Form(
