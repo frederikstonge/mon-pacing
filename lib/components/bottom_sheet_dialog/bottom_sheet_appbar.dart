@@ -13,7 +13,12 @@ class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
     return SizedBox(
       height: kToolbarHeight,
       child: NavigationToolbar(
-        middle: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        middle: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         centerMiddle: true,
       ),
     );

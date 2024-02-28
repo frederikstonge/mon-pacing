@@ -29,7 +29,12 @@ class TextFieldElement extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6),
-            child: Text(label, style: Theme.of(context).textTheme.labelMedium),
+            child: Text(
+              label,
+              style: Theme.of(context).textTheme.labelMedium,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           TextFormField(
             controller: controller,

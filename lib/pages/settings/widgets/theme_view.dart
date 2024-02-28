@@ -27,7 +27,11 @@ class ThemeView extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 child: ListTile(
-                  title: Text(_getThemeString(context, state.theme)),
+                  title: Text(
+                    _getThemeString(context, state.theme),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   trailing: const Icon(Icons.check),
                 ),
               ),
@@ -38,7 +42,11 @@ class ThemeView extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child: ListTile(
-                        title: Text(_getThemeString(context, e)),
+                        title: Text(
+                          _getThemeString(context, e),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ),

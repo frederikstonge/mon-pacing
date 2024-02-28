@@ -18,8 +18,22 @@ class MessageBoxDialog {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FilledButton(child: Text(yesLabel, style: const TextStyle(fontWeight: FontWeight.bold)), onPressed: () => context.pop(true)),
-                FilledButton.tonal(child: Text(noLabel, style: const TextStyle(fontWeight: FontWeight.bold)), onPressed: () => context.pop(false)),
+                FilledButton(
+                    child: Text(
+                      yesLabel,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onPressed: () => context.pop(true)),
+                FilledButton.tonal(
+                    child: Text(
+                      noLabel,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onPressed: () => context.pop(false)),
               ],
             ),
           ],

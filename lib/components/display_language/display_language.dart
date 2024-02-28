@@ -38,6 +38,8 @@ class DisplayLanguage extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       LocaleNames.of(context)!.nameOf(locale.languageCode) ?? locale.toString(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 )),
