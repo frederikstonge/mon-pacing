@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,7 +10,7 @@ class QuantityStepper extends StatefulWidget {
   final int? minValue;
   final int? maxValue;
   final int multiple;
-  final ValueSetter<int?> onChanged;
+  final FutureOr<void> Function(int? value) onChanged;
   final bool hasError;
 
   const QuantityStepper({
@@ -60,7 +62,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
         children: [
           IconButton(
             onPressed: canRemove()
-                ? () {
+                ? () async {
                     var value = int.tryParse(_controller.text);
                     if (value != null) {
                       value = value - widget.multiple;
@@ -68,7 +70,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
 
                     value = _correct(value);
                     _controller.text = value.toString();
-                    widget.onChanged(value);
+                    await widget.onChanged(value);
                   }
                 : null,
             icon: const Icon(Icons.remove),
@@ -84,7 +86,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                onChanged: (value) => widget.onChanged(int.tryParse(value)),
+                onChanged: (value) async => await widget.onChanged(int.tryParse(value)),
                 onTapOutside: (event) {
                   FocusScope.of(context).unfocus();
                 },
@@ -93,7 +95,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
           ),
           IconButton(
             onPressed: canAdd()
-                ? () {
+                ? () async {
                     var value = int.tryParse(_controller.text);
                     if (value != null) {
                       value = value + widget.multiple;
@@ -101,7 +103,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
 
                     value = _correct(value);
                     _controller.text = value.toString();
-                    widget.onChanged(value);
+                    await widget.onChanged(value);
                   }
                 : null,
             icon: const Icon(Icons.add),

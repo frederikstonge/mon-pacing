@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class TextFieldElement extends StatelessWidget {
@@ -5,7 +7,7 @@ class TextFieldElement extends StatelessWidget {
   final TextEditingController controller;
   final bool autoFocus;
   final int maxLines;
-  final ValueSetter<String>? onChanged;
+  final FutureOr<void> Function(String value)? onChanged;
   final String? Function(String?)? validator;
 
   const TextFieldElement({

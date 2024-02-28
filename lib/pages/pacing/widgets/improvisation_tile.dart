@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../components/custom_card/custom_card.dart';
@@ -6,7 +8,7 @@ import '../../../models/improvisation_model.dart';
 class ImprovisationTile extends StatelessWidget {
   final ImprovisationModel improvisation;
   final int index;
-  final ValueSetter<ImprovisationModel> onChanged;
+  final FutureOr<void> Function(ImprovisationModel value) onChanged;
 
   const ImprovisationTile({
     super.key,

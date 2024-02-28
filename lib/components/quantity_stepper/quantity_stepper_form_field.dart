@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../validators/validator.dart';
@@ -9,7 +11,8 @@ class QuantityStepperFormField extends FormField<int> {
   final int? minValue;
   final int? maxValue;
   final int multiple;
-  final ValueSetter<int?> onChanged;
+
+  final FutureOr<void> Function(int? value) onChanged;
 
   QuantityStepperFormField({
     super.key,
@@ -36,9 +39,9 @@ class QuantityStepperFormField extends FormField<int> {
             children: [
               QuantityStepper(
                 initialValue: state.value ?? initialValue ?? minValue ?? multiple,
-                onChanged: (value) {
+                onChanged: (value) async {
                   state.didChange(value);
-                  onChanged.call(value);
+                  await onChanged.call(value);
                 },
                 inputHeight: inputHeight,
                 inputWidth: inputWidth,
