@@ -14,7 +14,7 @@ class SliverScaffold extends StatelessWidget {
     required this.slivers,
     this.floatingActionButton,
     this.floatingActionButtonAlignment = Alignment.bottomRight,
-    this.floatingActionButtonHeight = 62,
+    this.floatingActionButtonHeight = 46,
     this.scrollController,
     this.scrollPhysics,
   });
@@ -31,7 +31,7 @@ class SliverScaffold extends StatelessWidget {
                 ...slivers,
                 if (floatingActionButton != null) ...[
                   SliverPadding(
-                    padding: EdgeInsets.only(top: 16, bottom: floatingActionButtonHeight),
+                    padding: EdgeInsets.only(top: 16 * 2, bottom: floatingActionButtonHeight),
                   ),
                 ],
               ],
