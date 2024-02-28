@@ -39,7 +39,11 @@ class PacingMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.edit),
-              title: Text(S.of(context).edit),
+              title: Text(
+                S.of(context).edit,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           InkWell(
@@ -49,7 +53,11 @@ class PacingMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.play_arrow),
-              title: Text(S.of(context).startMatch),
+              title: Text(
+                S.of(context).startMatch,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           InkWell(
@@ -59,7 +67,11 @@ class PacingMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.upload),
-              title: Text(S.of(context).export),
+              title: Text(
+                S.of(context).export,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           InkWell(
@@ -69,7 +81,11 @@ class PacingMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.delete),
-              title: Text(S.of(context).delete),
+              title: Text(
+                S.of(context).delete,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         ],

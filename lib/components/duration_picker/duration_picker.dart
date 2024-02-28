@@ -49,9 +49,28 @@ class _DurationPickerState extends State<DurationPicker> {
           SegmentedButton(
             style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
             segments: const [
-              ButtonSegment(value: 1, label: Text('1 sec')),
-              ButtonSegment(value: 10, label: Text('10 sec')),
-              ButtonSegment(value: 30, label: Text('30 sec')),
+              ButtonSegment(
+                value: 1,
+                label: Text(
+                  '1 sec',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              ButtonSegment(
+                  value: 10,
+                  label: Text(
+                    '10 sec',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+              ButtonSegment(
+                  value: 30,
+                  label: Text(
+                    '30 sec',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
             ],
             selected: {secondInterval},
             onSelectionChanged: (values) {
@@ -91,7 +110,11 @@ class _DurationPickerState extends State<DurationPicker> {
                 onPressed: () {
                   Navigator.of(context).pop(selectedDuration);
                 },
-                child: Text(S.of(context).save),
+                child: Text(
+                  S.of(context).save,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),

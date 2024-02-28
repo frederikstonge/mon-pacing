@@ -127,7 +127,11 @@ class _CreateMatchViewState extends State<CreateMatchView> {
                     navigator.pop();
                   }
                 },
-                child: Text(S.of(context).create),
+                child: Text(
+                  S.of(context).create,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),

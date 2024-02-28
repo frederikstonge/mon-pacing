@@ -23,6 +23,7 @@ class TextHeader extends StatelessWidget {
                 child: Text(
                   title,
                   style: Theme.of(context).textTheme.titleLarge,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

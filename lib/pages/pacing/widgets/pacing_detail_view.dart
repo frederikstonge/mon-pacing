@@ -101,6 +101,8 @@ class _PacingDetailViewState extends State<PacingDetailView> {
                           child: Text(
                             S.of(context).numberOfTeamsByDefault,
                             style: Theme.of(context).textTheme.titleMedium,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         QuantityStepperFormField(
@@ -185,7 +187,11 @@ class _PacingDetailViewState extends State<PacingDetailView> {
                     navigator.pop();
                   }
                 },
-                child: Text(editMode ? S.of(context).save : S.of(context).create),
+                child: Text(
+                  editMode ? S.of(context).save : S.of(context).create,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),
