@@ -80,9 +80,22 @@ class PacingCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(pacing.name, style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
-                    Text(S.of(context).improvisationCount(pacing.improvisations.length)),
-                    Text(S.of(context).modifiedDate(pacing.modifiedDate!)),
+                    Text(
+                      pacing.name,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      S.of(context).improvisationCount(pacing.improvisations.length),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      S.of(context).modifiedDate(pacing.modifiedDate!),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
                 ),
               ),

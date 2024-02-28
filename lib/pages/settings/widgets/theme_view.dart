@@ -16,7 +16,7 @@ class ThemeView extends StatelessWidget {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         return BottomSheetScaffold(
-          appBar: BottomSheetAppbar(title: Text(S.of(context).theme)),
+          appBar: BottomSheetAppbar(title: S.of(context).theme),
           body: ListView(
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),

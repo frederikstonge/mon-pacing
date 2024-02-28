@@ -26,7 +26,7 @@ class PacingMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
-      appBar: BottomSheetAppbar(title: Text(pacing.name)),
+      appBar: BottomSheetAppbar(title: pacing.name),
       body: ListView(
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),

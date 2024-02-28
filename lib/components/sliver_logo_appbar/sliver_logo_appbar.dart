@@ -66,7 +66,11 @@ class SliverLogoAppbar extends StatelessWidget {
                 ),
               ),
             ),
-      title: Text(title),
+      title: Text(
+        title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
       centerTitle: true,
       actions: actions,
     );

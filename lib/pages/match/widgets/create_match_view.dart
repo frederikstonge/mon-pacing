@@ -54,7 +54,7 @@ class _CreateMatchViewState extends State<CreateMatchView> {
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
       appBar: BottomSheetAppbar(
-        title: Text(S.of(context).startMatch),
+        title: S.of(context).startMatch,
       ),
       isBodyExpanded: true,
       body: Form(

@@ -16,7 +16,7 @@ class LanguageView extends StatelessWidget {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         return BottomSheetScaffold(
-          appBar: BottomSheetAppbar(title: Text(S.of(context).language)),
+          appBar: BottomSheetAppbar(title: S.of(context).language),
           body: ListView(
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
