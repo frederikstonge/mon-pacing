@@ -3,12 +3,15 @@
   "appTitle": "Mon Pacing",
   "areYouSure": "Êtes-vous sûr de vouloir {action} {name}?",
   "cancel": "Annuler",
+  "category": "Catégorie",
+  "compared": "Comparée",
   "create": "Créer",
   "createNewPacingTooltip": "Créer un nouveau pacing",
   "createPacing": "Créer un pacing",
   "dark": "Sombre",
   "defaultTimeBuffer": "Temps tampon par défaut",
   "delete": "Supprimer",
+  "duration": "Durée",
   "edit": "Modifier",
   "editPacing": "Modifier le pacing",
   "enableDefaultTimeBuffer": "Activer le temps tampon par défaut",
@@ -23,19 +26,22 @@
   "light": "Clair",
   "lni": "LNI Vintage",
   "matches": "Matchs",
+  "mixed": "Mixte",
   "modifiedDate": "Date de modification: {date}",
-  "@modifiedDate":{
+  "@modifiedDate": {
     "placeholders": {
       "date": {
-        "type": "DateTime",
-        "format": "yMd"
+        "format": "yMd",
+        "type": "DateTime"
       }
     }
   },
   "multipleOf": "Doit être un multiple de {multiple}",
   "name": "Nom",
+  "notes": "Notes",
   "numberOfTeamsByDefault": "Nombre d'équipe par défaut",
   "pacings": "Pacings",
+  "performers": "Interprètes",
   "required": "Le champ est requis",
   "save": "Sauvegarder",
   "settings": "Paramêtres",
@@ -44,5 +50,6 @@
   "teams": "Équipes",
   "theme": "Thème",
   "timeBuffer": "Temps tampon",
-  "timeBufferTooltip": "Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser pour le caucus, le vote etc."
+  "timeBufferTooltip": "Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser pour le caucus, le vote etc.",
+  "type": "Type"
 }
