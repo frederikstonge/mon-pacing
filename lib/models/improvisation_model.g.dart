@@ -73,14 +73,7 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
     IsarCore.endList(writer, listWriter);
   }
   IsarCore.writeLong(writer, 7, object.performers ?? -9223372036854775808);
-  {
-    final value = object.notes;
-    if (value == null) {
-      IsarCore.writeNull(writer, 8);
-    } else {
-      IsarCore.writeString(writer, 8, value);
-    }
-  }
+  IsarCore.writeString(writer, 8, object.notes);
   return 0;
 }
 
@@ -130,8 +123,8 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
       _performers = value;
     }
   }
-  final String? _notes;
-  _notes = IsarCore.readString(reader, 8);
+  final String _notes;
+  _notes = IsarCore.readString(reader, 8) ?? '';
   final object = ImprovisationModel(
     id: _id,
     order: _order,
@@ -971,22 +964,8 @@ extension ImprovisationModelQueryFilter
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      notesIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      notesIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       notesEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1002,7 +981,7 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       notesGreaterThan(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1018,7 +997,7 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       notesGreaterThanOrEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1034,7 +1013,7 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       notesLessThan(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1050,7 +1029,7 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       notesLessThanOrEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1066,8 +1045,8 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       notesBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1184,7 +1163,7 @@ _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
           .map((e) => e as int)
           .toList(),
       performers: json['performers'] as int?,
-      notes: json['notes'] as String?,
+      notes: json['notes'] as String,
     );
 
 Map<String, dynamic> _$$ImprovisationModelImplToJson(

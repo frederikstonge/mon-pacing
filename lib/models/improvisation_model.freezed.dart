@@ -27,7 +27,7 @@ mixin _$ImprovisationModel {
   String get theme => throw _privateConstructorUsedError;
   List<int> get durationsInSeconds => throw _privateConstructorUsedError;
   int? get performers => throw _privateConstructorUsedError;
-  String? get notes => throw _privateConstructorUsedError;
+  String get notes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +49,7 @@ abstract class $ImprovisationModelCopyWith<$Res> {
       String theme,
       List<int> durationsInSeconds,
       int? performers,
-      String? notes});
+      String notes});
 }
 
 /// @nodoc
@@ -72,7 +72,7 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
     Object? theme = null,
     Object? durationsInSeconds = null,
     Object? performers = freezed,
-    Object? notes = freezed,
+    Object? notes = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -103,10 +103,10 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
               as int?,
-      notes: freezed == notes
+      notes: null == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -127,7 +127,7 @@ abstract class _$$ImprovisationModelImplCopyWith<$Res>
       String theme,
       List<int> durationsInSeconds,
       int? performers,
-      String? notes});
+      String notes});
 }
 
 /// @nodoc
@@ -148,7 +148,7 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
     Object? theme = null,
     Object? durationsInSeconds = null,
     Object? performers = freezed,
-    Object? notes = freezed,
+    Object? notes = null,
   }) {
     return _then(_$ImprovisationModelImpl(
       id: null == id
@@ -179,10 +179,10 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
               as int?,
-      notes: freezed == notes
+      notes: null == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -198,7 +198,7 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
       required this.theme,
       required final List<int> durationsInSeconds,
       required this.performers,
-      this.notes})
+      required this.notes})
       : _durationsInSeconds = durationsInSeconds;
 
   factory _$ImprovisationModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -226,7 +226,7 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
   @override
   final int? performers;
   @override
-  final String? notes;
+  final String notes;
 
   @override
   String toString() {
@@ -288,7 +288,7 @@ abstract class _ImprovisationModel implements ImprovisationModel {
       required final String theme,
       required final List<int> durationsInSeconds,
       required final int? performers,
-      final String? notes}) = _$ImprovisationModelImpl;
+      required final String notes}) = _$ImprovisationModelImpl;
 
   factory _ImprovisationModel.fromJson(Map<String, dynamic> json) =
       _$ImprovisationModelImpl.fromJson;
@@ -308,7 +308,7 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   @override
   int? get performers;
   @override
-  String? get notes;
+  String get notes;
   @override
   @JsonKey(ignore: true)
   _$$ImprovisationModelImplCopyWith<_$ImprovisationModelImpl> get copyWith =>

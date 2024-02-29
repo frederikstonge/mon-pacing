@@ -1,21 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class TextFieldElement extends StatelessWidget {
+class NumberFieldElement extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final bool autoFocus;
-  final int maxLines;
-  final FutureOr<void> Function(String value)? onChanged;
+  final FutureOr<void> Function(int? value)? onChanged;
   final String? Function(String?)? validator;
 
-  const TextFieldElement({
+  const NumberFieldElement({
     super.key,
     required this.label,
     required this.controller,
     this.autoFocus = false,
-    this.maxLines = 1,
     this.onChanged,
     this.validator,
   });
@@ -37,11 +36,12 @@ class TextFieldElement extends StatelessWidget {
         TextFormField(
           controller: controller,
           autofocus: autoFocus,
-          maxLines: maxLines,
-          minLines: maxLines > 1 ? 2 : null,
-          onChanged: onChanged,
+          onChanged: (value) => onChanged?.call(int.tryParse(value)),
           validator: validator,
-          keyboardType: maxLines == 1 ? TextInputType.text : TextInputType.multiline,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
           onTapOutside: (event) => FocusScope.of(context).unfocus(),
           autovalidateMode: AutovalidateMode.onUserInteraction,
         ),

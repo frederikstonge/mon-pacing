@@ -3,12 +3,15 @@
   "appTitle": "Mon Pacing",
   "areYouSure": "Are you sure you want to {action} {name}?",
   "cancel": "Cancel",
+  "category": "Category",
+  "compared": "Compared",
   "create": "Create",
   "createNewPacingTooltip": "Create new pacing",
   "createPacing": "Create pacing",
   "dark": "Dark",
   "defaultTimeBuffer": "Default time buffer",
   "delete": "Delete",
+  "duration": "Duration",
   "edit": "Edit",
   "editPacing": "Edit pacing",
   "enableDefaultTimeBuffer": "Enable default time buffer",
@@ -23,19 +26,22 @@
   "light": "Light",
   "lni": "LNI Vintage",
   "matches": "Matches",
+  "mixed": "Mixed",
   "modifiedDate": "Modified date: {date}",
-  "@modifiedDate":{
+  "@modifiedDate": {
     "placeholders": {
       "date": {
-        "type": "DateTime",
-        "format": "yMd"
+        "format": "yMd",
+        "type": "DateTime"
       }
     }
   },
   "multipleOf": "Must be a multiple of {multiple}",
   "name": "Name",
+  "notes": "Notes",
   "numberOfTeamsByDefault": "Number of teams by default",
   "pacings": "Pacings",
+  "performers": "Performers",
   "required": "Field is required",
   "save": "Save",
   "settings": "Settings",
@@ -44,5 +50,6 @@
   "teams": "Teams",
   "theme": "Theme",
   "timeBuffer": "Timer buffer",
-  "timeBufferTooltip": "Extra time that will be added on top of each improvisation's duration to compensate for the huddle, voting and more."
+  "timeBufferTooltip": "Extra time that will be added on top of each improvisation's duration to compensate for the huddle, voting and more.",
+  "type": "Type"
 }
