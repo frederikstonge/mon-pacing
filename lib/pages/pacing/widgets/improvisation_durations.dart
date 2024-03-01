@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/duration_picker/duration_picker.dart';
 import '../../../extensions/duration_extensions.dart';
@@ -50,7 +51,7 @@ class ImprovisationDurations extends StatelessWidget {
                         },
                       ),
                     ),
-                    IconButton(
+                    LoadingIconButton(
                       icon: const Icon(Icons.add),
                       onPressed: () async {
                         final newDurations = List<int>.from(durations);
@@ -58,7 +59,7 @@ class ImprovisationDurations extends StatelessWidget {
                         await onChanged(newDurations);
                       },
                     ),
-                    IconButton(
+                    LoadingIconButton(
                       icon: const Icon(Icons.remove),
                       onPressed: durations.length > 1
                           ? () async {

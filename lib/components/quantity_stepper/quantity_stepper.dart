@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../actions/loading_icon_button.dart';
+
 class QuantityStepper extends StatefulWidget {
   final int initialValue;
   final double inputWidth;
@@ -60,7 +62,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(
+          LoadingIconButton(
             onPressed: canRemove()
                 ? () async {
                     var value = int.tryParse(_controller.text);
@@ -93,7 +95,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
               ),
             ),
           ),
-          IconButton(
+          LoadingIconButton(
             onPressed: canAdd()
                 ? () async {
                     var value = int.tryParse(_controller.text);

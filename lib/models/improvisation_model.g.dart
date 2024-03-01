@@ -42,7 +42,7 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
       ),
       IsarPropertySchema(
         name: 'performers',
-        type: IsarType.long,
+        type: IsarType.string,
       ),
       IsarPropertySchema(
         name: 'notes',
@@ -72,7 +72,7 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
     }
     IsarCore.endList(writer, listWriter);
   }
-  IsarCore.writeLong(writer, 7, object.performers ?? -9223372036854775808);
+  IsarCore.writeString(writer, 7, object.performers);
   IsarCore.writeString(writer, 8, object.notes);
   return 0;
 }
@@ -114,15 +114,8 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
       }
     }
   }
-  final int? _performers;
-  {
-    final value = IsarCore.readLong(reader, 7);
-    if (value == -9223372036854775808) {
-      _performers = null;
-    } else {
-      _performers = value;
-    }
-  }
+  final String _performers;
+  _performers = IsarCore.readString(reader, 7) ?? '';
   final String _notes;
   _notes = IsarCore.readString(reader, 8) ?? '';
   final object = ImprovisationModel(
@@ -864,28 +857,16 @@ extension ImprovisationModelQueryFilter
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      performersIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      performersIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       performersEqualTo(
-    int? value,
-  ) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
           property: 7,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
@@ -893,13 +874,15 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       performersGreaterThan(
-    int? value,
-  ) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
           property: 7,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
@@ -907,13 +890,15 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       performersGreaterThanOrEqualTo(
-    int? value,
-  ) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
           property: 7,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
@@ -921,13 +906,15 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       performersLessThan(
-    int? value,
-  ) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
           property: 7,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
@@ -935,13 +922,15 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       performersLessThanOrEqualTo(
-    int? value,
-  ) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
           property: 7,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
@@ -949,15 +938,99 @@ extension ImprovisationModelQueryFilter
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       performersBetween(
-    int? lower,
-    int? upper,
-  ) {
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
           property: 7,
           lower: lower,
           upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 7,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 7,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 7,
+          value: '',
         ),
       );
     });
@@ -1162,7 +1235,7 @@ _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
       durationsInSeconds: (json['durationsInSeconds'] as List<dynamic>)
           .map((e) => e as int)
           .toList(),
-      performers: json['performers'] as int?,
+      performers: json['performers'] as String,
       notes: json['notes'] as String,
     );
 

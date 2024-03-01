@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -73,10 +74,10 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                 actions: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: IconButton(
+                    child: LoadingIconButton(
                       icon: const Icon(Icons.download),
                       tooltip: S.of(context).importPacingTooltip,
-                      onPressed: () {},
+                      onPressed: () async => context.read<PacingsCubit>().import(),
                     ),
                   )
                 ],
@@ -112,7 +113,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       ),
                       delete: () async => await context.read<PacingsCubit>().delete(pacing),
                       edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
-                      export: () {},
+                      export: () async => await context.read<PacingsCubit>().export(pacing),
                       startMatch: () => BottomSheetDialog.showDialog(
                         context: context,
                         child: CreateMatchView(

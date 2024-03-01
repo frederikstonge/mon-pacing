@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:sanitize_filename/sanitize_filename.dart';
 
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
@@ -66,5 +72,29 @@ class PacingsCubit extends Cubit<PacingsState> {
   Future<void> refresh() async {
     emit(const PacingsState.initial());
     await fetch();
+  }
+
+  Future<PacingModel?> import() async {
+    const params = OpenFileDialogParams(
+      dialogType: OpenFileDialogType.document,
+      sourceType: SourceType.photoLibrary,
+      fileExtensionsFilter: ['json'],
+    );
+    final filePath = await FlutterFileDialog.pickFile(params: params);
+    if (filePath != null) {
+      final pacingValue = await File(filePath).readAsString();
+      final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
+      return await add(pacing.copyWith(id: 0));
+    }
+
+    return null;
+  }
+
+  Future<bool> export(PacingModel model) async {
+    final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+    final fileName = sanitizeFilename('${model.name}.json', replacement: '-');
+    final params = SaveFileDialogParams(data: data, fileName: fileName);
+    final filePath = await FlutterFileDialog.saveFile(params: params);
+    return filePath != null;
   }
 }

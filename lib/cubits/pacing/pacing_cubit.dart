@@ -37,7 +37,7 @@ class PacingCubit extends Cubit<PacingState> {
           type: nextType,
           durationsInSeconds: [const Duration(minutes: 2, seconds: 30).inSeconds],
           category: '',
-          performers: null,
+          performers: '',
           theme: '',
           notes: '',
         );

@@ -218,7 +218,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
               category: '',
               theme: '',
               durationsInSeconds: const <int>[],
-              performers: null,
+              performers: '',
               notes: '',
             ),
             growable: true);
@@ -233,7 +233,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
                 category: '',
                 theme: '',
                 durationsInSeconds: const <int>[],
-                performers: null,
+                performers: '',
                 notes: '',
               );
             } else {
@@ -424,7 +424,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                   category: '',
                   theme: '',
                   durationsInSeconds: const <int>[],
-                  performers: null,
+                  performers: '',
                   notes: '',
                 ),
                 growable: true);
@@ -439,7 +439,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                     category: '',
                     theme: '',
                     durationsInSeconds: const <int>[],
-                    performers: null,
+                    performers: '',
                     notes: '',
                   );
                 } else {

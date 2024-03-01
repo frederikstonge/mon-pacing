@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../cubits/pacing/pacing_cubit.dart';
@@ -34,9 +36,9 @@ class PacingPageView extends StatelessWidget {
                 SliverLogoAppbar(
                   title: pacing.name,
                   actions: [
-                    IconButton(
-                      onPressed: () {
-                        BottomSheetDialog.showDialog(
+                    LoadingIconButton(
+                      onPressed: () async {
+                        await BottomSheetDialog.showDialog(
                           context: context,
                           child: PacingDetailView(
                             pacing: pacing,
@@ -49,7 +51,7 @@ class PacingPageView extends StatelessWidget {
                       tooltip: S.of(context).editPacing,
                       icon: const Icon(Icons.edit),
                     ),
-                    IconButton(
+                    LoadingIconButton(
                       onPressed: () async {
                         final router = GoRouter.of(context);
                         await context.read<PacingsCubit>().edit(pacing);
@@ -73,6 +75,13 @@ class PacingPageView extends StatelessWidget {
                       improvisation: improvisation,
                       index: index,
                       onChanged: (value) => context.read<PacingCubit>().editImprovisation(value),
+                      onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
+                        context,
+                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(value.order + 1)),
+                        S.of(context).delete,
+                        S.of(context).cancel,
+                      ),
+                      onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(value.order),
                     );
                   },
                   onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),
