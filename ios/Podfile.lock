@@ -95,6 +95,8 @@ PODS:
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.20.0)
   - Flutter (1.0.0)
+  - flutter_file_dialog (0.0.1):
+    - Flutter
   - flutter_foreground_task (0.0.1):
     - Flutter
   - GoogleAppMeasurement (10.20.0):
@@ -164,6 +166,7 @@ DEPENDENCIES:
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_performance (from `.symlinks/plugins/firebase_performance/ios`)
   - Flutter (from `Flutter`)
+  - flutter_file_dialog (from `.symlinks/plugins/flutter_file_dialog/ios`)
   - flutter_foreground_task (from `.symlinks/plugins/flutter_foreground_task/ios`)
   - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -201,6 +204,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_performance/ios"
   Flutter:
     :path: Flutter
+  flutter_file_dialog:
+    :path: ".symlinks/plugins/flutter_file_dialog/ios"
   flutter_foreground_task:
     :path: ".symlinks/plugins/flutter_foreground_task/ios"
   isar_flutter_libs:
@@ -228,6 +233,7 @@ SPEC CHECKSUMS:
   FirebaseSessions: 2f348975f6d1c139231c180e12194161da2e0cd6
   FirebaseSharedSwift: 2fbf73618288b7a36b2014b957745dcdd781389e
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_file_dialog: 4c014a45b105709a27391e266c277d7e588e9299
   flutter_foreground_task: 21ef182ab0a29a3005cc72cd70e5f45cb7f7f817
   GoogleAppMeasurement: bb3c564c3efb933136af0e94899e0a46167466a8
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe

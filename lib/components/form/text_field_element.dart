@@ -6,7 +6,7 @@ class TextFieldElement extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final bool autoFocus;
-  final int maxLines;
+  final bool multiline;
   final FutureOr<void> Function(String value)? onChanged;
   final String? Function(String?)? validator;
 
@@ -15,7 +15,7 @@ class TextFieldElement extends StatelessWidget {
     required this.label,
     required this.controller,
     this.autoFocus = false,
-    this.maxLines = 1,
+    this.multiline = false,
     this.onChanged,
     this.validator,
   });
@@ -37,11 +37,11 @@ class TextFieldElement extends StatelessWidget {
         TextFormField(
           controller: controller,
           autofocus: autoFocus,
-          maxLines: maxLines,
-          minLines: maxLines > 1 ? 2 : null,
+          maxLines: multiline ? null : 1,
+          minLines: multiline ? 2 : null,
           onChanged: onChanged,
           validator: validator,
-          keyboardType: maxLines == 1 ? TextInputType.text : TextInputType.multiline,
+          keyboardType: multiline ? TextInputType.multiline : TextInputType.text,
           onTapOutside: (event) => FocusScope.of(context).unfocus(),
           autovalidateMode: AutovalidateMode.onUserInteraction,
         ),

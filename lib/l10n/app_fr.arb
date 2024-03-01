@@ -21,6 +21,7 @@
   "greaterThan": "Doit être plus grand que {min}",
   "importPacingTooltip": "Importer un pacing",
   "improvisationCount": "Nombre d'improvisation: {count}",
+  "improvisationNumber": "Improvisation #{order}",
   "language": "Langue",
   "lesserThan": "Doit être plus petit que {max}",
   "light": "Clair",

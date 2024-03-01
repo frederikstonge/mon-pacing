@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../../components/custom_card/custom_card.dart';
@@ -91,7 +92,7 @@ class _CreateMatchViewState extends State<CreateMatchView> {
               padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
               child: TextHeader(
                 title: S.of(context).teams,
-                trailing: IconButton(
+                trailing: LoadingIconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {},
                 ),
@@ -103,7 +104,7 @@ class _CreateMatchViewState extends State<CreateMatchView> {
                   SettingsTile(
                     leading: const Icon(Icons.color_lens),
                     title: Text(S.of(context).enableTimeBuffer),
-                    trailing: IconButton(
+                    trailing: LoadingIconButton(
                       icon: const Icon(Icons.remove),
                       onPressed: () {},
                     ),
