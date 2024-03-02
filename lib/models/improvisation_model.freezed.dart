@@ -21,7 +21,6 @@ ImprovisationModel _$ImprovisationModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ImprovisationModel {
   int get id => throw _privateConstructorUsedError;
-  int get order => throw _privateConstructorUsedError;
   ImprovisationType get type => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get theme => throw _privateConstructorUsedError;
@@ -43,7 +42,6 @@ abstract class $ImprovisationModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int order,
       ImprovisationType type,
       String category,
       String theme,
@@ -66,7 +64,6 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
   @override
   $Res call({
     Object? id = null,
-    Object? order = null,
     Object? type = null,
     Object? category = null,
     Object? theme = null,
@@ -78,10 +75,6 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
               as int,
       type: null == type
           ? _value.type
@@ -121,7 +114,6 @@ abstract class _$$ImprovisationModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      int order,
       ImprovisationType type,
       String category,
       String theme,
@@ -142,7 +134,6 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? order = null,
     Object? type = null,
     Object? category = null,
     Object? theme = null,
@@ -154,10 +145,6 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
               as int,
       type: null == type
           ? _value.type
@@ -192,7 +179,6 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
 class _$ImprovisationModelImpl implements _ImprovisationModel {
   const _$ImprovisationModelImpl(
       {required this.id,
-      required this.order,
       required this.type,
       required this.category,
       required this.theme,
@@ -206,8 +192,6 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
 
   @override
   final int id;
-  @override
-  final int order;
   @override
   final ImprovisationType type;
   @override
@@ -230,7 +214,7 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
 
   @override
   String toString() {
-    return 'ImprovisationModel(id: $id, order: $order, type: $type, category: $category, theme: $theme, durationsInSeconds: $durationsInSeconds, performers: $performers, notes: $notes)';
+    return 'ImprovisationModel(id: $id, type: $type, category: $category, theme: $theme, durationsInSeconds: $durationsInSeconds, performers: $performers, notes: $notes)';
   }
 
   @override
@@ -239,7 +223,6 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
         (other.runtimeType == runtimeType &&
             other is _$ImprovisationModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.order, order) || other.order == order) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.category, category) ||
                 other.category == category) &&
@@ -256,7 +239,6 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      order,
       type,
       category,
       theme,
@@ -282,7 +264,6 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
 abstract class _ImprovisationModel implements ImprovisationModel {
   const factory _ImprovisationModel(
       {required final int id,
-      required final int order,
       required final ImprovisationType type,
       required final String category,
       required final String theme,
@@ -295,8 +276,6 @@ abstract class _ImprovisationModel implements ImprovisationModel {
 
   @override
   int get id;
-  @override
-  int get order;
   @override
   ImprovisationType get type;
   @override

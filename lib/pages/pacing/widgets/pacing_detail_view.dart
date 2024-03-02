@@ -15,6 +15,7 @@ import '../../../components/text_header/text_header.dart';
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../extensions/duration_extensions.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../models/constants.dart';
 import '../../../models/pacing_model.dart';
 import '../../../validators/validator.dart';
 
@@ -115,8 +116,8 @@ class _PacingDetailViewState extends State<PacingDetailView> {
                               });
                             }
                           },
-                          minValue: 1,
-                          maxValue: 3,
+                          minValue: Constants.minumumTeams,
+                          maxValue: Constants.maximumTeams,
                         ),
                       ],
                     ),
@@ -152,7 +153,7 @@ class _PacingDetailViewState extends State<PacingDetailView> {
                     trailing: const Icon(Icons.chevron_right),
                     onTap: pacing.enableTimeBuffer
                         ? () async {
-                            final newDuration = await BottomSheetDialog.showDialog(
+                            final newDuration = await BottomSheetDialog.showDialog<Duration>(
                               context: context,
                               child: DurationPicker(
                                 title: S.of(context).timeBuffer,

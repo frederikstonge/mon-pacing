@@ -9,7 +9,6 @@ part 'team_model.g.dart';
 class TeamModel with _$TeamModel {
   const factory TeamModel({
     required int id,
-    required int order,
     required String name,
     required int color,
   }) = _TeamModel;

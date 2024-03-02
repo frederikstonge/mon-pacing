@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
@@ -49,6 +50,16 @@ final router = GoRouter(
               pageBuilder: (context, state) {
                 return const NoTransitionPage(child: MatchesPageShell());
               },
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: rootNavigatorKey,
+                  name: Routes.match,
+                  path: 'details/:id',
+                  builder: (context, state) => MatchPageShell(
+                    id: int.parse(state.pathParameters['id']!),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

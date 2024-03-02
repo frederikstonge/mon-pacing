@@ -174,7 +174,6 @@ MatchModel deserializeMatchModel(IsarReader reader) {
             length,
             TeamModel(
               id: -9223372036854775808,
-              order: -9223372036854775808,
               name: '',
               color: -9223372036854775808,
             ),
@@ -185,7 +184,6 @@ MatchModel deserializeMatchModel(IsarReader reader) {
             if (objectReader.isNull) {
               list[i] = TeamModel(
                 id: -9223372036854775808,
-                order: -9223372036854775808,
                 name: '',
                 color: -9223372036854775808,
               );
@@ -213,7 +211,6 @@ MatchModel deserializeMatchModel(IsarReader reader) {
             length,
             ImprovisationModel(
               id: -9223372036854775808,
-              order: -9223372036854775808,
               type: ImprovisationType.mixed,
               category: '',
               theme: '',
@@ -228,7 +225,6 @@ MatchModel deserializeMatchModel(IsarReader reader) {
             if (objectReader.isNull) {
               list[i] = ImprovisationModel(
                 id: -9223372036854775808,
-                order: -9223372036854775808,
                 type: ImprovisationType.mixed,
                 category: '',
                 theme: '',
@@ -380,7 +376,6 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                 length,
                 TeamModel(
                   id: -9223372036854775808,
-                  order: -9223372036854775808,
                   name: '',
                   color: -9223372036854775808,
                 ),
@@ -391,7 +386,6 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                 if (objectReader.isNull) {
                   list[i] = TeamModel(
                     id: -9223372036854775808,
-                    order: -9223372036854775808,
                     name: '',
                     color: -9223372036854775808,
                   );
@@ -419,7 +413,6 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                 length,
                 ImprovisationModel(
                   id: -9223372036854775808,
-                  order: -9223372036854775808,
                   type: ImprovisationType.mixed,
                   category: '',
                   theme: '',
@@ -434,7 +427,6 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                 if (objectReader.isNull) {
                   list[i] = ImprovisationModel(
                     id: -9223372036854775808,
-                    order: -9223372036854775808,
                     type: ImprovisationType.mixed,
                     category: '',
                     theme: '',

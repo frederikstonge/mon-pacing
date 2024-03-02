@@ -13,7 +13,7 @@ import '../../cubits/pacings/pacings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
-import '../match/widgets/create_match_view.dart';
+import '../match/widgets/match_detail_view.dart';
 import '../pacing/widgets/pacing_detail_view.dart';
 import 'widgets/pacing_card.dart';
 
@@ -116,7 +116,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       export: () async => await context.read<PacingsCubit>().export(pacing),
                       startMatch: () => BottomSheetDialog.showDialog(
                         context: context,
-                        child: CreateMatchView(
+                        child: MatchDetailView(
                           pacing: pacing,
                           onConfirm: (match) async {
                             final router = GoRouter.of(context);

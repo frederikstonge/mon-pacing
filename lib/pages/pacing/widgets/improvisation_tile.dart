@@ -85,7 +85,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  S.of(context).improvisationNumber(widget.improvisation.order + 1),
+                  S.of(context).improvisationNumber(widget.index + 1),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

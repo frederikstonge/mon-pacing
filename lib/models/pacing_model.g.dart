@@ -136,7 +136,6 @@ PacingModel deserializePacingModel(IsarReader reader) {
             length,
             ImprovisationModel(
               id: -9223372036854775808,
-              order: -9223372036854775808,
               type: ImprovisationType.mixed,
               category: '',
               theme: '',
@@ -151,7 +150,6 @@ PacingModel deserializePacingModel(IsarReader reader) {
             if (objectReader.isNull) {
               list[i] = ImprovisationModel(
                 id: -9223372036854775808,
-                order: -9223372036854775808,
                 type: ImprovisationType.mixed,
                 category: '',
                 theme: '',
@@ -229,7 +227,6 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
                 length,
                 ImprovisationModel(
                   id: -9223372036854775808,
-                  order: -9223372036854775808,
                   type: ImprovisationType.mixed,
                   category: '',
                   theme: '',
@@ -244,7 +241,6 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
                 if (objectReader.isNull) {
                   list[i] = ImprovisationModel(
                     id: -9223372036854775808,
-                    order: -9223372036854775808,
                     type: ImprovisationType.mixed,
                     category: '',
                     theme: '',

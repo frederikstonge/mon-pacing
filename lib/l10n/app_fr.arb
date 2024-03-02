@@ -1,5 +1,6 @@
 {
   "@@locale": "fr",
+  "addImprovisation": "Ajouter une improvisation",
   "appTitle": "Mon Pacing",
   "areYouSure": "Êtes-vous sûr de vouloir {action} {name}?",
   "cancel": "Annuler",
@@ -13,6 +14,7 @@
   "delete": "Supprimer",
   "duration": "Durée",
   "edit": "Modifier",
+  "editMatch": "Modifier le match",
   "editPacing": "Modifier le pacing",
   "enableDefaultTimeBuffer": "Activer le temps tampon par défaut",
   "enableTimeBuffer": "Activer le temps tampon",
@@ -41,6 +43,7 @@
   "name": "Nom",
   "notes": "Notes",
   "numberOfTeamsByDefault": "Nombre d'équipe par défaut",
+  "open": "Ouvrir",
   "pacings": "Pacings",
   "performers": "Interprètes",
   "required": "Le champ est requis",
@@ -52,5 +55,6 @@
   "theme": "Thème",
   "timeBuffer": "Temps tampon",
   "timeBufferTooltip": "Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser pour le caucus, le vote etc.",
-  "type": "Type"
+  "type": "Type",
+  "versus": "vs"
 }

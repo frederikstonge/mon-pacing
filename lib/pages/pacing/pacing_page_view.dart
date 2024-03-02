@@ -29,7 +29,7 @@ class PacingPageView extends StatelessWidget {
             success: (pacing) => SliverScaffold(
               floatingActionButton: FloatingActionButton(
                 onPressed: () => context.read<PacingCubit>().addImprovisation(),
-                tooltip: 'Add improvistion',
+                tooltip: S.of(context).addImprovisation,
                 child: const Icon(Icons.add),
               ),
               slivers: [
@@ -74,14 +74,14 @@ class PacingPageView extends StatelessWidget {
                       key: ValueKey(improvisation.id),
                       improvisation: improvisation,
                       index: index,
-                      onChanged: (value) => context.read<PacingCubit>().editImprovisation(value),
+                      onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
                       onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
                         context,
-                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(value.order + 1)),
+                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(index + 1)),
                         S.of(context).delete,
                         S.of(context).cancel,
                       ),
-                      onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(value.order),
+                      onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(index),
                     );
                   },
                   onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),
