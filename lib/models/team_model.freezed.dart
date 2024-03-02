@@ -21,7 +21,6 @@ TeamModel _$TeamModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TeamModel {
   int get id => throw _privateConstructorUsedError;
-  int get order => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get color => throw _privateConstructorUsedError;
 
@@ -36,7 +35,7 @@ abstract class $TeamModelCopyWith<$Res> {
   factory $TeamModelCopyWith(TeamModel value, $Res Function(TeamModel) then) =
       _$TeamModelCopyWithImpl<$Res, TeamModel>;
   @useResult
-  $Res call({int id, int order, String name, int color});
+  $Res call({int id, String name, int color});
 }
 
 /// @nodoc
@@ -53,7 +52,6 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
   @override
   $Res call({
     Object? id = null,
-    Object? order = null,
     Object? name = null,
     Object? color = null,
   }) {
@@ -61,10 +59,6 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _value.name
@@ -86,7 +80,7 @@ abstract class _$$TeamModelImplCopyWith<$Res>
       __$$TeamModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int order, String name, int color});
+  $Res call({int id, String name, int color});
 }
 
 /// @nodoc
@@ -101,7 +95,6 @@ class __$$TeamModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? order = null,
     Object? name = null,
     Object? color = null,
   }) {
@@ -109,10 +102,6 @@ class __$$TeamModelImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _value.name
@@ -130,10 +119,7 @@ class __$$TeamModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TeamModelImpl implements _TeamModel {
   const _$TeamModelImpl(
-      {required this.id,
-      required this.order,
-      required this.name,
-      required this.color});
+      {required this.id, required this.name, required this.color});
 
   factory _$TeamModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamModelImplFromJson(json);
@@ -141,15 +127,13 @@ class _$TeamModelImpl implements _TeamModel {
   @override
   final int id;
   @override
-  final int order;
-  @override
   final String name;
   @override
   final int color;
 
   @override
   String toString() {
-    return 'TeamModel(id: $id, order: $order, name: $name, color: $color)';
+    return 'TeamModel(id: $id, name: $name, color: $color)';
   }
 
   @override
@@ -158,14 +142,13 @@ class _$TeamModelImpl implements _TeamModel {
         (other.runtimeType == runtimeType &&
             other is _$TeamModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.order, order) || other.order == order) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.color, color) || other.color == color));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, order, name, color);
+  int get hashCode => Object.hash(runtimeType, id, name, color);
 
   @JsonKey(ignore: true)
   @override
@@ -184,7 +167,6 @@ class _$TeamModelImpl implements _TeamModel {
 abstract class _TeamModel implements TeamModel {
   const factory _TeamModel(
       {required final int id,
-      required final int order,
       required final String name,
       required final int color}) = _$TeamModelImpl;
 
@@ -193,8 +175,6 @@ abstract class _TeamModel implements TeamModel {
 
   @override
   int get id;
-  @override
-  int get order;
   @override
   String get name;
   @override

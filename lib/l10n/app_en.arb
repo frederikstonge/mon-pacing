@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "addImprovisation": "Add improvisation",
   "appTitle": "Mon Pacing",
   "areYouSure": "Are you sure you want to {action} {name}?",
   "cancel": "Cancel",
@@ -13,6 +14,7 @@
   "delete": "Delete",
   "duration": "Duration",
   "edit": "Edit",
+  "editMatch": "Edit match",
   "editPacing": "Edit pacing",
   "enableDefaultTimeBuffer": "Enable default time buffer",
   "enableTimeBuffer": "Enable time buffer",
@@ -41,6 +43,7 @@
   "name": "Name",
   "notes": "Notes",
   "numberOfTeamsByDefault": "Number of teams by default",
+  "open": "Open",
   "pacings": "Pacings",
   "performers": "Performers",
   "required": "Field is required",
@@ -52,5 +55,6 @@
   "theme": "Theme",
   "timeBuffer": "Timer buffer",
   "timeBufferTooltip": "Extra time that will be added on top of each improvisation's duration to compensate for the huddle, voting and more.",
-  "type": "Type"
+  "type": "Type",
+  "versus": "vs"
 }

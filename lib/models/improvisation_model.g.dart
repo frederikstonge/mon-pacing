@@ -20,10 +20,6 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
         type: IsarType.long,
       ),
       IsarPropertySchema(
-        name: 'order',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
         name: 'type',
         type: IsarType.byte,
         enumMap: {"mixed": 0, "compared": 1},
@@ -60,20 +56,19 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
 @isarProtected
 int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
   IsarCore.writeLong(writer, 1, object.id);
-  IsarCore.writeLong(writer, 2, object.order);
-  IsarCore.writeByte(writer, 3, object.type.index);
-  IsarCore.writeString(writer, 4, object.category);
-  IsarCore.writeString(writer, 5, object.theme);
+  IsarCore.writeByte(writer, 2, object.type.index);
+  IsarCore.writeString(writer, 3, object.category);
+  IsarCore.writeString(writer, 4, object.theme);
   {
     final list = object.durationsInSeconds;
-    final listWriter = IsarCore.beginList(writer, 6, list.length);
+    final listWriter = IsarCore.beginList(writer, 5, list.length);
     for (var i = 0; i < list.length; i++) {
       IsarCore.writeLong(listWriter, i, list[i]);
     }
     IsarCore.endList(writer, listWriter);
   }
-  IsarCore.writeString(writer, 7, object.performers);
-  IsarCore.writeString(writer, 8, object.notes);
+  IsarCore.writeString(writer, 6, object.performers);
+  IsarCore.writeString(writer, 7, object.notes);
   return 0;
 }
 
@@ -81,24 +76,22 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
 ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   final int _id;
   _id = IsarCore.readLong(reader, 1);
-  final int _order;
-  _order = IsarCore.readLong(reader, 2);
   final ImprovisationType _type;
   {
-    if (IsarCore.readNull(reader, 3)) {
+    if (IsarCore.readNull(reader, 2)) {
       _type = ImprovisationType.mixed;
     } else {
-      _type = _improvisationModelType[IsarCore.readByte(reader, 3)] ??
+      _type = _improvisationModelType[IsarCore.readByte(reader, 2)] ??
           ImprovisationType.mixed;
     }
   }
   final String _category;
-  _category = IsarCore.readString(reader, 4) ?? '';
+  _category = IsarCore.readString(reader, 3) ?? '';
   final String _theme;
-  _theme = IsarCore.readString(reader, 5) ?? '';
+  _theme = IsarCore.readString(reader, 4) ?? '';
   final List<int> _durationsInSeconds;
   {
-    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -115,12 +108,11 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
     }
   }
   final String _performers;
-  _performers = IsarCore.readString(reader, 7) ?? '';
+  _performers = IsarCore.readString(reader, 6) ?? '';
   final String _notes;
-  _notes = IsarCore.readString(reader, 8) ?? '';
+  _notes = IsarCore.readString(reader, 7) ?? '';
   final object = ImprovisationModel(
     id: _id,
-    order: _order,
     type: _type,
     category: _category,
     theme: _theme,
@@ -225,99 +217,13 @@ extension ImprovisationModelQueryFilter
   }
 
   QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      orderEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      orderGreaterThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      orderGreaterThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      orderLessThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      orderLessThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
-      orderBetween(
-    int lower,
-    int upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 2,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       typeEqualTo(
     ImprovisationType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 3,
+          property: 2,
           value: value.index,
         ),
       );
@@ -331,7 +237,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 3,
+          property: 2,
           value: value.index,
         ),
       );
@@ -345,7 +251,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value.index,
         ),
       );
@@ -359,7 +265,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 3,
+          property: 2,
           value: value.index,
         ),
       );
@@ -373,7 +279,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value.index,
         ),
       );
@@ -388,7 +294,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 3,
+          property: 2,
           lower: lower.index,
           upper: upper.index,
         ),
@@ -404,7 +310,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -420,7 +326,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -436,7 +342,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -452,7 +358,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -468,7 +374,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -485,7 +391,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 4,
+          property: 3,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -502,7 +408,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -518,7 +424,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -531,7 +437,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -544,7 +450,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 4,
+          property: 3,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -557,7 +463,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 4,
+          property: 3,
           value: '',
         ),
       );
@@ -569,7 +475,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 4,
+          property: 3,
           value: '',
         ),
       );
@@ -584,7 +490,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -600,7 +506,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -616,7 +522,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -632,7 +538,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -648,7 +554,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -665,7 +571,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 5,
+          property: 4,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -682,7 +588,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -698,7 +604,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -711,7 +617,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 5,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -724,7 +630,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 5,
+          property: 4,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -737,7 +643,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 5,
+          property: 4,
           value: '',
         ),
       );
@@ -749,7 +655,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 5,
+          property: 4,
           value: '',
         ),
       );
@@ -763,7 +669,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 6,
+          property: 5,
           value: value,
         ),
       );
@@ -777,7 +683,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 6,
+          property: 5,
           value: value,
         ),
       );
@@ -791,7 +697,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 6,
+          property: 5,
           value: value,
         ),
       );
@@ -805,7 +711,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 6,
+          property: 5,
           value: value,
         ),
       );
@@ -819,7 +725,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 6,
+          property: 5,
           value: value,
         ),
       );
@@ -834,7 +740,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 6,
+          property: 5,
           lower: lower,
           upper: upper,
         ),
@@ -851,7 +757,7 @@ extension ImprovisationModelQueryFilter
       durationsInSecondsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 6, value: null),
+        const GreaterOrEqualCondition(property: 5, value: null),
       );
     });
   }
@@ -864,7 +770,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -880,7 +786,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -896,7 +802,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -912,7 +818,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -928,7 +834,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -945,7 +851,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 7,
+          property: 6,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -962,7 +868,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -978,7 +884,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -991,7 +897,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1004,7 +910,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 7,
+          property: 6,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1017,7 +923,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 7,
+          property: 6,
           value: '',
         ),
       );
@@ -1029,7 +935,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 7,
+          property: 6,
           value: '',
         ),
       );
@@ -1044,7 +950,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1060,7 +966,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1076,7 +982,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1092,7 +998,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1108,7 +1014,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1125,7 +1031,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 8,
+          property: 7,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1142,7 +1048,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1158,7 +1064,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1171,7 +1077,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 8,
+          property: 7,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1184,7 +1090,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 8,
+          property: 7,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1197,7 +1103,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 8,
+          property: 7,
           value: '',
         ),
       );
@@ -1209,7 +1115,7 @@ extension ImprovisationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 8,
+          property: 7,
           value: '',
         ),
       );
@@ -1228,7 +1134,6 @@ _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
         Map<String, dynamic> json) =>
     _$ImprovisationModelImpl(
       id: json['id'] as int,
-      order: json['order'] as int,
       type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
       category: json['category'] as String,
       theme: json['theme'] as String,
@@ -1243,7 +1148,6 @@ Map<String, dynamic> _$$ImprovisationModelImplToJson(
         _$ImprovisationModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'order': instance.order,
       'type': _$ImprovisationTypeEnumMap[instance.type]!,
       'category': instance.category,
       'theme': instance.theme,

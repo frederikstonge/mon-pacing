@@ -20,10 +20,6 @@ const TeamModelSchema = IsarGeneratedSchema(
         type: IsarType.long,
       ),
       IsarPropertySchema(
-        name: 'order',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
         name: 'name',
         type: IsarType.string,
       ),
@@ -43,9 +39,8 @@ const TeamModelSchema = IsarGeneratedSchema(
 @isarProtected
 int serializeTeamModel(IsarWriter writer, TeamModel object) {
   IsarCore.writeLong(writer, 1, object.id);
-  IsarCore.writeLong(writer, 2, object.order);
-  IsarCore.writeString(writer, 3, object.name);
-  IsarCore.writeLong(writer, 4, object.color);
+  IsarCore.writeString(writer, 2, object.name);
+  IsarCore.writeLong(writer, 3, object.color);
   return 0;
 }
 
@@ -53,15 +48,12 @@ int serializeTeamModel(IsarWriter writer, TeamModel object) {
 TeamModel deserializeTeamModel(IsarReader reader) {
   final int _id;
   _id = IsarCore.readLong(reader, 1);
-  final int _order;
-  _order = IsarCore.readLong(reader, 2);
   final String _name;
-  _name = IsarCore.readString(reader, 3) ?? '';
+  _name = IsarCore.readString(reader, 2) ?? '';
   final int _color;
-  _color = IsarCore.readLong(reader, 4);
+  _color = IsarCore.readLong(reader, 3);
   final object = TeamModel(
     id: _id,
-    order: _order,
     name: _name,
     color: _color,
   );
@@ -151,88 +143,6 @@ extension TeamModelQueryFilter
     });
   }
 
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> orderEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> orderGreaterThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      orderGreaterThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> orderLessThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      orderLessThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> orderBetween(
-    int lower,
-    int upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 2,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> nameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -240,7 +150,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -255,7 +165,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -271,7 +181,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -286,7 +196,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -302,7 +212,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -318,7 +228,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 3,
+          property: 2,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -334,7 +244,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -349,7 +259,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -363,7 +273,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 3,
+          property: 2,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -377,7 +287,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 3,
+          property: 2,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -389,7 +299,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 3,
+          property: 2,
           value: '',
         ),
       );
@@ -400,7 +310,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 3,
+          property: 2,
           value: '',
         ),
       );
@@ -413,7 +323,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 4,
+          property: 3,
           value: value,
         ),
       );
@@ -426,7 +336,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 4,
+          property: 3,
           value: value,
         ),
       );
@@ -440,7 +350,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
         ),
       );
@@ -453,7 +363,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 4,
+          property: 3,
           value: value,
         ),
       );
@@ -467,7 +377,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
         ),
       );
@@ -481,7 +391,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 4,
+          property: 3,
           lower: lower,
           upper: upper,
         ),
@@ -500,7 +410,6 @@ extension TeamModelQueryObject
 _$TeamModelImpl _$$TeamModelImplFromJson(Map<String, dynamic> json) =>
     _$TeamModelImpl(
       id: json['id'] as int,
-      order: json['order'] as int,
       name: json['name'] as String,
       color: json['color'] as int,
     );
@@ -508,7 +417,6 @@ _$TeamModelImpl _$$TeamModelImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$TeamModelImplToJson(_$TeamModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'order': instance.order,
       'name': instance.name,
       'color': instance.color,
     };

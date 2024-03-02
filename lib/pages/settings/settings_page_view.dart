@@ -96,7 +96,7 @@ class SettingsPageView extends StatelessWidget {
                         onTap: state.enableDefaultTimeBuffer
                             ? () async {
                                 final settingsCubit = context.read<SettingsCubit>();
-                                final newDuration = await BottomSheetDialog.showDialog(
+                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
                                   context: context,
                                   child: DurationPicker(
                                     title: S.of(context).defaultTimeBuffer,

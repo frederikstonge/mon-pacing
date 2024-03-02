@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/matches/matches_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../router/routes.dart';
 import 'widgets/match_card.dart';
 
 class MatchesPageView extends StatefulWidget {
@@ -67,8 +70,18 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                         child: CircularProgressIndicator(),
                       );
                     }
-
-                    return MatchCard(match: matches.elementAt(index));
+                    final match = matches.elementAt(index);
+                    return MatchCard(
+                      match: match,
+                      open: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
+                      shouldDelete: () => MessageBoxDialog.questionShow(
+                        context,
+                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), match.name),
+                        S.of(context).delete,
+                        S.of(context).cancel,
+                      ),
+                      delete: () async => await context.read<MatchesCubit>().delete(match),
+                    );
                   },
                 ),
               ),

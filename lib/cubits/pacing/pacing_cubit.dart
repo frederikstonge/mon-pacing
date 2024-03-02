@@ -27,13 +27,11 @@ class PacingCubit extends Cubit<PacingState> {
     state.whenOrNull(
       success: (pacing) {
         final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
-        final nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
         final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
         final nextType = ImprovisationType.values[improvisations.length % 2];
 
         final newImprovisation = ImprovisationModel(
           id: nextId,
-          order: nextOrder,
           type: nextType,
           durationsInSeconds: [const Duration(minutes: 2, seconds: 30).inSeconds],
           category: '',
@@ -59,36 +57,26 @@ class PacingCubit extends Cubit<PacingState> {
       }
 
       improvisations.insert(newOrder, improvisation);
-      _reOrderImprovisations(improvisations);
 
       emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
     });
   }
 
-  void removeImprovisation(int order) {
+  void removeImprovisation(int index) {
     state.whenOrNull(success: (pacing) {
       final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
-      improvisations.removeAt(order);
-      _reOrderImprovisations(improvisations);
+      improvisations.removeAt(index);
 
       emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
     });
   }
 
-  void editImprovisation(ImprovisationModel model) {
+  void editImprovisation(int index, ImprovisationModel model) {
     state.whenOrNull(success: (pacing) {
       final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
-      improvisations[model.order] = model;
+      improvisations[index] = model;
 
       emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
     });
-  }
-
-  List<ImprovisationModel> _reOrderImprovisations(List<ImprovisationModel> improvisations) {
-    for (var i = 0; i < improvisations.length; i++) {
-      improvisations[i] = improvisations[i].copyWith(order: i);
-    }
-
-    return improvisations;
   }
 }
