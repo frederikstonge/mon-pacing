@@ -44,7 +44,11 @@ class SettingsPageView extends StatelessWidget {
                         onTap: () {
                           BottomSheetDialog.showDialog(
                             context: context,
-                            child: const LanguageView(),
+                            child: LanguageView(
+                              currentLocale: Locale(state.language),
+                              availableLocales: S.supportedLocales,
+                              onChanged: (locale) => context.read<SettingsCubit>().edit(state.copyWith(language: locale.toLanguageTag())),
+                            ),
                           );
                         },
                       ),
@@ -62,7 +66,11 @@ class SettingsPageView extends StatelessWidget {
                         onTap: () {
                           BottomSheetDialog.showDialog(
                             context: context,
-                            child: const ThemeView(),
+                            child: ThemeView(
+                              currentTheme: state.theme,
+                              availableThemes: ThemeType.values,
+                              onChanged: (theme) => context.read<SettingsCubit>().edit(state.copyWith(theme: theme)),
+                            ),
                           );
                         },
                       ),
