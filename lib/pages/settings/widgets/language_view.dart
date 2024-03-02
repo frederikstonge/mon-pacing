@@ -1,55 +1,60 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../../components/display_language/display_language.dart';
-import '../../../cubits/settings/settings_cubit.dart';
-import '../../../cubits/settings/settings_state.dart';
 import '../../../l10n/app_localizations.dart';
 
 class LanguageView extends StatelessWidget {
-  const LanguageView({super.key});
+  final Locale currentLocale;
+  final List<Locale> availableLocales;
+  final FutureOr<void> Function(Locale locale) onChanged;
+
+  const LanguageView({
+    super.key,
+    required this.currentLocale,
+    required this.availableLocales,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      builder: (context, state) {
-        return BottomSheetScaffold(
-          appBar: BottomSheetAppbar(title: S.of(context).language),
-          body: ListView(
-            padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: ListTile(
-                  title: DisplayLanguage(
-                    locale: Locale(state.language),
-                  ),
-                  trailing: const Icon(Icons.check),
-                ),
+    return BottomSheetScaffold(
+      appBar: BottomSheetAppbar(title: S.of(context).language),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: ListTile(
+              title: DisplayLanguage(
+                locale: currentLocale,
               ),
-              ...S.supportedLocales.where((element) => element.toLanguageTag() != state.language).map(
-                    (e) => InkWell(
-                      onTap: () {
-                        context.read<SettingsCubit>().edit(state.copyWith(language: e.toLanguageTag()));
-                        Navigator.of(context).pop();
-                      },
-                      child: ListTile(
-                        title: DisplayLanguage(
-                          locale: e,
-                        ),
-                      ),
+              trailing: const Icon(Icons.check),
+            ),
+          ),
+          ...availableLocales.where((element) => element != currentLocale).map(
+                (e) => InkWell(
+                  onTap: () async {
+                    final navigator = Navigator.of(context);
+                    await onChanged(e);
+                    navigator.pop();
+                  },
+                  child: ListTile(
+                    title: DisplayLanguage(
+                      locale: e,
                     ),
                   ),
-            ],
-          ),
-        );
-      },
+                ),
+              ),
+        ],
+      ),
     );
   }
 }
