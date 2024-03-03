@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../components/actions/loading_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/form/drop_down_element.dart';
 import '../../../components/form/text_field_element.dart';
@@ -180,7 +181,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
                       onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(notes: value)),
                     ),
                     const SizedBox(height: 8),
-                    FilledButton.tonalIcon(
+                    LoadingButton.tonalIcon(
                       onPressed: () async {
                         final response = await widget.onConfirmDelete(widget.improvisation);
                         if (response == true) {
@@ -188,7 +189,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
                         }
                       },
                       icon: const Icon(Icons.delete),
-                      label: Text(S.of(context).delete),
+                      child: Text(S.of(context).delete),
                     ),
                   ],
                 ),

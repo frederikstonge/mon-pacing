@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../l10n/app_localizations.dart';
@@ -74,7 +75,7 @@ class MatchCard extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert))
+              LoadingIconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert))
             ],
           ),
         ),
