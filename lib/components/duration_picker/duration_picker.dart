@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../l10n/app_localizations.dart';
+import '../actions/loading_button.dart';
 import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 
 class DurationPicker extends StatefulWidget {
@@ -106,7 +107,7 @@ class _DurationPickerState extends State<DurationPicker> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: FilledButton(
+              child: LoadingButton.filled(
                 onPressed: () {
                   Navigator.of(context).pop(selectedDuration);
                 },

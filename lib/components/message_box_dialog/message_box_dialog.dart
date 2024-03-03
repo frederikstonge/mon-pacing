@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../actions/loading_button.dart';
+
 class MessageBoxDialog {
   static Future<bool?> questionShow(BuildContext context, String question, String yesLabel, String noLabel) => show(
         context,
@@ -18,7 +20,7 @@ class MessageBoxDialog {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FilledButton(
+                LoadingButton.filled(
                     child: Text(
                       yesLabel,
                       style: const TextStyle(fontWeight: FontWeight.bold),
@@ -26,7 +28,7 @@ class MessageBoxDialog {
                       overflow: TextOverflow.ellipsis,
                     ),
                     onPressed: () => context.pop(true)),
-                FilledButton.tonal(
+                LoadingButton.tonal(
                     child: Text(
                       noLabel,
                       style: const TextStyle(fontWeight: FontWeight.bold),

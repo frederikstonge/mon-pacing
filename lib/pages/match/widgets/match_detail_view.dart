@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../../components/actions/loading_button.dart';
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
@@ -159,7 +160,7 @@ class _MatchDetailViewState extends State<MatchDetailView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: FilledButton(
+              child: LoadingButton.filled(
                 onPressed: () async {
                   if (formKey.currentState?.validate() ?? false) {
                     final navigator = Navigator.of(context);

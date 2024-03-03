@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../components/actions/loading_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
@@ -180,7 +181,7 @@ class _PacingDetailViewState extends State<PacingDetailView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: FilledButton(
+              child: LoadingButton.filled(
                 onPressed: () async {
                   if (formKey.currentState?.validate() ?? false) {
                     final navigator = Navigator.of(context);
