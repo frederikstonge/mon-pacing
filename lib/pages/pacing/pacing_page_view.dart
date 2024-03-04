@@ -26,67 +26,87 @@ class PacingPageView extends StatelessWidget {
           return state.when(
             initial: () => const Center(child: CircularProgressIndicator()),
             error: (error) => Center(child: Text(error)),
-            success: (pacing) => SliverScaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () => context.read<PacingCubit>().addImprovisation(),
-                tooltip: S.of(context).addImprovisation,
-                child: const Icon(Icons.add),
-              ),
-              slivers: [
-                SliverLogoAppbar(
-                  title: pacing.name,
-                  actions: [
-                    LoadingIconButton(
-                      onPressed: () async {
-                        await BottomSheetDialog.showDialog(
-                          context: context,
-                          child: PacingDetailView(
-                            pacing: pacing,
-                            onConfirm: (pacing) async {
-                              context.read<PacingCubit>().edit(pacing);
-                            },
-                          ),
-                        );
-                      },
-                      tooltip: S.of(context).editPacing,
-                      icon: const Icon(Icons.edit),
-                    ),
-                    LoadingIconButton(
-                      onPressed: () async {
-                        final router = GoRouter.of(context);
-                        await context.read<PacingsCubit>().edit(pacing);
-                        router.pop();
-                      },
-                      tooltip: S.of(context).save,
-                      icon: const Icon(Icons.save),
-                    ),
-                  ],
+            success: (pacing) => PopScope(
+              canPop: false,
+              onPopInvoked: (didPop) async {
+                if (didPop) return;
+                final router = GoRouter.of(context);
+                if (context.read<PacingCubit>().initialPacing != pacing) {
+                  final response = await MessageBoxDialog.questionShow(
+                    context,
+                    S.of(context).discardChanges,
+                    S.of(context).confirm,
+                    S.of(context).cancel,
+                  );
+                  if (response == true) {
+                    router.pop();
+                  }
+                } else {
+                  router.pop();
+                }
+              },
+              child: SliverScaffold(
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () => context.read<PacingCubit>().addImprovisation(),
+                  tooltip: S.of(context).addImprovisation,
+                  child: const Icon(Icons.add),
                 ),
-                SliverPersistentHeader(
-                  delegate: PacingPersistentHeader(pacing: pacing),
-                  pinned: true,
-                ),
-                SliverReorderableList(
-                  itemCount: pacing.improvisations.length,
-                  itemBuilder: (context, index) {
-                    final improvisation = pacing.improvisations.elementAt(index);
-                    return ImprovisationTile(
-                      key: ValueKey(improvisation.id),
-                      improvisation: improvisation,
-                      index: index,
-                      onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
-                      onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
-                        context,
-                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(index + 1)),
-                        S.of(context).delete,
-                        S.of(context).cancel,
+                slivers: [
+                  SliverLogoAppbar(
+                    title: pacing.name,
+                    actions: [
+                      LoadingIconButton(
+                        onPressed: () async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: PacingDetailView(
+                              pacing: pacing,
+                              onConfirm: (pacing) async {
+                                context.read<PacingCubit>().edit(pacing);
+                              },
+                            ),
+                          );
+                        },
+                        tooltip: S.of(context).editPacing,
+                        icon: const Icon(Icons.edit),
                       ),
-                      onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(index),
-                    );
-                  },
-                  onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),
-                ),
-              ],
+                      LoadingIconButton(
+                        onPressed: () async {
+                          final router = GoRouter.of(context);
+                          await context.read<PacingsCubit>().edit(pacing);
+                          router.pop();
+                        },
+                        tooltip: S.of(context).save,
+                        icon: const Icon(Icons.save),
+                      ),
+                    ],
+                  ),
+                  SliverPersistentHeader(
+                    delegate: PacingPersistentHeader(pacing: pacing),
+                    pinned: true,
+                  ),
+                  SliverReorderableList(
+                    itemCount: pacing.improvisations.length,
+                    itemBuilder: (context, index) {
+                      final improvisation = pacing.improvisations.elementAt(index);
+                      return ImprovisationTile(
+                        key: ValueKey(improvisation.id),
+                        improvisation: improvisation,
+                        index: index,
+                        onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
+                        onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
+                          context,
+                          S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(index + 1)),
+                          S.of(context).delete,
+                          S.of(context).cancel,
+                        ),
+                        onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(index),
+                      );
+                    },
+                    onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),
+                  ),
+                ],
+              ),
             ),
           );
         },
