@@ -12,10 +12,13 @@ class PacingCubit extends Cubit<PacingState> {
   final int id;
   final PacingsRepository pacingsRepository;
 
+  PacingModel? initialPacing;
+
   PacingCubit({required this.pacingsRepository, required this.id}) : super(const PacingState.initial());
 
   Future<void> initialize() async {
     final pacing = await pacingsRepository.get(id);
+    initialPacing = pacing;
     emit(PacingState.success(pacing!));
   }
 
