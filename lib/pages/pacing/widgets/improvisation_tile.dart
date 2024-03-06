@@ -40,6 +40,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
   late final TextEditingController _performersController;
   late final TextEditingController _notesController;
   late final GlobalKey<FormState> formKey;
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -82,6 +83,9 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
         child: CustomCard(
           contentPadding: 0,
           child: ExpansionTile(
+            onExpansionChanged: (value) => setState(() {
+              isExpanded = value;
+            }),
             leading: ReorderableDragStartListener(
               index: widget.index,
               enabled: widget.dragEnabled,
@@ -96,42 +100,49 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelSmall,
+                AnimatedSize(
+                  alignment: Alignment.topCenter,
+                  duration: const Duration(milliseconds: 200),
+                  child: SizedBox(
+                    height: !isExpanded ? null : 0.0,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        Text(
+                          '${S.of(context).category}: ${widget.improvisation.category}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        Text(
+                          '${S.of(context).performers}: ${widget.improvisation.performers}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        Text(
+                          '${S.of(context).duration}: ${widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        Text(
+                          '${S.of(context).theme}: ${widget.improvisation.theme}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                if (widget.improvisation.category.isNotEmpty) ...[
-                  Text(
-                    '${S.of(context).category}: ${widget.improvisation.category}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
-                if (widget.improvisation.performers.isNotEmpty) ...[
-                  Text(
-                    '${S.of(context).performers}: ${widget.improvisation.performers}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
-                Text(
-                  '${S.of(context).duration}: ${Duration(seconds: widget.improvisation.durationsInSeconds.reduce((value, element) => value + element)).toImprovDuration()}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-                if (widget.improvisation.theme.isNotEmpty) ...[
-                  Text(
-                    '${S.of(context).theme}: ${widget.improvisation.theme}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
               ],
             ),
             childrenPadding: const EdgeInsets.all(16),
