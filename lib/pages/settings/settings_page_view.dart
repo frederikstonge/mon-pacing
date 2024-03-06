@@ -9,6 +9,7 @@ import '../../components/settings_tile/settings_tile.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/text_header/text_header.dart';
+import '../../components/tooltip/custom_tooltip.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../extensions/duration_extensions.dart';
@@ -80,8 +81,7 @@ class SettingsPageView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                   child: TextHeader(
-                    title: S.of(context).defaultTimeBuffer,
-                    tooltip: S.of(context).timeBufferTooltip,
+                    title: S.of(context).pacing,
                   ),
                 ),
                 CustomCard(
@@ -89,7 +89,37 @@ class SettingsPageView extends StatelessWidget {
                     children: [
                       SettingsTile(
                         leading: const Icon(Icons.timer),
-                        title: Text(S.of(context).enableDefaultTimeBuffer),
+                        title: Text(S.of(context).defaultImprovisationDurationInSeconds),
+                        subTitle: Text(Duration(seconds: state.defaultImprovisationDurationInSeconds).toImprovDuration()),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          final settingsCubit = context.read<SettingsCubit>();
+                          final newDuration = await BottomSheetDialog.showDialog<Duration>(
+                            context: context,
+                            child: DurationPicker(
+                              title: S.of(context).defaultImprovisationDurationInSeconds,
+                              initialDuration: Duration(seconds: state.defaultImprovisationDurationInSeconds),
+                            ),
+                          );
+
+                          if (newDuration != null) {
+                            settingsCubit.edit(state.copyWith(defaultImprovisationDurationInSeconds: newDuration.inSeconds));
+                          }
+                        },
+                      ),
+                      SettingsTile(
+                        leading: const Icon(Icons.more_time),
+                        title: Row(
+                          children: [
+                            Flexible(child: Text(S.of(context).enableDefaultTimeBuffer)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(
+                                tooltip: S.of(context).timeBufferTooltip,
+                              ),
+                            )
+                          ],
+                        ),
                         trailing: Switch(
                             value: state.enableDefaultTimeBuffer,
                             onChanged: (value) {
@@ -97,7 +127,7 @@ class SettingsPageView extends StatelessWidget {
                             }),
                       ),
                       SettingsTile(
-                        leading: const Icon(Icons.timer_outlined),
+                        leading: const Icon(Icons.more_time),
                         title: Text(S.of(context).defaultTimeBuffer),
                         subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
                         trailing: const Icon(Icons.chevron_right),

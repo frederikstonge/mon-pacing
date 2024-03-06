@@ -101,6 +101,7 @@ class PacingPageView extends StatelessWidget {
                           S.of(context).cancel,
                         ),
                         onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(index),
+                        dragEnabled: pacing.improvisations.length > 1,
                       );
                     },
                     onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),

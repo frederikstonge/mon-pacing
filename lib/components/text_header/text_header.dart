@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../tooltip/custom_tooltip.dart';
+
 class TextHeader extends StatelessWidget {
   final String title;
   final String? tooltip;
@@ -30,11 +32,8 @@ class TextHeader extends StatelessWidget {
               if (tooltip != null) ...[
                 Padding(
                   padding: const EdgeInsets.only(left: 4),
-                  child: Tooltip(
-                    showDuration: const Duration(seconds: 6),
-                    message: tooltip,
-                    triggerMode: TooltipTriggerMode.tap,
-                    child: const Icon(Icons.info),
+                  child: CustomTooltip(
+                    tooltip: tooltip!,
                   ),
                 )
               ],
