@@ -50,16 +50,16 @@ class PacingCubit extends Cubit<PacingState> {
     );
   }
 
-  void moveImprovisation(int oldOrder, int newOrder) {
+  void moveImprovisation(int oldIndex, int newIndex) {
     state.whenOrNull(success: (pacing) {
       final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
-      final improvisation = improvisations.removeAt(oldOrder);
+      final improvisation = improvisations.removeAt(oldIndex);
 
-      if (oldOrder < newOrder) {
-        newOrder--;
+      if (oldIndex < newIndex) {
+        newIndex--;
       }
 
-      improvisations.insert(newOrder, improvisation);
+      improvisations.insert(newIndex, improvisation);
 
       emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
     });

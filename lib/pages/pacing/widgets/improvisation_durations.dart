@@ -35,46 +35,72 @@ class ImprovisationDurations extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        ...durations.asMap().entries.map(
-              (d) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ImprovisationDurationItem(
-                        key: ValueKey('${d.key}${d.value}'),
-                        duration: Duration(seconds: d.value),
-                        valueChanged: (value) async {
+        ReorderableListView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          onReorder: _drag,
+          children: durations
+              .asMap()
+              .entries
+              .map(
+                (d) => Padding(
+                  key: ValueKey('${d.key}${d.value}'),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
+                      ),
+                      Expanded(
+                        child: ImprovisationDurationItem(
+                          key: ValueKey('${d.key}${d.value}'),
+                          duration: Duration(seconds: d.value),
+                          valueChanged: (value) async {
+                            final newDurations = List<int>.from(durations);
+                            newDurations[d.key] = value.inSeconds;
+                            await onChanged(newDurations);
+                          },
+                        ),
+                      ),
+                      LoadingIconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () async {
                           final newDurations = List<int>.from(durations);
-                          newDurations[d.key] = value.inSeconds;
+                          newDurations.insert(d.key + 1, d.value);
                           await onChanged(newDurations);
                         },
                       ),
-                    ),
-                    LoadingIconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () async {
-                        final newDurations = List<int>.from(durations);
-                        newDurations.insert(d.key + 1, const Duration(minutes: 2, seconds: 30).inSeconds);
-                        await onChanged(newDurations);
-                      },
-                    ),
-                    LoadingIconButton(
-                      icon: const Icon(Icons.remove),
-                      onPressed: durations.length > 1
-                          ? () async {
-                              final newDurations = List<int>.from(durations);
-                              newDurations.removeAt(d.key);
-                              await onChanged(newDurations);
-                            }
-                          : null,
-                    ),
-                  ],
+                      LoadingIconButton(
+                        icon: const Icon(Icons.remove),
+                        onPressed: durations.length > 1
+                            ? () async {
+                                final newDurations = List<int>.from(durations);
+                                newDurations.removeAt(d.key);
+                                await onChanged(newDurations);
+                              }
+                            : null,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              )
+              .toList(),
+        ),
       ],
     );
+  }
+
+  void _drag(int oldIndex, int newIndex) {
+    final newDurations = List<int>.from(durations);
+    final duration = newDurations.removeAt(oldIndex);
+
+    if (oldIndex < newIndex) {
+      newIndex--;
+    }
+
+    newDurations.insert(newIndex, duration);
+    onChanged.call(newDurations);
   }
 }
 
