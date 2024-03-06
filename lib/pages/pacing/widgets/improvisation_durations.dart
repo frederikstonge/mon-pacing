@@ -50,7 +50,11 @@ class ImprovisationDurations extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 16.0),
-                        child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
+                        child: ReorderableDragStartListener(
+                          index: d.key,
+                          enabled: durations.length > 1,
+                          child: const Icon(Icons.drag_handle),
+                        ),
                       ),
                       Expanded(
                         child: ImprovisationDurationItem(

@@ -21,6 +21,8 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SettingsState {
   ThemeType get theme => throw _privateConstructorUsedError;
+  int get defaultImprovisationDurationInSeconds =>
+      throw _privateConstructorUsedError;
   bool get enableDefaultTimeBuffer => throw _privateConstructorUsedError;
   int get defaultTimeBufferInSeconds => throw _privateConstructorUsedError;
   String get language => throw _privateConstructorUsedError;
@@ -39,6 +41,7 @@ abstract class $SettingsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ThemeType theme,
+      int defaultImprovisationDurationInSeconds,
       bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
       String language});
@@ -58,6 +61,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   @override
   $Res call({
     Object? theme = null,
+    Object? defaultImprovisationDurationInSeconds = null,
     Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
     Object? language = null,
@@ -67,6 +71,11 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
+      defaultImprovisationDurationInSeconds: null ==
+              defaultImprovisationDurationInSeconds
+          ? _value.defaultImprovisationDurationInSeconds
+          : defaultImprovisationDurationInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       enableDefaultTimeBuffer: null == enableDefaultTimeBuffer
           ? _value.enableDefaultTimeBuffer
           : enableDefaultTimeBuffer // ignore: cast_nullable_to_non_nullable
@@ -93,6 +102,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {ThemeType theme,
+      int defaultImprovisationDurationInSeconds,
       bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
       String language});
@@ -110,6 +120,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? theme = null,
+    Object? defaultImprovisationDurationInSeconds = null,
     Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
     Object? language = null,
@@ -119,6 +130,11 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
+      defaultImprovisationDurationInSeconds: null ==
+              defaultImprovisationDurationInSeconds
+          ? _value.defaultImprovisationDurationInSeconds
+          : defaultImprovisationDurationInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       enableDefaultTimeBuffer: null == enableDefaultTimeBuffer
           ? _value.enableDefaultTimeBuffer
           : enableDefaultTimeBuffer // ignore: cast_nullable_to_non_nullable
@@ -140,6 +156,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
 class _$SettingsStateImpl implements _SettingsState {
   const _$SettingsStateImpl(
       {required this.theme,
+      required this.defaultImprovisationDurationInSeconds,
       required this.enableDefaultTimeBuffer,
       required this.defaultTimeBufferInSeconds,
       required this.language});
@@ -150,6 +167,8 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   final ThemeType theme;
   @override
+  final int defaultImprovisationDurationInSeconds;
+  @override
   final bool enableDefaultTimeBuffer;
   @override
   final int defaultTimeBufferInSeconds;
@@ -158,7 +177,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(theme: $theme, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, language: $language)';
+    return 'SettingsState(theme: $theme, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, language: $language)';
   }
 
   @override
@@ -167,6 +186,10 @@ class _$SettingsStateImpl implements _SettingsState {
         (other.runtimeType == runtimeType &&
             other is _$SettingsStateImpl &&
             (identical(other.theme, theme) || other.theme == theme) &&
+            (identical(other.defaultImprovisationDurationInSeconds,
+                    defaultImprovisationDurationInSeconds) ||
+                other.defaultImprovisationDurationInSeconds ==
+                    defaultImprovisationDurationInSeconds) &&
             (identical(
                     other.enableDefaultTimeBuffer, enableDefaultTimeBuffer) ||
                 other.enableDefaultTimeBuffer == enableDefaultTimeBuffer) &&
@@ -180,8 +203,13 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, theme, enableDefaultTimeBuffer,
-      defaultTimeBufferInSeconds, language);
+  int get hashCode => Object.hash(
+      runtimeType,
+      theme,
+      defaultImprovisationDurationInSeconds,
+      enableDefaultTimeBuffer,
+      defaultTimeBufferInSeconds,
+      language);
 
   @JsonKey(ignore: true)
   @override
@@ -200,6 +228,7 @@ class _$SettingsStateImpl implements _SettingsState {
 abstract class _SettingsState implements SettingsState {
   const factory _SettingsState(
       {required final ThemeType theme,
+      required final int defaultImprovisationDurationInSeconds,
       required final bool enableDefaultTimeBuffer,
       required final int defaultTimeBufferInSeconds,
       required final String language}) = _$SettingsStateImpl;
@@ -209,6 +238,8 @@ abstract class _SettingsState implements SettingsState {
 
   @override
   ThemeType get theme;
+  @override
+  int get defaultImprovisationDurationInSeconds;
   @override
   bool get enableDefaultTimeBuffer;
   @override

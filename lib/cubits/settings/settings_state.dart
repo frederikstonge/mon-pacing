@@ -9,6 +9,7 @@ part 'settings_state.g.dart';
 class SettingsState with _$SettingsState {
   const factory SettingsState({
     required ThemeType theme,
+    required int defaultImprovisationDurationInSeconds,
     required bool enableDefaultTimeBuffer,
     required int defaultTimeBufferInSeconds,
     required String language,

@@ -18,6 +18,7 @@ class ImprovisationTile extends StatefulWidget {
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
   final FutureOr<void> Function(ImprovisationModel value) onDelete;
   final FutureOr<bool?> Function(ImprovisationModel value) onConfirmDelete;
+  final bool dragEnabled;
 
   const ImprovisationTile({
     super.key,
@@ -26,6 +27,7 @@ class ImprovisationTile extends StatefulWidget {
     required this.onChanged,
     required this.onDelete,
     required this.onConfirmDelete,
+    required this.dragEnabled,
   });
 
   @override
@@ -80,7 +82,11 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
         child: CustomCard(
           contentPadding: 0,
           child: ExpansionTile(
-            leading: ReorderableDragStartListener(index: widget.index, child: const Icon(Icons.drag_handle)),
+            leading: ReorderableDragStartListener(
+              index: widget.index,
+              enabled: widget.dragEnabled,
+              child: const Icon(Icons.drag_handle),
+            ),
             title: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

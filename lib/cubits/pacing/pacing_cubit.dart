@@ -6,15 +6,21 @@ import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
+import '../settings/settings_cubit.dart';
 import 'pacing_state.dart';
 
 class PacingCubit extends Cubit<PacingState> {
   final int id;
   final PacingsRepository pacingsRepository;
+  final SettingsCubit settingsCubit;
 
   PacingModel? initialPacing;
 
-  PacingCubit({required this.pacingsRepository, required this.id}) : super(const PacingState.initial());
+  PacingCubit({
+    required this.pacingsRepository,
+    required this.settingsCubit,
+    required this.id,
+  }) : super(const PacingState.initial());
 
   Future<void> initialize() async {
     final pacing = await pacingsRepository.get(id);
@@ -36,7 +42,7 @@ class PacingCubit extends Cubit<PacingState> {
         final newImprovisation = ImprovisationModel(
           id: nextId,
           type: nextType,
-          durationsInSeconds: [const Duration(minutes: 2, seconds: 30).inSeconds],
+          durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
           category: '',
           performers: '',
           theme: '',

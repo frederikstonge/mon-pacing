@@ -9,6 +9,8 @@ part of 'settings_state.dart';
 _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
     _$SettingsStateImpl(
       theme: $enumDecode(_$ThemeTypeEnumMap, json['theme']),
+      defaultImprovisationDurationInSeconds:
+          json['defaultImprovisationDurationInSeconds'] as int,
       enableDefaultTimeBuffer: json['enableDefaultTimeBuffer'] as bool,
       defaultTimeBufferInSeconds: json['defaultTimeBufferInSeconds'] as int,
       language: json['language'] as String,
@@ -17,6 +19,8 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
     <String, dynamic>{
       'theme': _$ThemeTypeEnumMap[instance.theme]!,
+      'defaultImprovisationDurationInSeconds':
+          instance.defaultImprovisationDurationInSeconds,
       'enableDefaultTimeBuffer': instance.enableDefaultTimeBuffer,
       'defaultTimeBufferInSeconds': instance.defaultTimeBufferInSeconds,
       'language': instance.language,
