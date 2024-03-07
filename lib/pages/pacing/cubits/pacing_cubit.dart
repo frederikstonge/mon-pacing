@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../models/improvisation_model.dart';
-import '../../models/improvisation_type.dart';
-import '../../models/pacing_model.dart';
-import '../../repositories/pacings_repository.dart';
-import '../settings/settings_cubit.dart';
+import '../../../cubits/settings/settings_cubit.dart';
+import '../../../models/improvisation_model.dart';
+import '../../../models/improvisation_type.dart';
+import '../../../models/pacing_model.dart';
+import '../../../repositories/pacings_repository.dart';
 import 'pacing_state.dart';
 
 class PacingCubit extends Cubit<PacingState> {
