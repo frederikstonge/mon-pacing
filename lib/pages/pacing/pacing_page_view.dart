@@ -9,7 +9,7 @@ import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../l10n/app_localizations.dart';
-import '../pacing_detail/pacing_detail_shell.dart';
+import '../pacing_detail/pacing_detail_page_shell.dart';
 import 'cubits/pacing_cubit.dart';
 import 'cubits/pacing_state.dart';
 import 'widgets/improvisation_tile.dart';
@@ -59,7 +59,7 @@ class PacingPageView extends StatelessWidget {
                         onPressed: () async {
                           await BottomSheetDialog.showDialog(
                             context: context,
-                            child: PacingDetailShell(
+                            child: PacingDetailPageShell(
                               pacing: pacing,
                               onConfirm: (pacing) async {
                                 context.read<PacingCubit>().edit(pacing);

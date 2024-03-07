@@ -26,7 +26,11 @@ final router = GoRouter(
               name: Routes.pacings,
               path: '/pacings',
               pageBuilder: (context, state) {
-                return const NoTransitionPage(child: PacingsPageShell());
+                return NoTransitionPage(
+                  child: PacingsPageShell(
+                    key: state.pageKey,
+                  ),
+                );
               },
               routes: [
                 GoRoute(
@@ -34,7 +38,10 @@ final router = GoRouter(
                   name: Routes.pacing,
                   path: 'details/:id',
                   builder: (context, state) => PacingPageShell(
-                    id: int.parse(state.pathParameters['id']!),
+                    key: state.pageKey,
+                    id: int.parse(
+                      state.pathParameters['id']!,
+                    ),
                   ),
                 ),
               ],
@@ -48,7 +55,11 @@ final router = GoRouter(
               name: Routes.matches,
               path: '/matches',
               pageBuilder: (context, state) {
-                return const NoTransitionPage(child: MatchesPageShell());
+                return NoTransitionPage(
+                  child: MatchesPageShell(
+                    key: state.pageKey,
+                  ),
+                );
               },
               routes: [
                 GoRoute(
@@ -56,7 +67,10 @@ final router = GoRouter(
                   name: Routes.match,
                   path: 'details/:id',
                   builder: (context, state) => MatchPageShell(
-                    id: int.parse(state.pathParameters['id']!),
+                    key: state.pageKey,
+                    id: int.parse(
+                      state.pathParameters['id']!,
+                    ),
                   ),
                 ),
               ],
@@ -70,7 +84,10 @@ final router = GoRouter(
               name: Routes.settings,
               path: '/settings',
               pageBuilder: (context, state) {
-                return const NoTransitionPage(child: SettingsPageShell());
+                return NoTransitionPage(
+                    child: SettingsPageShell(
+                  key: state.pageKey,
+                ));
               },
             ),
           ],
