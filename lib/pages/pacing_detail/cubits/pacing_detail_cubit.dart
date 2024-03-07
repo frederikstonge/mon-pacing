@@ -18,17 +18,18 @@ class PacingDetailCubit extends Cubit<PacingDetailState> {
   }) : super(
           PacingDetailState(
             editMode: pacing != null,
-            pacing: pacing ??
-                PacingModel(
-                  id: 0,
-                  name: '',
-                  enableTimeBuffer: settingsCubit.state.enableDefaultTimeBuffer,
-                  timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
-                  createdDate: null,
-                  modifiedDate: null,
-                  defaultNumberOfTeams: 2,
-                  improvisations: [],
-                ),
+            pacing: pacing != null
+                ? pacing.copyWith()
+                : PacingModel(
+                    id: 0,
+                    name: '',
+                    enableTimeBuffer: settingsCubit.state.enableDefaultTimeBuffer,
+                    timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
+                    createdDate: null,
+                    modifiedDate: null,
+                    defaultNumberOfTeams: 2,
+                    improvisations: [],
+                  ),
           ),
         );
 

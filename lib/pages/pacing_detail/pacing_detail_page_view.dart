@@ -18,14 +18,14 @@ import '../../validators/validator.dart';
 import 'cubits/pacing_detail_cubit.dart';
 import 'cubits/pacing_detail_state.dart';
 
-class PacingDetailView extends StatefulWidget {
-  const PacingDetailView({super.key});
+class PacingDetailPageView extends StatefulWidget {
+  const PacingDetailPageView({super.key});
 
   @override
-  State<PacingDetailView> createState() => _PacingDetailViewState();
+  State<PacingDetailPageView> createState() => _PacingDetailPageViewState();
 }
 
-class _PacingDetailViewState extends State<PacingDetailView> {
+class _PacingDetailPageViewState extends State<PacingDetailPageView> {
   late final TextEditingController _nameController;
   late final GlobalKey<FormState> formKey;
 

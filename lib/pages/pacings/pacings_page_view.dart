@@ -13,8 +13,8 @@ import '../../cubits/pacings/pacings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
-import '../match_detail/match_detail_view.dart';
-import '../pacing_detail/pacing_detail_shell.dart';
+import '../match_detail/pacing_detail_page_shell.dart';
+import '../pacing_detail/pacing_detail_page_shell.dart';
 import 'widgets/pacing_card.dart';
 
 class PacingsPageView extends StatefulWidget {
@@ -56,7 +56,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
               onPressed: () {
                 BottomSheetDialog.showDialog(
                   context: context,
-                  child: PacingDetailShell(
+                  child: PacingDetailPageShell(
                     onConfirm: (pacing) async {
                       final router = GoRouter.of(context);
                       final pacingModel = await context.read<PacingsCubit>().add(pacing);
@@ -116,7 +116,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       export: () async => await context.read<PacingsCubit>().export(pacing),
                       startMatch: () => BottomSheetDialog.showDialog(
                         context: context,
-                        child: MatchDetailView(
+                        child: MatchDetailPageShell(
                           pacing: pacing,
                           onConfirm: (match) async {
                             final router = GoRouter.of(context);
