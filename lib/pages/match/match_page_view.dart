@@ -5,10 +5,10 @@ import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
-import '../../cubits/match/match_cubit.dart';
-import '../../cubits/match/match_state.dart';
 import '../../l10n/app_localizations.dart';
-import 'widgets/match_detail_view.dart';
+import '../match_detail/match_detail_view.dart';
+import 'cubits/match_cubit.dart';
+import 'cubits/match_state.dart';
 
 class MatchPageView extends StatelessWidget {
   const MatchPageView({super.key});

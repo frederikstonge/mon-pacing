@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../models/pacing_model.dart';
+import '../../../models/pacing_model.dart';
 
 part 'pacing_state.freezed.dart';
 

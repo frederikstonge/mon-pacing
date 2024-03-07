@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/pacing/pacing_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../repositories/pacings_repository.dart';
+import 'cubits/pacing_cubit.dart';
 import 'pacing_page_view.dart';
 
 class PacingPageShell extends StatelessWidget {

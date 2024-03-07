@@ -3,20 +3,20 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_button.dart';
-import '../../../components/actions/loading_icon_button.dart';
-import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
-import '../../../components/custom_card/custom_card.dart';
-import '../../../components/form/text_field_element.dart';
-import '../../../components/text_header/text_header.dart';
-import '../../../l10n/app_localizations.dart';
-import '../../../models/constants.dart';
-import '../../../models/match_model.dart';
-import '../../../models/pacing_model.dart';
-import '../../../models/team_model.dart';
-import '../../../validators/validator.dart';
-import 'team_tile.dart';
+import '../../components/actions/loading_button.dart';
+import '../../components/actions/loading_icon_button.dart';
+import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
+import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../components/custom_card/custom_card.dart';
+import '../../components/form/text_field_element.dart';
+import '../../components/text_header/text_header.dart';
+import '../../l10n/app_localizations.dart';
+import '../../models/constants.dart';
+import '../../models/match_model.dart';
+import '../../models/pacing_model.dart';
+import '../../models/team_model.dart';
+import '../../validators/validator.dart';
+import 'widgets/team_tile.dart';
 
 class MatchDetailView extends StatefulWidget {
   final PacingModel? pacing;
@@ -59,6 +59,12 @@ class _MatchDetailViewState extends State<MatchDetailView> {
     _nameController = TextEditingController(text: match.name);
     formKey = GlobalKey<FormState>();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
   }
 
   @override

@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../models/match_model.dart';
-import '../../models/point_model.dart';
-import '../../repositories/matches_repository.dart';
-import '../matches/matches_cubit.dart';
+import '../../../cubits/matches/matches_cubit.dart';
+import '../../../models/match_model.dart';
+import '../../../models/point_model.dart';
+import '../../../repositories/matches_repository.dart';
 import 'match_state.dart';
 
 class MatchCubit extends Cubit<MatchState> {
