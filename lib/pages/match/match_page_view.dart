@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
@@ -10,6 +9,7 @@ import '../../l10n/app_localizations.dart';
 import '../match_detail/pacing_detail_page_shell.dart';
 import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
+import 'widgets/match_panel.dart';
 
 class MatchPageView extends StatelessWidget {
   const MatchPageView({super.key});
@@ -22,7 +22,7 @@ class MatchPageView extends StatelessWidget {
           return state.when(
             initial: () => const Center(child: CircularProgressIndicator()),
             error: (error) => Center(child: Text(error)),
-            success: (match) => SlidingUpPanel(
+            success: (match) => MatchPanel(
               body: SliverScaffold(
                 slivers: [
                   SliverLogoAppbar(
@@ -47,37 +47,8 @@ class MatchPageView extends StatelessWidget {
                   ),
                 ],
               ),
-              parallaxEnabled: false,
-              renderPanelSheet: false,
-              margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              maxHeight: MediaQuery.of(context).size.height,
-              panelBuilder: () => BottomSheet(
-                constraints: const BoxConstraints.expand(),
-                dragHandleColor: Theme.of(context).colorScheme.onPrimary.withAlpha(100),
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                onClosing: () {},
-                builder: (context) => Padding(
-                  padding: EdgeInsets.only(
-                      bottom: (MediaQuery.of(context).viewInsets.bottom > 0
-                              ? MediaQuery.of(context).viewInsets.bottom
-                              : MediaQuery.of(context).padding.bottom) +
-                          MediaQuery.of(context).padding.top),
-                  child: DefaultTextStyle.merge(
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text('test'),
-                        Expanded(
-                          child: Placeholder(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              panelHeader: const PreferredSize(preferredSize: Size.fromHeight(100), child: Placeholder()),
+              panelBody: const Expanded(child: Placeholder()),
             ),
           );
         },
