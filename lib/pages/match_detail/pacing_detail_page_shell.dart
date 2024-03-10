@@ -24,14 +24,15 @@ class MatchDetailPageShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizer = S.of(context);
     return BlocProvider(
       create: (context) => MatchDetailCubit(
         settingsCubit: context.read<SettingsCubit>(),
-        s: S.of(context),
+        localizer: localizer,
         onConfirm: onConfirm,
         pacing: pacing,
         match: match,
-      ),
+      )..initialize(),
       child: const MatchDetailPageView(),
     );
   }
