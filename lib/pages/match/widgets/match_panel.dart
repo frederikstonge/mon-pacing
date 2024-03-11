@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
+import '../../../components/sliver_scaffold/sliver_scaffold.dart';
+
 class MatchPanel extends StatefulWidget {
-  final Widget body;
+  final List<Widget> slivers;
   final PreferredSizeWidget panelHeader;
   final Widget panelBody;
 
   const MatchPanel({
     super.key,
-    required this.body,
+    required this.slivers,
     required this.panelHeader,
     required this.panelBody,
   });
@@ -22,7 +24,7 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this);
+    animationController = AnimationController(vsync: this)..value = 1;
     super.initState();
   }
 
@@ -34,28 +36,34 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final bottomPadding = MediaQuery.of(context).viewInsets.bottom > 0
-        ? MediaQuery.of(context).viewInsets.bottom
-        : MediaQuery.of(context).padding.bottom;
+    final bottomPadding =
+        MediaQuery.of(context).viewInsets.bottom > 0 ? MediaQuery.of(context).viewInsets.bottom : MediaQuery.of(context).padding.bottom;
     return SlidingUpPanel(
-      body: widget.body,
+      body: SliverScaffold(
+        slivers: [
+          ...widget.slivers,
+          SliverPadding(
+            padding: EdgeInsets.only(bottom: widget.panelHeader.preferredSize.height + kMinInteractiveDimension),
+          ),
+        ],
+      ),
       renderPanelSheet: false,
       onPanelSlide: (position) => animationController.value = 1 - position,
       margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       maxHeight: MediaQuery.of(context).size.height,
-      minHeight: widget.panelHeader.preferredSize.height +
-          kMinInteractiveDimension +
-          bottomPadding,
+      minHeight: widget.panelHeader.preferredSize.height + kMinInteractiveDimension + bottomPadding,
       panelBuilder: () => BottomSheet(
         constraints: const BoxConstraints.expand(),
         animationController: BottomSheet.createAnimationController(this),
-        dragHandleColor:
-            Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
+        dragHandleColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
         backgroundColor: Theme.of(context).colorScheme.primary,
         onClosing: () {},
         builder: (context) => Padding(
           padding: EdgeInsets.only(
-              bottom: bottomPadding + MediaQuery.of(context).padding.top),
+            left: 8.0,
+            right: 8.0,
+            bottom: bottomPadding + MediaQuery.of(context).padding.top,
+          ),
           child: DefaultTextStyle.merge(
             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
             child: Column(
