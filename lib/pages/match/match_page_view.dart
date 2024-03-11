@@ -10,6 +10,7 @@ import '../match_detail/pacing_detail_page_shell.dart';
 import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
 import 'widgets/match_panel.dart';
+import 'widgets/scoreboard.dart';
 
 class MatchPageView extends StatelessWidget {
   const MatchPageView({super.key});
@@ -47,7 +48,7 @@ class MatchPageView extends StatelessWidget {
                   ),
                 ],
               ),
-              panelHeader: const PreferredSize(preferredSize: Size.fromHeight(100), child: Placeholder()),
+              panelHeader: Scoreboard(match: match),
               panelBody: const Expanded(child: Placeholder()),
             ),
           );
