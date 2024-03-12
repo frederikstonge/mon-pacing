@@ -17,6 +17,7 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).colorScheme.onPrimary;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: match.teams
@@ -46,13 +47,20 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
                       team.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: textColor),
                     ),
                   ],
                 ),
-                Text(
-                  '${match.points.where((point) => point.teamId == team.id).map((point) => point.value).fold(0, (previousValue, element) => previousValue + element)}',
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
+                Builder(builder: (context) {
+                  final points = match.points
+                      .where((point) => point.teamId == team.id)
+                      .map((point) => point.value)
+                      .fold(0, (previousValue, element) => previousValue + element);
+                  return Text(
+                    '$points',
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(color: textColor),
+                  );
+                }),
               ],
             ),
           )

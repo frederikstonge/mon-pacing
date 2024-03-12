@@ -24,6 +24,10 @@ const PenaltyModelSchema = IsarGeneratedSchema(
         type: IsarType.bool,
       ),
       IsarPropertySchema(
+        name: 'type',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
         name: 'player',
         type: IsarType.string,
       ),
@@ -48,9 +52,10 @@ const PenaltyModelSchema = IsarGeneratedSchema(
 int serializePenaltyModel(IsarWriter writer, PenaltyModel object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeBool(writer, 2, object.major);
-  IsarCore.writeString(writer, 3, object.player);
-  IsarCore.writeLong(writer, 4, object.teamId);
-  IsarCore.writeLong(writer, 5, object.improvisationId);
+  IsarCore.writeString(writer, 3, object.type);
+  IsarCore.writeString(writer, 4, object.player);
+  IsarCore.writeLong(writer, 5, object.teamId);
+  IsarCore.writeLong(writer, 6, object.improvisationId);
   return 0;
 }
 
@@ -60,15 +65,18 @@ PenaltyModel deserializePenaltyModel(IsarReader reader) {
   _id = IsarCore.readLong(reader, 1);
   final bool _major;
   _major = IsarCore.readBool(reader, 2);
+  final String _type;
+  _type = IsarCore.readString(reader, 3) ?? '';
   final String _player;
-  _player = IsarCore.readString(reader, 3) ?? '';
+  _player = IsarCore.readString(reader, 4) ?? '';
   final int _teamId;
-  _teamId = IsarCore.readLong(reader, 4);
+  _teamId = IsarCore.readLong(reader, 5);
   final int _improvisationId;
-  _improvisationId = IsarCore.readLong(reader, 5);
+  _improvisationId = IsarCore.readLong(reader, 6);
   final object = PenaltyModel(
     id: _id,
     major: _major,
+    type: _type,
     player: _player,
     teamId: _teamId,
     improvisationId: _improvisationId,
@@ -173,7 +181,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> playerEqualTo(
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -189,7 +197,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerGreaterThan(
+      typeGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -205,7 +213,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerGreaterThanOrEqualTo(
+      typeGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -220,8 +228,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerLessThan(
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -237,7 +244,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerLessThanOrEqualTo(
+      typeLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -252,7 +259,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> playerBetween(
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -270,7 +277,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerStartsWith(
+      typeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -278,6 +285,185 @@ extension PenaltyModelQueryFilter
       return query.addFilterCondition(
         StartsWithCondition(
           property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 3,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      typeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 3,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      typeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 3,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> playerEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      playerGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      playerGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      playerLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      playerLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> playerBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 4,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      playerStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -293,7 +479,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 3,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -306,7 +492,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 3,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -320,7 +506,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 3,
+          property: 4,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -333,7 +519,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 3,
+          property: 4,
           value: '',
         ),
       );
@@ -345,7 +531,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 3,
+          property: 4,
           value: '',
         ),
       );
@@ -358,7 +544,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 4,
+          property: 5,
           value: value,
         ),
       );
@@ -372,7 +558,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 4,
+          property: 5,
           value: value,
         ),
       );
@@ -386,7 +572,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 4,
+          property: 5,
           value: value,
         ),
       );
@@ -400,7 +586,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 4,
+          property: 5,
           value: value,
         ),
       );
@@ -414,7 +600,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 4,
+          property: 5,
           value: value,
         ),
       );
@@ -428,7 +614,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 4,
+          property: 5,
           lower: lower,
           upper: upper,
         ),
@@ -443,7 +629,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
@@ -457,7 +643,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
@@ -471,7 +657,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
@@ -485,7 +671,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
@@ -499,7 +685,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 5,
+          property: 6,
           value: value,
         ),
       );
@@ -514,7 +700,7 @@ extension PenaltyModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 5,
+          property: 6,
           lower: lower,
           upper: upper,
         ),
@@ -534,6 +720,7 @@ _$PenaltyModelImpl _$$PenaltyModelImplFromJson(Map<String, dynamic> json) =>
     _$PenaltyModelImpl(
       id: json['id'] as int,
       major: json['major'] as bool,
+      type: json['type'] as String,
       player: json['player'] as String,
       teamId: json['teamId'] as int,
       improvisationId: json['improvisationId'] as int,
@@ -543,6 +730,7 @@ Map<String, dynamic> _$$PenaltyModelImplToJson(_$PenaltyModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'major': instance.major,
+      'type': instance.type,
       'player': instance.player,
       'teamId': instance.teamId,
       'improvisationId': instance.improvisationId,

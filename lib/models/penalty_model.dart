@@ -10,6 +10,7 @@ class PenaltyModel with _$PenaltyModel {
   const factory PenaltyModel({
     required int id,
     required bool major,
+    required String type,
     required String player,
     required int teamId,
     required int improvisationId,
