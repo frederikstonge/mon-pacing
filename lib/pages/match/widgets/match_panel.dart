@@ -64,26 +64,23 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
             right: 8.0,
             bottom: bottomPadding + MediaQuery.of(context).padding.top,
           ),
-          child: DefaultTextStyle.merge(
-            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SizedBox(
-                  height: widget.panelHeader.preferredSize.height,
-                  child: widget.panelHeader,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: widget.panelHeader.preferredSize.height,
+                child: widget.panelHeader,
+              ),
+              SizeTransition(
+                sizeFactor: animationController,
+                child: SizedBox(
+                  height: bottomPadding,
                 ),
-                SizeTransition(
-                  sizeFactor: animationController,
-                  child: SizedBox(
-                    height: bottomPadding,
-                  ),
-                ),
-                widget.panelBody,
-              ],
-            ),
+              ),
+              widget.panelBody,
+            ],
           ),
         ),
       ),

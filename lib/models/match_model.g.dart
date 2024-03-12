@@ -257,6 +257,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
             PenaltyModel(
               id: -9223372036854775808,
               major: false,
+              type: '',
               player: '',
               teamId: -9223372036854775808,
               improvisationId: -9223372036854775808,
@@ -269,6 +270,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
               list[i] = PenaltyModel(
                 id: -9223372036854775808,
                 major: false,
+                type: '',
                 player: '',
                 teamId: -9223372036854775808,
                 improvisationId: -9223372036854775808,
@@ -459,6 +461,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                 PenaltyModel(
                   id: -9223372036854775808,
                   major: false,
+                  type: '',
                   player: '',
                   teamId: -9223372036854775808,
                   improvisationId: -9223372036854775808,
@@ -471,6 +474,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                   list[i] = PenaltyModel(
                     id: -9223372036854775808,
                     major: false,
+                    type: '',
                     player: '',
                     teamId: -9223372036854775808,
                     improvisationId: -9223372036854775808,

@@ -10,6 +10,7 @@ import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
 import 'widgets/match_panel.dart';
 import 'widgets/scoreboard.dart';
+import 'widgets/scorecard.dart';
 
 class MatchPageView extends StatelessWidget {
   static const scoreboardHeight = 100.0;
@@ -48,7 +49,7 @@ class MatchPageView extends StatelessWidget {
                 const SliverFillRemaining(child: Placeholder()),
               ],
               panelHeader: Scoreboard(match: match, height: scoreboardHeight),
-              panelBody: const Expanded(child: Placeholder()),
+              panelBody: Scorecard(match: match),
             ),
           );
         },
