@@ -12,9 +12,28 @@ import 'widgets/match_panel.dart';
 import 'widgets/scoreboard.dart';
 import 'widgets/scorecard.dart';
 
-class MatchPageView extends StatelessWidget {
+class MatchPageView extends StatefulWidget {
   static const scoreboardHeight = 100.0;
   const MatchPageView({super.key});
+
+  @override
+  State<MatchPageView> createState() => _MatchPageViewState();
+}
+
+class _MatchPageViewState extends State<MatchPageView> {
+  late final ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +44,7 @@ class MatchPageView extends StatelessWidget {
             initial: () => const Center(child: CircularProgressIndicator()),
             error: (error) => Center(child: Text(error)),
             success: (match) => MatchPanel(
+              scrollController: scrollController,
               slivers: [
                 SliverLogoAppbar(
                   title: match.name,
@@ -48,8 +68,8 @@ class MatchPageView extends StatelessWidget {
                 ),
                 const SliverFillRemaining(child: Placeholder()),
               ],
-              panelHeader: Scoreboard(match: match, height: scoreboardHeight),
-              panelBody: Scorecard(match: match),
+              panelHeader: Scoreboard(match: match, height: MatchPageView.scoreboardHeight),
+              panelBody: Scorecard(match: match, scrollController: scrollController),
             ),
           );
         },

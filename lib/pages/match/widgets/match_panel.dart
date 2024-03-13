@@ -7,12 +7,14 @@ class MatchPanel extends StatefulWidget {
   final List<Widget> slivers;
   final PreferredSizeWidget panelHeader;
   final Widget panelBody;
+  final ScrollController? scrollController;
 
   const MatchPanel({
     super.key,
     required this.slivers,
     required this.panelHeader,
     required this.panelBody,
+    this.scrollController,
   });
 
   @override
@@ -39,6 +41,7 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
     final bottomPadding =
         MediaQuery.of(context).viewInsets.bottom > 0 ? MediaQuery.of(context).viewInsets.bottom : MediaQuery.of(context).padding.bottom;
     return SlidingUpPanel(
+      scrollController: widget.scrollController,
       body: SliverScaffold(
         slivers: [
           ...widget.slivers,
