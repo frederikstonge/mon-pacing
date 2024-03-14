@@ -23,6 +23,7 @@ class Scorecard extends StatelessWidget {
         controller: scrollController,
         child: CustomCard(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Table(
                 columnWidths: const <int, TableColumnWidth>{
@@ -35,21 +36,27 @@ class Scorecard extends StatelessWidget {
                 ),
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: [
-                  const TableRow(
+                  TableRow(
                     children: [
                       Text(
-                        'Improvisations',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        S.of(context).improvisations,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Points',
+                        S.of(context).points,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Penalties',
+                        S.of(context).penalties,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -58,6 +65,8 @@ class Scorecard extends StatelessWidget {
                           children: [
                             Text(
                               S.of(context).improvisationNumber(e.key + 1),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.min,
@@ -147,9 +156,11 @@ class Scorecard extends StatelessWidget {
                       ),
                   TableRow(
                     children: [
-                      const Text(
-                        'Total',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Text(
+                        S.of(context).total,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Column(
                         mainAxisSize: MainAxisSize.min,
@@ -237,33 +248,53 @@ class Scorecard extends StatelessWidget {
               ),
               if (match.penalties.isNotEmpty) ...[
                 const Divider(),
-                ...List<PenaltyModel>.from(match.penalties).sortedByCompare((a) => a.improvisationId, (a, b) => a.compareTo(b)).map((e) {
-                  final team = match.teams.firstWhere((element) => element.id == e.teamId);
-                  final improvisationIndex = match.improvisations.indexWhere((element) => element.id == e.improvisationId);
+                ...List<PenaltyModel>.from(match.penalties).groupListsBy((a) => a.improvisationId).entries.map((e) {
                   return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${S.of(context).improvisationNumber(improvisationIndex + 1)}: '),
-                      SizedBox(
-                        height: 16,
-                        width: 16,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: Color(team.color),
-                          ),
-                        ),
+                      Text(
+                        '${S.of(context).improvisationNumber(e.key + 1)}: ',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      const SizedBox(width: 6),
-                      Text('${e.player} - ${e.type}'),
-                      if (e.major) ...[
-                        const Text(' - Major'),
-                      ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: e.value
+                              .map(
+                                (e) => Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 16,
+                                      width: 16,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Theme.of(context).colorScheme.onPrimary,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        child: CircleAvatar(
+                                          backgroundColor: Color(match.teams.firstWhere((element) => element.id == e.teamId).color),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Expanded(
+                                      child: Text(
+                                        '${e.player} - ${e.type}${e.major ? ' - ${S.of(context).major}' : ''}',
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      )
                     ],
                   );
                 }),
