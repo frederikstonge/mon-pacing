@@ -58,6 +58,8 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
                       .fold(0, (previousValue, element) => previousValue + element);
                   return Text(
                     '$points',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(color: textColor),
                   );
                 }),
