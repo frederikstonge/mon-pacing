@@ -21,6 +21,7 @@ class SliverScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SafeArea(
+        top: false,
         child: Stack(
           alignment: floatingActionButtonAlignment,
           children: [
