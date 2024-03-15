@@ -24,9 +24,9 @@ class Themes {
     const primaryColor = Colors.deepPurple;
     const secondaryColor = Colors.lightGreen;
     final cardBackgroundColor = Colors.grey.shade900;
-    final cardBorderColor = Colors.grey.shade700;
-    final dividerColor = Colors.grey.shade700;
-    final shadowColor = Colors.grey.shade700;
+    final cardBorderColor = Colors.grey.shade800;
+    final dividerColor = Colors.grey.shade800;
+    final shadowColor = Colors.grey.shade800;
     return _generateTheme(
       Brightness.dark,
       primaryColor,
