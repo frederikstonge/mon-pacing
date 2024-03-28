@@ -44,6 +44,7 @@ flutter pub global run flutter_migrate start
 # CI/CD
 
 - https://github.com/marketplace/actions/flutter-action
+- https://github.com/marketplace/actions/firebase-app-distribution
 
 ## iOS
 - https://github.com/marketplace/actions/apple-provisioning-profile-action
