@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'mon-pacing.appspot.com',
     iosBundleId: 'com.stongef.monpacing',
   );
+
 }
