@@ -43,13 +43,15 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
 
     return SlidingUpPanel(
       scrollController: scrollController,
-      body: SliverScaffold(
-        slivers: [
-          ...widget.slivers,
-          SliverPadding(
-            padding: EdgeInsets.only(bottom: panelHeight),
-          ),
-        ],
+      body: Scaffold(
+        body: SliverScaffold(
+          slivers: [
+            ...widget.slivers,
+            SliverPadding(
+              padding: EdgeInsets.only(bottom: panelHeight),
+            ),
+          ],
+        ),
       ),
       renderPanelSheet: false,
       onPanelSlide: (position) => animationController.value = 1 - position,

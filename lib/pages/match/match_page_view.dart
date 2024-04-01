@@ -21,61 +21,58 @@ class MatchPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: BlocBuilder<MatchCubit, MatchState>(
-        builder: (context, state) {
-          return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            error: (error) => Center(child: Text(error)),
-            success: (match, selectedImprovisationIndex) => MatchPanel(
-              slivers: [
-                SliverLogoAppbar(
-                  title: match.name,
-                  actions: [
-                    LoadingIconButton(
-                      onPressed: () async {
-                        await BottomSheetDialog.showDialog(
-                          context: context,
-                          child: MatchDetailPageShell(
-                            match: match,
-                            onConfirm: (match) async {
-                              await context.read<MatchCubit>().edit(match);
-                            },
-                          ),
-                        );
-                      },
-                      tooltip: S.of(context).editMatch,
-                      icon: const Icon(Icons.edit),
-                    ),
-                  ],
-                ),
-                SliverPersistentHeader(
-                  delegate: MatchPersistentHeader(
-                    match: match,
-                    selectedImprovisationIndex: selectedImprovisationIndex,
-                    changePage: context.read<MatchCubit>().changePage,
+    return BlocBuilder<MatchCubit, MatchState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => const Center(child: CircularProgressIndicator()),
+          error: (error) => Center(child: Text(error)),
+          success: (match, selectedImprovisationIndex) => MatchPanel(
+            slivers: [
+              SliverLogoAppbar(
+                title: match.name,
+                actions: [
+                  LoadingIconButton(
+                    onPressed: () async {
+                      await BottomSheetDialog.showDialog(
+                        context: context,
+                        child: MatchDetailPageShell(
+                          match: match,
+                          onConfirm: (match) async {
+                            await context.read<MatchCubit>().edit(match);
+                          },
+                        ),
+                      );
+                    },
+                    tooltip: S.of(context).editMatch,
+                    icon: const Icon(Icons.edit),
                   ),
-                  pinned: true,
+                ],
+              ),
+              SliverPersistentHeader(
+                delegate: MatchPersistentHeader(
+                  match: match,
+                  selectedImprovisationIndex: selectedImprovisationIndex,
+                  changePage: context.read<MatchCubit>().changePage,
                 ),
-                SliverToBoxAdapter(
-                  child: ImprovisationCard(improvisation: match.improvisations[selectedImprovisationIndex]),
+                pinned: true,
+              ),
+              SliverToBoxAdapter(
+                child: ImprovisationCard(improvisation: match.improvisations[selectedImprovisationIndex]),
+              ),
+              SliverToBoxAdapter(
+                child: ImprovisationActions(
+                  key: ValueKey(match.improvisations[selectedImprovisationIndex].hashCode),
+                  match: match,
+                  improvisation: match.improvisations[selectedImprovisationIndex],
+                  onPointChanged: context.read<MatchCubit>().setPoint,
                 ),
-                SliverToBoxAdapter(
-                  child: ImprovisationActions(
-                    key: ValueKey(match.improvisations[selectedImprovisationIndex].hashCode),
-                    match: match,
-                    improvisation: match.improvisations[selectedImprovisationIndex],
-                    onPointChanged: context.read<MatchCubit>().setPoint,
-                  ),
-                ),
-              ],
-              panelHeader: Scoreboard(match: match, height: MatchPageView.scoreboardHeight),
-              panelBody: Scorecard(match: match),
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+            panelHeader: Scoreboard(match: match, height: MatchPageView.scoreboardHeight),
+            panelBody: Scorecard(match: match),
+          ),
+        );
+      },
     );
   }
 }
