@@ -29,7 +29,8 @@ class MatchCubit extends Cubit<MatchState> {
     await state.whenOrNull(success: (match) async {
       final points = List<PointModel>.from(match.copyWith().points);
       if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
-        points.removeWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
+        final index = points.indexWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
+        points[index] = points[index].copyWith(value: value);
       } else {
         final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
         points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));

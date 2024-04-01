@@ -80,11 +80,12 @@ class PacingMenu extends StatelessWidget {
               await delete();
             },
             child: ListTile(
-              leading: const Icon(Icons.delete),
+              leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
               title: Text(
                 S.of(context).delete,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),
           ),

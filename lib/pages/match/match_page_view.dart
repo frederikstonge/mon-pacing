@@ -8,7 +8,9 @@ import '../../l10n/app_localizations.dart';
 import '../match_detail/pacing_detail_page_shell.dart';
 import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
+import 'widgets/improvisation.dart';
 import 'widgets/match_panel.dart';
+import 'widgets/match_persistent_header.dart';
 import 'widgets/scoreboard.dart';
 import 'widgets/scorecard.dart';
 
@@ -21,19 +23,7 @@ class MatchPageView extends StatefulWidget {
 }
 
 class _MatchPageViewState extends State<MatchPageView> {
-  late final ScrollController scrollController;
-
-  @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
+  int selectedImprovisationIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +34,6 @@ class _MatchPageViewState extends State<MatchPageView> {
             initial: () => const Center(child: CircularProgressIndicator()),
             error: (error) => Center(child: Text(error)),
             success: (match) => MatchPanel(
-              scrollController: scrollController,
               slivers: [
                 SliverLogoAppbar(
                   title: match.name,
@@ -66,14 +55,35 @@ class _MatchPageViewState extends State<MatchPageView> {
                     ),
                   ],
                 ),
-                const SliverFillRemaining(child: Placeholder()),
+                SliverPersistentHeader(
+                  delegate: MatchPersistentHeader(
+                    match: match,
+                    selectedImprovisationIndex: selectedImprovisationIndex,
+                    changePage: _changePage,
+                  ),
+                  pinned: true,
+                ),
+                SliverToBoxAdapter(
+                  child: Builder(
+                    builder: (context) {
+                      final improvisation = match.improvisations[selectedImprovisationIndex];
+                      return Improvisation(improvisation: improvisation);
+                    },
+                  ),
+                ),
               ],
               panelHeader: Scoreboard(match: match, height: MatchPageView.scoreboardHeight),
-              panelBody: Scorecard(match: match, scrollController: scrollController),
+              panelBody: Scorecard(match: match),
             ),
           );
         },
       ),
     );
+  }
+
+  void _changePage(int page) {
+    setState(() {
+      selectedImprovisationIndex = page;
+    });
   }
 }

@@ -7,14 +7,12 @@ class MatchPanel extends StatefulWidget {
   final List<Widget> slivers;
   final PreferredSizeWidget panelHeader;
   final Widget panelBody;
-  final ScrollController? scrollController;
 
   const MatchPanel({
     super.key,
     required this.slivers,
     required this.panelHeader,
     required this.panelBody,
-    this.scrollController,
   });
 
   @override
@@ -23,10 +21,12 @@ class MatchPanel extends StatefulWidget {
 
 class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
   late final AnimationController animationController;
+  late final ScrollController scrollController;
 
   @override
   void initState() {
     animationController = AnimationController(vsync: this)..value = 1;
+    scrollController = ScrollController();
     super.initState();
   }
 
@@ -40,13 +40,15 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final bottomPadding =
         MediaQuery.of(context).viewInsets.bottom > 0 ? MediaQuery.of(context).viewInsets.bottom : MediaQuery.of(context).padding.bottom;
+    final panelHeight = widget.panelHeader.preferredSize.height + kMinInteractiveDimension;
+
     return SlidingUpPanel(
-      scrollController: widget.scrollController,
+      scrollController: scrollController,
       body: SliverScaffold(
         slivers: [
           ...widget.slivers,
           SliverPadding(
-            padding: EdgeInsets.only(bottom: widget.panelHeader.preferredSize.height + kMinInteractiveDimension),
+            padding: EdgeInsets.only(bottom: panelHeight),
           ),
         ],
       ),
@@ -54,36 +56,39 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
       onPanelSlide: (position) => animationController.value = 1 - position,
       margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       maxHeight: MediaQuery.of(context).size.height,
-      minHeight: widget.panelHeader.preferredSize.height + kMinInteractiveDimension + bottomPadding,
+      minHeight: panelHeight + bottomPadding,
       panelBuilder: () => BottomSheet(
         constraints: const BoxConstraints.expand(),
         animationController: BottomSheet.createAnimationController(this),
         dragHandleColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
         backgroundColor: Theme.of(context).colorScheme.primary,
         onClosing: () {},
-        builder: (context) => Padding(
-          padding: EdgeInsets.only(
-            left: 8.0,
-            right: 8.0,
-            bottom: bottomPadding + MediaQuery.of(context).padding.top,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: widget.panelHeader.preferredSize.height,
-                child: widget.panelHeader,
-              ),
-              SizeTransition(
-                sizeFactor: animationController,
-                child: SizedBox(
-                  height: bottomPadding,
+        builder: (context) => SingleChildScrollView(
+          controller: scrollController,
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+              bottom: bottomPadding + MediaQuery.of(context).padding.top,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: widget.panelHeader.preferredSize.height,
+                  child: widget.panelHeader,
                 ),
-              ),
-              widget.panelBody,
-            ],
+                SizeTransition(
+                  sizeFactor: animationController,
+                  child: SizedBox(
+                    height: bottomPadding,
+                  ),
+                ),
+                widget.panelBody,
+              ],
+            ),
           ),
         ),
       ),
