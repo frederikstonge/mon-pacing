@@ -22,9 +22,9 @@ class Scorecard extends StatelessWidget {
         children: [
           Table(
             columnWidths: const <int, TableColumnWidth>{
-              0: FlexColumnWidth(3),
-              1: FlexColumnWidth(),
-              2: FlexColumnWidth(),
+              0: FlexColumnWidth(),
+              1: IntrinsicColumnWidth(),
+              2: IntrinsicColumnWidth(),
             },
             border: TableBorder(
               horizontalInside: BorderSide(color: Theme.of(context).dividerColor),
@@ -39,19 +39,25 @@ class Scorecard extends StatelessWidget {
                     maxLines: 1,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    S.of(context).points,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      S.of(context).points,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  Text(
-                    S.of(context).penalties,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      S.of(context).penalties,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

@@ -38,8 +38,7 @@ class _MatchPanelState extends State<MatchPanel> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final bottomPadding =
-        MediaQuery.of(context).viewInsets.bottom > 0 ? MediaQuery.of(context).viewInsets.bottom : MediaQuery.of(context).padding.bottom;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     final panelHeight = widget.panelHeader.preferredSize.height + kMinInteractiveDimension;
 
     return SlidingUpPanel(

@@ -25,25 +25,28 @@ class TeamTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SettingsTile(
       leading: InkWell(
-          onTap: () async {
-            final newColor = await BottomSheetDialog.showDialog<Color>(
-              context: context,
-              child:
-                  ColorPicker(initialColor: Color(team.color), title: 'Color'),
-            );
-            if (newColor != null) {
-              onChanged.call(team.copyWith(color: newColor.value));
-            }
-          },
-          child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  width: 2.0,
-                ),
-              ),
-              child: CircleAvatar(backgroundColor: Color(team.color)))),
+        onTap: () async {
+          final newColor = await BottomSheetDialog.showDialog<Color>(
+            context: context,
+            child: ColorPicker(initialColor: Color(team.color), title: 'Color'),
+          );
+          if (newColor != null) {
+            onChanged.call(team.copyWith(color: newColor.value));
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.onBackground,
+              width: 2.0,
+            ),
+          ),
+          child: CircleAvatar(
+            backgroundColor: Color(team.color),
+          ),
+        ),
+      ),
       title: TextFormField(
         initialValue: team.name,
         onChanged: (value) => onChanged.call(team.copyWith(name: value)),

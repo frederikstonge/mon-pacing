@@ -34,6 +34,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
           children: [
             IconButton(
               icon: const Icon(Icons.arrow_back),
+              tooltip: S.of(context).previousImprovisation,
               onPressed: selectedImprovisationIndex > 0 ? () => changePage(selectedImprovisationIndex - 1) : null,
             ),
           ],
@@ -62,6 +63,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
         ),
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward),
+          tooltip: S.of(context).nextImprovisation,
           onPressed: selectedImprovisationIndex < (match.improvisations.length - 1) ? () => changePage(selectedImprovisationIndex + 1) : null,
         ),
       ),

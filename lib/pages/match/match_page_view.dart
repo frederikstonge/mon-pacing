@@ -8,32 +8,27 @@ import '../../l10n/app_localizations.dart';
 import '../match_detail/pacing_detail_page_shell.dart';
 import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
-import 'widgets/improvisation.dart';
+import 'widgets/improvisation_actions.dart';
+import 'widgets/improvisation_card.dart';
 import 'widgets/match_panel.dart';
 import 'widgets/match_persistent_header.dart';
 import 'widgets/scoreboard.dart';
 import 'widgets/scorecard.dart';
 
-class MatchPageView extends StatefulWidget {
+class MatchPageView extends StatelessWidget {
   static const scoreboardHeight = 100.0;
   const MatchPageView({super.key});
 
   @override
-  State<MatchPageView> createState() => _MatchPageViewState();
-}
-
-class _MatchPageViewState extends State<MatchPageView> {
-  int selectedImprovisationIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocBuilder<MatchCubit, MatchState>(
         builder: (context, state) {
           return state.when(
             initial: () => const Center(child: CircularProgressIndicator()),
             error: (error) => Center(child: Text(error)),
-            success: (match) => MatchPanel(
+            success: (match, selectedImprovisationIndex) => MatchPanel(
               slivers: [
                 SliverLogoAppbar(
                   title: match.name,
@@ -59,16 +54,19 @@ class _MatchPageViewState extends State<MatchPageView> {
                   delegate: MatchPersistentHeader(
                     match: match,
                     selectedImprovisationIndex: selectedImprovisationIndex,
-                    changePage: _changePage,
+                    changePage: context.read<MatchCubit>().changePage,
                   ),
                   pinned: true,
                 ),
                 SliverToBoxAdapter(
-                  child: Builder(
-                    builder: (context) {
-                      final improvisation = match.improvisations[selectedImprovisationIndex];
-                      return Improvisation(improvisation: improvisation);
-                    },
+                  child: ImprovisationCard(improvisation: match.improvisations[selectedImprovisationIndex]),
+                ),
+                SliverToBoxAdapter(
+                  child: ImprovisationActions(
+                    key: ValueKey(match.improvisations[selectedImprovisationIndex].hashCode),
+                    match: match,
+                    improvisation: match.improvisations[selectedImprovisationIndex],
+                    onPointChanged: context.read<MatchCubit>().setPoint,
                   ),
                 ),
               ],
@@ -79,11 +77,5 @@ class _MatchPageViewState extends State<MatchPageView> {
         },
       ),
     );
-  }
-
-  void _changePage(int page) {
-    setState(() {
-      selectedImprovisationIndex = page;
-    });
   }
 }

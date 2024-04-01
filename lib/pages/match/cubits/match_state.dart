@@ -8,5 +8,8 @@ part 'match_state.freezed.dart';
 class MatchState with _$MatchState {
   const factory MatchState.initial() = MatchInitialState;
   const factory MatchState.error(String error) = MatchErrorState;
-  const factory MatchState.success(MatchModel match) = MatchSuccessState;
+  const factory MatchState.success(
+    MatchModel match,
+    int selectedImprovisationIndex,
+  ) = MatchSuccessState;
 }

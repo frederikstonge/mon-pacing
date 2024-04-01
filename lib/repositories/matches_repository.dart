@@ -26,7 +26,7 @@ class MatchesRepository {
   Future<void> edit(MatchModel entity) async {
     final model = entity.copyWith(modifiedDate: DateTime.now());
     final db = await databaseRepository.database;
-    await db.writeAsync((isar) => isar.matchModels.put(model));
+    return db.writeAsync((isar) => isar.matchModels.put(model));
   }
 
   Future<MatchModel?> get(int id) async {

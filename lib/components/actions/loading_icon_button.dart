@@ -57,10 +57,13 @@ class _LoadingIconButtonState extends State<LoadingIconButton> {
             setState(() {
               isLoading = true;
             });
-            await widget.onPressed?.call();
-            setState(() {
-              isLoading = false;
-            });
+            try {
+              await widget.onPressed?.call();
+            } finally {
+              setState(() {
+                isLoading = false;
+              });
+            }
           };
 
     final icon = isLoading

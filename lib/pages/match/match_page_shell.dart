@@ -18,10 +18,9 @@ class MatchPageShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MatchCubit(
-        id: id,
         matchesRepository: context.read<MatchesRepository>(),
         matchesCubit: context.read<MatchesCubit>(),
-      )..initialize(),
+      )..initialize(id),
       child: const MatchPageView(),
     );
   }

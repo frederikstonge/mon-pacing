@@ -9,24 +9,41 @@ import '../../../repositories/matches_repository.dart';
 import 'match_state.dart';
 
 class MatchCubit extends Cubit<MatchState> {
-  final int id;
   final MatchesRepository matchesRepository;
   final MatchesCubit matchesCubit;
 
-  MatchCubit({required this.id, required this.matchesRepository, required this.matchesCubit}) : super(const MatchState.initial());
+  MatchCubit({required this.matchesRepository, required this.matchesCubit}) : super(const MatchState.initial());
 
-  Future<void> initialize() async {
-    final match = await matchesRepository.get(id);
-    emit(MatchState.success(match!));
+  Future<void> initialize(int id, {int selectedImprovisationIndex = 0}) async {
+    await state.whenOrNull(
+      initial: () async {
+        final newMatch = await matchesRepository.get(id);
+        emit(MatchState.success(newMatch!, selectedImprovisationIndex));
+      },
+      success: (match, _) async {
+        final newMatch = await matchesRepository.get(id);
+        emit(MatchState.success(newMatch!, selectedImprovisationIndex));
+      },
+    );
   }
 
   Future<void> edit(MatchModel match) async {
-    await matchesCubit.edit(match);
-    emit(MatchState.success(match));
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex) async {
+        emit(MatchState.success(match, selectedImprovisationIndex));
+        await matchesCubit.edit(match);
+      },
+    );
+  }
+
+  void changePage(int page) {
+    state.whenOrNull(
+      success: (match, _) => emit(MatchState.success(match, page)),
+    );
   }
 
   Future<void> setPoint(int improvisationId, int teamId, int value) async {
-    await state.whenOrNull(success: (match) async {
+    await state.whenOrNull(success: (match, selectedImprovisationIndex) async {
       final points = List<PointModel>.from(match.copyWith().points);
       if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
         final index = points.indexWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
@@ -38,8 +55,8 @@ class MatchCubit extends Cubit<MatchState> {
 
       final newMatch = match.copyWith(points: points);
 
+      emit(MatchState.success(newMatch, selectedImprovisationIndex));
       await matchesCubit.edit(newMatch);
-      emit(MatchState.success(newMatch));
     });
   }
 }
