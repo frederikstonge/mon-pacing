@@ -47,10 +47,16 @@ class MatchCubit extends Cubit<MatchState> {
       final points = List<PointModel>.from(match.copyWith().points);
       if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
         final index = points.indexWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
-        points[index] = points[index].copyWith(value: value);
+        if (value > 0) {
+          points[index] = points[index].copyWith(value: value);
+        } else {
+          points.removeAt(index);
+        }
       } else {
-        final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
-        points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));
+        if (value > 0) {
+          final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
+          points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));
+        }
       }
 
       final newMatch = match.copyWith(points: points);

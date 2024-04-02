@@ -13,7 +13,7 @@ import '../../cubits/pacings/pacings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
-import '../match_detail/pacing_detail_page_shell.dart';
+import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
 import 'widgets/pacing_card.dart';
 

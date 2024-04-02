@@ -1,11 +1,11 @@
 name: mon_pacing
 description: "A new Flutter project."
-publish_to: "none" 
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
-  
+  sdk: ">=3.3.1 <4.0.0"
+
 dependencies:
   collection: ^1.18.0
   country_flags: ^2.2.0
@@ -33,7 +33,6 @@ dependencies:
   json_annotation: ^4.8.1
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5
-  sliding_up_panel2: ^3.3.0+1
 
 dev_dependencies:
   build_runner: ^2.4.8
