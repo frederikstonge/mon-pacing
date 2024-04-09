@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "addImprovisation": "Add improvisation",
+  "addPenalty": "Add penalty",
   "appTitle": "Mon Pacing",
   "areYouSure": "Are you sure you want to {action} {name}?",
   "cancel": "Cancel",
@@ -19,6 +20,7 @@
   "edit": "Edit",
   "editMatch": "Edit match",
   "editPacing": "Edit pacing",
+  "editPenalty": "Edit penalty",
   "enableDefaultTimeBuffer": "Enable default time buffer",
   "enableTimeBuffer": "Enable time buffer",
   "export": "Export",
@@ -53,6 +55,7 @@
   "pacing": "Pacing",
   "pacings": "Pacings",
   "penalties": "Penalties",
+  "performer": "Performer",
   "performers": "Performers",
   "points": "Points",
   "previousImprovisation": "Previous improvisation",

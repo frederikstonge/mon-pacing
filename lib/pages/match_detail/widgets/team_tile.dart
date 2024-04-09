@@ -6,6 +6,7 @@ import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/color_picker/color_picker.dart';
 import '../../../components/settings_tile/settings_tile.dart';
+import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../models/team_model.dart';
 import '../../../validators/validator.dart';
 
@@ -34,17 +35,11 @@ class TeamTile extends StatelessWidget {
             onChanged.call(team.copyWith(color: newColor.value));
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Theme.of(context).colorScheme.onBackground,
-              width: 2.0,
-            ),
-          ),
-          child: CircleAvatar(
-            backgroundColor: Color(team.color),
-          ),
+        child: TeamColorAvatar(
+          color: Color(team.color),
+          height: 36,
+          width: 36,
+          borderWidth: 2,
         ),
       ),
       title: TextFormField(

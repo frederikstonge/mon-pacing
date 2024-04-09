@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/quantity_stepper/quantity_stepper_form_field.dart';
+import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 
@@ -34,22 +35,7 @@ class ImprovisationActions extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          backgroundColor: Color(team.color),
-                        ),
-                      ),
-                    ),
+                    TeamColorAvatar(color: Color(team.color)),
                     const SizedBox(width: 6),
                     Text(team.name),
                   ],

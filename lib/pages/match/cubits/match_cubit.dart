@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/matches/matches_cubit.dart';
 import '../../../models/match_model.dart';
+import '../../../models/penalty_model.dart';
 import '../../../models/point_model.dart';
 import '../../../repositories/matches_repository.dart';
 import 'match_state.dart';
@@ -64,5 +65,45 @@ class MatchCubit extends Cubit<MatchState> {
       emit(MatchState.success(newMatch, selectedImprovisationIndex));
       await matchesCubit.edit(newMatch);
     });
+  }
+
+  Future<void> addPenalty(PenaltyModel penalty) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex) async {
+        final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
+        final nextPenaltyId = penalties.isNotEmpty ? penalties.map((e) => e.id).reduce(max) + 1 : 0;
+        penalties.add(penalty.copyWith(id: nextPenaltyId));
+        final newMatch = match.copyWith(penalties: penalties);
+        emit(MatchState.success(newMatch, selectedImprovisationIndex));
+        await matchesCubit.edit(newMatch);
+      },
+    );
+  }
+
+  Future<void> editPenalty(PenaltyModel penalty) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex) async {
+        final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
+        final index = penalties.indexWhere((element) => element.id == penalty.id);
+        if (index > 0) {
+          penalties[index] = penalty;
+          final newMatch = match.copyWith(penalties: penalties);
+          emit(MatchState.success(newMatch, selectedImprovisationIndex));
+          await matchesCubit.edit(newMatch);
+        }
+      },
+    );
+  }
+
+  Future<void> removePenalty(int penaltyId) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex) async {
+        final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
+        penalties.removeWhere((element) => element.id == penaltyId);
+        final newMatch = match.copyWith(penalties: penalties);
+        emit(MatchState.success(newMatch, selectedImprovisationIndex));
+        await matchesCubit.edit(newMatch);
+      },
+    );
   }
 }

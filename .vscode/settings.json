@@ -1,9 +1,12 @@
 {
+    "dart.flutterGenerateLocalizationsOnSave": "manualIfDirty",
     "dart.lineLength": 150,
     "[dart]": {
         "editor.rulers": [
             150
         ],
+        "editor.defaultFormatter": "Dart-Code.dart-code",
+        "editor.formatOnSave": true,
     },
     "files.exclude": {
         ".dart_tool": true,
@@ -15,4 +18,5 @@
         "pubspec.yaml": "pubspec.lock,pubspec_overrides.yaml,.packages,.flutter-plugins,.flutter-plugins-dependencies,.metadata",
         "*.dart": "${capture}.g.dart,${capture}.freezed.dart"
     }
+    
 }

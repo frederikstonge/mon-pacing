@@ -1,6 +1,7 @@
 {
   "@@locale": "fr",
   "addImprovisation": "Ajouter une improvisation",
+  "addPenalty": "Ajouter une pénalité",
   "appTitle": "Mon Pacing",
   "areYouSure": "Êtes-vous sûr de vouloir {action} {name}?",
   "cancel": "Annuler",
@@ -19,6 +20,7 @@
   "edit": "Modifier",
   "editMatch": "Modifier le match",
   "editPacing": "Modifier le pacing",
+  "editPenalty": "Modifier une pénalité",
   "enableDefaultTimeBuffer": "Activer le temps tampon par défaut",
   "enableTimeBuffer": "Activer le temps tampon",
   "export": "Exporter",
@@ -53,6 +55,7 @@
   "pacing": "Pacing",
   "pacings": "Pacings",
   "penalties": "Pénalités",
+  "performer": "Interprète",
   "performers": "Interprètes",
   "points": "Points",
   "previousImprovisation": "Improvisation précédente",

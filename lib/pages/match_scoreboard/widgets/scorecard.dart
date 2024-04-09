@@ -2,6 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/custom_card/custom_card.dart';
+import '../../../components/team_color_avatar/team_color_avatar.dart';
+import '../../../components/text_header/text_header.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 import '../../../models/penalty_model.dart';
@@ -76,22 +78,7 @@ class Scorecard extends StatelessWidget {
                                 (team) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      height: 16,
-                                      width: 16,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: Theme.of(context).colorScheme.onPrimary,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: CircleAvatar(
-                                          backgroundColor: Color(team.color),
-                                        ),
-                                      ),
-                                    ),
+                                    TeamColorAvatar(color: Color(team.color)),
                                     const SizedBox(width: 6),
                                     Builder(builder: (context) {
                                       final points = match.points
@@ -116,22 +103,7 @@ class Scorecard extends StatelessWidget {
                                 (team) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      height: 16,
-                                      width: 16,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: Theme.of(context).colorScheme.onPrimary,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: CircleAvatar(
-                                          backgroundColor: Color(team.color),
-                                        ),
-                                      ),
-                                    ),
+                                    TeamColorAvatar(color: Color(team.color)),
                                     const SizedBox(width: 6),
                                     Builder(builder: (context) {
                                       final penalties = switch (match.penalties
@@ -170,22 +142,7 @@ class Scorecard extends StatelessWidget {
                           (team) => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  child: CircleAvatar(
-                                    backgroundColor: Color(team.color),
-                                  ),
-                                ),
-                              ),
+                              TeamColorAvatar(color: Color(team.color)),
                               const SizedBox(width: 6),
                               Builder(builder: (context) {
                                 final points = match.points
@@ -210,22 +167,7 @@ class Scorecard extends StatelessWidget {
                           (team) => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  child: CircleAvatar(
-                                    backgroundColor: Color(team.color),
-                                  ),
-                                ),
-                              ),
+                              TeamColorAvatar(color: Color(team.color)),
                               const SizedBox(width: 6),
                               Builder(builder: (context) {
                                 final penalties = match.penalties
@@ -249,6 +191,10 @@ class Scorecard extends StatelessWidget {
           ),
           if (match.penalties.isNotEmpty) ...[
             const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: TextHeader(title: S.of(context).penalties),
+            ),
             ...List<PenaltyModel>.from(match.penalties).groupListsBy((a) => a.improvisationId).entries.map((e) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,26 +212,11 @@ class Scorecard extends StatelessWidget {
                             (e) => Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Theme.of(context).colorScheme.onPrimary,
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                    child: CircleAvatar(
-                                      backgroundColor: Color(match.teams.firstWhere((element) => element.id == e.teamId).color),
-                                    ),
-                                  ),
-                                ),
+                                TeamColorAvatar(color: Color(match.teams.firstWhere((element) => element.id == e.teamId).color)),
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    '${e.player} - ${e.type}${e.major ? ' - ${S.of(context).major}' : ''}',
+                                    '${e.performer} - ${e.type}${e.major ? ' ${S.of(context).major}' : ''}',
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                   ),

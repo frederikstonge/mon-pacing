@@ -11,7 +11,7 @@ class PenaltyModel with _$PenaltyModel {
     required int id,
     required bool major,
     required String type,
-    required String player,
+    required String performer,
     required int teamId,
     required int improvisationId,
   }) = _PenaltyModel;

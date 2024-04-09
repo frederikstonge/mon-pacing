@@ -23,7 +23,7 @@ mixin _$PenaltyModel {
   int get id => throw _privateConstructorUsedError;
   bool get major => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
-  String get player => throw _privateConstructorUsedError;
+  String get performer => throw _privateConstructorUsedError;
   int get teamId => throw _privateConstructorUsedError;
   int get improvisationId => throw _privateConstructorUsedError;
 
@@ -43,7 +43,7 @@ abstract class $PenaltyModelCopyWith<$Res> {
       {int id,
       bool major,
       String type,
-      String player,
+      String performer,
       int teamId,
       int improvisationId});
 }
@@ -64,7 +64,7 @@ class _$PenaltyModelCopyWithImpl<$Res, $Val extends PenaltyModel>
     Object? id = null,
     Object? major = null,
     Object? type = null,
-    Object? player = null,
+    Object? performer = null,
     Object? teamId = null,
     Object? improvisationId = null,
   }) {
@@ -81,9 +81,9 @@ class _$PenaltyModelCopyWithImpl<$Res, $Val extends PenaltyModel>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      player: null == player
-          ? _value.player
-          : player // ignore: cast_nullable_to_non_nullable
+      performer: null == performer
+          ? _value.performer
+          : performer // ignore: cast_nullable_to_non_nullable
               as String,
       teamId: null == teamId
           ? _value.teamId
@@ -109,7 +109,7 @@ abstract class _$$PenaltyModelImplCopyWith<$Res>
       {int id,
       bool major,
       String type,
-      String player,
+      String performer,
       int teamId,
       int improvisationId});
 }
@@ -128,7 +128,7 @@ class __$$PenaltyModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? major = null,
     Object? type = null,
-    Object? player = null,
+    Object? performer = null,
     Object? teamId = null,
     Object? improvisationId = null,
   }) {
@@ -145,9 +145,9 @@ class __$$PenaltyModelImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      player: null == player
-          ? _value.player
-          : player // ignore: cast_nullable_to_non_nullable
+      performer: null == performer
+          ? _value.performer
+          : performer // ignore: cast_nullable_to_non_nullable
               as String,
       teamId: null == teamId
           ? _value.teamId
@@ -168,7 +168,7 @@ class _$PenaltyModelImpl implements _PenaltyModel {
       {required this.id,
       required this.major,
       required this.type,
-      required this.player,
+      required this.performer,
       required this.teamId,
       required this.improvisationId});
 
@@ -182,7 +182,7 @@ class _$PenaltyModelImpl implements _PenaltyModel {
   @override
   final String type;
   @override
-  final String player;
+  final String performer;
   @override
   final int teamId;
   @override
@@ -190,7 +190,7 @@ class _$PenaltyModelImpl implements _PenaltyModel {
 
   @override
   String toString() {
-    return 'PenaltyModel(id: $id, major: $major, type: $type, player: $player, teamId: $teamId, improvisationId: $improvisationId)';
+    return 'PenaltyModel(id: $id, major: $major, type: $type, performer: $performer, teamId: $teamId, improvisationId: $improvisationId)';
   }
 
   @override
@@ -201,7 +201,8 @@ class _$PenaltyModelImpl implements _PenaltyModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.major, major) || other.major == major) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.player, player) || other.player == player) &&
+            (identical(other.performer, performer) ||
+                other.performer == performer) &&
             (identical(other.teamId, teamId) || other.teamId == teamId) &&
             (identical(other.improvisationId, improvisationId) ||
                 other.improvisationId == improvisationId));
@@ -210,7 +211,7 @@ class _$PenaltyModelImpl implements _PenaltyModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, major, type, player, teamId, improvisationId);
+      runtimeType, id, major, type, performer, teamId, improvisationId);
 
   @JsonKey(ignore: true)
   @override
@@ -231,7 +232,7 @@ abstract class _PenaltyModel implements PenaltyModel {
       {required final int id,
       required final bool major,
       required final String type,
-      required final String player,
+      required final String performer,
       required final int teamId,
       required final int improvisationId}) = _$PenaltyModelImpl;
 
@@ -245,7 +246,7 @@ abstract class _PenaltyModel implements PenaltyModel {
   @override
   String get type;
   @override
-  String get player;
+  String get performer;
   @override
   int get teamId;
   @override

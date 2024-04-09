@@ -28,7 +28,7 @@ const PenaltyModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'player',
+        name: 'performer',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -53,7 +53,7 @@ int serializePenaltyModel(IsarWriter writer, PenaltyModel object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeBool(writer, 2, object.major);
   IsarCore.writeString(writer, 3, object.type);
-  IsarCore.writeString(writer, 4, object.player);
+  IsarCore.writeString(writer, 4, object.performer);
   IsarCore.writeLong(writer, 5, object.teamId);
   IsarCore.writeLong(writer, 6, object.improvisationId);
   return 0;
@@ -67,8 +67,8 @@ PenaltyModel deserializePenaltyModel(IsarReader reader) {
   _major = IsarCore.readBool(reader, 2);
   final String _type;
   _type = IsarCore.readString(reader, 3) ?? '';
-  final String _player;
-  _player = IsarCore.readString(reader, 4) ?? '';
+  final String _performer;
+  _performer = IsarCore.readString(reader, 4) ?? '';
   final int _teamId;
   _teamId = IsarCore.readLong(reader, 5);
   final int _improvisationId;
@@ -77,7 +77,7 @@ PenaltyModel deserializePenaltyModel(IsarReader reader) {
     id: _id,
     major: _major,
     type: _type,
-    player: _player,
+    performer: _performer,
     teamId: _teamId,
     improvisationId: _improvisationId,
   );
@@ -359,7 +359,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> playerEqualTo(
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      performerEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -375,7 +376,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerGreaterThan(
+      performerGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -391,7 +392,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerGreaterThanOrEqualTo(
+      performerGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -407,7 +408,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerLessThan(
+      performerLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -423,7 +424,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerLessThanOrEqualTo(
+      performerLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -438,7 +439,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> playerBetween(
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      performerBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -456,7 +458,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerStartsWith(
+      performerStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -472,7 +474,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerEndsWith(
+      performerEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -488,7 +490,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerContains(String value, {bool caseSensitive = true}) {
+      performerContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -500,9 +502,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> playerMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      performerMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
@@ -515,7 +516,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerIsEmpty() {
+      performerIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -527,7 +528,7 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      playerIsNotEmpty() {
+      performerIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -721,7 +722,7 @@ _$PenaltyModelImpl _$$PenaltyModelImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       major: json['major'] as bool,
       type: json['type'] as String,
-      player: json['player'] as String,
+      performer: json['performer'] as String,
       teamId: json['teamId'] as int,
       improvisationId: json['improvisationId'] as int,
     );
@@ -731,7 +732,7 @@ Map<String, dynamic> _$$PenaltyModelImplToJson(_$PenaltyModelImpl instance) =>
       'id': instance.id,
       'major': instance.major,
       'type': instance.type,
-      'player': instance.player,
+      'performer': instance.performer,
       'teamId': instance.teamId,
       'improvisationId': instance.improvisationId,
     };
