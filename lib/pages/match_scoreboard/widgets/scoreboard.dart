@@ -17,7 +17,6 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = Theme.of(context).colorScheme.onPrimary;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: match.teams
@@ -47,7 +46,6 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
                       team.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: textColor),
                     ),
                   ],
                 ),
@@ -60,8 +58,8 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
                     '$points',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.displayLarge!.copyWith(color: textColor),
-                  );
+                    style: Theme.of(context).textTheme.displayLarge!,
+                    );
                 }),
               ],
             ),
