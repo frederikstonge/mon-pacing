@@ -85,12 +85,10 @@ class MatchCubit extends Cubit<MatchState> {
       success: (match, selectedImprovisationIndex) async {
         final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
         final index = penalties.indexWhere((element) => element.id == penalty.id);
-        if (index > 0) {
-          penalties[index] = penalty;
-          final newMatch = match.copyWith(penalties: penalties);
-          emit(MatchState.success(newMatch, selectedImprovisationIndex));
-          await matchesCubit.edit(newMatch);
-        }
+        penalties[index] = penalty;
+        final newMatch = match.copyWith(penalties: penalties);
+        emit(MatchState.success(newMatch, selectedImprovisationIndex));
+        await matchesCubit.edit(newMatch);
       },
     );
   }

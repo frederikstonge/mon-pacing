@@ -19,7 +19,6 @@ import 'widgets/improvisation_card.dart';
 import 'widgets/match_persistent_header.dart';
 
 class MatchPageView extends StatelessWidget {
-  static const scoreboardHeight = 100.0;
   const MatchPageView({super.key});
 
   @override
@@ -117,7 +116,7 @@ class MatchPageView extends StatelessWidget {
                                 improvisationId: match.improvisations.elementAt(selectedImprovisationIndex).id,
                                 teams: match.teams,
                                 penalty: e,
-                                onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
+                                onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
                               ),
                             ),
                             child: ListTile(
@@ -132,7 +131,7 @@ class MatchPageView extends StatelessWidget {
                                     final matchCubit = context.read<MatchCubit>();
                                     final result = await MessageBoxDialog.questionShow(
                                       context,
-                                      S.of(context).areYouSure(S.of(context).delete.toLowerCase(), match.name),
+                                      S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
                                       S.of(context).delete,
                                       S.of(context).cancel,
                                     );
