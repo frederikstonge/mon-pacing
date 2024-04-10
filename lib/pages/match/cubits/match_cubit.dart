@@ -15,23 +15,17 @@ class MatchCubit extends Cubit<MatchState> {
 
   MatchCubit({required this.matchesRepository, required this.matchesCubit}) : super(const MatchState.initial());
 
-  Future<void> initialize(int id, {int selectedImprovisationIndex = 0}) async {
-    await state.whenOrNull(
-      initial: () async {
-        final newMatch = await matchesRepository.get(id);
-        emit(MatchState.success(newMatch!, selectedImprovisationIndex));
-      },
-      success: (match, _) async {
-        final newMatch = await matchesRepository.get(id);
-        emit(MatchState.success(newMatch!, selectedImprovisationIndex));
-      },
-    );
+  Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
+    final newMatch = await matchesRepository.get(id);
+    var selectedImprovisationIndex = improvisationId != null ? newMatch!.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
+    selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
+    emit(MatchState.success(newMatch!, selectedImprovisationIndex, durationIndex ?? 0));
   }
 
   Future<void> edit(MatchModel match) async {
     await state.whenOrNull(
-      success: (match, selectedImprovisationIndex) async {
-        emit(MatchState.success(match, selectedImprovisationIndex));
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+        emit(MatchState.success(match, selectedImprovisationIndex, selectedDurationIndex));
         await matchesCubit.edit(match);
       },
     );
@@ -39,12 +33,30 @@ class MatchCubit extends Cubit<MatchState> {
 
   void changePage(int page) {
     state.whenOrNull(
-      success: (match, _) => emit(MatchState.success(match, page)),
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) => emit(
+        MatchState.success(
+          match,
+          page,
+          0,
+        ),
+      ),
+    );
+  }
+
+  void changeDuration(int durationIndex) {
+    state.whenOrNull(
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) => emit(
+        MatchState.success(
+          match,
+          selectedImprovisationIndex,
+          durationIndex,
+        ),
+      ),
     );
   }
 
   Future<void> setPoint(int improvisationId, int teamId, int value) async {
-    await state.whenOrNull(success: (match, selectedImprovisationIndex) async {
+    await state.whenOrNull(success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
       final points = List<PointModel>.from(match.copyWith().points);
       if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
         final index = points.indexWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
@@ -62,19 +74,19 @@ class MatchCubit extends Cubit<MatchState> {
 
       final newMatch = match.copyWith(points: points);
 
-      emit(MatchState.success(newMatch, selectedImprovisationIndex));
+      emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
       await matchesCubit.edit(newMatch);
     });
   }
 
   Future<void> addPenalty(PenaltyModel penalty) async {
     await state.whenOrNull(
-      success: (match, selectedImprovisationIndex) async {
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
         final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
         final nextPenaltyId = penalties.isNotEmpty ? penalties.map((e) => e.id).reduce(max) + 1 : 0;
         penalties.add(penalty.copyWith(id: nextPenaltyId));
         final newMatch = match.copyWith(penalties: penalties);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex));
+        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
         await matchesCubit.edit(newMatch);
       },
     );
@@ -82,12 +94,12 @@ class MatchCubit extends Cubit<MatchState> {
 
   Future<void> editPenalty(PenaltyModel penalty) async {
     await state.whenOrNull(
-      success: (match, selectedImprovisationIndex) async {
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
         final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
         final index = penalties.indexWhere((element) => element.id == penalty.id);
         penalties[index] = penalty;
         final newMatch = match.copyWith(penalties: penalties);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex));
+        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
         await matchesCubit.edit(newMatch);
       },
     );
@@ -95,11 +107,11 @@ class MatchCubit extends Cubit<MatchState> {
 
   Future<void> removePenalty(int penaltyId) async {
     await state.whenOrNull(
-      success: (match, selectedImprovisationIndex) async {
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
         final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
         penalties.removeWhere((element) => element.id == penaltyId);
         final newMatch = match.copyWith(penalties: penalties);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex));
+        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
         await matchesCubit.edit(newMatch);
       },
     );

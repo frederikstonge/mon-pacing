@@ -50,6 +50,7 @@
   "name": "Name",
   "nextImprovisation": "Next improvisation",
   "notes": "Notes",
+  "notificationTitle": "Timer",
   "numberOfTeamsByDefault": "Number of teams by default",
   "open": "Open",
   "pacing": "Pacing",

@@ -11,5 +11,6 @@ class MatchState with _$MatchState {
   const factory MatchState.success(
     MatchModel match,
     int selectedImprovisationIndex,
+    int selectedDurationIndex,
   ) = MatchSuccessState;
 }

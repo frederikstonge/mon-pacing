@@ -20,7 +20,8 @@ mixin _$MatchState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(MatchModel match, int selectedImprovisationIndex)
+    required TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)
         success,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +29,8 @@ mixin _$MatchState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(MatchModel match, int selectedImprovisationIndex)?
+    TResult? Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
         success,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +38,9 @@ mixin _$MatchState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(MatchModel match, int selectedImprovisationIndex)? success,
+    TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
+        success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -122,7 +126,8 @@ class _$MatchInitialStateImpl implements MatchInitialState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(MatchModel match, int selectedImprovisationIndex)
+    required TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)
         success,
   }) {
     return initial();
@@ -133,7 +138,8 @@ class _$MatchInitialStateImpl implements MatchInitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(MatchModel match, int selectedImprovisationIndex)?
+    TResult? Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
         success,
   }) {
     return initial?.call();
@@ -144,7 +150,9 @@ class _$MatchInitialStateImpl implements MatchInitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(MatchModel match, int selectedImprovisationIndex)? success,
+    TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
+        success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -259,7 +267,8 @@ class _$MatchErrorStateImpl implements MatchErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(MatchModel match, int selectedImprovisationIndex)
+    required TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)
         success,
   }) {
     return error(this.error);
@@ -270,7 +279,8 @@ class _$MatchErrorStateImpl implements MatchErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(MatchModel match, int selectedImprovisationIndex)?
+    TResult? Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
         success,
   }) {
     return error?.call(this.error);
@@ -281,7 +291,9 @@ class _$MatchErrorStateImpl implements MatchErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(MatchModel match, int selectedImprovisationIndex)? success,
+    TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
+        success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -340,7 +352,10 @@ abstract class _$$MatchSuccessStateImplCopyWith<$Res> {
           $Res Function(_$MatchSuccessStateImpl) then) =
       __$$MatchSuccessStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({MatchModel match, int selectedImprovisationIndex});
+  $Res call(
+      {MatchModel match,
+      int selectedImprovisationIndex,
+      int selectedDurationIndex});
 
   $MatchModelCopyWith<$Res> get match;
 }
@@ -358,6 +373,7 @@ class __$$MatchSuccessStateImplCopyWithImpl<$Res>
   $Res call({
     Object? match = null,
     Object? selectedImprovisationIndex = null,
+    Object? selectedDurationIndex = null,
   }) {
     return _then(_$MatchSuccessStateImpl(
       null == match
@@ -367,6 +383,10 @@ class __$$MatchSuccessStateImplCopyWithImpl<$Res>
       null == selectedImprovisationIndex
           ? _value.selectedImprovisationIndex
           : selectedImprovisationIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == selectedDurationIndex
+          ? _value.selectedDurationIndex
+          : selectedDurationIndex // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -383,16 +403,19 @@ class __$$MatchSuccessStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MatchSuccessStateImpl implements MatchSuccessState {
-  const _$MatchSuccessStateImpl(this.match, this.selectedImprovisationIndex);
+  const _$MatchSuccessStateImpl(
+      this.match, this.selectedImprovisationIndex, this.selectedDurationIndex);
 
   @override
   final MatchModel match;
   @override
   final int selectedImprovisationIndex;
+  @override
+  final int selectedDurationIndex;
 
   @override
   String toString() {
-    return 'MatchState.success(match: $match, selectedImprovisationIndex: $selectedImprovisationIndex)';
+    return 'MatchState.success(match: $match, selectedImprovisationIndex: $selectedImprovisationIndex, selectedDurationIndex: $selectedDurationIndex)';
   }
 
   @override
@@ -404,12 +427,14 @@ class _$MatchSuccessStateImpl implements MatchSuccessState {
             (identical(other.selectedImprovisationIndex,
                     selectedImprovisationIndex) ||
                 other.selectedImprovisationIndex ==
-                    selectedImprovisationIndex));
+                    selectedImprovisationIndex) &&
+            (identical(other.selectedDurationIndex, selectedDurationIndex) ||
+                other.selectedDurationIndex == selectedDurationIndex));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, match, selectedImprovisationIndex);
+  int get hashCode => Object.hash(
+      runtimeType, match, selectedImprovisationIndex, selectedDurationIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -423,10 +448,11 @@ class _$MatchSuccessStateImpl implements MatchSuccessState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) error,
-    required TResult Function(MatchModel match, int selectedImprovisationIndex)
+    required TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)
         success,
   }) {
-    return success(match, selectedImprovisationIndex);
+    return success(match, selectedImprovisationIndex, selectedDurationIndex);
   }
 
   @override
@@ -434,10 +460,12 @@ class _$MatchSuccessStateImpl implements MatchSuccessState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? error,
-    TResult? Function(MatchModel match, int selectedImprovisationIndex)?
+    TResult? Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
         success,
   }) {
-    return success?.call(match, selectedImprovisationIndex);
+    return success?.call(
+        match, selectedImprovisationIndex, selectedDurationIndex);
   }
 
   @override
@@ -445,11 +473,13 @@ class _$MatchSuccessStateImpl implements MatchSuccessState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? error,
-    TResult Function(MatchModel match, int selectedImprovisationIndex)? success,
+    TResult Function(MatchModel match, int selectedImprovisationIndex,
+            int selectedDurationIndex)?
+        success,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(match, selectedImprovisationIndex);
+      return success(match, selectedImprovisationIndex, selectedDurationIndex);
     }
     return orElse();
   }
@@ -491,11 +521,13 @@ class _$MatchSuccessStateImpl implements MatchSuccessState {
 
 abstract class MatchSuccessState implements MatchState {
   const factory MatchSuccessState(
-          final MatchModel match, final int selectedImprovisationIndex) =
-      _$MatchSuccessStateImpl;
+      final MatchModel match,
+      final int selectedImprovisationIndex,
+      final int selectedDurationIndex) = _$MatchSuccessStateImpl;
 
   MatchModel get match;
   int get selectedImprovisationIndex;
+  int get selectedDurationIndex;
   @JsonKey(ignore: true)
   _$$MatchSuccessStateImplCopyWith<_$MatchSuccessStateImpl> get copyWith =>
       throw _privateConstructorUsedError;

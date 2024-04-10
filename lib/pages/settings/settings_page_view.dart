@@ -9,6 +9,7 @@ import '../../components/settings_tile/settings_tile.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/text_header/text_header.dart';
+import '../../components/timer_banner/timer_banner.dart';
 import '../../components/tooltip/custom_tooltip.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
@@ -24,8 +25,9 @@ class SettingsPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverScaffold(
+      appBar: SliverLogoAppbar(title: S.of(context).settings),
       slivers: [
-        SliverLogoAppbar(title: S.of(context).settings),
+        const TimerBanner(),
         BlocBuilder<SettingsCubit, SettingsState>(
           builder: (context, state) {
             return SliverList.list(

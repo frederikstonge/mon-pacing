@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 import '../../extensions/duration_extensions.dart';
-import 'timer_event_model.dart';
 import 'timer_status_model.dart';
+
+const String timerStatusDataKey = 'timerStatus';
 
 @pragma('vm:entry-point')
 void startCallback() {
@@ -20,7 +22,7 @@ class TimerTaskHandler extends TaskHandler {
   Future<void> onStart(DateTime timestamp, SendPort? sendPort) async {
     _sendPort = sendPort;
 
-    _timerStatus = await FlutterForegroundTask.getData<TimerStatusModel>(key: 'timerStatus');
+    _timerStatus = await getTimerStatus();
     if (_timerStatus == null) {
       await FlutterForegroundTask.stopService();
       return;
@@ -33,7 +35,7 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   Future<void> onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
-    _timerStatus = await FlutterForegroundTask.getData<TimerStatusModel>(key: 'timerStatus');
+    _timerStatus = await getTimerStatus();
     if (_timerStatus == null) {
       await FlutterForegroundTask.stopService();
       return;
@@ -56,37 +58,50 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   void onNotificationPressed() {
-    final matchId = _timerStatus?.matchId;
-    if (matchId != null) {
-      FlutterForegroundTask.launchApp('/resume-route');
-      final event = TimerEventModel(eventName: 'onNotificationPressed', data: _timerStatus?.matchId.toString());
-      _sendPort?.send(event.toJson());
-    }
-
-    FlutterForegroundTask.launchApp();
+    final matchId = _timerStatus!.matchId;
+    final improvisationId = _timerStatus!.improvisationId;
+    final durationIndex = _timerStatus!.durationIndex;
+    final path = '/matches/details/$matchId?improvisationId=$improvisationId&durationIndex=$durationIndex';
+    FlutterForegroundTask.launchApp(path);
   }
 
   Future<void> onTick() async {
-    if (!_stopwatch!.isRunning && _timerStatus!.status == TimerStatus.started) {
-      _stopwatch!.start();
-    } else if (_stopwatch!.isRunning && _timerStatus!.status == TimerStatus.paused) {
-      _stopwatch!.stop();
+    if (_timerStatus!.status == TimerStatus.paused) {
+      if (_stopwatch!.isRunning) {
+        _stopwatch!.stop();
+      }
+
+      return;
     }
 
-    final elapsed = _timerStatus!.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
-    if (elapsed <= 0) {
+    if (!_stopwatch!.isRunning) {
+      _stopwatch!.start();
+    }
+
+    final remainingMilliseconds = _timerStatus!.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
+
+    _timerStatus = _timerStatus!.copyWith(remainingMilliseconds: remainingMilliseconds);
+    await FlutterForegroundTask.saveData(key: timerStatusDataKey, value: json.encode(_timerStatus!.toJson()));
+
+    _sendPort?.send(_timerStatus!.toJson());
+
+    if (remainingMilliseconds <= 0) {
       await FlutterForegroundTask.stopService();
       return;
     }
 
-    final elapsedDuration = Duration(milliseconds: elapsed);
-    final event = TimerEventModel(eventName: 'update', data: elapsedDuration.inMilliseconds.toString());
-
-    _sendPort?.send(event.toJson());
-
+    final remainingDuration = Duration(milliseconds: remainingMilliseconds);
     await FlutterForegroundTask.updateService(
-      notificationTitle: 'Timer',
-      notificationText: elapsedDuration.toImprovDuration(),
+      notificationTitle: _timerStatus!.notificationTitle,
+      notificationText: remainingDuration.toImprovDuration(),
     );
+  }
+
+  Future<TimerStatusModel?> getTimerStatus() async {
+    final data = await FlutterForegroundTask.getData<String>(key: timerStatusDataKey);
+    if (data == null) {
+      return null;
+    }
+    return TimerStatusModel.fromJson(json.decode(data));
   }
 }

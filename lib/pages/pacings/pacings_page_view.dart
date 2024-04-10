@@ -7,6 +7,7 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
+import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
@@ -68,20 +69,21 @@ class _PacingsPageViewState extends State<PacingsPageView> {
               tooltip: S.of(context).createNewPacingTooltip,
               child: const Icon(Icons.add),
             ),
+            appBar: SliverLogoAppbar(
+              title: S.of(context).pacings,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: LoadingIconButton(
+                    icon: const Icon(Icons.download),
+                    tooltip: S.of(context).importPacingTooltip,
+                    onPressed: () async => context.read<PacingsCubit>().import(),
+                  ),
+                )
+              ],
+            ),
             slivers: [
-              SliverLogoAppbar(
-                title: S.of(context).pacings,
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: LoadingIconButton(
-                      icon: const Icon(Icons.download),
-                      tooltip: S.of(context).importPacingTooltip,
-                      onPressed: () async => context.read<PacingsCubit>().import(),
-                    ),
-                  )
-                ],
-              ),
+              const TimerBanner(),
               state.when(
                 initial: () => const SliverFillRemaining(
                   child: Center(

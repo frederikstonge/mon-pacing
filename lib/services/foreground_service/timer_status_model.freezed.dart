@@ -23,7 +23,11 @@ mixin _$TimerStatusModel {
   Duration get duration => throw _privateConstructorUsedError;
   int get matchId => throw _privateConstructorUsedError;
   int get improvisationId => throw _privateConstructorUsedError;
+  int get durationIndex => throw _privateConstructorUsedError;
   TimerStatus get status => throw _privateConstructorUsedError;
+  int get remainingMilliseconds => throw _privateConstructorUsedError;
+  bool get hapticFeedback => throw _privateConstructorUsedError;
+  String get notificationTitle => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +45,11 @@ abstract class $TimerStatusModelCopyWith<$Res> {
       {Duration duration,
       int matchId,
       int improvisationId,
-      TimerStatus status});
+      int durationIndex,
+      TimerStatus status,
+      int remainingMilliseconds,
+      bool hapticFeedback,
+      String notificationTitle});
 }
 
 /// @nodoc
@@ -60,7 +68,11 @@ class _$TimerStatusModelCopyWithImpl<$Res, $Val extends TimerStatusModel>
     Object? duration = null,
     Object? matchId = null,
     Object? improvisationId = null,
+    Object? durationIndex = null,
     Object? status = null,
+    Object? remainingMilliseconds = null,
+    Object? hapticFeedback = null,
+    Object? notificationTitle = null,
   }) {
     return _then(_value.copyWith(
       duration: null == duration
@@ -75,10 +87,26 @@ class _$TimerStatusModelCopyWithImpl<$Res, $Val extends TimerStatusModel>
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
+      durationIndex: null == durationIndex
+          ? _value.durationIndex
+          : durationIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as TimerStatus,
+      remainingMilliseconds: null == remainingMilliseconds
+          ? _value.remainingMilliseconds
+          : remainingMilliseconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      hapticFeedback: null == hapticFeedback
+          ? _value.hapticFeedback
+          : hapticFeedback // ignore: cast_nullable_to_non_nullable
+              as bool,
+      notificationTitle: null == notificationTitle
+          ? _value.notificationTitle
+          : notificationTitle // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -95,7 +123,11 @@ abstract class _$$TimerStatusModelImplCopyWith<$Res>
       {Duration duration,
       int matchId,
       int improvisationId,
-      TimerStatus status});
+      int durationIndex,
+      TimerStatus status,
+      int remainingMilliseconds,
+      bool hapticFeedback,
+      String notificationTitle});
 }
 
 /// @nodoc
@@ -112,7 +144,11 @@ class __$$TimerStatusModelImplCopyWithImpl<$Res>
     Object? duration = null,
     Object? matchId = null,
     Object? improvisationId = null,
+    Object? durationIndex = null,
     Object? status = null,
+    Object? remainingMilliseconds = null,
+    Object? hapticFeedback = null,
+    Object? notificationTitle = null,
   }) {
     return _then(_$TimerStatusModelImpl(
       duration: null == duration
@@ -127,10 +163,26 @@ class __$$TimerStatusModelImplCopyWithImpl<$Res>
           ? _value.improvisationId
           : improvisationId // ignore: cast_nullable_to_non_nullable
               as int,
+      durationIndex: null == durationIndex
+          ? _value.durationIndex
+          : durationIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as TimerStatus,
+      remainingMilliseconds: null == remainingMilliseconds
+          ? _value.remainingMilliseconds
+          : remainingMilliseconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      hapticFeedback: null == hapticFeedback
+          ? _value.hapticFeedback
+          : hapticFeedback // ignore: cast_nullable_to_non_nullable
+              as bool,
+      notificationTitle: null == notificationTitle
+          ? _value.notificationTitle
+          : notificationTitle // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -142,7 +194,11 @@ class _$TimerStatusModelImpl implements _TimerStatusModel {
       {required this.duration,
       required this.matchId,
       required this.improvisationId,
-      required this.status});
+      required this.durationIndex,
+      required this.status,
+      required this.remainingMilliseconds,
+      required this.hapticFeedback,
+      required this.notificationTitle});
 
   factory _$TimerStatusModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TimerStatusModelImplFromJson(json);
@@ -154,11 +210,19 @@ class _$TimerStatusModelImpl implements _TimerStatusModel {
   @override
   final int improvisationId;
   @override
+  final int durationIndex;
+  @override
   final TimerStatus status;
+  @override
+  final int remainingMilliseconds;
+  @override
+  final bool hapticFeedback;
+  @override
+  final String notificationTitle;
 
   @override
   String toString() {
-    return 'TimerStatusModel(duration: $duration, matchId: $matchId, improvisationId: $improvisationId, status: $status)';
+    return 'TimerStatusModel(duration: $duration, matchId: $matchId, improvisationId: $improvisationId, durationIndex: $durationIndex, status: $status, remainingMilliseconds: $remainingMilliseconds, hapticFeedback: $hapticFeedback, notificationTitle: $notificationTitle)';
   }
 
   @override
@@ -171,13 +235,29 @@ class _$TimerStatusModelImpl implements _TimerStatusModel {
             (identical(other.matchId, matchId) || other.matchId == matchId) &&
             (identical(other.improvisationId, improvisationId) ||
                 other.improvisationId == improvisationId) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.durationIndex, durationIndex) ||
+                other.durationIndex == durationIndex) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.remainingMilliseconds, remainingMilliseconds) ||
+                other.remainingMilliseconds == remainingMilliseconds) &&
+            (identical(other.hapticFeedback, hapticFeedback) ||
+                other.hapticFeedback == hapticFeedback) &&
+            (identical(other.notificationTitle, notificationTitle) ||
+                other.notificationTitle == notificationTitle));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, duration, matchId, improvisationId, status);
+  int get hashCode => Object.hash(
+      runtimeType,
+      duration,
+      matchId,
+      improvisationId,
+      durationIndex,
+      status,
+      remainingMilliseconds,
+      hapticFeedback,
+      notificationTitle);
 
   @JsonKey(ignore: true)
   @override
@@ -199,7 +279,11 @@ abstract class _TimerStatusModel implements TimerStatusModel {
       {required final Duration duration,
       required final int matchId,
       required final int improvisationId,
-      required final TimerStatus status}) = _$TimerStatusModelImpl;
+      required final int durationIndex,
+      required final TimerStatus status,
+      required final int remainingMilliseconds,
+      required final bool hapticFeedback,
+      required final String notificationTitle}) = _$TimerStatusModelImpl;
 
   factory _TimerStatusModel.fromJson(Map<String, dynamic> json) =
       _$TimerStatusModelImpl.fromJson;
@@ -211,7 +295,15 @@ abstract class _TimerStatusModel implements TimerStatusModel {
   @override
   int get improvisationId;
   @override
+  int get durationIndex;
+  @override
   TimerStatus get status;
+  @override
+  int get remainingMilliseconds;
+  @override
+  bool get hapticFeedback;
+  @override
+  String get notificationTitle;
   @override
   @JsonKey(ignore: true)
   _$$TimerStatusModelImplCopyWith<_$TimerStatusModelImpl> get copyWith =>

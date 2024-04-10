@@ -50,6 +50,7 @@
   "name": "Nom",
   "nextImprovisation": "Improvisation suivante",
   "notes": "Notes",
+  "notificationTitle": "Chronomètre",
   "numberOfTeamsByDefault": "Nombre d'équipe par défaut",
   "open": "Ouvrir",
   "pacing": "Pacing",

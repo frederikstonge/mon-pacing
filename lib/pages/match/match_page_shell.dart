@@ -8,10 +8,14 @@ import 'match_page_view.dart';
 
 class MatchPageShell extends StatelessWidget {
   final int id;
+  final int? improvisationId;
+  final int? durationIndex;
 
   const MatchPageShell({
     super.key,
     required this.id,
+    this.improvisationId,
+    this.durationIndex,
   });
 
   @override
@@ -20,7 +24,7 @@ class MatchPageShell extends StatelessWidget {
       create: (context) => MatchCubit(
         matchesRepository: context.read<MatchesRepository>(),
         matchesCubit: context.read<MatchesCubit>(),
-      )..initialize(id),
+      )..initialize(id, improvisationId: improvisationId, durationIndex: durationIndex),
       child: const MatchPageView(),
     );
   }

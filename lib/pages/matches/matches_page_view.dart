@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
+import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/matches/matches_state.dart';
 import '../../l10n/app_localizations.dart';
@@ -47,10 +48,11 @@ class _MatchesPageViewState extends State<MatchesPageView> {
           child: SliverScaffold(
             scrollController: _scrollController,
             scrollPhysics: const AlwaysScrollableScrollPhysics(),
+            appBar: SliverLogoAppbar(
+              title: S.of(context).matches,
+            ),
             slivers: [
-              SliverLogoAppbar(
-                title: S.of(context).matches,
-              ),
+              const TimerBanner(),
               state.when(
                 initial: () => const SliverFillRemaining(
                   child: Center(

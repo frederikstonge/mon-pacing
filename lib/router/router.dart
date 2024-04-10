@@ -66,12 +66,20 @@ final router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.match,
                   path: 'details/:id',
-                  builder: (context, state) => MatchPageShell(
-                    key: state.pageKey,
-                    id: int.parse(
-                      state.pathParameters['id']!,
-                    ),
-                  ),
+                  builder: (context, state) {
+                    final improvisationIdQuery = state.uri.queryParameters['improvisationId'];
+                    final improvisationId = improvisationIdQuery != null ? int.parse(improvisationIdQuery) : null;
+                    final durationIndexQuery = state.uri.queryParameters['durationIndex'];
+                    final durationIndex = durationIndexQuery != null ? int.parse(durationIndexQuery) : null;
+                    return MatchPageShell(
+                      key: state.pageKey,
+                      id: int.parse(
+                        state.pathParameters['id']!,
+                      ),
+                      improvisationId: improvisationId,
+                      durationIndex: durationIndex,
+                    );
+                  },
                 ),
               ],
             ),

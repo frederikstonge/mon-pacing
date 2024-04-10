@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 
 import 'bootstrapper.dart';
 import 'firebase_options.dart';
-import 'services/foreground_service/foreground_service_init.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,9 +34,6 @@ Future<void> main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
-
-  initForegroundTask();
-  await requestPermissionForAndroid();
 
   runApp(const Bootstrapper());
 }

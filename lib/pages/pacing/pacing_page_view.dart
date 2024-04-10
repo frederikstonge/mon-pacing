@@ -7,6 +7,7 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
+import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -51,36 +52,37 @@ class PacingPageView extends StatelessWidget {
                   tooltip: S.of(context).addImprovisation,
                   child: const Icon(Icons.add),
                 ),
+                appBar: SliverLogoAppbar(
+                  title: pacing.name,
+                  actions: [
+                    LoadingIconButton(
+                      onPressed: () async {
+                        await BottomSheetDialog.showDialog(
+                          context: context,
+                          child: PacingDetailPageShell(
+                            pacing: pacing,
+                            onConfirm: (pacing) async {
+                              context.read<PacingCubit>().edit(pacing);
+                            },
+                          ),
+                        );
+                      },
+                      tooltip: S.of(context).editPacing,
+                      icon: const Icon(Icons.edit),
+                    ),
+                    LoadingIconButton(
+                      onPressed: () async {
+                        final router = GoRouter.of(context);
+                        await context.read<PacingsCubit>().edit(pacing);
+                        router.pop();
+                      },
+                      tooltip: S.of(context).save,
+                      icon: const Icon(Icons.save),
+                    ),
+                  ],
+                ),
                 slivers: [
-                  SliverLogoAppbar(
-                    title: pacing.name,
-                    actions: [
-                      LoadingIconButton(
-                        onPressed: () async {
-                          await BottomSheetDialog.showDialog(
-                            context: context,
-                            child: PacingDetailPageShell(
-                              pacing: pacing,
-                              onConfirm: (pacing) async {
-                                context.read<PacingCubit>().edit(pacing);
-                              },
-                            ),
-                          );
-                        },
-                        tooltip: S.of(context).editPacing,
-                        icon: const Icon(Icons.edit),
-                      ),
-                      LoadingIconButton(
-                        onPressed: () async {
-                          final router = GoRouter.of(context);
-                          await context.read<PacingsCubit>().edit(pacing);
-                          router.pop();
-                        },
-                        tooltip: S.of(context).save,
-                        icon: const Icon(Icons.save),
-                      ),
-                    ],
-                  ),
+                  const TimerBanner(),
                   SliverPersistentHeader(
                     delegate: PacingPersistentHeader(pacing: pacing),
                     pinned: true,
