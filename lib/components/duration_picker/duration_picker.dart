@@ -47,47 +47,50 @@ class _DurationPickerState extends State<DurationPicker> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SegmentedButton(
-            style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-            segments: const [
-              ButtonSegment(
-                value: 1,
-                label: Text(
-                  '1 sec',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SegmentedButton(
+              style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
+              segments: const [
+                ButtonSegment(
+                  value: 1,
+                  label: Text(
+                    '1 sec',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              ButtonSegment(
-                  value: 10,
-                  label: Text(
-                    '10 sec',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )),
-              ButtonSegment(
-                  value: 30,
-                  label: Text(
-                    '30 sec',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )),
-            ],
-            selected: {secondInterval},
-            onSelectionChanged: (values) {
-              final value = values.first;
-              final difference = selectedDuration.inSeconds % value;
-              if (difference != 0) {
-                if (difference < (value / 2)) {
-                  selectedDuration = Duration(seconds: selectedDuration.inSeconds - difference);
-                } else {
-                  selectedDuration = Duration(seconds: selectedDuration.inSeconds + (value - difference));
+                ButtonSegment(
+                    value: 10,
+                    label: Text(
+                      '10 sec',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                ButtonSegment(
+                    value: 30,
+                    label: Text(
+                      '30 sec',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+              ],
+              selected: {secondInterval},
+              onSelectionChanged: (values) {
+                final value = values.first;
+                final difference = selectedDuration.inSeconds % value;
+                if (difference != 0) {
+                  if (difference < (value / 2)) {
+                    selectedDuration = Duration(seconds: selectedDuration.inSeconds - difference);
+                  } else {
+                    selectedDuration = Duration(seconds: selectedDuration.inSeconds + (value - difference));
+                  }
                 }
-              }
-              setState(() {
-                secondInterval = value;
-              });
-            },
+                setState(() {
+                  secondInterval = value;
+                });
+              },
+            ),
           ),
           CupertinoTimerPicker(
             key: ValueKey(secondInterval),

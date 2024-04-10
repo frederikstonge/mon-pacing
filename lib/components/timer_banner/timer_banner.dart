@@ -30,7 +30,7 @@ class TimerBanner extends StatelessWidget {
                 child: MaterialBanner(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   content: Text(
-                    'test - ${Duration(milliseconds: state.timerStatus!.remainingMilliseconds).toImprovDuration()}',
+                    '${state.timerStatus!.notificationTitle} - ${Duration(milliseconds: state.timerStatus!.remainingMilliseconds).toImprovDuration()}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),

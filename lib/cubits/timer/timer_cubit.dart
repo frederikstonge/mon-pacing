@@ -23,7 +23,9 @@ class TimerCubit extends Cubit<TimerState> {
     settingsCubit.stream.listen((event) async {
       localizer = await S.delegate.load(Locale(event.language));
     });
+
     localizer = await S.delegate.load(Locale(settingsCubit.state.language));
+
     initForegroundTask();
     await requestPermissionForAndroid();
 
@@ -44,7 +46,7 @@ class TimerCubit extends Cubit<TimerState> {
     }
   }
 
-  Future<bool> start(int matchId, int improvisationId, int durationIndex, Duration duration) async {
+  Future<bool> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
     final timerStatus = TimerStatusModel(
       duration: duration,
       matchId: matchId,
@@ -53,15 +55,10 @@ class TimerCubit extends Cubit<TimerState> {
       remainingMilliseconds: duration.inMilliseconds,
       status: TimerStatus.started,
       hapticFeedback: false,
-      notificationTitle: localizer.notificationTitle,
+      notificationTitle: matchName,
     );
 
     await _updateTimerStatus(timerStatus);
-
-    final isRegistered = _registerReceivePort(FlutterForegroundTask.receivePort);
-    if (!isRegistered) {
-      return false;
-    }
 
     if (await FlutterForegroundTask.isRunningService) {
       return await FlutterForegroundTask.restartService();

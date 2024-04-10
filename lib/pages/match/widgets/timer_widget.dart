@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cubits/timer/timer_cubit.dart';
 import '../../../cubits/timer/timer_state.dart';
 import '../../../extensions/duration_extensions.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../services/foreground_service/timer_status_model.dart';
@@ -65,6 +66,8 @@ class TimerWidget extends StatelessWidget {
                 ? Duration(milliseconds: state.timerStatus!.remainingMilliseconds).toImprovDuration()
                 : Duration(seconds: improvisation.durationsInSeconds.elementAt(durationIndex)).toImprovDuration(),
             style: Theme.of(context).textTheme.displaySmall,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,16 +76,24 @@ class TimerWidget extends StatelessWidget {
                 onPressed: isActive && state.timerStatus!.status == TimerStatus.paused
                     ? () => context.read<TimerCubit>().resume()
                     : () => context.read<TimerCubit>().start(
-                        match.id, improvisation.id, durationIndex, Duration(seconds: improvisation.durationsInSeconds.elementAt(durationIndex))),
-                icon: const Icon(Icons.play_arrow),
+                          match.id,
+                          match.name,
+                          improvisation.id,
+                          durationIndex,
+                          Duration(seconds: improvisation.durationsInSeconds.elementAt(durationIndex)),
+                        ),
+                icon: isActive && state.timerStatus!.status == TimerStatus.started ? const Icon(Icons.replay) : const Icon(Icons.play_arrow),
+                tooltip: S.of(context).start,
               ),
               IconButton(
                 onPressed: isActive && state.timerStatus!.status == TimerStatus.started ? () => context.read<TimerCubit>().pause() : null,
                 icon: const Icon(Icons.pause),
+                tooltip: S.of(context).pause,
               ),
               IconButton(
                 onPressed: isActive ? () => context.read<TimerCubit>().stop() : null,
                 icon: const Icon(Icons.stop),
+                tooltip: S.of(context).stop,
               ),
             ],
           ),
