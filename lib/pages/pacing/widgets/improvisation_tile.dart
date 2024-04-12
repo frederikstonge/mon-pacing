@@ -99,6 +99,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
                   S.of(context).improvisationNumber(widget.index + 1),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 AnimatedSize(
                   alignment: Alignment.topCenter,

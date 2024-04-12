@@ -32,10 +32,10 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
                 ? match.copyWith()
                 : MatchModel(
                     id: 0,
-                    name: '',
+                    name: pacing!.name,
                     createdDate: null,
                     modifiedDate: null,
-                    improvisations: List<ImprovisationModel>.from(pacing!.improvisations),
+                    improvisations: List<ImprovisationModel>.from(pacing.improvisations),
                     teams: [],
                     penalties: [],
                     points: [],
