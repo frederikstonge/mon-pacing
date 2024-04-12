@@ -42,16 +42,3 @@ flutter pub global activate flutter_migrate
 
 flutter pub global run flutter_migrate start
 ```
-
-# CI/CD
-
-- https://github.com/marketplace/actions/flutter-action
-- https://github.com/marketplace/actions/firebase-app-distribution
-
-## iOS
-- https://github.com/marketplace/actions/apple-provisioning-profile-action
-- https://github.com/marketplace/actions/apple-certificate-action
-- https://github.com/codemagic-ci-cd/cli-tools/blob/master/docs/xcode-project/use-profiles.md
-
-## Android
-- https://github.com/marketplace/actions/secret-to-file
