@@ -142,40 +142,40 @@ class MatchPageView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          ...match.penalties.map(
-                            (e) => InkWell(
-                              onTap: () => BottomSheetDialog.showDialog(
-                                context: context,
-                                child: MatchPenaltyShell(
-                                  improvisationId: improvisation.id,
-                                  teams: match.teams,
-                                  penalty: e,
-                                  onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
+                          ...match.penalties.where((p) => p.improvisationId == improvisation.id).map(
+                                (e) => InkWell(
+                                  onTap: () => BottomSheetDialog.showDialog(
+                                    context: context,
+                                    child: MatchPenaltyShell(
+                                      improvisationId: improvisation.id,
+                                      teams: match.teams,
+                                      penalty: e,
+                                      onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    leading: TeamColorAvatar(color: Color(match.teams.firstWhere((element) => element.id == e.teamId).color)),
+                                    title: Text('${e.type}${e.major ? ' ${S.of(context).major}' : ''}'),
+                                    subtitle: Text(e.performer),
+                                    trailing: LoadingIconButton(
+                                        icon: const Icon(Icons.remove),
+                                        tooltip: S.of(context).delete,
+                                        onPressed: () async {
+                                          final matchCubit = context.read<MatchCubit>();
+                                          final result = await MessageBoxDialog.questionShow(
+                                            context,
+                                            S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
+                                            S.of(context).delete,
+                                            S.of(context).cancel,
+                                          );
+                                          if (result ?? false) {
+                                            await matchCubit.removePenalty(e.id);
+                                          }
+                                        }),
+                                  ),
                                 ),
                               ),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                leading: TeamColorAvatar(color: Color(match.teams.firstWhere((element) => element.id == e.teamId).color)),
-                                title: Text('${e.type}${e.major ? ' ${S.of(context).major}' : ''}'),
-                                subtitle: Text(e.performer),
-                                trailing: LoadingIconButton(
-                                    icon: const Icon(Icons.remove),
-                                    tooltip: S.of(context).delete,
-                                    onPressed: () async {
-                                      final matchCubit = context.read<MatchCubit>();
-                                      final result = await MessageBoxDialog.questionShow(
-                                        context,
-                                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
-                                        S.of(context).delete,
-                                        S.of(context).cancel,
-                                      );
-                                      if (result ?? false) {
-                                        await matchCubit.removePenalty(e.id);
-                                      }
-                                    }),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
