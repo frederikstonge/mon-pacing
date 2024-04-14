@@ -4,6 +4,7 @@ import 'package:isar/isar.dart';
 import 'base_model.dart';
 import 'improvisation_model.dart';
 import 'improvisation_type.dart';
+import 'penalties_behavior.dart';
 import 'penalty_model.dart';
 import 'point_model.dart';
 import 'team_model.dart';
@@ -24,6 +25,9 @@ class MatchModel with _$MatchModel implements BaseModel {
     required List<ImprovisationModel> improvisations,
     required List<PenaltyModel> penalties,
     required List<PointModel> points,
+    required bool enablePenaltiesImpactPoints,
+    required PenaltiesBehavior penaltiesBehavior,
+    required int penaltiesRequiredToImpactPoints,
   }) = _MatchModel;
 
   factory MatchModel.fromJson(Map<String, Object?> json) => _$MatchModelFromJson(json);

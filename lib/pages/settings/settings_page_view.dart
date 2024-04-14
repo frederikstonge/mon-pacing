@@ -5,6 +5,8 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/display_language/display_language.dart';
 import '../../components/duration_picker/duration_picker.dart';
+import '../../components/penalties_behavior/penalties_behavior_view.dart';
+import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
@@ -15,6 +17,7 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../extensions/duration_extensions.dart';
 import '../../l10n/app_localizations.dart';
+import '../../models/penalties_behavior.dart';
 import '../../models/theme_type.dart';
 import 'widgets/language_view.dart';
 import 'widgets/theme_view.dart';
@@ -71,7 +74,6 @@ class SettingsPageView extends StatelessWidget {
                             context: context,
                             child: ThemeView(
                               currentTheme: state.theme,
-                              availableThemes: ThemeType.values,
                               onChanged: (theme) => context.read<SettingsCubit>().edit(state.copyWith(theme: theme)),
                             ),
                           );
@@ -133,22 +135,97 @@ class SettingsPageView extends StatelessWidget {
                         title: Text(S.of(context).defaultTimeBuffer),
                         subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
                         trailing: const Icon(Icons.chevron_right),
-                        onTap: state.enableDefaultTimeBuffer
-                            ? () async {
-                                final settingsCubit = context.read<SettingsCubit>();
-                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                                  context: context,
-                                  child: DurationPicker(
-                                    title: S.of(context).defaultTimeBuffer,
-                                    initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
-                                  ),
-                                );
+                        onTap: () async {
+                          final settingsCubit = context.read<SettingsCubit>();
+                          final newDuration = await BottomSheetDialog.showDialog<Duration>(
+                            context: context,
+                            child: DurationPicker(
+                              title: S.of(context).defaultTimeBuffer,
+                              initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
+                            ),
+                          );
 
-                                if (newDuration != null) {
-                                  settingsCubit.edit(state.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds));
+                          if (newDuration != null) {
+                            settingsCubit.edit(state.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds));
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                  child: TextHeader(
+                    title: S.of(context).match,
+                  ),
+                ),
+                CustomCard(
+                  child: Column(
+                    children: [
+                      SettingsTile(
+                        leading: const Icon(Icons.scoreboard),
+                        title: Row(
+                          children: [
+                            Flexible(child: Text(S.of(context).enableDefaultPenaltiesImpactPoints)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(
+                                tooltip: S.of(context).penaltiesImpactPointsTooltip,
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: Switch(
+                            value: state.enableDefaultPenaltiesImpactPoints,
+                            onChanged: (value) {
+                              context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPenaltiesImpactPoints: value));
+                            }),
+                      ),
+                      SettingsTile(
+                        leading: const Icon(Icons.sports),
+                        title: Text(S.of(context).defaultPenaltiesBehavior),
+                        subTitle: Text(
+                          switch (state.defaultPenaltiesBehavior) {
+                            PenaltiesBehavior.addPoints => S.of(context).penaltiesBehaviorAdd,
+                            PenaltiesBehavior.substractPoints => S.of(context).penaltiesBehaviorSubstract,
+                          },
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () {
+                          BottomSheetDialog.showDialog(
+                            context: context,
+                            child: PenaltiesBehaviorView(
+                              currentPenaltiesBehavior: state.defaultPenaltiesBehavior,
+                              onChanged: (penaltiesBehavior) =>
+                                  context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesBehavior: penaltiesBehavior)),
+                            ),
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                S.of(context).defaultPenaltiesRequiredToImpactPoints,
+                                style: Theme.of(context).textTheme.titleMedium,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            QuantityStepperFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              initialValue: state.defaultPenaltiesRequiredToImpactPoints,
+                              onChanged: (value) {
+                                if (value != null) {
+                                  context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesRequiredToImpactPoints: value));
                                 }
-                              }
-                            : null,
+                              },
+                              minValue: 1,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

@@ -1,12 +1,11 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../components/text_header/text_header.dart';
+import '../../../extensions/match_extensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
-import '../../../models/penalty_model.dart';
 
 class Scorecard extends StatelessWidget {
   final MatchModel match;
@@ -81,10 +80,7 @@ class Scorecard extends StatelessWidget {
                                     TeamColorAvatar(color: Color(team.color)),
                                     const SizedBox(width: 6),
                                     Builder(builder: (context) {
-                                      final points = match.points
-                                              .firstWhereOrNull((point) => point.teamId == team.id && point.improvisationId == e.value.id)
-                                              ?.value ??
-                                          0;
+                                      final points = match.getImprovisationPointsByTeamId(e.value.id, team.id);
                                       return Text(
                                         '$points',
                                         maxLines: 1,
@@ -106,13 +102,7 @@ class Scorecard extends StatelessWidget {
                                     TeamColorAvatar(color: Color(team.color)),
                                     const SizedBox(width: 6),
                                     Builder(builder: (context) {
-                                      final penalties = switch (match.penalties
-                                          .firstWhereOrNull((penalty) => penalty.teamId == team.id && penalty.improvisationId == e.value.id)
-                                          ?.major) {
-                                        null => 0,
-                                        false => 1,
-                                        true => 2,
-                                      };
+                                      final penalties = match.getImprovisationPenaltyValuesByTeamId(e.value.id, team.id);
                                       return Text(
                                         '$penalties',
                                         maxLines: 1,
@@ -145,9 +135,7 @@ class Scorecard extends StatelessWidget {
                               TeamColorAvatar(color: Color(team.color)),
                               const SizedBox(width: 6),
                               Builder(builder: (context) {
-                                final points = match.points
-                                    .where((point) => point.teamId == team.id)
-                                    .fold(0, (previousValue, element) => previousValue + element.value);
+                                final points = match.getTotalPointsByTeamId(team.id);
                                 return Text(
                                   '$points',
                                   maxLines: 1,
@@ -170,9 +158,7 @@ class Scorecard extends StatelessWidget {
                               TeamColorAvatar(color: Color(team.color)),
                               const SizedBox(width: 6),
                               Builder(builder: (context) {
-                                final penalties = match.penalties
-                                    .where((penalty) => penalty.teamId == team.id)
-                                    .fold(0, (previousValue, element) => previousValue + (element.major ? 2 : 1));
+                                final penalties = match.getTotalPenaltyValuesByTeamId(team.id);
                                 return Text(
                                   '$penalties',
                                   maxLines: 1,
@@ -195,7 +181,7 @@ class Scorecard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: TextHeader(title: S.of(context).penalties),
             ),
-            ...List<PenaltyModel>.from(match.penalties).groupListsBy((a) => a.improvisationId).entries.map((e) {
+            ...match.getPenaltiesGroupedByImprovisationId().entries.map((e) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -212,7 +198,7 @@ class Scorecard extends StatelessWidget {
                             (e) => Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TeamColorAvatar(color: Color(match.teams.firstWhere((element) => element.id == e.teamId).color)),
+                                TeamColorAvatar(color: match.getTeamColor(e.teamId)),
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(

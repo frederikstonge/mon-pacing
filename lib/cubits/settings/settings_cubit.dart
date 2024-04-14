@@ -9,9 +9,6 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
       : super(
           SettingsState(
             theme: ThemeType.light,
-            defaultImprovisationDurationInSeconds: const Duration(minutes: 2, seconds: 30).inSeconds,
-            enableDefaultTimeBuffer: true,
-            defaultTimeBufferInSeconds: const Duration(minutes: 1).inSeconds,
             language: Intl.getCurrentLocale().substring(0, 2) == 'fr' ? 'fr' : 'en',
           ),
         );

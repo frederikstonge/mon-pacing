@@ -29,6 +29,9 @@ mixin _$MatchModel {
       throw _privateConstructorUsedError;
   List<PenaltyModel> get penalties => throw _privateConstructorUsedError;
   List<PointModel> get points => throw _privateConstructorUsedError;
+  bool get enablePenaltiesImpactPoints => throw _privateConstructorUsedError;
+  PenaltiesBehavior get penaltiesBehavior => throw _privateConstructorUsedError;
+  int get penaltiesRequiredToImpactPoints => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +53,10 @@ abstract class $MatchModelCopyWith<$Res> {
       List<TeamModel> teams,
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
-      List<PointModel> points});
+      List<PointModel> points,
+      bool enablePenaltiesImpactPoints,
+      PenaltiesBehavior penaltiesBehavior,
+      int penaltiesRequiredToImpactPoints});
 }
 
 /// @nodoc
@@ -74,6 +80,9 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? improvisations = null,
     Object? penalties = null,
     Object? points = null,
+    Object? enablePenaltiesImpactPoints = null,
+    Object? penaltiesBehavior = null,
+    Object? penaltiesRequiredToImpactPoints = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -108,6 +117,18 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
+      enablePenaltiesImpactPoints: null == enablePenaltiesImpactPoints
+          ? _value.enablePenaltiesImpactPoints
+          : enablePenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
+              as bool,
+      penaltiesBehavior: null == penaltiesBehavior
+          ? _value.penaltiesBehavior
+          : penaltiesBehavior // ignore: cast_nullable_to_non_nullable
+              as PenaltiesBehavior,
+      penaltiesRequiredToImpactPoints: null == penaltiesRequiredToImpactPoints
+          ? _value.penaltiesRequiredToImpactPoints
+          : penaltiesRequiredToImpactPoints // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -128,7 +149,10 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       List<TeamModel> teams,
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
-      List<PointModel> points});
+      List<PointModel> points,
+      bool enablePenaltiesImpactPoints,
+      PenaltiesBehavior penaltiesBehavior,
+      int penaltiesRequiredToImpactPoints});
 }
 
 /// @nodoc
@@ -150,6 +174,9 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? improvisations = null,
     Object? penalties = null,
     Object? points = null,
+    Object? enablePenaltiesImpactPoints = null,
+    Object? penaltiesBehavior = null,
+    Object? penaltiesRequiredToImpactPoints = null,
   }) {
     return _then(_$MatchModelImpl(
       id: null == id
@@ -184,6 +211,18 @@ class __$$MatchModelImplCopyWithImpl<$Res>
           ? _value._points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
+      enablePenaltiesImpactPoints: null == enablePenaltiesImpactPoints
+          ? _value.enablePenaltiesImpactPoints
+          : enablePenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
+              as bool,
+      penaltiesBehavior: null == penaltiesBehavior
+          ? _value.penaltiesBehavior
+          : penaltiesBehavior // ignore: cast_nullable_to_non_nullable
+              as PenaltiesBehavior,
+      penaltiesRequiredToImpactPoints: null == penaltiesRequiredToImpactPoints
+          ? _value.penaltiesRequiredToImpactPoints
+          : penaltiesRequiredToImpactPoints // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -199,7 +238,10 @@ class _$MatchModelImpl implements _MatchModel {
       required final List<TeamModel> teams,
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
-      required final List<PointModel> points})
+      required final List<PointModel> points,
+      required this.enablePenaltiesImpactPoints,
+      required this.penaltiesBehavior,
+      required this.penaltiesRequiredToImpactPoints})
       : _teams = teams,
         _improvisations = improvisations,
         _penalties = penalties,
@@ -249,8 +291,15 @@ class _$MatchModelImpl implements _MatchModel {
   }
 
   @override
+  final bool enablePenaltiesImpactPoints;
+  @override
+  final PenaltiesBehavior penaltiesBehavior;
+  @override
+  final int penaltiesRequiredToImpactPoints;
+
+  @override
   String toString() {
-    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points)';
+    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesBehavior: $penaltiesBehavior, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints)';
   }
 
   @override
@@ -269,7 +318,17 @@ class _$MatchModelImpl implements _MatchModel {
                 .equals(other._improvisations, _improvisations) &&
             const DeepCollectionEquality()
                 .equals(other._penalties, _penalties) &&
-            const DeepCollectionEquality().equals(other._points, _points));
+            const DeepCollectionEquality().equals(other._points, _points) &&
+            (identical(other.enablePenaltiesImpactPoints,
+                    enablePenaltiesImpactPoints) ||
+                other.enablePenaltiesImpactPoints ==
+                    enablePenaltiesImpactPoints) &&
+            (identical(other.penaltiesBehavior, penaltiesBehavior) ||
+                other.penaltiesBehavior == penaltiesBehavior) &&
+            (identical(other.penaltiesRequiredToImpactPoints,
+                    penaltiesRequiredToImpactPoints) ||
+                other.penaltiesRequiredToImpactPoints ==
+                    penaltiesRequiredToImpactPoints));
   }
 
   @JsonKey(ignore: true)
@@ -283,7 +342,10 @@ class _$MatchModelImpl implements _MatchModel {
       const DeepCollectionEquality().hash(_teams),
       const DeepCollectionEquality().hash(_improvisations),
       const DeepCollectionEquality().hash(_penalties),
-      const DeepCollectionEquality().hash(_points));
+      const DeepCollectionEquality().hash(_points),
+      enablePenaltiesImpactPoints,
+      penaltiesBehavior,
+      penaltiesRequiredToImpactPoints);
 
   @JsonKey(ignore: true)
   @override
@@ -308,7 +370,10 @@ abstract class _MatchModel implements MatchModel, BaseModel {
       required final List<TeamModel> teams,
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
-      required final List<PointModel> points}) = _$MatchModelImpl;
+      required final List<PointModel> points,
+      required final bool enablePenaltiesImpactPoints,
+      required final PenaltiesBehavior penaltiesBehavior,
+      required final int penaltiesRequiredToImpactPoints}) = _$MatchModelImpl;
 
   factory _MatchModel.fromJson(Map<String, dynamic> json) =
       _$MatchModelImpl.fromJson;
@@ -329,6 +394,12 @@ abstract class _MatchModel implements MatchModel, BaseModel {
   List<PenaltyModel> get penalties;
   @override
   List<PointModel> get points;
+  @override
+  bool get enablePenaltiesImpactPoints;
+  @override
+  PenaltiesBehavior get penaltiesBehavior;
+  @override
+  int get penaltiesRequiredToImpactPoints;
   @override
   @JsonKey(ignore: true)
   _$$MatchModelImplCopyWith<_$MatchModelImpl> get copyWith =>

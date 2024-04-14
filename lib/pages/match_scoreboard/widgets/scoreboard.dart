@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../components/team_color_avatar/team_color_avatar.dart';
+import '../../../extensions/match_extensions.dart';
 import '../../../models/match_model.dart';
 
 class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
@@ -35,18 +36,12 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ],
                 ),
-                Builder(builder: (context) {
-                  final points = match.points
-                      .where((point) => point.teamId == team.id)
-                      .map((point) => point.value)
-                      .fold(0, (previousValue, element) => previousValue + element);
-                  return Text(
-                    '$points',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.displayLarge!,
-                  );
-                }),
+                Text(
+                  '${match.getTotalPointsByTeamIdWithPenalties(team.id)}',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.displayLarge!,
+                ),
               ],
             ),
           )

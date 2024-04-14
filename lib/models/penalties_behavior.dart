@@ -1,0 +1,4 @@
+enum PenaltiesBehavior {
+  addPoints,
+  substractPoints,
+}

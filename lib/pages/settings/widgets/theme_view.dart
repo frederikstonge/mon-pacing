@@ -9,13 +9,11 @@ import '../../../models/theme_type.dart';
 
 class ThemeView extends StatelessWidget {
   final ThemeType currentTheme;
-  final List<ThemeType> availableThemes;
   final FutureOr<void> Function(ThemeType theme) onChanged;
 
   const ThemeView({
     super.key,
     required this.currentTheme,
-    required this.availableThemes,
     required this.onChanged,
   });
 

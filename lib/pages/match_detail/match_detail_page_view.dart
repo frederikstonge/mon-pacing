@@ -4,12 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../components/actions/loading_button.dart';
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
+import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/text_field_element.dart';
+import '../../components/penalties_behavior/penalties_behavior_view.dart';
+import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
+import '../../components/settings_tile/settings_tile.dart';
 import '../../components/text_header/text_header.dart';
+import '../../components/tooltip/custom_tooltip.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../models/penalties_behavior.dart';
 import '../../validators/validator.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
@@ -113,6 +119,82 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                         .toList(),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                  child: TextHeader(
+                    title: S.of(context).penaltiesBehavior,
+                  ),
+                ),
+                CustomCard(
+                    child: Column(
+                  children: [
+                    SettingsTile(
+                      leading: const Icon(Icons.scoreboard),
+                      title: Row(
+                        children: [
+                          Flexible(child: Text(S.of(context).enableDefaultPenaltiesImpactPoints)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4),
+                            child: CustomTooltip(
+                              tooltip: S.of(context).penaltiesImpactPointsTooltip,
+                            ),
+                          )
+                        ],
+                      ),
+                      trailing: Switch(
+                          value: state.match.enablePenaltiesImpactPoints,
+                          onChanged: (value) {
+                            context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));
+                          }),
+                    ),
+                    SettingsTile(
+                      leading: const Icon(Icons.sports),
+                      title: Text(S.of(context).penaltiesBehavior),
+                      subTitle: Text(
+                        switch (state.match.penaltiesBehavior) {
+                          PenaltiesBehavior.addPoints => S.of(context).penaltiesBehaviorAdd,
+                          PenaltiesBehavior.substractPoints => S.of(context).penaltiesBehaviorSubstract,
+                        },
+                      ),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {
+                        BottomSheetDialog.showDialog(
+                          context: context,
+                          child: PenaltiesBehaviorView(
+                            currentPenaltiesBehavior: state.match.penaltiesBehavior,
+                            onChanged: (penaltiesBehavior) =>
+                                context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesBehavior: penaltiesBehavior)),
+                          ),
+                        );
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              S.of(context).penaltiesRequiredToImpactPoints,
+                              style: Theme.of(context).textTheme.titleMedium,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          QuantityStepperFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: state.match.penaltiesRequiredToImpactPoints,
+                            onChanged: (value) {
+                              if (value != null) {
+                                context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToImpactPoints: value));
+                              }
+                            },
+                            minValue: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ))
               ],
             ),
           ),

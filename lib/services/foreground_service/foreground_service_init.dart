@@ -43,8 +43,4 @@ Future<void> requestPermissionForAndroid() async {
   if (!await FlutterForegroundTask.isIgnoringBatteryOptimizations) {
     await FlutterForegroundTask.requestIgnoreBatteryOptimization();
   }
-
-  if (!await FlutterForegroundTask.canDrawOverlays) {
-    await FlutterForegroundTask.openSystemAlertWindowSettings();
-  }
 }

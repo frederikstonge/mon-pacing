@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
@@ -10,8 +8,8 @@ import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/timer_banner/timer_banner.dart';
+import '../../extensions/match_extensions.dart';
 import '../../l10n/app_localizations.dart';
-import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_penalty/match_penalty_shell.dart';
 import '../match_scoreboard/match_scoreboard_shell.dart';
@@ -71,27 +69,9 @@ class MatchPageView extends StatelessWidget {
                 ),
                 slivers: [
                   TimerBanner(
-                    onActionOverride: (timerStatus) {
-                      if (match.id == timerStatus.matchId) {
-                        if (improvisation.id != timerStatus.improvisationId) {
-                          final page = match.improvisations.indexWhere((element) => element.id == timerStatus.improvisationId);
-                          context.read<MatchCubit>().changePage(page);
-                        }
-
-                        if (selectedDurationIndex != timerStatus.durationIndex) {
-                          context.read<MatchCubit>().changeDuration(timerStatus.durationIndex);
-                        }
-                      } else {
-                        context.goNamed(
-                          Routes.match,
-                          pathParameters: {'id': timerStatus.matchId.toString()},
-                          queryParameters: {
-                            'improvisationId': timerStatus.improvisationId.toString(),
-                            'durationIndex': timerStatus.durationIndex.toString(),
-                          },
-                        );
-                      }
-                    },
+                    match: match,
+                    improvisation: improvisation,
+                    selectedDurationIndex: selectedDurationIndex,
                   ),
                   SliverPersistentHeader(
                     delegate: MatchPersistentHeader(
@@ -155,7 +135,7 @@ class MatchPageView extends StatelessWidget {
                                   ),
                                   child: ListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    leading: TeamColorAvatar(color: Color(match.teams.firstWhere((element) => element.id == e.teamId).color)),
+                                    leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
                                     title: Text('${e.type}${e.major ? ' ${S.of(context).major}' : ''}'),
                                     subtitle: Text(e.performer),
                                     trailing: LoadingIconButton(

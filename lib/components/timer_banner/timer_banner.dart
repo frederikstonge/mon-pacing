@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,15 +5,22 @@ import 'package:go_router/go_router.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../extensions/duration_extensions.dart';
+import '../../models/improvisation_model.dart';
+import '../../models/match_model.dart';
+import '../../pages/match/cubits/match_cubit.dart';
 import '../../router/routes.dart';
 import '../../services/foreground_service/timer_status_model.dart';
 
 class TimerBanner extends StatelessWidget {
-  final FutureOr<void> Function(TimerStatusModel timerStatus)? onActionOverride;
+  final MatchModel? match;
+  final ImprovisationModel? improvisation;
+  final int? selectedDurationIndex;
 
   const TimerBanner({
     super.key,
-    this.onActionOverride,
+    this.match,
+    this.improvisation,
+    this.selectedDurationIndex,
   });
 
   @override
@@ -26,39 +31,58 @@ class TimerBanner extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (state.timerStatus != null) ...[
-              SafeArea(
-                child: MaterialBanner(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  content: Text(
-                    '${state.timerStatus!.notificationTitle} - ${Duration(milliseconds: state.timerStatus!.remainingMilliseconds).toImprovDuration()}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                  actions: [
-                    IconButton(
-                      onPressed: () => onActionOverride != null
-                          ? onActionOverride!.call(state.timerStatus!)
-                          : context.goNamed(
-                              Routes.match,
-                              pathParameters: {'id': state.timerStatus!.matchId.toString()},
-                              queryParameters: {
-                                'improvisationId': state.timerStatus!.improvisationId.toString(),
-                                'durationIndex': state.timerStatus!.durationIndex.toString(),
-                              },
-                            ),
-                      icon: Icon(
-                        Icons.arrow_forward,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    )
-                  ],
+              MaterialBanner(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                content: Text(
+                  '${state.timerStatus!.notificationTitle} - ${Duration(milliseconds: state.timerStatus!.remainingMilliseconds).toImprovDuration()}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                 ),
+                actions: [
+                  IconButton(
+                    onPressed: () => _onAction(context, state.timerStatus!),
+                    icon: Icon(
+                      Icons.arrow_forward,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  )
+                ],
               ),
             ],
           ],
         ),
       ),
+    );
+  }
+
+  void _onAction(BuildContext context, TimerStatusModel timerStatus) {
+    if (match != null && improvisation != null && selectedDurationIndex != null) {
+      if (match!.id == timerStatus.matchId) {
+        if (improvisation!.id != timerStatus.improvisationId) {
+          final page = match!.improvisations.indexWhere((element) => element.id == timerStatus.improvisationId);
+          context.read<MatchCubit>().changePage(page);
+        }
+
+        if (selectedDurationIndex != timerStatus.durationIndex) {
+          context.read<MatchCubit>().changeDuration(timerStatus.durationIndex);
+        }
+      } else {
+        _goToMatch(context, timerStatus);
+      }
+    } else {
+      _goToMatch(context, timerStatus);
+    }
+  }
+
+  void _goToMatch(BuildContext context, TimerStatusModel timerStatus) {
+    context.goNamed(
+      Routes.match,
+      pathParameters: {'id': timerStatus.matchId.toString()},
+      queryParameters: {
+        'improvisationId': timerStatus.improvisationId.toString(),
+        'durationIndex': timerStatus.durationIndex.toString(),
+      },
     );
   }
 }
