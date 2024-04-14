@@ -22,11 +22,10 @@ class Scorecard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Table(
-            columnWidths: const <int, TableColumnWidth>{
-              0: FlexColumnWidth(),
-              1: IntrinsicColumnWidth(),
-              2: IntrinsicColumnWidth(),
-            },
+            columnWidths: [
+              const FlexColumnWidth(),
+              ...match.teams.map((e) => const IntrinsicColumnWidth()),
+            ].asMap(),
             border: TableBorder(
               horizontalInside: BorderSide(color: Theme.of(context).dividerColor),
             ),
@@ -40,24 +39,14 @@ class Scorecard extends StatelessWidget {
                     maxLines: 1,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      S.of(context).points,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      S.of(context).penalties,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                  ...match.teams.map(
+                    (team) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          TeamColorAvatar(color: Color(team.color)),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -70,49 +59,17 @@ class Scorecard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: match.teams
-                              .map(
-                                (team) => Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    TeamColorAvatar(color: Color(team.color)),
-                                    const SizedBox(width: 6),
-                                    Builder(builder: (context) {
-                                      final points = match.getImprovisationPointsByTeamId(e.value.id, team.id);
-                                      return Text(
-                                        '$points',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      );
-                                    }),
-                                  ],
-                                ),
+                        ...match.teams.map(
+                          (team) => Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${match.getImprovisationPointsByTeamId(e.value.id, team.id)}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               )
-                              .toList(),
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: match.teams
-                              .map(
-                                (team) => Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    TeamColorAvatar(color: Color(team.color)),
-                                    const SizedBox(width: 6),
-                                    Builder(builder: (context) {
-                                      final penalties = match.getImprovisationPenaltyValuesByTeamId(e.value.id, team.id);
-                                      return Text(
-                                        '$penalties',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              )
-                              .toList(),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -125,51 +82,18 @@ class Scorecard extends StatelessWidget {
                     maxLines: 1,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: match.teams
-                        .map(
-                          (team) => Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TeamColorAvatar(color: Color(team.color)),
-                              const SizedBox(width: 6),
-                              Builder(builder: (context) {
-                                final points = match.getTotalPointsByTeamId(team.id);
-                                return Text(
-                                  '$points',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
-                                );
-                              }),
-                            ],
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: match.teams
-                        .map(
-                          (team) => Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TeamColorAvatar(color: Color(team.color)),
-                              const SizedBox(width: 6),
-                              Builder(builder: (context) {
-                                final penalties = match.getTotalPenaltyValuesByTeamId(team.id);
-                                return Text(
-                                  '$penalties',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
-                                );
-                              }),
-                            ],
-                          ),
-                        )
-                        .toList(),
+                  ...match.teams.map(
+                    (team) => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${match.getTotalPointsByTeamId(team.id)}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

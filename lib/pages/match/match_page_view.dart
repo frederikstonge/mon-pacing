@@ -31,138 +31,140 @@ class MatchPageView extends StatelessWidget {
           return state.when(
             initial: () => const Center(child: CircularProgressIndicator()),
             error: (error) => Center(child: Text(error)),
-            success: (match, selectedImprovisationIndex, selectedDurationIndex) => Builder(builder: (context) {
-              final improvisation = match.improvisations.elementAt(selectedImprovisationIndex);
-              return SliverScaffold(
-                appBar: SliverLogoAppbar(
-                  title: match.name,
-                  actions: [
-                    LoadingIconButton(
-                      onPressed: () async {
-                        await BottomSheetDialog.showDialog(
-                          context: context,
-                          child: MatchScoreboardShell(
-                            match: match,
-                            onExport: (match) {},
-                          ),
-                        );
-                      },
-                      tooltip: S.of(context).scoreboard,
-                      icon: const Icon(Icons.scoreboard),
-                    ),
-                    LoadingIconButton(
-                      onPressed: () async {
-                        await BottomSheetDialog.showDialog(
-                          context: context,
-                          child: MatchDetailPageShell(
-                            match: match,
-                            onConfirm: (match) async {
-                              await context.read<MatchCubit>().edit(match);
-                            },
-                          ),
-                        );
-                      },
-                      tooltip: S.of(context).editMatch,
-                      icon: const Icon(Icons.edit),
-                    ),
-                  ],
-                ),
-                slivers: [
-                  TimerBanner(
-                    match: match,
-                    improvisation: improvisation,
-                    selectedDurationIndex: selectedDurationIndex,
-                  ),
-                  SliverPersistentHeader(
-                    delegate: MatchPersistentHeader(
-                      match: match,
-                      selectedImprovisationIndex: selectedImprovisationIndex,
-                      changePage: context.read<MatchCubit>().changePage,
-                    ),
-                    pinned: true,
-                  ),
-                  SliverToBoxAdapter(
-                    child: ImprovisationCard(improvisation: improvisation),
-                  ),
-                  SliverToBoxAdapter(
-                    child: CustomCard(
-                      child: TimerWidget(
-                        match: match,
-                        improvisation: improvisation,
-                        durationIndex: selectedDurationIndex,
-                        onDurationIndexChanged: (durationIndex) => context.read<MatchCubit>().changeDuration(durationIndex),
+            success: (match, selectedImprovisationIndex, selectedDurationIndex) => Builder(
+              builder: (context) {
+                final improvisation = match.improvisations.elementAt(selectedImprovisationIndex);
+                return SliverScaffold(
+                  appBar: SliverLogoAppbar(
+                    title: match.name,
+                    actions: [
+                      LoadingIconButton(
+                        onPressed: () async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: MatchScoreboardShell(
+                              match: match,
+                              onExport: (match) {},
+                            ),
+                          );
+                        },
+                        tooltip: S.of(context).scoreboard,
+                        icon: const Icon(Icons.scoreboard),
                       ),
-                    ),
+                      LoadingIconButton(
+                        onPressed: () async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: MatchDetailPageShell(
+                              match: match,
+                              onConfirm: (match) async {
+                                await context.read<MatchCubit>().edit(match);
+                              },
+                            ),
+                          );
+                        },
+                        tooltip: S.of(context).editMatch,
+                        icon: const Icon(Icons.edit),
+                      ),
+                    ],
                   ),
-                  SliverToBoxAdapter(
-                    child: ImprovisationActions(
-                      key: ValueKey(improvisation.hashCode),
+                  slivers: [
+                    TimerBanner(
                       match: match,
                       improvisation: improvisation,
-                      onPointChanged: context.read<MatchCubit>().setPoint,
+                      selectedDurationIndex: selectedDurationIndex,
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: CustomCard(
-                      child: Column(
-                        children: [
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(S.of(context).penalties, style: const TextStyle(fontWeight: FontWeight.bold)),
-                            trailing: LoadingIconButton(
-                              icon: const Icon(Icons.add),
-                              tooltip: S.of(context).addPenalty,
-                              onPressed: () async => await BottomSheetDialog.showDialog(
-                                context: context,
-                                child: MatchPenaltyShell(
-                                  improvisationId: improvisation.id,
-                                  teams: match.teams,
-                                  onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
+                    SliverPersistentHeader(
+                      delegate: MatchPersistentHeader(
+                        match: match,
+                        selectedImprovisationIndex: selectedImprovisationIndex,
+                        changePage: context.read<MatchCubit>().changePage,
+                      ),
+                      pinned: true,
+                    ),
+                    SliverToBoxAdapter(
+                      child: ImprovisationCard(improvisation: improvisation),
+                    ),
+                    SliverToBoxAdapter(
+                      child: CustomCard(
+                        child: TimerWidget(
+                          match: match,
+                          improvisation: improvisation,
+                          durationIndex: selectedDurationIndex,
+                          onDurationIndexChanged: (durationIndex) => context.read<MatchCubit>().changeDuration(durationIndex),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: ImprovisationActions(
+                        key: ValueKey(improvisation.hashCode),
+                        match: match,
+                        improvisation: improvisation,
+                        onPointChanged: context.read<MatchCubit>().setPoint,
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: CustomCard(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(S.of(context).penalties, style: const TextStyle(fontWeight: FontWeight.bold)),
+                              trailing: LoadingIconButton(
+                                icon: const Icon(Icons.add),
+                                tooltip: S.of(context).addPenalty,
+                                onPressed: () async => await BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: MatchPenaltyShell(
+                                    improvisationId: improvisation.id,
+                                    teams: match.teams,
+                                    onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          ...match.penalties.where((p) => p.improvisationId == improvisation.id).map(
-                                (e) => InkWell(
-                                  onTap: () => BottomSheetDialog.showDialog(
-                                    context: context,
-                                    child: MatchPenaltyShell(
-                                      improvisationId: improvisation.id,
-                                      teams: match.teams,
-                                      penalty: e,
-                                      onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
+                            ...match.penalties.where((p) => p.improvisationId == improvisation.id).map(
+                                  (e) => InkWell(
+                                    onTap: () => BottomSheetDialog.showDialog(
+                                      context: context,
+                                      child: MatchPenaltyShell(
+                                        improvisationId: improvisation.id,
+                                        teams: match.teams,
+                                        penalty: e,
+                                        onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
+                                      title: Text('${e.type}${e.major ? ' ${S.of(context).major}' : ''}'),
+                                      subtitle: Text(e.performer),
+                                      trailing: LoadingIconButton(
+                                          icon: const Icon(Icons.remove),
+                                          tooltip: S.of(context).delete,
+                                          onPressed: () async {
+                                            final matchCubit = context.read<MatchCubit>();
+                                            final result = await MessageBoxDialog.questionShow(
+                                              context,
+                                              S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
+                                              S.of(context).delete,
+                                              S.of(context).cancel,
+                                            );
+                                            if (result ?? false) {
+                                              await matchCubit.removePenalty(e.id);
+                                            }
+                                          }),
                                     ),
                                   ),
-                                  child: ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
-                                    title: Text('${e.type}${e.major ? ' ${S.of(context).major}' : ''}'),
-                                    subtitle: Text(e.performer),
-                                    trailing: LoadingIconButton(
-                                        icon: const Icon(Icons.remove),
-                                        tooltip: S.of(context).delete,
-                                        onPressed: () async {
-                                          final matchCubit = context.read<MatchCubit>();
-                                          final result = await MessageBoxDialog.questionShow(
-                                            context,
-                                            S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
-                                            S.of(context).delete,
-                                            S.of(context).cancel,
-                                          );
-                                          if (result ?? false) {
-                                            await matchCubit.removePenalty(e.id);
-                                          }
-                                        }),
-                                  ),
                                 ),
-                              ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
+                  ],
+                );
+              },
+            ),
           );
         },
       ),
