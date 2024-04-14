@@ -1,3 +1,4 @@
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -15,6 +16,12 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
 
   void edit(SettingsState model) {
     emit(model);
+  }
+
+  Future<void> vibrate(HapticsType type) async {
+    if (state.enableHapticFeedback && await Haptics.canVibrate()) {
+      await Haptics.vibrate(type);
+    }
   }
 
   @override

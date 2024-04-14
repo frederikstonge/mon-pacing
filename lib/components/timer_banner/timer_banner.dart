@@ -10,6 +10,7 @@ import '../../models/match_model.dart';
 import '../../pages/match/cubits/match_cubit.dart';
 import '../../router/routes.dart';
 import '../../services/foreground_service/timer_status_model.dart';
+import '../actions/loading_icon_button.dart';
 
 class TimerBanner extends StatelessWidget {
   final MatchModel? match;
@@ -40,7 +41,7 @@ class TimerBanner extends StatelessWidget {
                   style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                 ),
                 actions: [
-                  IconButton(
+                  LoadingIconButton(
                     onPressed: () => _onAction(context, state.timerStatus!),
                     icon: Icon(
                       Icons.arrow_forward,

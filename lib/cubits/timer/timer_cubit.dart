@@ -54,7 +54,7 @@ class TimerCubit extends Cubit<TimerState> {
       durationIndex: durationIndex,
       remainingMilliseconds: duration.inMilliseconds,
       status: TimerStatus.started,
-      hapticFeedback: false,
+      hapticFeedback: settingsCubit.state.enableHapticFeedback,
       notificationTitle: matchName,
     );
 
@@ -129,6 +129,7 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   Future<bool> _updateTimerStatus(TimerStatusModel timerStatus) async {
+    timerStatus = timerStatus.copyWith(hapticFeedback: settingsCubit.state.enableHapticFeedback);
     emit(TimerState(timerStatus: timerStatus));
     return await FlutterForegroundTask.saveData(key: timerStatusDataKey, value: json.encode(timerStatus.toJson()));
   }

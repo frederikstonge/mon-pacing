@@ -22,6 +22,7 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 mixin _$SettingsState {
   String get language => throw _privateConstructorUsedError;
   ThemeType get theme => throw _privateConstructorUsedError;
+  bool get enableHapticFeedback => throw _privateConstructorUsedError;
   int get defaultImprovisationDurationInSeconds =>
       throw _privateConstructorUsedError;
   bool get enableDefaultTimeBuffer => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $SettingsStateCopyWith<$Res> {
   $Res call(
       {String language,
       ThemeType theme,
+      bool enableHapticFeedback,
       int defaultImprovisationDurationInSeconds,
       bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
@@ -71,6 +73,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   $Res call({
     Object? language = null,
     Object? theme = null,
+    Object? enableHapticFeedback = null,
     Object? defaultImprovisationDurationInSeconds = null,
     Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
@@ -87,6 +90,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
+      enableHapticFeedback: null == enableHapticFeedback
+          ? _value.enableHapticFeedback
+          : enableHapticFeedback // ignore: cast_nullable_to_non_nullable
+              as bool,
       defaultImprovisationDurationInSeconds: null ==
               defaultImprovisationDurationInSeconds
           ? _value.defaultImprovisationDurationInSeconds
@@ -129,6 +136,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   $Res call(
       {String language,
       ThemeType theme,
+      bool enableHapticFeedback,
       int defaultImprovisationDurationInSeconds,
       bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
@@ -150,6 +158,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? language = null,
     Object? theme = null,
+    Object? enableHapticFeedback = null,
     Object? defaultImprovisationDurationInSeconds = null,
     Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
@@ -166,6 +175,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
+      enableHapticFeedback: null == enableHapticFeedback
+          ? _value.enableHapticFeedback
+          : enableHapticFeedback // ignore: cast_nullable_to_non_nullable
+              as bool,
       defaultImprovisationDurationInSeconds: null ==
               defaultImprovisationDurationInSeconds
           ? _value.defaultImprovisationDurationInSeconds
@@ -203,6 +216,7 @@ class _$SettingsStateImpl implements _SettingsState {
   const _$SettingsStateImpl(
       {required this.language,
       required this.theme,
+      this.enableHapticFeedback = true,
       this.defaultImprovisationDurationInSeconds = 150,
       this.enableDefaultTimeBuffer = true,
       this.defaultTimeBufferInSeconds = 60,
@@ -217,6 +231,9 @@ class _$SettingsStateImpl implements _SettingsState {
   final String language;
   @override
   final ThemeType theme;
+  @override
+  @JsonKey()
+  final bool enableHapticFeedback;
   @override
   @JsonKey()
   final int defaultImprovisationDurationInSeconds;
@@ -238,7 +255,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(language: $language, theme: $theme, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints)';
+    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints)';
   }
 
   @override
@@ -249,12 +266,13 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.theme, theme) || other.theme == theme) &&
+            (identical(other.enableHapticFeedback, enableHapticFeedback) ||
+                other.enableHapticFeedback == enableHapticFeedback) &&
             (identical(other.defaultImprovisationDurationInSeconds,
                     defaultImprovisationDurationInSeconds) ||
                 other.defaultImprovisationDurationInSeconds ==
                     defaultImprovisationDurationInSeconds) &&
-            (identical(
-                    other.enableDefaultTimeBuffer, enableDefaultTimeBuffer) ||
+            (identical(other.enableDefaultTimeBuffer, enableDefaultTimeBuffer) ||
                 other.enableDefaultTimeBuffer == enableDefaultTimeBuffer) &&
             (identical(other.defaultTimeBufferInSeconds,
                     defaultTimeBufferInSeconds) ||
@@ -280,6 +298,7 @@ class _$SettingsStateImpl implements _SettingsState {
       runtimeType,
       language,
       theme,
+      enableHapticFeedback,
       defaultImprovisationDurationInSeconds,
       enableDefaultTimeBuffer,
       defaultTimeBufferInSeconds,
@@ -305,6 +324,7 @@ abstract class _SettingsState implements SettingsState {
   const factory _SettingsState(
       {required final String language,
       required final ThemeType theme,
+      final bool enableHapticFeedback,
       final int defaultImprovisationDurationInSeconds,
       final bool enableDefaultTimeBuffer,
       final int defaultTimeBufferInSeconds,
@@ -319,6 +339,8 @@ abstract class _SettingsState implements SettingsState {
   String get language;
   @override
   ThemeType get theme;
+  @override
+  bool get enableHapticFeedback;
   @override
   int get defaultImprovisationDurationInSeconds;
   @override

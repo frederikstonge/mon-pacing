@@ -25,6 +25,7 @@
   "editPenalty": "Edit penalty",
   "enableDefaultPenaltiesImpactPoints": "Enable penalties impact points by default",
   "enableDefaultTimeBuffer": "Enable default time buffer",
+  "enableHapticFeedback": "Enable haptic feedback",
   "enablePenaltiesImpactPoints": "Enable penalties impact points",
   "enableTimeBuffer": "Enable time buffer",
   "export": "Export",

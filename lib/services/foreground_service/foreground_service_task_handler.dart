@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../extensions/duration_extensions.dart';
 import 'timer_status_model.dart';
@@ -91,6 +93,14 @@ class TimerTaskHandler extends TaskHandler {
     }
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
+
+    if (remainingDuration.inSeconds % 60 == 0 ||
+        remainingDuration.inSeconds == 30 ||
+        remainingDuration.inSeconds == 10 ||
+        remainingDuration.inSeconds <= 5) {
+      unawaited(vibrate(HapticsType.medium));
+    }
+
     await FlutterForegroundTask.updateService(
       notificationTitle: _timerStatus!.notificationTitle,
       notificationText: remainingDuration.toImprovDuration(),
@@ -103,5 +113,11 @@ class TimerTaskHandler extends TaskHandler {
       return null;
     }
     return TimerStatusModel.fromJson(json.decode(data));
+  }
+
+  Future<void> vibrate(HapticsType type) async {
+    if ((_timerStatus?.hapticFeedback ?? false) && await Haptics.canVibrate()) {
+      await Haptics.vibrate(type);
+    }
   }
 }

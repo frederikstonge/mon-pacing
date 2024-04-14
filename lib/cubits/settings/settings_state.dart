@@ -11,6 +11,7 @@ class SettingsState with _$SettingsState {
   const factory SettingsState({
     required String language,
     required ThemeType theme,
+    @Default(true) bool enableHapticFeedback,
     @Default(150) int defaultImprovisationDurationInSeconds,
     @Default(true) bool enableDefaultTimeBuffer,
     @Default(60) int defaultTimeBufferInSeconds,

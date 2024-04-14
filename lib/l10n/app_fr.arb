@@ -25,6 +25,7 @@
   "editPenalty": "Modifier une pénalité",
   "enableDefaultPenaltiesImpactPoints": "Activer l'impact des pénalités sur le pointage par défaut",
   "enableDefaultTimeBuffer": "Activer le temps tampon par défaut",
+  "enableHapticFeedback": "Activer le retour tactile",
   "enablePenaltiesImpactPoints": "Activer l'impact des pénalités sur le pointage",
   "enableTimeBuffer": "Activer le temps tampon",
   "export": "Exporter",

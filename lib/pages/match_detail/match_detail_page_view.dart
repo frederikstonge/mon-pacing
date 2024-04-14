@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../components/actions/loading_button.dart';
 import '../../components/actions/loading_icon_button.dart';
+import '../../components/actions/loading_switch.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
@@ -141,7 +142,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                           )
                         ],
                       ),
-                      trailing: Switch(
+                      trailing: LoadingSwitch(
                           value: state.match.enablePenaltiesImpactPoints,
                           onChanged: (value) {
                             context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));

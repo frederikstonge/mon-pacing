@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../components/actions/loading_icon_button.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 
@@ -32,7 +33,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
         leading: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
+            LoadingIconButton(
               icon: const Icon(Icons.arrow_back),
               tooltip: S.of(context).previousImprovisation,
               onPressed: selectedImprovisationIndex > 0 ? () => changePage(selectedImprovisationIndex - 1) : null,
@@ -61,7 +62,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
                   ))
               .toList(),
         ),
-        trailing: IconButton(
+        trailing: LoadingIconButton(
           icon: const Icon(Icons.arrow_forward),
           tooltip: S.of(context).nextImprovisation,
           onPressed: selectedImprovisationIndex < (match.improvisations.length - 1) ? () => changePage(selectedImprovisationIndex + 1) : null,
