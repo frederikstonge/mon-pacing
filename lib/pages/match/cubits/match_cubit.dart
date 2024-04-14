@@ -24,7 +24,7 @@ class MatchCubit extends Cubit<MatchState> {
 
   Future<void> edit(MatchModel match) async {
     await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+      success: (_, selectedImprovisationIndex, selectedDurationIndex) async {
         emit(MatchState.success(match, selectedImprovisationIndex, selectedDurationIndex));
         await matchesCubit.edit(match);
       },
@@ -33,7 +33,7 @@ class MatchCubit extends Cubit<MatchState> {
 
   void changePage(int page) {
     state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) => emit(
+      success: (match, _, selectedDurationIndex) => emit(
         MatchState.success(
           match,
           page,
@@ -45,7 +45,7 @@ class MatchCubit extends Cubit<MatchState> {
 
   void changeDuration(int durationIndex) {
     state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) => emit(
+      success: (match, selectedImprovisationIndex, _) => emit(
         MatchState.success(
           match,
           selectedImprovisationIndex,

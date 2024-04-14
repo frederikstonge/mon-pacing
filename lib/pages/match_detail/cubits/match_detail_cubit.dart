@@ -40,7 +40,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
                     penalties: [],
                     points: [],
                     enablePenaltiesImpactPoints: settingsCubit.state.enableDefaultPenaltiesImpactPoints,
-                    penaltiesBehavior: settingsCubit.state.defaultPenaltiesBehavior,
+                    penaltiesImpactType: settingsCubit.state.defaultPenaltiesImpactType,
                     penaltiesRequiredToImpactPoints: settingsCubit.state.defaultPenaltiesRequiredToImpactPoints,
                   ),
           ),

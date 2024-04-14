@@ -3,24 +3,24 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
-import '../../models/penalties_behavior.dart';
+import '../../models/penalties_impact_type.dart';
 import '../bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 
-class PenaltiesBehaviorView extends StatelessWidget {
-  final PenaltiesBehavior currentPenaltiesBehavior;
-  final FutureOr<void> Function(PenaltiesBehavior penaltiesBehavior) onChanged;
+class PenaltiesImpactTypeView extends StatelessWidget {
+  final PenaltiesImpactType currentPenaltiesImpactType;
+  final FutureOr<void> Function(PenaltiesImpactType penaltiesBehavior) onChanged;
 
-  const PenaltiesBehaviorView({
+  const PenaltiesImpactTypeView({
     super.key,
-    required this.currentPenaltiesBehavior,
+    required this.currentPenaltiesImpactType,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
-      appBar: BottomSheetAppbar(title: S.of(context).penaltiesBehavior),
+      appBar: BottomSheetAppbar(title: S.of(context).penaltiesImpactType),
       body: ListView(
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),
@@ -32,14 +32,14 @@ class PenaltiesBehaviorView extends StatelessWidget {
             },
             child: ListTile(
               title: Text(
-                _getPenaltiesBehaviorString(context, currentPenaltiesBehavior),
+                _getPenaltiesBehaviorString(context, currentPenaltiesImpactType),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
               trailing: const Icon(Icons.check),
             ),
           ),
-          ...PenaltiesBehavior.values.where((element) => element != currentPenaltiesBehavior).map(
+          ...PenaltiesImpactType.values.where((element) => element != currentPenaltiesImpactType).map(
                 (e) => InkWell(
                   onTap: () async {
                     final navigator = Navigator.of(context);
@@ -61,10 +61,10 @@ class PenaltiesBehaviorView extends StatelessWidget {
     );
   }
 
-  String _getPenaltiesBehaviorString(BuildContext context, PenaltiesBehavior penaltiesBehavior) {
+  String _getPenaltiesBehaviorString(BuildContext context, PenaltiesImpactType penaltiesBehavior) {
     return switch (penaltiesBehavior) {
-      PenaltiesBehavior.addPoints => S.of(context).penaltiesBehaviorAdd,
-      PenaltiesBehavior.substractPoints => S.of(context).penaltiesBehaviorSubstract,
+      PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+      PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
     };
   }
 }

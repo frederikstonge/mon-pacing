@@ -8,14 +8,14 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/text_field_element.dart';
-import '../../components/penalties_behavior/penalties_behavior_view.dart';
+import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/text_header/text_header.dart';
 import '../../components/tooltip/custom_tooltip.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
-import '../../models/penalties_behavior.dart';
+import '../../models/penalties_impact_type.dart';
 import '../../validators/validator.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
@@ -122,7 +122,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                 Padding(
                   padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                   child: TextHeader(
-                    title: S.of(context).penaltiesBehavior,
+                    title: S.of(context).penaltiesImpactType,
                   ),
                 ),
                 CustomCard(
@@ -149,21 +149,21 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                     ),
                     SettingsTile(
                       leading: const Icon(Icons.sports),
-                      title: Text(S.of(context).penaltiesBehavior),
+                      title: Text(S.of(context).penaltiesImpactType),
                       subTitle: Text(
-                        switch (state.match.penaltiesBehavior) {
-                          PenaltiesBehavior.addPoints => S.of(context).penaltiesBehaviorAdd,
-                          PenaltiesBehavior.substractPoints => S.of(context).penaltiesBehaviorSubstract,
+                        switch (state.match.penaltiesImpactType) {
+                          PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                          PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
                         },
                       ),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () {
                         BottomSheetDialog.showDialog(
                           context: context,
-                          child: PenaltiesBehaviorView(
-                            currentPenaltiesBehavior: state.match.penaltiesBehavior,
-                            onChanged: (penaltiesBehavior) =>
-                                context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesBehavior: penaltiesBehavior)),
+                          child: PenaltiesImpactTypeView(
+                            currentPenaltiesImpactType: state.match.penaltiesImpactType,
+                            onChanged: (penaltiesImpactType) =>
+                                context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
                           ),
                         );
                       },

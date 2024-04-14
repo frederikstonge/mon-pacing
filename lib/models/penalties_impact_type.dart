@@ -1,4 +1,4 @@
-enum PenaltiesBehavior {
+enum PenaltiesImpactType {
   addPoints,
   substractPoints,
 }

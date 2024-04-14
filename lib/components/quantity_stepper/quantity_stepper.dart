@@ -129,7 +129,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
   }
 
   bool canRemove() {
-    if (widget.maxValue == null) {
+    if (widget.minValue == null) {
       return true;
     }
 

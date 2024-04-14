@@ -2,14 +2,14 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../models/match_model.dart';
-import '../models/penalties_behavior.dart';
+import '../models/penalties_impact_type.dart';
 import '../models/penalty_model.dart';
 
 extension MatchExtensions on MatchModel {
   int getTotalPointsByTeamIdWithPenalties(int teamId) {
     var points = getTotalPointsByTeamId(teamId);
     if (enablePenaltiesImpactPoints) {
-      if (penaltiesBehavior == PenaltiesBehavior.substractPoints) {
+      if (penaltiesImpactType == PenaltiesImpactType.substractPoints) {
         final penaltyValues = getTotalPenaltyValuesByTeamId(teamId);
         final impact = (penaltyValues / penaltiesRequiredToImpactPoints).floor();
         points -= impact;

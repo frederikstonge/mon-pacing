@@ -5,7 +5,7 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/display_language/display_language.dart';
 import '../../components/duration_picker/duration_picker.dart';
-import '../../components/penalties_behavior/penalties_behavior_view.dart';
+import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -17,13 +17,26 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../extensions/duration_extensions.dart';
 import '../../l10n/app_localizations.dart';
-import '../../models/penalties_behavior.dart';
+import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';
 import 'widgets/language_view.dart';
 import 'widgets/theme_view.dart';
 
-class SettingsPageView extends StatelessWidget {
+class SettingsPageView extends StatefulWidget {
   const SettingsPageView({super.key});
+
+  @override
+  State<SettingsPageView> createState() => _SettingsPageViewState();
+}
+
+class _SettingsPageViewState extends State<SettingsPageView> {
+  late final GlobalKey<FormState> formKey;
+
+  @override
+  void initState() {
+    formKey = GlobalKey<FormState>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,21 +196,21 @@ class SettingsPageView extends StatelessWidget {
                       ),
                       SettingsTile(
                         leading: const Icon(Icons.sports),
-                        title: Text(S.of(context).defaultPenaltiesBehavior),
+                        title: Text(S.of(context).defaultPenaltiesImpactType),
                         subTitle: Text(
-                          switch (state.defaultPenaltiesBehavior) {
-                            PenaltiesBehavior.addPoints => S.of(context).penaltiesBehaviorAdd,
-                            PenaltiesBehavior.substractPoints => S.of(context).penaltiesBehaviorSubstract,
+                          switch (state.defaultPenaltiesImpactType) {
+                            PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                            PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
                           },
                         ),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () {
                           BottomSheetDialog.showDialog(
                             context: context,
-                            child: PenaltiesBehaviorView(
-                              currentPenaltiesBehavior: state.defaultPenaltiesBehavior,
-                              onChanged: (penaltiesBehavior) =>
-                                  context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesBehavior: penaltiesBehavior)),
+                            child: PenaltiesImpactTypeView(
+                              currentPenaltiesImpactType: state.defaultPenaltiesImpactType,
+                              onChanged: (penaltiesImpactType) =>
+                                  context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesImpactType: penaltiesImpactType)),
                             ),
                           );
                         },
@@ -214,15 +227,18 @@ class SettingsPageView extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            QuantityStepperFormField(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              initialValue: state.defaultPenaltiesRequiredToImpactPoints,
-                              onChanged: (value) {
-                                if (value != null) {
-                                  context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesRequiredToImpactPoints: value));
-                                }
-                              },
-                              minValue: 1,
+                            Form(
+                              key: formKey,
+                              child: QuantityStepperFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                initialValue: state.defaultPenaltiesRequiredToImpactPoints,
+                                onChanged: (value) {
+                                  if (value != null && formKey.currentState!.validate()) {
+                                    context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesRequiredToImpactPoints: value));
+                                  }
+                                },
+                                minValue: 1,
+                              ),
                             ),
                           ],
                         ),

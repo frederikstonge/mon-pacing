@@ -30,7 +30,8 @@ mixin _$MatchModel {
   List<PenaltyModel> get penalties => throw _privateConstructorUsedError;
   List<PointModel> get points => throw _privateConstructorUsedError;
   bool get enablePenaltiesImpactPoints => throw _privateConstructorUsedError;
-  PenaltiesBehavior get penaltiesBehavior => throw _privateConstructorUsedError;
+  PenaltiesImpactType get penaltiesImpactType =>
+      throw _privateConstructorUsedError;
   int get penaltiesRequiredToImpactPoints => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +56,7 @@ abstract class $MatchModelCopyWith<$Res> {
       List<PenaltyModel> penalties,
       List<PointModel> points,
       bool enablePenaltiesImpactPoints,
-      PenaltiesBehavior penaltiesBehavior,
+      PenaltiesImpactType penaltiesImpactType,
       int penaltiesRequiredToImpactPoints});
 }
 
@@ -81,7 +82,7 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? penalties = null,
     Object? points = null,
     Object? enablePenaltiesImpactPoints = null,
-    Object? penaltiesBehavior = null,
+    Object? penaltiesImpactType = null,
     Object? penaltiesRequiredToImpactPoints = null,
   }) {
     return _then(_value.copyWith(
@@ -121,10 +122,10 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
           ? _value.enablePenaltiesImpactPoints
           : enablePenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
               as bool,
-      penaltiesBehavior: null == penaltiesBehavior
-          ? _value.penaltiesBehavior
-          : penaltiesBehavior // ignore: cast_nullable_to_non_nullable
-              as PenaltiesBehavior,
+      penaltiesImpactType: null == penaltiesImpactType
+          ? _value.penaltiesImpactType
+          : penaltiesImpactType // ignore: cast_nullable_to_non_nullable
+              as PenaltiesImpactType,
       penaltiesRequiredToImpactPoints: null == penaltiesRequiredToImpactPoints
           ? _value.penaltiesRequiredToImpactPoints
           : penaltiesRequiredToImpactPoints // ignore: cast_nullable_to_non_nullable
@@ -151,7 +152,7 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       List<PenaltyModel> penalties,
       List<PointModel> points,
       bool enablePenaltiesImpactPoints,
-      PenaltiesBehavior penaltiesBehavior,
+      PenaltiesImpactType penaltiesImpactType,
       int penaltiesRequiredToImpactPoints});
 }
 
@@ -175,7 +176,7 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? penalties = null,
     Object? points = null,
     Object? enablePenaltiesImpactPoints = null,
-    Object? penaltiesBehavior = null,
+    Object? penaltiesImpactType = null,
     Object? penaltiesRequiredToImpactPoints = null,
   }) {
     return _then(_$MatchModelImpl(
@@ -215,10 +216,10 @@ class __$$MatchModelImplCopyWithImpl<$Res>
           ? _value.enablePenaltiesImpactPoints
           : enablePenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
               as bool,
-      penaltiesBehavior: null == penaltiesBehavior
-          ? _value.penaltiesBehavior
-          : penaltiesBehavior // ignore: cast_nullable_to_non_nullable
-              as PenaltiesBehavior,
+      penaltiesImpactType: null == penaltiesImpactType
+          ? _value.penaltiesImpactType
+          : penaltiesImpactType // ignore: cast_nullable_to_non_nullable
+              as PenaltiesImpactType,
       penaltiesRequiredToImpactPoints: null == penaltiesRequiredToImpactPoints
           ? _value.penaltiesRequiredToImpactPoints
           : penaltiesRequiredToImpactPoints // ignore: cast_nullable_to_non_nullable
@@ -240,7 +241,7 @@ class _$MatchModelImpl implements _MatchModel {
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
       required this.enablePenaltiesImpactPoints,
-      required this.penaltiesBehavior,
+      required this.penaltiesImpactType,
       required this.penaltiesRequiredToImpactPoints})
       : _teams = teams,
         _improvisations = improvisations,
@@ -293,13 +294,13 @@ class _$MatchModelImpl implements _MatchModel {
   @override
   final bool enablePenaltiesImpactPoints;
   @override
-  final PenaltiesBehavior penaltiesBehavior;
+  final PenaltiesImpactType penaltiesImpactType;
   @override
   final int penaltiesRequiredToImpactPoints;
 
   @override
   String toString() {
-    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesBehavior: $penaltiesBehavior, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints)';
+    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints)';
   }
 
   @override
@@ -323,8 +324,8 @@ class _$MatchModelImpl implements _MatchModel {
                     enablePenaltiesImpactPoints) ||
                 other.enablePenaltiesImpactPoints ==
                     enablePenaltiesImpactPoints) &&
-            (identical(other.penaltiesBehavior, penaltiesBehavior) ||
-                other.penaltiesBehavior == penaltiesBehavior) &&
+            (identical(other.penaltiesImpactType, penaltiesImpactType) ||
+                other.penaltiesImpactType == penaltiesImpactType) &&
             (identical(other.penaltiesRequiredToImpactPoints,
                     penaltiesRequiredToImpactPoints) ||
                 other.penaltiesRequiredToImpactPoints ==
@@ -344,7 +345,7 @@ class _$MatchModelImpl implements _MatchModel {
       const DeepCollectionEquality().hash(_penalties),
       const DeepCollectionEquality().hash(_points),
       enablePenaltiesImpactPoints,
-      penaltiesBehavior,
+      penaltiesImpactType,
       penaltiesRequiredToImpactPoints);
 
   @JsonKey(ignore: true)
@@ -372,7 +373,7 @@ abstract class _MatchModel implements MatchModel, BaseModel {
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
       required final bool enablePenaltiesImpactPoints,
-      required final PenaltiesBehavior penaltiesBehavior,
+      required final PenaltiesImpactType penaltiesImpactType,
       required final int penaltiesRequiredToImpactPoints}) = _$MatchModelImpl;
 
   factory _MatchModel.fromJson(Map<String, dynamic> json) =
@@ -397,7 +398,7 @@ abstract class _MatchModel implements MatchModel, BaseModel {
   @override
   bool get enablePenaltiesImpactPoints;
   @override
-  PenaltiesBehavior get penaltiesBehavior;
+  PenaltiesImpactType get penaltiesImpactType;
   @override
   int get penaltiesRequiredToImpactPoints;
   @override

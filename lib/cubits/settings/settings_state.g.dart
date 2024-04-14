@@ -17,9 +17,10 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
           json['defaultTimeBufferInSeconds'] as int? ?? 60,
       enableDefaultPenaltiesImpactPoints:
           json['enableDefaultPenaltiesImpactPoints'] as bool? ?? true,
-      defaultPenaltiesBehavior: $enumDecodeNullable(
-              _$PenaltiesBehaviorEnumMap, json['defaultPenaltiesBehavior']) ??
-          PenaltiesBehavior.addPoints,
+      defaultPenaltiesImpactType: $enumDecodeNullable(
+              _$PenaltiesImpactTypeEnumMap,
+              json['defaultPenaltiesImpactType']) ??
+          PenaltiesImpactType.addPoints,
       defaultPenaltiesRequiredToImpactPoints:
           json['defaultPenaltiesRequiredToImpactPoints'] as int? ?? 3,
     );
@@ -34,8 +35,8 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
       'defaultTimeBufferInSeconds': instance.defaultTimeBufferInSeconds,
       'enableDefaultPenaltiesImpactPoints':
           instance.enableDefaultPenaltiesImpactPoints,
-      'defaultPenaltiesBehavior':
-          _$PenaltiesBehaviorEnumMap[instance.defaultPenaltiesBehavior]!,
+      'defaultPenaltiesImpactType':
+          _$PenaltiesImpactTypeEnumMap[instance.defaultPenaltiesImpactType]!,
       'defaultPenaltiesRequiredToImpactPoints':
           instance.defaultPenaltiesRequiredToImpactPoints,
     };
@@ -46,7 +47,7 @@ const _$ThemeTypeEnumMap = {
   ThemeType.lni: 'lni',
 };
 
-const _$PenaltiesBehaviorEnumMap = {
-  PenaltiesBehavior.addPoints: 'addPoints',
-  PenaltiesBehavior.substractPoints: 'substractPoints',
+const _$PenaltiesImpactTypeEnumMap = {
+  PenaltiesImpactType.addPoints: 'addPoints',
+  PenaltiesImpactType.substractPoints: 'substractPoints',
 };

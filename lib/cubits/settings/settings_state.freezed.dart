@@ -28,7 +28,7 @@ mixin _$SettingsState {
   int get defaultTimeBufferInSeconds => throw _privateConstructorUsedError;
   bool get enableDefaultPenaltiesImpactPoints =>
       throw _privateConstructorUsedError;
-  PenaltiesBehavior get defaultPenaltiesBehavior =>
+  PenaltiesImpactType get defaultPenaltiesImpactType =>
       throw _privateConstructorUsedError;
   int get defaultPenaltiesRequiredToImpactPoints =>
       throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
       bool enableDefaultPenaltiesImpactPoints,
-      PenaltiesBehavior defaultPenaltiesBehavior,
+      PenaltiesImpactType defaultPenaltiesImpactType,
       int defaultPenaltiesRequiredToImpactPoints});
 }
 
@@ -75,7 +75,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
     Object? enableDefaultPenaltiesImpactPoints = null,
-    Object? defaultPenaltiesBehavior = null,
+    Object? defaultPenaltiesImpactType = null,
     Object? defaultPenaltiesRequiredToImpactPoints = null,
   }) {
     return _then(_value.copyWith(
@@ -105,10 +105,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.enableDefaultPenaltiesImpactPoints
           : enableDefaultPenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
               as bool,
-      defaultPenaltiesBehavior: null == defaultPenaltiesBehavior
-          ? _value.defaultPenaltiesBehavior
-          : defaultPenaltiesBehavior // ignore: cast_nullable_to_non_nullable
-              as PenaltiesBehavior,
+      defaultPenaltiesImpactType: null == defaultPenaltiesImpactType
+          ? _value.defaultPenaltiesImpactType
+          : defaultPenaltiesImpactType // ignore: cast_nullable_to_non_nullable
+              as PenaltiesImpactType,
       defaultPenaltiesRequiredToImpactPoints: null ==
               defaultPenaltiesRequiredToImpactPoints
           ? _value.defaultPenaltiesRequiredToImpactPoints
@@ -133,7 +133,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
       bool enableDefaultPenaltiesImpactPoints,
-      PenaltiesBehavior defaultPenaltiesBehavior,
+      PenaltiesImpactType defaultPenaltiesImpactType,
       int defaultPenaltiesRequiredToImpactPoints});
 }
 
@@ -154,7 +154,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
     Object? enableDefaultPenaltiesImpactPoints = null,
-    Object? defaultPenaltiesBehavior = null,
+    Object? defaultPenaltiesImpactType = null,
     Object? defaultPenaltiesRequiredToImpactPoints = null,
   }) {
     return _then(_$SettingsStateImpl(
@@ -184,10 +184,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.enableDefaultPenaltiesImpactPoints
           : enableDefaultPenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
               as bool,
-      defaultPenaltiesBehavior: null == defaultPenaltiesBehavior
-          ? _value.defaultPenaltiesBehavior
-          : defaultPenaltiesBehavior // ignore: cast_nullable_to_non_nullable
-              as PenaltiesBehavior,
+      defaultPenaltiesImpactType: null == defaultPenaltiesImpactType
+          ? _value.defaultPenaltiesImpactType
+          : defaultPenaltiesImpactType // ignore: cast_nullable_to_non_nullable
+              as PenaltiesImpactType,
       defaultPenaltiesRequiredToImpactPoints: null ==
               defaultPenaltiesRequiredToImpactPoints
           ? _value.defaultPenaltiesRequiredToImpactPoints
@@ -207,7 +207,7 @@ class _$SettingsStateImpl implements _SettingsState {
       this.enableDefaultTimeBuffer = true,
       this.defaultTimeBufferInSeconds = 60,
       this.enableDefaultPenaltiesImpactPoints = true,
-      this.defaultPenaltiesBehavior = PenaltiesBehavior.addPoints,
+      this.defaultPenaltiesImpactType = PenaltiesImpactType.addPoints,
       this.defaultPenaltiesRequiredToImpactPoints = 3});
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -231,14 +231,14 @@ class _$SettingsStateImpl implements _SettingsState {
   final bool enableDefaultPenaltiesImpactPoints;
   @override
   @JsonKey()
-  final PenaltiesBehavior defaultPenaltiesBehavior;
+  final PenaltiesImpactType defaultPenaltiesImpactType;
   @override
   @JsonKey()
   final int defaultPenaltiesRequiredToImpactPoints;
 
   @override
   String toString() {
-    return 'SettingsState(language: $language, theme: $theme, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesBehavior: $defaultPenaltiesBehavior, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints)';
+    return 'SettingsState(language: $language, theme: $theme, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints)';
   }
 
   @override
@@ -264,9 +264,10 @@ class _$SettingsStateImpl implements _SettingsState {
                     enableDefaultPenaltiesImpactPoints) ||
                 other.enableDefaultPenaltiesImpactPoints ==
                     enableDefaultPenaltiesImpactPoints) &&
-            (identical(
-                    other.defaultPenaltiesBehavior, defaultPenaltiesBehavior) ||
-                other.defaultPenaltiesBehavior == defaultPenaltiesBehavior) &&
+            (identical(other.defaultPenaltiesImpactType,
+                    defaultPenaltiesImpactType) ||
+                other.defaultPenaltiesImpactType ==
+                    defaultPenaltiesImpactType) &&
             (identical(other.defaultPenaltiesRequiredToImpactPoints,
                     defaultPenaltiesRequiredToImpactPoints) ||
                 other.defaultPenaltiesRequiredToImpactPoints ==
@@ -283,7 +284,7 @@ class _$SettingsStateImpl implements _SettingsState {
       enableDefaultTimeBuffer,
       defaultTimeBufferInSeconds,
       enableDefaultPenaltiesImpactPoints,
-      defaultPenaltiesBehavior,
+      defaultPenaltiesImpactType,
       defaultPenaltiesRequiredToImpactPoints);
 
   @JsonKey(ignore: true)
@@ -308,7 +309,7 @@ abstract class _SettingsState implements SettingsState {
       final bool enableDefaultTimeBuffer,
       final int defaultTimeBufferInSeconds,
       final bool enableDefaultPenaltiesImpactPoints,
-      final PenaltiesBehavior defaultPenaltiesBehavior,
+      final PenaltiesImpactType defaultPenaltiesImpactType,
       final int defaultPenaltiesRequiredToImpactPoints}) = _$SettingsStateImpl;
 
   factory _SettingsState.fromJson(Map<String, dynamic> json) =
@@ -327,7 +328,7 @@ abstract class _SettingsState implements SettingsState {
   @override
   bool get enableDefaultPenaltiesImpactPoints;
   @override
-  PenaltiesBehavior get defaultPenaltiesBehavior;
+  PenaltiesImpactType get defaultPenaltiesImpactType;
   @override
   int get defaultPenaltiesRequiredToImpactPoints;
   @override

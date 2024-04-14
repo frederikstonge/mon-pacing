@@ -57,7 +57,7 @@ const MatchModelSchema = IsarGeneratedSchema(
         type: IsarType.bool,
       ),
       IsarPropertySchema(
-        name: 'penaltiesBehavior',
+        name: 'penaltiesImpactType',
         type: IsarType.byte,
         enumMap: {"addPoints": 0, "substractPoints": 1},
       ),
@@ -147,7 +147,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
     IsarCore.endList(writer, listWriter);
   }
   IsarCore.writeBool(writer, 8, object.enablePenaltiesImpactPoints);
-  IsarCore.writeByte(writer, 9, object.penaltiesBehavior.index);
+  IsarCore.writeByte(writer, 9, object.penaltiesImpactType.index);
   IsarCore.writeLong(writer, 10, object.penaltiesRequiredToImpactPoints);
   return object.id;
 }
@@ -344,14 +344,14 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final bool _enablePenaltiesImpactPoints;
   _enablePenaltiesImpactPoints = IsarCore.readBool(reader, 8);
-  final PenaltiesBehavior _penaltiesBehavior;
+  final PenaltiesImpactType _penaltiesImpactType;
   {
     if (IsarCore.readNull(reader, 9)) {
-      _penaltiesBehavior = PenaltiesBehavior.addPoints;
+      _penaltiesImpactType = PenaltiesImpactType.addPoints;
     } else {
-      _penaltiesBehavior =
-          _matchModelPenaltiesBehavior[IsarCore.readByte(reader, 9)] ??
-              PenaltiesBehavior.addPoints;
+      _penaltiesImpactType =
+          _matchModelPenaltiesImpactType[IsarCore.readByte(reader, 9)] ??
+              PenaltiesImpactType.addPoints;
     }
   }
   final int _penaltiesRequiredToImpactPoints;
@@ -366,7 +366,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
     penalties: _penalties,
     points: _points,
     enablePenaltiesImpactPoints: _enablePenaltiesImpactPoints,
-    penaltiesBehavior: _penaltiesBehavior,
+    penaltiesImpactType: _penaltiesImpactType,
     penaltiesRequiredToImpactPoints: _penaltiesRequiredToImpactPoints,
   );
   return object;
@@ -568,10 +568,10 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
     case 9:
       {
         if (IsarCore.readNull(reader, 9)) {
-          return PenaltiesBehavior.addPoints;
+          return PenaltiesImpactType.addPoints;
         } else {
-          return _matchModelPenaltiesBehavior[IsarCore.readByte(reader, 9)] ??
-              PenaltiesBehavior.addPoints;
+          return _matchModelPenaltiesImpactType[IsarCore.readByte(reader, 9)] ??
+              PenaltiesImpactType.addPoints;
         }
       }
     case 10:
@@ -588,7 +588,7 @@ sealed class _MatchModelUpdate {
     DateTime? modifiedDate,
     String? name,
     bool? enablePenaltiesImpactPoints,
-    PenaltiesBehavior? penaltiesBehavior,
+    PenaltiesImpactType? penaltiesImpactType,
     int? penaltiesRequiredToImpactPoints,
   });
 }
@@ -605,7 +605,7 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
     Object? modifiedDate = ignore,
     Object? name = ignore,
     Object? enablePenaltiesImpactPoints = ignore,
-    Object? penaltiesBehavior = ignore,
+    Object? penaltiesImpactType = ignore,
     Object? penaltiesRequiredToImpactPoints = ignore,
   }) {
     return collection.updateProperties([
@@ -616,8 +616,8 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
           if (name != ignore) 3: name as String?,
           if (enablePenaltiesImpactPoints != ignore)
             8: enablePenaltiesImpactPoints as bool?,
-          if (penaltiesBehavior != ignore)
-            9: penaltiesBehavior as PenaltiesBehavior?,
+          if (penaltiesImpactType != ignore)
+            9: penaltiesImpactType as PenaltiesImpactType?,
           if (penaltiesRequiredToImpactPoints != ignore)
             10: penaltiesRequiredToImpactPoints as int?,
         }) >
@@ -632,7 +632,7 @@ sealed class _MatchModelUpdateAll {
     DateTime? modifiedDate,
     String? name,
     bool? enablePenaltiesImpactPoints,
-    PenaltiesBehavior? penaltiesBehavior,
+    PenaltiesImpactType? penaltiesImpactType,
     int? penaltiesRequiredToImpactPoints,
   });
 }
@@ -649,7 +649,7 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
     Object? modifiedDate = ignore,
     Object? name = ignore,
     Object? enablePenaltiesImpactPoints = ignore,
-    Object? penaltiesBehavior = ignore,
+    Object? penaltiesImpactType = ignore,
     Object? penaltiesRequiredToImpactPoints = ignore,
   }) {
     return collection.updateProperties(id, {
@@ -658,8 +658,8 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
       if (name != ignore) 3: name as String?,
       if (enablePenaltiesImpactPoints != ignore)
         8: enablePenaltiesImpactPoints as bool?,
-      if (penaltiesBehavior != ignore)
-        9: penaltiesBehavior as PenaltiesBehavior?,
+      if (penaltiesImpactType != ignore)
+        9: penaltiesImpactType as PenaltiesImpactType?,
       if (penaltiesRequiredToImpactPoints != ignore)
         10: penaltiesRequiredToImpactPoints as int?,
     });
@@ -678,7 +678,7 @@ sealed class _MatchModelQueryUpdate {
     DateTime? modifiedDate,
     String? name,
     bool? enablePenaltiesImpactPoints,
-    PenaltiesBehavior? penaltiesBehavior,
+    PenaltiesImpactType? penaltiesImpactType,
     int? penaltiesRequiredToImpactPoints,
   });
 }
@@ -695,7 +695,7 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
     Object? modifiedDate = ignore,
     Object? name = ignore,
     Object? enablePenaltiesImpactPoints = ignore,
-    Object? penaltiesBehavior = ignore,
+    Object? penaltiesImpactType = ignore,
     Object? penaltiesRequiredToImpactPoints = ignore,
   }) {
     return query.updateProperties(limit: limit, {
@@ -704,8 +704,8 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
       if (name != ignore) 3: name as String?,
       if (enablePenaltiesImpactPoints != ignore)
         8: enablePenaltiesImpactPoints as bool?,
-      if (penaltiesBehavior != ignore)
-        9: penaltiesBehavior as PenaltiesBehavior?,
+      if (penaltiesImpactType != ignore)
+        9: penaltiesImpactType as PenaltiesImpactType?,
       if (penaltiesRequiredToImpactPoints != ignore)
         10: penaltiesRequiredToImpactPoints as int?,
     });
@@ -731,7 +731,7 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
     Object? modifiedDate = ignore,
     Object? name = ignore,
     Object? enablePenaltiesImpactPoints = ignore,
-    Object? penaltiesBehavior = ignore,
+    Object? penaltiesImpactType = ignore,
     Object? penaltiesRequiredToImpactPoints = ignore,
   }) {
     final q = query.build();
@@ -742,8 +742,8 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
         if (name != ignore) 3: name as String?,
         if (enablePenaltiesImpactPoints != ignore)
           8: enablePenaltiesImpactPoints as bool?,
-        if (penaltiesBehavior != ignore)
-          9: penaltiesBehavior as PenaltiesBehavior?,
+        if (penaltiesImpactType != ignore)
+          9: penaltiesImpactType as PenaltiesImpactType?,
         if (penaltiesRequiredToImpactPoints != ignore)
           10: penaltiesRequiredToImpactPoints as int?,
       });
@@ -762,9 +762,9 @@ extension MatchModelQueryBuilderUpdate
       _MatchModelQueryBuilderUpdateImpl(this);
 }
 
-const _matchModelPenaltiesBehavior = {
-  0: PenaltiesBehavior.addPoints,
-  1: PenaltiesBehavior.substractPoints,
+const _matchModelPenaltiesImpactType = {
+  0: PenaltiesImpactType.addPoints,
+  1: PenaltiesImpactType.substractPoints,
 };
 
 extension MatchModelQueryFilter
@@ -1294,8 +1294,8 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesBehaviorEqualTo(
-    PenaltiesBehavior value,
+      penaltiesImpactTypeEqualTo(
+    PenaltiesImpactType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1308,8 +1308,8 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesBehaviorGreaterThan(
-    PenaltiesBehavior value,
+      penaltiesImpactTypeGreaterThan(
+    PenaltiesImpactType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1322,8 +1322,8 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesBehaviorGreaterThanOrEqualTo(
-    PenaltiesBehavior value,
+      penaltiesImpactTypeGreaterThanOrEqualTo(
+    PenaltiesImpactType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1336,8 +1336,8 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesBehaviorLessThan(
-    PenaltiesBehavior value,
+      penaltiesImpactTypeLessThan(
+    PenaltiesImpactType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1350,8 +1350,8 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesBehaviorLessThanOrEqualTo(
-    PenaltiesBehavior value,
+      penaltiesImpactTypeLessThanOrEqualTo(
+    PenaltiesImpactType value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1364,9 +1364,9 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesBehaviorBetween(
-    PenaltiesBehavior lower,
-    PenaltiesBehavior upper,
+      penaltiesImpactTypeBetween(
+    PenaltiesImpactType lower,
+    PenaltiesImpactType upper,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1542,14 +1542,15 @@ extension MatchModelQuerySortBy
     });
   }
 
-  QueryBuilder<MatchModel, MatchModel, QAfterSortBy> sortByPenaltiesBehavior() {
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByPenaltiesImpactType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
-      sortByPenaltiesBehaviorDesc() {
+      sortByPenaltiesImpactTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9, sort: Sort.desc);
     });
@@ -1636,14 +1637,15 @@ extension MatchModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByPenaltiesBehavior() {
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByPenaltiesImpactType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
-      thenByPenaltiesBehaviorDesc() {
+      thenByPenaltiesImpactTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(9, sort: Sort.desc);
     });
@@ -1694,7 +1696,7 @@ extension MatchModelQueryWhereDistinct
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
-      distinctByPenaltiesBehavior() {
+      distinctByPenaltiesImpactType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(9);
     });
@@ -1767,8 +1769,8 @@ extension MatchModelQueryProperty1
     });
   }
 
-  QueryBuilder<MatchModel, PenaltiesBehavior, QAfterProperty>
-      penaltiesBehaviorProperty() {
+  QueryBuilder<MatchModel, PenaltiesImpactType, QAfterProperty>
+      penaltiesImpactTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
@@ -1845,8 +1847,8 @@ extension MatchModelQueryProperty2<R>
     });
   }
 
-  QueryBuilder<MatchModel, (R, PenaltiesBehavior), QAfterProperty>
-      penaltiesBehaviorProperty() {
+  QueryBuilder<MatchModel, (R, PenaltiesImpactType), QAfterProperty>
+      penaltiesImpactTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
@@ -1923,8 +1925,8 @@ extension MatchModelQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<MatchModel, (R1, R2, PenaltiesBehavior), QOperations>
-      penaltiesBehaviorProperty() {
+  QueryBuilder<MatchModel, (R1, R2, PenaltiesImpactType), QOperations>
+      penaltiesImpactTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(9);
     });
@@ -1965,8 +1967,8 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
           .map((e) => PointModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       enablePenaltiesImpactPoints: json['enablePenaltiesImpactPoints'] as bool,
-      penaltiesBehavior:
-          $enumDecode(_$PenaltiesBehaviorEnumMap, json['penaltiesBehavior']),
+      penaltiesImpactType: $enumDecode(
+          _$PenaltiesImpactTypeEnumMap, json['penaltiesImpactType']),
       penaltiesRequiredToImpactPoints:
           json['penaltiesRequiredToImpactPoints'] as int,
     );
@@ -1982,13 +1984,13 @@ Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
       'penalties': instance.penalties,
       'points': instance.points,
       'enablePenaltiesImpactPoints': instance.enablePenaltiesImpactPoints,
-      'penaltiesBehavior':
-          _$PenaltiesBehaviorEnumMap[instance.penaltiesBehavior]!,
+      'penaltiesImpactType':
+          _$PenaltiesImpactTypeEnumMap[instance.penaltiesImpactType]!,
       'penaltiesRequiredToImpactPoints':
           instance.penaltiesRequiredToImpactPoints,
     };
 
-const _$PenaltiesBehaviorEnumMap = {
-  PenaltiesBehavior.addPoints: 'addPoints',
-  PenaltiesBehavior.substractPoints: 'substractPoints',
+const _$PenaltiesImpactTypeEnumMap = {
+  PenaltiesImpactType.addPoints: 'addPoints',
+  PenaltiesImpactType.substractPoints: 'substractPoints',
 };
