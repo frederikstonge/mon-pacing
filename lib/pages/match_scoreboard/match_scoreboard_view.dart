@@ -12,7 +12,7 @@ import 'widgets/scorecard.dart';
 
 class MatchScoreboardView extends StatelessWidget {
   final MatchModel match;
-  final FutureOr<void> Function(MatchModel match) onExport;
+  final FutureOr<void> Function() onExport;
 
   const MatchScoreboardView({
     super.key,
@@ -29,7 +29,7 @@ class MatchScoreboardView extends StatelessWidget {
           icon: const Icon(Icons.upload),
           tooltip: S.of(context).export,
           onPressed: () async {
-            await onExport.call(match);
+            await onExport.call();
           },
         ),
       ),

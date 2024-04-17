@@ -37,7 +37,7 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
                 Text(
-                  '${match.getTotalPointsByTeamIdWithPenalties(team.id)}',
+                  '${match.getTotalPointsByTeamId(team.id)}',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: Theme.of(context).textTheme.displayLarge!,

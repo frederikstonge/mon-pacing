@@ -9,6 +9,7 @@ import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../extensions/match_extensions.dart';
+import '../../extensions/penalty_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_penalty/match_penalty_shell.dart';
@@ -44,7 +45,7 @@ class MatchPageView extends StatelessWidget {
                             context: context,
                             child: MatchScoreboardShell(
                               match: match,
-                              onExport: (match) {},
+                              onExport: () => context.read<MatchCubit>().exportExcel(match),
                             ),
                           );
                         },
@@ -137,7 +138,7 @@ class MatchPageView extends StatelessWidget {
                                     child: ListTile(
                                       contentPadding: EdgeInsets.zero,
                                       leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
-                                      title: Text('${e.type}${e.major ? ' ${S.of(context).major}' : ''}'),
+                                      title: Text(e.getPenaltyString(S.of(context))),
                                       subtitle: Text(e.performer),
                                       trailing: LoadingIconButton(
                                           icon: const Icon(Icons.remove),

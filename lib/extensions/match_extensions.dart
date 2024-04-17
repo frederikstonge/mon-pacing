@@ -6,25 +6,6 @@ import '../models/penalties_impact_type.dart';
 import '../models/penalty_model.dart';
 
 extension MatchExtensions on MatchModel {
-  int getTotalPointsByTeamIdWithPenalties(int teamId) {
-    var points = getTotalPointsByTeamId(teamId);
-    if (enablePenaltiesImpactPoints) {
-      if (penaltiesImpactType == PenaltiesImpactType.substractPoints) {
-        final penaltyValues = getTotalPenaltyValuesByTeamId(teamId);
-        final impact = (penaltyValues / penaltiesRequiredToImpactPoints).floor();
-        points -= impact;
-      } else {
-        final impact = teams.where((t) => t.id != teamId).map((t) {
-          final penaltyValues = getTotalPenaltyValuesByTeamId(t.id);
-          return (penaltyValues / penaltiesRequiredToImpactPoints).floor();
-        }).fold(0, (previousValue, element) => previousValue + element);
-        points += impact;
-      }
-    }
-
-    return points;
-  }
-
   // Color
   Color getTeamColor(int teamId) => Color(teams.firstWhere((element) => element.id == teamId).color);
 
@@ -52,8 +33,27 @@ extension MatchExtensions on MatchModel {
       .fold(0, (previousValue, element) => previousValue + element);
 
   // Points
-  int getTotalPointsByTeamId(int teamId) =>
+  int getSubtotalPointsByTeamId(int teamId) =>
       points.where((point) => point.teamId == teamId).map((point) => point.value).fold(0, (previousValue, element) => previousValue + element);
+
+  int getTotalPointsByTeamId(int teamId) {
+    var points = getSubtotalPointsByTeamId(teamId);
+    if (enablePenaltiesImpactPoints) {
+      if (penaltiesImpactType == PenaltiesImpactType.substractPoints) {
+        final penaltyValues = getTotalPenaltyValuesByTeamId(teamId);
+        final impact = (penaltyValues / penaltiesRequiredToImpactPoints).floor();
+        points -= impact;
+      } else {
+        final impact = teams.where((t) => t.id != teamId).map((t) {
+          final penaltyValues = getTotalPenaltyValuesByTeamId(t.id);
+          return (penaltyValues / penaltiesRequiredToImpactPoints).floor();
+        }).fold(0, (previousValue, element) => previousValue + element);
+        points += impact;
+      }
+    }
+
+    return points;
+  }
 
   int getImprovisationPointsByTeamId(int improvisationId, int teamId) =>
       points.firstWhereOrNull((point) => point.teamId == teamId && point.improvisationId == improvisationId)?.value ?? 0;

@@ -4,6 +4,7 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../components/text_header/text_header.dart';
 import '../../../extensions/match_extensions.dart';
+import '../../../extensions/penalty_extensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 
@@ -77,7 +78,7 @@ class Scorecard extends StatelessWidget {
               TableRow(
                 children: [
                   Text(
-                    S.of(context).total,
+                    S.of(context).subtotal,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: const TextStyle(fontWeight: FontWeight.bold),
@@ -87,7 +88,7 @@ class Scorecard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${match.getTotalPointsByTeamId(team.id)}',
+                          '${match.getSubtotalPointsByTeamId(team.id)}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -126,7 +127,7 @@ class Scorecard extends StatelessWidget {
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    '${e.performer} - ${e.type}${e.major ? ' ${S.of(context).major}' : ''}',
+                                    e.getPenaltyString(S.of(context)),
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                   ),

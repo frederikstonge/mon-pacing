@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubits/settings/settings_cubit.dart';
-import '../../l10n/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
 import 'cubits/match_detail_cubit.dart';
@@ -24,11 +23,9 @@ class MatchDetailPageShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizer = S.of(context);
     return BlocProvider(
       create: (context) => MatchDetailCubit(
         settingsCubit: context.read<SettingsCubit>(),
-        localizer: localizer,
         onConfirm: onConfirm,
         pacing: pacing,
         match: match,

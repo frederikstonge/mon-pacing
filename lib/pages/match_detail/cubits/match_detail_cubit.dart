@@ -16,13 +16,12 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   final SettingsCubit settingsCubit;
   final PacingModel? pacing;
   final MatchModel? match;
-  final S localizer;
+  late S localizer;
   final FutureOr<void> Function(MatchModel value) onConfirm;
 
   MatchDetailCubit({
     required this.settingsCubit,
     required this.onConfirm,
-    required this.localizer,
     this.pacing,
     this.match,
   }) : super(
@@ -46,7 +45,13 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
           ),
         );
 
-  void initialize() {
+  Future<void> initialize() async {
+    settingsCubit.stream.listen((event) async {
+      localizer = await S.delegate.load(Locale(event.language));
+    });
+
+    localizer = await S.delegate.load(Locale(settingsCubit.state.language));
+
     if (!state.editMode) {
       final teams = List<TeamModel>.from(state.match.teams);
       for (int i = 0; i < pacing!.defaultNumberOfTeams; i++) {

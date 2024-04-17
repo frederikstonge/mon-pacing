@@ -7,7 +7,7 @@ import 'match_scoreboard_view.dart';
 
 class MatchScoreboardShell extends StatelessWidget {
   final MatchModel match;
-  final FutureOr<void> Function(MatchModel match) onExport;
+  final FutureOr<void> Function() onExport;
 
   const MatchScoreboardShell({
     super.key,
