@@ -10,8 +10,7 @@ _$TimerStateImpl _$$TimerStateImplFromJson(Map<String, dynamic> json) =>
     _$TimerStateImpl(
       timerStatus: json['timerStatus'] == null
           ? null
-          : TimerStatusModel.fromJson(
-              json['timerStatus'] as Map<String, dynamic>),
+          : TimerModel.fromJson(json['timerStatus'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TimerStateImplToJson(_$TimerStateImpl instance) =>

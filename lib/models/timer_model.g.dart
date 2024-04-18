@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'timer_status_model.dart';
+part of 'timer_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TimerStatusModelImpl _$$TimerStatusModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$TimerStatusModelImpl(
+_$TimerModelImpl _$$TimerModelImplFromJson(Map<String, dynamic> json) =>
+    _$TimerModelImpl(
       duration: Duration(microseconds: json['duration'] as int),
       matchId: json['matchId'] as int,
       improvisationId: json['improvisationId'] as int,
@@ -19,8 +18,7 @@ _$TimerStatusModelImpl _$$TimerStatusModelImplFromJson(
       notificationTitle: json['notificationTitle'] as String,
     );
 
-Map<String, dynamic> _$$TimerStatusModelImplToJson(
-        _$TimerStatusModelImpl instance) =>
+Map<String, dynamic> _$$TimerModelImplToJson(_$TimerModelImpl instance) =>
     <String, dynamic>{
       'duration': instance.duration.inMicroseconds,
       'matchId': instance.matchId,

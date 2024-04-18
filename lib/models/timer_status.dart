@@ -1,0 +1,4 @@
+enum TimerStatus {
+  started,
+  paused,
+}

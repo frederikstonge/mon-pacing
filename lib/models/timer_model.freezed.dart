@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'timer_status_model.dart';
+part of 'timer_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-TimerStatusModel _$TimerStatusModelFromJson(Map<String, dynamic> json) {
-  return _TimerStatusModel.fromJson(json);
+TimerModel _$TimerModelFromJson(Map<String, dynamic> json) {
+  return _TimerModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$TimerStatusModel {
+mixin _$TimerModel {
   Duration get duration => throw _privateConstructorUsedError;
   int get matchId => throw _privateConstructorUsedError;
   int get improvisationId => throw _privateConstructorUsedError;
@@ -31,15 +31,15 @@ mixin _$TimerStatusModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TimerStatusModelCopyWith<TimerStatusModel> get copyWith =>
+  $TimerModelCopyWith<TimerModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TimerStatusModelCopyWith<$Res> {
-  factory $TimerStatusModelCopyWith(
-          TimerStatusModel value, $Res Function(TimerStatusModel) then) =
-      _$TimerStatusModelCopyWithImpl<$Res, TimerStatusModel>;
+abstract class $TimerModelCopyWith<$Res> {
+  factory $TimerModelCopyWith(
+          TimerModel value, $Res Function(TimerModel) then) =
+      _$TimerModelCopyWithImpl<$Res, TimerModel>;
   @useResult
   $Res call(
       {Duration duration,
@@ -53,9 +53,9 @@ abstract class $TimerStatusModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TimerStatusModelCopyWithImpl<$Res, $Val extends TimerStatusModel>
-    implements $TimerStatusModelCopyWith<$Res> {
-  _$TimerStatusModelCopyWithImpl(this._value, this._then);
+class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
+    implements $TimerModelCopyWith<$Res> {
+  _$TimerModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -112,11 +112,11 @@ class _$TimerStatusModelCopyWithImpl<$Res, $Val extends TimerStatusModel>
 }
 
 /// @nodoc
-abstract class _$$TimerStatusModelImplCopyWith<$Res>
-    implements $TimerStatusModelCopyWith<$Res> {
-  factory _$$TimerStatusModelImplCopyWith(_$TimerStatusModelImpl value,
-          $Res Function(_$TimerStatusModelImpl) then) =
-      __$$TimerStatusModelImplCopyWithImpl<$Res>;
+abstract class _$$TimerModelImplCopyWith<$Res>
+    implements $TimerModelCopyWith<$Res> {
+  factory _$$TimerModelImplCopyWith(
+          _$TimerModelImpl value, $Res Function(_$TimerModelImpl) then) =
+      __$$TimerModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -131,11 +131,11 @@ abstract class _$$TimerStatusModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TimerStatusModelImplCopyWithImpl<$Res>
-    extends _$TimerStatusModelCopyWithImpl<$Res, _$TimerStatusModelImpl>
-    implements _$$TimerStatusModelImplCopyWith<$Res> {
-  __$$TimerStatusModelImplCopyWithImpl(_$TimerStatusModelImpl _value,
-      $Res Function(_$TimerStatusModelImpl) _then)
+class __$$TimerModelImplCopyWithImpl<$Res>
+    extends _$TimerModelCopyWithImpl<$Res, _$TimerModelImpl>
+    implements _$$TimerModelImplCopyWith<$Res> {
+  __$$TimerModelImplCopyWithImpl(
+      _$TimerModelImpl _value, $Res Function(_$TimerModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$TimerStatusModelImplCopyWithImpl<$Res>
     Object? hapticFeedback = null,
     Object? notificationTitle = null,
   }) {
-    return _then(_$TimerStatusModelImpl(
+    return _then(_$TimerModelImpl(
       duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ class __$$TimerStatusModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TimerStatusModelImpl implements _TimerStatusModel {
-  const _$TimerStatusModelImpl(
+class _$TimerModelImpl implements _TimerModel {
+  const _$TimerModelImpl(
       {required this.duration,
       required this.matchId,
       required this.improvisationId,
@@ -200,8 +200,8 @@ class _$TimerStatusModelImpl implements _TimerStatusModel {
       required this.hapticFeedback,
       required this.notificationTitle});
 
-  factory _$TimerStatusModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TimerStatusModelImplFromJson(json);
+  factory _$TimerModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimerModelImplFromJson(json);
 
   @override
   final Duration duration;
@@ -222,14 +222,14 @@ class _$TimerStatusModelImpl implements _TimerStatusModel {
 
   @override
   String toString() {
-    return 'TimerStatusModel(duration: $duration, matchId: $matchId, improvisationId: $improvisationId, durationIndex: $durationIndex, status: $status, remainingMilliseconds: $remainingMilliseconds, hapticFeedback: $hapticFeedback, notificationTitle: $notificationTitle)';
+    return 'TimerModel(duration: $duration, matchId: $matchId, improvisationId: $improvisationId, durationIndex: $durationIndex, status: $status, remainingMilliseconds: $remainingMilliseconds, hapticFeedback: $hapticFeedback, notificationTitle: $notificationTitle)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TimerStatusModelImpl &&
+            other is _$TimerModelImpl &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             (identical(other.matchId, matchId) || other.matchId == matchId) &&
@@ -262,20 +262,19 @@ class _$TimerStatusModelImpl implements _TimerStatusModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TimerStatusModelImplCopyWith<_$TimerStatusModelImpl> get copyWith =>
-      __$$TimerStatusModelImplCopyWithImpl<_$TimerStatusModelImpl>(
-          this, _$identity);
+  _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
+      __$$TimerModelImplCopyWithImpl<_$TimerModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TimerStatusModelImplToJson(
+    return _$$TimerModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _TimerStatusModel implements TimerStatusModel {
-  const factory _TimerStatusModel(
+abstract class _TimerModel implements TimerModel {
+  const factory _TimerModel(
       {required final Duration duration,
       required final int matchId,
       required final int improvisationId,
@@ -283,10 +282,10 @@ abstract class _TimerStatusModel implements TimerStatusModel {
       required final TimerStatus status,
       required final int remainingMilliseconds,
       required final bool hapticFeedback,
-      required final String notificationTitle}) = _$TimerStatusModelImpl;
+      required final String notificationTitle}) = _$TimerModelImpl;
 
-  factory _TimerStatusModel.fromJson(Map<String, dynamic> json) =
-      _$TimerStatusModelImpl.fromJson;
+  factory _TimerModel.fromJson(Map<String, dynamic> json) =
+      _$TimerModelImpl.fromJson;
 
   @override
   Duration get duration;
@@ -306,6 +305,6 @@ abstract class _TimerStatusModel implements TimerStatusModel {
   String get notificationTitle;
   @override
   @JsonKey(ignore: true)
-  _$$TimerStatusModelImplCopyWith<_$TimerStatusModelImpl> get copyWith =>
+  _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

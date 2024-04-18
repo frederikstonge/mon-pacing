@@ -1,11 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'timer_status_model.freezed.dart';
-part 'timer_status_model.g.dart';
+import 'timer_status.dart';
+
+part 'timer_model.freezed.dart';
+part 'timer_model.g.dart';
 
 @freezed
-class TimerStatusModel with _$TimerStatusModel {
-  const factory TimerStatusModel({
+class TimerModel with _$TimerModel {
+  const factory TimerModel({
     required Duration duration,
     required int matchId,
     required int improvisationId,
@@ -14,12 +16,7 @@ class TimerStatusModel with _$TimerStatusModel {
     required int remainingMilliseconds,
     required bool hapticFeedback,
     required String notificationTitle,
-  }) = _TimerStatusModel;
+  }) = _TimerModel;
 
-  factory TimerStatusModel.fromJson(Map<String, dynamic> json) => _$TimerStatusModelFromJson(json);
-}
-
-enum TimerStatus {
-  started,
-  paused,
+  factory TimerModel.fromJson(Map<String, dynamic> json) => _$TimerModelFromJson(json);
 }
