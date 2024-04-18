@@ -25,13 +25,13 @@ class TimerCubit extends Cubit<TimerState> {
       return;
     }
 
-    final data = await FlutterForegroundTask.getData<String>(key: timerStatusDataKey);
+    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
     if (data == null) {
       return;
     }
     try {
       final timer = TimerModel.fromJson(json.decode(data));
-      await _updateTimerStatus(timer);
+      await _updateTimer(timer);
     } catch (_) {
       return;
     }
@@ -49,7 +49,7 @@ class TimerCubit extends Cubit<TimerState> {
       notificationTitle: matchName,
     );
 
-    await _updateTimerStatus(timer);
+    await _updateTimer(timer);
 
     if (await FlutterForegroundTask.isRunningService) {
       return await FlutterForegroundTask.restartService();
@@ -63,29 +63,29 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   Future<bool> resume() async {
-    final data = await FlutterForegroundTask.getData<String>(key: timerStatusDataKey);
+    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
     if (data == null) {
       emit(const TimerState());
       return false;
     }
 
     final timer = TimerModel.fromJson(json.decode(data)).copyWith(status: TimerStatus.started);
-    return await _updateTimerStatus(timer);
+    return await _updateTimer(timer);
   }
 
   Future<bool> pause() async {
-    final data = await FlutterForegroundTask.getData<String>(key: timerStatusDataKey);
+    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
     if (data == null) {
       emit(const TimerState());
       return false;
     }
 
     final timer = TimerModel.fromJson(json.decode(data)).copyWith(status: TimerStatus.paused);
-    return await _updateTimerStatus(timer);
+    return await _updateTimer(timer);
   }
 
   Future<bool> stop() async {
-    await FlutterForegroundTask.removeData(key: timerStatusDataKey);
+    await FlutterForegroundTask.removeData(key: timerDataKey);
     emit(const TimerState());
     return await FlutterForegroundTask.stopService();
   }
@@ -98,7 +98,11 @@ class TimerCubit extends Cubit<TimerState> {
 
   void _onReceiveData(dynamic data) {
     final event = TimerModel.fromJson(data);
-    _updateTimerStatus(event);
+    if (event.remainingMilliseconds <= 0) {
+      stop();
+      return;
+    }
+    _updateTimer(event);
   }
 
   bool _registerReceivePort(ReceivePort? newReceivePort) {
@@ -119,9 +123,9 @@ class TimerCubit extends Cubit<TimerState> {
     _receivePort = null;
   }
 
-  Future<bool> _updateTimerStatus(TimerModel timerStatus) async {
-    timerStatus = timerStatus.copyWith(hapticFeedback: settingsCubit.state.enableHapticFeedback);
-    emit(TimerState(timerStatus: timerStatus));
-    return await FlutterForegroundTask.saveData(key: timerStatusDataKey, value: json.encode(timerStatus.toJson()));
+  Future<bool> _updateTimer(TimerModel timer) async {
+    timer = timer.copyWith(hapticFeedback: settingsCubit.state.enableHapticFeedback);
+    emit(TimerState(timer: timer));
+    return await FlutterForegroundTask.saveData(key: timerDataKey, value: json.encode(timer.toJson()));
   }
 }

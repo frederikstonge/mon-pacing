@@ -20,7 +20,7 @@ TimerState _$TimerStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TimerState {
-  TimerModel? get timerStatus => throw _privateConstructorUsedError;
+  TimerModel? get timer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,9 +34,9 @@ abstract class $TimerStateCopyWith<$Res> {
           TimerState value, $Res Function(TimerState) then) =
       _$TimerStateCopyWithImpl<$Res, TimerState>;
   @useResult
-  $Res call({TimerModel? timerStatus});
+  $Res call({TimerModel? timer});
 
-  $TimerModelCopyWith<$Res>? get timerStatus;
+  $TimerModelCopyWith<$Res>? get timer;
 }
 
 /// @nodoc
@@ -52,25 +52,25 @@ class _$TimerStateCopyWithImpl<$Res, $Val extends TimerState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timerStatus = freezed,
+    Object? timer = freezed,
   }) {
     return _then(_value.copyWith(
-      timerStatus: freezed == timerStatus
-          ? _value.timerStatus
-          : timerStatus // ignore: cast_nullable_to_non_nullable
+      timer: freezed == timer
+          ? _value.timer
+          : timer // ignore: cast_nullable_to_non_nullable
               as TimerModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $TimerModelCopyWith<$Res>? get timerStatus {
-    if (_value.timerStatus == null) {
+  $TimerModelCopyWith<$Res>? get timer {
+    if (_value.timer == null) {
       return null;
     }
 
-    return $TimerModelCopyWith<$Res>(_value.timerStatus!, (value) {
-      return _then(_value.copyWith(timerStatus: value) as $Val);
+    return $TimerModelCopyWith<$Res>(_value.timer!, (value) {
+      return _then(_value.copyWith(timer: value) as $Val);
     });
   }
 }
@@ -83,10 +83,10 @@ abstract class _$$TimerStateImplCopyWith<$Res>
       __$$TimerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({TimerModel? timerStatus});
+  $Res call({TimerModel? timer});
 
   @override
-  $TimerModelCopyWith<$Res>? get timerStatus;
+  $TimerModelCopyWith<$Res>? get timer;
 }
 
 /// @nodoc
@@ -100,12 +100,12 @@ class __$$TimerStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timerStatus = freezed,
+    Object? timer = freezed,
   }) {
     return _then(_$TimerStateImpl(
-      timerStatus: freezed == timerStatus
-          ? _value.timerStatus
-          : timerStatus // ignore: cast_nullable_to_non_nullable
+      timer: freezed == timer
+          ? _value.timer
+          : timer // ignore: cast_nullable_to_non_nullable
               as TimerModel?,
     ));
   }
@@ -114,17 +114,17 @@ class __$$TimerStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TimerStateImpl implements _TimerState {
-  const _$TimerStateImpl({this.timerStatus});
+  const _$TimerStateImpl({this.timer});
 
   factory _$TimerStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$TimerStateImplFromJson(json);
 
   @override
-  final TimerModel? timerStatus;
+  final TimerModel? timer;
 
   @override
   String toString() {
-    return 'TimerState(timerStatus: $timerStatus)';
+    return 'TimerState(timer: $timer)';
   }
 
   @override
@@ -132,13 +132,12 @@ class _$TimerStateImpl implements _TimerState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TimerStateImpl &&
-            (identical(other.timerStatus, timerStatus) ||
-                other.timerStatus == timerStatus));
+            (identical(other.timer, timer) || other.timer == timer));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, timerStatus);
+  int get hashCode => Object.hash(runtimeType, timer);
 
   @JsonKey(ignore: true)
   @override
@@ -155,13 +154,13 @@ class _$TimerStateImpl implements _TimerState {
 }
 
 abstract class _TimerState implements TimerState {
-  const factory _TimerState({final TimerModel? timerStatus}) = _$TimerStateImpl;
+  const factory _TimerState({final TimerModel? timer}) = _$TimerStateImpl;
 
   factory _TimerState.fromJson(Map<String, dynamic> json) =
       _$TimerStateImpl.fromJson;
 
   @override
-  TimerModel? get timerStatus;
+  TimerModel? get timer;
   @override
   @JsonKey(ignore: true)
   _$$TimerStateImplCopyWith<_$TimerStateImpl> get copyWith =>

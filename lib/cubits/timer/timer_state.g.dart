@@ -8,12 +8,12 @@ part of 'timer_state.dart';
 
 _$TimerStateImpl _$$TimerStateImplFromJson(Map<String, dynamic> json) =>
     _$TimerStateImpl(
-      timerStatus: json['timerStatus'] == null
+      timer: json['timer'] == null
           ? null
-          : TimerModel.fromJson(json['timerStatus'] as Map<String, dynamic>),
+          : TimerModel.fromJson(json['timer'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TimerStateImplToJson(_$TimerStateImpl instance) =>
     <String, dynamic>{
-      'timerStatus': instance.timerStatus,
+      'timer': instance.timer,
     };

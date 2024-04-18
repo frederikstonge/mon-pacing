@@ -8,7 +8,7 @@ part 'timer_state.g.dart';
 @freezed
 class TimerState with _$TimerState {
   const factory TimerState({
-    TimerModel? timerStatus,
+    TimerModel? timer,
   }) = _TimerState;
 
   factory TimerState.fromJson(Map<String, dynamic> json) => _$TimerStateFromJson(json);

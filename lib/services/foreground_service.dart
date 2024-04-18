@@ -10,7 +10,7 @@ import '../extensions/duration_extensions.dart';
 import '../models/timer_model.dart';
 import '../models/timer_status.dart';
 
-const String timerStatusDataKey = 'timerStatus';
+const String timerDataKey = 'timer';
 
 @pragma('vm:entry-point')
 void startCallback() {
@@ -69,7 +69,7 @@ class TimerTaskHandler extends TaskHandler {
   Future<void> onStart(DateTime timestamp, SendPort? sendPort) async {
     _sendPort = sendPort;
 
-    _timer = await getTimerStatus();
+    _timer = await getTimer();
     if (_timer == null) {
       await FlutterForegroundTask.stopService();
       return;
@@ -82,7 +82,7 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   Future<void> onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
-    _timer = await getTimerStatus();
+    _timer = await getTimer();
     if (_timer == null) {
       await FlutterForegroundTask.stopService();
       return;
@@ -128,7 +128,7 @@ class TimerTaskHandler extends TaskHandler {
     final remainingMilliseconds = _timer!.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
     _timer = _timer!.copyWith(remainingMilliseconds: remainingMilliseconds);
-    await FlutterForegroundTask.saveData(key: timerStatusDataKey, value: json.encode(_timer!.toJson()));
+    await FlutterForegroundTask.saveData(key: timerDataKey, value: json.encode(_timer!.toJson()));
 
     _sendPort?.send(_timer!.toJson());
 
@@ -152,8 +152,8 @@ class TimerTaskHandler extends TaskHandler {
     );
   }
 
-  Future<TimerModel?> getTimerStatus() async {
-    final data = await FlutterForegroundTask.getData<String>(key: timerStatusDataKey);
+  Future<TimerModel?> getTimer() async {
+    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
     if (data == null) {
       return null;
     }

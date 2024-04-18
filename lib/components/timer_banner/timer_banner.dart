@@ -26,63 +26,68 @@ class TimerBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: BlocBuilder<TimerCubit, TimerState>(
-        builder: (context, state) => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (state.timerStatus != null) ...[
-              MaterialBanner(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                content: Text(
-                  '${state.timerStatus!.notificationTitle} - ${Duration(milliseconds: state.timerStatus!.remainingMilliseconds).toImprovDuration()}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                ),
-                actions: [
-                  LoadingIconButton(
-                    onPressed: () => _onAction(context, state.timerStatus!),
+    return BlocBuilder<TimerCubit, TimerState>(
+      builder: (context, state) => SliverToBoxAdapter(
+        child: state.timer != null
+            ? Container(
+                color: Theme.of(context).colorScheme.primary,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.timer,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  title: Text(
+                    state.timer!.notificationTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                  subtitle: Text(
+                    Duration(milliseconds: state.timer!.remainingMilliseconds).toImprovDuration(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                  trailing: LoadingIconButton(
+                    onPressed: () => _onAction(context, state.timer!),
                     icon: Icon(
                       Icons.arrow_forward,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
-                  )
-                ],
-              ),
-            ],
-          ],
-        ),
+                  ),
+                ),
+              )
+            : null,
       ),
     );
   }
 
-  void _onAction(BuildContext context, TimerModel timerStatus) {
+  void _onAction(BuildContext context, TimerModel timer) {
     if (match != null && improvisation != null && selectedDurationIndex != null) {
-      if (match!.id == timerStatus.matchId) {
-        if (improvisation!.id != timerStatus.improvisationId) {
-          final page = match!.improvisations.indexWhere((element) => element.id == timerStatus.improvisationId);
+      if (match!.id == timer.matchId) {
+        if (improvisation!.id != timer.improvisationId) {
+          final page = match!.improvisations.indexWhere((element) => element.id == timer.improvisationId);
           context.read<MatchCubit>().changePage(page);
         }
 
-        if (selectedDurationIndex != timerStatus.durationIndex) {
-          context.read<MatchCubit>().changeDuration(timerStatus.durationIndex);
+        if (selectedDurationIndex != timer.durationIndex) {
+          context.read<MatchCubit>().changeDuration(timer.durationIndex);
         }
       } else {
-        _goToMatch(context, timerStatus);
+        _goToMatch(context, timer);
       }
     } else {
-      _goToMatch(context, timerStatus);
+      _goToMatch(context, timer);
     }
   }
 
-  void _goToMatch(BuildContext context, TimerModel timerStatus) {
+  void _goToMatch(BuildContext context, TimerModel timer) {
     context.goNamed(
       Routes.match,
-      pathParameters: {'id': timerStatus.matchId.toString()},
+      pathParameters: {'id': timer.matchId.toString()},
       queryParameters: {
-        'improvisationId': timerStatus.improvisationId.toString(),
-        'durationIndex': timerStatus.durationIndex.toString(),
+        'improvisationId': timer.improvisationId.toString(),
+        'durationIndex': timer.durationIndex.toString(),
       },
     );
   }
