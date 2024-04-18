@@ -88,11 +88,14 @@ class _LoadingButtonState extends State<LoadingButton> {
             setState(() {
               isLoading = true;
             });
-            await widget.onPressed?.call();
-            if (mounted) {
-              setState(() {
-                isLoading = false;
-              });
+            try {
+              await widget.onPressed?.call();
+            } finally {
+              if (mounted) {
+                setState(() {
+                  isLoading = false;
+                });
+              }
             }
           };
 

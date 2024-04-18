@@ -8,14 +8,19 @@ import 'package:sanitize_filename/sanitize_filename.dart';
 
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
+import '../../services/toaster_service.dart';
 import 'pacings_state.dart';
 
 class PacingsCubit extends Cubit<PacingsState> {
   static const int _pageSize = 20;
   final PacingsRepository pacingsRepository;
+  final ToasterService toasterService;
   bool _isFetching = false;
 
-  PacingsCubit({required this.pacingsRepository}) : super(const PacingsState.initial());
+  PacingsCubit({
+    required this.pacingsRepository,
+    required this.toasterService,
+  }) : super(const PacingsState.initial());
 
   Future<PacingModel> add(PacingModel model) async {
     try {
@@ -84,7 +89,11 @@ class PacingsCubit extends Cubit<PacingsState> {
     if (filePath != null) {
       final pacingValue = await File(filePath).readAsString();
       final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
-      return await add(pacing.copyWith(id: 0));
+      try {
+        return await pacingsRepository.add(pacing.copyWith(id: 0));
+      } finally {
+        await refresh();
+      }
     }
 
     return null;

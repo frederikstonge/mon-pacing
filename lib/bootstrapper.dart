@@ -9,6 +9,7 @@ import 'cubits/timer/timer_cubit.dart';
 import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
+import 'services/toaster_service.dart';
 
 class Bootstrapper extends StatelessWidget {
   const Bootstrapper({super.key});
@@ -21,6 +22,9 @@ class Bootstrapper extends StatelessWidget {
           create: (_) => DatabaseRepository(),
         ),
         RepositoryProvider(
+          create: (_) => ToasterService(),
+        ),
+        RepositoryProvider(
           create: (repositoryContext) => PacingsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
         RepositoryProvider(
@@ -30,10 +34,16 @@ class Bootstrapper extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (blocContext) => PacingsCubit(pacingsRepository: blocContext.read<PacingsRepository>())..fetch(),
+            create: (blocContext) => PacingsCubit(
+              pacingsRepository: blocContext.read<PacingsRepository>(),
+              toasterService: blocContext.read<ToasterService>(),
+            )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => MatchesCubit(repository: blocContext.read<MatchesRepository>())..fetch(),
+            create: (blocContext) => MatchesCubit(
+              repository: blocContext.read<MatchesRepository>(),
+              toasterService: blocContext.read<ToasterService>(),
+            )..fetch(),
           ),
           BlocProvider(
             create: (_) => SettingsCubit(),
