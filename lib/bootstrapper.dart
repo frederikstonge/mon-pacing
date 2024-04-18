@@ -34,19 +34,21 @@ class Bootstrapper extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
+            create: (_) => SettingsCubit()..intializeLocalizer(),
+          ),
+          BlocProvider(
             create: (blocContext) => PacingsCubit(
               pacingsRepository: blocContext.read<PacingsRepository>(),
               toasterService: blocContext.read<ToasterService>(),
+              settingsCubit: blocContext.read<SettingsCubit>(),
             )..fetch(),
           ),
           BlocProvider(
             create: (blocContext) => MatchesCubit(
               repository: blocContext.read<MatchesRepository>(),
               toasterService: blocContext.read<ToasterService>(),
+              settingsCubit: blocContext.read<SettingsCubit>(),
             )..fetch(),
-          ),
-          BlocProvider(
-            create: (_) => SettingsCubit(),
           ),
           BlocProvider(
             create: (blocContext) => TimerCubit(settingsCubit: blocContext.read<SettingsCubit>())..initialize(),

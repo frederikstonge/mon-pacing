@@ -7,20 +7,17 @@ import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
 import '../../../models/pacing_model.dart';
 import '../../../repositories/pacings_repository.dart';
-import '../../../services/toaster_service.dart';
 import 'pacing_state.dart';
 
 class PacingCubit extends Cubit<PacingState> {
   final PacingsRepository pacingsRepository;
   final SettingsCubit settingsCubit;
-  final ToasterService toasterService;
 
   PacingModel? initialPacing;
 
   PacingCubit({
     required this.pacingsRepository,
     required this.settingsCubit,
-    required this.toasterService,
   }) : super(const PacingState.initial());
 
   Future<void> initialize(int id) async {

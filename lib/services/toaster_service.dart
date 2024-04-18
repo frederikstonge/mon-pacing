@@ -14,6 +14,8 @@ class ToasterService {
       style: ToastificationStyle.flatColored,
       boxShadow: lowModeShadow,
       autoCloseDuration: const Duration(seconds: 5),
+      showProgressBar: false,
+      dragToClose: true,
     );
   }
 }

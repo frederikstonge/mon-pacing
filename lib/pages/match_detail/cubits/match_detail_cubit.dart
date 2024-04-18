@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/settings/settings_cubit.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/pacing_model.dart';
@@ -16,7 +15,6 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   final SettingsCubit settingsCubit;
   final PacingModel? pacing;
   final MatchModel? match;
-  late S localizer;
   final FutureOr<void> Function(MatchModel value) onConfirm;
 
   MatchDetailCubit({
@@ -46,12 +44,6 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
         );
 
   Future<void> initialize() async {
-    settingsCubit.stream.listen((event) async {
-      localizer = await S.delegate.load(Locale(event.language));
-    });
-
-    localizer = await S.delegate.load(Locale(settingsCubit.state.language));
-
     if (!state.editMode) {
       final teams = List<TeamModel>.from(state.match.teams);
       for (int i = 0; i < pacing!.defaultNumberOfTeams; i++) {
@@ -93,7 +85,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     final random = Random();
     return TeamModel(
       id: nextId,
-      name: '${localizer.team} ${teams.length + 1}',
+      name: '${settingsCubit.localizer.team} ${teams.length + 1}',
       color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
     );
   }

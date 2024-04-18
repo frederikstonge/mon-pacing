@@ -1,32 +1,46 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../models/match_model.dart';
 import '../../repositories/matches_repository.dart';
 import '../../services/toaster_service.dart';
+import '../settings/settings_cubit.dart';
 import 'matches_state.dart';
 
 class MatchesCubit extends Cubit<MatchesState> {
   static const int _pageSize = 20;
   final MatchesRepository repository;
   final ToasterService toasterService;
+  final SettingsCubit settingsCubit;
   bool _isFetching = false;
 
   MatchesCubit({
     required this.repository,
     required this.toasterService,
+    required this.settingsCubit,
   }) : super(const MatchesState.initial());
 
-  Future<MatchModel> add(MatchModel model) async {
+  Future<MatchModel?> add(MatchModel model) async {
     try {
-      return await repository.add(model);
+      if (model.improvisations.isEmpty) {
+        toasterService.show(title: settingsCubit.localizer.toasterYouCantStartAMatchWithoutImprovisation, type: ToastificationType.error);
+      }
+      final matchModel = await repository.add(model);
+      return matchModel;
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
+
+    return null;
   }
 
   Future<void> edit(MatchModel model) async {
     try {
       await repository.edit(model);
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -35,6 +49,9 @@ class MatchesCubit extends Cubit<MatchesState> {
   Future<void> delete(MatchModel model) async {
     try {
       await repository.delete(model.id);
+      toasterService.show(title: settingsCubit.localizer.toasterMatchDeleted);
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -63,6 +80,7 @@ class MatchesCubit extends Cubit<MatchesState> {
       );
     } catch (exception) {
       emit(MatchesState.error(exception.toString()));
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       _isFetching = false;
     }

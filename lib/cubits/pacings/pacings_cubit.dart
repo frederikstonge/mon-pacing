@@ -5,34 +5,46 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:sanitize_filename/sanitize_filename.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../services/toaster_service.dart';
+import '../settings/settings_cubit.dart';
 import 'pacings_state.dart';
 
 class PacingsCubit extends Cubit<PacingsState> {
   static const int _pageSize = 20;
   final PacingsRepository pacingsRepository;
   final ToasterService toasterService;
+  final SettingsCubit settingsCubit;
   bool _isFetching = false;
 
   PacingsCubit({
     required this.pacingsRepository,
     required this.toasterService,
+    required this.settingsCubit,
   }) : super(const PacingsState.initial());
 
-  Future<PacingModel> add(PacingModel model) async {
+  Future<PacingModel?> add(PacingModel model) async {
     try {
-      return await pacingsRepository.add(model);
+      final pacing = await pacingsRepository.add(model);
+      return pacing;
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
+
+    return null;
   }
 
   Future<void> edit(PacingModel model) async {
     try {
       await pacingsRepository.edit(model);
+      toasterService.show(title: settingsCubit.localizer.toasterPacingSaved);
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -41,6 +53,9 @@ class PacingsCubit extends Cubit<PacingsState> {
   Future<void> delete(PacingModel model) async {
     try {
       await pacingsRepository.delete(model.id);
+      toasterService.show(title: settingsCubit.localizer.toasterPacingDeleted);
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -69,6 +84,7 @@ class PacingsCubit extends Cubit<PacingsState> {
       );
     } catch (exception) {
       emit(PacingsState.error(exception.toString()));
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
       _isFetching = false;
     }
@@ -90,7 +106,11 @@ class PacingsCubit extends Cubit<PacingsState> {
       final pacingValue = await File(filePath).readAsString();
       final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
       try {
-        return await pacingsRepository.add(pacing.copyWith(id: 0));
+        final newPacing = await pacingsRepository.add(pacing.copyWith(id: 0));
+        toasterService.show(title: settingsCubit.localizer.toasterPacingImported);
+        return newPacing;
+      } catch (exception) {
+        toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
       } finally {
         await refresh();
       }
@@ -100,10 +120,19 @@ class PacingsCubit extends Cubit<PacingsState> {
   }
 
   Future<bool> export(PacingModel model) async {
-    final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
-    final fileName = sanitizeFilename('${model.name}.json', replacement: '-');
-    final params = SaveFileDialogParams(data: data, fileName: fileName);
-    final filePath = await FlutterFileDialog.saveFile(params: params);
-    return filePath != null;
+    try {
+      final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+      final fileName = sanitizeFilename('${model.name}.json', replacement: '-');
+      final params = SaveFileDialogParams(data: data, fileName: fileName);
+      final filePath = await FlutterFileDialog.saveFile(params: params);
+      if (filePath != null) {
+        toasterService.show(title: settingsCubit.localizer.toasterPacingExported);
+        return true;
+      }
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+    }
+
+    return false;
   }
 }
