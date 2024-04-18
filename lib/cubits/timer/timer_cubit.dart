@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'dart:isolate';
-import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
-import '../../l10n/app_localizations.dart';
 import '../../models/timer_model.dart';
 import '../../models/timer_status.dart';
 import '../../services/foreground_service.dart';
@@ -15,17 +13,10 @@ import 'timer_state.dart';
 class TimerCubit extends Cubit<TimerState> {
   ReceivePort? _receivePort;
   final SettingsCubit settingsCubit;
-  late S localizer;
 
   TimerCubit({required this.settingsCubit}) : super(const TimerState());
 
   Future<void> initialize() async {
-    settingsCubit.stream.listen((event) async {
-      localizer = await S.delegate.load(Locale(event.language));
-    });
-
-    localizer = await S.delegate.load(Locale(settingsCubit.state.language));
-
     initForegroundTask();
     await requestPermissionForAndroid();
 
@@ -64,7 +55,7 @@ class TimerCubit extends Cubit<TimerState> {
       return await FlutterForegroundTask.restartService();
     } else {
       return await FlutterForegroundTask.startService(
-        notificationTitle: localizer.notificationTitle,
+        notificationTitle: settingsCubit.localizer.notificationTitle,
         notificationText: '',
         callback: startCallback,
       );

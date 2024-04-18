@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubits/settings/settings_cubit.dart';
 import '../../repositories/pacings_repository.dart';
-import '../../services/toaster_service.dart';
 import 'cubits/pacing_cubit.dart';
 import 'pacing_page_view.dart';
 
@@ -21,7 +20,6 @@ class PacingPageShell extends StatelessWidget {
       create: (context) => PacingCubit(
         pacingsRepository: context.read<PacingsRepository>(),
         settingsCubit: context.read<SettingsCubit>(),
-        toasterService: context.read<ToasterService>(),
       )..initialize(id),
       child: const PacingPageView(),
     );

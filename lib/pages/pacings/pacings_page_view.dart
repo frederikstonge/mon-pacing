@@ -61,7 +61,9 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                     onConfirm: (pacing) async {
                       final router = GoRouter.of(context);
                       final pacingModel = await context.read<PacingsCubit>().add(pacing);
-                      router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                      if (pacingModel != null) {
+                        router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                      }
                     },
                   ),
                 );
@@ -123,7 +125,9 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                           onConfirm: (match) async {
                             final router = GoRouter.of(context);
                             final matchModel = await context.read<MatchesCubit>().add(match);
-                            router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+                            if (matchModel != null) {
+                              router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+                            }
                           },
                         ),
                       ),

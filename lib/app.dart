@@ -31,6 +31,7 @@ class App extends StatelessWidget {
             child: ToastificationWrapper(
               config: const ToastificationConfig(
                 alignment: Alignment.topCenter,
+                animationDuration: Duration(milliseconds: 300),
               ),
               child: MaterialApp.router(
                 onGenerateTitle: (context) => S.of(context).appTitle,
