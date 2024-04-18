@@ -17,18 +17,21 @@ import '../../../models/match_model.dart';
 import '../../../models/penalty_model.dart';
 import '../../../models/point_model.dart';
 import '../../../repositories/matches_repository.dart';
+import '../../../services/toaster_service.dart';
 import 'match_state.dart';
 
 class MatchCubit extends Cubit<MatchState> {
   final MatchesRepository matchesRepository;
   final MatchesCubit matchesCubit;
   final SettingsCubit settingsCubit;
+  final ToasterService toasterService;
   late S localizer;
 
   MatchCubit({
     required this.matchesRepository,
     required this.matchesCubit,
     required this.settingsCubit,
+    required this.toasterService,
   }) : super(const MatchState.initial());
 
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {

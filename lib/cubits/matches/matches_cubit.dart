@@ -2,14 +2,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/match_model.dart';
 import '../../repositories/matches_repository.dart';
+import '../../services/toaster_service.dart';
 import 'matches_state.dart';
 
 class MatchesCubit extends Cubit<MatchesState> {
   static const int _pageSize = 20;
   final MatchesRepository repository;
+  final ToasterService toasterService;
   bool _isFetching = false;
 
-  MatchesCubit({required this.repository}) : super(const MatchesState.initial());
+  MatchesCubit({
+    required this.repository,
+    required this.toasterService,
+  }) : super(const MatchesState.initial());
 
   Future<MatchModel> add(MatchModel model) async {
     try {
