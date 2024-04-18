@@ -12,7 +12,7 @@ import '../../../extensions/duration_extensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
-import '../../../services/foreground_service/timer_status_model.dart';
+import '../../../models/timer_status.dart';
 
 class TimerWidget extends StatelessWidget {
   final MatchModel match;

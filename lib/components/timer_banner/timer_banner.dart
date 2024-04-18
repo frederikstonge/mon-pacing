@@ -7,9 +7,9 @@ import '../../cubits/timer/timer_state.dart';
 import '../../extensions/duration_extensions.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
+import '../../models/timer_model.dart';
 import '../../pages/match/cubits/match_cubit.dart';
 import '../../router/routes.dart';
-import '../../services/foreground_service/timer_status_model.dart';
 import '../actions/loading_icon_button.dart';
 
 class TimerBanner extends StatelessWidget {
@@ -57,7 +57,7 @@ class TimerBanner extends StatelessWidget {
     );
   }
 
-  void _onAction(BuildContext context, TimerStatusModel timerStatus) {
+  void _onAction(BuildContext context, TimerModel timerStatus) {
     if (match != null && improvisation != null && selectedDurationIndex != null) {
       if (match!.id == timerStatus.matchId) {
         if (improvisation!.id != timerStatus.improvisationId) {
@@ -76,7 +76,7 @@ class TimerBanner extends StatelessWidget {
     }
   }
 
-  void _goToMatch(BuildContext context, TimerStatusModel timerStatus) {
+  void _goToMatch(BuildContext context, TimerModel timerStatus) {
     context.goNamed(
       Routes.match,
       pathParameters: {'id': timerStatus.matchId.toString()},

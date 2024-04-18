@@ -20,7 +20,7 @@ TimerState _$TimerStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TimerState {
-  TimerStatusModel? get timerStatus => throw _privateConstructorUsedError;
+  TimerModel? get timerStatus => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,9 +34,9 @@ abstract class $TimerStateCopyWith<$Res> {
           TimerState value, $Res Function(TimerState) then) =
       _$TimerStateCopyWithImpl<$Res, TimerState>;
   @useResult
-  $Res call({TimerStatusModel? timerStatus});
+  $Res call({TimerModel? timerStatus});
 
-  $TimerStatusModelCopyWith<$Res>? get timerStatus;
+  $TimerModelCopyWith<$Res>? get timerStatus;
 }
 
 /// @nodoc
@@ -58,18 +58,18 @@ class _$TimerStateCopyWithImpl<$Res, $Val extends TimerState>
       timerStatus: freezed == timerStatus
           ? _value.timerStatus
           : timerStatus // ignore: cast_nullable_to_non_nullable
-              as TimerStatusModel?,
+              as TimerModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $TimerStatusModelCopyWith<$Res>? get timerStatus {
+  $TimerModelCopyWith<$Res>? get timerStatus {
     if (_value.timerStatus == null) {
       return null;
     }
 
-    return $TimerStatusModelCopyWith<$Res>(_value.timerStatus!, (value) {
+    return $TimerModelCopyWith<$Res>(_value.timerStatus!, (value) {
       return _then(_value.copyWith(timerStatus: value) as $Val);
     });
   }
@@ -83,10 +83,10 @@ abstract class _$$TimerStateImplCopyWith<$Res>
       __$$TimerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({TimerStatusModel? timerStatus});
+  $Res call({TimerModel? timerStatus});
 
   @override
-  $TimerStatusModelCopyWith<$Res>? get timerStatus;
+  $TimerModelCopyWith<$Res>? get timerStatus;
 }
 
 /// @nodoc
@@ -106,7 +106,7 @@ class __$$TimerStateImplCopyWithImpl<$Res>
       timerStatus: freezed == timerStatus
           ? _value.timerStatus
           : timerStatus // ignore: cast_nullable_to_non_nullable
-              as TimerStatusModel?,
+              as TimerModel?,
     ));
   }
 }
@@ -120,7 +120,7 @@ class _$TimerStateImpl implements _TimerState {
       _$$TimerStateImplFromJson(json);
 
   @override
-  final TimerStatusModel? timerStatus;
+  final TimerModel? timerStatus;
 
   @override
   String toString() {
@@ -155,14 +155,13 @@ class _$TimerStateImpl implements _TimerState {
 }
 
 abstract class _TimerState implements TimerState {
-  const factory _TimerState({final TimerStatusModel? timerStatus}) =
-      _$TimerStateImpl;
+  const factory _TimerState({final TimerModel? timerStatus}) = _$TimerStateImpl;
 
   factory _TimerState.fromJson(Map<String, dynamic> json) =
       _$TimerStateImpl.fromJson;
 
   @override
-  TimerStatusModel? get timerStatus;
+  TimerModel? get timerStatus;
   @override
   @JsonKey(ignore: true)
   _$$TimerStateImplCopyWith<_$TimerStateImpl> get copyWith =>
