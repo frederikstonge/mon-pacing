@@ -55,6 +55,7 @@
   "multipleOf": "Doit être un multiple de {multiple}",
   "name": "Nom",
   "nextImprovisation": "Improvisation suivante",
+  "noPenalty": "Aucune pénalité.",
   "notes": "Notes",
   "notificationTitle": "Chronomètre",
   "numberOfTeamsByDefault": "Nombre d'équipe par défaut",

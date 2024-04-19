@@ -100,12 +100,18 @@ class Scorecard extends StatelessWidget {
               ),
             ],
           ),
-          if (match.penalties.isNotEmpty) ...[
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: TextHeader(title: S.of(context).penalties),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextHeader(title: S.of(context).penalties),
+          ),
+          if (match.penalties.isEmpty) ...[
+            Text(
+              S.of(context).noPenalty,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
+          ] else ...[
             ...match.getPenaltiesGroupedByImprovisationId().entries.map((e) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

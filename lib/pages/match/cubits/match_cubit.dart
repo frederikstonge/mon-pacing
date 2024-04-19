@@ -278,30 +278,38 @@ class MatchCubit extends Cubit<MatchState> {
         cellStyle: excel.CellStyle(bold: true, fontSize: 17),
       );
 
-      final penaltiesGroupedByImprovisationId = match.getPenaltiesGroupedByImprovisationId();
-      for (final entry in penaltiesGroupedByImprovisationId.entries) {
-        var isFirst = true;
-        for (final penalty in entry.value) {
-          final improvisationNumber = match.improvisations.indexWhere((element) => element.id == entry.key) + 1;
-          sheet.updateCell(
-            excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyIndex),
-            excel.TextCellValue(isFirst ? settingsCubit.localizer.improvisationNumber(improvisationNumber) : ''),
-            cellStyle: excel.CellStyle(bold: true),
-          );
+      if (match.penalties.isEmpty) {
+        sheet.updateCell(
+          excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyIndex),
+          excel.TextCellValue(settingsCubit.localizer.noPenalty),
+        );
+      } else {
+        final penaltiesGroupedByImprovisationId = match.getPenaltiesGroupedByImprovisationId();
+        for (final entry in penaltiesGroupedByImprovisationId.entries) {
+          var isFirst = true;
+          for (final penalty in entry.value) {
+            final improvisationNumber = match.improvisations.indexWhere((element) => element.id == entry.key) + 1;
+            final team = match.teams.firstWhere((element) => element.id == penalty.teamId);
+            sheet.updateCell(
+              excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyIndex),
+              excel.TextCellValue(isFirst ? settingsCubit.localizer.improvisationNumber(improvisationNumber) : ''),
+              cellStyle: excel.CellStyle(bold: true),
+            );
 
-          sheet.updateCell(
-            excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyIndex),
-            excel.TextCellValue(penalty.getPenaltyString(settingsCubit.localizer)),
-            cellStyle: excel.CellStyle(),
-          );
+            sheet.updateCell(
+              excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyIndex),
+              excel.TextCellValue('${team.name} - ${penalty.getPenaltyString(settingsCubit.localizer)}'),
+              cellStyle: excel.CellStyle(),
+            );
 
-          sheet.merge(
-            excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyIndex),
-            excel.CellIndex.indexByColumnRow(columnIndex: sheet.maxColumns - 1, rowIndex: penaltyIndex),
-          );
+            sheet.merge(
+              excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyIndex),
+              excel.CellIndex.indexByColumnRow(columnIndex: sheet.maxColumns - 1, rowIndex: penaltyIndex),
+            );
 
-          isFirst = false;
-          penaltyIndex++;
+            isFirst = false;
+            penaltyIndex++;
+          }
         }
       }
 

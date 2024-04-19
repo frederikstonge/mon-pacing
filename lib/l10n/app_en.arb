@@ -55,6 +55,7 @@
   "multipleOf": "Must be a multiple of {multiple}",
   "name": "Name",
   "nextImprovisation": "Next improvisation",
+  "noPenalty": "No penalty.",
   "notes": "Notes",
   "notificationTitle": "Timer",
   "numberOfTeamsByDefault": "Number of teams by default",
