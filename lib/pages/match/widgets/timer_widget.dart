@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../../components/actions/loading_icon_button.dart';
-import '../../../cubits/settings/settings_cubit.dart';
 import '../../../cubits/timer/timer_cubit.dart';
 import '../../../cubits/timer/timer_state.dart';
 import '../../../extensions/duration_extensions.dart';
@@ -60,7 +58,6 @@ class TimerWidget extends StatelessWidget {
                     .toList(),
                 selected: {durationIndex},
                 onSelectionChanged: (values) async {
-                  unawaited(context.read<SettingsCubit>().vibrate(HapticsType.light));
                   await onDurationIndexChanged(values.first);
                 },
               ),
