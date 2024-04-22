@@ -128,6 +128,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                   padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                   child: TextHeader(
                     title: S.of(context).pacing,
+                    tooltip: S.of(context).defaultPacingSettingsTooltip,
                   ),
                 ),
                 CustomCard(
@@ -199,6 +200,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                   padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                   child: TextHeader(
                     title: S.of(context).match,
+                    tooltip: S.of(context).defaultMatchSettingsTooltip,
                   ),
                 ),
                 CustomCard(
