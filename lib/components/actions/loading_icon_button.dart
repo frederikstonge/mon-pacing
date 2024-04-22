@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
+
+import '../../cubits/settings/settings_cubit.dart';
 
 class LoadingIconButton extends StatefulWidget {
   final _IconButtonVariant _variant;
@@ -58,6 +62,7 @@ class _LoadingIconButtonState extends State<LoadingIconButton> {
               isLoading = true;
             });
             try {
+              unawaited(context.read<SettingsCubit>().vibrate(HapticsType.light));
               await widget.onPressed?.call();
             } finally {
               if (mounted) {

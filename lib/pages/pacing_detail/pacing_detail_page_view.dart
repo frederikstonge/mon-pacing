@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../components/actions/haptic_switch.dart';
 import '../../components/actions/loading_button.dart';
-import '../../components/actions/loading_switch.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
@@ -118,7 +118,7 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                     SettingsTile(
                       leading: const Icon(Icons.timer),
                       title: Text(S.of(context).enableTimeBuffer),
-                      trailing: LoadingSwitch(
+                      trailing: HapticSwitch(
                           value: state.pacing.enableTimeBuffer,
                           onChanged: (value) {
                             context.read<PacingDetailCubit>().edit(state.pacing.copyWith(enableTimeBuffer: value));

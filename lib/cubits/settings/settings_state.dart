@@ -12,6 +12,7 @@ class SettingsState with _$SettingsState {
     required String language,
     required ThemeType theme,
     @Default(true) bool enableHapticFeedback,
+    @Default(true) bool enableTimerHapticFeedback,
     @Default(150) int defaultImprovisationDurationInSeconds,
     @Default(true) bool enableDefaultTimeBuffer,
     @Default(60) int defaultTimeBufferInSeconds,

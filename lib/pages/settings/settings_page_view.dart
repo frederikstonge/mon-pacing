@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../components/actions/loading_switch.dart';
+import '../../components/actions/haptic_switch.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/display_language/display_language.dart';
@@ -96,10 +96,29 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                       SettingsTile(
                         leading: const Icon(Icons.vibration),
                         title: Text(S.of(context).enableHapticFeedback),
-                        trailing: LoadingSwitch(
+                        trailing: HapticSwitch(
                             value: state.enableHapticFeedback,
                             onChanged: (value) {
                               context.read<SettingsCubit>().edit(state.copyWith(enableHapticFeedback: value));
+                            }),
+                      ),
+                      SettingsTile(
+                        leading: const Icon(Icons.vibration),
+                        title: Row(
+                          children: [
+                            Flexible(child: Text(S.of(context).enableTimerHapticFeedback)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(
+                                tooltip: S.of(context).timerHapticFeedbackTooltip,
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: HapticSwitch(
+                            value: state.enableTimerHapticFeedback,
+                            onChanged: (value) {
+                              context.read<SettingsCubit>().edit(state.copyWith(enableTimerHapticFeedback: value));
                             }),
                       ),
                     ],
@@ -147,7 +166,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                             )
                           ],
                         ),
-                        trailing: LoadingSwitch(
+                        trailing: HapticSwitch(
                             value: state.enableDefaultTimeBuffer,
                             onChanged: (value) {
                               context.read<SettingsCubit>().edit(state.copyWith(enableDefaultTimeBuffer: value));
@@ -198,7 +217,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                             )
                           ],
                         ),
-                        trailing: LoadingSwitch(
+                        trailing: HapticSwitch(
                             value: state.enableDefaultPenaltiesImpactPoints,
                             onChanged: (value) {
                               context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPenaltiesImpactPoints: value));

@@ -11,6 +11,8 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
       language: json['language'] as String,
       theme: $enumDecode(_$ThemeTypeEnumMap, json['theme']),
       enableHapticFeedback: json['enableHapticFeedback'] as bool? ?? true,
+      enableTimerHapticFeedback:
+          json['enableTimerHapticFeedback'] as bool? ?? true,
       defaultImprovisationDurationInSeconds:
           json['defaultImprovisationDurationInSeconds'] as int? ?? 150,
       enableDefaultTimeBuffer: json['enableDefaultTimeBuffer'] as bool? ?? true,
@@ -31,6 +33,7 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
       'language': instance.language,
       'theme': _$ThemeTypeEnumMap[instance.theme]!,
       'enableHapticFeedback': instance.enableHapticFeedback,
+      'enableTimerHapticFeedback': instance.enableTimerHapticFeedback,
       'defaultImprovisationDurationInSeconds':
           instance.defaultImprovisationDurationInSeconds,
       'enableDefaultTimeBuffer': instance.enableDefaultTimeBuffer,
