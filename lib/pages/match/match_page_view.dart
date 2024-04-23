@@ -88,7 +88,22 @@ class MatchPageView extends StatelessWidget {
                         improvisation: improvisation,
                         index: selectedImprovisationIndex,
                         onSave: context.read<MatchCubit>().editImprovisation,
-                        onDelete: context.read<MatchCubit>().removeImprovisation,
+                        onDelete: (improvisation) async {
+                          final matchCubit = context.read<MatchCubit>();
+                          final shouldDelete = await MessageBoxDialog.questionShow(
+                            context,
+                            S.of(context).areYouSure(
+                                  S.of(context).delete.toLowerCase(),
+                                  S.of(context).improvisationNumber(selectedImprovisationIndex + 1),
+                                ),
+                            S.of(context).delete,
+                            S.of(context).cancel,
+                          );
+
+                          if (shouldDelete == true) {
+                            await matchCubit.removeImprovisation(improvisation);
+                          }
+                        },
                       ),
                     ),
                     SliverToBoxAdapter(

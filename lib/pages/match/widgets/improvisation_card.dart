@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/improvisation_detail/improvisation_detail.dart';
-import '../../../components/message_box_dialog/message_box_dialog.dart';
 import '../../../extensions/duration_extensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/improvisation_model.dart';
@@ -53,6 +52,7 @@ class _ImprovisationCardState extends State<ImprovisationCard> {
               if (editMode) ...[
                 LoadingIconButton(
                   icon: const Icon(Icons.save),
+                  tooltip: S.of(context).save,
                   onPressed: () async {
                     if (formKey.currentState?.validate() ?? false) {
                       await widget.onSave.call(editImprovisation);
@@ -63,6 +63,7 @@ class _ImprovisationCardState extends State<ImprovisationCard> {
                   },
                 ),
                 LoadingIconButton(
+                  tooltip: S.of(context).cancel,
                   icon: const Icon(Icons.cancel),
                   onPressed: () {
                     setState(() {
@@ -72,6 +73,7 @@ class _ImprovisationCardState extends State<ImprovisationCard> {
                 ),
               ] else ...[
                 LoadingIconButton(
+                  tooltip: S.of(context).edit,
                   icon: const Icon(Icons.edit),
                   onPressed: () {
                     setState(() {
@@ -82,17 +84,10 @@ class _ImprovisationCardState extends State<ImprovisationCard> {
                   },
                 ),
                 LoadingIconButton(
+                  tooltip: S.of(context).delete,
                   icon: const Icon(Icons.delete),
                   onPressed: () async {
-                    final shouldDelete = await MessageBoxDialog.questionShow(
-                      context,
-                      S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(widget.index + 1)),
-                      S.of(context).delete,
-                      S.of(context).cancel,
-                    );
-                    if (shouldDelete == true) {
-                      await widget.onDelete.call(widget.improvisation);
-                    }
+                    await widget.onDelete.call(widget.improvisation);
                   },
                 ),
               ]
