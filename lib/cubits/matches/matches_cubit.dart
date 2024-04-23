@@ -24,6 +24,7 @@ class MatchesCubit extends Cubit<MatchesState> {
     try {
       if (model.improvisations.isEmpty) {
         toasterService.show(title: settingsCubit.localizer.toasterYouCantStartAMatchWithoutImprovisation, type: ToastificationType.error);
+        return null;
       }
       final matchModel = await repository.add(model);
       return matchModel;
