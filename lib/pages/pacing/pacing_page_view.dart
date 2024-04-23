@@ -16,8 +16,21 @@ import 'cubits/pacing_state.dart';
 import 'widgets/improvisation_tile.dart';
 import 'widgets/pacing_persistent_header.dart';
 
-class PacingPageView extends StatelessWidget {
+class PacingPageView extends StatefulWidget {
   const PacingPageView({super.key});
+
+  @override
+  State<PacingPageView> createState() => _PacingPageViewState();
+}
+
+class _PacingPageViewState extends State<PacingPageView> {
+  late final GlobalKey<FormState> formKey;
+
+  @override
+  void initState() {
+    formKey = GlobalKey<FormState>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +85,11 @@ class PacingPageView extends StatelessWidget {
                     ),
                     LoadingIconButton(
                       onPressed: () async {
-                        final router = GoRouter.of(context);
-                        await context.read<PacingsCubit>().edit(pacing);
-                        router.pop();
+                        if (formKey.currentState?.validate() ?? false) {
+                          final router = GoRouter.of(context);
+                          await context.read<PacingsCubit>().edit(pacing);
+                          router.pop();
+                        }
                       },
                       tooltip: S.of(context).save,
                       icon: const Icon(Icons.save),
@@ -87,26 +102,29 @@ class PacingPageView extends StatelessWidget {
                     delegate: PacingPersistentHeader(pacing: pacing),
                     pinned: true,
                   ),
-                  SliverReorderableList(
-                    itemCount: pacing.improvisations.length,
-                    itemBuilder: (context, index) {
-                      final improvisation = pacing.improvisations.elementAt(index);
-                      return ImprovisationTile(
-                        key: ValueKey(improvisation.id),
-                        improvisation: improvisation,
-                        index: index,
-                        onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
-                        onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
-                          context,
-                          S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(index + 1)),
-                          S.of(context).delete,
-                          S.of(context).cancel,
-                        ),
-                        onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(index),
-                        dragEnabled: pacing.improvisations.length > 1,
-                      );
-                    },
-                    onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),
+                  Form(
+                    key: formKey,
+                    child: SliverReorderableList(
+                      itemCount: pacing.improvisations.length,
+                      itemBuilder: (context, index) {
+                        final improvisation = pacing.improvisations.elementAt(index);
+                        return ImprovisationTile(
+                          key: ValueKey(improvisation.id),
+                          improvisation: improvisation,
+                          index: index,
+                          onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
+                          onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
+                            context,
+                            S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(index + 1)),
+                            S.of(context).delete,
+                            S.of(context).cancel,
+                          ),
+                          onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(index),
+                          dragEnabled: pacing.improvisations.length > 1,
+                        );
+                      },
+                      onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),
+                    ),
                   ),
                 ],
               ),
