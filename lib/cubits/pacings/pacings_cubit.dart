@@ -96,24 +96,26 @@ class PacingsCubit extends Cubit<PacingsState> {
   }
 
   Future<PacingModel?> import() async {
-    const params = OpenFileDialogParams(
-      dialogType: OpenFileDialogType.document,
-      sourceType: SourceType.photoLibrary,
-      fileExtensionsFilter: ['json'],
-    );
-    final filePath = await FlutterFileDialog.pickFile(params: params);
-    if (filePath != null) {
-      final pacingValue = await File(filePath).readAsString();
-      final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
-      try {
+    try {
+      const params = OpenFileDialogParams(
+        dialogType: OpenFileDialogType.document,
+        sourceType: SourceType.photoLibrary,
+        fileExtensionsFilter: ['json'],
+      );
+
+      final filePath = await FlutterFileDialog.pickFile(params: params);
+      if (filePath != null) {
+        final pacingValue = await File(filePath).readAsString();
+        final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
         final newPacing = await pacingsRepository.add(pacing.copyWith(id: 0));
         toasterService.show(title: settingsCubit.localizer.toasterPacingImported);
+
         return newPacing;
-      } catch (exception) {
-        toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
-      } finally {
-        await refresh();
       }
+    } catch (exception) {
+      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+    } finally {
+      await refresh();
     }
 
     return null;
