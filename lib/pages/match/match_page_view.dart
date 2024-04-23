@@ -84,7 +84,12 @@ class MatchPageView extends StatelessWidget {
                       pinned: true,
                     ),
                     SliverToBoxAdapter(
-                      child: ImprovisationCard(improvisation: improvisation),
+                      child: ImprovisationCard(
+                        improvisation: improvisation,
+                        index: selectedImprovisationIndex,
+                        onSave: context.read<MatchCubit>().editImprovisation,
+                        onDelete: context.read<MatchCubit>().removeImprovisation,
+                      ),
                     ),
                     SliverToBoxAdapter(
                       child: CustomCard(

@@ -12,6 +12,7 @@ import '../../../cubits/matches/matches_cubit.dart';
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../extensions/match_extensions.dart';
 import '../../../extensions/penalty_extensions.dart';
+import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/penalty_model.dart';
 import '../../../models/point_model.dart';
@@ -43,6 +44,53 @@ class MatchCubit extends Cubit<MatchState> {
     await state.whenOrNull(
       success: (_, selectedImprovisationIndex, selectedDurationIndex) async {
         emit(MatchState.success(match, selectedImprovisationIndex, selectedDurationIndex));
+        await matchesCubit.edit(match);
+      },
+    );
+  }
+
+  Future<void> editImprovisation(ImprovisationModel improvisation) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+        final improvisations = List<ImprovisationModel>.from(match.improvisations);
+
+        final editIndex = improvisations.indexWhere((element) => element.id == improvisation.id);
+        improvisations[editIndex] = improvisation;
+
+        emit(
+          MatchState.success(
+            match.copyWith(improvisations: improvisations),
+            selectedImprovisationIndex,
+            selectedDurationIndex,
+          ),
+        );
+
+        await matchesCubit.edit(match);
+      },
+    );
+  }
+
+  Future<void> removeImprovisation(ImprovisationModel improvisation) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+        final improvisations = List<ImprovisationModel>.from(match.improvisations);
+        final removeIndex = improvisations.indexWhere((element) => element.id == improvisation.id);
+        improvisations.removeAt(removeIndex);
+
+        final points = List<PointModel>.from(match.points);
+        points.removeWhere((element) => element.improvisationId == improvisation.id);
+
+        final penalties = List<PenaltyModel>.from(match.penalties);
+        penalties.removeWhere((element) => element.improvisationId == improvisation.id);
+
+        emit(
+          MatchState.success(
+            match.copyWith(improvisations: improvisations, points: points, penalties: penalties),
+            selectedImprovisationIndex,
+            selectedDurationIndex,
+          ),
+        );
+
         await matchesCubit.edit(match);
       },
     );
