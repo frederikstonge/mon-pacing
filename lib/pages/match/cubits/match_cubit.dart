@@ -49,19 +49,38 @@ class MatchCubit extends Cubit<MatchState> {
     );
   }
 
-  Future<void> editImprovisation(ImprovisationModel improvisation) async {
+  Future<void> addImprovisation(ImprovisationModel improvisation, int index) async {
     await state.whenOrNull(
       success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
         final improvisations = List<ImprovisationModel>.from(match.improvisations);
 
-        final editIndex = improvisations.indexWhere((element) => element.id == improvisation.id);
-        improvisations[editIndex] = improvisation;
+        improvisations.insert(index, improvisation);
 
         emit(
           MatchState.success(
             match.copyWith(improvisations: improvisations),
-            selectedImprovisationIndex,
-            selectedDurationIndex,
+            index,
+            0,
+          ),
+        );
+
+        await matchesCubit.edit(match);
+      },
+    );
+  }
+
+  Future<void> editImprovisation(ImprovisationModel improvisation, int index) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+        final improvisations = List<ImprovisationModel>.from(match.improvisations.where((element) => element.id != improvisation.id));
+
+        improvisations.insert(index, improvisation);
+
+        emit(
+          MatchState.success(
+            match.copyWith(improvisations: improvisations),
+            index,
+            0,
           ),
         );
 
@@ -83,11 +102,14 @@ class MatchCubit extends Cubit<MatchState> {
         final penalties = List<PenaltyModel>.from(match.penalties);
         penalties.removeWhere((element) => element.improvisationId == improvisation.id);
 
+        final newSelectedImprovisationIndex =
+            selectedImprovisationIndex >= improvisations.length ? selectedImprovisationIndex - 1 : selectedImprovisationIndex;
+
         emit(
           MatchState.success(
             match.copyWith(improvisations: improvisations, points: points, penalties: penalties),
-            selectedImprovisationIndex,
-            selectedDurationIndex,
+            newSelectedImprovisationIndex,
+            0,
           ),
         );
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
@@ -12,6 +13,7 @@ import '../../extensions/match_extensions.dart';
 import '../../extensions/penalty_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../match_detail/match_detail_page_shell.dart';
+import '../match_improvisation/match_improvisation_shell.dart';
 import '../match_penalty/match_penalty_shell.dart';
 import '../match_scoreboard/match_scoreboard_shell.dart';
 import 'cubits/match_cubit.dart';
@@ -36,6 +38,19 @@ class MatchPageView extends StatelessWidget {
               builder: (context) {
                 final improvisation = match.improvisations.elementAt(selectedImprovisationIndex);
                 return SliverScaffold(
+                  floatingActionButton: FloatingActionButton(
+                    onPressed: () {
+                      BottomSheetDialog.showDialog(
+                        context: context,
+                        child: MatchImprovisationShell(
+                          match: match,
+                          onConfirm: (improvisation, index) async => await context.read<MatchCubit>().addImprovisation(improvisation, index),
+                        ),
+                      );
+                    },
+                    tooltip: S.of(context).addImprovisation,
+                    child: const Icon(Icons.add),
+                  ),
                   appBar: SliverLogoAppbar(
                     title: match.name,
                     actions: [
@@ -87,7 +102,16 @@ class MatchPageView extends StatelessWidget {
                       child: ImprovisationCard(
                         improvisation: improvisation,
                         index: selectedImprovisationIndex,
-                        onSave: context.read<MatchCubit>().editImprovisation,
+                        onEdit: (improvisation) async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: MatchImprovisationShell(
+                              improvisation: improvisation,
+                              match: match,
+                              onConfirm: (improvisation, index) async => await context.read<MatchCubit>().editImprovisation(improvisation, index),
+                            ),
+                          );
+                        },
                         onDelete: (improvisation) async {
                           final matchCubit = context.read<MatchCubit>();
                           final shouldDelete = await MessageBoxDialog.questionShow(
