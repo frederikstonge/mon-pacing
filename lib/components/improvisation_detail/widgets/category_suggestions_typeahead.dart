@@ -51,7 +51,10 @@ class _CategorySuggestionsTypeaheadState extends State<CategorySuggestionsTypeah
         label: S.of(context).category,
         controller: controller,
         focusNode: focusNode,
-        onTapOutside: () async => await context.read<CategorySuggestionRepository>().add(widget.categoryController.text),
+        onTapOutside: () async {
+          await context.read<CategorySuggestionRepository>().add(widget.categoryController.text);
+          _suggestionsController.suggestions = null;
+        },
         onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
       ),
       onSelected: (value) async {

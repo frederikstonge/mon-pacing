@@ -21,7 +21,9 @@ CategorySuggestionModel _$CategorySuggestionModelFromJson(
 
 /// @nodoc
 mixin _$CategorySuggestionModel {
-  int get id => throw _privateConstructorUsedError;
+  int get id =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  @Index(unique: true)
   String get name => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
@@ -39,7 +41,10 @@ abstract class $CategorySuggestionModelCopyWith<$Res> {
       _$CategorySuggestionModelCopyWithImpl<$Res, CategorySuggestionModel>;
   @useResult
   $Res call(
-      {int id, String name, DateTime? createdDate, DateTime? modifiedDate});
+      {int id,
+      @Index(unique: true) String name,
+      DateTime? createdDate,
+      DateTime? modifiedDate});
 }
 
 /// @nodoc
@@ -92,7 +97,10 @@ abstract class _$$CategorySuggestionModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id, String name, DateTime? createdDate, DateTime? modifiedDate});
+      {int id,
+      @Index(unique: true) String name,
+      DateTime? createdDate,
+      DateTime? modifiedDate});
 }
 
 /// @nodoc
@@ -139,7 +147,7 @@ class __$$CategorySuggestionModelImplCopyWithImpl<$Res>
 class _$CategorySuggestionModelImpl implements _CategorySuggestionModel {
   const _$CategorySuggestionModelImpl(
       {required this.id,
-      required this.name,
+      @Index(unique: true) required this.name,
       required this.createdDate,
       required this.modifiedDate});
 
@@ -148,7 +156,9 @@ class _$CategorySuggestionModelImpl implements _CategorySuggestionModel {
 
   @override
   final int id;
+// ignore: invalid_annotation_target
   @override
+  @Index(unique: true)
   final String name;
   @override
   final DateTime? createdDate;
@@ -197,7 +207,7 @@ abstract class _CategorySuggestionModel
     implements CategorySuggestionModel, BaseModel {
   const factory _CategorySuggestionModel(
       {required final int id,
-      required final String name,
+      @Index(unique: true) required final String name,
       required final DateTime? createdDate,
       required final DateTime? modifiedDate}) = _$CategorySuggestionModelImpl;
 
@@ -206,7 +216,8 @@ abstract class _CategorySuggestionModel
 
   @override
   int get id;
-  @override
+  @override // ignore: invalid_annotation_target
+  @Index(unique: true)
   String get name;
   @override
   DateTime? get createdDate;

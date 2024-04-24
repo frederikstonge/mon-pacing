@@ -34,7 +34,16 @@ const CategorySuggestionModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
     ],
-    indexes: [],
+    indexes: [
+      IsarIndexSchema(
+        name: 'name',
+        properties: [
+          "name",
+        ],
+        unique: true,
+        hash: false,
+      ),
+    ],
   ),
   converter: IsarObjectConverter<int, CategorySuggestionModel>(
     serialize: serializeCategorySuggestionModel,

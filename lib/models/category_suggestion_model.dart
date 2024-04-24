@@ -12,7 +12,8 @@ class CategorySuggestionModel with _$CategorySuggestionModel implements BaseMode
   @Implements<BaseModel>()
   const factory CategorySuggestionModel({
     required int id,
-    required String name,
+    // ignore: invalid_annotation_target
+    @Index(unique: true) required String name,
     required DateTime? createdDate,
     required DateTime? modifiedDate,
   }) = _CategorySuggestionModel;
