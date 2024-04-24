@@ -6,6 +6,7 @@
   "areYouSure": "Are you sure you want to {action} {name}?",
   "cancel": "Cancel",
   "category": "Category",
+  "clearAllCategorySuggestions": "Clear all category suggestions",
   "compared": "Compared",
   "confirm": "Confirm",
   "create": "Create",

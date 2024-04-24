@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../components/actions/haptic_switch.dart';
+import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/display_language/display_language.dart';
 import '../../components/duration_picker/duration_picker.dart';
+import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
@@ -20,6 +22,7 @@ import '../../extensions/duration_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';
+import '../../repositories/category_suggestion_repository.dart';
 import 'widgets/language_view.dart';
 import 'widgets/theme_view.dart';
 
@@ -121,6 +124,27 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               context.read<SettingsCubit>().edit(state.copyWith(enableTimerHapticFeedback: value));
                             }),
                       ),
+                      SettingsTile(
+                          leading: const Icon(Icons.search),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).clearAllCategorySuggestions)),
+                            ],
+                          ),
+                          trailing: LoadingIconButton.filled(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () async {
+                              final result = await MessageBoxDialog.questionShow(
+                                context,
+                                S.of(context).areYouSure(S.of(context).clearAllCategorySuggestions.toLowerCase(), ''),
+                                S.of(context).confirm,
+                                S.of(context).cancel,
+                              );
+                              if (result == true && context.mounted) {
+                                await context.read<CategorySuggestionRepository>().clear();
+                              }
+                            },
+                          )),
                     ],
                   ),
                 ),

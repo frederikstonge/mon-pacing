@@ -32,4 +32,9 @@ class CategorySuggestionRepository {
     final db = await databaseRepository.database;
     await db.writeAsync((isar) => isar.categorySuggestionModels.delete(id));
   }
+
+  Future<void> clear() async {
+    final db = await databaseRepository.database;
+    await db.writeAsync((isar) => isar.categorySuggestionModels.clear());
+  }
 }
