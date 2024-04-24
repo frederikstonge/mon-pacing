@@ -35,7 +35,7 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
       builder: (context, state) {
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
-            title: state.editMode ? S.of(context).addImprovisation : S.of(context).editImprovisation,
+            title: state.editMode ? S.of(context).editImprovisation : S.of(context).addImprovisation,
           ),
           body: Form(
             key: formKey,

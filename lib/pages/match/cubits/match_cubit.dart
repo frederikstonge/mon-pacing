@@ -92,15 +92,11 @@ class MatchCubit extends Cubit<MatchState> {
   Future<void> removeImprovisation(ImprovisationModel improvisation) async {
     await state.whenOrNull(
       success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final improvisations = List<ImprovisationModel>.from(match.improvisations);
-        final removeIndex = improvisations.indexWhere((element) => element.id == improvisation.id);
-        improvisations.removeAt(removeIndex);
+        final improvisations = List<ImprovisationModel>.from(match.improvisations.where((element) => element.id != improvisation.id));
 
-        final points = List<PointModel>.from(match.points);
-        points.removeWhere((element) => element.improvisationId == improvisation.id);
+        final points = List<PointModel>.from(match.points.where((element) => element.improvisationId != improvisation.id));
 
-        final penalties = List<PenaltyModel>.from(match.penalties);
-        penalties.removeWhere((element) => element.improvisationId == improvisation.id);
+        final penalties = List<PenaltyModel>.from(match.penalties.where((element) => element.improvisationId != improvisation.id));
 
         final newSelectedImprovisationIndex =
             selectedImprovisationIndex >= improvisations.length ? selectedImprovisationIndex - 1 : selectedImprovisationIndex;
