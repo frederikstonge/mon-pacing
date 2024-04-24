@@ -20,6 +20,7 @@
   "defaultTimeBuffer": "Default time buffer",
   "delete": "Delete",
   "discardChanges": "Are you sure you want to discard your changes? All unsaved data will be lost.",
+  "duplicate": "Duplicate",
   "duration": "Duration",
   "edit": "Edit",
   "editImprovisation": "Edit improvisation",

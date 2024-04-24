@@ -58,6 +58,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                 BottomSheetDialog.showDialog(
                   context: context,
                   child: PacingDetailPageShell(
+                    editMode: false,
                     onConfirm: (pacing) async {
                       final router = GoRouter.of(context);
                       final pacingModel = await context.read<PacingsCubit>().add(pacing);
@@ -118,6 +119,20 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       delete: () async => await context.read<PacingsCubit>().delete(pacing),
                       edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
                       export: () async => await context.read<PacingsCubit>().export(pacing),
+                      duplicate: () => BottomSheetDialog.showDialog(
+                        context: context,
+                        child: PacingDetailPageShell(
+                          editMode: false,
+                          pacing: pacing,
+                          onConfirm: (pacing) async {
+                            final router = GoRouter.of(context);
+                            final pacingModel = await context.read<PacingsCubit>().add(pacing);
+                            if (pacingModel != null) {
+                              router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                            }
+                          },
+                        ),
+                      ),
                       startMatch: () => BottomSheetDialog.showDialog(
                         context: context,
                         child: MatchDetailPageShell(

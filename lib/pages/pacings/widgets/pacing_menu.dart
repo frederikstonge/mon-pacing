@@ -12,15 +12,17 @@ class PacingMenu extends StatelessWidget {
   final FutureOr<void> Function() edit;
   final FutureOr<void> Function() startMatch;
   final FutureOr<void> Function() export;
+  final FutureOr<void> Function() duplicate;
   final FutureOr<void> Function() delete;
 
   const PacingMenu({
     super.key,
     required this.pacing,
     required this.edit,
-    required this.delete,
     required this.startMatch,
     required this.export,
+    required this.duplicate,
+    required this.delete,
   });
 
   @override
@@ -69,6 +71,20 @@ class PacingMenu extends StatelessWidget {
               leading: const Icon(Icons.upload),
               title: Text(
                 S.of(context).export,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () async {
+              Navigator.of(context).pop();
+              await duplicate.call();
+            },
+            child: ListTile(
+              leading: const Icon(Icons.copy),
+              title: Text(
+                S.of(context).duplicate,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

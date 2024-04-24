@@ -9,15 +9,17 @@ import 'pacing_detail_state.dart';
 class PacingDetailCubit extends Cubit<PacingDetailState> {
   final SettingsCubit settingsCubit;
   final PacingModel? pacing;
+  final bool editMode;
   final FutureOr<void> Function(PacingModel value) onConfirm;
 
   PacingDetailCubit({
     required this.settingsCubit,
     required this.onConfirm,
+    required this.editMode,
     this.pacing,
   }) : super(
           PacingDetailState(
-            editMode: pacing != null,
+            editMode: editMode,
             pacing: pacing != null
                 ? pacing.copyWith()
                 : PacingModel(

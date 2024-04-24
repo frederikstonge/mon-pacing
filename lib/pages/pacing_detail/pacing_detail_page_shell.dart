@@ -10,11 +10,13 @@ import 'pacing_detail_page_view.dart';
 
 class PacingDetailPageShell extends StatelessWidget {
   final PacingModel? pacing;
+  final bool editMode;
   final FutureOr<void> Function(PacingModel value) onConfirm;
 
   const PacingDetailPageShell({
     super.key,
     required this.onConfirm,
+    required this.editMode,
     this.pacing,
   });
 
@@ -22,6 +24,7 @@ class PacingDetailPageShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PacingDetailCubit(
+        editMode: editMode,
         settingsCubit: context.read<SettingsCubit>(),
         onConfirm: onConfirm,
         pacing: pacing,

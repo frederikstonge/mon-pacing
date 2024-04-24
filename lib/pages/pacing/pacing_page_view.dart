@@ -74,6 +74,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                           context: context,
                           child: PacingDetailPageShell(
                             pacing: pacing,
+                            editMode: true,
                             onConfirm: (pacing) async {
                               context.read<PacingCubit>().edit(pacing);
                             },
