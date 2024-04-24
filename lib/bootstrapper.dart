@@ -6,6 +6,7 @@ import 'cubits/matches/matches_cubit.dart';
 import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/timer/timer_cubit.dart';
+import 'repositories/category_suggestion_repository.dart';
 import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
@@ -29,6 +30,9 @@ class Bootstrapper extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (repositoryContext) => MatchesRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => CategorySuggestionRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
       ],
       child: MultiBlocProvider(

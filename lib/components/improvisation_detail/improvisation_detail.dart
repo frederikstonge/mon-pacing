@@ -8,6 +8,7 @@ import '../../models/improvisation_type.dart';
 import '../../pages/pacing/widgets/improvisation_durations.dart';
 import '../form/drop_down_element.dart';
 import '../form/text_field_element.dart';
+import 'widgets/category_suggestions_typeahead.dart';
 
 class ImprovisationDetail extends StatefulWidget {
   final ImprovisationModel improvisation;
@@ -67,10 +68,10 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           ).toList(),
         ),
         const SizedBox(height: 8),
-        TextFieldElement(
-          label: S.of(context).category,
-          controller: _categoryController,
-          onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
+        CategorySuggestionsTypeahead(
+          improvisation: widget.improvisation,
+          onChanged: widget.onChanged,
+          categoryController: _categoryController,
         ),
         const SizedBox(height: 8),
         TextFieldElement(

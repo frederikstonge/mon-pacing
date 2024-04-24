@@ -1,6 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../models/category_suggestion_model.dart';
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
 
@@ -19,7 +20,11 @@ class DatabaseRepository {
   Future<Isar> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
     return Isar.open(
-      schemas: [PacingModelSchema, MatchModelSchema],
+      schemas: [
+        PacingModelSchema,
+        MatchModelSchema,
+        CategorySuggestionModelSchema,
+      ],
       directory: dir.path,
     );
   }

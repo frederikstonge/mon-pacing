@@ -102,6 +102,8 @@ PODS:
     - Flutter
   - flutter_foreground_task (0.0.1):
     - Flutter
+  - flutter_keyboard_visibility (0.0.1):
+    - Flutter
   - GoogleAppMeasurement (10.24.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.24.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
@@ -168,6 +170,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - pointer_interceptor_ios (0.0.1):
+    - Flutter
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
@@ -183,9 +187,11 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_file_dialog (from `.symlinks/plugins/flutter_file_dialog/ios`)
   - flutter_foreground_task (from `.symlinks/plugins/flutter_foreground_task/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - pointer_interceptor_ios (from `.symlinks/plugins/pointer_interceptor_ios/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
@@ -225,12 +231,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_file_dialog/ios"
   flutter_foreground_task:
     :path: ".symlinks/plugins/flutter_foreground_task/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   haptic_feedback:
     :path: ".symlinks/plugins/haptic_feedback/ios"
   isar_flutter_libs:
     :path: ".symlinks/plugins/isar_flutter_libs/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  pointer_interceptor_ios:
+    :path: ".symlinks/plugins/pointer_interceptor_ios/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
@@ -255,6 +265,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_file_dialog: 4c014a45b105709a27391e266c277d7e588e9299
   flutter_foreground_task: 21ef182ab0a29a3005cc72cd70e5f45cb7f7f817
+  flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   GoogleAppMeasurement: f3abf08495ef2cba7829f15318c373b8d9226491
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
@@ -262,6 +273,7 @@ SPEC CHECKSUMS:
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  pointer_interceptor_ios: 9280618c0b2eeb80081a343924aa8ad756c21375
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695

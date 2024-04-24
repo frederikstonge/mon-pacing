@@ -9,7 +9,9 @@ class TextFieldElement extends StatelessWidget {
   final bool autoUnfocus;
   final bool multiline;
   final FutureOr<void> Function(String value)? onChanged;
+  final FutureOr<void> Function()? onTapOutside;
   final String? Function(String?)? validator;
+  final FocusNode? focusNode;
 
   const TextFieldElement({
     super.key,
@@ -20,6 +22,8 @@ class TextFieldElement extends StatelessWidget {
     this.multiline = false,
     this.onChanged,
     this.validator,
+    this.focusNode,
+    this.onTapOutside,
   });
 
   @override
@@ -39,14 +43,18 @@ class TextFieldElement extends StatelessWidget {
         TextFormField(
           controller: controller,
           autofocus: autoFocus,
+          focusNode: focusNode,
           maxLines: multiline ? null : 1,
           minLines: multiline ? 2 : null,
           onChanged: onChanged,
           validator: validator,
           keyboardType: multiline ? TextInputType.multiline : TextInputType.text,
-          onTapOutside: (event) {
+          onTapOutside: (event) async {
             if (autoUnfocus) {
               FocusScope.of(context).unfocus();
+            }
+            if (onTapOutside != null) {
+              await onTapOutside!.call();
             }
           },
           autovalidateMode: AutovalidateMode.onUserInteraction,
