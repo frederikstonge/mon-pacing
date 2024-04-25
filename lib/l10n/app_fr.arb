@@ -34,6 +34,7 @@
   "enableTimeBuffer": "Activer le temps tampon",
   "enableTimerHapticFeedback": "Activer la vibration du chronomètre",
   "export": "Exporter",
+  "free": "Libre",
   "general": "Général",
   "greaterThan": "Doit être plus grand que {min}",
   "importPacingTooltip": "Importer un pacing",
@@ -103,5 +104,6 @@
   "toasterYouCantStartAMatchWithoutImprovisation": "Vous ne pouvez pas démarrer un match sans improvisation.",
   "total": "Total",
   "type": "Type",
+  "unlimited": "Illimité",
   "versus": "vs"
 }

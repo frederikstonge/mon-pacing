@@ -71,12 +71,14 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           label: S.of(context).category,
           controller: _categoryController,
           onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
+          hintText: S.of(context).unlimited,
         ),
         const SizedBox(height: 8),
         TextFieldElement(
           label: S.of(context).performers,
           controller: _performersController,
           onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(performers: value)),
+          hintText: S.of(context).free,
         ),
         const SizedBox(height: 8),
         ImprovisationDurations(

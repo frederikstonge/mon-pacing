@@ -34,6 +34,7 @@
   "enableTimeBuffer": "Enable time buffer",
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
   "export": "Export",
+  "free": "Free",
   "general": "General",
   "greaterThan": "Must be greater than {min}",
   "importPacingTooltip": "Import pacing",
@@ -103,5 +104,6 @@
   "toasterYouCantStartAMatchWithoutImprovisation": "You can't start a match without improvisation.",
   "total": "Total",
   "type": "Type",
+  "unlimited": "Unlimited",
   "versus": "vs"
 }

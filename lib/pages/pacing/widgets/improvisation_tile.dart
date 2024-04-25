@@ -6,6 +6,7 @@ import '../../../components/actions/loading_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/improvisation_detail/improvisation_detail.dart';
 import '../../../extensions/duration_extensions.dart';
+import '../../../extensions/improvisation_extensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
@@ -91,13 +92,13 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
-                          '${S.of(context).category}: ${widget.improvisation.category}',
+                          '${S.of(context).category}: ${widget.improvisation.getCategoryString(S.of(context))}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
-                          '${S.of(context).performers}: ${widget.improvisation.performers}',
+                          '${S.of(context).performers}: ${widget.improvisation.getPerformersString(S.of(context))}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall,

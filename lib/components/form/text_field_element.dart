@@ -10,6 +10,8 @@ class TextFieldElement extends StatelessWidget {
   final bool multiline;
   final FutureOr<void> Function(String value)? onChanged;
   final String? Function(String?)? validator;
+  final FocusNode? focusNode;
+  final String? hintText;
 
   const TextFieldElement({
     super.key,
@@ -20,6 +22,8 @@ class TextFieldElement extends StatelessWidget {
     this.multiline = false,
     this.onChanged,
     this.validator,
+    this.focusNode,
+    this.hintText,
   });
 
   @override
@@ -37,6 +41,8 @@ class TextFieldElement extends StatelessWidget {
           ),
         ),
         TextFormField(
+          focusNode: focusNode,
+          decoration: InputDecoration(hintText: hintText),
           controller: controller,
           autofocus: autoFocus,
           maxLines: multiline ? null : 1,
