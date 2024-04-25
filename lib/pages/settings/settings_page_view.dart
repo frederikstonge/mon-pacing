@@ -136,7 +136,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                     children: [
                       SettingsTile(
                         leading: const Icon(Icons.timer),
-                        title: Text(S.of(context).defaultImprovisationDurationInSeconds),
+                        title: Text(S.of(context).improvisationDurationInSeconds),
                         subTitle: Text(Duration(seconds: state.defaultImprovisationDurationInSeconds).toImprovDuration()),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
@@ -144,7 +144,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           final newDuration = await BottomSheetDialog.showDialog<Duration>(
                             context: context,
                             child: DurationPicker(
-                              title: S.of(context).defaultImprovisationDurationInSeconds,
+                              title: S.of(context).improvisationDurationInSeconds,
                               initialDuration: Duration(seconds: state.defaultImprovisationDurationInSeconds),
                             ),
                           );
@@ -158,7 +158,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                         leading: const Icon(Icons.more_time),
                         title: Row(
                           children: [
-                            Flexible(child: Text(S.of(context).enableDefaultTimeBuffer)),
+                            Flexible(child: Text(S.of(context).enableTimeBuffer)),
                             Padding(
                               padding: const EdgeInsets.only(left: 4),
                               child: CustomTooltip(
@@ -175,7 +175,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                       ),
                       SettingsTile(
                         leading: const Icon(Icons.more_time),
-                        title: Text(S.of(context).defaultTimeBuffer),
+                        title: Text(S.of(context).timeBuffer),
                         subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
@@ -183,7 +183,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           final newDuration = await BottomSheetDialog.showDialog<Duration>(
                             context: context,
                             child: DurationPicker(
-                              title: S.of(context).defaultTimeBuffer,
+                              title: S.of(context).timeBuffer,
                               initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
                             ),
                           );
@@ -210,7 +210,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                         leading: const Icon(Icons.scoreboard),
                         title: Row(
                           children: [
-                            Flexible(child: Text(S.of(context).enableDefaultPenaltiesImpactPoints)),
+                            Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
                             Padding(
                               padding: const EdgeInsets.only(left: 4),
                               child: CustomTooltip(
@@ -227,7 +227,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                       ),
                       SettingsTile(
                         leading: const Icon(Icons.sports),
-                        title: Text(S.of(context).defaultPenaltiesImpactType),
+                        title: Text(S.of(context).penaltiesImpactType),
                         subTitle: Text(
                           switch (state.defaultPenaltiesImpactType) {
                             PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
@@ -252,7 +252,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           children: [
                             Expanded(
                               child: Text(
-                                S.of(context).defaultPenaltiesRequiredToImpactPoints,
+                                S.of(context).penaltiesRequiredToImpactPoints,
                                 style: Theme.of(context).textTheme.titleMedium,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

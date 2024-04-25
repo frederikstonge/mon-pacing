@@ -133,7 +133,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                       leading: const Icon(Icons.scoreboard),
                       title: Row(
                         children: [
-                          Flexible(child: Text(S.of(context).enableDefaultPenaltiesImpactPoints)),
+                          Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
                           Padding(
                             padding: const EdgeInsets.only(left: 4),
                             child: CustomTooltip(
