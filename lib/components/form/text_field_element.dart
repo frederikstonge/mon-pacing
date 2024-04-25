@@ -41,6 +41,7 @@ class TextFieldElement extends StatelessWidget {
           ),
         ),
         TextFormField(
+          textCapitalization: TextCapitalization.sentences,
           focusNode: focusNode,
           decoration: InputDecoration(hintText: hintText),
           controller: controller,
