@@ -55,7 +55,7 @@ class _CategorySuggestionsTypeaheadState extends State<CategorySuggestionsTypeah
   }
 
   void _onFocusChange() {
-    context.read<CategorySuggestionRepository>().add(widget.categoryController.text);
+    unawaited(context.read<CategorySuggestionRepository>().add(widget.categoryController.text));
     _suggestionsController.suggestions = null;
   }
 
@@ -68,11 +68,13 @@ class _CategorySuggestionsTypeaheadState extends State<CategorySuggestionsTypeah
       builder: (context, controller, focusNode) => TextFieldElement(
         label: S.of(context).category,
         controller: controller,
+        autoUnfocus: false,
         focusNode: focusNode,
         onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
       ),
       onSelected: (value) async {
         widget.categoryController.text = value.name;
+        _focusNode.unfocus();
         await widget.onChanged.call(widget.improvisation.copyWith(category: value.name));
       },
       emptyBuilder: (context) => const SizedBox(),
