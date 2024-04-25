@@ -9,7 +9,6 @@ class TextFieldElement extends StatelessWidget {
   final bool autoUnfocus;
   final bool multiline;
   final FutureOr<void> Function(String value)? onChanged;
-  final FutureOr<void> Function()? onTapOutside;
   final String? Function(String?)? validator;
   final FocusNode? focusNode;
 
@@ -23,7 +22,6 @@ class TextFieldElement extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.focusNode,
-    this.onTapOutside,
   });
 
   @override
@@ -52,9 +50,6 @@ class TextFieldElement extends StatelessWidget {
           onTapOutside: (event) async {
             if (autoUnfocus) {
               FocusScope.of(context).unfocus();
-            }
-            if (onTapOutside != null) {
-              await onTapOutside!.call();
             }
           },
           autovalidateMode: AutovalidateMode.onUserInteraction,

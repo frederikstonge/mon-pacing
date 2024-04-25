@@ -29,32 +29,46 @@ class CategorySuggestionsTypeahead extends StatefulWidget {
 
 class _CategorySuggestionsTypeaheadState extends State<CategorySuggestionsTypeahead> {
   late final SuggestionsController<CategorySuggestionModel> _suggestionsController;
+  late final Timer _timer;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
     _suggestionsController = SuggestionsController<CategorySuggestionModel>();
+    _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (_suggestionsController.isOpen) {
+        _suggestionsController.resize();
+      }
+    });
+    _focusNode = FocusNode();
+    _focusNode.addListener(_onFocusChange);
     super.initState();
   }
 
   @override
   void dispose() {
+    _timer.cancel();
     _suggestionsController.dispose();
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onFocusChange() {
+    context.read<CategorySuggestionRepository>().add(widget.categoryController.text);
+    _suggestionsController.suggestions = null;
   }
 
   @override
   Widget build(BuildContext context) {
     return TypeAheadField<CategorySuggestionModel>(
+      focusNode: _focusNode,
       suggestionsController: _suggestionsController,
       controller: widget.categoryController,
       builder: (context, controller, focusNode) => TextFieldElement(
         label: S.of(context).category,
         controller: controller,
         focusNode: focusNode,
-        onTapOutside: () async {
-          await context.read<CategorySuggestionRepository>().add(widget.categoryController.text);
-          _suggestionsController.suggestions = null;
-        },
         onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
       ),
       onSelected: (value) async {
