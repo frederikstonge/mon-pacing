@@ -55,16 +55,16 @@ class MatchCubit extends Cubit<MatchState> {
         final improvisations = List<ImprovisationModel>.from(match.improvisations);
 
         improvisations.insert(index, improvisation);
-
+        final newMatch = match.copyWith(improvisations: improvisations);
         emit(
           MatchState.success(
-            match.copyWith(improvisations: improvisations),
+            newMatch,
             index,
             0,
           ),
         );
 
-        await matchesCubit.edit(match);
+        await matchesCubit.edit(newMatch);
       },
     );
   }
@@ -75,16 +75,16 @@ class MatchCubit extends Cubit<MatchState> {
         final improvisations = List<ImprovisationModel>.from(match.improvisations.where((element) => element.id != improvisation.id));
 
         improvisations.insert(index, improvisation);
-
+        final newMatch = match.copyWith(improvisations: improvisations);
         emit(
           MatchState.success(
-            match.copyWith(improvisations: improvisations),
+            newMatch,
             index,
             0,
           ),
         );
 
-        await matchesCubit.edit(match);
+        await matchesCubit.edit(newMatch);
       },
     );
   }
@@ -101,15 +101,17 @@ class MatchCubit extends Cubit<MatchState> {
         final newSelectedImprovisationIndex =
             selectedImprovisationIndex >= improvisations.length ? selectedImprovisationIndex - 1 : selectedImprovisationIndex;
 
+        final newMatch = match.copyWith(improvisations: improvisations, points: points, penalties: penalties);
+
         emit(
           MatchState.success(
-            match.copyWith(improvisations: improvisations, points: points, penalties: penalties),
+            newMatch,
             newSelectedImprovisationIndex,
             0,
           ),
         );
 
-        await matchesCubit.edit(match);
+        await matchesCubit.edit(newMatch);
       },
     );
   }

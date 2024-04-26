@@ -9,6 +9,7 @@ import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/timer_banner/timer_banner.dart';
+import '../../cubits/timer/timer_cubit.dart';
 import '../../extensions/match_extensions.dart';
 import '../../extensions/penalty_extensions.dart';
 import '../../l10n/app_localizations.dart';
@@ -115,6 +116,7 @@ class MatchPageView extends StatelessWidget {
                         onDelete: match.improvisations.length > 1
                             ? (improvisation) async {
                                 final matchCubit = context.read<MatchCubit>();
+                                final timerCubit = context.read<TimerCubit>();
                                 final shouldDelete = await MessageBoxDialog.questionShow(
                                   context,
                                   S.of(context).areYouSure(
@@ -126,6 +128,10 @@ class MatchPageView extends StatelessWidget {
                                 );
 
                                 if (shouldDelete == true) {
+                                  if (improvisation.id == timerCubit.state.timer?.improvisationId) {
+                                    await timerCubit.stop();
+                                  }
+
                                   await matchCubit.removeImprovisation(improvisation);
                                 }
                               }
