@@ -112,22 +112,24 @@ class MatchPageView extends StatelessWidget {
                             ),
                           );
                         },
-                        onDelete: (improvisation) async {
-                          final matchCubit = context.read<MatchCubit>();
-                          final shouldDelete = await MessageBoxDialog.questionShow(
-                            context,
-                            S.of(context).areYouSure(
-                                  S.of(context).delete.toLowerCase(),
-                                  S.of(context).improvisationNumber(selectedImprovisationIndex + 1),
-                                ),
-                            S.of(context).delete,
-                            S.of(context).cancel,
-                          );
+                        onDelete: match.improvisations.length > 1
+                            ? (improvisation) async {
+                                final matchCubit = context.read<MatchCubit>();
+                                final shouldDelete = await MessageBoxDialog.questionShow(
+                                  context,
+                                  S.of(context).areYouSure(
+                                        S.of(context).delete.toLowerCase(),
+                                        S.of(context).improvisationNumber(selectedImprovisationIndex + 1),
+                                      ),
+                                  S.of(context).delete,
+                                  S.of(context).cancel,
+                                );
 
-                          if (shouldDelete == true) {
-                            await matchCubit.removeImprovisation(improvisation);
-                          }
-                        },
+                                if (shouldDelete == true) {
+                                  await matchCubit.removeImprovisation(improvisation);
+                                }
+                              }
+                            : null,
                       ),
                     ),
                     SliverToBoxAdapter(

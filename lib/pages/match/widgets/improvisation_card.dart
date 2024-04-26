@@ -15,7 +15,7 @@ class ImprovisationCard extends StatelessWidget {
   final ImprovisationModel improvisation;
   final int index;
   final FutureOr<void> Function(ImprovisationModel improvisation) onEdit;
-  final FutureOr<void> Function(ImprovisationModel improvisation) onDelete;
+  final FutureOr<void> Function(ImprovisationModel improvisation)? onDelete;
 
   const ImprovisationCard({
     super.key,
@@ -50,9 +50,11 @@ class ImprovisationCard extends StatelessWidget {
               LoadingIconButton(
                 tooltip: S.of(context).delete,
                 icon: const Icon(Icons.delete),
-                onPressed: () async {
-                  await onDelete.call(improvisation);
-                },
+                onPressed: onDelete != null
+                    ? () async {
+                        await onDelete!.call(improvisation);
+                      }
+                    : null,
               ),
             ],
           ),
