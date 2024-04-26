@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:intl/intl.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../models/theme_type.dart';
@@ -13,7 +14,7 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
       : super(
           SettingsState(
             theme: ThemeType.light,
-            language: Intl.getCurrentLocale().substring(0, 2) == 'fr' ? 'fr' : 'en',
+            language: Platform.localeName.substring(0, 2) == 'fr' ? 'fr' : 'en',
           ),
         );
 
