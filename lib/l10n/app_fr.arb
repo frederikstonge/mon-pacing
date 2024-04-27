@@ -32,7 +32,7 @@
   "general": "Général",
   "greaterThan": "Doit être plus grand que {min}",
   "importPacingTooltip": "Importer un pacing",
-  "improvisationCount": "Nombre d'improvisation: {count}",
+  "improvisationCount": "Nombre d'improvisations: {count}",
   "improvisationDurationInSeconds": "Durée d'improvisation",
   "improvisationIndex": "Position de l'improvisation",
   "improvisationNumber": "Improvisation #{order}",
