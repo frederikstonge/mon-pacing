@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
 
@@ -18,8 +20,8 @@ class MatchModel with _$MatchModel implements BaseModel {
   @Implements<BaseModel>()
   const factory MatchModel({
     required int id,
-    required String name,
-    required DateTime? createdDate,
+    @index required String name,
+    @index required DateTime? createdDate,
     required DateTime? modifiedDate,
     required List<TeamModel> teams,
     required List<ImprovisationModel> improvisations,

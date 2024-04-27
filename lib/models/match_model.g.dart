@@ -66,7 +66,24 @@ const MatchModelSchema = IsarGeneratedSchema(
         type: IsarType.long,
       ),
     ],
-    indexes: [],
+    indexes: [
+      IsarIndexSchema(
+        name: 'createdDate',
+        properties: [
+          "createdDate",
+        ],
+        unique: false,
+        hash: false,
+      ),
+      IsarIndexSchema(
+        name: 'name',
+        properties: [
+          "name",
+        ],
+        unique: false,
+        hash: false,
+      ),
+    ],
   ),
   converter: IsarObjectConverter<int, MatchModel>(
     serialize: serializeMatchModel,

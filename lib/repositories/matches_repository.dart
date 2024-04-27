@@ -36,6 +36,6 @@ class MatchesRepository {
 
   Future<List<MatchModel>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
-    return await db.matchModels.where().findAllAsync(offset: skip, limit: take);
+    return await db.matchModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
 }

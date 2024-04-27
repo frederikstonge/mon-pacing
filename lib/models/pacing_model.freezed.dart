@@ -21,7 +21,9 @@ PacingModel _$PacingModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PacingModel {
   int get id => throw _privateConstructorUsedError;
+  @index
   String get name => throw _privateConstructorUsedError;
+  @index
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
   bool get enableTimeBuffer => throw _privateConstructorUsedError;
@@ -44,8 +46,8 @@ abstract class $PacingModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String name,
-      DateTime? createdDate,
+      @index String name,
+      @index DateTime? createdDate,
       DateTime? modifiedDate,
       bool enableTimeBuffer,
       int timeBufferInSeconds,
@@ -122,8 +124,8 @@ abstract class _$$PacingModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String name,
-      DateTime? createdDate,
+      @index String name,
+      @index DateTime? createdDate,
       DateTime? modifiedDate,
       bool enableTimeBuffer,
       int timeBufferInSeconds,
@@ -193,8 +195,8 @@ class __$$PacingModelImplCopyWithImpl<$Res>
 class _$PacingModelImpl implements _PacingModel {
   const _$PacingModelImpl(
       {required this.id,
-      required this.name,
-      required this.createdDate,
+      @index required this.name,
+      @index required this.createdDate,
       required this.modifiedDate,
       required this.enableTimeBuffer,
       required this.timeBufferInSeconds,
@@ -208,8 +210,10 @@ class _$PacingModelImpl implements _PacingModel {
   @override
   final int id;
   @override
+  @index
   final String name;
   @override
+  @index
   final DateTime? createdDate;
   @override
   final DateTime? modifiedDate;
@@ -283,8 +287,8 @@ class _$PacingModelImpl implements _PacingModel {
 abstract class _PacingModel implements PacingModel, BaseModel {
   const factory _PacingModel(
           {required final int id,
-          required final String name,
-          required final DateTime? createdDate,
+          @index required final String name,
+          @index required final DateTime? createdDate,
           required final DateTime? modifiedDate,
           required final bool enableTimeBuffer,
           required final int timeBufferInSeconds,
@@ -298,8 +302,10 @@ abstract class _PacingModel implements PacingModel, BaseModel {
   @override
   int get id;
   @override
+  @index
   String get name;
   @override
+  @index
   DateTime? get createdDate;
   @override
   DateTime? get modifiedDate;

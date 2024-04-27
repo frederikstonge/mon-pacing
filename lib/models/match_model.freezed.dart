@@ -21,7 +21,9 @@ MatchModel _$MatchModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MatchModel {
   int get id => throw _privateConstructorUsedError;
+  @index
   String get name => throw _privateConstructorUsedError;
+  @index
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
   List<TeamModel> get teams => throw _privateConstructorUsedError;
@@ -48,8 +50,8 @@ abstract class $MatchModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String name,
-      DateTime? createdDate,
+      @index String name,
+      @index DateTime? createdDate,
       DateTime? modifiedDate,
       List<TeamModel> teams,
       List<ImprovisationModel> improvisations,
@@ -144,8 +146,8 @@ abstract class _$$MatchModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String name,
-      DateTime? createdDate,
+      @index String name,
+      @index DateTime? createdDate,
       DateTime? modifiedDate,
       List<TeamModel> teams,
       List<ImprovisationModel> improvisations,
@@ -233,8 +235,8 @@ class __$$MatchModelImplCopyWithImpl<$Res>
 class _$MatchModelImpl implements _MatchModel {
   const _$MatchModelImpl(
       {required this.id,
-      required this.name,
-      required this.createdDate,
+      @index required this.name,
+      @index required this.createdDate,
       required this.modifiedDate,
       required final List<TeamModel> teams,
       required final List<ImprovisationModel> improvisations,
@@ -254,8 +256,10 @@ class _$MatchModelImpl implements _MatchModel {
   @override
   final int id;
   @override
+  @index
   final String name;
   @override
+  @index
   final DateTime? createdDate;
   @override
   final DateTime? modifiedDate;
@@ -365,8 +369,8 @@ class _$MatchModelImpl implements _MatchModel {
 abstract class _MatchModel implements MatchModel, BaseModel {
   const factory _MatchModel(
       {required final int id,
-      required final String name,
-      required final DateTime? createdDate,
+      @index required final String name,
+      @index required final DateTime? createdDate,
       required final DateTime? modifiedDate,
       required final List<TeamModel> teams,
       required final List<ImprovisationModel> improvisations,
@@ -382,8 +386,10 @@ abstract class _MatchModel implements MatchModel, BaseModel {
   @override
   int get id;
   @override
+  @index
   String get name;
   @override
+  @index
   DateTime? get createdDate;
   @override
   DateTime? get modifiedDate;

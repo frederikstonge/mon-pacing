@@ -37,6 +37,6 @@ class PacingsRepository {
 
   Future<List<PacingModel>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
-    return await db.pacingModels.where().findAllAsync(offset: skip, limit: take);
+    return await db.pacingModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
 }
