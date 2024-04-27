@@ -89,6 +89,7 @@
   "timeBuffer": "Temps tampon",
   "timeBufferTooltip": "Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser pour le caucus, le vote etc.",
   "timerHapticFeedbackTooltip": "Le chronomètre vibrera à chaque minute, 30 secondes, 10 secondes, 5, 4, 3, 2, 1.",
+  "timerIsActiveError": "Impossible de {action} l'improvisation. Le chronomètre est activé.",
   "toasterGenericError": "Une erreur est survenue.",
   "toasterMatchDeleted": "Match supprimé.",
   "toasterMatchResultExported": "Le résultat de match a été exporté.",

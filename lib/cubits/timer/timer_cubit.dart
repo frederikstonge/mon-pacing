@@ -25,15 +25,19 @@ class TimerCubit extends Cubit<TimerState> {
       return;
     }
 
-    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
-    if (data == null) {
-      return;
-    }
-    try {
-      final timer = TimerModel.fromJson(json.decode(data));
-      await _updateTimer(timer);
-    } catch (_) {
-      return;
+    if (await FlutterForegroundTask.isRunningService) {
+      final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
+      if (data == null) {
+        return;
+      }
+      try {
+        final timer = TimerModel.fromJson(json.decode(data));
+        await _updateTimer(timer);
+      } catch (_) {
+        return;
+      }
+    } else {
+      await FlutterForegroundTask.removeData(key: timerDataKey);
     }
   }
 
@@ -91,9 +95,10 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   @override
-  Future<void> close() {
+  Future<void> close() async {
     _closeReceivePort();
-    return super.close();
+    await stop();
+    return await super.close();
   }
 
   void _onReceiveData(dynamic data) {

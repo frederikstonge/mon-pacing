@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
@@ -13,6 +14,7 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../extensions/match_extensions.dart';
 import '../../extensions/penalty_extensions.dart';
 import '../../l10n/app_localizations.dart';
+import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_improvisation/match_improvisation_shell.dart';
 import '../match_penalty/match_penalty_shell.dart';
@@ -104,6 +106,14 @@ class MatchPageView extends StatelessWidget {
                         improvisation: improvisation,
                         index: selectedImprovisationIndex,
                         onEdit: (improvisation) async {
+                          if (improvisation.id == context.read<TimerCubit>().state.timer?.improvisationId) {
+                            context.read<ToasterService>().show(
+                                  title: S.of(context).timerIsActiveError(S.of(context).edit.toLowerCase()),
+                                  type: ToastificationType.error,
+                                );
+                            return;
+                          }
+
                           await BottomSheetDialog.showDialog(
                             context: context,
                             child: MatchImprovisationShell(
@@ -115,8 +125,15 @@ class MatchPageView extends StatelessWidget {
                         },
                         onDelete: match.improvisations.length > 1
                             ? (improvisation) async {
+                                if (improvisation.id == context.read<TimerCubit>().state.timer?.improvisationId) {
+                                  context.read<ToasterService>().show(
+                                        title: S.of(context).timerIsActiveError(S.of(context).delete.toLowerCase()),
+                                        type: ToastificationType.error,
+                                      );
+                                  return;
+                                }
+
                                 final matchCubit = context.read<MatchCubit>();
-                                final timerCubit = context.read<TimerCubit>();
                                 final shouldDelete = await MessageBoxDialog.questionShow(
                                   context,
                                   S.of(context).areYouSure(
@@ -128,10 +145,6 @@ class MatchPageView extends StatelessWidget {
                                 );
 
                                 if (shouldDelete == true) {
-                                  if (improvisation.id == timerCubit.state.timer?.improvisationId) {
-                                    await timerCubit.stop();
-                                  }
-
                                   await matchCubit.removeImprovisation(improvisation);
                                 }
                               }
