@@ -36,7 +36,7 @@ void initForegroundTask() {
       playSound: false,
     ),
     foregroundTaskOptions: const ForegroundTaskOptions(
-      interval: 500,
+      interval: 1000,
       isOnceEvent: false,
       autoRunOnBoot: true,
       allowWakeLock: true,
@@ -68,18 +68,14 @@ class TimerTaskHandler extends TaskHandler {
   @override
   Future<void> onStart(DateTime timestamp, SendPort? sendPort) async {
     _sendPort = sendPort;
-
     _timer = await getTimer();
-
-    _stopwatch = Stopwatch()..start();
-
+    _stopwatch = Stopwatch();
     await onTick();
   }
 
   @override
   Future<void> onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
     _timer = await getTimer();
-
     await onTick();
   }
 
@@ -149,6 +145,7 @@ class TimerTaskHandler extends TaskHandler {
     if (data == null) {
       return null;
     }
+
     return TimerModel.fromJson(json.decode(data));
   }
 
