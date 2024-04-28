@@ -21,6 +21,14 @@ const PacingModelSchema = IsarGeneratedSchema(
     embedded: false,
     properties: [
       IsarPropertySchema(
+        name: 'categories',
+        type: IsarType.stringList,
+      ),
+      IsarPropertySchema(
+        name: 'themes',
+        type: IsarType.stringList,
+      ),
+      IsarPropertySchema(
         name: 'createdDate',
         type: IsarType.dateTime,
       ),
@@ -79,23 +87,39 @@ const PacingModelSchema = IsarGeneratedSchema(
 
 @isarProtected
 int serializePacingModel(IsarWriter writer, PacingModel object) {
+  {
+    final list = object.categories;
+    final listWriter = IsarCore.beginList(writer, 1, list.length);
+    for (var i = 0; i < list.length; i++) {
+      IsarCore.writeString(listWriter, i, list[i]);
+    }
+    IsarCore.endList(writer, listWriter);
+  }
+  {
+    final list = object.themes;
+    final listWriter = IsarCore.beginList(writer, 2, list.length);
+    for (var i = 0; i < list.length; i++) {
+      IsarCore.writeString(listWriter, i, list[i]);
+    }
+    IsarCore.endList(writer, listWriter);
+  }
   IsarCore.writeLong(
       writer,
-      1,
+      3,
       object.createdDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
   IsarCore.writeLong(
       writer,
-      2,
+      4,
       object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
-  IsarCore.writeString(writer, 3, object.name);
-  IsarCore.writeBool(writer, 4, object.enableTimeBuffer);
-  IsarCore.writeLong(writer, 5, object.timeBufferInSeconds);
-  IsarCore.writeLong(writer, 6, object.defaultNumberOfTeams);
+  IsarCore.writeString(writer, 5, object.name);
+  IsarCore.writeBool(writer, 6, object.enableTimeBuffer);
+  IsarCore.writeLong(writer, 7, object.timeBufferInSeconds);
+  IsarCore.writeLong(writer, 8, object.defaultNumberOfTeams);
   {
     final list = object.improvisations;
-    final listWriter = IsarCore.beginList(writer, 7, list.length);
+    final listWriter = IsarCore.beginList(writer, 9, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -115,7 +139,7 @@ PacingModel deserializePacingModel(IsarReader reader) {
   _id = IsarCore.readId(reader);
   final DateTime? _createdDate;
   {
-    final value = IsarCore.readLong(reader, 1);
+    final value = IsarCore.readLong(reader, 3);
     if (value == -9223372036854775808) {
       _createdDate = null;
     } else {
@@ -125,7 +149,7 @@ PacingModel deserializePacingModel(IsarReader reader) {
   }
   final DateTime? _modifiedDate;
   {
-    final value = IsarCore.readLong(reader, 2);
+    final value = IsarCore.readLong(reader, 4);
     if (value == -9223372036854775808) {
       _modifiedDate = null;
     } else {
@@ -134,16 +158,16 @@ PacingModel deserializePacingModel(IsarReader reader) {
     }
   }
   final String _name;
-  _name = IsarCore.readString(reader, 3) ?? '';
+  _name = IsarCore.readString(reader, 5) ?? '';
   final bool _enableTimeBuffer;
-  _enableTimeBuffer = IsarCore.readBool(reader, 4);
+  _enableTimeBuffer = IsarCore.readBool(reader, 6);
   final int _timeBufferInSeconds;
-  _timeBufferInSeconds = IsarCore.readLong(reader, 5);
+  _timeBufferInSeconds = IsarCore.readLong(reader, 7);
   final int _defaultNumberOfTeams;
-  _defaultNumberOfTeams = IsarCore.readLong(reader, 6);
+  _defaultNumberOfTeams = IsarCore.readLong(reader, 8);
   final List<ImprovisationModel> _improvisations;
   {
-    final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 9, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -202,21 +226,45 @@ PacingModel deserializePacingModel(IsarReader reader) {
 @isarProtected
 dynamic deserializePacingModelProp(IsarReader reader, int property) {
   switch (property) {
-    case 0:
-      return IsarCore.readId(reader);
     case 1:
       {
-        final value = IsarCore.readLong(reader, 1);
-        if (value == -9223372036854775808) {
-          return null;
-        } else {
-          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
-              .toLocal();
+        final length = IsarCore.readList(reader, 1, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
+            return const <String>[];
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
         }
       }
     case 2:
       {
-        final value = IsarCore.readLong(reader, 2);
+        final length = IsarCore.readList(reader, 2, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
+            return const <String>[];
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
+        }
+      }
+    case 0:
+      return IsarCore.readId(reader);
+    case 3:
+      {
+        final value = IsarCore.readLong(reader, 3);
         if (value == -9223372036854775808) {
           return null;
         } else {
@@ -224,17 +272,27 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
               .toLocal();
         }
       }
-    case 3:
-      return IsarCore.readString(reader, 3) ?? '';
     case 4:
-      return IsarCore.readBool(reader, 4);
-    case 5:
-      return IsarCore.readLong(reader, 5);
-    case 6:
-      return IsarCore.readLong(reader, 6);
-    case 7:
       {
-        final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
+        final value = IsarCore.readLong(reader, 4);
+        if (value == -9223372036854775808) {
+          return null;
+        } else {
+          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
+              .toLocal();
+        }
+      }
+    case 5:
+      return IsarCore.readString(reader, 5) ?? '';
+    case 6:
+      return IsarCore.readBool(reader, 6);
+    case 7:
+      return IsarCore.readLong(reader, 7);
+    case 8:
+      return IsarCore.readLong(reader, 8);
+    case 9:
+      {
+        final length = IsarCore.readList(reader, 9, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -312,12 +370,12 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
     return collection.updateProperties([
           id
         ], {
-          if (createdDate != ignore) 1: createdDate as DateTime?,
-          if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
-          if (name != ignore) 3: name as String?,
-          if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
-          if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
-          if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
+          if (createdDate != ignore) 3: createdDate as DateTime?,
+          if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
+          if (name != ignore) 5: name as String?,
+          if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
+          if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
+          if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
         }) >
         0;
   }
@@ -351,12 +409,12 @@ class _PacingModelUpdateAllImpl implements _PacingModelUpdateAll {
     Object? defaultNumberOfTeams = ignore,
   }) {
     return collection.updateProperties(id, {
-      if (createdDate != ignore) 1: createdDate as DateTime?,
-      if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
-      if (name != ignore) 3: name as String?,
-      if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
-      if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
-      if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
+      if (createdDate != ignore) 3: createdDate as DateTime?,
+      if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
+      if (name != ignore) 5: name as String?,
+      if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
+      if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
+      if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
     });
   }
 }
@@ -394,12 +452,12 @@ class _PacingModelQueryUpdateImpl implements _PacingModelQueryUpdate {
     Object? defaultNumberOfTeams = ignore,
   }) {
     return query.updateProperties(limit: limit, {
-      if (createdDate != ignore) 1: createdDate as DateTime?,
-      if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
-      if (name != ignore) 3: name as String?,
-      if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
-      if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
-      if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
+      if (createdDate != ignore) 3: createdDate as DateTime?,
+      if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
+      if (name != ignore) 5: name as String?,
+      if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
+      if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
+      if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
     });
   }
 }
@@ -429,12 +487,12 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
     final q = query.build();
     try {
       return q.updateProperties(limit: limit, {
-        if (createdDate != ignore) 1: createdDate as DateTime?,
-        if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
-        if (name != ignore) 3: name as String?,
-        if (enableTimeBuffer != ignore) 4: enableTimeBuffer as bool?,
-        if (timeBufferInSeconds != ignore) 5: timeBufferInSeconds as int?,
-        if (defaultNumberOfTeams != ignore) 6: defaultNumberOfTeams as int?,
+        if (createdDate != ignore) 3: createdDate as DateTime?,
+        if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
+        if (name != ignore) 5: name as String?,
+        if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
+        if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
+        if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
       });
     } finally {
       q.close();
@@ -453,6 +511,394 @@ extension PacingModelQueryBuilderUpdate
 
 extension PacingModelQueryFilter
     on QueryBuilder<PacingModel, PacingModel, QFilterCondition> {
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 1,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 1,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 1,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 1,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesIsEmpty() {
+    return not().categoriesIsNotEmpty();
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      categoriesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 1, value: null),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 2,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 2,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 2,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 2,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesIsEmpty() {
+    return not().themesIsNotEmpty();
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      themesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 2, value: null),
+      );
+    });
+  }
+
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition> idEqualTo(
     int value,
   ) {
@@ -538,14 +984,14 @@ extension PacingModelQueryFilter
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
       createdDateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 1));
+      return query.addFilterCondition(const IsNullCondition(property: 3));
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
       createdDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 1));
+      return query.addFilterCondition(const IsNullCondition(property: 3));
     });
   }
 
@@ -556,7 +1002,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 1,
+          property: 3,
           value: value,
         ),
       );
@@ -570,7 +1016,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 1,
+          property: 3,
           value: value,
         ),
       );
@@ -584,7 +1030,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 1,
+          property: 3,
           value: value,
         ),
       );
@@ -598,7 +1044,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 1,
+          property: 3,
           value: value,
         ),
       );
@@ -612,7 +1058,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 1,
+          property: 3,
           value: value,
         ),
       );
@@ -627,7 +1073,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 1,
+          property: 3,
           lower: lower,
           upper: upper,
         ),
@@ -638,14 +1084,14 @@ extension PacingModelQueryFilter
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
       modifiedDateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
+      return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
       modifiedDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
+      return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
@@ -656,7 +1102,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 2,
+          property: 4,
           value: value,
         ),
       );
@@ -670,7 +1116,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 2,
+          property: 4,
           value: value,
         ),
       );
@@ -684,7 +1130,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 4,
           value: value,
         ),
       );
@@ -698,7 +1144,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 4,
           value: value,
         ),
       );
@@ -712,7 +1158,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
+          property: 4,
           value: value,
         ),
       );
@@ -727,7 +1173,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 2,
+          property: 4,
           lower: lower,
           upper: upper,
         ),
@@ -742,7 +1188,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -757,7 +1203,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -773,7 +1219,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -788,7 +1234,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -804,7 +1250,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -820,7 +1266,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 3,
+          property: 5,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -836,7 +1282,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -851,7 +1297,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -865,7 +1311,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 3,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -879,7 +1325,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 3,
+          property: 5,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -891,7 +1337,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 3,
+          property: 5,
           value: '',
         ),
       );
@@ -903,7 +1349,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 3,
+          property: 5,
           value: '',
         ),
       );
@@ -917,7 +1363,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 4,
+          property: 6,
           value: value,
         ),
       );
@@ -931,7 +1377,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 5,
+          property: 7,
           value: value,
         ),
       );
@@ -945,7 +1391,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 5,
+          property: 7,
           value: value,
         ),
       );
@@ -959,7 +1405,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 5,
+          property: 7,
           value: value,
         ),
       );
@@ -973,7 +1419,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 5,
+          property: 7,
           value: value,
         ),
       );
@@ -987,7 +1433,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 5,
+          property: 7,
           value: value,
         ),
       );
@@ -1002,7 +1448,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 5,
+          property: 7,
           lower: lower,
           upper: upper,
         ),
@@ -1017,7 +1463,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 6,
+          property: 8,
           value: value,
         ),
       );
@@ -1031,7 +1477,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 6,
+          property: 8,
           value: value,
         ),
       );
@@ -1045,7 +1491,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 6,
+          property: 8,
           value: value,
         ),
       );
@@ -1059,7 +1505,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 6,
+          property: 8,
           value: value,
         ),
       );
@@ -1073,7 +1519,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 6,
+          property: 8,
           value: value,
         ),
       );
@@ -1088,7 +1534,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 6,
+          property: 8,
           lower: lower,
           upper: upper,
         ),
@@ -1105,7 +1551,7 @@ extension PacingModelQueryFilter
       improvisationsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 7, value: null),
+        const GreaterOrEqualCondition(property: 9, value: null),
       );
     });
   }
@@ -1130,26 +1576,26 @@ extension PacingModelQuerySortBy
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(1);
+      return query.addSortBy(3);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByCreatedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(1, sort: Sort.desc);
+      return query.addSortBy(3, sort: Sort.desc);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
+      return query.addSortBy(4);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByModifiedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
+      return query.addSortBy(4, sort: Sort.desc);
     });
   }
 
@@ -1157,7 +1603,7 @@ extension PacingModelQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        3,
+        5,
         caseSensitive: caseSensitive,
       );
     });
@@ -1167,7 +1613,7 @@ extension PacingModelQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        3,
+        5,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -1177,42 +1623,42 @@ extension PacingModelQuerySortBy
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByEnableTimeBuffer() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4);
+      return query.addSortBy(6);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByEnableTimeBufferDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4, sort: Sort.desc);
+      return query.addSortBy(6, sort: Sort.desc);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByTimeBufferInSeconds() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5);
+      return query.addSortBy(7);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByTimeBufferInSecondsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5, sort: Sort.desc);
+      return query.addSortBy(7, sort: Sort.desc);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByDefaultNumberOfTeams() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6);
+      return query.addSortBy(8);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByDefaultNumberOfTeamsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6, sort: Sort.desc);
+      return query.addSortBy(8, sort: Sort.desc);
     });
   }
 }
@@ -1233,82 +1679,82 @@ extension PacingModelQuerySortThenBy
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(1);
+      return query.addSortBy(3);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByCreatedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(1, sort: Sort.desc);
+      return query.addSortBy(3, sort: Sort.desc);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByModifiedDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByModifiedDateDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByNameDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByEnableTimeBuffer() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByEnableTimeBufferDesc() {
+      thenByModifiedDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(4, sort: Sort.desc);
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByTimeBufferInSeconds() {
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5);
+      return query.addSortBy(5, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByNameDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(5, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByTimeBufferInSecondsDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByDefaultNumberOfTeams() {
+      thenByEnableTimeBuffer() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(6);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByDefaultNumberOfTeamsDesc() {
+      thenByEnableTimeBufferDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(6, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByTimeBufferInSeconds() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByTimeBufferInSecondsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByDefaultNumberOfTeams() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(8);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByDefaultNumberOfTeamsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(8, sort: Sort.desc);
     });
   }
 }
@@ -1316,50 +1762,75 @@ extension PacingModelQuerySortThenBy
 extension PacingModelQueryWhereDistinct
     on QueryBuilder<PacingModel, PacingModel, QDistinct> {
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
-      distinctByCreatedDate() {
+      distinctByCategories() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(1);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterDistinct> distinctByThemes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(2);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
+      distinctByCreatedDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(3);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
       distinctByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(2);
+      return query.addDistinctBy(4);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(3, caseSensitive: caseSensitive);
+      return query.addDistinctBy(5, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
       distinctByEnableTimeBuffer() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(4);
+      return query.addDistinctBy(6);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
       distinctByTimeBufferInSeconds() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(5);
+      return query.addDistinctBy(7);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
       distinctByDefaultNumberOfTeams() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(6);
+      return query.addDistinctBy(8);
     });
   }
 }
 
 extension PacingModelQueryProperty1
     on QueryBuilder<PacingModel, PacingModel, QProperty> {
+  QueryBuilder<PacingModel, List<String>, QAfterProperty> categoriesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(1);
+    });
+  }
+
+  QueryBuilder<PacingModel, List<String>, QAfterProperty> themesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(2);
+    });
+  }
+
   QueryBuilder<PacingModel, int, QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1368,51 +1839,65 @@ extension PacingModelQueryProperty1
 
   QueryBuilder<PacingModel, DateTime?, QAfterProperty> createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<PacingModel, DateTime?, QAfterProperty> modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<PacingModel, String, QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<PacingModel, bool, QAfterProperty> enableTimeBufferProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, int, QAfterProperty> timeBufferInSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<PacingModel, int, QAfterProperty>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(8);
     });
   }
 
   QueryBuilder<PacingModel, List<ImprovisationModel>, QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(9);
     });
   }
 }
 
 extension PacingModelQueryProperty2<R>
     on QueryBuilder<PacingModel, R, QAfterProperty> {
+  QueryBuilder<PacingModel, (R, List<String>), QAfterProperty>
+      categoriesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(1);
+    });
+  }
+
+  QueryBuilder<PacingModel, (R, List<String>), QAfterProperty>
+      themesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(2);
+    });
+  }
+
   QueryBuilder<PacingModel, (R, int), QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1422,54 +1907,68 @@ extension PacingModelQueryProperty2<R>
   QueryBuilder<PacingModel, (R, DateTime?), QAfterProperty>
       createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<PacingModel, (R, DateTime?), QAfterProperty>
       modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<PacingModel, (R, String), QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<PacingModel, (R, bool), QAfterProperty>
       enableTimeBufferProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, (R, int), QAfterProperty>
       timeBufferInSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<PacingModel, (R, int), QAfterProperty>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(8);
     });
   }
 
   QueryBuilder<PacingModel, (R, List<ImprovisationModel>), QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(9);
     });
   }
 }
 
 extension PacingModelQueryProperty3<R1, R2>
     on QueryBuilder<PacingModel, (R1, R2), QAfterProperty> {
+  QueryBuilder<PacingModel, (R1, R2, List<String>), QOperations>
+      categoriesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(1);
+    });
+  }
+
+  QueryBuilder<PacingModel, (R1, R2, List<String>), QOperations>
+      themesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(2);
+    });
+  }
+
   QueryBuilder<PacingModel, (R1, R2, int), QOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1479,48 +1978,48 @@ extension PacingModelQueryProperty3<R1, R2>
   QueryBuilder<PacingModel, (R1, R2, DateTime?), QOperations>
       createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, DateTime?), QOperations>
       modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, String), QOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, bool), QOperations>
       enableTimeBufferProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, int), QOperations>
       timeBufferInSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, int), QOperations>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(8);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, List<ImprovisationModel>), QOperations>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(9);
     });
   }
 }

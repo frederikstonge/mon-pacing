@@ -17,6 +17,8 @@ part 'match_model.g.dart';
 @freezed
 @collection
 class MatchModel with _$MatchModel implements BaseModel {
+  const MatchModel._();
+
   @Implements<BaseModel>()
   const factory MatchModel({
     required int id,
@@ -31,6 +33,8 @@ class MatchModel with _$MatchModel implements BaseModel {
     required PenaltiesImpactType penaltiesImpactType,
     required int penaltiesRequiredToImpactPoints,
   }) = _MatchModel;
+
+  List<String> get teamNames => teams.map((e) => e.name).toList();
 
   factory MatchModel.fromJson(Map<String, Object?> json) => _$MatchModelFromJson(json);
 }

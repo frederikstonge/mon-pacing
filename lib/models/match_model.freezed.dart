@@ -232,7 +232,7 @@ class __$$MatchModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MatchModelImpl implements _MatchModel {
+class _$MatchModelImpl extends _MatchModel {
   const _$MatchModelImpl(
       {required this.id,
       @index required this.name,
@@ -248,7 +248,8 @@ class _$MatchModelImpl implements _MatchModel {
       : _teams = teams,
         _improvisations = improvisations,
         _penalties = penalties,
-        _points = points;
+        _points = points,
+        super._();
 
   factory _$MatchModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$MatchModelImplFromJson(json);
@@ -366,7 +367,7 @@ class _$MatchModelImpl implements _MatchModel {
   }
 }
 
-abstract class _MatchModel implements MatchModel, BaseModel {
+abstract class _MatchModel extends MatchModel implements BaseModel {
   const factory _MatchModel(
       {required final int id,
       @index required final String name,
@@ -379,6 +380,7 @@ abstract class _MatchModel implements MatchModel, BaseModel {
       required final bool enablePenaltiesImpactPoints,
       required final PenaltiesImpactType penaltiesImpactType,
       required final int penaltiesRequiredToImpactPoints}) = _$MatchModelImpl;
+  const _MatchModel._() : super._();
 
   factory _MatchModel.fromJson(Map<String, dynamic> json) =
       _$MatchModelImpl.fromJson;
