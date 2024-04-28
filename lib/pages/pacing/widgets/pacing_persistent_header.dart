@@ -39,7 +39,7 @@ class PacingPersistentHeader extends SliverPersistentHeaderDelegate {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              pacing.totalDuration.toImprovDuration(),
+              pacing.totalDuration().toImprovDuration(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

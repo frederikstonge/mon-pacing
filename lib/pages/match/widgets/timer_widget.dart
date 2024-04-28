@@ -34,22 +34,31 @@ class TimerWidget extends StatelessWidget {
           state.timer!.improvisationId == improvisation.id &&
           state.timer!.durationIndex == durationIndex;
 
+      final includeHuddleTimer = improvisation.huddleTimerInSeconds > 0;
+
+      final durations = [
+        if (includeHuddleTimer) ...[
+          Duration(seconds: improvisation.huddleTimerInSeconds),
+        ],
+        ...improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
+      ];
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (improvisation.durationsInSeconds.length > 1) ...[
+          if (durations.length > 1) ...[
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SegmentedButton(
                 style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-                segments: improvisation.durationsInSeconds
+                segments: durations
                     .asMap()
                     .entries
                     .map(
                       (e) => ButtonSegment(
                         value: e.key,
                         label: Text(
-                          Duration(seconds: e.value).toImprovDuration(),
+                          includeHuddleTimer && e.key == 0 ? S.of(context).huddle : e.value.toImprovDuration(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -67,7 +76,7 @@ class TimerWidget extends StatelessWidget {
           Text(
             isActive
                 ? Duration(milliseconds: state.timer!.remainingMilliseconds).toImprovDuration()
-                : Duration(seconds: improvisation.durationsInSeconds.elementAt(durationIndex)).toImprovDuration(),
+                : durations.elementAt(durationIndex).toImprovDuration(),
             style: Theme.of(context).textTheme.displaySmall,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -83,7 +92,7 @@ class TimerWidget extends StatelessWidget {
                           match.name,
                           improvisation.id,
                           durationIndex,
-                          Duration(seconds: improvisation.durationsInSeconds.elementAt(durationIndex)),
+                          durations.elementAt(durationIndex),
                         ),
                 icon: isActive && state.timer!.status == TimerStatus.started ? const Icon(Icons.replay) : const Icon(Icons.play_arrow),
                 tooltip: S.of(context).start,

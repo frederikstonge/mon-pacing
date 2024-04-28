@@ -44,6 +44,14 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
         name: 'notes',
         type: IsarType.string,
       ),
+      IsarPropertySchema(
+        name: 'timeBufferInSeconds',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'huddleTimerInSeconds',
+        type: IsarType.long,
+      ),
     ],
     indexes: [],
   ),
@@ -69,6 +77,8 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
   }
   IsarCore.writeString(writer, 6, object.performers);
   IsarCore.writeString(writer, 7, object.notes);
+  IsarCore.writeLong(writer, 8, object.timeBufferInSeconds);
+  IsarCore.writeLong(writer, 9, object.huddleTimerInSeconds);
   return 0;
 }
 
@@ -111,6 +121,10 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   _performers = IsarCore.readString(reader, 6) ?? '';
   final String _notes;
   _notes = IsarCore.readString(reader, 7) ?? '';
+  final int _timeBufferInSeconds;
+  _timeBufferInSeconds = IsarCore.readLong(reader, 8);
+  final int _huddleTimerInSeconds;
+  _huddleTimerInSeconds = IsarCore.readLong(reader, 9);
   final object = ImprovisationModel(
     id: _id,
     type: _type,
@@ -119,6 +133,8 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
     durationsInSeconds: _durationsInSeconds,
     performers: _performers,
     notes: _notes,
+    timeBufferInSeconds: _timeBufferInSeconds,
+    huddleTimerInSeconds: _huddleTimerInSeconds,
   );
   return object;
 }
@@ -1121,6 +1137,178 @@ extension ImprovisationModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsGreaterThan(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsGreaterThanOrEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsLessThan(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsLessThanOrEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 8,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsBetween(
+    int lower,
+    int upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 8,
+          lower: lower,
+          upper: upper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 9,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsGreaterThan(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 9,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsGreaterThanOrEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 9,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsLessThan(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 9,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsLessThanOrEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 9,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsBetween(
+    int lower,
+    int upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 9,
+          lower: lower,
+          upper: upper,
+        ),
+      );
+    });
+  }
 }
 
 extension ImprovisationModelQueryObject
@@ -1142,6 +1330,8 @@ _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
           .toList(),
       performers: json['performers'] as String,
       notes: json['notes'] as String,
+      timeBufferInSeconds: json['timeBufferInSeconds'] as int? ?? 30,
+      huddleTimerInSeconds: json['huddleTimerInSeconds'] as int? ?? 30,
     );
 
 Map<String, dynamic> _$$ImprovisationModelImplToJson(
@@ -1154,6 +1344,8 @@ Map<String, dynamic> _$$ImprovisationModelImplToJson(
       'durationsInSeconds': instance.durationsInSeconds,
       'performers': instance.performers,
       'notes': instance.notes,
+      'timeBufferInSeconds': instance.timeBufferInSeconds,
+      'huddleTimerInSeconds': instance.huddleTimerInSeconds,
     };
 
 const _$ImprovisationTypeEnumMap = {

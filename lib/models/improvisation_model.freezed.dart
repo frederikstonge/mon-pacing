@@ -27,6 +27,8 @@ mixin _$ImprovisationModel {
   List<int> get durationsInSeconds => throw _privateConstructorUsedError;
   String get performers => throw _privateConstructorUsedError;
   String get notes => throw _privateConstructorUsedError;
+  int get timeBufferInSeconds => throw _privateConstructorUsedError;
+  int get huddleTimerInSeconds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +49,9 @@ abstract class $ImprovisationModelCopyWith<$Res> {
       String theme,
       List<int> durationsInSeconds,
       String performers,
-      String notes});
+      String notes,
+      int timeBufferInSeconds,
+      int huddleTimerInSeconds});
 }
 
 /// @nodoc
@@ -70,6 +74,8 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
     Object? durationsInSeconds = null,
     Object? performers = null,
     Object? notes = null,
+    Object? timeBufferInSeconds = null,
+    Object? huddleTimerInSeconds = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -100,6 +106,14 @@ class _$ImprovisationModelCopyWithImpl<$Res, $Val extends ImprovisationModel>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String,
+      timeBufferInSeconds: null == timeBufferInSeconds
+          ? _value.timeBufferInSeconds
+          : timeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      huddleTimerInSeconds: null == huddleTimerInSeconds
+          ? _value.huddleTimerInSeconds
+          : huddleTimerInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -119,7 +133,9 @@ abstract class _$$ImprovisationModelImplCopyWith<$Res>
       String theme,
       List<int> durationsInSeconds,
       String performers,
-      String notes});
+      String notes,
+      int timeBufferInSeconds,
+      int huddleTimerInSeconds});
 }
 
 /// @nodoc
@@ -140,6 +156,8 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
     Object? durationsInSeconds = null,
     Object? performers = null,
     Object? notes = null,
+    Object? timeBufferInSeconds = null,
+    Object? huddleTimerInSeconds = null,
   }) {
     return _then(_$ImprovisationModelImpl(
       id: null == id
@@ -170,6 +188,14 @@ class __$$ImprovisationModelImplCopyWithImpl<$Res>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String,
+      timeBufferInSeconds: null == timeBufferInSeconds
+          ? _value.timeBufferInSeconds
+          : timeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      huddleTimerInSeconds: null == huddleTimerInSeconds
+          ? _value.huddleTimerInSeconds
+          : huddleTimerInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -184,7 +210,9 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
       required this.theme,
       required final List<int> durationsInSeconds,
       required this.performers,
-      required this.notes})
+      required this.notes,
+      this.timeBufferInSeconds = 30,
+      this.huddleTimerInSeconds = 30})
       : _durationsInSeconds = durationsInSeconds;
 
   factory _$ImprovisationModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -211,10 +239,16 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
   final String performers;
   @override
   final String notes;
+  @override
+  @JsonKey()
+  final int timeBufferInSeconds;
+  @override
+  @JsonKey()
+  final int huddleTimerInSeconds;
 
   @override
   String toString() {
-    return 'ImprovisationModel(id: $id, type: $type, category: $category, theme: $theme, durationsInSeconds: $durationsInSeconds, performers: $performers, notes: $notes)';
+    return 'ImprovisationModel(id: $id, type: $type, category: $category, theme: $theme, durationsInSeconds: $durationsInSeconds, performers: $performers, notes: $notes, timeBufferInSeconds: $timeBufferInSeconds, huddleTimerInSeconds: $huddleTimerInSeconds)';
   }
 
   @override
@@ -231,7 +265,11 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
                 .equals(other._durationsInSeconds, _durationsInSeconds) &&
             (identical(other.performers, performers) ||
                 other.performers == performers) &&
-            (identical(other.notes, notes) || other.notes == notes));
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.timeBufferInSeconds, timeBufferInSeconds) ||
+                other.timeBufferInSeconds == timeBufferInSeconds) &&
+            (identical(other.huddleTimerInSeconds, huddleTimerInSeconds) ||
+                other.huddleTimerInSeconds == huddleTimerInSeconds));
   }
 
   @JsonKey(ignore: true)
@@ -244,7 +282,9 @@ class _$ImprovisationModelImpl implements _ImprovisationModel {
       theme,
       const DeepCollectionEquality().hash(_durationsInSeconds),
       performers,
-      notes);
+      notes,
+      timeBufferInSeconds,
+      huddleTimerInSeconds);
 
   @JsonKey(ignore: true)
   @override
@@ -269,7 +309,9 @@ abstract class _ImprovisationModel implements ImprovisationModel {
       required final String theme,
       required final List<int> durationsInSeconds,
       required final String performers,
-      required final String notes}) = _$ImprovisationModelImpl;
+      required final String notes,
+      final int timeBufferInSeconds,
+      final int huddleTimerInSeconds}) = _$ImprovisationModelImpl;
 
   factory _ImprovisationModel.fromJson(Map<String, dynamic> json) =
       _$ImprovisationModelImpl.fromJson;
@@ -288,6 +330,10 @@ abstract class _ImprovisationModel implements ImprovisationModel {
   String get performers;
   @override
   String get notes;
+  @override
+  int get timeBufferInSeconds;
+  @override
+  int get huddleTimerInSeconds;
   @override
   @JsonKey(ignore: true)
   _$$ImprovisationModelImplCopyWith<_$ImprovisationModelImpl> get copyWith =>

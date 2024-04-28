@@ -41,21 +41,13 @@ const PacingModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'enableTimeBuffer',
-        type: IsarType.bool,
-      ),
-      IsarPropertySchema(
-        name: 'timeBufferInSeconds',
-        type: IsarType.long,
+        name: 'improvisations',
+        type: IsarType.objectList,
+        target: 'ImprovisationModel',
       ),
       IsarPropertySchema(
         name: 'defaultNumberOfTeams',
         type: IsarType.long,
-      ),
-      IsarPropertySchema(
-        name: 'improvisations',
-        type: IsarType.objectList,
-        target: 'ImprovisationModel',
       ),
     ],
     indexes: [
@@ -114,12 +106,9 @@ int serializePacingModel(IsarWriter writer, PacingModel object) {
       object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
   IsarCore.writeString(writer, 5, object.name);
-  IsarCore.writeBool(writer, 6, object.enableTimeBuffer);
-  IsarCore.writeLong(writer, 7, object.timeBufferInSeconds);
-  IsarCore.writeLong(writer, 8, object.defaultNumberOfTeams);
   {
     final list = object.improvisations;
-    final listWriter = IsarCore.beginList(writer, 9, list.length);
+    final listWriter = IsarCore.beginList(writer, 6, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -130,6 +119,7 @@ int serializePacingModel(IsarWriter writer, PacingModel object) {
     }
     IsarCore.endList(writer, listWriter);
   }
+  IsarCore.writeLong(writer, 7, object.defaultNumberOfTeams);
   return object.id;
 }
 
@@ -159,15 +149,9 @@ PacingModel deserializePacingModel(IsarReader reader) {
   }
   final String _name;
   _name = IsarCore.readString(reader, 5) ?? '';
-  final bool _enableTimeBuffer;
-  _enableTimeBuffer = IsarCore.readBool(reader, 6);
-  final int _timeBufferInSeconds;
-  _timeBufferInSeconds = IsarCore.readLong(reader, 7);
-  final int _defaultNumberOfTeams;
-  _defaultNumberOfTeams = IsarCore.readLong(reader, 8);
   final List<ImprovisationModel> _improvisations;
   {
-    final length = IsarCore.readList(reader, 9, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -210,15 +194,15 @@ PacingModel deserializePacingModel(IsarReader reader) {
       }
     }
   }
+  final int _defaultNumberOfTeams;
+  _defaultNumberOfTeams = IsarCore.readLong(reader, 7);
   final object = PacingModel(
     id: _id,
     createdDate: _createdDate,
     modifiedDate: _modifiedDate,
     name: _name,
-    enableTimeBuffer: _enableTimeBuffer,
-    timeBufferInSeconds: _timeBufferInSeconds,
-    defaultNumberOfTeams: _defaultNumberOfTeams,
     improvisations: _improvisations,
+    defaultNumberOfTeams: _defaultNumberOfTeams,
   );
   return object;
 }
@@ -285,14 +269,8 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
     case 5:
       return IsarCore.readString(reader, 5) ?? '';
     case 6:
-      return IsarCore.readBool(reader, 6);
-    case 7:
-      return IsarCore.readLong(reader, 7);
-    case 8:
-      return IsarCore.readLong(reader, 8);
-    case 9:
       {
-        final length = IsarCore.readList(reader, 9, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -335,6 +313,8 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
           }
         }
       }
+    case 7:
+      return IsarCore.readLong(reader, 7);
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -346,8 +326,6 @@ sealed class _PacingModelUpdate {
     DateTime? createdDate,
     DateTime? modifiedDate,
     String? name,
-    bool? enableTimeBuffer,
-    int? timeBufferInSeconds,
     int? defaultNumberOfTeams,
   });
 }
@@ -363,8 +341,6 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enableTimeBuffer = ignore,
-    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     return collection.updateProperties([
@@ -373,9 +349,7 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
           if (createdDate != ignore) 3: createdDate as DateTime?,
           if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
           if (name != ignore) 5: name as String?,
-          if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
-          if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
-          if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
+          if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
         }) >
         0;
   }
@@ -387,8 +361,6 @@ sealed class _PacingModelUpdateAll {
     DateTime? createdDate,
     DateTime? modifiedDate,
     String? name,
-    bool? enableTimeBuffer,
-    int? timeBufferInSeconds,
     int? defaultNumberOfTeams,
   });
 }
@@ -404,17 +376,13 @@ class _PacingModelUpdateAllImpl implements _PacingModelUpdateAll {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enableTimeBuffer = ignore,
-    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     return collection.updateProperties(id, {
       if (createdDate != ignore) 3: createdDate as DateTime?,
       if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
       if (name != ignore) 5: name as String?,
-      if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
-      if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
-      if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
+      if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
     });
   }
 }
@@ -430,8 +398,6 @@ sealed class _PacingModelQueryUpdate {
     DateTime? createdDate,
     DateTime? modifiedDate,
     String? name,
-    bool? enableTimeBuffer,
-    int? timeBufferInSeconds,
     int? defaultNumberOfTeams,
   });
 }
@@ -447,17 +413,13 @@ class _PacingModelQueryUpdateImpl implements _PacingModelQueryUpdate {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enableTimeBuffer = ignore,
-    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     return query.updateProperties(limit: limit, {
       if (createdDate != ignore) 3: createdDate as DateTime?,
       if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
       if (name != ignore) 5: name as String?,
-      if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
-      if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
-      if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
+      if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
     });
   }
 }
@@ -480,8 +442,6 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
     Object? name = ignore,
-    Object? enableTimeBuffer = ignore,
-    Object? timeBufferInSeconds = ignore,
     Object? defaultNumberOfTeams = ignore,
   }) {
     final q = query.build();
@@ -490,9 +450,7 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
         if (createdDate != ignore) 3: createdDate as DateTime?,
         if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
         if (name != ignore) 5: name as String?,
-        if (enableTimeBuffer != ignore) 6: enableTimeBuffer as bool?,
-        if (timeBufferInSeconds != ignore) 7: timeBufferInSeconds as int?,
-        if (defaultNumberOfTeams != ignore) 8: defaultNumberOfTeams as int?,
+        if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
       });
     } finally {
       q.close();
@@ -1357,101 +1315,15 @@ extension PacingModelQueryFilter
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      enableTimeBufferEqualTo(
-    bool value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 6,
-          value: value,
-        ),
-      );
-    });
+      improvisationsIsEmpty() {
+    return not().improvisationsIsNotEmpty();
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      timeBufferInSecondsEqualTo(
-    int value,
-  ) {
+      improvisationsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        EqualCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      timeBufferInSecondsGreaterThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      timeBufferInSecondsGreaterThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      timeBufferInSecondsLessThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      timeBufferInSecondsLessThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 7,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      timeBufferInSecondsBetween(
-    int lower,
-    int upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 7,
-          lower: lower,
-          upper: upper,
-        ),
+        const GreaterOrEqualCondition(property: 6, value: null),
       );
     });
   }
@@ -1463,7 +1335,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 8,
+          property: 7,
           value: value,
         ),
       );
@@ -1477,7 +1349,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 8,
+          property: 7,
           value: value,
         ),
       );
@@ -1491,7 +1363,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 8,
+          property: 7,
           value: value,
         ),
       );
@@ -1505,7 +1377,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 8,
+          property: 7,
           value: value,
         ),
       );
@@ -1519,7 +1391,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 8,
+          property: 7,
           value: value,
         ),
       );
@@ -1534,24 +1406,10 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 8,
+          property: 7,
           lower: lower,
           upper: upper,
         ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      improvisationsIsEmpty() {
-    return not().improvisationsIsNotEmpty();
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      improvisationsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 9, value: null),
       );
     });
   }
@@ -1621,44 +1479,16 @@ extension PacingModelQuerySortBy
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByEnableTimeBuffer() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByEnableTimeBufferDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByTimeBufferInSeconds() {
+      sortByDefaultNumberOfTeams() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(7);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByTimeBufferInSecondsDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(7, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByDefaultNumberOfTeams() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(8);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       sortByDefaultNumberOfTeamsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(8, sort: Sort.desc);
+      return query.addSortBy(7, sort: Sort.desc);
     });
   }
 }
@@ -1717,44 +1547,16 @@ extension PacingModelQuerySortThenBy
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByEnableTimeBuffer() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByEnableTimeBufferDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByTimeBufferInSeconds() {
+      thenByDefaultNumberOfTeams() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(7);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByTimeBufferInSecondsDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(7, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByDefaultNumberOfTeams() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(8);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       thenByDefaultNumberOfTeamsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(8, sort: Sort.desc);
+      return query.addSortBy(7, sort: Sort.desc);
     });
   }
 }
@@ -1796,23 +1598,9 @@ extension PacingModelQueryWhereDistinct
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
-      distinctByEnableTimeBuffer() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(6);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
-      distinctByTimeBufferInSeconds() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(7);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
       distinctByDefaultNumberOfTeams() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(8);
+      return query.addDistinctBy(7);
     });
   }
 }
@@ -1855,29 +1643,17 @@ extension PacingModelQueryProperty1
     });
   }
 
-  QueryBuilder<PacingModel, bool, QAfterProperty> enableTimeBufferProperty() {
+  QueryBuilder<PacingModel, List<ImprovisationModel>, QAfterProperty>
+      improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
-    });
-  }
-
-  QueryBuilder<PacingModel, int, QAfterProperty> timeBufferInSecondsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
     });
   }
 
   QueryBuilder<PacingModel, int, QAfterProperty>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
-    });
-  }
-
-  QueryBuilder<PacingModel, List<ImprovisationModel>, QAfterProperty>
-      improvisationsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(7);
     });
   }
 }
@@ -1924,31 +1700,17 @@ extension PacingModelQueryProperty2<R>
     });
   }
 
-  QueryBuilder<PacingModel, (R, bool), QAfterProperty>
-      enableTimeBufferProperty() {
+  QueryBuilder<PacingModel, (R, List<ImprovisationModel>), QAfterProperty>
+      improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, (R, int), QAfterProperty>
-      timeBufferInSecondsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
-    });
-  }
-
-  QueryBuilder<PacingModel, (R, int), QAfterProperty>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
-    });
-  }
-
-  QueryBuilder<PacingModel, (R, List<ImprovisationModel>), QAfterProperty>
-      improvisationsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(7);
     });
   }
 }
@@ -1995,31 +1757,17 @@ extension PacingModelQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<PacingModel, (R1, R2, bool), QOperations>
-      enableTimeBufferProperty() {
+  QueryBuilder<PacingModel, (R1, R2, List<ImprovisationModel>), QOperations>
+      improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, int), QOperations>
-      timeBufferInSecondsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
-    });
-  }
-
-  QueryBuilder<PacingModel, (R1, R2, int), QOperations>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
-    });
-  }
-
-  QueryBuilder<PacingModel, (R1, R2, List<ImprovisationModel>), QOperations>
-      improvisationsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(7);
     });
   }
 }
@@ -2038,12 +1786,10 @@ _$PacingModelImpl _$$PacingModelImplFromJson(Map<String, dynamic> json) =>
       modifiedDate: json['modifiedDate'] == null
           ? null
           : DateTime.parse(json['modifiedDate'] as String),
-      enableTimeBuffer: json['enableTimeBuffer'] as bool,
-      timeBufferInSeconds: json['timeBufferInSeconds'] as int,
-      defaultNumberOfTeams: json['defaultNumberOfTeams'] as int,
       improvisations: (json['improvisations'] as List<dynamic>)
           .map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      defaultNumberOfTeams: json['defaultNumberOfTeams'] as int? ?? 2,
     );
 
 Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
@@ -2052,8 +1798,6 @@ Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
       'name': instance.name,
       'createdDate': instance.createdDate?.toIso8601String(),
       'modifiedDate': instance.modifiedDate?.toIso8601String(),
-      'enableTimeBuffer': instance.enableTimeBuffer,
-      'timeBufferInSeconds': instance.timeBufferInSeconds,
-      'defaultNumberOfTeams': instance.defaultNumberOfTeams,
       'improvisations': instance.improvisations,
+      'defaultNumberOfTeams': instance.defaultNumberOfTeams,
     };

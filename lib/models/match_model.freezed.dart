@@ -242,9 +242,9 @@ class _$MatchModelImpl extends _MatchModel {
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
-      required this.enablePenaltiesImpactPoints,
-      required this.penaltiesImpactType,
-      required this.penaltiesRequiredToImpactPoints})
+      this.enablePenaltiesImpactPoints = true,
+      this.penaltiesImpactType = PenaltiesImpactType.addPoints,
+      this.penaltiesRequiredToImpactPoints = 3})
       : _teams = teams,
         _improvisations = improvisations,
         _penalties = penalties,
@@ -297,10 +297,13 @@ class _$MatchModelImpl extends _MatchModel {
   }
 
   @override
+  @JsonKey()
   final bool enablePenaltiesImpactPoints;
   @override
+  @JsonKey()
   final PenaltiesImpactType penaltiesImpactType;
   @override
+  @JsonKey()
   final int penaltiesRequiredToImpactPoints;
 
   @override
@@ -377,9 +380,9 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
-      required final bool enablePenaltiesImpactPoints,
-      required final PenaltiesImpactType penaltiesImpactType,
-      required final int penaltiesRequiredToImpactPoints}) = _$MatchModelImpl;
+      final bool enablePenaltiesImpactPoints,
+      final PenaltiesImpactType penaltiesImpactType,
+      final int penaltiesRequiredToImpactPoints}) = _$MatchModelImpl;
   const _MatchModel._() : super._();
 
   factory _MatchModel.fromJson(Map<String, dynamic> json) =

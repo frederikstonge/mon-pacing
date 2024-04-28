@@ -32,6 +32,8 @@ class MatchImprovisationCubit extends Cubit<MatchImprovisationState> {
                   performers: '',
                   theme: '',
                   notes: '',
+                  timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
+                  huddleTimerInSeconds: settingsCubit.state.defaultHuddleTimerInSeconds,
                 ),
             index: improvisation != null ? match.improvisations.indexWhere((element) => element.id == improvisation.id) : match.improvisations.length,
           ),

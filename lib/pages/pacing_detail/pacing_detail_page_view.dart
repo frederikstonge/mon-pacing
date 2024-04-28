@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../components/actions/haptic_switch.dart';
 import '../../components/actions/loading_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
-import '../../components/duration_picker/duration_picker.dart';
 import '../../components/form/text_field_element.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
-import '../../components/settings_tile/settings_tile.dart';
 import '../../components/text_header/text_header.dart';
-import '../../extensions/duration_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../validators/validator.dart';
@@ -101,50 +96,6 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                child: TextHeader(
-                  title: S.of(context).timeBuffer,
-                  tooltip: S.of(context).timeBufferTooltip,
-                ),
-              ),
-              CustomCard(
-                child: Column(
-                  children: [
-                    SettingsTile(
-                      leading: const Icon(Icons.timer),
-                      title: Text(S.of(context).enableTimeBuffer),
-                      trailing: HapticSwitch(
-                          value: state.pacing.enableTimeBuffer,
-                          onChanged: (value) {
-                            context.read<PacingDetailCubit>().edit(state.pacing.copyWith(enableTimeBuffer: value));
-                          }),
-                    ),
-                    SettingsTile(
-                      leading: const Icon(Icons.timer_outlined),
-                      title: Text(S.of(context).timeBuffer),
-                      subTitle: Text(Duration(seconds: state.pacing.timeBufferInSeconds).toImprovDuration()),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: state.pacing.enableTimeBuffer
-                          ? () async {
-                              final pacingDetailCubit = context.read<PacingDetailCubit>();
-                              final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                                context: context,
-                                child: DurationPicker(
-                                  title: S.of(context).timeBuffer,
-                                  initialDuration: Duration(seconds: state.pacing.timeBufferInSeconds),
-                                ),
-                              );
-
-                              if (newDuration != null) {
-                                pacingDetailCubit.edit(state.pacing.copyWith(timeBufferInSeconds: newDuration.inSeconds));
-                              }
-                            }
-                          : null,
                     ),
                   ],
                 ),

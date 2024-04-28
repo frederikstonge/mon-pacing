@@ -45,6 +45,8 @@ class PacingCubit extends Cubit<PacingState> {
           performers: '',
           theme: '',
           notes: '',
+          timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
+          huddleTimerInSeconds: settingsCubit.state.defaultHuddleTimerInSeconds,
         );
 
         improvisations.add(newImprovisation);
