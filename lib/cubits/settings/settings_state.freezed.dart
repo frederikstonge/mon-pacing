@@ -26,8 +26,8 @@ mixin _$SettingsState {
   bool get enableTimerHapticFeedback => throw _privateConstructorUsedError;
   int get defaultImprovisationDurationInSeconds =>
       throw _privateConstructorUsedError;
-  bool get enableDefaultTimeBuffer => throw _privateConstructorUsedError;
   int get defaultTimeBufferInSeconds => throw _privateConstructorUsedError;
+  int get defaultHuddleTimerInSeconds => throw _privateConstructorUsedError;
   bool get enableDefaultPenaltiesImpactPoints =>
       throw _privateConstructorUsedError;
   PenaltiesImpactType get defaultPenaltiesImpactType =>
@@ -53,8 +53,8 @@ abstract class $SettingsStateCopyWith<$Res> {
       bool enableHapticFeedback,
       bool enableTimerHapticFeedback,
       int defaultImprovisationDurationInSeconds,
-      bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
+      int defaultHuddleTimerInSeconds,
       bool enableDefaultPenaltiesImpactPoints,
       PenaltiesImpactType defaultPenaltiesImpactType,
       int defaultPenaltiesRequiredToImpactPoints});
@@ -78,8 +78,8 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? enableHapticFeedback = null,
     Object? enableTimerHapticFeedback = null,
     Object? defaultImprovisationDurationInSeconds = null,
-    Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
+    Object? defaultHuddleTimerInSeconds = null,
     Object? enableDefaultPenaltiesImpactPoints = null,
     Object? defaultPenaltiesImpactType = null,
     Object? defaultPenaltiesRequiredToImpactPoints = null,
@@ -106,13 +106,13 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.defaultImprovisationDurationInSeconds
           : defaultImprovisationDurationInSeconds // ignore: cast_nullable_to_non_nullable
               as int,
-      enableDefaultTimeBuffer: null == enableDefaultTimeBuffer
-          ? _value.enableDefaultTimeBuffer
-          : enableDefaultTimeBuffer // ignore: cast_nullable_to_non_nullable
-              as bool,
       defaultTimeBufferInSeconds: null == defaultTimeBufferInSeconds
           ? _value.defaultTimeBufferInSeconds
           : defaultTimeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      defaultHuddleTimerInSeconds: null == defaultHuddleTimerInSeconds
+          ? _value.defaultHuddleTimerInSeconds
+          : defaultHuddleTimerInSeconds // ignore: cast_nullable_to_non_nullable
               as int,
       enableDefaultPenaltiesImpactPoints: null ==
               enableDefaultPenaltiesImpactPoints
@@ -146,8 +146,8 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       bool enableHapticFeedback,
       bool enableTimerHapticFeedback,
       int defaultImprovisationDurationInSeconds,
-      bool enableDefaultTimeBuffer,
       int defaultTimeBufferInSeconds,
+      int defaultHuddleTimerInSeconds,
       bool enableDefaultPenaltiesImpactPoints,
       PenaltiesImpactType defaultPenaltiesImpactType,
       int defaultPenaltiesRequiredToImpactPoints});
@@ -169,8 +169,8 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? enableHapticFeedback = null,
     Object? enableTimerHapticFeedback = null,
     Object? defaultImprovisationDurationInSeconds = null,
-    Object? enableDefaultTimeBuffer = null,
     Object? defaultTimeBufferInSeconds = null,
+    Object? defaultHuddleTimerInSeconds = null,
     Object? enableDefaultPenaltiesImpactPoints = null,
     Object? defaultPenaltiesImpactType = null,
     Object? defaultPenaltiesRequiredToImpactPoints = null,
@@ -197,13 +197,13 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.defaultImprovisationDurationInSeconds
           : defaultImprovisationDurationInSeconds // ignore: cast_nullable_to_non_nullable
               as int,
-      enableDefaultTimeBuffer: null == enableDefaultTimeBuffer
-          ? _value.enableDefaultTimeBuffer
-          : enableDefaultTimeBuffer // ignore: cast_nullable_to_non_nullable
-              as bool,
       defaultTimeBufferInSeconds: null == defaultTimeBufferInSeconds
           ? _value.defaultTimeBufferInSeconds
           : defaultTimeBufferInSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      defaultHuddleTimerInSeconds: null == defaultHuddleTimerInSeconds
+          ? _value.defaultHuddleTimerInSeconds
+          : defaultHuddleTimerInSeconds // ignore: cast_nullable_to_non_nullable
               as int,
       enableDefaultPenaltiesImpactPoints: null ==
               enableDefaultPenaltiesImpactPoints
@@ -232,8 +232,8 @@ class _$SettingsStateImpl implements _SettingsState {
       this.enableHapticFeedback = true,
       this.enableTimerHapticFeedback = true,
       this.defaultImprovisationDurationInSeconds = 150,
-      this.enableDefaultTimeBuffer = true,
-      this.defaultTimeBufferInSeconds = 60,
+      this.defaultTimeBufferInSeconds = 30,
+      this.defaultHuddleTimerInSeconds = 30,
       this.enableDefaultPenaltiesImpactPoints = true,
       this.defaultPenaltiesImpactType = PenaltiesImpactType.addPoints,
       this.defaultPenaltiesRequiredToImpactPoints = 3});
@@ -256,10 +256,10 @@ class _$SettingsStateImpl implements _SettingsState {
   final int defaultImprovisationDurationInSeconds;
   @override
   @JsonKey()
-  final bool enableDefaultTimeBuffer;
+  final int defaultTimeBufferInSeconds;
   @override
   @JsonKey()
-  final int defaultTimeBufferInSeconds;
+  final int defaultHuddleTimerInSeconds;
   @override
   @JsonKey()
   final bool enableDefaultPenaltiesImpactPoints;
@@ -272,7 +272,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, enableDefaultTimeBuffer: $enableDefaultTimeBuffer, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints)';
+    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, defaultHuddleTimerInSeconds: $defaultHuddleTimerInSeconds, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints)';
   }
 
   @override
@@ -291,11 +291,12 @@ class _$SettingsStateImpl implements _SettingsState {
                     defaultImprovisationDurationInSeconds) ||
                 other.defaultImprovisationDurationInSeconds ==
                     defaultImprovisationDurationInSeconds) &&
-            (identical(other.enableDefaultTimeBuffer, enableDefaultTimeBuffer) ||
-                other.enableDefaultTimeBuffer == enableDefaultTimeBuffer) &&
             (identical(other.defaultTimeBufferInSeconds, defaultTimeBufferInSeconds) ||
                 other.defaultTimeBufferInSeconds ==
                     defaultTimeBufferInSeconds) &&
+            (identical(other.defaultHuddleTimerInSeconds, defaultHuddleTimerInSeconds) ||
+                other.defaultHuddleTimerInSeconds ==
+                    defaultHuddleTimerInSeconds) &&
             (identical(other.enableDefaultPenaltiesImpactPoints,
                     enableDefaultPenaltiesImpactPoints) ||
                 other.enableDefaultPenaltiesImpactPoints ==
@@ -318,8 +319,8 @@ class _$SettingsStateImpl implements _SettingsState {
       enableHapticFeedback,
       enableTimerHapticFeedback,
       defaultImprovisationDurationInSeconds,
-      enableDefaultTimeBuffer,
       defaultTimeBufferInSeconds,
+      defaultHuddleTimerInSeconds,
       enableDefaultPenaltiesImpactPoints,
       defaultPenaltiesImpactType,
       defaultPenaltiesRequiredToImpactPoints);
@@ -345,8 +346,8 @@ abstract class _SettingsState implements SettingsState {
       final bool enableHapticFeedback,
       final bool enableTimerHapticFeedback,
       final int defaultImprovisationDurationInSeconds,
-      final bool enableDefaultTimeBuffer,
       final int defaultTimeBufferInSeconds,
+      final int defaultHuddleTimerInSeconds,
       final bool enableDefaultPenaltiesImpactPoints,
       final PenaltiesImpactType defaultPenaltiesImpactType,
       final int defaultPenaltiesRequiredToImpactPoints}) = _$SettingsStateImpl;
@@ -365,9 +366,9 @@ abstract class _SettingsState implements SettingsState {
   @override
   int get defaultImprovisationDurationInSeconds;
   @override
-  bool get enableDefaultTimeBuffer;
-  @override
   int get defaultTimeBufferInSeconds;
+  @override
+  int get defaultHuddleTimerInSeconds;
   @override
   bool get enableDefaultPenaltiesImpactPoints;
   @override

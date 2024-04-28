@@ -2233,11 +2233,13 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
       points: (json['points'] as List<dynamic>)
           .map((e) => PointModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      enablePenaltiesImpactPoints: json['enablePenaltiesImpactPoints'] as bool,
-      penaltiesImpactType: $enumDecode(
-          _$PenaltiesImpactTypeEnumMap, json['penaltiesImpactType']),
+      enablePenaltiesImpactPoints:
+          json['enablePenaltiesImpactPoints'] as bool? ?? true,
+      penaltiesImpactType: $enumDecodeNullable(
+              _$PenaltiesImpactTypeEnumMap, json['penaltiesImpactType']) ??
+          PenaltiesImpactType.addPoints,
       penaltiesRequiredToImpactPoints:
-          json['penaltiesRequiredToImpactPoints'] as int,
+          json['penaltiesRequiredToImpactPoints'] as int? ?? 3,
     );
 
 Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>

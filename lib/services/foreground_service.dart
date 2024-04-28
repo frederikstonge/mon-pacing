@@ -36,7 +36,7 @@ void initForegroundTask() {
       playSound: false,
     ),
     foregroundTaskOptions: const ForegroundTaskOptions(
-      interval: 1000,
+      interval: 500,
       isOnceEvent: false,
       autoRunOnBoot: true,
       allowWakeLock: true,
@@ -70,12 +70,8 @@ class TimerTaskHandler extends TaskHandler {
     _sendPort = sendPort;
 
     _timer = await getTimer();
-    if (_timer == null) {
-      await FlutterForegroundTask.stopService();
-      return;
-    }
 
-    _stopwatch = Stopwatch();
+    _stopwatch = Stopwatch()..start();
 
     await onTick();
   }
@@ -83,10 +79,6 @@ class TimerTaskHandler extends TaskHandler {
   @override
   Future<void> onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
     _timer = await getTimer();
-    if (_timer == null) {
-      await FlutterForegroundTask.stopService();
-      return;
-    }
 
     await onTick();
   }
@@ -113,7 +105,14 @@ class TimerTaskHandler extends TaskHandler {
   }
 
   Future<void> onTick() async {
-    if (_timer!.status == TimerStatus.paused) {
+    var timer = _timer?.copyWith();
+
+    if (timer == null) {
+      await FlutterForegroundTask.stopService();
+      return;
+    }
+
+    if (timer.status == TimerStatus.paused) {
       if (_stopwatch!.isRunning) {
         _stopwatch!.stop();
       }
@@ -125,17 +124,10 @@ class TimerTaskHandler extends TaskHandler {
       _stopwatch!.start();
     }
 
-    final remainingMilliseconds = _timer!.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
+    final remainingMilliseconds = timer.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
-    _timer = _timer!.copyWith(remainingMilliseconds: remainingMilliseconds);
-    await FlutterForegroundTask.saveData(key: timerDataKey, value: json.encode(_timer!.toJson()));
-
-    _sendPort?.send(_timer!.toJson());
-
-    if (remainingMilliseconds <= 0) {
-      await FlutterForegroundTask.stopService();
-      return;
-    }
+    timer = timer.copyWith(remainingMilliseconds: remainingMilliseconds);
+    _sendPort?.send(timer.toJson());
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
 
@@ -143,11 +135,11 @@ class TimerTaskHandler extends TaskHandler {
         remainingDuration.inSeconds == 30 ||
         remainingDuration.inSeconds == 10 ||
         remainingDuration.inSeconds <= 5) {
-      unawaited(vibrate(HapticsType.medium));
+      unawaited(vibrate(HapticsType.light));
     }
 
     await FlutterForegroundTask.updateService(
-      notificationTitle: _timer!.notificationTitle,
+      notificationTitle: timer.notificationTitle,
       notificationText: remainingDuration.toImprovDuration(),
     );
   }

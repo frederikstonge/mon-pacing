@@ -2,12 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../extensions/duration_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../../pages/pacing/widgets/improvisation_durations.dart';
+import '../bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../duration_picker/duration_picker.dart';
 import '../form/drop_down_element.dart';
 import '../form/text_field_element.dart';
+import '../settings_tile/settings_tile.dart';
+import '../tooltip/custom_tooltip.dart';
 
 class ImprovisationDetail extends StatefulWidget {
   final ImprovisationModel improvisation;
@@ -98,6 +103,64 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           controller: _notesController,
           multiline: true,
           onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(notes: value)),
+        ),
+        SettingsTile(
+          leading: const Icon(Icons.timer),
+          title: Row(
+            children: [
+              Flexible(child: Text(S.of(context).huddleTimer)),
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: CustomTooltip(
+                  tooltip: S.of(context).huddleTimerTooltip,
+                ),
+              )
+            ],
+          ),
+          subTitle: Text(Duration(seconds: widget.improvisation.huddleTimerInSeconds).toImprovDuration()),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () async {
+            final newDuration = await BottomSheetDialog.showDialog<Duration>(
+              context: context,
+              child: DurationPicker(
+                title: S.of(context).huddleTimer,
+                initialDuration: Duration(seconds: widget.improvisation.huddleTimerInSeconds),
+              ),
+            );
+
+            if (newDuration != null) {
+              await widget.onChanged.call(widget.improvisation.copyWith(huddleTimerInSeconds: newDuration.inSeconds));
+            }
+          },
+        ),
+        SettingsTile(
+          leading: const Icon(Icons.more_time),
+          title: Row(
+            children: [
+              Flexible(child: Text(S.of(context).timeBuffer)),
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: CustomTooltip(
+                  tooltip: S.of(context).timeBufferTooltip,
+                ),
+              )
+            ],
+          ),
+          subTitle: Text(Duration(seconds: widget.improvisation.timeBufferInSeconds).toImprovDuration()),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () async {
+            final newDuration = await BottomSheetDialog.showDialog<Duration>(
+              context: context,
+              child: DurationPicker(
+                title: S.of(context).timeBuffer,
+                initialDuration: Duration(seconds: widget.improvisation.timeBufferInSeconds),
+              ),
+            );
+
+            if (newDuration != null) {
+              await widget.onChanged.call(widget.improvisation.copyWith(timeBufferInSeconds: newDuration.inSeconds));
+            }
+          },
         ),
       ],
     );

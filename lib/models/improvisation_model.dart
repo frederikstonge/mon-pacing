@@ -17,6 +17,8 @@ class ImprovisationModel with _$ImprovisationModel {
     required List<int> durationsInSeconds,
     required String performers,
     required String notes,
+    @Default(30) int timeBufferInSeconds,
+    @Default(30) int huddleTimerInSeconds,
   }) = _ImprovisationModel;
 
   factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);

@@ -155,10 +155,40 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                         },
                       ),
                       SettingsTile(
+                        leading: const Icon(Icons.timer),
+                        title: Row(
+                          children: [
+                            Flexible(child: Text(S.of(context).huddleTimer)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(
+                                tooltip: S.of(context).huddleTimerTooltip,
+                              ),
+                            )
+                          ],
+                        ),
+                        subTitle: Text(Duration(seconds: state.defaultHuddleTimerInSeconds).toImprovDuration()),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          final settingsCubit = context.read<SettingsCubit>();
+                          final newDuration = await BottomSheetDialog.showDialog<Duration>(
+                            context: context,
+                            child: DurationPicker(
+                              title: S.of(context).huddleTimer,
+                              initialDuration: Duration(seconds: state.defaultHuddleTimerInSeconds),
+                            ),
+                          );
+
+                          if (newDuration != null) {
+                            settingsCubit.edit(state.copyWith(defaultHuddleTimerInSeconds: newDuration.inSeconds));
+                          }
+                        },
+                      ),
+                      SettingsTile(
                         leading: const Icon(Icons.more_time),
                         title: Row(
                           children: [
-                            Flexible(child: Text(S.of(context).enableTimeBuffer)),
+                            Flexible(child: Text(S.of(context).timeBuffer)),
                             Padding(
                               padding: const EdgeInsets.only(left: 4),
                               child: CustomTooltip(
@@ -167,15 +197,6 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                             )
                           ],
                         ),
-                        trailing: HapticSwitch(
-                            value: state.enableDefaultTimeBuffer,
-                            onChanged: (value) {
-                              context.read<SettingsCubit>().edit(state.copyWith(enableDefaultTimeBuffer: value));
-                            }),
-                      ),
-                      SettingsTile(
-                        leading: const Icon(Icons.more_time),
-                        title: Text(S.of(context).timeBuffer),
                         subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {

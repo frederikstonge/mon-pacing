@@ -32,7 +32,11 @@ class TimerCubit extends Cubit<TimerState> {
       }
       try {
         final timer = TimerModel.fromJson(json.decode(data));
-        await _updateTimer(timer);
+        if (timer.remainingMilliseconds > 0) {
+          await _updateTimer(timer);
+        } else {
+          await stop();
+        }
       } catch (_) {
         return;
       }
@@ -67,31 +71,20 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   Future<bool> resume() async {
-    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
-    if (data == null) {
-      emit(const TimerState());
-      return false;
-    }
-
-    final timer = TimerModel.fromJson(json.decode(data)).copyWith(status: TimerStatus.started);
+    final timer = state.timer!.copyWith(status: TimerStatus.started);
     return await _updateTimer(timer);
   }
 
   Future<bool> pause() async {
-    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
-    if (data == null) {
-      emit(const TimerState());
-      return false;
-    }
-
-    final timer = TimerModel.fromJson(json.decode(data)).copyWith(status: TimerStatus.paused);
+    final timer = state.timer!.copyWith(status: TimerStatus.paused);
     return await _updateTimer(timer);
   }
 
   Future<bool> stop() async {
     await FlutterForegroundTask.removeData(key: timerDataKey);
+    final result = await FlutterForegroundTask.stopService();
     emit(const TimerState());
-    return await FlutterForegroundTask.stopService();
+    return result;
   }
 
   @override
@@ -101,13 +94,16 @@ class TimerCubit extends Cubit<TimerState> {
     return await super.close();
   }
 
-  void _onReceiveData(dynamic data) {
+  Future<void> _onReceiveData(dynamic data) async {
     final event = TimerModel.fromJson(data);
     if (event.remainingMilliseconds <= 0) {
-      stop();
+      await stop();
       return;
     }
-    _updateTimer(event);
+
+    if (state.timer != null) {
+      await _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
+    }
   }
 
   bool _registerReceivePort(ReceivePort? newReceivePort) {

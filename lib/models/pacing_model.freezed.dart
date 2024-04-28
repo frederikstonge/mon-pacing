@@ -26,11 +26,9 @@ mixin _$PacingModel {
   @index
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
-  bool get enableTimeBuffer => throw _privateConstructorUsedError;
-  int get timeBufferInSeconds => throw _privateConstructorUsedError;
-  int get defaultNumberOfTeams => throw _privateConstructorUsedError;
   List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
+  int get defaultNumberOfTeams => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,10 +47,8 @@ abstract class $PacingModelCopyWith<$Res> {
       @index String name,
       @index DateTime? createdDate,
       DateTime? modifiedDate,
-      bool enableTimeBuffer,
-      int timeBufferInSeconds,
-      int defaultNumberOfTeams,
-      List<ImprovisationModel> improvisations});
+      List<ImprovisationModel> improvisations,
+      int defaultNumberOfTeams});
 }
 
 /// @nodoc
@@ -72,10 +68,8 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? enableTimeBuffer = null,
-    Object? timeBufferInSeconds = null,
-    Object? defaultNumberOfTeams = null,
     Object? improvisations = null,
+    Object? defaultNumberOfTeams = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -94,22 +88,14 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      enableTimeBuffer: null == enableTimeBuffer
-          ? _value.enableTimeBuffer
-          : enableTimeBuffer // ignore: cast_nullable_to_non_nullable
-              as bool,
-      timeBufferInSeconds: null == timeBufferInSeconds
-          ? _value.timeBufferInSeconds
-          : timeBufferInSeconds // ignore: cast_nullable_to_non_nullable
-              as int,
-      defaultNumberOfTeams: null == defaultNumberOfTeams
-          ? _value.defaultNumberOfTeams
-          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
-              as int,
       improvisations: null == improvisations
           ? _value.improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
               as List<ImprovisationModel>,
+      defaultNumberOfTeams: null == defaultNumberOfTeams
+          ? _value.defaultNumberOfTeams
+          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -127,10 +113,8 @@ abstract class _$$PacingModelImplCopyWith<$Res>
       @index String name,
       @index DateTime? createdDate,
       DateTime? modifiedDate,
-      bool enableTimeBuffer,
-      int timeBufferInSeconds,
-      int defaultNumberOfTeams,
-      List<ImprovisationModel> improvisations});
+      List<ImprovisationModel> improvisations,
+      int defaultNumberOfTeams});
 }
 
 /// @nodoc
@@ -148,10 +132,8 @@ class __$$PacingModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? createdDate = freezed,
     Object? modifiedDate = freezed,
-    Object? enableTimeBuffer = null,
-    Object? timeBufferInSeconds = null,
-    Object? defaultNumberOfTeams = null,
     Object? improvisations = null,
+    Object? defaultNumberOfTeams = null,
   }) {
     return _then(_$PacingModelImpl(
       id: null == id
@@ -170,22 +152,14 @@ class __$$PacingModelImplCopyWithImpl<$Res>
           ? _value.modifiedDate
           : modifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      enableTimeBuffer: null == enableTimeBuffer
-          ? _value.enableTimeBuffer
-          : enableTimeBuffer // ignore: cast_nullable_to_non_nullable
-              as bool,
-      timeBufferInSeconds: null == timeBufferInSeconds
-          ? _value.timeBufferInSeconds
-          : timeBufferInSeconds // ignore: cast_nullable_to_non_nullable
-              as int,
-      defaultNumberOfTeams: null == defaultNumberOfTeams
-          ? _value.defaultNumberOfTeams
-          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
-              as int,
       improvisations: null == improvisations
           ? _value._improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
               as List<ImprovisationModel>,
+      defaultNumberOfTeams: null == defaultNumberOfTeams
+          ? _value.defaultNumberOfTeams
+          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -198,10 +172,8 @@ class _$PacingModelImpl extends _PacingModel {
       @index required this.name,
       @index required this.createdDate,
       required this.modifiedDate,
-      required this.enableTimeBuffer,
-      required this.timeBufferInSeconds,
-      required this.defaultNumberOfTeams,
-      required final List<ImprovisationModel> improvisations})
+      required final List<ImprovisationModel> improvisations,
+      this.defaultNumberOfTeams = 2})
       : _improvisations = improvisations,
         super._();
 
@@ -218,12 +190,6 @@ class _$PacingModelImpl extends _PacingModel {
   final DateTime? createdDate;
   @override
   final DateTime? modifiedDate;
-  @override
-  final bool enableTimeBuffer;
-  @override
-  final int timeBufferInSeconds;
-  @override
-  final int defaultNumberOfTeams;
   final List<ImprovisationModel> _improvisations;
   @override
   List<ImprovisationModel> get improvisations {
@@ -233,8 +199,12 @@ class _$PacingModelImpl extends _PacingModel {
   }
 
   @override
+  @JsonKey()
+  final int defaultNumberOfTeams;
+
+  @override
   String toString() {
-    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, enableTimeBuffer: $enableTimeBuffer, timeBufferInSeconds: $timeBufferInSeconds, defaultNumberOfTeams: $defaultNumberOfTeams, improvisations: $improvisations)';
+    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations, defaultNumberOfTeams: $defaultNumberOfTeams)';
   }
 
   @override
@@ -248,14 +218,10 @@ class _$PacingModelImpl extends _PacingModel {
                 other.createdDate == createdDate) &&
             (identical(other.modifiedDate, modifiedDate) ||
                 other.modifiedDate == modifiedDate) &&
-            (identical(other.enableTimeBuffer, enableTimeBuffer) ||
-                other.enableTimeBuffer == enableTimeBuffer) &&
-            (identical(other.timeBufferInSeconds, timeBufferInSeconds) ||
-                other.timeBufferInSeconds == timeBufferInSeconds) &&
-            (identical(other.defaultNumberOfTeams, defaultNumberOfTeams) ||
-                other.defaultNumberOfTeams == defaultNumberOfTeams) &&
             const DeepCollectionEquality()
-                .equals(other._improvisations, _improvisations));
+                .equals(other._improvisations, _improvisations) &&
+            (identical(other.defaultNumberOfTeams, defaultNumberOfTeams) ||
+                other.defaultNumberOfTeams == defaultNumberOfTeams));
   }
 
   @JsonKey(ignore: true)
@@ -266,10 +232,8 @@ class _$PacingModelImpl extends _PacingModel {
       name,
       createdDate,
       modifiedDate,
-      enableTimeBuffer,
-      timeBufferInSeconds,
-      defaultNumberOfTeams,
-      const DeepCollectionEquality().hash(_improvisations));
+      const DeepCollectionEquality().hash(_improvisations),
+      defaultNumberOfTeams);
 
   @JsonKey(ignore: true)
   @override
@@ -287,15 +251,12 @@ class _$PacingModelImpl extends _PacingModel {
 
 abstract class _PacingModel extends PacingModel implements BaseModel {
   const factory _PacingModel(
-          {required final int id,
-          @index required final String name,
-          @index required final DateTime? createdDate,
-          required final DateTime? modifiedDate,
-          required final bool enableTimeBuffer,
-          required final int timeBufferInSeconds,
-          required final int defaultNumberOfTeams,
-          required final List<ImprovisationModel> improvisations}) =
-      _$PacingModelImpl;
+      {required final int id,
+      @index required final String name,
+      @index required final DateTime? createdDate,
+      required final DateTime? modifiedDate,
+      required final List<ImprovisationModel> improvisations,
+      final int defaultNumberOfTeams}) = _$PacingModelImpl;
   const _PacingModel._() : super._();
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
@@ -312,13 +273,9 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
   @override
   DateTime? get modifiedDate;
   @override
-  bool get enableTimeBuffer;
-  @override
-  int get timeBufferInSeconds;
+  List<ImprovisationModel> get improvisations;
   @override
   int get defaultNumberOfTeams;
-  @override
-  List<ImprovisationModel> get improvisations;
   @override
   @JsonKey(ignore: true)
   _$$PacingModelImplCopyWith<_$PacingModelImpl> get copyWith =>

@@ -21,10 +21,8 @@ class PacingModel with _$PacingModel implements BaseModel {
     @index required String name,
     @index required DateTime? createdDate,
     required DateTime? modifiedDate,
-    required bool enableTimeBuffer,
-    required int timeBufferInSeconds,
-    required int defaultNumberOfTeams,
     required List<ImprovisationModel> improvisations,
+    @Default(2) int defaultNumberOfTeams,
   }) = _PacingModel;
 
   List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();

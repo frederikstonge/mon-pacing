@@ -29,9 +29,9 @@ class MatchModel with _$MatchModel implements BaseModel {
     required List<ImprovisationModel> improvisations,
     required List<PenaltyModel> penalties,
     required List<PointModel> points,
-    required bool enablePenaltiesImpactPoints,
-    required PenaltiesImpactType penaltiesImpactType,
-    required int penaltiesRequiredToImpactPoints,
+    @Default(true) bool enablePenaltiesImpactPoints,
+    @Default(PenaltiesImpactType.addPoints) PenaltiesImpactType penaltiesImpactType,
+    @Default(3) int penaltiesRequiredToImpactPoints,
   }) = _MatchModel;
 
   List<String> get teamNames => teams.map((e) => e.name).toList();

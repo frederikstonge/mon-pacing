@@ -1,11 +1,20 @@
 extension DurationExtensions on Duration {
   String toImprovDuration() {
-    String value = '$inMinutes min';
-    final seconds = inSeconds % 60;
-    if (seconds != 0) {
-      value = '$value $seconds sec';
+    String value = '';
+
+    if (inSeconds <= 0) {
+      return '-';
     }
 
-    return value;
+    if (inMinutes > 0) {
+      value += '$inMinutes min';
+    }
+
+    final seconds = inSeconds % 60;
+    if (seconds != 0) {
+      value += ' $seconds sec';
+    }
+
+    return value.trim();
   }
 }
