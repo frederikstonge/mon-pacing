@@ -1,20 +1,17 @@
+import 'package:intl/intl.dart';
+
 extension DurationExtensions on Duration {
   String toImprovDuration() {
+    final formatter = NumberFormat('00');
     String value = '';
 
-    if (inSeconds <= 0) {
-      return '-';
+    if (inHours > 0) {
+      value += '${formatter.format(inHours)}:';
     }
 
-    if (inMinutes > 0) {
-      value += '$inMinutes min';
-    }
-
+    final minutes = (inMinutes % 60);
     final seconds = inSeconds % 60;
-    if (seconds != 0) {
-      value += ' $seconds sec';
-    }
 
-    return value.trim();
+    return value += '${formatter.format(minutes)}:${formatter.format(seconds)}';
   }
 }

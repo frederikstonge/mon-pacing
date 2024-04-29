@@ -111,6 +111,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                         final improvisation = pacing.improvisations.elementAt(index);
                         return ImprovisationTile(
                           key: ValueKey(improvisation.id),
+                          pacing: pacing,
                           improvisation: improvisation,
                           index: index,
                           onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),

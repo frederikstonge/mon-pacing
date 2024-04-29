@@ -7,11 +7,14 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../components/improvisation_detail/improvisation_detail.dart';
 import '../../../extensions/duration_extensions.dart';
 import '../../../extensions/improvisation_extensions.dart';
+import '../../../extensions/pacing_extensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
+import '../../../models/pacing_model.dart';
 
 class ImprovisationTile extends StatefulWidget {
+  final PacingModel pacing;
   final ImprovisationModel improvisation;
   final int index;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
@@ -21,6 +24,7 @@ class ImprovisationTile extends StatefulWidget {
 
   const ImprovisationTile({
     super.key,
+    required this.pacing,
     required this.improvisation,
     required this.index,
     required this.onChanged,
@@ -71,8 +75,8 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  S.of(context).improvisationNumber(widget.index + 1),
-                  maxLines: 1,
+                  '${widget.pacing.totalDuration(take: widget.index).toImprovDuration()} - ${S.of(context).improvisationNumber(widget.index + 1)}',
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),

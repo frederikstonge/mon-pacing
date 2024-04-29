@@ -103,21 +103,23 @@ class TimerTaskHandler extends TaskHandler {
   Future<void> onTick() async {
     var timer = _timer?.copyWith();
 
+    // Handle STOP
     if (timer == null) {
       await FlutterForegroundTask.stopService();
       return;
     }
-
-    if (timer.status == TimerStatus.paused) {
+    if (timer.status == TimerStatus.started) {
+      // Handle RESUME
+      if (!_stopwatch!.isRunning) {
+        _stopwatch!.start();
+      }
+    } else {
+      // Handle PAUSED
       if (_stopwatch!.isRunning) {
         _stopwatch!.stop();
       }
 
       return;
-    }
-
-    if (!_stopwatch!.isRunning) {
-      _stopwatch!.start();
     }
 
     final remainingMilliseconds = timer.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
