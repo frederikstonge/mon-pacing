@@ -17,11 +17,13 @@ import '../tooltip/custom_tooltip.dart';
 class ImprovisationDetail extends StatefulWidget {
   final ImprovisationModel improvisation;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
+  final FutureOr<void> Function() onDragStart;
 
   const ImprovisationDetail({
     super.key,
     required this.improvisation,
     required this.onChanged,
+    required this.onDragStart,
   });
 
   @override
@@ -90,6 +92,7 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           label: S.of(context).duration,
           durations: widget.improvisation.durationsInSeconds,
           onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(durationsInSeconds: value)),
+          onDragStart: widget.onDragStart,
         ),
         const SizedBox(height: 8),
         TextFieldElement(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/actions/loading_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
@@ -7,6 +8,7 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/improvisation_detail/improvisation_detail.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
+import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import 'cubits/match_improvisation_cubit.dart';
 import 'cubits/match_improvisation_state.dart';
@@ -78,6 +80,7 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                       onChanged: (value) {
                         context.read<MatchImprovisationCubit>().edit(value);
                       },
+                      onDragStart: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
                     ),
                   ],
                 )),

@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
-import '../../../cubits/settings/settings_cubit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 import 'match_menu.dart';
@@ -16,6 +13,7 @@ class MatchCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;
   final FutureOr<void> Function() delete;
   final FutureOr<void> Function() open;
+  final FutureOr<void> Function() onLongPress;
   final MatchModel match;
 
   const MatchCard({
@@ -24,6 +22,7 @@ class MatchCard extends StatelessWidget {
     required this.shouldDelete,
     required this.delete,
     required this.open,
+    required this.onLongPress,
   });
 
   @override
@@ -46,7 +45,7 @@ class MatchCard extends StatelessWidget {
       onDismissed: (direction) async => await delete.call(),
       child: InkWell(
         onLongPress: () {
-          unawaited(context.read<SettingsCubit>().vibrate(HapticsType.selection));
+          onLongPress();
           _openMenu(context);
         },
         onTap: () {

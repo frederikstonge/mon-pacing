@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
@@ -11,6 +12,7 @@ import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
+import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
@@ -116,6 +118,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                         S.of(context).delete,
                         S.of(context).cancel,
                       ),
+                      onLongPress: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       delete: () async => await context.read<PacingsCubit>().delete(pacing),
                       edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
                       export: () async => await context.read<PacingsCubit>().export(pacing),

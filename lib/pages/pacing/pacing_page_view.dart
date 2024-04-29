@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
@@ -9,6 +10,7 @@ import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
+import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
 import 'cubits/pacing_cubit.dart';
@@ -123,8 +125,10 @@ class _PacingPageViewState extends State<PacingPageView> {
                           ),
                           onDelete: (value) async => context.read<PacingCubit>().removeImprovisation(index),
                           dragEnabled: pacing.improvisations.length > 1,
+                          onDragStart: _onDragStart,
                         );
                       },
+                      onReorderStart: (index) => _onDragStart(),
                       onReorder: (oldIndex, newIndex) => context.read<PacingCubit>().moveImprovisation(oldIndex, newIndex),
                     ),
                   ),
@@ -135,5 +139,9 @@ class _PacingPageViewState extends State<PacingPageView> {
         },
       ),
     );
+  }
+
+  Future<void> _onDragStart() async {
+    await context.read<SettingsCubit>().vibrate(HapticsType.selection);
   }
 }

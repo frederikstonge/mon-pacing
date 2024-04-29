@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
-import '../../../cubits/settings/settings_cubit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/pacing_model.dart';
 import 'pacing_menu.dart';
@@ -19,6 +16,7 @@ class PacingCard extends StatelessWidget {
   final FutureOr<void> Function() export;
   final FutureOr<void> Function() duplicate;
   final FutureOr<void> Function() startMatch;
+  final FutureOr<void> Function() onLongPress;
   final PacingModel pacing;
 
   const PacingCard({
@@ -30,6 +28,7 @@ class PacingCard extends StatelessWidget {
     required this.export,
     required this.duplicate,
     required this.startMatch,
+    required this.onLongPress,
   });
 
   @override
@@ -73,7 +72,7 @@ class PacingCard extends StatelessWidget {
       },
       child: InkWell(
         onLongPress: () {
-          unawaited(context.read<SettingsCubit>().vibrate(HapticsType.selection));
+          onLongPress();
           _openMenu(context);
         },
         onTap: () {

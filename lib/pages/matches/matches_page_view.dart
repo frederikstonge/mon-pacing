@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -8,6 +9,7 @@ import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/matches/matches_state.dart';
+import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
@@ -75,6 +77,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                     final match = matches.elementAt(index);
                     return MatchCard(
                       match: match,
+                      onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       open: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
                       shouldDelete: () => MessageBoxDialog.questionShow(
                         context,

@@ -12,12 +12,14 @@ class ImprovisationDurations extends StatelessWidget {
   final String label;
   final List<int> durations;
   final FutureOr<void> Function(List<int> durations) onChanged;
+  final FutureOr<void> Function() onDragStart;
 
   const ImprovisationDurations({
     super.key,
     required this.label,
     required this.durations,
     required this.onChanged,
+    required this.onDragStart,
   });
 
   @override
@@ -38,6 +40,7 @@ class ImprovisationDurations extends StatelessWidget {
         ReorderableListView(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
+          onReorderStart: (index) => onDragStart(),
           onReorder: _drag,
           children: durations
               .asMap()
