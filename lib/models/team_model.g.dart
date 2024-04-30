@@ -409,9 +409,9 @@ extension TeamModelQueryObject
 
 _$TeamModelImpl _$$TeamModelImplFromJson(Map<String, dynamic> json) =>
     _$TeamModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      color: json['color'] as int,
+      color: (json['color'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$TeamModelImplToJson(_$TeamModelImpl instance) =>

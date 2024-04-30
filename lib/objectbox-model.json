@@ -1,0 +1,335 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8914607900243138768",
+      "lastPropertyId": "13:5609030383979502710",
+      "name": "ImprovisationEntityModel",
+      "properties": [
+        {
+          "id": "1:3117701101401553046",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:2398888621869490011",
+          "name": "category",
+          "type": 9,
+          "flags": 8,
+          "indexId": "1:2122003198354024666"
+        },
+        {
+          "id": "5:7564667562157563041",
+          "name": "theme",
+          "type": 9,
+          "flags": 8,
+          "indexId": "2:6395375526733635240"
+        },
+        {
+          "id": "7:3159391340129517827",
+          "name": "performers",
+          "type": 9
+        },
+        {
+          "id": "8:6453554132006712815",
+          "name": "notes",
+          "type": 9,
+          "flags": 8,
+          "indexId": "3:3368114024170850700"
+        },
+        {
+          "id": "11:2349662434354150040",
+          "name": "type",
+          "type": 6
+        },
+        {
+          "id": "12:3130543207458000461",
+          "name": "timeBufferId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:432671548468845201",
+          "relationTarget": "DurationEntityModel"
+        },
+        {
+          "id": "13:5609030383979502710",
+          "name": "huddleTimerId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:5977630624184484134",
+          "relationTarget": "DurationEntityModel"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:4335433331722211646",
+          "name": "durations",
+          "targetId": "2:1489243300379573623"
+        }
+      ]
+    },
+    {
+      "id": "2:1489243300379573623",
+      "lastPropertyId": "4:2662620539167294471",
+      "name": "DurationEntityModel",
+      "properties": [
+        {
+          "id": "1:3932507240510649338",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8793924553072343553",
+          "name": "createdDate",
+          "type": 10
+        },
+        {
+          "id": "3:7074055300620186114",
+          "name": "modifiedDate",
+          "type": 10
+        },
+        {
+          "id": "4:2662620539167294471",
+          "name": "durationInSeconds",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:5906246021334358872",
+      "lastPropertyId": "8:6752668424207716573",
+      "name": "PenaltyEntityModel",
+      "properties": [
+        {
+          "id": "1:3272644439606059522",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:1337962594594493009",
+          "name": "major",
+          "type": 1
+        },
+        {
+          "id": "5:9190026604264138351",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "6:5481684287904550538",
+          "name": "performer",
+          "type": 9
+        },
+        {
+          "id": "7:3334217244485576348",
+          "name": "teamId",
+          "type": 6
+        },
+        {
+          "id": "8:6752668424207716573",
+          "name": "improvisationId",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:3319381071288449821",
+      "lastPropertyId": "6:8031417781075583715",
+      "name": "PointEntityModel",
+      "properties": [
+        {
+          "id": "1:4188330149373707241",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:6666184671137137373",
+          "name": "teamId",
+          "type": 6
+        },
+        {
+          "id": "5:3545528426188780479",
+          "name": "improvisationId",
+          "type": 6
+        },
+        {
+          "id": "6:8031417781075583715",
+          "name": "value",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:4271602385428364471",
+      "lastPropertyId": "5:3529359524545972799",
+      "name": "TeamEntityModel",
+      "properties": [
+        {
+          "id": "1:8646497019152405054",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:5442795310964879505",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:3529359524545972799",
+          "name": "color",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:8929856911640017933",
+      "lastPropertyId": "7:1261302864208010568",
+      "name": "MatchEntityModel",
+      "properties": [
+        {
+          "id": "1:878969476734533241",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6021016290077953270",
+          "name": "createdDate",
+          "type": 10,
+          "flags": 8,
+          "indexId": "6:6486354849065329154"
+        },
+        {
+          "id": "3:2203636915164371176",
+          "name": "modifiedDate",
+          "type": 10,
+          "flags": 8,
+          "indexId": "7:1456309799862639749"
+        },
+        {
+          "id": "4:1747032072527755774",
+          "name": "name",
+          "type": 9,
+          "flags": 8,
+          "indexId": "8:2658494162385683945"
+        },
+        {
+          "id": "5:8174789409349348733",
+          "name": "enablePenaltiesImpactPoints",
+          "type": 1
+        },
+        {
+          "id": "6:5118917127053205944",
+          "name": "penaltiesImpactType",
+          "type": 6
+        },
+        {
+          "id": "7:1261302864208010568",
+          "name": "penaltiesRequiredToImpactPoints",
+          "type": 6
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:6510061847270632051",
+          "name": "improvisations",
+          "targetId": "1:8914607900243138768"
+        },
+        {
+          "id": "3:8830045624412587589",
+          "name": "teams",
+          "targetId": "5:4271602385428364471"
+        },
+        {
+          "id": "4:3910597622604587346",
+          "name": "penalties",
+          "targetId": "3:5906246021334358872"
+        },
+        {
+          "id": "5:5524940104923030729",
+          "name": "points",
+          "targetId": "4:3319381071288449821"
+        }
+      ]
+    },
+    {
+      "id": "7:4479497672813572538",
+      "lastPropertyId": "5:1026035684906517907",
+      "name": "PacingEntityModel",
+      "properties": [
+        {
+          "id": "1:3575499540990970638",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5344798503133286712",
+          "name": "createdDate",
+          "type": 10,
+          "flags": 8,
+          "indexId": "9:4504118641178305882"
+        },
+        {
+          "id": "3:3095661558979648766",
+          "name": "modifiedDate",
+          "type": 10,
+          "flags": 8,
+          "indexId": "10:5233006772204919081"
+        },
+        {
+          "id": "4:6415873581400012360",
+          "name": "name",
+          "type": 9,
+          "flags": 8,
+          "indexId": "11:5714752445595325751"
+        },
+        {
+          "id": "5:1026035684906517907",
+          "name": "defaultNumberOfTeams",
+          "type": 6
+        }
+      ],
+      "relations": [
+        {
+          "id": "6:5542827067799863848",
+          "name": "improvisations",
+          "targetId": "1:8914607900243138768"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "7:4479497672813572538",
+  "lastIndexId": "11:5714752445595325751",
+  "lastRelationId": "6:5542827067799863848",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    4289033690076171076,
+    7835396717960053853,
+    7144344542896103951,
+    3820478307473349613,
+    844023223591610288,
+    8455124917036302612,
+    6638289729991681444,
+    3408745059806097945,
+    2248899038727762277,
+    8114421501588075415,
+    2318498905215491722
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

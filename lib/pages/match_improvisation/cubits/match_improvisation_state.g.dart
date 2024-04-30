@@ -12,7 +12,7 @@ _$MatchImprovisationStateImpl _$$MatchImprovisationStateImplFromJson(
       improvisation: ImprovisationModel.fromJson(
           json['improvisation'] as Map<String, dynamic>),
       editMode: json['editMode'] as bool,
-      index: json['index'] as int,
+      index: (json['index'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$MatchImprovisationStateImplToJson(

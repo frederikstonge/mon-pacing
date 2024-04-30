@@ -8,12 +8,12 @@ part of 'timer_model.dart';
 
 _$TimerModelImpl _$$TimerModelImplFromJson(Map<String, dynamic> json) =>
     _$TimerModelImpl(
-      duration: Duration(microseconds: json['duration'] as int),
-      matchId: json['matchId'] as int,
-      improvisationId: json['improvisationId'] as int,
-      durationIndex: json['durationIndex'] as int,
+      duration: Duration(microseconds: (json['duration'] as num).toInt()),
+      matchId: (json['matchId'] as num).toInt(),
+      improvisationId: (json['improvisationId'] as num).toInt(),
+      durationIndex: (json['durationIndex'] as num).toInt(),
       status: $enumDecode(_$TimerStatusEnumMap, json['status']),
-      remainingMilliseconds: json['remainingMilliseconds'] as int,
+      remainingMilliseconds: (json['remainingMilliseconds'] as num).toInt(),
       hapticFeedback: json['hapticFeedback'] as bool,
       notificationTitle: json['notificationTitle'] as String,
     );

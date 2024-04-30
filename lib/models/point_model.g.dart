@@ -412,10 +412,10 @@ extension PointModelQueryObject
 
 _$PointModelImpl _$$PointModelImplFromJson(Map<String, dynamic> json) =>
     _$PointModelImpl(
-      id: json['id'] as int,
-      teamId: json['teamId'] as int,
-      improvisationId: json['improvisationId'] as int,
-      value: json['value'] as int,
+      id: (json['id'] as num).toInt(),
+      teamId: (json['teamId'] as num).toInt(),
+      improvisationId: (json['improvisationId'] as num).toInt(),
+      value: (json['value'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$PointModelImplToJson(_$PointModelImpl instance) =>
