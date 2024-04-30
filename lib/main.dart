@@ -31,6 +31,7 @@ Future<void> main() async {
     if (!kDebugMode) {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     }
+
     return true;
   };
 

@@ -6,6 +6,8 @@ version: 1.0.0+1
 environment:
   sdk: ">=3.3.1 <4.0.0"
 
+isar_version: &isar_version 4.0.2 # define the version to be used
+
 dependencies:
   collection: ^1.18.0
   country_flags: ^2.2.0
@@ -30,8 +32,12 @@ dependencies:
   haptic_feedback: ^0.4.2
   hydrated_bloc: ^9.1.4
   intl: any
-  isar: ^4.0.0-dev.14
-  isar_flutter_libs: ^4.0.0-dev.14
+  isar: 
+    version: *isar_version
+    hosted: https://pub.isar-community.dev/
+  isar_flutter_libs: # contains Isar Core
+    version: *isar_version
+    hosted: https://pub.isar-community.dev/
   json_annotation: ^4.8.1
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5

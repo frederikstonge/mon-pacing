@@ -38,7 +38,6 @@
 
         <service 
             android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
-            android:stopWithTask="true"
             android:foregroundServiceType="specialUse"
             android:exported="false">
 
