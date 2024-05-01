@@ -24,11 +24,4 @@ class PointModel with _$PointModel {
         improvisationId: model.improvisationId,
         value: model.value,
       );
-
-  PointEntityModel toEntity() => PointEntityModel(
-        id: this.id,
-        teamId: teamId,
-        improvisationId: improvisationId,
-        value: value,
-      );
 }

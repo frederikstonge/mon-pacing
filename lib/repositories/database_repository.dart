@@ -1,13 +1,12 @@
-import 'package:isar/isar.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-import '../models/match_model.dart';
-import '../models/pacing_model.dart';
+import '../objectbox.g.dart';
 
 class DatabaseRepository {
-  Isar? _database;
+  Store? _database;
 
-  Future<Isar> get database async {
+  Future<Store> get database async {
     if (_database != null) {
       return _database!;
     }
@@ -16,11 +15,9 @@ class DatabaseRepository {
     return _database!;
   }
 
-  Future<Isar> _getDatabase() async {
+  Future<Store> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
-    return Isar.open(
-      schemas: [PacingModelSchema, MatchModelSchema],
-      directory: dir.path,
-    );
+    final store = openStore(directory: p.join(dir.path, 'mon-pacing'));
+    return store;
   }
 }

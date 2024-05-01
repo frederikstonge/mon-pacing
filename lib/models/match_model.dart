@@ -2,7 +2,6 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
-import 'package:objectbox/objectbox.dart';
 
 import 'base_model.dart';
 import 'entities/match_entity_model.dart';
@@ -19,8 +18,6 @@ part 'match_model.g.dart';
 @freezed
 @collection
 class MatchModel with _$MatchModel implements BaseModel {
-  const MatchModel._();
-
   @Implements<BaseModel>()
   const factory MatchModel({
     required int id,
@@ -50,19 +47,5 @@ class MatchModel with _$MatchModel implements BaseModel {
         enablePenaltiesImpactPoints: model.enablePenaltiesImpactPoints,
         penaltiesImpactType: PenaltiesImpactType.values.elementAt(model.penaltiesImpactType),
         penaltiesRequiredToImpactPoints: model.penaltiesRequiredToImpactPoints,
-      );
-
-  MatchEntityModel toEntity() => MatchEntityModel(
-        id: this.id,
-        name: name,
-        createdDate: createdDate,
-        modifiedDate: modifiedDate,
-        teams: ToMany(items: teams.map((e) => e.toEntity()).toList()),
-        improvisations: ToMany(items: improvisations.map((e) => e.toEntity()).toList()),
-        penalties: ToMany(items: penalties.map((e) => e.toEntity()).toList()),
-        points: ToMany(items: points.map((e) => e.toEntity()).toList()),
-        enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
-        penaltiesImpactType: penaltiesImpactType.index,
-        penaltiesRequiredToImpactPoints: penaltiesRequiredToImpactPoints,
       );
 }

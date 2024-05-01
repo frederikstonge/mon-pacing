@@ -1,11 +1,31 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
+import '../models/entities/match_entity_model.dart';
 import '../models/match_model.dart';
 import '../models/penalties_impact_type.dart';
 import '../models/penalty_model.dart';
+import '../objectbox.g.dart';
+import 'improvisation_extensions.dart';
+import 'penalty_extensions.dart';
+import 'point_extensions.dart';
+import 'team_extensions.dart';
 
 extension MatchExtensions on MatchModel {
+  MatchEntityModel toEntity() => MatchEntityModel(
+        id: id,
+        name: name,
+        createdDate: createdDate,
+        modifiedDate: modifiedDate,
+        teams: ToMany(items: teams.map((e) => e.toEntity()).toList()),
+        improvisations: ToMany(items: improvisations.asMap().entries.map((e) => e.value.toEntity(e.key)).toList()),
+        penalties: ToMany(items: penalties.map((e) => e.toEntity()).toList()),
+        points: ToMany(items: points.map((e) => e.toEntity()).toList()),
+        enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
+        penaltiesImpactType: penaltiesImpactType.index,
+        penaltiesRequiredToImpactPoints: penaltiesRequiredToImpactPoints,
+      );
+
   // Color
   Color getTeamColor(int teamId) => Color(teams.firstWhere((element) => element.id == teamId).color);
 

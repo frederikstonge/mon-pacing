@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +24,7 @@ class MatchImprovisationCubit extends Cubit<MatchImprovisationState> {
             editMode: improvisation != null,
             improvisation: improvisation ??
                 ImprovisationModel(
-                  id: match.improvisations.isNotEmpty ? match.improvisations.map((e) => e.id).reduce(max) + 1 : 0,
+                  id: 0,
                   type: ImprovisationType.values[match.improvisations.length % 2],
                   durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
                   category: '',

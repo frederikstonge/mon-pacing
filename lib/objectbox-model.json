@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:8914607900243138768",
-      "lastPropertyId": "19:8343780043905013942",
+      "lastPropertyId": "20:7256173461365793860",
       "name": "ImprovisationEntityModel",
       "properties": [
         {
@@ -58,6 +58,11 @@
         {
           "id": "19:8343780043905013942",
           "name": "huddleTimerInSeconds",
+          "type": 6
+        },
+        {
+          "id": "20:7256173461365793860",
+          "name": "order",
           "type": 6
         }
       ],

@@ -13,6 +13,7 @@ import 'package:flat_buffers/flat_buffers.dart' as fb;
 import 'package:objectbox/internal.dart'
     as obx_int; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart' as obx;
+import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/entities/improvisation_entity_model.dart';
 import 'models/entities/match_entity_model.dart';
@@ -27,7 +28,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(1, 8914607900243138768),
       name: 'ImprovisationEntityModel',
-      lastPropertyId: const obx_int.IdUid(19, 8343780043905013942),
+      lastPropertyId: const obx_int.IdUid(20, 7256173461365793860),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -76,6 +77,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(19, 8343780043905013942),
             name: 'huddleTimerInSeconds',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 7256173461365793860),
+            name: 'order',
             type: 6,
             flags: 0)
       ],
@@ -293,16 +299,17 @@ final _entities = <obx_int.ModelEntity>[
 /// For Flutter apps, also calls `loadObjectBoxLibraryAndroidCompat()` from
 /// the ObjectBox Flutter library to fix loading the native ObjectBox library
 /// on Android 6 and older.
-obx.Store openStore(
+Future<obx.Store> openStore(
     {String? directory,
     int? maxDBSizeInKB,
     int? maxDataSizeInKB,
     int? fileMode,
     int? maxReaders,
     bool queriesCaseSensitiveDefault = true,
-    String? macosApplicationGroup}) {
+    String? macosApplicationGroup}) async {
+  await loadObjectBoxLibraryAndroidCompat();
   return obx.Store(getObjectBoxModel(),
-      directory: directory,
+      directory: directory ?? (await defaultStoreDirectory()).path,
       maxDBSizeInKB: maxDBSizeInKB,
       maxDataSizeInKB: maxDataSizeInKB,
       fileMode: fileMode,
@@ -366,7 +373,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               final notesOffset = fbb.writeString(object.notes);
               final durationsInSecondsOffset =
                   fbb.writeString(object.durationsInSeconds);
-              fbb.startTable(20);
+              fbb.startTable(21);
               fbb.addInt64(0, object.id);
               fbb.addOffset(3, categoryOffset);
               fbb.addOffset(4, themeOffset);
@@ -376,6 +383,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fbb.addOffset(16, durationsInSecondsOffset);
               fbb.addInt64(17, object.timeBufferInSeconds);
               fbb.addInt64(18, object.huddleTimerInSeconds);
+              fbb.addInt64(19, object.order);
               fbb.finish(fbb.endTable());
               return object.id;
             },
@@ -384,6 +392,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               final rootOffset = buffer.derefObject(0);
               final idParam =
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final orderParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
               final typeParam =
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
               final categoryParam =
@@ -405,6 +415,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0);
               final object = ImprovisationEntityModel(
                   id: idParam,
+                  order: orderParam,
                   type: typeParam,
                   category: categoryParam,
                   theme: themeParam,
@@ -717,6 +728,10 @@ class ImprovisationEntityModel_ {
   static final huddleTimerInSeconds =
       obx.QueryIntegerProperty<ImprovisationEntityModel>(
           _entities[0].properties[8]);
+
+  /// see [ImprovisationEntityModel.order]
+  static final order = obx.QueryIntegerProperty<ImprovisationEntityModel>(
+      _entities[0].properties[9]);
 }
 
 /// [PenaltyEntityModel] entity fields to define ObjectBox queries.

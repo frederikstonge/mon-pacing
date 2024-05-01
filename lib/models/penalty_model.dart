@@ -28,13 +28,4 @@ class PenaltyModel with _$PenaltyModel {
         teamId: model.teamId,
         improvisationId: model.improvisationId,
       );
-
-  PenaltyEntityModel toEntity() => PenaltyEntityModel(
-        id: this.id,
-        major: major,
-        type: type,
-        performer: performer,
-        teamId: teamId,
-        improvisationId: improvisationId,
-      );
 }

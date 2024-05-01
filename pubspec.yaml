@@ -40,6 +40,8 @@ dependencies:
     hosted: https://pub.isar-community.dev/
   json_annotation: ^4.8.1
   objectbox: ^2.5.1
+  objectbox_flutter_libs: any
+  path: ^1.9.0
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5
   toastification:

@@ -166,7 +166,7 @@ class __$$PacingModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PacingModelImpl extends _PacingModel {
+class _$PacingModelImpl implements _PacingModel {
   const _$PacingModelImpl(
       {required this.id,
       @index required this.name,
@@ -174,8 +174,7 @@ class _$PacingModelImpl extends _PacingModel {
       required this.modifiedDate,
       required final List<ImprovisationModel> improvisations,
       this.defaultNumberOfTeams = 2})
-      : _improvisations = improvisations,
-        super._();
+      : _improvisations = improvisations;
 
   factory _$PacingModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PacingModelImplFromJson(json);
@@ -249,7 +248,7 @@ class _$PacingModelImpl extends _PacingModel {
   }
 }
 
-abstract class _PacingModel extends PacingModel implements BaseModel {
+abstract class _PacingModel implements PacingModel, BaseModel {
   const factory _PacingModel(
       {required final int id,
       @index required final String name,
@@ -257,7 +256,6 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
       required final DateTime? modifiedDate,
       required final List<ImprovisationModel> improvisations,
       final int defaultNumberOfTeams}) = _$PacingModelImpl;
-  const _PacingModel._() : super._();
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
       _$PacingModelImpl.fromJson;

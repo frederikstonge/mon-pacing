@@ -5,6 +5,8 @@ class ImprovisationEntityModel {
   @Id()
   int id;
 
+  int order;
+
   int type;
 
   @Index(type: IndexType.value)
@@ -26,6 +28,7 @@ class ImprovisationEntityModel {
 
   ImprovisationEntityModel({
     this.id = 0,
+    required this.order,
     required this.type,
     required this.category,
     required this.theme,

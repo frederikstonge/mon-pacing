@@ -22,10 +22,4 @@ class TeamModel with _$TeamModel {
         name: model.name,
         color: model.color,
       );
-
-  TeamEntityModel toEntity() => TeamEntityModel(
-        id: this.id,
-        name: name,
-        color: color,
-      );
 }

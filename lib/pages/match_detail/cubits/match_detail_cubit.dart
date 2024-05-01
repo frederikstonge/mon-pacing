@@ -81,10 +81,9 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   TeamModel _createTeam(List<TeamModel> teams) {
-    final nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
     final random = Random();
     return TeamModel(
-      id: nextId,
+      id: 0,
       name: '${settingsCubit.localizer.team} ${teams.length + 1}',
       color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
     );

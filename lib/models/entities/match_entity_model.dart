@@ -13,10 +13,12 @@ class MatchEntityModel implements BaseModel {
   int id;
 
   @Index(type: IndexType.value)
+  @Property(type: PropertyType.date)
   @override
   DateTime? createdDate;
 
   @Index(type: IndexType.value)
+  @Property(type: PropertyType.date)
   @override
   DateTime? modifiedDate;
 

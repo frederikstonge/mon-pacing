@@ -35,16 +35,4 @@ class ImprovisationModel with _$ImprovisationModel {
         timeBufferInSeconds: model.timeBufferInSeconds,
         huddleTimerInSeconds: model.huddleTimerInSeconds,
       );
-
-  ImprovisationEntityModel toEntity() => ImprovisationEntityModel(
-        id: this.id,
-        type: type.index,
-        category: category,
-        theme: theme,
-        durationsInSeconds: durationsInSeconds.join(','),
-        performers: performers,
-        notes: notes,
-        timeBufferInSeconds: timeBufferInSeconds,
-        huddleTimerInSeconds: huddleTimerInSeconds,
-      );
 }
