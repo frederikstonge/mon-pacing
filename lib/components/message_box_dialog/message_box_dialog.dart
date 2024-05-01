@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../actions/loading_button.dart';
 
@@ -27,7 +26,7 @@ class MessageBoxDialog {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    onPressed: () => context.pop(true)),
+                    onPressed: () => Navigator.of(context).pop(true)),
                 LoadingButton.tonal(
                     child: Text(
                       noLabel,
@@ -35,7 +34,7 @@ class MessageBoxDialog {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    onPressed: () => context.pop(false)),
+                    onPressed: () => Navigator.of(context).pop(false)),
               ],
             ),
           ],
