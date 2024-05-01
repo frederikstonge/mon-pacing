@@ -29,5 +29,7 @@ class PacingEntityModel implements BaseModel {
     required this.name,
     required this.improvisations,
     required this.defaultNumberOfTeams,
+    this.createdDate,
+    this.modifiedDate,
   });
 }

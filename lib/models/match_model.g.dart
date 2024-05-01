@@ -21,10 +21,6 @@ const MatchModelSchema = IsarGeneratedSchema(
     embedded: false,
     properties: [
       IsarPropertySchema(
-        name: 'teamNames',
-        type: IsarType.stringList,
-      ),
-      IsarPropertySchema(
         name: 'createdDate',
         type: IsarType.dateTime,
       ),
@@ -104,28 +100,20 @@ const MatchModelSchema = IsarGeneratedSchema(
 
 @isarProtected
 int serializeMatchModel(IsarWriter writer, MatchModel object) {
-  {
-    final list = object.teamNames;
-    final listWriter = IsarCore.beginList(writer, 1, list.length);
-    for (var i = 0; i < list.length; i++) {
-      IsarCore.writeString(listWriter, i, list[i]);
-    }
-    IsarCore.endList(writer, listWriter);
-  }
   IsarCore.writeLong(
       writer,
-      2,
+      1,
       object.createdDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
   IsarCore.writeLong(
       writer,
-      3,
+      2,
       object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
-  IsarCore.writeString(writer, 4, object.name);
+  IsarCore.writeString(writer, 3, object.name);
   {
     final list = object.teams;
-    final listWriter = IsarCore.beginList(writer, 5, list.length);
+    final listWriter = IsarCore.beginList(writer, 4, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -138,7 +126,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
   }
   {
     final list = object.improvisations;
-    final listWriter = IsarCore.beginList(writer, 6, list.length);
+    final listWriter = IsarCore.beginList(writer, 5, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -151,7 +139,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
   }
   {
     final list = object.penalties;
-    final listWriter = IsarCore.beginList(writer, 7, list.length);
+    final listWriter = IsarCore.beginList(writer, 6, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -164,7 +152,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
   }
   {
     final list = object.points;
-    final listWriter = IsarCore.beginList(writer, 8, list.length);
+    final listWriter = IsarCore.beginList(writer, 7, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -175,9 +163,9 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
     }
     IsarCore.endList(writer, listWriter);
   }
-  IsarCore.writeBool(writer, 9, object.enablePenaltiesImpactPoints);
-  IsarCore.writeByte(writer, 10, object.penaltiesImpactType.index);
-  IsarCore.writeLong(writer, 11, object.penaltiesRequiredToImpactPoints);
+  IsarCore.writeBool(writer, 8, object.enablePenaltiesImpactPoints);
+  IsarCore.writeByte(writer, 9, object.penaltiesImpactType.index);
+  IsarCore.writeLong(writer, 10, object.penaltiesRequiredToImpactPoints);
   return object.id;
 }
 
@@ -187,7 +175,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   _id = IsarCore.readId(reader);
   final DateTime? _createdDate;
   {
-    final value = IsarCore.readLong(reader, 2);
+    final value = IsarCore.readLong(reader, 1);
     if (value == -9223372036854775808) {
       _createdDate = null;
     } else {
@@ -197,7 +185,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final DateTime? _modifiedDate;
   {
-    final value = IsarCore.readLong(reader, 3);
+    final value = IsarCore.readLong(reader, 2);
     if (value == -9223372036854775808) {
       _modifiedDate = null;
     } else {
@@ -206,10 +194,10 @@ MatchModel deserializeMatchModel(IsarReader reader) {
     }
   }
   final String _name;
-  _name = IsarCore.readString(reader, 4) ?? '';
+  _name = IsarCore.readString(reader, 3) ?? '';
   final List<TeamModel> _teams;
   {
-    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 4, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -246,7 +234,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final List<ImprovisationModel> _improvisations;
   {
-    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -291,7 +279,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final List<PenaltyModel> _penalties;
   {
-    final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -334,7 +322,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final List<PointModel> _points;
   {
-    final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -372,19 +360,19 @@ MatchModel deserializeMatchModel(IsarReader reader) {
     }
   }
   final bool _enablePenaltiesImpactPoints;
-  _enablePenaltiesImpactPoints = IsarCore.readBool(reader, 9);
+  _enablePenaltiesImpactPoints = IsarCore.readBool(reader, 8);
   final PenaltiesImpactType _penaltiesImpactType;
   {
-    if (IsarCore.readNull(reader, 10)) {
+    if (IsarCore.readNull(reader, 9)) {
       _penaltiesImpactType = PenaltiesImpactType.addPoints;
     } else {
       _penaltiesImpactType =
-          _matchModelPenaltiesImpactType[IsarCore.readByte(reader, 10)] ??
+          _matchModelPenaltiesImpactType[IsarCore.readByte(reader, 9)] ??
               PenaltiesImpactType.addPoints;
     }
   }
   final int _penaltiesRequiredToImpactPoints;
-  _penaltiesRequiredToImpactPoints = IsarCore.readLong(reader, 11);
+  _penaltiesRequiredToImpactPoints = IsarCore.readLong(reader, 10);
   final object = MatchModel(
     id: _id,
     createdDate: _createdDate,
@@ -404,25 +392,18 @@ MatchModel deserializeMatchModel(IsarReader reader) {
 @isarProtected
 dynamic deserializeMatchModelProp(IsarReader reader, int property) {
   switch (property) {
-    case 1:
-      {
-        final length = IsarCore.readList(reader, 1, IsarCore.readerPtrPtr);
-        {
-          final reader = IsarCore.readerPtr;
-          if (reader.isNull) {
-            return const <String>[];
-          } else {
-            final list = List<String>.filled(length, '', growable: true);
-            for (var i = 0; i < length; i++) {
-              list[i] = IsarCore.readString(reader, i) ?? '';
-            }
-            IsarCore.freeReader(reader);
-            return list;
-          }
-        }
-      }
     case 0:
       return IsarCore.readId(reader);
+    case 1:
+      {
+        final value = IsarCore.readLong(reader, 1);
+        if (value == -9223372036854775808) {
+          return null;
+        } else {
+          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
+              .toLocal();
+        }
+      }
     case 2:
       {
         final value = IsarCore.readLong(reader, 2);
@@ -434,20 +415,10 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
         }
       }
     case 3:
-      {
-        final value = IsarCore.readLong(reader, 3);
-        if (value == -9223372036854775808) {
-          return null;
-        } else {
-          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
-              .toLocal();
-        }
-      }
+      return IsarCore.readString(reader, 3) ?? '';
     case 4:
-      return IsarCore.readString(reader, 4) ?? '';
-    case 5:
       {
-        final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 4, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -482,9 +453,9 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
           }
         }
       }
-    case 6:
+    case 5:
       {
-        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -527,9 +498,9 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
           }
         }
       }
-    case 7:
+    case 6:
       {
-        final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -570,9 +541,9 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
           }
         }
       }
-    case 8:
+    case 7:
       {
-        final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -609,20 +580,19 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
           }
         }
       }
+    case 8:
+      return IsarCore.readBool(reader, 8);
     case 9:
-      return IsarCore.readBool(reader, 9);
-    case 10:
       {
-        if (IsarCore.readNull(reader, 10)) {
+        if (IsarCore.readNull(reader, 9)) {
           return PenaltiesImpactType.addPoints;
         } else {
-          return _matchModelPenaltiesImpactType[
-                  IsarCore.readByte(reader, 10)] ??
+          return _matchModelPenaltiesImpactType[IsarCore.readByte(reader, 9)] ??
               PenaltiesImpactType.addPoints;
         }
       }
-    case 11:
-      return IsarCore.readLong(reader, 11);
+    case 10:
+      return IsarCore.readLong(reader, 10);
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -658,15 +628,15 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
     return collection.updateProperties([
           id
         ], {
-          if (createdDate != ignore) 2: createdDate as DateTime?,
-          if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-          if (name != ignore) 4: name as String?,
+          if (createdDate != ignore) 1: createdDate as DateTime?,
+          if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+          if (name != ignore) 3: name as String?,
           if (enablePenaltiesImpactPoints != ignore)
-            9: enablePenaltiesImpactPoints as bool?,
+            8: enablePenaltiesImpactPoints as bool?,
           if (penaltiesImpactType != ignore)
-            10: penaltiesImpactType as PenaltiesImpactType?,
+            9: penaltiesImpactType as PenaltiesImpactType?,
           if (penaltiesRequiredToImpactPoints != ignore)
-            11: penaltiesRequiredToImpactPoints as int?,
+            10: penaltiesRequiredToImpactPoints as int?,
         }) >
         0;
   }
@@ -700,15 +670,15 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
     Object? penaltiesRequiredToImpactPoints = ignore,
   }) {
     return collection.updateProperties(id, {
-      if (createdDate != ignore) 2: createdDate as DateTime?,
-      if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-      if (name != ignore) 4: name as String?,
+      if (createdDate != ignore) 1: createdDate as DateTime?,
+      if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+      if (name != ignore) 3: name as String?,
       if (enablePenaltiesImpactPoints != ignore)
-        9: enablePenaltiesImpactPoints as bool?,
+        8: enablePenaltiesImpactPoints as bool?,
       if (penaltiesImpactType != ignore)
-        10: penaltiesImpactType as PenaltiesImpactType?,
+        9: penaltiesImpactType as PenaltiesImpactType?,
       if (penaltiesRequiredToImpactPoints != ignore)
-        11: penaltiesRequiredToImpactPoints as int?,
+        10: penaltiesRequiredToImpactPoints as int?,
     });
   }
 }
@@ -746,15 +716,15 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
     Object? penaltiesRequiredToImpactPoints = ignore,
   }) {
     return query.updateProperties(limit: limit, {
-      if (createdDate != ignore) 2: createdDate as DateTime?,
-      if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-      if (name != ignore) 4: name as String?,
+      if (createdDate != ignore) 1: createdDate as DateTime?,
+      if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+      if (name != ignore) 3: name as String?,
       if (enablePenaltiesImpactPoints != ignore)
-        9: enablePenaltiesImpactPoints as bool?,
+        8: enablePenaltiesImpactPoints as bool?,
       if (penaltiesImpactType != ignore)
-        10: penaltiesImpactType as PenaltiesImpactType?,
+        9: penaltiesImpactType as PenaltiesImpactType?,
       if (penaltiesRequiredToImpactPoints != ignore)
-        11: penaltiesRequiredToImpactPoints as int?,
+        10: penaltiesRequiredToImpactPoints as int?,
     });
   }
 }
@@ -784,15 +754,15 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
     final q = query.build();
     try {
       return q.updateProperties(limit: limit, {
-        if (createdDate != ignore) 2: createdDate as DateTime?,
-        if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-        if (name != ignore) 4: name as String?,
+        if (createdDate != ignore) 1: createdDate as DateTime?,
+        if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+        if (name != ignore) 3: name as String?,
         if (enablePenaltiesImpactPoints != ignore)
-          9: enablePenaltiesImpactPoints as bool?,
+          8: enablePenaltiesImpactPoints as bool?,
         if (penaltiesImpactType != ignore)
-          10: penaltiesImpactType as PenaltiesImpactType?,
+          9: penaltiesImpactType as PenaltiesImpactType?,
         if (penaltiesRequiredToImpactPoints != ignore)
-          11: penaltiesRequiredToImpactPoints as int?,
+          10: penaltiesRequiredToImpactPoints as int?,
       });
     } finally {
       q.close();
@@ -816,200 +786,6 @@ const _matchModelPenaltiesImpactType = {
 
 extension MatchModelQueryFilter
     on QueryBuilder<MatchModel, MatchModel, QFilterCondition> {
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementGreaterThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementLessThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementLessThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 1,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 1,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesIsEmpty() {
-    return not().teamNamesIsNotEmpty();
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamNamesIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 1, value: null),
-      );
-    });
-  }
-
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition> idEqualTo(
     int value,
   ) {
@@ -1095,14 +871,14 @@ extension MatchModelQueryFilter
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
       createdDateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
+      return query.addFilterCondition(const IsNullCondition(property: 1));
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
       createdDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
+      return query.addFilterCondition(const IsNullCondition(property: 1));
     });
   }
 
@@ -1113,7 +889,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -1127,7 +903,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -1141,7 +917,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -1155,7 +931,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -1169,7 +945,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -1184,7 +960,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 2,
+          property: 1,
           lower: lower,
           upper: upper,
         ),
@@ -1195,14 +971,14 @@ extension MatchModelQueryFilter
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
       modifiedDateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
+      return query.addFilterCondition(const IsNullCondition(property: 2));
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
       modifiedDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
+      return query.addFilterCondition(const IsNullCondition(property: 2));
     });
   }
 
@@ -1213,7 +989,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -1227,7 +1003,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -1241,7 +1017,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -1255,7 +1031,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -1269,7 +1045,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -1284,7 +1060,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 3,
+          property: 2,
           lower: lower,
           upper: upper,
         ),
@@ -1299,7 +1075,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1314,7 +1090,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1330,7 +1106,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1345,7 +1121,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1361,7 +1137,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1377,7 +1153,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 4,
+          property: 3,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1393,7 +1169,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1408,7 +1184,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1422,7 +1198,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1436,7 +1212,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 4,
+          property: 3,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1448,7 +1224,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 4,
+          property: 3,
           value: '',
         ),
       );
@@ -1459,7 +1235,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 4,
+          property: 3,
           value: '',
         ),
       );
@@ -1474,7 +1250,7 @@ extension MatchModelQueryFilter
       teamsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 5, value: null),
+        const GreaterOrEqualCondition(property: 4, value: null),
       );
     });
   }
@@ -1488,7 +1264,7 @@ extension MatchModelQueryFilter
       improvisationsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 6, value: null),
+        const GreaterOrEqualCondition(property: 5, value: null),
       );
     });
   }
@@ -1502,7 +1278,7 @@ extension MatchModelQueryFilter
       penaltiesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 7, value: null),
+        const GreaterOrEqualCondition(property: 6, value: null),
       );
     });
   }
@@ -1515,7 +1291,7 @@ extension MatchModelQueryFilter
       pointsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 8, value: null),
+        const GreaterOrEqualCondition(property: 7, value: null),
       );
     });
   }
@@ -1527,7 +1303,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 9,
+          property: 8,
           value: value,
         ),
       );
@@ -1541,7 +1317,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 10,
+          property: 9,
           value: value.index,
         ),
       );
@@ -1555,7 +1331,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 10,
+          property: 9,
           value: value.index,
         ),
       );
@@ -1569,7 +1345,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 10,
+          property: 9,
           value: value.index,
         ),
       );
@@ -1583,7 +1359,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 10,
+          property: 9,
           value: value.index,
         ),
       );
@@ -1597,7 +1373,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 10,
+          property: 9,
           value: value.index,
         ),
       );
@@ -1612,7 +1388,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 10,
+          property: 9,
           lower: lower.index,
           upper: upper.index,
         ),
@@ -1627,7 +1403,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 11,
+          property: 10,
           value: value,
         ),
       );
@@ -1641,7 +1417,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 11,
+          property: 10,
           value: value,
         ),
       );
@@ -1655,7 +1431,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 11,
+          property: 10,
           value: value,
         ),
       );
@@ -1669,7 +1445,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 11,
+          property: 10,
           value: value,
         ),
       );
@@ -1683,7 +1459,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 11,
+          property: 10,
           value: value,
         ),
       );
@@ -1698,7 +1474,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 11,
+          property: 10,
           lower: lower,
           upper: upper,
         ),
@@ -1726,25 +1502,25 @@ extension MatchModelQuerySortBy
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> sortByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
+      return query.addSortBy(1);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> sortByCreatedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
+      return query.addSortBy(1, sort: Sort.desc);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> sortByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3);
+      return query.addSortBy(2);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> sortByModifiedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc);
+      return query.addSortBy(2, sort: Sort.desc);
     });
   }
 
@@ -1752,7 +1528,7 @@ extension MatchModelQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        4,
+        3,
         caseSensitive: caseSensitive,
       );
     });
@@ -1762,7 +1538,7 @@ extension MatchModelQuerySortBy
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        4,
+        3,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -1772,42 +1548,42 @@ extension MatchModelQuerySortBy
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       sortByEnablePenaltiesImpactPoints() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9);
+      return query.addSortBy(8);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       sortByEnablePenaltiesImpactPointsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9, sort: Sort.desc);
+      return query.addSortBy(8, sort: Sort.desc);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       sortByPenaltiesImpactType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(10);
+      return query.addSortBy(9);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       sortByPenaltiesImpactTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(10, sort: Sort.desc);
+      return query.addSortBy(9, sort: Sort.desc);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       sortByPenaltiesRequiredToImpactPoints() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(11);
+      return query.addSortBy(10);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       sortByPenaltiesRequiredToImpactPointsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(11, sort: Sort.desc);
+      return query.addSortBy(10, sort: Sort.desc);
     });
   }
 }
@@ -1828,143 +1604,131 @@ extension MatchModelQuerySortThenBy
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
+      return query.addSortBy(1);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByCreatedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
+      return query.addSortBy(1, sort: Sort.desc);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3);
+      return query.addSortBy(2);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByModifiedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc);
+      return query.addSortBy(2, sort: Sort.desc);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4, caseSensitive: caseSensitive);
+      return query.addSortBy(3, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(3, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       thenByEnablePenaltiesImpactPoints() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9);
+      return query.addSortBy(8);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       thenByEnablePenaltiesImpactPointsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9, sort: Sort.desc);
+      return query.addSortBy(8, sort: Sort.desc);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       thenByPenaltiesImpactType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(10);
+      return query.addSortBy(9);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       thenByPenaltiesImpactTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(10, sort: Sort.desc);
+      return query.addSortBy(9, sort: Sort.desc);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       thenByPenaltiesRequiredToImpactPoints() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(11);
+      return query.addSortBy(10);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
       thenByPenaltiesRequiredToImpactPointsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(11, sort: Sort.desc);
+      return query.addSortBy(10, sort: Sort.desc);
     });
   }
 }
 
 extension MatchModelQueryWhereDistinct
     on QueryBuilder<MatchModel, MatchModel, QDistinct> {
-  QueryBuilder<MatchModel, MatchModel, QAfterDistinct> distinctByTeamNames() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(1);
-    });
-  }
-
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct> distinctByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(2);
+      return query.addDistinctBy(1);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
       distinctByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(3);
+      return query.addDistinctBy(2);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(4, caseSensitive: caseSensitive);
+      return query.addDistinctBy(3, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
       distinctByEnablePenaltiesImpactPoints() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(9);
+      return query.addDistinctBy(8);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
       distinctByPenaltiesImpactType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(10);
+      return query.addDistinctBy(9);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
       distinctByPenaltiesRequiredToImpactPoints() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(11);
+      return query.addDistinctBy(10);
     });
   }
 }
 
 extension MatchModelQueryProperty1
     on QueryBuilder<MatchModel, MatchModel, QProperty> {
-  QueryBuilder<MatchModel, List<String>, QAfterProperty> teamNamesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
   QueryBuilder<MatchModel, int, QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1973,79 +1737,72 @@ extension MatchModelQueryProperty1
 
   QueryBuilder<MatchModel, DateTime?, QAfterProperty> createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(1);
     });
   }
 
   QueryBuilder<MatchModel, DateTime?, QAfterProperty> modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(2);
     });
   }
 
   QueryBuilder<MatchModel, String, QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<MatchModel, List<TeamModel>, QAfterProperty> teamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<MatchModel, List<ImprovisationModel>, QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<MatchModel, List<PenaltyModel>, QAfterProperty>
       penaltiesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<MatchModel, List<PointModel>, QAfterProperty> pointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<MatchModel, bool, QAfterProperty>
       enablePenaltiesImpactPointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(8);
     });
   }
 
   QueryBuilder<MatchModel, PenaltiesImpactType, QAfterProperty>
       penaltiesImpactTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(10);
+      return query.addProperty(9);
     });
   }
 
   QueryBuilder<MatchModel, int, QAfterProperty>
       penaltiesRequiredToImpactPointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(11);
+      return query.addProperty(10);
     });
   }
 }
 
 extension MatchModelQueryProperty2<R>
     on QueryBuilder<MatchModel, R, QAfterProperty> {
-  QueryBuilder<MatchModel, (R, List<String>), QAfterProperty>
-      teamNamesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
   QueryBuilder<MatchModel, (R, int), QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -2055,82 +1812,75 @@ extension MatchModelQueryProperty2<R>
   QueryBuilder<MatchModel, (R, DateTime?), QAfterProperty>
       createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(1);
     });
   }
 
   QueryBuilder<MatchModel, (R, DateTime?), QAfterProperty>
       modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(2);
     });
   }
 
   QueryBuilder<MatchModel, (R, String), QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<MatchModel, (R, List<TeamModel>), QAfterProperty>
       teamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<MatchModel, (R, List<ImprovisationModel>), QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<MatchModel, (R, List<PenaltyModel>), QAfterProperty>
       penaltiesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<MatchModel, (R, List<PointModel>), QAfterProperty>
       pointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<MatchModel, (R, bool), QAfterProperty>
       enablePenaltiesImpactPointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(8);
     });
   }
 
   QueryBuilder<MatchModel, (R, PenaltiesImpactType), QAfterProperty>
       penaltiesImpactTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(10);
+      return query.addProperty(9);
     });
   }
 
   QueryBuilder<MatchModel, (R, int), QAfterProperty>
       penaltiesRequiredToImpactPointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(11);
+      return query.addProperty(10);
     });
   }
 }
 
 extension MatchModelQueryProperty3<R1, R2>
     on QueryBuilder<MatchModel, (R1, R2), QAfterProperty> {
-  QueryBuilder<MatchModel, (R1, R2, List<String>), QOperations>
-      teamNamesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
   QueryBuilder<MatchModel, (R1, R2, int), QOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -2140,69 +1890,69 @@ extension MatchModelQueryProperty3<R1, R2>
   QueryBuilder<MatchModel, (R1, R2, DateTime?), QOperations>
       createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(1);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, DateTime?), QOperations>
       modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(2);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, String), QOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, List<TeamModel>), QOperations>
       teamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, List<ImprovisationModel>), QOperations>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, List<PenaltyModel>), QOperations>
       penaltiesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, List<PointModel>), QOperations>
       pointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, bool), QOperations>
       enablePenaltiesImpactPointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(8);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, PenaltiesImpactType), QOperations>
       penaltiesImpactTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(10);
+      return query.addProperty(9);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, int), QOperations>
       penaltiesRequiredToImpactPointsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(11);
+      return query.addProperty(10);
     });
   }
 }

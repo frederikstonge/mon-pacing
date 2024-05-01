@@ -5,6 +5,7 @@ class TeamEntityModel {
   @Id()
   int id;
 
+  @Index(type: IndexType.value)
   String name;
 
   int color;

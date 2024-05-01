@@ -2,8 +2,10 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
+import 'package:objectbox/objectbox.dart';
 
 import 'base_model.dart';
+import 'entities/match_entity_model.dart';
 import 'improvisation_model.dart';
 import 'improvisation_type.dart';
 import 'penalties_impact_type.dart';
@@ -34,7 +36,33 @@ class MatchModel with _$MatchModel implements BaseModel {
     @Default(3) int penaltiesRequiredToImpactPoints,
   }) = _MatchModel;
 
-  List<String> get teamNames => teams.map((e) => e.name).toList();
-
   factory MatchModel.fromJson(Map<String, Object?> json) => _$MatchModelFromJson(json);
+
+  factory MatchModel.fromEntity(MatchEntityModel model) => MatchModel(
+        id: model.id,
+        name: model.name,
+        createdDate: model.createdDate,
+        modifiedDate: model.modifiedDate,
+        teams: model.teams.map((e) => TeamModel.fromEntity(e)).toList(),
+        improvisations: model.improvisations.map((e) => ImprovisationModel.fromEntity(e)).toList(),
+        penalties: model.penalties.map((e) => PenaltyModel.fromEntity(e)).toList(),
+        points: model.points.map((e) => PointModel.fromEntity(e)).toList(),
+        enablePenaltiesImpactPoints: model.enablePenaltiesImpactPoints,
+        penaltiesImpactType: PenaltiesImpactType.values.elementAt(model.penaltiesImpactType),
+        penaltiesRequiredToImpactPoints: model.penaltiesRequiredToImpactPoints,
+      );
+
+  MatchEntityModel toEntity() => MatchEntityModel(
+        id: this.id,
+        name: name,
+        createdDate: createdDate,
+        modifiedDate: modifiedDate,
+        teams: ToMany(items: teams.map((e) => e.toEntity()).toList()),
+        improvisations: ToMany(items: improvisations.map((e) => e.toEntity()).toList()),
+        penalties: ToMany(items: penalties.map((e) => e.toEntity()).toList()),
+        points: ToMany(items: points.map((e) => e.toEntity()).toList()),
+        enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
+        penaltiesImpactType: penaltiesImpactType.index,
+        penaltiesRequiredToImpactPoints: penaltiesRequiredToImpactPoints,
+      );
 }

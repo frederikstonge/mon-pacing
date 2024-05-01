@@ -1,7 +1,5 @@
 import 'package:objectbox/objectbox.dart';
 
-import 'duration_entity_model.dart';
-
 @Entity()
 class ImprovisationEntityModel {
   @Id()
@@ -15,26 +13,26 @@ class ImprovisationEntityModel {
   @Index(type: IndexType.value)
   String theme;
 
-  ToMany<DurationEntityModel> durations;
+  String durationsInSeconds;
 
   String performers;
 
   @Index(type: IndexType.value)
   String notes;
 
-  ToOne<DurationEntityModel> timeBuffer;
+  int timeBufferInSeconds;
 
-  ToOne<DurationEntityModel> huddleTimer;
+  int huddleTimerInSeconds;
 
   ImprovisationEntityModel({
     this.id = 0,
     required this.type,
     required this.category,
     required this.theme,
-    required this.durations,
+    required this.durationsInSeconds,
     required this.performers,
     required this.notes,
-    required this.timeBuffer,
-    required this.huddleTimer,
+    required this.timeBufferInSeconds,
+    required this.huddleTimerInSeconds,
   });
 }

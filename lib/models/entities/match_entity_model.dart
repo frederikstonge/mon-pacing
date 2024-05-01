@@ -47,5 +47,7 @@ class MatchEntityModel implements BaseModel {
     required this.enablePenaltiesImpactPoints,
     required this.penaltiesImpactType,
     required this.penaltiesRequiredToImpactPoints,
+    this.createdDate,
+    this.modifiedDate,
   });
 }

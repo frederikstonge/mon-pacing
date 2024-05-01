@@ -14,7 +14,6 @@ import 'package:objectbox/internal.dart'
     as obx_int; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart' as obx;
 
-import 'models/entities/duration_entity_model.dart';
 import 'models/entities/improvisation_entity_model.dart';
 import 'models/entities/match_entity_model.dart';
 import 'models/entities/pacing_entity_model.dart';
@@ -28,7 +27,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(1, 8914607900243138768),
       name: 'ImprovisationEntityModel',
-      lastPropertyId: const obx_int.IdUid(13, 5609030383979502710),
+      lastPropertyId: const obx_int.IdUid(19, 8343780043905013942),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -65,51 +64,18 @@ final _entities = <obx_int.ModelEntity>[
             type: 6,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 3130543207458000461),
-            name: 'timeBufferId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(4, 432671548468845201),
-            relationTarget: 'DurationEntityModel'),
+            id: const obx_int.IdUid(17, 1616420319674578135),
+            name: 'durationsInSeconds',
+            type: 9,
+            flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 5609030383979502710),
-            name: 'huddleTimerId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(5, 5977630624184484134),
-            relationTarget: 'DurationEntityModel')
-      ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(1, 4335433331722211646),
-            name: 'durations',
-            targetId: const obx_int.IdUid(2, 1489243300379573623))
-      ],
-      backlinks: <obx_int.ModelBacklink>[]),
-  obx_int.ModelEntity(
-      id: const obx_int.IdUid(2, 1489243300379573623),
-      name: 'DurationEntityModel',
-      lastPropertyId: const obx_int.IdUid(4, 2662620539167294471),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 3932507240510649338),
-            name: 'id',
+            id: const obx_int.IdUid(18, 6545694690976846619),
+            name: 'timeBufferInSeconds',
             type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 8793924553072343553),
-            name: 'createdDate',
-            type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7074055300620186114),
-            name: 'modifiedDate',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 2662620539167294471),
-            name: 'durationInSeconds',
+            id: const obx_int.IdUid(19, 8343780043905013942),
+            name: 'huddleTimerInSeconds',
             type: 6,
             flags: 0)
       ],
@@ -198,7 +164,8 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(4, 5442795310964879505),
             name: 'name',
             type: 9,
-            flags: 0),
+            flags: 8,
+            indexId: const obx_int.IdUid(12, 3545682763422031939)),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(5, 3529359524545972799),
             name: 'color',
@@ -350,11 +317,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(7, 4479497672813572538),
-      lastIndexId: const obx_int.IdUid(11, 5714752445595325751),
+      lastIndexId: const obx_int.IdUid(12, 3545682763422031939),
       lastRelationId: const obx_int.IdUid(6, 5542827067799863848),
       lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [],
-      retiredIndexUids: const [],
+      retiredEntityUids: const [1489243300379573623],
+      retiredIndexUids: const [432671548468845201, 5977630624184484134],
       retiredPropertyUids: const [
         4289033690076171076,
         7835396717960053853,
@@ -366,125 +333,91 @@ obx_int.ModelDefinition getObjectBoxModel() {
         3408745059806097945,
         2248899038727762277,
         8114421501588075415,
-        2318498905215491722
+        2318498905215491722,
+        8793924553072343553,
+        7074055300620186114,
+        3130543207458000461,
+        5609030383979502710,
+        3932507240510649338,
+        2662620539167294471,
+        6538454476088505756,
+        7657096682733062722,
+        5030910398968900542
       ],
-      retiredRelationUids: const [],
+      retiredRelationUids: const [4335433331722211646],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, obx_int.EntityDefinition>{
-    ImprovisationEntityModel: obx_int.EntityDefinition<
-            ImprovisationEntityModel>(
-        model: _entities[0],
-        toOneRelations: (ImprovisationEntityModel object) =>
-            [object.timeBuffer, object.huddleTimer],
-        toManyRelations: (ImprovisationEntityModel object) => {
-              obx_int.RelInfo<ImprovisationEntityModel>.toMany(1, object.id):
-                  object.durations
+    ImprovisationEntityModel:
+        obx_int.EntityDefinition<ImprovisationEntityModel>(
+            model: _entities[0],
+            toOneRelations: (ImprovisationEntityModel object) => [],
+            toManyRelations: (ImprovisationEntityModel object) => {},
+            getId: (ImprovisationEntityModel object) => object.id,
+            setId: (ImprovisationEntityModel object, int id) {
+              object.id = id;
             },
-        getId: (ImprovisationEntityModel object) => object.id,
-        setId: (ImprovisationEntityModel object, int id) {
-          object.id = id;
-        },
-        objectToFB: (ImprovisationEntityModel object, fb.Builder fbb) {
-          final categoryOffset = fbb.writeString(object.category);
-          final themeOffset = fbb.writeString(object.theme);
-          final performersOffset = fbb.writeString(object.performers);
-          final notesOffset = fbb.writeString(object.notes);
-          fbb.startTable(14);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(3, categoryOffset);
-          fbb.addOffset(4, themeOffset);
-          fbb.addOffset(6, performersOffset);
-          fbb.addOffset(7, notesOffset);
-          fbb.addInt64(10, object.type);
-          fbb.addInt64(11, object.timeBuffer.targetId);
-          fbb.addInt64(12, object.huddleTimer.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final typeParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
-          final categoryParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
-          final themeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 12, '');
-          final durationsParam = obx.ToMany<DurationEntityModel>();
-          final performersParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 16, '');
-          final notesParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 18, '');
-          final timeBufferParam = obx.ToOne<DurationEntityModel>(
-              targetId:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0));
-          final huddleTimerParam = obx.ToOne<DurationEntityModel>(
-              targetId:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0));
-          final object = ImprovisationEntityModel(
-              id: idParam,
-              type: typeParam,
-              category: categoryParam,
-              theme: themeParam,
-              durations: durationsParam,
-              performers: performersParam,
-              notes: notesParam,
-              timeBuffer: timeBufferParam,
-              huddleTimer: huddleTimerParam);
-          object.timeBuffer.attach(store);
-          object.huddleTimer.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<ImprovisationEntityModel>(
-              object.durations,
-              store,
-              obx_int.RelInfo<ImprovisationEntityModel>.toMany(1, object.id));
-          return object;
-        }),
-    DurationEntityModel: obx_int.EntityDefinition<DurationEntityModel>(
-        model: _entities[1],
-        toOneRelations: (DurationEntityModel object) => [],
-        toManyRelations: (DurationEntityModel object) => {},
-        getId: (DurationEntityModel object) => object.id,
-        setId: (DurationEntityModel object, int id) {
-          object.id = id;
-        },
-        objectToFB: (DurationEntityModel object, fb.Builder fbb) {
-          fbb.startTable(5);
-          fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.createdDate?.millisecondsSinceEpoch);
-          fbb.addInt64(2, object.modifiedDate?.millisecondsSinceEpoch);
-          fbb.addInt64(3, object.durationInSeconds);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final createdDateValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
-          final modifiedDateValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final durationInSecondsParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
-          final object = DurationEntityModel(
-              id: idParam, durationInSeconds: durationInSecondsParam)
-            ..createdDate = createdDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(createdDateValue)
-            ..modifiedDate = modifiedDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
+            objectToFB: (ImprovisationEntityModel object, fb.Builder fbb) {
+              final categoryOffset = fbb.writeString(object.category);
+              final themeOffset = fbb.writeString(object.theme);
+              final performersOffset = fbb.writeString(object.performers);
+              final notesOffset = fbb.writeString(object.notes);
+              final durationsInSecondsOffset =
+                  fbb.writeString(object.durationsInSeconds);
+              fbb.startTable(20);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(3, categoryOffset);
+              fbb.addOffset(4, themeOffset);
+              fbb.addOffset(6, performersOffset);
+              fbb.addOffset(7, notesOffset);
+              fbb.addInt64(10, object.type);
+              fbb.addOffset(16, durationsInSecondsOffset);
+              fbb.addInt64(17, object.timeBufferInSeconds);
+              fbb.addInt64(18, object.huddleTimerInSeconds);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final typeParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
+              final categoryParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 10, '');
+              final themeParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+              final durationsInSecondsParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 36, '');
+              final performersParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 16, '');
+              final notesParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+              final timeBufferInSecondsParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0);
+              final huddleTimerInSecondsParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0);
+              final object = ImprovisationEntityModel(
+                  id: idParam,
+                  type: typeParam,
+                  category: categoryParam,
+                  theme: themeParam,
+                  durationsInSeconds: durationsInSecondsParam,
+                  performers: performersParam,
+                  notes: notesParam,
+                  timeBufferInSeconds: timeBufferInSecondsParam,
+                  huddleTimerInSeconds: huddleTimerInSecondsParam);
 
-          return object;
-        }),
+              return object;
+            }),
     PenaltyEntityModel: obx_int.EntityDefinition<PenaltyEntityModel>(
-        model: _entities[2],
+        model: _entities[1],
         toOneRelations: (PenaltyEntityModel object) => [],
         toManyRelations: (PenaltyEntityModel object) => {},
         getId: (PenaltyEntityModel object) => object.id,
@@ -530,7 +463,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           return object;
         }),
     PointEntityModel: obx_int.EntityDefinition<PointEntityModel>(
-        model: _entities[3],
+        model: _entities[2],
         toOneRelations: (PointEntityModel object) => [],
         toManyRelations: (PointEntityModel object) => {},
         getId: (PointEntityModel object) => object.id,
@@ -566,7 +499,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           return object;
         }),
     TeamEntityModel: obx_int.EntityDefinition<TeamEntityModel>(
-        model: _entities[4],
+        model: _entities[3],
         toOneRelations: (TeamEntityModel object) => [],
         toManyRelations: (TeamEntityModel object) => {},
         getId: (TeamEntityModel object) => object.id,
@@ -597,7 +530,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           return object;
         }),
     MatchEntityModel: obx_int.EntityDefinition<MatchEntityModel>(
-        model: _entities[5],
+        model: _entities[4],
         toOneRelations: (MatchEntityModel object) => [],
         toManyRelations: (MatchEntityModel object) => {
               obx_int.RelInfo<MatchEntityModel>.toMany(2, object.id):
@@ -647,6 +580,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           final penaltiesRequiredToImpactPointsParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final createdDateParam = createdDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(createdDateValue);
+          final modifiedDateParam = modifiedDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
           final object = MatchEntityModel(
               id: idParam,
               name: nameParam,
@@ -657,13 +596,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               enablePenaltiesImpactPoints: enablePenaltiesImpactPointsParam,
               penaltiesImpactType: penaltiesImpactTypeParam,
               penaltiesRequiredToImpactPoints:
-                  penaltiesRequiredToImpactPointsParam)
-            ..createdDate = createdDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(createdDateValue)
-            ..modifiedDate = modifiedDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
+                  penaltiesRequiredToImpactPointsParam,
+              createdDate: createdDateParam,
+              modifiedDate: modifiedDateParam);
           obx_int.InternalToManyAccess.setRelInfo<MatchEntityModel>(
               object.improvisations,
               store,
@@ -683,7 +618,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           return object;
         }),
     PacingEntityModel: obx_int.EntityDefinition<PacingEntityModel>(
-        model: _entities[6],
+        model: _entities[5],
         toOneRelations: (PacingEntityModel object) => [],
         toManyRelations: (PacingEntityModel object) => {
               obx_int.RelInfo<PacingEntityModel>.toMany(6, object.id):
@@ -718,17 +653,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final improvisationsParam = obx.ToMany<ImprovisationEntityModel>();
           final defaultNumberOfTeamsParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final createdDateParam = createdDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(createdDateValue);
+          final modifiedDateParam = modifiedDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
           final object = PacingEntityModel(
               id: idParam,
               name: nameParam,
               improvisations: improvisationsParam,
-              defaultNumberOfTeams: defaultNumberOfTeamsParam)
-            ..createdDate = createdDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(createdDateValue)
-            ..modifiedDate = modifiedDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
+              defaultNumberOfTeams: defaultNumberOfTeamsParam,
+              createdDate: createdDateParam,
+              modifiedDate: modifiedDateParam);
           obx_int.InternalToManyAccess.setRelInfo<PacingEntityModel>(
               object.improvisations,
               store,
@@ -766,177 +703,158 @@ class ImprovisationEntityModel_ {
   static final type = obx.QueryIntegerProperty<ImprovisationEntityModel>(
       _entities[0].properties[5]);
 
-  /// see [ImprovisationEntityModel.timeBuffer]
-  static final timeBuffer =
-      obx.QueryRelationToOne<ImprovisationEntityModel, DurationEntityModel>(
+  /// see [ImprovisationEntityModel.durationsInSeconds]
+  static final durationsInSeconds =
+      obx.QueryStringProperty<ImprovisationEntityModel>(
           _entities[0].properties[6]);
 
-  /// see [ImprovisationEntityModel.huddleTimer]
-  static final huddleTimer =
-      obx.QueryRelationToOne<ImprovisationEntityModel, DurationEntityModel>(
+  /// see [ImprovisationEntityModel.timeBufferInSeconds]
+  static final timeBufferInSeconds =
+      obx.QueryIntegerProperty<ImprovisationEntityModel>(
           _entities[0].properties[7]);
 
-  /// see [ImprovisationEntityModel.durations]
-  static final durations =
-      obx.QueryRelationToMany<ImprovisationEntityModel, DurationEntityModel>(
-          _entities[0].relations[0]);
-}
-
-/// [DurationEntityModel] entity fields to define ObjectBox queries.
-class DurationEntityModel_ {
-  /// see [DurationEntityModel.id]
-  static final id =
-      obx.QueryIntegerProperty<DurationEntityModel>(_entities[1].properties[0]);
-
-  /// see [DurationEntityModel.createdDate]
-  static final createdDate =
-      obx.QueryDateProperty<DurationEntityModel>(_entities[1].properties[1]);
-
-  /// see [DurationEntityModel.modifiedDate]
-  static final modifiedDate =
-      obx.QueryDateProperty<DurationEntityModel>(_entities[1].properties[2]);
-
-  /// see [DurationEntityModel.durationInSeconds]
-  static final durationInSeconds =
-      obx.QueryIntegerProperty<DurationEntityModel>(_entities[1].properties[3]);
+  /// see [ImprovisationEntityModel.huddleTimerInSeconds]
+  static final huddleTimerInSeconds =
+      obx.QueryIntegerProperty<ImprovisationEntityModel>(
+          _entities[0].properties[8]);
 }
 
 /// [PenaltyEntityModel] entity fields to define ObjectBox queries.
 class PenaltyEntityModel_ {
   /// see [PenaltyEntityModel.id]
   static final id =
-      obx.QueryIntegerProperty<PenaltyEntityModel>(_entities[2].properties[0]);
+      obx.QueryIntegerProperty<PenaltyEntityModel>(_entities[1].properties[0]);
 
   /// see [PenaltyEntityModel.major]
   static final major =
-      obx.QueryBooleanProperty<PenaltyEntityModel>(_entities[2].properties[1]);
+      obx.QueryBooleanProperty<PenaltyEntityModel>(_entities[1].properties[1]);
 
   /// see [PenaltyEntityModel.type]
   static final type =
-      obx.QueryStringProperty<PenaltyEntityModel>(_entities[2].properties[2]);
+      obx.QueryStringProperty<PenaltyEntityModel>(_entities[1].properties[2]);
 
   /// see [PenaltyEntityModel.performer]
   static final performer =
-      obx.QueryStringProperty<PenaltyEntityModel>(_entities[2].properties[3]);
+      obx.QueryStringProperty<PenaltyEntityModel>(_entities[1].properties[3]);
 
   /// see [PenaltyEntityModel.teamId]
   static final teamId =
-      obx.QueryIntegerProperty<PenaltyEntityModel>(_entities[2].properties[4]);
+      obx.QueryIntegerProperty<PenaltyEntityModel>(_entities[1].properties[4]);
 
   /// see [PenaltyEntityModel.improvisationId]
   static final improvisationId =
-      obx.QueryIntegerProperty<PenaltyEntityModel>(_entities[2].properties[5]);
+      obx.QueryIntegerProperty<PenaltyEntityModel>(_entities[1].properties[5]);
 }
 
 /// [PointEntityModel] entity fields to define ObjectBox queries.
 class PointEntityModel_ {
   /// see [PointEntityModel.id]
   static final id =
-      obx.QueryIntegerProperty<PointEntityModel>(_entities[3].properties[0]);
+      obx.QueryIntegerProperty<PointEntityModel>(_entities[2].properties[0]);
 
   /// see [PointEntityModel.teamId]
   static final teamId =
-      obx.QueryIntegerProperty<PointEntityModel>(_entities[3].properties[1]);
+      obx.QueryIntegerProperty<PointEntityModel>(_entities[2].properties[1]);
 
   /// see [PointEntityModel.improvisationId]
   static final improvisationId =
-      obx.QueryIntegerProperty<PointEntityModel>(_entities[3].properties[2]);
+      obx.QueryIntegerProperty<PointEntityModel>(_entities[2].properties[2]);
 
   /// see [PointEntityModel.value]
   static final value =
-      obx.QueryIntegerProperty<PointEntityModel>(_entities[3].properties[3]);
+      obx.QueryIntegerProperty<PointEntityModel>(_entities[2].properties[3]);
 }
 
 /// [TeamEntityModel] entity fields to define ObjectBox queries.
 class TeamEntityModel_ {
   /// see [TeamEntityModel.id]
   static final id =
-      obx.QueryIntegerProperty<TeamEntityModel>(_entities[4].properties[0]);
+      obx.QueryIntegerProperty<TeamEntityModel>(_entities[3].properties[0]);
 
   /// see [TeamEntityModel.name]
   static final name =
-      obx.QueryStringProperty<TeamEntityModel>(_entities[4].properties[1]);
+      obx.QueryStringProperty<TeamEntityModel>(_entities[3].properties[1]);
 
   /// see [TeamEntityModel.color]
   static final color =
-      obx.QueryIntegerProperty<TeamEntityModel>(_entities[4].properties[2]);
+      obx.QueryIntegerProperty<TeamEntityModel>(_entities[3].properties[2]);
 }
 
 /// [MatchEntityModel] entity fields to define ObjectBox queries.
 class MatchEntityModel_ {
   /// see [MatchEntityModel.id]
   static final id =
-      obx.QueryIntegerProperty<MatchEntityModel>(_entities[5].properties[0]);
+      obx.QueryIntegerProperty<MatchEntityModel>(_entities[4].properties[0]);
 
   /// see [MatchEntityModel.createdDate]
   static final createdDate =
-      obx.QueryDateProperty<MatchEntityModel>(_entities[5].properties[1]);
+      obx.QueryDateProperty<MatchEntityModel>(_entities[4].properties[1]);
 
   /// see [MatchEntityModel.modifiedDate]
   static final modifiedDate =
-      obx.QueryDateProperty<MatchEntityModel>(_entities[5].properties[2]);
+      obx.QueryDateProperty<MatchEntityModel>(_entities[4].properties[2]);
 
   /// see [MatchEntityModel.name]
   static final name =
-      obx.QueryStringProperty<MatchEntityModel>(_entities[5].properties[3]);
+      obx.QueryStringProperty<MatchEntityModel>(_entities[4].properties[3]);
 
   /// see [MatchEntityModel.enablePenaltiesImpactPoints]
   static final enablePenaltiesImpactPoints =
-      obx.QueryBooleanProperty<MatchEntityModel>(_entities[5].properties[4]);
+      obx.QueryBooleanProperty<MatchEntityModel>(_entities[4].properties[4]);
 
   /// see [MatchEntityModel.penaltiesImpactType]
   static final penaltiesImpactType =
-      obx.QueryIntegerProperty<MatchEntityModel>(_entities[5].properties[5]);
+      obx.QueryIntegerProperty<MatchEntityModel>(_entities[4].properties[5]);
 
   /// see [MatchEntityModel.penaltiesRequiredToImpactPoints]
   static final penaltiesRequiredToImpactPoints =
-      obx.QueryIntegerProperty<MatchEntityModel>(_entities[5].properties[6]);
+      obx.QueryIntegerProperty<MatchEntityModel>(_entities[4].properties[6]);
 
   /// see [MatchEntityModel.improvisations]
   static final improvisations =
       obx.QueryRelationToMany<MatchEntityModel, ImprovisationEntityModel>(
-          _entities[5].relations[0]);
+          _entities[4].relations[0]);
 
   /// see [MatchEntityModel.teams]
   static final teams =
       obx.QueryRelationToMany<MatchEntityModel, TeamEntityModel>(
-          _entities[5].relations[1]);
+          _entities[4].relations[1]);
 
   /// see [MatchEntityModel.penalties]
   static final penalties =
       obx.QueryRelationToMany<MatchEntityModel, PenaltyEntityModel>(
-          _entities[5].relations[2]);
+          _entities[4].relations[2]);
 
   /// see [MatchEntityModel.points]
   static final points =
       obx.QueryRelationToMany<MatchEntityModel, PointEntityModel>(
-          _entities[5].relations[3]);
+          _entities[4].relations[3]);
 }
 
 /// [PacingEntityModel] entity fields to define ObjectBox queries.
 class PacingEntityModel_ {
   /// see [PacingEntityModel.id]
   static final id =
-      obx.QueryIntegerProperty<PacingEntityModel>(_entities[6].properties[0]);
+      obx.QueryIntegerProperty<PacingEntityModel>(_entities[5].properties[0]);
 
   /// see [PacingEntityModel.createdDate]
   static final createdDate =
-      obx.QueryDateProperty<PacingEntityModel>(_entities[6].properties[1]);
+      obx.QueryDateProperty<PacingEntityModel>(_entities[5].properties[1]);
 
   /// see [PacingEntityModel.modifiedDate]
   static final modifiedDate =
-      obx.QueryDateProperty<PacingEntityModel>(_entities[6].properties[2]);
+      obx.QueryDateProperty<PacingEntityModel>(_entities[5].properties[2]);
 
   /// see [PacingEntityModel.name]
   static final name =
-      obx.QueryStringProperty<PacingEntityModel>(_entities[6].properties[3]);
+      obx.QueryStringProperty<PacingEntityModel>(_entities[5].properties[3]);
 
   /// see [PacingEntityModel.defaultNumberOfTeams]
   static final defaultNumberOfTeams =
-      obx.QueryIntegerProperty<PacingEntityModel>(_entities[6].properties[4]);
+      obx.QueryIntegerProperty<PacingEntityModel>(_entities[5].properties[4]);
 
   /// see [PacingEntityModel.improvisations]
   static final improvisations =
       obx.QueryRelationToMany<PacingEntityModel, ImprovisationEntityModel>(
-          _entities[6].relations[0]);
+          _entities[5].relations[0]);
 }
