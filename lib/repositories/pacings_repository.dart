@@ -39,4 +39,18 @@ class PacingsRepository {
     final db = await databaseRepository.database;
     return await db.pacingModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
+
+  Future<List<PacingModel>> search(String search, int skip, int take) async {
+    final db = await databaseRepository.database;
+
+    return await db.pacingModels
+        .where()
+        .nameContains(search)
+        .or()
+        .categoriesElementContains(search)
+        .or()
+        .themesElementContains(search)
+        .sortByCreatedDateDesc()
+        .findAllAsync(offset: skip, limit: take);
+  }
 }

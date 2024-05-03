@@ -38,4 +38,16 @@ class MatchesRepository {
     final db = await databaseRepository.database;
     return await db.matchModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
+
+  Future<List<MatchModel>> search(String search, int skip, int take) async {
+    final db = await databaseRepository.database;
+
+    return await db.matchModels
+        .where()
+        .nameContains(search)
+        .or()
+        .teamNamesElementContains(search)
+        .sortByCreatedDateDesc()
+        .findAllAsync(offset: skip, limit: take);
+  }
 }
