@@ -41,8 +41,7 @@ dependencies:
   json_annotation: ^4.8.1
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5
-  toastification:
-    git: https://github.com/payam-zahedi/toastification
+  toastification: ^2.0.0
 
 dev_dependencies:
   build_runner: ^2.4.8

@@ -997,12 +997,11 @@ packages:
   toastification:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "71cd09124fa9b1605717c73f681e7117e540f86c"
-      url: "https://github.com/payam-zahedi/toastification"
-    source: git
-    version: "1.2.1"
+      name: toastification
+      sha256: "5e751acc2fb5b8d008138dac255d62290fde4e5a24824f29809ac098c3dfe395"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   typed_data:
     dependency: transitive
     description:
