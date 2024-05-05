@@ -6,8 +6,6 @@ version: 1.0.0+1
 environment:
   sdk: ">=3.3.1 <4.0.0"
 
-isar_version: &isar_version 4.0.2 # define the version to be used
-
 dependencies:
   collection: ^1.18.0
   country_flags: ^2.2.0
@@ -33,10 +31,10 @@ dependencies:
   hydrated_bloc: ^9.1.4
   intl: any
   isar: 
-    version: *isar_version
+    version: ^4.0.3
     hosted: https://pub.isar-community.dev/
-  isar_flutter_libs: # contains Isar Core
-    version: *isar_version
+  isar_flutter_libs:
+    version: ^4.0.3
     hosted: https://pub.isar-community.dev/
   json_annotation: ^4.8.1
   path_provider: ^2.1.2
