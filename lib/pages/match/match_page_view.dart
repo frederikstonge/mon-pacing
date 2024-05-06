@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
+import '../../components/match_menu/match_menu.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/timer_banner/timer_banner.dart';
+import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../extensions/match_extensions.dart';
 import '../../extensions/penalty_extensions.dart';
@@ -71,19 +74,38 @@ class MatchPageView extends StatelessWidget {
                         icon: const Icon(Icons.scoreboard),
                       ),
                       LoadingIconButton(
-                        onPressed: () async {
-                          await BottomSheetDialog.showDialog(
-                            context: context,
-                            child: MatchDetailPageShell(
-                              match: match,
-                              onConfirm: (match) async {
-                                await context.read<MatchCubit>().edit(match);
-                              },
-                            ),
-                          );
-                        },
-                        tooltip: S.of(context).editMatch,
-                        icon: const Icon(Icons.edit),
+                        onPressed: () => BottomSheetDialog.showDialog(
+                          context: context,
+                          child: MatchMenu(
+                            match: match,
+                            edit: () async {
+                              await BottomSheetDialog.showDialog(
+                                context: context,
+                                child: MatchDetailPageShell(
+                                  match: match,
+                                  onConfirm: (match) async {
+                                    await context.read<MatchCubit>().edit(match);
+                                  },
+                                ),
+                              );
+                            },
+                            delete: () async {
+                              final matchesCubit = context.read<MatchesCubit>();
+                              final router = GoRouter.of(context);
+                              final result = await MessageBoxDialog.questionShow(
+                                context,
+                                S.of(context).areYouSure(S.of(context).delete.toLowerCase(), match.name),
+                                S.of(context).delete,
+                                S.of(context).cancel,
+                              );
+                              if (result == true) {
+                                await matchesCubit.delete(match);
+                                router.pop();
+                              }
+                            },
+                          ),
+                        ),
+                        icon: const Icon(Icons.more_vert),
                       ),
                     ],
                   ),

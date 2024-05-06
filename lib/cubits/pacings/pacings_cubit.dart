@@ -42,7 +42,6 @@ class PacingsCubit extends Cubit<PacingsState> {
   Future<void> edit(PacingModel model) async {
     try {
       await pacingsRepository.edit(model);
-      toasterService.show(title: settingsCubit.localizer.toasterPacingSaved);
     } catch (exception) {
       toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {

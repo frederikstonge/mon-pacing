@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
+import '../../../components/pacing_menu/pacing_menu.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/pacing_model.dart';
-import 'pacing_menu.dart';
 
 class PacingCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;

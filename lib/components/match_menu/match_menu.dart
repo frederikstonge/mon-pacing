@@ -9,13 +9,13 @@ import '../../../models/match_model.dart';
 
 class MatchMenu extends StatelessWidget {
   final MatchModel match;
-  final FutureOr<void> Function() open;
+  final FutureOr<void> Function() edit;
   final FutureOr<void> Function() delete;
 
   const MatchMenu({
     super.key,
     required this.match,
-    required this.open,
+    required this.edit,
     required this.delete,
   });
 
@@ -31,12 +31,12 @@ class MatchMenu extends StatelessWidget {
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();
-              await open.call();
+              await edit.call();
             },
             child: ListTile(
-              leading: const Icon(Icons.play_arrow),
+              leading: const Icon(Icons.edit),
               title: Text(
-                S.of(context).open,
+                S.of(context).edit,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../cubits/pacings/pacings_cubit.dart';
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
@@ -11,28 +12,28 @@ import 'pacing_state.dart';
 
 class PacingCubit extends Cubit<PacingState> {
   final PacingsRepository pacingsRepository;
+  final PacingsCubit pacingsCubit;
   final SettingsCubit settingsCubit;
-
-  PacingModel? initialPacing;
 
   PacingCubit({
     required this.pacingsRepository,
+    required this.pacingsCubit,
     required this.settingsCubit,
   }) : super(const PacingState.initial());
 
   Future<void> initialize(int id) async {
     final pacing = await pacingsRepository.get(id);
-    initialPacing = pacing;
     emit(PacingState.success(pacing!));
   }
 
-  void edit(PacingModel model) {
+  Future<void> edit(PacingModel model) async {
     emit(PacingState.success(model));
+    await pacingsCubit.edit(model);
   }
 
-  void addImprovisation() {
-    state.whenOrNull(
-      success: (pacing) {
+  Future<void> addImprovisation() async {
+    await state.whenOrNull(
+      success: (pacing) async {
         final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
         final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
         final nextType = ImprovisationType.values[improvisations.length % 2];
@@ -51,13 +52,16 @@ class PacingCubit extends Cubit<PacingState> {
 
         improvisations.add(newImprovisation);
 
-        emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+        final newPacing = pacing.copyWith(improvisations: improvisations);
+
+        emit(PacingState.success(newPacing));
+        await pacingsCubit.edit(newPacing);
       },
     );
   }
 
-  void moveImprovisation(int oldIndex, int newIndex) {
-    state.whenOrNull(success: (pacing) {
+  Future<void> moveImprovisation(int oldIndex, int newIndex) async {
+    await state.whenOrNull(success: (pacing) async {
       final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
       final improvisation = improvisations.removeAt(oldIndex);
 
@@ -67,25 +71,34 @@ class PacingCubit extends Cubit<PacingState> {
 
       improvisations.insert(newIndex, improvisation);
 
-      emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+      final newPacing = pacing.copyWith(improvisations: improvisations);
+
+      emit(PacingState.success(newPacing));
+      await pacingsCubit.edit(newPacing);
     });
   }
 
-  void removeImprovisation(int index) {
-    state.whenOrNull(success: (pacing) {
+  Future<void> removeImprovisation(int index) async {
+    await state.whenOrNull(success: (pacing) async {
       final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
       improvisations.removeAt(index);
 
-      emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+      final newPacing = pacing.copyWith(improvisations: improvisations);
+
+      emit(PacingState.success(newPacing));
+      await pacingsCubit.edit(newPacing);
     });
   }
 
-  void editImprovisation(int index, ImprovisationModel model) {
-    state.whenOrNull(success: (pacing) {
+  Future<void> editImprovisation(int index, ImprovisationModel model) async {
+    await state.whenOrNull(success: (pacing) async {
       final improvisations = List<ImprovisationModel>.from(pacing.copyWith().improvisations);
       improvisations[index] = model;
 
-      emit(PacingState.success(pacing.copyWith(improvisations: improvisations)));
+      final newPacing = pacing.copyWith(improvisations: improvisations);
+
+      emit(PacingState.success(newPacing));
+      await pacingsCubit.edit(newPacing);
     });
   }
 }
