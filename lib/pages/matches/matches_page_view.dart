@@ -78,7 +78,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                     return MatchCard(
                       match: match,
                       onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                      open: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
+                      edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
                       shouldDelete: () => MessageBoxDialog.questionShow(
                         context,
                         S.of(context).areYouSure(S.of(context).delete.toLowerCase(), match.name),

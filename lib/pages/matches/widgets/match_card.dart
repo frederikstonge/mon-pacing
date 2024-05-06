@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
+import '../../../components/match_menu/match_menu.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
-import 'match_menu.dart';
 
 class MatchCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;
   final FutureOr<void> Function() delete;
-  final FutureOr<void> Function() open;
+  final FutureOr<void> Function() edit;
   final FutureOr<void> Function() onLongPress;
   final MatchModel match;
 
@@ -21,7 +21,7 @@ class MatchCard extends StatelessWidget {
     required this.match,
     required this.shouldDelete,
     required this.delete,
-    required this.open,
+    required this.edit,
     required this.onLongPress,
   });
 
@@ -49,7 +49,7 @@ class MatchCard extends StatelessWidget {
           _openMenu(context);
         },
         onTap: () {
-          open.call();
+          edit.call();
         },
         child: CustomCard(
           child: Row(
@@ -91,7 +91,7 @@ class MatchCard extends StatelessWidget {
       context: context,
       child: MatchMenu(
         match: match,
-        open: open,
+        edit: edit,
         delete: () async {
           final result = await shouldDelete();
           if (result == true) {
