@@ -112,16 +112,16 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                     final pacing = pacings.elementAt(index);
                     return PacingCard(
                       pacing: pacing,
+                      onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                      edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
                       shouldDelete: () => MessageBoxDialog.questionShow(
                         context,
                         S.of(context).areYouSure(S.of(context).delete.toLowerCase(), pacing.name),
                         S.of(context).delete,
                         S.of(context).cancel,
                       ),
-                      onLongPress: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                      delete: () async => await context.read<PacingsCubit>().delete(pacing),
-                      edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
-                      export: () async => await context.read<PacingsCubit>().export(pacing),
+                      delete: () => context.read<PacingsCubit>().delete(pacing),
+                      export: () => context.read<PacingsCubit>().export(pacing),
                       duplicate: () => BottomSheetDialog.showDialog(
                         context: context,
                         child: PacingDetailPageShell(

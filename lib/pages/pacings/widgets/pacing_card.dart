@@ -125,7 +125,7 @@ class PacingCard extends StatelessWidget {
         delete: () async {
           final result = await shouldDelete();
           if (result == true) {
-            await delete();
+            await delete.call();
           }
         },
       ),

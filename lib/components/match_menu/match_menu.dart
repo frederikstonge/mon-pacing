@@ -45,7 +45,7 @@ class MatchMenu extends StatelessWidget {
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();
-              await delete();
+              await delete.call();
             },
             child: ListTile(
               leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),

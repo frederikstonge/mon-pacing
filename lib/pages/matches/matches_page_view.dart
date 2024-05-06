@@ -85,7 +85,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                         S.of(context).delete,
                         S.of(context).cancel,
                       ),
-                      delete: () async => await context.read<MatchesCubit>().delete(match),
+                      delete: () => context.read<MatchesCubit>().delete(match),
                     );
                   },
                 ),
