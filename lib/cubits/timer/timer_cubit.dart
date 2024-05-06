@@ -75,15 +75,13 @@ class TimerCubit extends Cubit<TimerState> {
 
   Future<void> _onReceiveData(dynamic data) async {
     final event = TimerModel.fromJson(data);
-    if (event.remainingMilliseconds <= 0) {
+    if (Duration(milliseconds: event.remainingMilliseconds).inSeconds <= 0) {
       await stop();
       return;
     }
 
     if (state.timer != null) {
       await _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
-    } else {
-      await _updateTimer(event);
     }
   }
 

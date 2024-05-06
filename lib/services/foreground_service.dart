@@ -127,14 +127,14 @@ class TimerTaskHandler extends TaskHandler {
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
 
-    if (remainingDuration.inSeconds % 60 == 0 ||
-        remainingDuration.inSeconds == 30 ||
-        remainingDuration.inSeconds == 10 ||
-        remainingDuration.inSeconds <= 5) {
-      unawaited(vibrate(HapticsType.light));
-    }
-
     if (remainingDuration.inSeconds >= 0) {
+      if (remainingDuration.inSeconds % 60 == 0 ||
+          remainingDuration.inSeconds == 30 ||
+          remainingDuration.inSeconds == 10 ||
+          remainingDuration.inSeconds <= 5) {
+        unawaited(vibrate(HapticsType.light));
+      }
+
       await FlutterForegroundTask.updateService(
         notificationTitle: timer.notificationTitle,
         notificationText: remainingDuration.toImprovDuration(),
