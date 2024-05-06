@@ -17,35 +17,17 @@ class TimerCubit extends Cubit<TimerState> {
   TimerCubit({required this.settingsCubit}) : super(const TimerState());
 
   Future<void> initialize() async {
-    initForegroundTask();
     await requestPermissionForAndroid();
-
-    final isRegistered = _registerReceivePort(FlutterForegroundTask.receivePort);
-    if (!isRegistered) {
-      return;
-    }
-
-    if (await FlutterForegroundTask.isRunningService) {
-      final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
-      if (data == null) {
-        return;
-      }
-      try {
-        final timer = TimerModel.fromJson(json.decode(data));
-        if (timer.remainingMilliseconds > 0) {
-          await _updateTimer(timer);
-        } else {
-          await stop();
-        }
-      } catch (_) {
-        return;
-      }
-    } else {
-      await FlutterForegroundTask.removeData(key: timerDataKey);
-    }
+    initForegroundTask();
+    _receivePort = FlutterForegroundTask.receivePort;
+    _receivePort?.listen(_onReceiveData);
   }
 
   Future<bool> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
+    if (await FlutterForegroundTask.isRunningService) {
+      await FlutterForegroundTask.stopService();
+    }
+
     final timer = TimerModel(
       duration: duration,
       matchId: matchId,
@@ -59,15 +41,11 @@ class TimerCubit extends Cubit<TimerState> {
 
     await _updateTimer(timer);
 
-    if (await FlutterForegroundTask.isRunningService) {
-      return await FlutterForegroundTask.restartService();
-    } else {
-      return await FlutterForegroundTask.startService(
-        notificationTitle: settingsCubit.localizer.notificationTitle,
-        notificationText: '',
-        callback: startCallback,
-      );
-    }
+    return await FlutterForegroundTask.startService(
+      notificationTitle: settingsCubit.localizer.notificationTitle,
+      notificationText: '',
+      callback: startCallback,
+    );
   }
 
   Future<bool> resume() async {
@@ -81,16 +59,17 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   Future<bool> stop() async {
-    await FlutterForegroundTask.removeData(key: timerDataKey);
     final result = await FlutterForegroundTask.stopService();
+    await FlutterForegroundTask.removeData(key: timerDataKey);
     emit(const TimerState());
     return result;
   }
 
   @override
   Future<void> close() async {
-    _closeReceivePort();
     await stop();
+    _receivePort?.close();
+    _receivePort = null;
     return await super.close();
   }
 
@@ -103,25 +82,9 @@ class TimerCubit extends Cubit<TimerState> {
 
     if (state.timer != null) {
       await _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
+    } else {
+      await _updateTimer(event);
     }
-  }
-
-  bool _registerReceivePort(ReceivePort? newReceivePort) {
-    if (newReceivePort == null) {
-      return false;
-    }
-
-    _closeReceivePort();
-
-    _receivePort = newReceivePort;
-    _receivePort?.listen(_onReceiveData);
-
-    return _receivePort != null;
-  }
-
-  void _closeReceivePort() {
-    _receivePort?.close();
-    _receivePort = null;
   }
 
   Future<bool> _updateTimer(TimerModel timer) async {
