@@ -62,22 +62,20 @@ Future<void> requestPermissionForAndroid() async {
 }
 
 class TimerTaskHandler extends TaskHandler {
-  SendPort? _sendPort;
   Stopwatch? _stopwatch;
   TimerModel? _timer;
 
   @override
   Future<void> onStart(DateTime timestamp, SendPort? sendPort) async {
-    _sendPort = sendPort;
     _timer = await getTimer();
     _stopwatch = Stopwatch();
-    await onTick();
+    await onTick(sendPort);
   }
 
   @override
   Future<void> onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
     _timer = await getTimer();
-    await onTick();
+    await onTick(sendPort);
   }
 
   @override
@@ -101,12 +99,11 @@ class TimerTaskHandler extends TaskHandler {
     FlutterForegroundTask.launchApp(path);
   }
 
-  Future<void> onTick() async {
+  Future<void> onTick(SendPort? sendPort) async {
     var timer = _timer?.copyWith();
 
     // Handle STOP
     if (timer == null) {
-      await FlutterForegroundTask.stopService();
       return;
     }
     if (timer.status == TimerStatus.started) {
@@ -126,7 +123,7 @@ class TimerTaskHandler extends TaskHandler {
     final remainingMilliseconds = timer.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
     timer = timer.copyWith(remainingMilliseconds: remainingMilliseconds);
-    _sendPort?.send(timer.toJson());
+    sendPort?.send(timer.toJson());
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
 
@@ -137,10 +134,12 @@ class TimerTaskHandler extends TaskHandler {
       unawaited(vibrate(HapticsType.light));
     }
 
-    await FlutterForegroundTask.updateService(
-      notificationTitle: timer.notificationTitle,
-      notificationText: remainingDuration.toImprovDuration(),
-    );
+    if (remainingDuration.inSeconds >= 0) {
+      await FlutterForegroundTask.updateService(
+        notificationTitle: timer.notificationTitle,
+        notificationText: remainingDuration.toImprovDuration(),
+      );
+    }
   }
 
   Future<TimerModel?> getTimer() async {
