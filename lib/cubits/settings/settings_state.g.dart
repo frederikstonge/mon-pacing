@@ -14,11 +14,12 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
       enableTimerHapticFeedback:
           json['enableTimerHapticFeedback'] as bool? ?? true,
       defaultImprovisationDurationInSeconds:
-          json['defaultImprovisationDurationInSeconds'] as int? ?? 150,
+          (json['defaultImprovisationDurationInSeconds'] as num?)?.toInt() ??
+              150,
       defaultTimeBufferInSeconds:
-          json['defaultTimeBufferInSeconds'] as int? ?? 30,
+          (json['defaultTimeBufferInSeconds'] as num?)?.toInt() ?? 30,
       defaultHuddleTimerInSeconds:
-          json['defaultHuddleTimerInSeconds'] as int? ?? 30,
+          (json['defaultHuddleTimerInSeconds'] as num?)?.toInt() ?? 30,
       enableDefaultPenaltiesImpactPoints:
           json['enableDefaultPenaltiesImpactPoints'] as bool? ?? true,
       defaultPenaltiesImpactType: $enumDecodeNullable(
@@ -26,7 +27,8 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
               json['defaultPenaltiesImpactType']) ??
           PenaltiesImpactType.addPoints,
       defaultPenaltiesRequiredToImpactPoints:
-          json['defaultPenaltiesRequiredToImpactPoints'] as int? ?? 3,
+          (json['defaultPenaltiesRequiredToImpactPoints'] as num?)?.toInt() ??
+              3,
     );
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>

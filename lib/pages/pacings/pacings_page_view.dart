@@ -77,14 +77,16 @@ class _PacingsPageViewState extends State<PacingsPageView> {
             appBar: SliverLogoAppbar(
               title: S.of(context).pacings,
               actions: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: LoadingIconButton(
-                    icon: const Icon(Icons.download),
-                    tooltip: S.of(context).importPacingTooltip,
-                    onPressed: () async => context.read<PacingsCubit>().import(),
-                  ),
-                )
+                LoadingIconButton(
+                  icon: const Icon(Icons.download),
+                  tooltip: S.of(context).importPacingTooltip,
+                  onPressed: () async => context.read<PacingsCubit>().import(),
+                ),
+                LoadingIconButton(
+                  icon: const Icon(Icons.search),
+                  tooltip: S.of(context).search,
+                  onPressed: () => context.goNamed(Routes.pacingsSearch),
+                ),
               ],
             ),
             slivers: [

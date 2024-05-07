@@ -1321,17 +1321,18 @@ extension ImprovisationModelQueryObject
 _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
         Map<String, dynamic> json) =>
     _$ImprovisationModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
       category: json['category'] as String,
       theme: json['theme'] as String,
       durationsInSeconds: (json['durationsInSeconds'] as List<dynamic>)
-          .map((e) => e as int)
+          .map((e) => (e as num).toInt())
           .toList(),
       performers: json['performers'] as String,
       notes: json['notes'] as String,
-      timeBufferInSeconds: json['timeBufferInSeconds'] as int? ?? 30,
-      huddleTimerInSeconds: json['huddleTimerInSeconds'] as int? ?? 30,
+      timeBufferInSeconds: (json['timeBufferInSeconds'] as num?)?.toInt() ?? 30,
+      huddleTimerInSeconds:
+          (json['huddleTimerInSeconds'] as num?)?.toInt() ?? 30,
     );
 
 Map<String, dynamic> _$$ImprovisationModelImplToJson(

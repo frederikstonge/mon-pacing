@@ -2213,7 +2213,7 @@ extension MatchModelQueryProperty3<R1, R2>
 
 _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
     _$MatchModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       createdDate: json['createdDate'] == null
           ? null
@@ -2239,7 +2239,7 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
               _$PenaltiesImpactTypeEnumMap, json['penaltiesImpactType']) ??
           PenaltiesImpactType.addPoints,
       penaltiesRequiredToImpactPoints:
-          json['penaltiesRequiredToImpactPoints'] as int? ?? 3,
+          (json['penaltiesRequiredToImpactPoints'] as num?)?.toInt() ?? 3,
     );
 
 Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>

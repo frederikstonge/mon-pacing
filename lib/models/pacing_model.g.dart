@@ -1778,7 +1778,7 @@ extension PacingModelQueryProperty3<R1, R2>
 
 _$PacingModelImpl _$$PacingModelImplFromJson(Map<String, dynamic> json) =>
     _$PacingModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       createdDate: json['createdDate'] == null
           ? null
@@ -1789,7 +1789,8 @@ _$PacingModelImpl _$$PacingModelImplFromJson(Map<String, dynamic> json) =>
       improvisations: (json['improvisations'] as List<dynamic>)
           .map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      defaultNumberOfTeams: json['defaultNumberOfTeams'] as int? ?? 2,
+      defaultNumberOfTeams:
+          (json['defaultNumberOfTeams'] as num?)?.toInt() ?? 2,
     );
 
 Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
