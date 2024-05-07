@@ -719,12 +719,12 @@ extension PenaltyModelQueryObject
 
 _$PenaltyModelImpl _$$PenaltyModelImplFromJson(Map<String, dynamic> json) =>
     _$PenaltyModelImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       major: json['major'] as bool,
       type: json['type'] as String,
       performer: json['performer'] as String,
-      teamId: json['teamId'] as int,
-      improvisationId: json['improvisationId'] as int,
+      teamId: (json['teamId'] as num).toInt(),
+      improvisationId: (json['improvisationId'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$PenaltyModelImplToJson(_$PenaltyModelImpl instance) =>
