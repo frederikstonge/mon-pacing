@@ -5,13 +5,27 @@ extension DurationExtensions on Duration {
     final formatter = NumberFormat('00');
     String value = '';
 
-    if (inHours > 0) {
-      value += '${formatter.format(inHours)}:';
-    }
-
-    final minutes = (inMinutes % 60);
+    final hasHours = inHours > 0;
+    final minutes = inMinutes % 60;
+    final hasMinutes = minutes > 0;
     final seconds = inSeconds % 60;
 
-    return value += '$minutes:${formatter.format(seconds)}';
+    if (hasHours) {
+      value += '$inHours:';
+    }
+
+    if (hasHours) {
+      value += '${formatter.format(minutes)}:';
+    } else {
+      value += '$minutes:';
+    }
+
+    if (hasMinutes) {
+      value += formatter.format(seconds);
+    } else {
+      value += '$seconds:';
+    }
+
+    return value;
   }
 }
