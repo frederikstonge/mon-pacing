@@ -77,7 +77,7 @@ class TimerWidget extends StatelessWidget {
             isActive
                 ? Duration(milliseconds: state.timer!.remainingMilliseconds).toImprovDuration()
                 : durations.elementAt(durationIndex).toImprovDuration(),
-            style: Theme.of(context).textTheme.displaySmall,
+            style: Theme.of(context).textTheme.displayLarge,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
