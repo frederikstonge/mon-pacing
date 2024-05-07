@@ -7,8 +7,30 @@ import '../../router/routes.dart';
 import 'cubits/pacings_search_cubit.dart';
 import 'cubits/pacings_search_state.dart';
 
-class PacingsSearchPageView extends StatelessWidget {
+class PacingsSearchPageView extends StatefulWidget {
   const PacingsSearchPageView({super.key});
+
+  @override
+  State<PacingsSearchPageView> createState() => _PacingsSearchPageViewState();
+}
+
+class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
+  late final ScrollController _scrollController;
+  final _scrollThreshold = 200.0;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +56,7 @@ class PacingsSearchPageView extends StatelessWidget {
       body: BlocBuilder<PacingsSearchCubit, PacingsSearchState>(
         builder: (context, state) {
           return ListView.builder(
+            controller: _scrollController,
             itemCount: state.hasMore ? state.pacings.length + 1 : state.pacings.length,
             itemBuilder: (context, index) {
               if (state.hasMore && index != 0 && index == state.pacings.length) {
@@ -79,5 +102,15 @@ class PacingsSearchPageView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> _onScroll() async {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      final pacingsSearchCubit = context.read<PacingsSearchCubit>();
+      final query = pacingsSearchCubit.state.searchQuery;
+      await pacingsSearchCubit.fetch(query);
+    }
   }
 }
