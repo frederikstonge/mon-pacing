@@ -49,9 +49,9 @@ dev_dependencies:
   freezed: ^2.4.7
   json_serializable: ^6.7.1
 
-assets:
-  - google_fonts/
-
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - google_fonts/
