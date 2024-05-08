@@ -44,9 +44,9 @@ class MatchesRepository {
 
     return await db.matchModels
         .where()
-        .nameContains(search)
+        .nameContains(search, caseSensitive: false)
         .or()
-        .teamNamesElementContains(search)
+        .teamNamesElementContains(search, caseSensitive: false)
         .sortByCreatedDateDesc()
         .findAllAsync(offset: skip, limit: take);
   }

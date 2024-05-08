@@ -45,11 +45,11 @@ class PacingsRepository {
 
     return await db.pacingModels
         .where()
-        .nameContains(search)
+        .nameContains(search, caseSensitive: false)
         .or()
-        .categoriesElementContains(search)
+        .categoriesElementContains(search, caseSensitive: false)
         .or()
-        .themesElementContains(search)
+        .themesElementContains(search, caseSensitive: false)
         .sortByCreatedDateDesc()
         .findAllAsync(offset: skip, limit: take);
   }
