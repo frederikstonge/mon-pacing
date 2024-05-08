@@ -6,17 +6,17 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../router/routes.dart';
-import 'cubits/pacings_search_cubit.dart';
-import 'cubits/pacings_search_state.dart';
+import 'cubits/matches_search_cubit.dart';
+import 'cubits/matches_search_state.dart';
 
-class PacingsSearchPageView extends StatefulWidget {
-  const PacingsSearchPageView({super.key});
+class MatchesSearchPageView extends StatefulWidget {
+  const MatchesSearchPageView({super.key});
 
   @override
-  State<PacingsSearchPageView> createState() => _PacingsSearchPageViewState();
+  State<MatchesSearchPageView> createState() => _MatchesSearchPageViewState();
 }
 
-class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
+class _MatchesSearchPageViewState extends State<MatchesSearchPageView> {
   late final ScrollController _scrollController;
   Timer? _debounce;
   final _scrollThreshold = 200.0;
@@ -54,29 +54,29 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
           onFieldSubmitted: _onChanged,
         ),
       ),
-      body: BlocBuilder<PacingsSearchCubit, PacingsSearchState>(
+      body: BlocBuilder<MatchesSearchCubit, MatchesSearchState>(
         builder: (context, state) {
           return ListView.builder(
             controller: _scrollController,
-            itemCount: state.hasMore ? state.pacings.length + 1 : state.pacings.length,
+            itemCount: state.hasMore ? state.matches.length + 1 : state.matches.length,
             itemBuilder: (context, index) {
-              if (state.hasMore && index != 0 && index == state.pacings.length) {
+              if (state.hasMore && index != 0 && index == state.matches.length) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
-              final pacing = state.pacings.elementAtOrNull(index);
-              if (pacing == null) {
+              final match = state.matches.elementAtOrNull(index);
+              if (match == null) {
                 return const SizedBox.shrink();
               }
 
               return InkWell(
-                onTap: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
+                onTap: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
                 child: ListTile(
                   isThreeLine: true,
                   title: Text(
-                    pacing.name,
+                    match.name,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -85,12 +85,12 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        S.of(context).improvisationCount(pacing.improvisations.length),
+                        match.teams.map((e) => e.name).join(' ${S.of(context).versus} '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        S.of(context).modifiedDate(pacing.modifiedDate!),
+                        S.of(context).modifiedDate(match.modifiedDate!),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -111,7 +111,7 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
     }
 
     _debounce = Timer(const Duration(milliseconds: 250), () {
-      context.read<PacingsSearchCubit>().fetch(value);
+      context.read<MatchesSearchCubit>().fetch(value);
     });
   }
 
@@ -119,7 +119,7 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      final pacingsSearchCubit = context.read<PacingsSearchCubit>();
+      final pacingsSearchCubit = context.read<MatchesSearchCubit>();
       final query = pacingsSearchCubit.state.searchQuery;
       await pacingsSearchCubit.fetch(query);
     }

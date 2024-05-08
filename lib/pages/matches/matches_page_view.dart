@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
+import '../../components/actions/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
@@ -52,6 +53,13 @@ class _MatchesPageViewState extends State<MatchesPageView> {
             scrollPhysics: const AlwaysScrollableScrollPhysics(),
             appBar: SliverLogoAppbar(
               title: S.of(context).matches,
+              actions: [
+                LoadingIconButton(
+                  icon: const Icon(Icons.search),
+                  tooltip: S.of(context).search,
+                  onPressed: () => context.goNamed(Routes.matchesSearch),
+                ),
+              ],
             ),
             slivers: [
               const TimerBanner(),
