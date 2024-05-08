@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +18,7 @@ class PacingsSearchPageView extends StatefulWidget {
 
 class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
   late final ScrollController _scrollController;
+  Timer? _debounce;
   final _scrollThreshold = 200.0;
 
   @override
@@ -29,6 +32,7 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -45,12 +49,8 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
                 fontSize: 18,
               ),
               border: InputBorder.none),
-          onChanged: (value) {
-            context.read<PacingsSearchCubit>().fetch(value);
-          },
-          onFieldSubmitted: (value) {
-            context.read<PacingsSearchCubit>().fetch(value);
-          },
+          onChanged: _onChanged,
+          onFieldSubmitted: _onChanged,
         ),
       ),
       body: BlocBuilder<PacingsSearchCubit, PacingsSearchState>(
@@ -102,6 +102,16 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
         },
       ),
     );
+  }
+
+  void _onChanged(String value) {
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
+    }
+
+    _debounce = Timer(const Duration(milliseconds: 250), () {
+      context.read<PacingsSearchCubit>().fetch(value);
+    });
   }
 
   Future<void> _onScroll() async {
