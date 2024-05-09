@@ -20,11 +20,7 @@ extension DurationExtensions on Duration {
       value += '$minutes:';
     }
 
-    if (hasMinutes) {
-      value += formatter.format(seconds);
-    } else {
-      value += '$seconds:';
-    }
+    value += formatter.format(seconds);
 
     return value;
   }
