@@ -7,7 +7,6 @@ extension DurationExtensions on Duration {
 
     final hasHours = inHours > 0;
     final minutes = inMinutes % 60;
-    final hasMinutes = minutes > 0;
     final seconds = inSeconds % 60;
 
     if (hasHours) {
