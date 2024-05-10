@@ -34,10 +34,15 @@ class MatchCubit extends Cubit<MatchState> {
   }) : super(const MatchState.initial());
 
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
-    final newMatch = await matchesRepository.get(id);
-    var selectedImprovisationIndex = improvisationId != null ? newMatch!.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
+    final match = await matchesRepository.get(id);
+    if (match == null) {
+      emit(MatchState.error(settingsCubit.localizer.toasterGenericError));
+      return;
+    }
+
+    var selectedImprovisationIndex = improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
-    emit(MatchState.success(newMatch!, selectedImprovisationIndex, durationIndex ?? 0));
+    emit(MatchState.success(match, selectedImprovisationIndex, durationIndex ?? 0));
   }
 
   Future<void> edit(MatchModel match) async {

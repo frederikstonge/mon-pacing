@@ -23,7 +23,12 @@ class PacingCubit extends Cubit<PacingState> {
 
   Future<void> initialize(int id) async {
     final pacing = await pacingsRepository.get(id);
-    emit(PacingState.success(pacing!));
+    if (pacing == null) {
+      emit(PacingState.error(settingsCubit.localizer.toasterGenericError));
+      return;
+    }
+
+    emit(PacingState.success(pacing));
   }
 
   Future<void> edit(PacingModel model) async {
