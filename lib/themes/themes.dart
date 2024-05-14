@@ -83,12 +83,9 @@ class Themes {
       onError: Colors.white,
       errorContainer: secondaryColor,
       onErrorContainer: onSecondary,
-      background: background,
-      onBackground: onBackground,
       surface: background,
       onSurface: onBackground,
       surfaceTint: background,
-      surfaceVariant: background,
       inverseSurface: onBackground,
       shadow: shadowColor,
     );

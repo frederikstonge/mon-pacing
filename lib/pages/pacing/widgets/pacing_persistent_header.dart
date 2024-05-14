@@ -25,7 +25,7 @@ class PacingPersistentHeader extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       height: height,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

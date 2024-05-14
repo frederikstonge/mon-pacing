@@ -28,7 +28,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       child: NavigationToolbar(
         leading: Row(
           mainAxisSize: MainAxisSize.min,

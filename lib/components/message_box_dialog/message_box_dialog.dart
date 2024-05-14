@@ -7,9 +7,9 @@ class MessageBoxDialog {
         context: context,
         useRootNavigator: true,
         useSafeArea: true,
-        barrierColor: Theme.of(context).colorScheme.onBackground.withAlpha(100),
+        barrierColor: Theme.of(context).colorScheme.onSurface.withAlpha(100),
         builder: (BuildContext context) => Dialog(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           insetPadding: const EdgeInsets.symmetric(horizontal: 24),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           child: Padding(

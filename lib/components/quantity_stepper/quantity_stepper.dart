@@ -56,7 +56,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
           color: widget.hasError ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.primary,
           width: 2,
         ),
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
