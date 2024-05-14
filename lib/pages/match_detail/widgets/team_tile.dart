@@ -7,6 +7,7 @@ import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/color_picker/color_picker.dart';
 import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/team_model.dart';
 import '../../../validators/validator.dart';
 
@@ -29,7 +30,7 @@ class TeamTile extends StatelessWidget {
         onTap: () async {
           final newColor = await BottomSheetDialog.showDialog<Color>(
             context: context,
-            child: ColorPicker(initialColor: Color(team.color), title: 'Color'),
+            child: ColorPicker(initialColor: Color(team.color), title: S.of(context).color),
           );
           if (newColor != null) {
             onChanged.call(team.copyWith(color: newColor.value));

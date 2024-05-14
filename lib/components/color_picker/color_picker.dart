@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 import '../bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';
@@ -20,9 +20,9 @@ class ColorPicker extends StatelessWidget {
       appBar: BottomSheetAppbar(
         title: title,
       ),
-      body: BlockPicker(
-        pickerColor: initialColor,
-        onColorChanged: (value) {
+      body: MaterialColorPicker(
+        selectedColor: initialColor,
+        onColorChange: (value) {
           Navigator.of(context).pop(value);
         },
       ),
