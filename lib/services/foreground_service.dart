@@ -39,7 +39,7 @@ void initForegroundTask() {
     foregroundTaskOptions: const ForegroundTaskOptions(
       interval: 1000,
       isOnceEvent: false,
-      autoRunOnBoot: true,
+      autoRunOnBoot: false,
       allowWakeLock: true,
       allowWifiLock: true,
     ),
