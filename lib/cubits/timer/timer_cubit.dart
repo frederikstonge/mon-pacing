@@ -3,27 +3,38 @@ import 'dart:isolate';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../models/timer_model.dart';
 import '../../models/timer_status.dart';
 import '../../services/foreground_service.dart';
+import '../../services/toaster_service.dart';
 import '../settings/settings_cubit.dart';
 import 'timer_state.dart';
 
 class TimerCubit extends Cubit<TimerState> {
   ReceivePort? _receivePort;
   final SettingsCubit settingsCubit;
+  final ToasterService toasterService;
 
-  TimerCubit({required this.settingsCubit}) : super(const TimerState());
+  TimerCubit({
+    required this.settingsCubit,
+    required this.toasterService,
+  }) : super(const TimerState());
 
   Future<void> initialize() async {
-    await requestPermissionForAndroid();
+    await _requestPermissions();
     initForegroundTask();
     _receivePort = FlutterForegroundTask.receivePort;
     _receivePort?.listen(_onReceiveData);
   }
 
   Future<bool> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
+    final hasPermissions = await _requestPermissions();
+    if (!hasPermissions) {
+      return false;
+    }
+
     if (await FlutterForegroundTask.isRunningService) {
       await FlutterForegroundTask.stopService();
     }
@@ -89,5 +100,29 @@ class TimerCubit extends Cubit<TimerState> {
     timer = timer.copyWith(hapticFeedback: settingsCubit.state.enableTimerHapticFeedback);
     emit(TimerState(timer: timer));
     return await FlutterForegroundTask.saveData(key: timerDataKey, value: json.encode(timer.toJson()));
+  }
+
+  Future<bool> _requestPermissions() async {
+    final notificationPermission = await requestNotificationPermission();
+    if (!notificationPermission) {
+      toasterService.show(
+        type: ToastificationType.error,
+        title: settingsCubit.localizer.toasterGenericError,
+        description: settingsCubit.localizer.missingNotificationPermissionError,
+      );
+      return false;
+    }
+
+    final ignoreBatteryOptimization = await requestIgnoreBatteryOptimization();
+    if (!ignoreBatteryOptimization) {
+      toasterService.show(
+        type: ToastificationType.error,
+        title: settingsCubit.localizer.toasterGenericError,
+        description: settingsCubit.localizer.missingIgnoreBatteryOptimizationError,
+      );
+      return false;
+    }
+
+    return true;
   }
 }

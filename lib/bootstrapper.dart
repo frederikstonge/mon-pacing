@@ -51,7 +51,10 @@ class Bootstrapper extends StatelessWidget {
             )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => TimerCubit(settingsCubit: blocContext.read<SettingsCubit>())..initialize(),
+            create: (blocContext) => TimerCubit(
+              toasterService: blocContext.read<ToasterService>(),
+              settingsCubit: blocContext.read<SettingsCubit>(),
+            )..initialize(),
           ),
         ],
         child: const App(),
