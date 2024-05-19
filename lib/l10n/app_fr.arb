@@ -46,6 +46,8 @@
   "major": "Majeur",
   "match": "Match",
   "matches": "Matchs",
+  "missingIgnoreBatteryOptimizationError": "L'optimisation de la batterie est toujours activé. Veuillez aller dans les paramêtres de votre appareil pour ignorer l'optimisation de la batterie.",
+  "missingNotificationPermissionError": "La permission de recevoir des notifications a été déclinée. Veuillez aller dans les paramêtres de votre appareil pour autoriser les notifications.",
   "mixed": "Mixte",
   "modifiedDate": "Date de modification: {date}",
   "@modifiedDate": {

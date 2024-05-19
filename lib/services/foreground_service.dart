@@ -46,19 +46,33 @@ void initForegroundTask() {
   );
 }
 
-Future<void> requestPermissionForAndroid() async {
+Future<bool> requestNotificationPermission() async {
   if (!Platform.isAndroid) {
-    return;
+    return true;
   }
 
   final NotificationPermission notificationPermissionStatus = await FlutterForegroundTask.checkNotificationPermission();
   if (notificationPermissionStatus != NotificationPermission.granted) {
-    await FlutterForegroundTask.requestNotificationPermission();
+    final notificationPermission = await FlutterForegroundTask.requestNotificationPermission();
+    if (notificationPermission != NotificationPermission.granted) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+Future<bool> requestIgnoreBatteryOptimization() async {
+  if (!Platform.isAndroid) {
+    return true;
   }
 
   if (!await FlutterForegroundTask.isIgnoringBatteryOptimizations) {
-    await FlutterForegroundTask.requestIgnoreBatteryOptimization();
+    final batteryOptimization = await FlutterForegroundTask.requestIgnoreBatteryOptimization();
+    return batteryOptimization;
   }
+
+  return true;
 }
 
 class TimerTaskHandler extends TaskHandler {
