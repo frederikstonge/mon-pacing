@@ -371,7 +371,7 @@ class MatchCubit extends Cubit<MatchState> {
 
             sheet.updateCell(
               excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyIndex),
-              excel.TextCellValue('${team.name} - ${penalty.getPenaltyString(settingsCubit.localizer)}'),
+              excel.TextCellValue('${team.name} - ${penalty.getPenaltyString(settingsCubit.localizer, match)}'),
               cellStyle: excel.CellStyle(),
             );
 

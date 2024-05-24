@@ -10,6 +10,7 @@ dependencies:
   collection: ^1.18.0
   country_flags: ^2.2.0
   cupertino_icons: ^1.0.6
+  darq: ^2.0.0
   excel: ^4.0.3
   firebase_analytics: ^10.8.6
   firebase_core: ^2.24.2

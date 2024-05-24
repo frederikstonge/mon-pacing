@@ -27,7 +27,7 @@ class MatchPenaltyCubit extends Cubit<MatchPenaltyState> {
                     id: 0,
                     major: false,
                     type: '',
-                    performer: '',
+                    performerId: null,
                     teamId: teams.first.id,
                     improvisationId: improvisationId,
                   ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +9,7 @@ import '../../../cubits/settings/settings_cubit.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/pacing_model.dart';
+import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
 import 'match_detail_state.dart';
 
@@ -80,6 +82,30 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     emit(state.copyWith(match: match));
   }
 
+  void addPerformer(int teamId) {
+    final teams = List<TeamModel>.from(state.match.teams);
+    final team = teams.firstWhere((t) => t.id == teamId);
+    team.performers.add(_createPerformer());
+    final match = state.match.copyWith(teams: teams);
+    emit(state.copyWith(match: match));
+  }
+
+  void editPerformer(int teamId, int index, PerformerModel performer) {
+    final teams = List<TeamModel>.from(state.match.teams);
+    final team = teams.firstWhere((t) => t.id == teamId);
+    team.performers[index] = performer;
+    final match = state.match.copyWith(teams: teams);
+    emit(state.copyWith(match: match));
+  }
+
+  void removePerformer(int teamId, int index) {
+    final teams = List<TeamModel>.from(state.match.teams);
+    final team = teams.firstWhere((t) => t.id == teamId);
+    team.performers.removeAt(index);
+    final match = state.match.copyWith(teams: teams);
+    emit(state.copyWith(match: match));
+  }
+
   TeamModel _createTeam(List<TeamModel> teams) {
     final nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
     final random = Random();
@@ -87,6 +113,13 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
       id: nextId,
       name: '${settingsCubit.localizer.team} ${teams.length + 1}',
       color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
+      performers: [],
     );
+  }
+
+  PerformerModel _createPerformer() {
+    final performers = List<PerformerModel>.from(state.match.teams.selectMany((t, i) => t.performers));
+    final nextId = performers.isNotEmpty ? performers.map((e) => e.id).toList().reduce(max) + 1 : 0;
+    return PerformerModel(id: nextId, name: '');
   }
 }

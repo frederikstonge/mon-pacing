@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +7,7 @@ import '../../components/actions/loading_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
+import '../../components/form/drop_down_element.dart';
 import '../../components/form/text_field_element.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
@@ -25,13 +27,11 @@ class MatchPenaltyView extends StatefulWidget {
 
 class _MatchPenaltyViewState extends State<MatchPenaltyView> {
   late final GlobalKey<FormState> formKey;
-  late final TextEditingController _performerController;
   late final TextEditingController _typeController;
 
   @override
   void initState() {
     formKey = GlobalKey<FormState>();
-    _performerController = TextEditingController(text: context.read<MatchPenaltyCubit>().state.penalty.performer);
     _typeController = TextEditingController(text: context.read<MatchPenaltyCubit>().state.penalty.type);
     super.initState();
   }
@@ -104,13 +104,22 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                               context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(major: value));
                             }),
                       ),
-                      TextFieldElement(
-                        autoFocus: true,
+                      DropDownElement<int?>(
                         label: S.of(context).performer,
-                        controller: _performerController,
+                        value: state.teams
+                            .firstWhere((t) => t.id == state.penalty.teamId)
+                            .performers
+                            .firstWhereOrNull((p) => p.id == state.penalty.performerId)
+                            ?.id,
                         onChanged: (value) {
-                          context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(performer: value));
+                          context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(performerId: value));
                         },
+                        items: [
+                          const DropdownMenuItem(value: null, child: Text('-')),
+                          ...state.teams.firstWhere((t) => t.id == state.penalty.teamId).performers.map(
+                                (p) => DropdownMenuItem(value: p.id, child: Text(p.name)),
+                              ),
+                        ],
                       ),
                     ],
                   ),

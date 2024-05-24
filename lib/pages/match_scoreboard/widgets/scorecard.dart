@@ -133,7 +133,7 @@ class Scorecard extends StatelessWidget {
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    e.getPenaltyString(S.of(context)),
+                                    e.getPenaltyString(S.of(context), match),
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                   ),

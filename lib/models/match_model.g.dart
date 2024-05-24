@@ -96,6 +96,7 @@ const MatchModelSchema = IsarGeneratedSchema(
   ),
   embeddedSchemas: [
     TeamModelSchema,
+    PerformerModelSchema,
     ImprovisationModelSchema,
     PenaltyModelSchema,
     PointModelSchema
@@ -303,7 +304,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
               id: -9223372036854775808,
               major: false,
               type: '',
-              performer: '',
+              performerId: null,
               teamId: -9223372036854775808,
               improvisationId: -9223372036854775808,
             ),
@@ -316,7 +317,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
                 id: -9223372036854775808,
                 major: false,
                 type: '',
-                performer: '',
+                performerId: null,
                 teamId: -9223372036854775808,
                 improvisationId: -9223372036854775808,
               );
@@ -541,7 +542,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                   id: -9223372036854775808,
                   major: false,
                   type: '',
-                  performer: '',
+                  performerId: null,
                   teamId: -9223372036854775808,
                   improvisationId: -9223372036854775808,
                 ),
@@ -554,7 +555,7 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                     id: -9223372036854775808,
                     major: false,
                     type: '',
-                    performer: '',
+                    performerId: null,
                     teamId: -9223372036854775808,
                     improvisationId: -9223372036854775808,
                   );
