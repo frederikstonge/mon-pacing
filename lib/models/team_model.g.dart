@@ -27,6 +27,11 @@ const TeamModelSchema = IsarGeneratedSchema(
         name: 'color',
         type: IsarType.long,
       ),
+      IsarPropertySchema(
+        name: 'performers',
+        type: IsarType.objectList,
+        target: 'PerformerModel',
+      ),
     ],
     indexes: [],
   ),
@@ -41,6 +46,19 @@ int serializeTeamModel(IsarWriter writer, TeamModel object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeString(writer, 2, object.name);
   IsarCore.writeLong(writer, 3, object.color);
+  {
+    final list = object.performers;
+    final listWriter = IsarCore.beginList(writer, 4, list.length);
+    for (var i = 0; i < list.length; i++) {
+      {
+        final value = list[i];
+        final objectWriter = IsarCore.beginObject(listWriter, i);
+        serializePerformerModel(objectWriter, value);
+        IsarCore.endObject(listWriter, objectWriter);
+      }
+    }
+    IsarCore.endList(writer, listWriter);
+  }
   return 0;
 }
 
@@ -52,10 +70,46 @@ TeamModel deserializeTeamModel(IsarReader reader) {
   _name = IsarCore.readString(reader, 2) ?? '';
   final int _color;
   _color = IsarCore.readLong(reader, 3);
+  final List<PerformerModel> _performers;
+  {
+    final length = IsarCore.readList(reader, 4, IsarCore.readerPtrPtr);
+    {
+      final reader = IsarCore.readerPtr;
+      if (reader.isNull) {
+        _performers = const <PerformerModel>[];
+      } else {
+        final list = List<PerformerModel>.filled(
+            length,
+            PerformerModel(
+              id: -9223372036854775808,
+              name: '',
+            ),
+            growable: true);
+        for (var i = 0; i < length; i++) {
+          {
+            final objectReader = IsarCore.readObject(reader, i);
+            if (objectReader.isNull) {
+              list[i] = PerformerModel(
+                id: -9223372036854775808,
+                name: '',
+              );
+            } else {
+              final embedded = deserializePerformerModel(objectReader);
+              IsarCore.freeReader(objectReader);
+              list[i] = embedded;
+            }
+          }
+        }
+        IsarCore.freeReader(reader);
+        _performers = list;
+      }
+    }
+  }
   final object = TeamModel(
     id: _id,
     name: _name,
     color: _color,
+    performers: _performers,
   );
   return object;
 }
@@ -398,6 +452,20 @@ extension TeamModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performersIsEmpty() {
+    return not().performersIsNotEmpty();
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performersIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 4, value: null),
+      );
+    });
+  }
 }
 
 extension TeamModelQueryObject
@@ -412,6 +480,10 @@ _$TeamModelImpl _$$TeamModelImplFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       color: (json['color'] as num).toInt(),
+      performers: (json['performers'] as List<dynamic>?)
+              ?.map((e) => PerformerModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$TeamModelImplToJson(_$TeamModelImpl instance) =>
@@ -419,4 +491,5 @@ Map<String, dynamic> _$$TeamModelImplToJson(_$TeamModelImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'color': instance.color,
+      'performers': instance.performers,
     };

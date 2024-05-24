@@ -225,8 +225,10 @@ class MatchPageView extends StatelessWidget {
                                     child: ListTile(
                                       contentPadding: EdgeInsets.zero,
                                       leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
-                                      title: Text(e.getPenaltyString(S.of(context))),
-                                      subtitle: Text(e.performer),
+                                      title: Text(e.getPenaltyString(S.of(context), match)),
+                                      subtitle: Text(e.performerId != null
+                                          ? match.teams.firstWhere((t) => t.id == e.teamId).performers.firstWhere((p) => p.id == e.performerId).name
+                                          : ''),
                                       trailing: LoadingIconButton(
                                           icon: const Icon(Icons.remove),
                                           tooltip: S.of(context).delete,

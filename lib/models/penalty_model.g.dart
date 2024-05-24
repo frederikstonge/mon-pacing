@@ -28,8 +28,8 @@ const PenaltyModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'performer',
-        type: IsarType.string,
+        name: 'performerId',
+        type: IsarType.long,
       ),
       IsarPropertySchema(
         name: 'teamId',
@@ -53,7 +53,7 @@ int serializePenaltyModel(IsarWriter writer, PenaltyModel object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeBool(writer, 2, object.major);
   IsarCore.writeString(writer, 3, object.type);
-  IsarCore.writeString(writer, 4, object.performer);
+  IsarCore.writeLong(writer, 4, object.performerId ?? -9223372036854775808);
   IsarCore.writeLong(writer, 5, object.teamId);
   IsarCore.writeLong(writer, 6, object.improvisationId);
   return 0;
@@ -67,8 +67,15 @@ PenaltyModel deserializePenaltyModel(IsarReader reader) {
   _major = IsarCore.readBool(reader, 2);
   final String _type;
   _type = IsarCore.readString(reader, 3) ?? '';
-  final String _performer;
-  _performer = IsarCore.readString(reader, 4) ?? '';
+  final int? _performerId;
+  {
+    final value = IsarCore.readLong(reader, 4);
+    if (value == -9223372036854775808) {
+      _performerId = null;
+    } else {
+      _performerId = value;
+    }
+  }
   final int _teamId;
   _teamId = IsarCore.readLong(reader, 5);
   final int _improvisationId;
@@ -77,7 +84,7 @@ PenaltyModel deserializePenaltyModel(IsarReader reader) {
     id: _id,
     major: _major,
     type: _type,
-    performer: _performer,
+    performerId: _performerId,
     teamId: _teamId,
     improvisationId: _improvisationId,
   );
@@ -360,180 +367,100 @@ extension PenaltyModelQueryFilter
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      performerIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 4));
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      performerIdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 4));
+    });
+  }
+
+  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+      performerIdEqualTo(
+    int? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
           property: 4,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      performerIdGreaterThan(
+    int? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
           property: 4,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerGreaterThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      performerIdGreaterThanOrEqualTo(
+    int? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
           property: 4,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerLessThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      performerIdLessThan(
+    int? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
           property: 4,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerLessThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      performerIdLessThanOrEqualTo(
+    int? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
           property: 4,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
   QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-  }) {
+      performerIdBetween(
+    int? lower,
+    int? upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
           property: 4,
           lower: lower,
           upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 4,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 4,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
-      performerIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 4,
-          value: '',
         ),
       );
     });
@@ -722,7 +649,7 @@ _$PenaltyModelImpl _$$PenaltyModelImplFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       major: json['major'] as bool,
       type: json['type'] as String,
-      performer: json['performer'] as String,
+      performerId: (json['performerId'] as num?)?.toInt(),
       teamId: (json['teamId'] as num).toInt(),
       improvisationId: (json['improvisationId'] as num).toInt(),
     );
@@ -732,7 +659,7 @@ Map<String, dynamic> _$$PenaltyModelImplToJson(_$PenaltyModelImpl instance) =>
       'id': instance.id,
       'major': instance.major,
       'type': instance.type,
-      'performer': instance.performer,
+      'performerId': instance.performerId,
       'teamId': instance.teamId,
       'improvisationId': instance.improvisationId,
     };

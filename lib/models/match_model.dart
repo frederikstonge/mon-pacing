@@ -8,6 +8,7 @@ import 'improvisation_model.dart';
 import 'improvisation_type.dart';
 import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
+import 'performer_model.dart';
 import 'point_model.dart';
 import 'team_model.dart';
 
