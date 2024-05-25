@@ -22,6 +22,7 @@ MatchDetailState _$MatchDetailStateFromJson(Map<String, dynamic> json) {
 mixin _$MatchDetailState {
   bool get editMode => throw _privateConstructorUsedError;
   MatchModel get match => throw _privateConstructorUsedError;
+  int get selectedTeamIndex => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $MatchDetailStateCopyWith<$Res> {
           MatchDetailState value, $Res Function(MatchDetailState) then) =
       _$MatchDetailStateCopyWithImpl<$Res, MatchDetailState>;
   @useResult
-  $Res call({bool editMode, MatchModel match});
+  $Res call({bool editMode, MatchModel match, int selectedTeamIndex});
 
   $MatchModelCopyWith<$Res> get match;
 }
@@ -55,6 +56,7 @@ class _$MatchDetailStateCopyWithImpl<$Res, $Val extends MatchDetailState>
   $Res call({
     Object? editMode = null,
     Object? match = null,
+    Object? selectedTeamIndex = null,
   }) {
     return _then(_value.copyWith(
       editMode: null == editMode
@@ -65,6 +67,10 @@ class _$MatchDetailStateCopyWithImpl<$Res, $Val extends MatchDetailState>
           ? _value.match
           : match // ignore: cast_nullable_to_non_nullable
               as MatchModel,
+      selectedTeamIndex: null == selectedTeamIndex
+          ? _value.selectedTeamIndex
+          : selectedTeamIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -85,7 +91,7 @@ abstract class _$$MatchDetailStateImplCopyWith<$Res>
       __$$MatchDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool editMode, MatchModel match});
+  $Res call({bool editMode, MatchModel match, int selectedTeamIndex});
 
   @override
   $MatchModelCopyWith<$Res> get match;
@@ -104,6 +110,7 @@ class __$$MatchDetailStateImplCopyWithImpl<$Res>
   $Res call({
     Object? editMode = null,
     Object? match = null,
+    Object? selectedTeamIndex = null,
   }) {
     return _then(_$MatchDetailStateImpl(
       editMode: null == editMode
@@ -114,6 +121,10 @@ class __$$MatchDetailStateImplCopyWithImpl<$Res>
           ? _value.match
           : match // ignore: cast_nullable_to_non_nullable
               as MatchModel,
+      selectedTeamIndex: null == selectedTeamIndex
+          ? _value.selectedTeamIndex
+          : selectedTeamIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -121,7 +132,10 @@ class __$$MatchDetailStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MatchDetailStateImpl implements _MatchDetailState {
-  const _$MatchDetailStateImpl({required this.editMode, required this.match});
+  const _$MatchDetailStateImpl(
+      {required this.editMode,
+      required this.match,
+      this.selectedTeamIndex = 0});
 
   factory _$MatchDetailStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$MatchDetailStateImplFromJson(json);
@@ -130,10 +144,13 @@ class _$MatchDetailStateImpl implements _MatchDetailState {
   final bool editMode;
   @override
   final MatchModel match;
+  @override
+  @JsonKey()
+  final int selectedTeamIndex;
 
   @override
   String toString() {
-    return 'MatchDetailState(editMode: $editMode, match: $match)';
+    return 'MatchDetailState(editMode: $editMode, match: $match, selectedTeamIndex: $selectedTeamIndex)';
   }
 
   @override
@@ -143,12 +160,15 @@ class _$MatchDetailStateImpl implements _MatchDetailState {
             other is _$MatchDetailStateImpl &&
             (identical(other.editMode, editMode) ||
                 other.editMode == editMode) &&
-            (identical(other.match, match) || other.match == match));
+            (identical(other.match, match) || other.match == match) &&
+            (identical(other.selectedTeamIndex, selectedTeamIndex) ||
+                other.selectedTeamIndex == selectedTeamIndex));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, editMode, match);
+  int get hashCode =>
+      Object.hash(runtimeType, editMode, match, selectedTeamIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -168,7 +188,8 @@ class _$MatchDetailStateImpl implements _MatchDetailState {
 abstract class _MatchDetailState implements MatchDetailState {
   const factory _MatchDetailState(
       {required final bool editMode,
-      required final MatchModel match}) = _$MatchDetailStateImpl;
+      required final MatchModel match,
+      final int selectedTeamIndex}) = _$MatchDetailStateImpl;
 
   factory _MatchDetailState.fromJson(Map<String, dynamic> json) =
       _$MatchDetailStateImpl.fromJson;
@@ -177,6 +198,8 @@ abstract class _MatchDetailState implements MatchDetailState {
   bool get editMode;
   @override
   MatchModel get match;
+  @override
+  int get selectedTeamIndex;
   @override
   @JsonKey(ignore: true)
   _$$MatchDetailStateImplCopyWith<_$MatchDetailStateImpl> get copyWith =>

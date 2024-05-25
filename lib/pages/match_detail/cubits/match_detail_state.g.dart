@@ -11,6 +11,7 @@ _$MatchDetailStateImpl _$$MatchDetailStateImplFromJson(
     _$MatchDetailStateImpl(
       editMode: json['editMode'] as bool,
       match: MatchModel.fromJson(json['match'] as Map<String, dynamic>),
+      selectedTeamIndex: (json['selectedTeamIndex'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$MatchDetailStateImplToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$MatchDetailStateImplToJson(
     <String, dynamic>{
       'editMode': instance.editMode,
       'match': instance.match,
+      'selectedTeamIndex': instance.selectedTeamIndex,
     };

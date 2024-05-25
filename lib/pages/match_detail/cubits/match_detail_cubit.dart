@@ -61,6 +61,10 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     emit(state.copyWith(match: match));
   }
 
+  void selectTeam(int index) {
+    emit(state.copyWith(selectedTeamIndex: index));
+  }
+
   void addTeam() {
     final teams = List<TeamModel>.from(state.match.teams);
     teams.add(_createTeam(teams));
@@ -83,27 +87,24 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   void addPerformer(int teamId) {
-    final teams = List<TeamModel>.from(state.match.teams);
-    final team = teams.firstWhere((t) => t.id == teamId);
-    team.performers.add(_createPerformer());
-    final match = state.match.copyWith(teams: teams);
-    emit(state.copyWith(match: match));
+    final team = state.match.teams.firstWhere((t) => t.id == teamId);
+    final performers = List<PerformerModel>.from(team.performers);
+    performers.add(_createPerformer());
+    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
   void editPerformer(int teamId, int index, PerformerModel performer) {
-    final teams = List<TeamModel>.from(state.match.teams);
-    final team = teams.firstWhere((t) => t.id == teamId);
-    team.performers[index] = performer;
-    final match = state.match.copyWith(teams: teams);
-    emit(state.copyWith(match: match));
+    final team = state.match.teams.firstWhere((t) => t.id == teamId);
+    final performers = List<PerformerModel>.from(team.performers);
+    performers[index] = performer;
+    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
   void removePerformer(int teamId, int index) {
-    final teams = List<TeamModel>.from(state.match.teams);
-    final team = teams.firstWhere((t) => t.id == teamId);
-    team.performers.removeAt(index);
-    final match = state.match.copyWith(teams: teams);
-    emit(state.copyWith(match: match));
+    final team = state.match.teams.firstWhere((t) => t.id == teamId);
+    final performers = List<PerformerModel>.from(team.performers);
+    performers.removeAt(index);
+    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
   TeamModel _createTeam(List<TeamModel> teams) {
@@ -113,7 +114,9 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
       id: nextId,
       name: '${settingsCubit.localizer.team} ${teams.length + 1}',
       color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
-      performers: [],
+      performers: [
+        _createPerformer(),
+      ],
     );
   }
 
