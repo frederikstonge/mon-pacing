@@ -10,6 +10,7 @@ class MatchDetailState with _$MatchDetailState {
   const factory MatchDetailState({
     required bool editMode,
     required MatchModel match,
+    @Default(0) int selectedTeamIndex,
   }) = _MatchDetailState;
 
   factory MatchDetailState.fromJson(Map<String, dynamic> json) => _$MatchDetailStateFromJson(json);

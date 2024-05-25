@@ -20,6 +20,7 @@ import '../../models/penalties_impact_type.dart';
 import '../../validators/validator.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
+import 'widgets/team_performers.dart';
 import 'widgets/team_tile.dart';
 
 class MatchDetailPageView extends StatefulWidget {
@@ -52,6 +53,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
   Widget build(BuildContext context) {
     return BlocBuilder<MatchDetailCubit, MatchDetailState>(
       builder: (context, state) {
+        final selectedTeam = state.match.teams.firstWhere((t) => t.id == state.selectedTeamIndex);
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
             title: state.editMode ? S.of(context).editMatch : S.of(context).startMatch,
@@ -101,23 +103,51 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                 ),
                 CustomCard(
                   child: Column(
-                    children: state.match.teams
-                        .asMap()
-                        .entries
-                        .map(
-                          (e) => TeamTile(
-                            team: e.value,
-                            onChanged: (value) {
-                              context.read<MatchDetailCubit>().editTeam(e.key, value);
-                            },
-                            onDelete: !state.editMode && state.match.teams.length > Constants.minumumTeams
-                                ? () {
-                                    context.read<MatchDetailCubit>().removeTeam(e.key);
-                                  }
-                                : null,
+                    children: [
+                      ...state.match.teams.asMap().entries.map(
+                            (e) => TeamTile(
+                              team: e.value,
+                              onChanged: (value) {
+                                context.read<MatchDetailCubit>().editTeam(e.key, value);
+                              },
+                              onDelete: !state.editMode && state.match.teams.length > Constants.minumumTeams
+                                  ? () {
+                                      context.read<MatchDetailCubit>().removeTeam(e.key);
+                                    }
+                                  : null,
+                            ),
                           ),
-                        )
-                        .toList(),
+                      SegmentedButton(
+                        style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
+                        segments: state.match.teams
+                            .asMap()
+                            .entries
+                            .map(
+                              (e) => ButtonSegment(
+                                value: e.key,
+                                label: Text(
+                                  e.value.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        selected: {state.selectedTeamIndex},
+                        onSelectionChanged: (values) async {
+                          context.read<MatchDetailCubit>().selectTeam(values.first);
+                        },
+                      ),
+                      TeamPerformers(
+                        label: S.of(context).performers,
+                        performers: selectedTeam.performers,
+                        teamId: selectedTeam.id,
+                        addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
+                        editPerformer: context.read<MatchDetailCubit>().editPerformer,
+                        removePerformer:
+                            selectedTeam.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
