@@ -20,12 +20,52 @@ class ColorPicker extends StatelessWidget {
       appBar: BottomSheetAppbar(
         title: title,
       ),
-      body: MaterialColorPicker(
-        selectedColor: initialColor,
-        onColorChange: (value) {
-          Navigator.of(context).pop(value);
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: MaterialColorPicker(
+          selectedColor: initialColor,
+          colors: [
+            Colors.blue,
+            Colors.red,
+            Colors.yellow,
+            Colors.green,
+            Colors.purple,
+            Colors.pink,
+            Colors.orange,
+            Colors.brown,
+            toMaterialColor(Colors.white),
+            toMaterialColor(Colors.black),
+            Colors.grey,
+            Colors.amber,
+            Colors.cyan,
+            Colors.deepOrange,
+            Colors.deepPurple,
+            Colors.indigo,
+            Colors.lightBlue,
+            Colors.lightGreen,
+            Colors.lime,
+            Colors.teal,
+          ],
+          onColorChange: (value) {
+            Navigator.of(context).pop(value);
+          },
+        ),
       ),
     );
+  }
+
+  MaterialColor toMaterialColor(Color color) {
+    return MaterialColor(color.value, {
+      50: color,
+      100: color,
+      200: color,
+      300: color,
+      400: color,
+      500: color,
+      600: color,
+      700: color,
+      800: color,
+      900: color,
+    });
   }
 }
