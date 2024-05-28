@@ -9,7 +9,6 @@ import '../../models/theme_type.dart';
 import 'settings_state.dart';
 
 class SettingsCubit extends HydratedCubit<SettingsState> {
-  late S localizer;
   SettingsCubit()
       : super(
           SettingsState(
@@ -18,13 +17,7 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
           ),
         );
 
-  Future<void> intializeLocalizer() async {
-    stream.listen((event) async {
-      localizer = await S.delegate.load(Locale(event.language));
-    });
-
-    localizer = await S.delegate.load(Locale(state.language));
-  }
+  S get localizer => lookupS(Locale(state.language));
 
   void edit(SettingsState model) {
     emit(model);

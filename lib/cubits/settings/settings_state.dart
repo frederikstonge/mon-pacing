@@ -16,6 +16,7 @@ class SettingsState with _$SettingsState {
     @Default(150) int defaultImprovisationDurationInSeconds,
     @Default(30) int defaultTimeBufferInSeconds,
     @Default(30) int defaultHuddleTimerInSeconds,
+    @Default(true) bool defaultEnableStatistics,
     @Default(true) bool enableDefaultPenaltiesImpactPoints,
     @Default(PenaltiesImpactType.addPoints) PenaltiesImpactType defaultPenaltiesImpactType,
     @Default(3) int defaultPenaltiesRequiredToImpactPoints,

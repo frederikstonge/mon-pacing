@@ -84,148 +84,174 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                           context.read<MatchDetailCubit>().edit(state.match.copyWith(name: value));
                         },
                       ),
+                      const SizedBox(height: 8),
+                      SettingsTile(
+                        leading: const Icon(Icons.sports),
+                        title: Row(
+                          children: [
+                            Flexible(child: Text(S.of(context).enableStatistics)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(
+                                tooltip: S.of(context).enableStatisticsTooltip,
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: HapticSwitch(
+                          value: state.match.enableStatistics,
+                          onChanged: !state.editMode
+                              ? (value) {
+                                  context.read<MatchDetailCubit>().edit(state.match.copyWith(enableStatistics: value));
+                                }
+                              : null,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                  child: TextHeader(
-                    title: S.of(context).teams,
-                    trailing: LoadingIconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: !state.editMode && state.match.teams.length < Constants.maximumTeams
-                          ? () {
-                              context.read<MatchDetailCubit>().addTeam();
-                            }
-                          : null,
+                if (state.match.enableStatistics) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                    child: TextHeader(
+                      title: S.of(context).teams,
+                      trailing: LoadingIconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: !state.editMode && state.match.teams.length < Constants.maximumTeams
+                            ? () {
+                                context.read<MatchDetailCubit>().addTeam();
+                              }
+                            : null,
+                      ),
                     ),
                   ),
-                ),
-                CustomCard(
-                  child: Column(
-                    children: [
-                      ...state.match.teams.asMap().entries.map(
-                            (e) => TeamTile(
-                              team: e.value,
-                              onChanged: (value) {
-                                context.read<MatchDetailCubit>().editTeam(e.key, value);
-                              },
-                              onDelete: !state.editMode && state.match.teams.length > Constants.minumumTeams
-                                  ? () {
-                                      context.read<MatchDetailCubit>().removeTeam(e.key);
-                                    }
-                                  : null,
+                  CustomCard(
+                    child: Column(
+                      children: [
+                        ...state.match.teams.asMap().entries.map(
+                              (e) => TeamTile(
+                                team: e.value,
+                                onChanged: (value) {
+                                  context.read<MatchDetailCubit>().editTeam(e.key, value);
+                                },
+                                onDelete: !state.editMode && state.match.teams.length > Constants.minumumTeams
+                                    ? () {
+                                        context.read<MatchDetailCubit>().removeTeam(e.key);
+                                      }
+                                    : null,
+                              ),
                             ),
+                        SegmentedButton(
+                          style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
+                          segments: state.match.teams
+                              .asMap()
+                              .entries
+                              .map(
+                                (e) => ButtonSegment(
+                                  value: e.key,
+                                  label: Text(
+                                    e.value.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          selected: {state.selectedTeamIndex},
+                          onSelectionChanged: (values) async {
+                            context.read<MatchDetailCubit>().selectTeam(values.first);
+                          },
+                        ),
+                        TeamPerformers(
+                          label: S.of(context).performers,
+                          performers: selectedTeam.performers,
+                          teamId: selectedTeam.id,
+                          addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
+                          editPerformer: context.read<MatchDetailCubit>().editPerformer,
+                          removePerformer:
+                              selectedTeam.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                    child: TextHeader(
+                      title: S.of(context).penaltiesImpactType,
+                    ),
+                  ),
+                  CustomCard(
+                    child: Column(
+                      children: [
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).penaltiesImpactPointsTooltip,
+                                ),
+                              )
+                            ],
                           ),
-                      SegmentedButton(
-                        style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-                        segments: state.match.teams
-                            .asMap()
-                            .entries
-                            .map(
-                              (e) => ButtonSegment(
-                                value: e.key,
-                                label: Text(
-                                  e.value.name,
-                                  maxLines: 1,
+                          trailing: HapticSwitch(
+                              value: state.match.enablePenaltiesImpactPoints,
+                              onChanged: (value) {
+                                context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));
+                              }),
+                        ),
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Text(S.of(context).penaltiesImpactType),
+                          subTitle: Text(
+                            switch (state.match.penaltiesImpactType) {
+                              PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                              PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
+                            },
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () {
+                            BottomSheetDialog.showDialog(
+                              context: context,
+                              child: PenaltiesImpactTypeView(
+                                currentPenaltiesImpactType: state.match.penaltiesImpactType,
+                                onChanged: (penaltiesImpactType) =>
+                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
+                              ),
+                            );
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).penaltiesRequiredToImpactPoints,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                            )
-                            .toList(),
-                        selected: {state.selectedTeamIndex},
-                        onSelectionChanged: (values) async {
-                          context.read<MatchDetailCubit>().selectTeam(values.first);
-                        },
-                      ),
-                      TeamPerformers(
-                        label: S.of(context).performers,
-                        performers: selectedTeam.performers,
-                        teamId: selectedTeam.id,
-                        addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
-                        editPerformer: context.read<MatchDetailCubit>().editPerformer,
-                        removePerformer:
-                            selectedTeam.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
-                      ),
-                    ],
+                              QuantityStepperFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                initialValue: state.match.penaltiesRequiredToImpactPoints,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToImpactPoints: value));
+                                  }
+                                },
+                                minValue: 1,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                  child: TextHeader(
-                    title: S.of(context).penaltiesImpactType,
-                  ),
-                ),
-                CustomCard(
-                    child: Column(
-                  children: [
-                    SettingsTile(
-                      leading: const Icon(Icons.scoreboard),
-                      title: Row(
-                        children: [
-                          Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: CustomTooltip(
-                              tooltip: S.of(context).penaltiesImpactPointsTooltip,
-                            ),
-                          )
-                        ],
-                      ),
-                      trailing: HapticSwitch(
-                          value: state.match.enablePenaltiesImpactPoints,
-                          onChanged: (value) {
-                            context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));
-                          }),
-                    ),
-                    SettingsTile(
-                      leading: const Icon(Icons.sports),
-                      title: Text(S.of(context).penaltiesImpactType),
-                      subTitle: Text(
-                        switch (state.match.penaltiesImpactType) {
-                          PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
-                          PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
-                        },
-                      ),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () {
-                        BottomSheetDialog.showDialog(
-                          context: context,
-                          child: PenaltiesImpactTypeView(
-                            currentPenaltiesImpactType: state.match.penaltiesImpactType,
-                            onChanged: (penaltiesImpactType) =>
-                                context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
-                          ),
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              S.of(context).penaltiesRequiredToImpactPoints,
-                              style: Theme.of(context).textTheme.titleMedium,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          QuantityStepperFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            initialValue: state.match.penaltiesRequiredToImpactPoints,
-                            onChanged: (value) {
-                              if (value != null) {
-                                context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToImpactPoints: value));
-                              }
-                            },
-                            minValue: 1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ))
+                ],
               ],
             ),
           ),

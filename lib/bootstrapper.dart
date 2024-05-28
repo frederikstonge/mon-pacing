@@ -34,7 +34,7 @@ class Bootstrapper extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => SettingsCubit()..intializeLocalizer(),
+            create: (_) => SettingsCubit(),
           ),
           BlocProvider(
             create: (blocContext) => PacingsCubit(

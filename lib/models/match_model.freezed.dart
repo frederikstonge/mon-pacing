@@ -31,6 +31,7 @@ mixin _$MatchModel {
       throw _privateConstructorUsedError;
   List<PenaltyModel> get penalties => throw _privateConstructorUsedError;
   List<PointModel> get points => throw _privateConstructorUsedError;
+  bool get enableStatistics => throw _privateConstructorUsedError;
   bool get enablePenaltiesImpactPoints => throw _privateConstructorUsedError;
   PenaltiesImpactType get penaltiesImpactType =>
       throw _privateConstructorUsedError;
@@ -57,6 +58,7 @@ abstract class $MatchModelCopyWith<$Res> {
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
       List<PointModel> points,
+      bool enableStatistics,
       bool enablePenaltiesImpactPoints,
       PenaltiesImpactType penaltiesImpactType,
       int penaltiesRequiredToImpactPoints});
@@ -83,6 +85,7 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? improvisations = null,
     Object? penalties = null,
     Object? points = null,
+    Object? enableStatistics = null,
     Object? enablePenaltiesImpactPoints = null,
     Object? penaltiesImpactType = null,
     Object? penaltiesRequiredToImpactPoints = null,
@@ -120,6 +123,10 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
+      enableStatistics: null == enableStatistics
+          ? _value.enableStatistics
+          : enableStatistics // ignore: cast_nullable_to_non_nullable
+              as bool,
       enablePenaltiesImpactPoints: null == enablePenaltiesImpactPoints
           ? _value.enablePenaltiesImpactPoints
           : enablePenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
@@ -153,6 +160,7 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
       List<PointModel> points,
+      bool enableStatistics,
       bool enablePenaltiesImpactPoints,
       PenaltiesImpactType penaltiesImpactType,
       int penaltiesRequiredToImpactPoints});
@@ -177,6 +185,7 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? improvisations = null,
     Object? penalties = null,
     Object? points = null,
+    Object? enableStatistics = null,
     Object? enablePenaltiesImpactPoints = null,
     Object? penaltiesImpactType = null,
     Object? penaltiesRequiredToImpactPoints = null,
@@ -214,6 +223,10 @@ class __$$MatchModelImplCopyWithImpl<$Res>
           ? _value._points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
+      enableStatistics: null == enableStatistics
+          ? _value.enableStatistics
+          : enableStatistics // ignore: cast_nullable_to_non_nullable
+              as bool,
       enablePenaltiesImpactPoints: null == enablePenaltiesImpactPoints
           ? _value.enablePenaltiesImpactPoints
           : enablePenaltiesImpactPoints // ignore: cast_nullable_to_non_nullable
@@ -242,6 +255,7 @@ class _$MatchModelImpl extends _MatchModel {
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
+      this.enableStatistics = true,
       this.enablePenaltiesImpactPoints = true,
       this.penaltiesImpactType = PenaltiesImpactType.addPoints,
       this.penaltiesRequiredToImpactPoints = 3})
@@ -298,6 +312,9 @@ class _$MatchModelImpl extends _MatchModel {
 
   @override
   @JsonKey()
+  final bool enableStatistics;
+  @override
+  @JsonKey()
   final bool enablePenaltiesImpactPoints;
   @override
   @JsonKey()
@@ -308,7 +325,7 @@ class _$MatchModelImpl extends _MatchModel {
 
   @override
   String toString() {
-    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints)';
+    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, enableStatistics: $enableStatistics, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints)';
   }
 
   @override
@@ -328,6 +345,8 @@ class _$MatchModelImpl extends _MatchModel {
             const DeepCollectionEquality()
                 .equals(other._penalties, _penalties) &&
             const DeepCollectionEquality().equals(other._points, _points) &&
+            (identical(other.enableStatistics, enableStatistics) ||
+                other.enableStatistics == enableStatistics) &&
             (identical(other.enablePenaltiesImpactPoints,
                     enablePenaltiesImpactPoints) ||
                 other.enablePenaltiesImpactPoints ==
@@ -352,6 +371,7 @@ class _$MatchModelImpl extends _MatchModel {
       const DeepCollectionEquality().hash(_improvisations),
       const DeepCollectionEquality().hash(_penalties),
       const DeepCollectionEquality().hash(_points),
+      enableStatistics,
       enablePenaltiesImpactPoints,
       penaltiesImpactType,
       penaltiesRequiredToImpactPoints);
@@ -380,6 +400,7 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
+      final bool enableStatistics,
       final bool enablePenaltiesImpactPoints,
       final PenaltiesImpactType penaltiesImpactType,
       final int penaltiesRequiredToImpactPoints}) = _$MatchModelImpl;
@@ -406,6 +427,8 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
   List<PenaltyModel> get penalties;
   @override
   List<PointModel> get points;
+  @override
+  bool get enableStatistics;
   @override
   bool get enablePenaltiesImpactPoints;
   @override

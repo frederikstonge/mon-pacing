@@ -30,6 +30,7 @@ class MatchModel with _$MatchModel implements BaseModel {
     required List<ImprovisationModel> improvisations,
     required List<PenaltyModel> penalties,
     required List<PointModel> points,
+    @Default(true) bool enableStatistics,
     @Default(true) bool enablePenaltiesImpactPoints,
     @Default(PenaltiesImpactType.addPoints) PenaltiesImpactType penaltiesImpactType,
     @Default(3) int penaltiesRequiredToImpactPoints,

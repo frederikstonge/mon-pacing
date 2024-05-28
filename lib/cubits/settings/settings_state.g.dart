@@ -20,6 +20,7 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
           (json['defaultTimeBufferInSeconds'] as num?)?.toInt() ?? 30,
       defaultHuddleTimerInSeconds:
           (json['defaultHuddleTimerInSeconds'] as num?)?.toInt() ?? 30,
+      defaultEnableStatistics: json['defaultEnableStatistics'] as bool? ?? true,
       enableDefaultPenaltiesImpactPoints:
           json['enableDefaultPenaltiesImpactPoints'] as bool? ?? true,
       defaultPenaltiesImpactType: $enumDecodeNullable(
@@ -41,6 +42,7 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
           instance.defaultImprovisationDurationInSeconds,
       'defaultTimeBufferInSeconds': instance.defaultTimeBufferInSeconds,
       'defaultHuddleTimerInSeconds': instance.defaultHuddleTimerInSeconds,
+      'defaultEnableStatistics': instance.defaultEnableStatistics,
       'enableDefaultPenaltiesImpactPoints':
           instance.enableDefaultPenaltiesImpactPoints,
       'defaultPenaltiesImpactType':
