@@ -24,6 +24,8 @@
   "editPacing": "Edit pacing",
   "editPenalty": "Edit penalty",
   "enableHapticFeedback": "Enable haptic feedback",
+  "enableMatchExpulsion": "Enable match expulsion",
+  "enableMatchExpulsionTooltip": "A performer with too many penalty points will be expelled from the match.",
   "enablePenaltiesImpactPoints": "Enable penalties impact points",
   "enableStatistics": "Enable statistics",
   "enableStatisticsTooltip": "Add team lineups and track points, penalties etc",
@@ -76,6 +78,7 @@
   "penaltiesImpactType": "Penalties impact type",
   "penaltiesImpactTypeAdd": "Penalties add points to other teams",
   "penaltiesImpactTypeSubstract": "Penalties substract points to its team",
+  "penaltiesRequiredToExpel": "Penalties required to expel a performer",
   "penaltiesRequiredToImpactPoints": "Penalties required to impact points",
   "performer": "Performer",
   "performers": "Performers",
@@ -107,5 +110,17 @@
   "total": "Total",
   "type": "Type",
   "unlimited": "Unlimited",
-  "versus": "vs"
+  "versus": "vs",
+  "warningExpelPlayerDescription": "Performer {performer} has {penalty} penalty points.",
+  "@warningExpelPlayerDescription": {
+    "placeholders": {
+      "performer": {
+        "type": "String"
+      },
+      "penalty": {
+        "type": "int"
+      }
+    }
+  },
+  "warningExpelPlayerTitle": "Player to expel"
 }

@@ -22,6 +22,16 @@ extension MatchExtensions on MatchModel {
       )
       .fold(0, (previousValue, element) => previousValue + element);
 
+  int getTotalPenaltyValuesByPerformerId(int teamId, int performerId) => penalties
+      .where((penalty) => penalty.teamId == teamId && penalty.performerId == performerId)
+      .map(
+        (e) => switch (e.major) {
+          false => 1,
+          true => 2,
+        },
+      )
+      .fold(0, (previousValue, element) => previousValue + element);
+
   int getImprovisationPenaltyValuesByTeamId(int improvisationId, int teamId) => penalties
       .where((penalty) => penalty.improvisationId == improvisationId && penalty.teamId == teamId)
       .map(

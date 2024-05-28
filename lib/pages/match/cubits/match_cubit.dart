@@ -43,6 +43,7 @@ class MatchCubit extends Cubit<MatchState> {
     var selectedImprovisationIndex = improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
     emit(MatchState.success(match, selectedImprovisationIndex, durationIndex ?? 0));
+    _validatePenalties(match);
   }
 
   Future<void> edit(MatchModel match) async {
@@ -178,6 +179,7 @@ class MatchCubit extends Cubit<MatchState> {
         final newMatch = match.copyWith(penalties: penalties);
         emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
         await matchesCubit.edit(newMatch);
+        _validatePenalty(newMatch, penalty);
       },
     );
   }
@@ -191,6 +193,7 @@ class MatchCubit extends Cubit<MatchState> {
         final newMatch = match.copyWith(penalties: penalties);
         emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
         await matchesCubit.edit(newMatch);
+        _validatePenalty(newMatch, penalty);
       },
     );
   }
@@ -410,5 +413,46 @@ class MatchCubit extends Cubit<MatchState> {
     }
 
     return false;
+  }
+
+  void _validatePenalty(MatchModel match, PenaltyModel penalty) {
+    if (match.enableMatchExpulsion && penalty.performerId != null) {
+      final penaltyPoints = match.getTotalPenaltyValuesByPerformerId(
+        penalty.teamId,
+        penalty.performerId!,
+      );
+
+      if (penaltyPoints >= match.penaltiesRequiredToExpel) {
+        final performer = match.teams.firstWhere((t) => t.id == penalty.teamId).performers.firstWhere((p) => p.id == penalty.performerId);
+        toasterService.show(
+          title: settingsCubit.localizer.warningExpelPlayerTitle,
+          description: settingsCubit.localizer.warningExpelPlayerDescription(performer.name, penaltyPoints),
+          type: ToastificationType.warning,
+          autoClose: false,
+        );
+      }
+    }
+  }
+
+  void _validatePenalties(MatchModel match) {
+    if (match.enableMatchExpulsion) {
+      for (final team in match.teams) {
+        for (final performer in team.performers) {
+          final penaltyPoints = match.getTotalPenaltyValuesByPerformerId(
+            team.id,
+            performer.id,
+          );
+
+          if (penaltyPoints >= match.penaltiesRequiredToExpel) {
+            toasterService.show(
+              title: settingsCubit.localizer.warningExpelPlayerTitle,
+              description: settingsCubit.localizer.warningExpelPlayerDescription(performer.name, penaltyPoints),
+              type: ToastificationType.warning,
+              autoClose: false,
+            );
+          }
+        }
+      }
+    }
   }
 }

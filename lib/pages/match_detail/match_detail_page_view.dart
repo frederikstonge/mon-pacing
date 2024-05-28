@@ -177,7 +177,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                     child: TextHeader(
-                      title: S.of(context).penaltiesImpactType,
+                      title: S.of(context).penalties,
                     ),
                   ),
                   CustomCard(
@@ -241,6 +241,50 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                 onChanged: (value) {
                                   if (value != null) {
                                     context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToImpactPoints: value));
+                                  }
+                                },
+                                minValue: 1,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).enableMatchExpulsion)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).enableMatchExpulsionTooltip,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: HapticSwitch(
+                              value: state.match.enableMatchExpulsion,
+                              onChanged: (value) {
+                                context.read<MatchDetailCubit>().edit(state.match.copyWith(enableMatchExpulsion: value));
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).penaltiesRequiredToExpel,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              QuantityStepperFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                initialValue: state.match.penaltiesRequiredToExpel,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToExpel: value));
                                   }
                                 },
                                 minValue: 1,

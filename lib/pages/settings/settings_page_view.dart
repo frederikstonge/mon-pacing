@@ -225,82 +225,82 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                   ),
                 ),
                 CustomCard(
-                  child: Column(
-                    children: [
-                      SettingsTile(
-                        leading: const Icon(Icons.scoreboard),
-                        title: Row(
-                          children: [
-                            Flexible(child: Text(S.of(context).enableStatistics)),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: CustomTooltip(
-                                tooltip: S.of(context).enableStatisticsTooltip,
-                              ),
-                            )
-                          ],
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        SettingsTile(
+                          leading: const Icon(Icons.scoreboard),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).enableStatistics)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).enableStatisticsTooltip,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: HapticSwitch(
+                              value: state.defaultEnableStatistics,
+                              onChanged: (value) {
+                                context.read<SettingsCubit>().edit(state.copyWith(defaultEnableStatistics: value));
+                              }),
                         ),
-                        trailing: HapticSwitch(
-                            value: state.defaultEnableStatistics,
-                            onChanged: (value) {
-                              context.read<SettingsCubit>().edit(state.copyWith(defaultEnableStatistics: value));
-                            }),
-                      ),
-                      SettingsTile(
-                        leading: const Icon(Icons.sports),
-                        title: Row(
-                          children: [
-                            Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: CustomTooltip(
-                                tooltip: S.of(context).penaltiesImpactPointsTooltip,
-                              ),
-                            )
-                          ],
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).penaltiesImpactPointsTooltip,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: HapticSwitch(
+                              value: state.enableDefaultPenaltiesImpactPoints,
+                              onChanged: (value) {
+                                context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPenaltiesImpactPoints: value));
+                              }),
                         ),
-                        trailing: HapticSwitch(
-                            value: state.enableDefaultPenaltiesImpactPoints,
-                            onChanged: (value) {
-                              context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPenaltiesImpactPoints: value));
-                            }),
-                      ),
-                      SettingsTile(
-                        leading: const Icon(Icons.sports),
-                        title: Text(S.of(context).penaltiesImpactType),
-                        subTitle: Text(
-                          switch (state.defaultPenaltiesImpactType) {
-                            PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
-                            PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Text(S.of(context).penaltiesImpactType),
+                          subTitle: Text(
+                            switch (state.defaultPenaltiesImpactType) {
+                              PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                              PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
+                            },
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () {
+                            BottomSheetDialog.showDialog(
+                              context: context,
+                              child: PenaltiesImpactTypeView(
+                                currentPenaltiesImpactType: state.defaultPenaltiesImpactType,
+                                onChanged: (penaltiesImpactType) =>
+                                    context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesImpactType: penaltiesImpactType)),
+                              ),
+                            );
                           },
                         ),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () {
-                          BottomSheetDialog.showDialog(
-                            context: context,
-                            child: PenaltiesImpactTypeView(
-                              currentPenaltiesImpactType: state.defaultPenaltiesImpactType,
-                              onChanged: (penaltiesImpactType) =>
-                                  context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesImpactType: penaltiesImpactType)),
-                            ),
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                S.of(context).penaltiesRequiredToImpactPoints,
-                                style: Theme.of(context).textTheme.titleMedium,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).penaltiesRequiredToImpactPoints,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                            Form(
-                              key: formKey,
-                              child: QuantityStepperFormField(
+                              QuantityStepperFormField(
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 initialValue: state.defaultPenaltiesRequiredToImpactPoints,
                                 onChanged: (value) {
@@ -310,11 +310,55 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 },
                                 minValue: 1,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).enableMatchExpulsion)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).enableMatchExpulsionTooltip,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: HapticSwitch(
+                              value: state.enableDefaultMatchExpulsion,
+                              onChanged: (value) {
+                                context.read<SettingsCubit>().edit(state.copyWith(enableDefaultMatchExpulsion: value));
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).penaltiesRequiredToExpel,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              QuantityStepperFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                initialValue: state.defaultPenaltiesRequiredToExpel,
+                                onChanged: (value) {
+                                  if (value != null && formKey.currentState!.validate()) {
+                                    context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesRequiredToExpel: value));
+                                  }
+                                },
+                                minValue: 1,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

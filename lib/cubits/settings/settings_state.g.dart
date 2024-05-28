@@ -30,6 +30,10 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
       defaultPenaltiesRequiredToImpactPoints:
           (json['defaultPenaltiesRequiredToImpactPoints'] as num?)?.toInt() ??
               3,
+      enableDefaultMatchExpulsion:
+          json['enableDefaultMatchExpulsion'] as bool? ?? true,
+      defaultPenaltiesRequiredToExpel:
+          (json['defaultPenaltiesRequiredToExpel'] as num?)?.toInt() ?? 3,
     );
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
@@ -49,6 +53,9 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
           _$PenaltiesImpactTypeEnumMap[instance.defaultPenaltiesImpactType]!,
       'defaultPenaltiesRequiredToImpactPoints':
           instance.defaultPenaltiesRequiredToImpactPoints,
+      'enableDefaultMatchExpulsion': instance.enableDefaultMatchExpulsion,
+      'defaultPenaltiesRequiredToExpel':
+          instance.defaultPenaltiesRequiredToExpel,
     };
 
 const _$ThemeTypeEnumMap = {
