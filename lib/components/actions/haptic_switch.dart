@@ -8,7 +8,7 @@ import '../../cubits/settings/settings_cubit.dart';
 
 class HapticSwitch extends StatelessWidget {
   final bool value;
-  final FutureOr<void> Function(bool value) onChanged;
+  final FutureOr<void> Function(bool value)? onChanged;
 
   const HapticSwitch({
     super.key,
@@ -19,10 +19,13 @@ class HapticSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Switch(
-        value: value,
-        onChanged: (value) async {
-          unawaited(context.read<SettingsCubit>().vibrate(HapticsType.light));
-          return await onChanged.call(value);
-        });
+      value: value,
+      onChanged: onChanged != null
+          ? (value) async {
+              unawaited(context.read<SettingsCubit>().vibrate(HapticsType.light));
+              return await onChanged!.call(value);
+            }
+          : null,
+    );
   }
 }

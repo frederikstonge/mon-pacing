@@ -25,6 +25,8 @@
   "editPenalty": "Edit penalty",
   "enableHapticFeedback": "Enable haptic feedback",
   "enablePenaltiesImpactPoints": "Enable penalties impact points",
+  "enableStatistics": "Enable statistics",
+  "enableStatisticsTooltip": "Add team lineups and track points, penalties etc",
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
   "export": "Export",
   "free": "Free",

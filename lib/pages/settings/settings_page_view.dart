@@ -231,6 +231,25 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                         leading: const Icon(Icons.scoreboard),
                         title: Row(
                           children: [
+                            Flexible(child: Text(S.of(context).enableStatistics)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(
+                                tooltip: S.of(context).enableStatisticsTooltip,
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: HapticSwitch(
+                            value: state.defaultEnableStatistics,
+                            onChanged: (value) {
+                              context.read<SettingsCubit>().edit(state.copyWith(defaultEnableStatistics: value));
+                            }),
+                      ),
+                      SettingsTile(
+                        leading: const Icon(Icons.sports),
+                        title: Row(
+                          children: [
                             Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
                             Padding(
                               padding: const EdgeInsets.only(left: 4),
