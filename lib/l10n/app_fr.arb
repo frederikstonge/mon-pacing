@@ -24,6 +24,8 @@
   "editPacing": "Modifier le pacing",
   "editPenalty": "Modifier une pénalité",
   "enableHapticFeedback": "Activer la vibration",
+  "enableMatchExpulsion": "Activé les expulsions de match",
+  "enableMatchExpulsionTooltip": "Un interprète avec trop de points de pénalité sera expulsé du match.",
   "enablePenaltiesImpactPoints": "Activer l'impact des pénalités sur le pointage",
   "enableStatistics": "Activer les statistiques",
   "enableStatisticsTooltip": "Ajouter les alignements des équipes et calculer les points, pénalitées etc",
@@ -76,6 +78,7 @@
   "penaltiesImpactType": "Type d'impact des pénalités",
   "penaltiesImpactTypeAdd": "Les pénalités ajoutent des points aux autres équipes",
   "penaltiesImpactTypeSubstract": "Les pénalités enlèvent des points a son équipe",
+  "penaltiesRequiredToExpel": "Pénalités requises pour expulser un interprète",
   "penaltiesRequiredToImpactPoints": "Pénalités requises pour impacter le pointage",
   "performer": "Interprète",
   "performers": "Interprètes",
@@ -107,5 +110,17 @@
   "total": "Total",
   "type": "Type",
   "unlimited": "Illimité",
-  "versus": "vs"
+  "versus": "vs",
+  "warningExpelPlayerDescription": "L'interprète {performer} a {penalty} points de pénalité.",
+  "@warningExpelPlayerDescription": {
+    "placeholders": {
+      "performer": {
+        "type": "String"
+      },
+      "penalty": {
+        "type": "int"
+      }
+    }
+  },
+  "warningExpelPlayerTitle": "Joueur à expulser"
 }

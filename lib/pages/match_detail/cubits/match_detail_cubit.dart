@@ -38,9 +38,12 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
                     teams: [],
                     penalties: [],
                     points: [],
+                    enableStatistics: settingsCubit.state.defaultEnableStatistics,
                     enablePenaltiesImpactPoints: settingsCubit.state.enableDefaultPenaltiesImpactPoints,
                     penaltiesImpactType: settingsCubit.state.defaultPenaltiesImpactType,
                     penaltiesRequiredToImpactPoints: settingsCubit.state.defaultPenaltiesRequiredToImpactPoints,
+                    enableMatchExpulsion: settingsCubit.state.enableDefaultMatchExpulsion,
+                    penaltiesRequiredToExpel: settingsCubit.state.defaultPenaltiesRequiredToExpel,
                   ),
           ),
         );

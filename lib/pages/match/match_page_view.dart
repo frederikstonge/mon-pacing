@@ -228,25 +228,26 @@ class MatchPageView extends StatelessWidget {
                                       child: ListTile(
                                         contentPadding: EdgeInsets.zero,
                                         leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
-                                        title: Text(e.getPenaltyString(S.of(context), match)),
+                                        title: Text(e.getPenaltyString(S.of(context), match, includePerformerName: false)),
                                         subtitle: Text(e.performerId != null
                                             ? match.teams.firstWhere((t) => t.id == e.teamId).performers.firstWhere((p) => p.id == e.performerId).name
                                             : ''),
                                         trailing: LoadingIconButton(
-                                            icon: const Icon(Icons.remove),
-                                            tooltip: S.of(context).delete,
-                                            onPressed: () async {
-                                              final matchCubit = context.read<MatchCubit>();
-                                              final result = await MessageBoxDialog.questionShow(
-                                                context,
-                                                S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
-                                                S.of(context).delete,
-                                                S.of(context).cancel,
-                                              );
-                                              if (result ?? false) {
-                                                await matchCubit.removePenalty(e.id);
-                                              }
-                                            }),
+                                          icon: const Icon(Icons.remove),
+                                          tooltip: S.of(context).delete,
+                                          onPressed: () async {
+                                            final matchCubit = context.read<MatchCubit>();
+                                            final result = await MessageBoxDialog.questionShow(
+                                              context,
+                                              S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
+                                              S.of(context).delete,
+                                              S.of(context).cancel,
+                                            );
+                                            if (result ?? false) {
+                                              await matchCubit.removePenalty(e.id);
+                                            }
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ),

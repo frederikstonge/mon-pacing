@@ -20,6 +20,8 @@ class SettingsState with _$SettingsState {
     @Default(true) bool enableDefaultPenaltiesImpactPoints,
     @Default(PenaltiesImpactType.addPoints) PenaltiesImpactType defaultPenaltiesImpactType,
     @Default(3) int defaultPenaltiesRequiredToImpactPoints,
+    @Default(true) bool enableDefaultMatchExpulsion,
+    @Default(3) int defaultPenaltiesRequiredToExpel,
   }) = _SettingsState;
 
   factory SettingsState.fromJson(Map<String, dynamic> json) => _$SettingsStateFromJson(json);

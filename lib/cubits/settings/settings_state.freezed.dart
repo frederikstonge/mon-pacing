@@ -35,6 +35,8 @@ mixin _$SettingsState {
       throw _privateConstructorUsedError;
   int get defaultPenaltiesRequiredToImpactPoints =>
       throw _privateConstructorUsedError;
+  bool get enableDefaultMatchExpulsion => throw _privateConstructorUsedError;
+  int get defaultPenaltiesRequiredToExpel => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,7 +61,9 @@ abstract class $SettingsStateCopyWith<$Res> {
       bool defaultEnableStatistics,
       bool enableDefaultPenaltiesImpactPoints,
       PenaltiesImpactType defaultPenaltiesImpactType,
-      int defaultPenaltiesRequiredToImpactPoints});
+      int defaultPenaltiesRequiredToImpactPoints,
+      bool enableDefaultMatchExpulsion,
+      int defaultPenaltiesRequiredToExpel});
 }
 
 /// @nodoc
@@ -86,6 +90,8 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? enableDefaultPenaltiesImpactPoints = null,
     Object? defaultPenaltiesImpactType = null,
     Object? defaultPenaltiesRequiredToImpactPoints = null,
+    Object? enableDefaultMatchExpulsion = null,
+    Object? defaultPenaltiesRequiredToExpel = null,
   }) {
     return _then(_value.copyWith(
       language: null == language
@@ -135,6 +141,14 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.defaultPenaltiesRequiredToImpactPoints
           : defaultPenaltiesRequiredToImpactPoints // ignore: cast_nullable_to_non_nullable
               as int,
+      enableDefaultMatchExpulsion: null == enableDefaultMatchExpulsion
+          ? _value.enableDefaultMatchExpulsion
+          : enableDefaultMatchExpulsion // ignore: cast_nullable_to_non_nullable
+              as bool,
+      defaultPenaltiesRequiredToExpel: null == defaultPenaltiesRequiredToExpel
+          ? _value.defaultPenaltiesRequiredToExpel
+          : defaultPenaltiesRequiredToExpel // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -158,7 +172,9 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       bool defaultEnableStatistics,
       bool enableDefaultPenaltiesImpactPoints,
       PenaltiesImpactType defaultPenaltiesImpactType,
-      int defaultPenaltiesRequiredToImpactPoints});
+      int defaultPenaltiesRequiredToImpactPoints,
+      bool enableDefaultMatchExpulsion,
+      int defaultPenaltiesRequiredToExpel});
 }
 
 /// @nodoc
@@ -183,6 +199,8 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? enableDefaultPenaltiesImpactPoints = null,
     Object? defaultPenaltiesImpactType = null,
     Object? defaultPenaltiesRequiredToImpactPoints = null,
+    Object? enableDefaultMatchExpulsion = null,
+    Object? defaultPenaltiesRequiredToExpel = null,
   }) {
     return _then(_$SettingsStateImpl(
       language: null == language
@@ -232,6 +250,14 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.defaultPenaltiesRequiredToImpactPoints
           : defaultPenaltiesRequiredToImpactPoints // ignore: cast_nullable_to_non_nullable
               as int,
+      enableDefaultMatchExpulsion: null == enableDefaultMatchExpulsion
+          ? _value.enableDefaultMatchExpulsion
+          : enableDefaultMatchExpulsion // ignore: cast_nullable_to_non_nullable
+              as bool,
+      defaultPenaltiesRequiredToExpel: null == defaultPenaltiesRequiredToExpel
+          ? _value.defaultPenaltiesRequiredToExpel
+          : defaultPenaltiesRequiredToExpel // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -250,7 +276,9 @@ class _$SettingsStateImpl implements _SettingsState {
       this.defaultEnableStatistics = true,
       this.enableDefaultPenaltiesImpactPoints = true,
       this.defaultPenaltiesImpactType = PenaltiesImpactType.addPoints,
-      this.defaultPenaltiesRequiredToImpactPoints = 3});
+      this.defaultPenaltiesRequiredToImpactPoints = 3,
+      this.enableDefaultMatchExpulsion = true,
+      this.defaultPenaltiesRequiredToExpel = 3});
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsStateImplFromJson(json);
@@ -286,10 +314,16 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   @JsonKey()
   final int defaultPenaltiesRequiredToImpactPoints;
+  @override
+  @JsonKey()
+  final bool enableDefaultMatchExpulsion;
+  @override
+  @JsonKey()
+  final int defaultPenaltiesRequiredToExpel;
 
   @override
   String toString() {
-    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, defaultHuddleTimerInSeconds: $defaultHuddleTimerInSeconds, defaultEnableStatistics: $defaultEnableStatistics, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints)';
+    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, defaultHuddleTimerInSeconds: $defaultHuddleTimerInSeconds, defaultEnableStatistics: $defaultEnableStatistics, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints, enableDefaultMatchExpulsion: $enableDefaultMatchExpulsion, defaultPenaltiesRequiredToExpel: $defaultPenaltiesRequiredToExpel)';
   }
 
   @override
@@ -304,8 +338,7 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.enableHapticFeedback == enableHapticFeedback) &&
             (identical(other.enableTimerHapticFeedback, enableTimerHapticFeedback) ||
                 other.enableTimerHapticFeedback == enableTimerHapticFeedback) &&
-            (identical(other.defaultImprovisationDurationInSeconds,
-                    defaultImprovisationDurationInSeconds) ||
+            (identical(other.defaultImprovisationDurationInSeconds, defaultImprovisationDurationInSeconds) ||
                 other.defaultImprovisationDurationInSeconds ==
                     defaultImprovisationDurationInSeconds) &&
             (identical(other.defaultTimeBufferInSeconds, defaultTimeBufferInSeconds) ||
@@ -314,8 +347,7 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.defaultHuddleTimerInSeconds, defaultHuddleTimerInSeconds) ||
                 other.defaultHuddleTimerInSeconds ==
                     defaultHuddleTimerInSeconds) &&
-            (identical(
-                    other.defaultEnableStatistics, defaultEnableStatistics) ||
+            (identical(other.defaultEnableStatistics, defaultEnableStatistics) ||
                 other.defaultEnableStatistics == defaultEnableStatistics) &&
             (identical(other.enableDefaultPenaltiesImpactPoints, enableDefaultPenaltiesImpactPoints) ||
                 other.enableDefaultPenaltiesImpactPoints ==
@@ -326,7 +358,12 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.defaultPenaltiesRequiredToImpactPoints,
                     defaultPenaltiesRequiredToImpactPoints) ||
                 other.defaultPenaltiesRequiredToImpactPoints ==
-                    defaultPenaltiesRequiredToImpactPoints));
+                    defaultPenaltiesRequiredToImpactPoints) &&
+            (identical(other.enableDefaultMatchExpulsion, enableDefaultMatchExpulsion) ||
+                other.enableDefaultMatchExpulsion ==
+                    enableDefaultMatchExpulsion) &&
+            (identical(other.defaultPenaltiesRequiredToExpel, defaultPenaltiesRequiredToExpel) ||
+                other.defaultPenaltiesRequiredToExpel == defaultPenaltiesRequiredToExpel));
   }
 
   @JsonKey(ignore: true)
@@ -343,7 +380,9 @@ class _$SettingsStateImpl implements _SettingsState {
       defaultEnableStatistics,
       enableDefaultPenaltiesImpactPoints,
       defaultPenaltiesImpactType,
-      defaultPenaltiesRequiredToImpactPoints);
+      defaultPenaltiesRequiredToImpactPoints,
+      enableDefaultMatchExpulsion,
+      defaultPenaltiesRequiredToExpel);
 
   @JsonKey(ignore: true)
   @override
@@ -371,7 +410,9 @@ abstract class _SettingsState implements SettingsState {
       final bool defaultEnableStatistics,
       final bool enableDefaultPenaltiesImpactPoints,
       final PenaltiesImpactType defaultPenaltiesImpactType,
-      final int defaultPenaltiesRequiredToImpactPoints}) = _$SettingsStateImpl;
+      final int defaultPenaltiesRequiredToImpactPoints,
+      final bool enableDefaultMatchExpulsion,
+      final int defaultPenaltiesRequiredToExpel}) = _$SettingsStateImpl;
 
   factory _SettingsState.fromJson(Map<String, dynamic> json) =
       _$SettingsStateImpl.fromJson;
@@ -398,6 +439,10 @@ abstract class _SettingsState implements SettingsState {
   PenaltiesImpactType get defaultPenaltiesImpactType;
   @override
   int get defaultPenaltiesRequiredToImpactPoints;
+  @override
+  bool get enableDefaultMatchExpulsion;
+  @override
+  int get defaultPenaltiesRequiredToExpel;
   @override
   @JsonKey(ignore: true)
   _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
