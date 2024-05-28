@@ -6,6 +6,7 @@ class ToasterService {
     required String title,
     String? description,
     ToastificationType type = ToastificationType.success,
+    bool autoClose = true,
   }) {
     toastification.show(
       title: Text(title),
@@ -13,7 +14,7 @@ class ToasterService {
       type: type,
       style: ToastificationStyle.flatColored,
       boxShadow: lowModeShadow,
-      autoCloseDuration: const Duration(seconds: 5),
+      autoCloseDuration: autoClose ? const Duration(seconds: 5) : null,
       showProgressBar: false,
       dragToClose: true,
     );
