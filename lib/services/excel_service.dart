@@ -21,16 +21,29 @@ class ExcelService {
       cellStyle: excel.CellStyle(bold: true, fontSize: 20),
     );
 
-    sheet.updateCell(
-      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: 1),
-      excel.TextCellValue(match.teams.map((e) => e.name).join(' vs ')),
-      cellStyle: excel.CellStyle(),
-    );
+    var teamRowIndex = 2;
+    for (final team in match.teams) {
+      sheet.updateCell(
+        excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: teamRowIndex++),
+        excel.TextCellValue(team.name),
+        cellStyle: excel.CellStyle(bold: true),
+      );
+
+      for (final performer in team.performers) {
+        sheet.updateCell(
+          excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: teamRowIndex++),
+          excel.TextCellValue(performer.name),
+          cellStyle: excel.CellStyle(),
+        );
+      }
+
+      teamRowIndex++;
+    }
 
     // Points title
-    var pointsTableIndex = 3;
+    var pointsRowIndex = teamRowIndex + 1;
     sheet.updateCell(
-      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: pointsTableIndex++),
+      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: pointsRowIndex++),
       excel.TextCellValue(localizer.points),
       cellStyle: excel.CellStyle(bold: true, fontSize: 17),
     );
@@ -39,7 +52,7 @@ class ExcelService {
 
     // Points header
     sheet.updateCell(
-      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: pointsTableIndex),
+      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: pointsRowIndex),
       excel.TextCellValue('${localizer.teams} ${localizer.improvisations}'),
       cellStyle: excel.CellStyle(
         bold: true,
@@ -52,7 +65,7 @@ class ExcelService {
 
     match.improvisations.forEachIndexed((index, element) {
       sheet.updateCell(
-        excel.CellIndex.indexByColumnRow(columnIndex: index + 1, rowIndex: pointsTableIndex),
+        excel.CellIndex.indexByColumnRow(columnIndex: index + 1, rowIndex: pointsRowIndex),
         excel.IntCellValue(index + 1),
         cellStyle: excel.CellStyle(
           bold: true,
@@ -65,7 +78,7 @@ class ExcelService {
     });
 
     sheet.updateCell(
-      excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 1, rowIndex: pointsTableIndex),
+      excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 1, rowIndex: pointsRowIndex),
       excel.TextCellValue(localizer.subtotal),
       cellStyle: excel.CellStyle(
         bold: true,
@@ -78,7 +91,7 @@ class ExcelService {
     );
 
     sheet.updateCell(
-      excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 2, rowIndex: pointsTableIndex++),
+      excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 2, rowIndex: pointsRowIndex++),
       excel.TextCellValue(localizer.total),
       cellStyle: excel.CellStyle(
         bold: true,
@@ -93,7 +106,7 @@ class ExcelService {
     // Points content
     for (final team in match.teams) {
       sheet.updateCell(
-        excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: pointsTableIndex),
+        excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: pointsRowIndex),
         excel.TextCellValue(team.name),
         cellStyle: excel.CellStyle(
           topBorder: border,
@@ -105,7 +118,7 @@ class ExcelService {
 
       match.improvisations.forEachIndexed((index, element) {
         sheet.updateCell(
-          excel.CellIndex.indexByColumnRow(columnIndex: index + 1, rowIndex: pointsTableIndex),
+          excel.CellIndex.indexByColumnRow(columnIndex: index + 1, rowIndex: pointsRowIndex),
           excel.IntCellValue(match.getImprovisationPointsByTeamId(element.id, team.id)),
           cellStyle: excel.CellStyle(
             topBorder: border,
@@ -117,7 +130,7 @@ class ExcelService {
       });
 
       sheet.updateCell(
-        excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 1, rowIndex: pointsTableIndex),
+        excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 1, rowIndex: pointsRowIndex),
         excel.IntCellValue(match.getSubtotalPointsByTeamId(team.id)),
         cellStyle: excel.CellStyle(
           topBorder: border,
@@ -128,7 +141,7 @@ class ExcelService {
       );
 
       sheet.updateCell(
-        excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 2, rowIndex: pointsTableIndex++),
+        excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 2, rowIndex: pointsRowIndex++),
         excel.IntCellValue(match.getTotalPointsByTeamId(team.id)),
         cellStyle: excel.CellStyle(
           bold: true,
@@ -141,18 +154,18 @@ class ExcelService {
     }
 
     // PENALTIES
-    var penaltyIndex = pointsTableIndex + 1;
+    var penaltyRowIndex = pointsRowIndex + 1;
 
     // Penalties title
     sheet.updateCell(
-      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyIndex++),
+      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyRowIndex++),
       excel.TextCellValue(localizer.penalties),
       cellStyle: excel.CellStyle(bold: true, fontSize: 17),
     );
 
     if (match.penalties.isEmpty) {
       sheet.updateCell(
-        excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyIndex),
+        excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyRowIndex),
         excel.TextCellValue(localizer.noPenalty),
       );
     } else {
@@ -163,24 +176,24 @@ class ExcelService {
           final improvisationNumber = match.improvisations.indexWhere((element) => element.id == entry.key) + 1;
           final team = match.teams.firstWhere((element) => element.id == penalty.teamId);
           sheet.updateCell(
-            excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyIndex),
+            excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyRowIndex),
             excel.TextCellValue(isFirst ? localizer.improvisationNumber(improvisationNumber) : ''),
             cellStyle: excel.CellStyle(bold: true),
           );
 
           sheet.updateCell(
-            excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyIndex),
+            excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyRowIndex),
             excel.TextCellValue('${team.name} - ${penalty.getPenaltyString(localizer, match)}'),
             cellStyle: excel.CellStyle(),
           );
 
           sheet.merge(
-            excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyIndex),
-            excel.CellIndex.indexByColumnRow(columnIndex: sheet.maxColumns - 1, rowIndex: penaltyIndex),
+            excel.CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: penaltyRowIndex),
+            excel.CellIndex.indexByColumnRow(columnIndex: sheet.maxColumns - 1, rowIndex: penaltyRowIndex),
           );
 
           isFirst = false;
-          penaltyIndex++;
+          penaltyRowIndex++;
         }
       }
     }
