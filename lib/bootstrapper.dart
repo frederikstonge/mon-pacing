@@ -9,6 +9,7 @@ import 'cubits/timer/timer_cubit.dart';
 import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
+import 'services/excel_service.dart';
 import 'services/toaster_service.dart';
 
 class Bootstrapper extends StatelessWidget {
@@ -23,6 +24,9 @@ class Bootstrapper extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (_) => ToasterService(),
+        ),
+        RepositoryProvider(
+          create: (_) => ExcelService(),
         ),
         RepositoryProvider(
           create: (repositoryContext) => PacingsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
