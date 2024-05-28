@@ -89,7 +89,8 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   void addPerformer(int teamId) {
     final team = state.match.teams.firstWhere((t) => t.id == teamId);
     final performers = List<PerformerModel>.from(team.performers);
-    performers.add(_createPerformer());
+    final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t, i) => t.performers));
+    performers.add(_createPerformer(allPerformers));
     editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
@@ -109,21 +110,20 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   TeamModel _createTeam(List<TeamModel> teams) {
     final nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
-    final performers = List<PerformerModel>.from(teams.selectMany((t, i) => t.performers));
+    final allPerformers = List<PerformerModel>.from(teams.selectMany((t, i) => t.performers));
     final random = Random();
     return TeamModel(
       id: nextId,
       name: '${settingsCubit.localizer.team} ${teams.length + 1}',
       color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
       performers: [
-        _createPerformer(performers: performers),
+        _createPerformer(allPerformers),
       ],
     );
   }
 
-  PerformerModel _createPerformer({List<PerformerModel>? performers}) {
-    performers ??= state.match.teams.selectMany((t, i) => t.performers).toList();
-    final nextId = performers.isNotEmpty ? performers.map((e) => e.id).toList().reduce(max) + 1 : 0;
+  PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
+    final nextId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(max) + 1 : 0;
     return PerformerModel(id: nextId, name: '');
   }
 }
