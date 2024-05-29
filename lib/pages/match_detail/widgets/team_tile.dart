@@ -45,6 +45,7 @@ class TeamTile extends StatelessWidget {
       ),
       title: TextFormField(
         initialValue: team.name,
+        textCapitalization: TextCapitalization.sentences,
         onChanged: (value) => onChanged.call(team.copyWith(name: value)),
         validator: Validators.stringRequired,
       ),

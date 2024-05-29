@@ -41,6 +41,7 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
     return Scaffold(
       appBar: AppBar(
         title: TextFormField(
+          textCapitalization: TextCapitalization.sentences,
           textInputAction: TextInputAction.search,
           autofocus: true,
           decoration: InputDecoration(

@@ -4,6 +4,16 @@
   "addPenalty": "Add penalty",
   "appTitle": "Mon Pacing",
   "areYouSure": "Are you sure you want to {action} {name}?",
+  "@areYouSure": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cancel": "Cancel",
   "category": "Category",
   "color": "Color",
@@ -34,24 +44,52 @@
   "free": "Free",
   "general": "General",
   "greaterThan": "Must be greater than {min}",
+  "@greaterThan": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
   "huddle": "Huddle",
   "huddleTimer": "Huddle timer",
   "huddleTimerTooltip": "Time allowed for the huddle before the improvisation starts. A timer will be added during the match.",
   "importPacingTooltip": "Import pacing",
   "improvisationCount": "Improvisation count: {count}",
+  "@improvisationCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "improvisationDurationInSeconds": "Improvisation duration",
   "improvisationIndex": "Improvisation position",
   "improvisationNumber": "Improvisation #{order}",
+  "@improvisationNumber": {
+    "placeholders": {
+      "order": {
+        "type": "int"
+      }
+    }
+  },
   "improvisations": "Improvisations",
   "language": "Language",
   "lesserThan": "Must be lesser than {max}",
+  "@lesserThan": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "light": "Light",
   "lni": "LNI Vintage",
   "major": "Major",
   "match": "Match",
   "matches": "Matches",
-  "missingIgnoreBatteryOptimizationError": "Battery Optimization is still enabled. Please go to your device's settings to ignore battery optimization.",
-  "missingNotificationPermissionError": "Notification permission has been denied. Please go to your device's settings to allow notifications.",
+  "missingIgnoreBatteryOptimizationError": "Battery Optimization is still enabled. Please go to your device''s settings to ignore battery optimization.",
+  "missingNotificationPermissionError": "Notification permission has been denied. Please go to your device''s settings to allow notifications.",
   "mixed": "Mixed",
   "modifiedDate": "Modified date: {date}",
   "@modifiedDate": {
@@ -63,6 +101,13 @@
     }
   },
   "multipleOf": "Must be a multiple of {multiple}",
+  "@multipleOf": {
+    "placeholders": {
+      "multiple": {
+        "type": "int"
+      }
+    }
+  },
   "name": "Name",
   "nextImprovisation": "Next improvisation",
   "noPenalty": "No penalty.",
@@ -97,16 +142,23 @@
   "teams": "Teams",
   "theme": "Theme",
   "timeBuffer": "Timer buffer",
-  "timeBufferTooltip": "Extra time that will be added on top of each improvisation's duration to compensate for the voting and more. This is only used to evaluate the total time of a pacing.",
+  "timeBufferTooltip": "Extra time that will be added on top of each improvisation''s duration to compensate for the voting and more. This is only used to evaluate the total time of a pacing.",
   "timerHapticFeedbackTooltip": "Timer will vibrate every minute, 30 seconds, 10 seconds, 5, 4, 3, 2, 1.",
   "timerIsActiveError": "Unable to {action} improvisation. Timer is active.",
+  "@timerIsActiveError": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
   "toasterGenericError": "An error has occurred.",
   "toasterMatchDeleted": "Match deleted.",
   "toasterMatchResultExported": "Match result exported.",
   "toasterPacingDeleted": "Pacing deleted.",
   "toasterPacingExported": "Pacing exported.",
   "toasterPacingImported": "Pacing imported.",
-  "toasterYouCantStartAMatchWithoutImprovisation": "You can't start a match without improvisation.",
+  "toasterYouCantStartAMatchWithoutImprovisation": "You can''t start a match without improvisation.",
   "total": "Total",
   "type": "Type",
   "unlimited": "Unlimited",

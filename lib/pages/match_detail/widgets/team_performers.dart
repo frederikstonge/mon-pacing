@@ -118,6 +118,7 @@ class _TeamPerformerItemState extends State<TeamPerformerItem> {
   Widget build(BuildContext context) {
     return TextField(
       controller: _textController,
+      textCapitalization: TextCapitalization.sentences,
       onChanged: (value) => widget.valueChanged(widget.performer.copyWith(name: value)),
       decoration: InputDecoration(
         border: OutlineInputBorder(
