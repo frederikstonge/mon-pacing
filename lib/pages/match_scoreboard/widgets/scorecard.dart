@@ -56,7 +56,7 @@ class Scorecard extends StatelessWidget {
                     (e) => TableRow(
                       children: [
                         Text(
-                          S.of(context).improvisationNumber(e.key + 1),
+                          S.of(context).improvisationNumber(order: e.key + 1),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -117,7 +117,7 @@ class Scorecard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${S.of(context).improvisationNumber(e.key + 1)}: ',
+                    '${S.of(context).improvisationNumber(order: e.key + 1)}: ',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),

@@ -77,7 +77,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${widget.pacing.totalDuration(take: widget.index).toImprovDuration()} - ${S.of(context).improvisationNumber(widget.index + 1)}',
+                  '${widget.pacing.totalDuration(take: widget.index).toImprovDuration()} - ${S.of(context).improvisationNumber(order: widget.index + 1)}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.bold),

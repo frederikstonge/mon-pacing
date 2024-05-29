@@ -93,7 +93,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                           final router = GoRouter.of(context);
                           final result = await MessageBoxDialog.questionShow(
                             context,
-                            S.of(context).areYouSure(S.of(context).delete.toLowerCase(), pacing.name),
+                            S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: pacing.name),
                             S.of(context).delete,
                             S.of(context).cancel,
                           );
@@ -148,7 +148,9 @@ class _PacingPageViewState extends State<PacingPageView> {
                         onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
                         onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
                           context,
-                          S.of(context).areYouSure(S.of(context).delete.toLowerCase(), S.of(context).improvisationNumber(index + 1)),
+                          S
+                              .of(context)
+                              .areYouSure(action: S.of(context).delete.toLowerCase(), name: S.of(context).improvisationNumber(order: index + 1)),
                           S.of(context).delete,
                           S.of(context).cancel,
                         ),

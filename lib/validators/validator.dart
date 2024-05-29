@@ -16,14 +16,14 @@ class Validators {
   }
 
   static String? lesserThan(int value, int? maxValue) {
-    return maxValue != null && value > maxValue ? S.of(_context).lesserThan(maxValue) : null;
+    return maxValue != null && value > maxValue ? S.of(_context).lesserThan(max: maxValue) : null;
   }
 
   static String? greaterThan(int value, int? minValue) {
-    return minValue != null && value < minValue ? S.of(_context).greaterThan(minValue) : null;
+    return minValue != null && value < minValue ? S.of(_context).greaterThan(min: minValue) : null;
   }
 
   static String? intMultipleOf(int value, int? multiple) {
-    return multiple != null && value % multiple != 0 ? S.of(_context).multipleOf(multiple) : null;
+    return multiple != null && value % multiple != 0 ? S.of(_context).multipleOf(multiple: multiple) : null;
   }
 }

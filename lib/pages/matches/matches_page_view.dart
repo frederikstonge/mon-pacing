@@ -89,7 +89,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                       edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
                       shouldDelete: () => MessageBoxDialog.questionShow(
                         context,
-                        S.of(context).areYouSure(S.of(context).delete.toLowerCase(), match.name),
+                        S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
                         S.of(context).delete,
                         S.of(context).cancel,
                       ),

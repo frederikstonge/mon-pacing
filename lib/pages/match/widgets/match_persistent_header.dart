@@ -58,7 +58,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
               .entries
               .map((e) => DropdownMenuItem(
                     value: e.key,
-                    child: Text(S.of(context).improvisationNumber(e.key + 1)),
+                    child: Text(S.of(context).improvisationNumber(order: e.key + 1)),
                   ))
               .toList(),
         ),

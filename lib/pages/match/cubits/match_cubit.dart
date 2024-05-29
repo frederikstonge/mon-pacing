@@ -244,7 +244,7 @@ class MatchCubit extends Cubit<MatchState> {
         final performer = match.teams.firstWhere((t) => t.id == penalty.teamId).performers.firstWhere((p) => p.id == penalty.performerId);
         toasterService.show(
           title: settingsCubit.localizer.warningExpelPlayerTitle,
-          description: settingsCubit.localizer.warningExpelPlayerDescription(performer.name, penaltyPoints),
+          description: settingsCubit.localizer.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
           type: ToastificationType.warning,
           autoClose: false,
         );
@@ -264,7 +264,7 @@ class MatchCubit extends Cubit<MatchState> {
           if (penaltyPoints >= match.penaltiesRequiredToExpel) {
             toasterService.show(
               title: settingsCubit.localizer.warningExpelPlayerTitle,
-              description: settingsCubit.localizer.warningExpelPlayerDescription(performer.name, penaltyPoints),
+              description: settingsCubit.localizer.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
               type: ToastificationType.warning,
               autoClose: false,
             );

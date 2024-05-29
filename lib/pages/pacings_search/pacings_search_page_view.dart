@@ -86,12 +86,12 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        S.of(context).improvisationCount(pacing.improvisations.length),
+                        S.of(context).improvisationCount(count: pacing.improvisations.length),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        S.of(context).modifiedDate(pacing.modifiedDate!),
+                        S.of(context).modifiedDate(date: pacing.modifiedDate!),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

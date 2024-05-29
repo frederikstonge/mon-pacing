@@ -96,7 +96,7 @@ class MatchPageView extends StatelessWidget {
                               final router = GoRouter.of(context);
                               final result = await MessageBoxDialog.questionShow(
                                 context,
-                                S.of(context).areYouSure(S.of(context).delete.toLowerCase(), match.name),
+                                S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
                                 S.of(context).delete,
                                 S.of(context).cancel,
                               );
@@ -132,7 +132,7 @@ class MatchPageView extends StatelessWidget {
                         onEdit: (improvisation) async {
                           if (improvisation.id == context.read<TimerCubit>().state.timer?.improvisationId) {
                             context.read<ToasterService>().show(
-                                  title: S.of(context).timerIsActiveError(S.of(context).edit.toLowerCase()),
+                                  title: S.of(context).timerIsActiveError(action: S.of(context).edit.toLowerCase()),
                                   type: ToastificationType.error,
                                 );
                             return;
@@ -151,7 +151,7 @@ class MatchPageView extends StatelessWidget {
                             ? (improvisation) async {
                                 if (improvisation.id == context.read<TimerCubit>().state.timer?.improvisationId) {
                                   context.read<ToasterService>().show(
-                                        title: S.of(context).timerIsActiveError(S.of(context).delete.toLowerCase()),
+                                        title: S.of(context).timerIsActiveError(action: S.of(context).delete.toLowerCase()),
                                         type: ToastificationType.error,
                                       );
                                   return;
@@ -161,8 +161,8 @@ class MatchPageView extends StatelessWidget {
                                 final shouldDelete = await MessageBoxDialog.questionShow(
                                   context,
                                   S.of(context).areYouSure(
-                                        S.of(context).delete.toLowerCase(),
-                                        S.of(context).improvisationNumber(selectedImprovisationIndex + 1),
+                                        action: S.of(context).delete.toLowerCase(),
+                                        name: S.of(context).improvisationNumber(order: selectedImprovisationIndex + 1),
                                       ),
                                   S.of(context).delete,
                                   S.of(context).cancel,
@@ -239,7 +239,7 @@ class MatchPageView extends StatelessWidget {
                                             final matchCubit = context.read<MatchCubit>();
                                             final result = await MessageBoxDialog.questionShow(
                                               context,
-                                              S.of(context).areYouSure(S.of(context).delete.toLowerCase(), e.type),
+                                              S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: e.type),
                                               S.of(context).delete,
                                               S.of(context).cancel,
                                             );

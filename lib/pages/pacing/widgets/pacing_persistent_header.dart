@@ -34,7 +34,7 @@ class PacingPersistentHeader extends SliverPersistentHeaderDelegate {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              S.of(context).improvisationCount(pacing.improvisations.length),
+              S.of(context).improvisationCount(count: pacing.improvisations.length),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

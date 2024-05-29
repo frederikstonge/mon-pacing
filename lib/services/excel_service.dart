@@ -177,7 +177,7 @@ class ExcelService {
           final team = match.teams.firstWhere((element) => element.id == penalty.teamId);
           sheet.updateCell(
             excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: penaltyRowIndex),
-            excel.TextCellValue(isFirst ? localizer.improvisationNumber(improvisationNumber) : ''),
+            excel.TextCellValue(isFirst ? localizer.improvisationNumber(order: improvisationNumber) : ''),
             cellStyle: excel.CellStyle(bold: true),
           );
 
