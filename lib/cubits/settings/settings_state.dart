@@ -13,6 +13,7 @@ class SettingsState with _$SettingsState {
     required ThemeType theme,
     @Default(true) bool enableHapticFeedback,
     @Default(true) bool enableTimerHapticFeedback,
+    @Default(2) int defaultNumberOfTeams,
     @Default(150) int defaultImprovisationDurationInSeconds,
     @Default(30) int defaultTimeBufferInSeconds,
     @Default(30) int defaultHuddleTimerInSeconds,

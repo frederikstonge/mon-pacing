@@ -13,6 +13,8 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
       enableHapticFeedback: json['enableHapticFeedback'] as bool? ?? true,
       enableTimerHapticFeedback:
           json['enableTimerHapticFeedback'] as bool? ?? true,
+      defaultNumberOfTeams:
+          (json['defaultNumberOfTeams'] as num?)?.toInt() ?? 2,
       defaultImprovisationDurationInSeconds:
           (json['defaultImprovisationDurationInSeconds'] as num?)?.toInt() ??
               150,
@@ -42,6 +44,7 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
       'theme': _$ThemeTypeEnumMap[instance.theme]!,
       'enableHapticFeedback': instance.enableHapticFeedback,
       'enableTimerHapticFeedback': instance.enableTimerHapticFeedback,
+      'defaultNumberOfTeams': instance.defaultNumberOfTeams,
       'defaultImprovisationDurationInSeconds':
           instance.defaultImprovisationDurationInSeconds,
       'defaultTimeBufferInSeconds': instance.defaultTimeBufferInSeconds,

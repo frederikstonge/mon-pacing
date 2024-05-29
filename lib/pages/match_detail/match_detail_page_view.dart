@@ -177,7 +177,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                     child: TextHeader(
-                      title: S.of(context).penalties,
+                      title: S.of(context).penalty,
                     ),
                   ),
                   CustomCard(
@@ -248,6 +248,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             ],
                           ),
                         ),
+                        const Divider(),
                         SettingsTile(
                           leading: const Icon(Icons.sports),
                           title: Row(

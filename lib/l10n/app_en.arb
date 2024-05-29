@@ -23,8 +23,10 @@
   "createNewPacingTooltip": "Create new pacing",
   "createPacing": "Create pacing",
   "dark": "Dark",
+  "defaultImprovisationSettingsTooltip": "These settings will be used as default when creating new improvisations, but can be changed individually.",
   "defaultMatchSettingsTooltip": "These settings will be used as default when creating new matches, but can be changed individually.",
   "defaultPacingSettingsTooltip": "These settings will be used as default when creating new pacings, but can be changed individually.",
+  "defaultPenaltySettingsTooltip": "These settings will be used as default when creating new penalties, but can be changed individually.",
   "delete": "Delete",
   "duplicate": "Duplicate",
   "duration": "Duration",
@@ -55,6 +57,7 @@
   "huddleTimer": "Huddle timer",
   "huddleTimerTooltip": "Time allowed for the huddle before the improvisation starts. A timer will be added during the match.",
   "importPacingTooltip": "Import pacing",
+  "improvisation": "Improvisation",
   "improvisationCount": "Improvisation count: {count}",
   "@improvisationCount": {
     "placeholders": {
@@ -125,6 +128,7 @@
   "penaltiesImpactTypeSubstract": "Penalties substract points to its team",
   "penaltiesRequiredToExpel": "Penalties required to expel a performer",
   "penaltiesRequiredToImpactPoints": "Penalties required to impact points",
+  "penalty": "Penalty",
   "performer": "Performer",
   "performers": "Performers",
   "points": "Points",

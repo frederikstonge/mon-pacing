@@ -24,6 +24,7 @@ mixin _$SettingsState {
   ThemeType get theme => throw _privateConstructorUsedError;
   bool get enableHapticFeedback => throw _privateConstructorUsedError;
   bool get enableTimerHapticFeedback => throw _privateConstructorUsedError;
+  int get defaultNumberOfTeams => throw _privateConstructorUsedError;
   int get defaultImprovisationDurationInSeconds =>
       throw _privateConstructorUsedError;
   int get defaultTimeBufferInSeconds => throw _privateConstructorUsedError;
@@ -55,6 +56,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       ThemeType theme,
       bool enableHapticFeedback,
       bool enableTimerHapticFeedback,
+      int defaultNumberOfTeams,
       int defaultImprovisationDurationInSeconds,
       int defaultTimeBufferInSeconds,
       int defaultHuddleTimerInSeconds,
@@ -83,6 +85,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? theme = null,
     Object? enableHapticFeedback = null,
     Object? enableTimerHapticFeedback = null,
+    Object? defaultNumberOfTeams = null,
     Object? defaultImprovisationDurationInSeconds = null,
     Object? defaultTimeBufferInSeconds = null,
     Object? defaultHuddleTimerInSeconds = null,
@@ -110,6 +113,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.enableTimerHapticFeedback
           : enableTimerHapticFeedback // ignore: cast_nullable_to_non_nullable
               as bool,
+      defaultNumberOfTeams: null == defaultNumberOfTeams
+          ? _value.defaultNumberOfTeams
+          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
+              as int,
       defaultImprovisationDurationInSeconds: null ==
               defaultImprovisationDurationInSeconds
           ? _value.defaultImprovisationDurationInSeconds
@@ -166,6 +173,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       ThemeType theme,
       bool enableHapticFeedback,
       bool enableTimerHapticFeedback,
+      int defaultNumberOfTeams,
       int defaultImprovisationDurationInSeconds,
       int defaultTimeBufferInSeconds,
       int defaultHuddleTimerInSeconds,
@@ -192,6 +200,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? theme = null,
     Object? enableHapticFeedback = null,
     Object? enableTimerHapticFeedback = null,
+    Object? defaultNumberOfTeams = null,
     Object? defaultImprovisationDurationInSeconds = null,
     Object? defaultTimeBufferInSeconds = null,
     Object? defaultHuddleTimerInSeconds = null,
@@ -219,6 +228,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.enableTimerHapticFeedback
           : enableTimerHapticFeedback // ignore: cast_nullable_to_non_nullable
               as bool,
+      defaultNumberOfTeams: null == defaultNumberOfTeams
+          ? _value.defaultNumberOfTeams
+          : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
+              as int,
       defaultImprovisationDurationInSeconds: null ==
               defaultImprovisationDurationInSeconds
           ? _value.defaultImprovisationDurationInSeconds
@@ -270,6 +283,7 @@ class _$SettingsStateImpl implements _SettingsState {
       required this.theme,
       this.enableHapticFeedback = true,
       this.enableTimerHapticFeedback = true,
+      this.defaultNumberOfTeams = 2,
       this.defaultImprovisationDurationInSeconds = 150,
       this.defaultTimeBufferInSeconds = 30,
       this.defaultHuddleTimerInSeconds = 30,
@@ -293,6 +307,9 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   @JsonKey()
   final bool enableTimerHapticFeedback;
+  @override
+  @JsonKey()
+  final int defaultNumberOfTeams;
   @override
   @JsonKey()
   final int defaultImprovisationDurationInSeconds;
@@ -323,7 +340,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, defaultHuddleTimerInSeconds: $defaultHuddleTimerInSeconds, defaultEnableStatistics: $defaultEnableStatistics, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints, enableDefaultMatchExpulsion: $enableDefaultMatchExpulsion, defaultPenaltiesRequiredToExpel: $defaultPenaltiesRequiredToExpel)';
+    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultNumberOfTeams: $defaultNumberOfTeams, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, defaultHuddleTimerInSeconds: $defaultHuddleTimerInSeconds, defaultEnableStatistics: $defaultEnableStatistics, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints, enableDefaultMatchExpulsion: $enableDefaultMatchExpulsion, defaultPenaltiesRequiredToExpel: $defaultPenaltiesRequiredToExpel)';
   }
 
   @override
@@ -338,6 +355,8 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.enableHapticFeedback == enableHapticFeedback) &&
             (identical(other.enableTimerHapticFeedback, enableTimerHapticFeedback) ||
                 other.enableTimerHapticFeedback == enableTimerHapticFeedback) &&
+            (identical(other.defaultNumberOfTeams, defaultNumberOfTeams) ||
+                other.defaultNumberOfTeams == defaultNumberOfTeams) &&
             (identical(other.defaultImprovisationDurationInSeconds, defaultImprovisationDurationInSeconds) ||
                 other.defaultImprovisationDurationInSeconds ==
                     defaultImprovisationDurationInSeconds) &&
@@ -374,6 +393,7 @@ class _$SettingsStateImpl implements _SettingsState {
       theme,
       enableHapticFeedback,
       enableTimerHapticFeedback,
+      defaultNumberOfTeams,
       defaultImprovisationDurationInSeconds,
       defaultTimeBufferInSeconds,
       defaultHuddleTimerInSeconds,
@@ -404,6 +424,7 @@ abstract class _SettingsState implements SettingsState {
       required final ThemeType theme,
       final bool enableHapticFeedback,
       final bool enableTimerHapticFeedback,
+      final int defaultNumberOfTeams,
       final int defaultImprovisationDurationInSeconds,
       final int defaultTimeBufferInSeconds,
       final int defaultHuddleTimerInSeconds,
@@ -425,6 +446,8 @@ abstract class _SettingsState implements SettingsState {
   bool get enableHapticFeedback;
   @override
   bool get enableTimerHapticFeedback;
+  @override
+  int get defaultNumberOfTeams;
   @override
   int get defaultImprovisationDurationInSeconds;
   @override
