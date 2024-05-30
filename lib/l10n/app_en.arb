@@ -42,7 +42,8 @@
   "enableStatistics": "Enable statistics",
   "enableStatisticsTooltip": "Add team lineups and track points, penalties etc",
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
-  "export": "Export",
+  "exportMatchSheet": "Export match sheet",
+  "exportPacing": "Export pacing",
   "free": "Free",
   "general": "General",
   "greaterThan": "Must be greater than {min}",
@@ -91,6 +92,7 @@
   "major": "Major",
   "match": "Match",
   "matches": "Matches",
+  "matchSummary": "Match summary",
   "missingIgnoreBatteryOptimizationError": "Battery Optimization is still enabled. Please go to your device''s settings to ignore battery optimization.",
   "missingNotificationPermissionError": "Notification permission has been denied. Please go to your device''s settings to allow notifications.",
   "mixed": "Mixed",
@@ -170,11 +172,11 @@
   "warningExpelPlayerDescription": "Performer {performer} has {penalty} penalty points.",
   "@warningExpelPlayerDescription": {
     "placeholders": {
-      "performer": {
-        "type": "String"
-      },
       "penalty": {
         "type": "int"
+      },
+      "performer": {
+        "type": "String"
       }
     }
   },

@@ -100,6 +100,7 @@ class Scorecard extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 8),
           const Divider(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
