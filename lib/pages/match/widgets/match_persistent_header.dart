@@ -53,19 +53,27 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
               changePage(value);
             }
           },
-          items: match.improvisations
-              .asMap()
-              .entries
-              .map((e) => DropdownMenuItem(
+          items: [
+            ...match.improvisations.asMap().entries.map(
+                  (e) => DropdownMenuItem(
                     value: e.key,
                     child: Text(S.of(context).improvisationNumber(order: e.key + 1)),
-                  ))
-              .toList(),
+                  ),
+                ),
+            if (match.enableStatistics) ...[
+              DropdownMenuItem(
+                value: match.improvisations.length,
+                child: Text(S.of(context).matchSummary),
+              ),
+            ],
+          ],
         ),
         trailing: LoadingIconButton(
           icon: const Icon(Icons.arrow_forward),
           tooltip: S.of(context).nextImprovisation,
-          onPressed: selectedImprovisationIndex < (match.improvisations.length - 1) ? () => changePage(selectedImprovisationIndex + 1) : null,
+          onPressed: selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
+              ? () => changePage(selectedImprovisationIndex + 1)
+              : null,
         ),
       ),
     );

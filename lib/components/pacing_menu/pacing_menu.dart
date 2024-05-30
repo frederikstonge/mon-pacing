@@ -70,7 +70,7 @@ class PacingMenu extends StatelessWidget {
             child: ListTile(
               leading: const Icon(Icons.upload),
               title: Text(
-                S.of(context).export,
+                S.of(context).exportPacing,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
