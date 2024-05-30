@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:darq/darq.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/settings/settings_cubit.dart';
+import '../../../models/constants.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/pacing_model.dart';
@@ -118,7 +118,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     return TeamModel(
       id: nextId,
       name: '${settingsCubit.localizer.team} ${teams.length + 1}',
-      color: Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1).value,
+      color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).value,
       performers: [
         _createPerformer(allPerformers),
       ],

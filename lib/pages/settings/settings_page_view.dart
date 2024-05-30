@@ -157,7 +157,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                     context.read<SettingsCubit>().edit(state.copyWith(defaultNumberOfTeams: value));
                                   }
                                 },
-                                minValue: Constants.minumumTeams,
+                                minValue: Constants.minimumTeams,
                                 maxValue: Constants.maximumTeams,
                               ),
                             ],

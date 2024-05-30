@@ -91,7 +91,7 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                                 context.read<PacingDetailCubit>().edit(state.pacing.copyWith(defaultNumberOfTeams: value));
                               }
                             },
-                            minValue: Constants.minumumTeams,
+                            minValue: Constants.minimumTeams,
                             maxValue: Constants.maximumTeams,
                           ),
                         ],

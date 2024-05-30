@@ -134,7 +134,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                 onChanged: (value) {
                                   context.read<MatchDetailCubit>().editTeam(e.key, value);
                                 },
-                                onDelete: !state.editMode && state.match.teams.length > Constants.minumumTeams
+                                onDelete: !state.editMode && state.match.teams.length > Constants.minimumTeams
                                     ? () {
                                         context.read<MatchDetailCubit>().removeTeam(e.key);
                                       }
