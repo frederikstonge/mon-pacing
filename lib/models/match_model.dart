@@ -10,6 +10,7 @@ import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
 import 'performer_model.dart';
 import 'point_model.dart';
+import 'star_model.dart';
 import 'team_model.dart';
 
 part 'match_model.freezed.dart';
@@ -30,6 +31,7 @@ class MatchModel with _$MatchModel implements BaseModel {
     required List<ImprovisationModel> improvisations,
     required List<PenaltyModel> penalties,
     required List<PointModel> points,
+    @Default([]) List<StarModel> stars,
     @Default(true) bool enableStatistics,
     @Default(true) bool enablePenaltiesImpactPoints,
     @Default(PenaltiesImpactType.addPoints) PenaltiesImpactType penaltiesImpactType,

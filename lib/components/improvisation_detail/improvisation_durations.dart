@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_icon_button.dart';
-import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
-import '../../../components/duration_picker/duration_picker.dart';
-import '../../../extensions/duration_extensions.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../extensions/duration_extensions.dart';
+import '../../l10n/app_localizations.dart';
+import '../actions/loading_icon_button.dart';
+import '../bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../duration_picker/duration_picker.dart';
 
 class ImprovisationDurations extends StatelessWidget {
   final String label;

@@ -12,7 +12,7 @@ import 'match_detail_page_view.dart';
 class MatchDetailPageShell extends StatelessWidget {
   final MatchModel? match;
   final PacingModel? pacing;
-  final FutureOr<void> Function(MatchModel value) onConfirm;
+  final FutureOr<bool> Function(MatchModel value) onConfirm;
 
   const MatchDetailPageShell({
     super.key,

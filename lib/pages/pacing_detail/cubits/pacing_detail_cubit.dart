@@ -10,7 +10,7 @@ class PacingDetailCubit extends Cubit<PacingDetailState> {
   final SettingsCubit settingsCubit;
   final PacingModel? pacing;
   final bool editMode;
-  final FutureOr<void> Function(PacingModel value) onConfirm;
+  final FutureOr<bool> Function(PacingModel value) onConfirm;
 
   PacingDetailCubit({
     required this.settingsCubit,

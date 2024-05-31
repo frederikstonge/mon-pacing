@@ -3,6 +3,7 @@ import 'package:toastification/toastification.dart';
 
 import '../../models/match_model.dart';
 import '../../repositories/matches_repository.dart';
+import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
 import '../settings/settings_cubit.dart';
 import 'matches_state.dart';
@@ -12,12 +13,14 @@ class MatchesCubit extends Cubit<MatchesState> {
   final MatchesRepository repository;
   final ToasterService toasterService;
   final SettingsCubit settingsCubit;
+  final AnalyticsService analyticsService;
   bool _isFetching = false;
 
   MatchesCubit({
     required this.repository,
     required this.toasterService,
     required this.settingsCubit,
+    required this.analyticsService,
   }) : super(const MatchesState.initial());
 
   Future<MatchModel?> add(MatchModel model) async {
@@ -26,7 +29,14 @@ class MatchesCubit extends Cubit<MatchesState> {
         toasterService.show(title: settingsCubit.localizer.toasterYouCantStartAMatchWithoutImprovisation, type: ToastificationType.error);
         return null;
       }
+
+      if (model.enableStatistics && model.teams.any((t) => t.performers.isEmpty)) {
+        toasterService.show(title: settingsCubit.localizer.toasterYouCantStartAMatchWithAnEmptyTeam, type: ToastificationType.error);
+        return null;
+      }
+
       final matchModel = await repository.add(model);
+      await analyticsService.logStartMatch(matchModel);
       return matchModel;
     } catch (exception) {
       toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);

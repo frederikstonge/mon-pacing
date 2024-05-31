@@ -198,7 +198,35 @@ class ExcelService {
       }
     }
 
-    for (var i = 0; i < sheet.maxColumns; i++) {
+    // STARS
+    var starsRowIndex = penaltyRowIndex + 1;
+
+    // Stars title
+    sheet.updateCell(
+      excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: starsRowIndex++),
+      excel.TextCellValue(localizer.stars),
+      cellStyle: excel.CellStyle(bold: true, fontSize: 17),
+    );
+
+    if (match.penalties.isEmpty) {
+      sheet.updateCell(
+        excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: starsRowIndex),
+        excel.TextCellValue(localizer.noStar),
+      );
+    } else {
+      for (final star in match.stars) {
+        final team = match.teams.firstWhere((element) => element.id == star.teamId);
+        final performer = team.performers.firstWhere((element) => element.id == star.performerId);
+        sheet.updateCell(
+          excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: starsRowIndex),
+          excel.TextCellValue('${team.name} - ${performer.name}'),
+        );
+
+        starsRowIndex++;
+      }
+    }
+
+    for (var i = 0; i < sheet.maxColumns - 1; i++) {
       sheet.setColumnAutoFit(i);
     }
 

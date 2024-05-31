@@ -17,7 +17,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   final SettingsCubit settingsCubit;
   final PacingModel? pacing;
   final MatchModel? match;
-  final FutureOr<void> Function(MatchModel value) onConfirm;
+  final FutureOr<bool> Function(MatchModel value) onConfirm;
 
   MatchDetailCubit({
     required this.settingsCubit,
