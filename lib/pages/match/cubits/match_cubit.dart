@@ -13,7 +13,9 @@ import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/penalty_model.dart';
 import '../../../models/point_model.dart';
+import '../../../models/star_model.dart';
 import '../../../repositories/matches_repository.dart';
+import '../../../services/analytics_service.dart';
 import '../../../services/excel_service.dart';
 import '../../../services/toaster_service.dart';
 import 'match_state.dart';
@@ -24,6 +26,7 @@ class MatchCubit extends Cubit<MatchState> {
   final SettingsCubit settingsCubit;
   final ToasterService toasterService;
   final ExcelService excelService;
+  final AnalyticsService analyticsService;
 
   MatchCubit({
     required this.matchesRepository,
@@ -31,6 +34,7 @@ class MatchCubit extends Cubit<MatchState> {
     required this.settingsCubit,
     required this.toasterService,
     required this.excelService,
+    required this.analyticsService,
   }) : super(const MatchState.initial());
 
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
@@ -210,6 +214,62 @@ class MatchCubit extends Cubit<MatchState> {
     );
   }
 
+  Future<void> addStar() async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+        final stars = List<StarModel>.from(match.copyWith().stars);
+        final nextStarId = stars.isNotEmpty ? stars.map((e) => e.id).reduce(max) + 1 : 0;
+        stars.add(StarModel(id: nextStarId, teamId: match.teams.first.id, performerId: match.teams.first.performers.first.id));
+        final newMatch = match.copyWith(stars: stars);
+        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
+        await matchesCubit.edit(newMatch);
+      },
+    );
+  }
+
+  Future<void> editStar(StarModel star) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+        final stars = List<StarModel>.from(match.copyWith().stars);
+        final index = stars.indexWhere((element) => element.id == star.id);
+        stars[index] = star;
+        final newMatch = match.copyWith(stars: stars);
+        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
+        await matchesCubit.edit(newMatch);
+      },
+    );
+  }
+
+  Future<void> removeStar(int starId) async {
+    await state.whenOrNull(
+      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+        final stars = List<StarModel>.from(match.copyWith().stars);
+        stars.removeWhere((element) => element.id == starId);
+        final newMatch = match.copyWith(stars: stars);
+        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
+        await matchesCubit.edit(newMatch);
+      },
+    );
+  }
+
+  Future<void> moveStar(int oldIndex, int newIndex) async {
+    await state.whenOrNull(success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
+      final stars = List<StarModel>.from(match.copyWith().stars);
+      final star = stars.removeAt(oldIndex);
+
+      if (oldIndex < newIndex) {
+        newIndex--;
+      }
+
+      stars.insert(newIndex, star);
+
+      final newMatch = match.copyWith(stars: stars);
+
+      emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
+      await matchesCubit.edit(newMatch);
+    });
+  }
+
   Future<bool> exportExcel(MatchModel match) async {
     try {
       final bytes = excelService.exportMatchToExcel(match, settingsCubit.localizer);
@@ -221,6 +281,7 @@ class MatchCubit extends Cubit<MatchState> {
       final data = Uint8List.fromList(bytes);
       final fileName = sanitizeFilename('${match.name}.xlsx', replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
+      await analyticsService.logExportToExcel();
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {
         toasterService.show(title: settingsCubit.localizer.toasterMatchResultExported);

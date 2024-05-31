@@ -309,8 +309,10 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
                         final navigator = Navigator.of(context);
-                        await context.read<MatchDetailCubit>().onConfirm(state.match);
-                        navigator.pop();
+                        final result = await context.read<MatchDetailCubit>().onConfirm(state.match);
+                        if (result) {
+                          navigator.pop();
+                        }
                       }
                     },
                     child: Text(

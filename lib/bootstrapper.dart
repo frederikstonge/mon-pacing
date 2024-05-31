@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +10,7 @@ import 'cubits/timer/timer_cubit.dart';
 import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
+import 'services/analytics_service.dart';
 import 'services/excel_service.dart';
 import 'services/toaster_service.dart';
 
@@ -27,6 +29,9 @@ class Bootstrapper extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (_) => ExcelService(),
+        ),
+        RepositoryProvider(
+          create: (_) => AnalyticsService(analytics: FirebaseAnalytics.instance),
         ),
         RepositoryProvider(
           create: (repositoryContext) => PacingsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
@@ -52,6 +57,7 @@ class Bootstrapper extends StatelessWidget {
               repository: blocContext.read<MatchesRepository>(),
               toasterService: blocContext.read<ToasterService>(),
               settingsCubit: blocContext.read<SettingsCubit>(),
+              analyticsService: blocContext.read<AnalyticsService>(),
             )..fetch(),
           ),
           BlocProvider(

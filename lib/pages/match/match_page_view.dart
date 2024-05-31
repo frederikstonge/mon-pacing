@@ -88,6 +88,7 @@ class MatchPageView extends StatelessWidget {
                                   match: match,
                                   onConfirm: (match) async {
                                     await context.read<MatchCubit>().edit(match);
+                                    return true;
                                   },
                                 ),
                               );

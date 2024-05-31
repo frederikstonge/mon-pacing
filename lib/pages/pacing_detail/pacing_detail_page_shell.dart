@@ -11,7 +11,7 @@ import 'pacing_detail_page_view.dart';
 class PacingDetailPageShell extends StatelessWidget {
   final PacingModel? pacing;
   final bool editMode;
-  final FutureOr<void> Function(PacingModel value) onConfirm;
+  final FutureOr<bool> Function(PacingModel value) onConfirm;
 
   const PacingDetailPageShell({
     super.key,

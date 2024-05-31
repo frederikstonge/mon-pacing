@@ -113,41 +113,75 @@ class Scorecard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ] else ...[
-            ...match.getPenaltiesGroupedByImprovisationId().entries.map((e) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${S.of(context).improvisationNumber(order: e.key + 1)}: ',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: e.value
-                          .map(
-                            (e) => Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TeamColorAvatar(color: match.getTeamColor(e.teamId)),
-                                const SizedBox(width: 6),
-                                Expanded(
-                                  child: Text(
-                                    e.getPenaltyString(S.of(context), match),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                          .toList(),
+            ...match.getPenaltiesGroupedByImprovisationId().entries.map(
+              (e) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${S.of(context).improvisationNumber(order: e.key + 1)}: ',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  )
-                ],
-              );
-            }),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: e.value
+                            .map(
+                              (e) => Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TeamColorAvatar(color: match.getTeamColor(e.teamId)),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                    child: Text(
+                                      e.getPenaltyString(S.of(context), match),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+          ],
+          const SizedBox(height: 8),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextHeader(title: S.of(context).stars),
+          ),
+          if (match.stars.isEmpty) ...[
+            Text(
+              S.of(context).noStar,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ] else ...[
+            ...match.stars.map(
+              (s) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TeamColorAvatar(color: match.getTeamColor(s.teamId)),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        match.teams.firstWhere((t) => t.id == s.teamId).performers.firstWhere((p) => p.id == s.performerId).name,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ],
         ],
       ),

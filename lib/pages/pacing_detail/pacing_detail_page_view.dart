@@ -112,8 +112,10 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                   onPressed: () async {
                     if (formKey.currentState?.validate() ?? false) {
                       final navigator = Navigator.of(context);
-                      await context.read<PacingDetailCubit>().onConfirm(state.pacing);
-                      navigator.pop();
+                      final result = await context.read<PacingDetailCubit>().onConfirm(state.pacing);
+                      if (result) {
+                        navigator.pop();
+                      }
                     }
                   },
                   child: Text(

@@ -68,6 +68,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                               editMode: true,
                               onConfirm: (pacing) async {
                                 await context.read<PacingCubit>().edit(pacing);
+                                return true;
                               },
                             ),
                           );
@@ -83,7 +84,10 @@ class _PacingPageViewState extends State<PacingPageView> {
                                 if (matchModel != null) {
                                   router.pop();
                                   router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+                                  return true;
                                 }
+
+                                return false;
                               },
                             ),
                           );
@@ -117,7 +121,10 @@ class _PacingPageViewState extends State<PacingPageView> {
                                 if (pacingModel != null) {
                                   router.pop();
                                   router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                                  return true;
                                 }
+
+                                return false;
                               },
                             ),
                           );
