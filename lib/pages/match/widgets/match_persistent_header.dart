@@ -41,6 +41,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
           ],
         ),
         middle: DropdownButtonFormField<int>(
+          isExpanded: true,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6.0),
@@ -57,13 +58,21 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
             ...match.improvisations.asMap().entries.map(
                   (e) => DropdownMenuItem(
                     value: e.key,
-                    child: Text(S.of(context).improvisationNumber(order: e.key + 1)),
+                    child: Row(
+                      children: [
+                        Expanded(child: Text(S.of(context).improvisationNumber(order: e.key + 1))),
+                      ],
+                    ),
                   ),
                 ),
             if (match.enableStatistics) ...[
               DropdownMenuItem(
                 value: match.improvisations.length,
-                child: Text(S.of(context).matchSummary),
+                child: Row(
+                  children: [
+                    Expanded(child: Text(S.of(context).matchSummary)),
+                  ],
+                ),
               ),
             ],
           ],

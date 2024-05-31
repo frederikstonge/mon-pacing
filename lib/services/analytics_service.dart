@@ -20,7 +20,7 @@ class AnalyticsService {
     await analytics.logEvent(
       name: AnalyticsService.startMatchEventName,
       parameters: {
-        'enableStatistics': match.enableStatistics,
+        'enableStatistics': match.enableStatistics.toString(),
       },
     );
   }

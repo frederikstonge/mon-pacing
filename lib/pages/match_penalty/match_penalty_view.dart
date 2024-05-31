@@ -55,6 +55,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                   child: Column(
                     children: [
                       DropdownButtonFormField<int>(
+                        isExpanded: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
@@ -74,10 +75,12 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                                     children: [
                                       TeamColorAvatar(color: Color(e.color)),
                                       const SizedBox(width: 6),
-                                      Text(
-                                        e.name,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      Expanded(
+                                        child: Text(
+                                          e.name,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -115,9 +118,23 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                           context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(performerId: value));
                         },
                         items: [
-                          const DropdownMenuItem(value: null, child: Text('-')),
+                          const DropdownMenuItem(
+                            value: null,
+                            child: Row(
+                              children: [
+                                Expanded(child: Text('-')),
+                              ],
+                            ),
+                          ),
                           ...state.teams.firstWhere((t) => t.id == state.penalty.teamId).performers.map(
-                                (p) => DropdownMenuItem(value: p.id, child: Text(p.name)),
+                                (p) => DropdownMenuItem(
+                                  value: p.id,
+                                  child: Row(
+                                    children: [
+                                      Expanded(child: Text(p.name)),
+                                    ],
+                                  ),
+                                ),
                               ),
                         ],
                       ),
