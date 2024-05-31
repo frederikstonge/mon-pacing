@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/actions/loading_icon_button.dart';
@@ -74,7 +75,7 @@ class MatchStarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           Padding(
@@ -86,6 +87,7 @@ class MatchStarItem extends StatelessWidget {
           ),
           Expanded(
             child: DropdownButtonFormField<int>(
+              isExpanded: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6.0),
@@ -95,7 +97,9 @@ class MatchStarItem extends StatelessWidget {
               value: star.teamId,
               onChanged: (value) {
                 if (value != null) {
-                  valueChanged(star.copyWith(teamId: value));
+                  final team = teams.firstWhere((t) => t.id == value);
+                  final performer = team.performers.firstWhereOrNull((p) => p.id == star.performerId);
+                  valueChanged(star.copyWith(teamId: value, performerId: performer != null ? performer.id : team.performers.first.id));
                 }
               },
               items: teams
@@ -106,10 +110,12 @@ class MatchStarItem extends StatelessWidget {
                         children: [
                           TeamColorAvatar(color: Color(e.color)),
                           const SizedBox(width: 6),
-                          Text(
-                            e.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            child: Text(
+                              e.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       ),
@@ -118,18 +124,17 @@ class MatchStarItem extends StatelessWidget {
                   .toList(),
             ),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 8),
           Expanded(
             child: DropdownButtonFormField<int>(
+              isExpanded: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6.0),
                 ),
               ),
               icon: const Icon(Icons.arrow_downward),
-              value: teams.firstWhere((t) => t.id == star.teamId).performers.any((p) => p.id == star.performerId)
-                  ? star.performerId
-                  : teams.firstWhere((t) => t.id == star.teamId).performers.first.id,
+              value: star.performerId,
               onChanged: (value) {
                 if (value != null) {
                   valueChanged(star.copyWith(performerId: value));
@@ -141,10 +146,16 @@ class MatchStarItem extends StatelessWidget {
                   .map(
                     (e) => DropdownMenuItem(
                       value: e.id,
-                      child: Text(
-                        e.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              e.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   )

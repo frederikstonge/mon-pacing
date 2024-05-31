@@ -68,7 +68,11 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
               final display = e == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared;
               return DropdownMenuItem<ImprovisationType>(
                 value: e,
-                child: Text(display),
+                child: Row(
+                  children: [
+                    Expanded(child: Text(display)),
+                  ],
+                ),
               );
             },
           ).toList(),

@@ -31,6 +31,7 @@ class DropDownElement<T> extends StatelessWidget {
           ),
         ),
         DropdownButtonFormField<T>(
+          isExpanded: true,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6.0),

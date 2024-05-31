@@ -32,26 +32,11 @@ class MatchSummary extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Scoreboard(match: match),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: LoadingButton.filledIcon(
-            icon: const Icon(Icons.scoreboard),
-            onPressed: () async {
-              await BottomSheetDialog.showDialog(
-                context: context,
-                child: MatchScoreboardShell(
-                  match: match,
-                ),
-              );
-            },
-            child: Text(S.of(context).scoreboard),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+          padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
           child: TextHeader(
             title: S.of(context).stars,
             trailing: LoadingIconButton(
@@ -78,8 +63,25 @@ class MatchSummary extends StatelessWidget {
                   onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                 ),
         ),
+        const SizedBox(height: 8),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: LoadingButton.filledIcon(
+            icon: const Icon(Icons.scoreboard),
+            onPressed: () async {
+              await BottomSheetDialog.showDialog(
+                context: context,
+                child: MatchScoreboardShell(
+                  match: match,
+                ),
+              );
+            },
+            child: Text(S.of(context).scoreboard),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: LoadingButton.tonalIcon(
             icon: const Icon(Icons.upload),
             onPressed: () async {
