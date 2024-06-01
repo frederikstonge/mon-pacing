@@ -168,6 +168,7 @@
   "toasterPacingImported": "Pacing imported.",
   "toasterYouCantStartAMatchWithAnEmptyTeam": "You can''t start a match with an empty. team",
   "toasterYouCantStartAMatchWithoutImprovisation": "You can''t start a match without improvisation.",
+  "toasterYouMustFillAllPerformersName": "You must fill all performers'' name.",
   "total": "Total",
   "type": "Type",
   "unlimited": "Unlimited",
