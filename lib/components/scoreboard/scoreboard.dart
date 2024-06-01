@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/team_color_avatar/team_color_avatar.dart';
-import '../../../extensions/match_extensions.dart';
-import '../../../models/match_model.dart';
+import '../../extensions/match_extensions.dart';
+import '../../models/match_model.dart';
+import '../team_color_avatar/team_color_avatar.dart';
 
 class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
   final MatchModel match;
