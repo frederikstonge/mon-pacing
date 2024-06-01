@@ -8,10 +8,10 @@ import '../../../extensions/penalty_extensions.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 
-class Scorecard extends StatelessWidget {
+class ScoreDetail extends StatelessWidget {
   final MatchModel match;
 
-  const Scorecard({
+  const ScoreDetail({
     super.key,
     required this.match,
   });

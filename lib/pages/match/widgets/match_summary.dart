@@ -8,12 +8,12 @@ import '../../../components/actions/loading_button.dart';
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
+import '../../../components/scoreboard/scoreboard.dart';
 import '../../../components/text_header/text_header.dart';
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 import '../../match_scoreboard/match_scoreboard_shell.dart';
-import '../../match_scoreboard/widgets/scoreboard.dart';
 import '../cubits/match_cubit.dart';
 import 'match_stars.dart';
 

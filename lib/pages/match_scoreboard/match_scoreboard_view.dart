@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../components/scoreboard/scoreboard.dart';
 import '../../models/match_model.dart';
-import 'widgets/scoreboard.dart';
-import 'widgets/scorecard.dart';
+import 'widgets/score_detail.dart';
 
 class MatchScoreboardView extends StatelessWidget {
   final MatchModel match;
@@ -25,7 +25,7 @@ class MatchScoreboardView extends StatelessWidget {
         children: [
           const SizedBox(height: 16),
           Scoreboard(match: match),
-          Scorecard(match: match),
+          ScoreDetail(match: match),
         ],
       ),
     );

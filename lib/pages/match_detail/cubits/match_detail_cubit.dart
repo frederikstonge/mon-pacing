@@ -111,6 +111,20 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
+  void movePerformer(int teamId, int oldIndex, int newIndex) {
+    final team = state.match.teams.firstWhere((t) => t.id == teamId);
+    final performers = List<PerformerModel>.from(team.performers);
+
+    final performer = performers.removeAt(oldIndex);
+
+    if (oldIndex < newIndex) {
+      newIndex--;
+    }
+
+    performers.insert(newIndex, performer);
+    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
+  }
+
   TeamModel _createTeam(List<TeamModel> teams) {
     final nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
     final allPerformers = List<PerformerModel>.from(teams.selectMany((t) => t.performers));

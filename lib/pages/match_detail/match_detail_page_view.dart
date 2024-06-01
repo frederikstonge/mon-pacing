@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/actions/haptic_switch.dart';
 import '../../components/actions/loading_button.dart';
@@ -14,6 +15,7 @@ import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/text_header/text_header.dart';
 import '../../components/tooltip/custom_tooltip.dart';
+import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
@@ -170,6 +172,8 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                           editPerformer: context.read<MatchDetailCubit>().editPerformer,
                           removePerformer:
                               selectedTeam.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
+                          onDrag: context.read<MatchDetailCubit>().movePerformer,
+                          onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                         ),
                       ],
                     ),
