@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../models/performer_model.dart';
+import '../../../validators/validator.dart';
 
 class TeamPerformers extends StatelessWidget {
   final String label;
@@ -116,7 +117,7 @@ class _TeamPerformerItemState extends State<TeamPerformerItem> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: _textController,
       textCapitalization: TextCapitalization.sentences,
       onChanged: (value) => widget.valueChanged(widget.performer.copyWith(name: value)),
@@ -125,6 +126,7 @@ class _TeamPerformerItemState extends State<TeamPerformerItem> {
           borderRadius: BorderRadius.circular(6.0),
         ),
       ),
+      validator: (value) => Validators.stringRequired(value),
     );
   }
 }

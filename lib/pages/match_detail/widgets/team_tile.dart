@@ -47,7 +47,7 @@ class TeamTile extends StatelessWidget {
         initialValue: team.name,
         textCapitalization: TextCapitalization.sentences,
         onChanged: (value) => onChanged.call(team.copyWith(name: value)),
-        validator: Validators.stringRequired,
+        validator: (value) => Validators.stringRequired(value),
       ),
       trailing: LoadingIconButton(
         icon: const Icon(Icons.remove),

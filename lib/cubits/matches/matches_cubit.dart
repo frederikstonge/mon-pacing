@@ -35,6 +35,11 @@ class MatchesCubit extends Cubit<MatchesState> {
         return null;
       }
 
+      if (model.enableStatistics && model.teams.any((t) => t.performers.any((p) => p.name.isEmpty))) {
+        toasterService.show(title: settingsCubit.localizer.toasterYouMustFillAllPerformersName, type: ToastificationType.error);
+        return null;
+      }
+
       final matchModel = await repository.add(model);
       await analyticsService.logStartMatch(matchModel);
       return matchModel;
