@@ -55,7 +55,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
   Widget build(BuildContext context) {
     return BlocBuilder<MatchDetailCubit, MatchDetailState>(
       builder: (context, state) {
-        final selectedTeam = state.match.teams.firstWhere((t) => t.id == state.selectedTeamIndex);
+        final selectedTeam = state.match.teams.elementAt(state.selectedTeamIndex);
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
             title: state.editMode ? S.of(context).editMatch : S.of(context).startMatch,
