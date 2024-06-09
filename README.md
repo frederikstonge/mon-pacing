@@ -3,7 +3,9 @@
 [![Codemagic build status](https://api.codemagic.io/apps/66182d00f959c53097b7c5cf/66182d00f959c53097b7c5ce/status_badge.svg)](https://codemagic.io/apps/66182d00f959c53097b7c5cf/66182d00f959c53097b7c5ce/latest_build)
 
 A project used by referees for Robert Gravel's Improvisation style matches.
-[Ligue Nationale d'Improvisation](https://en.wikipedia.org/wiki/Ligue_nationale_d%27improvisation)
+
+- [Mon Pacing](https://linktr.ee/monpacing)
+- [Ligue Nationale d'Improvisation](https://en.wikipedia.org/wiki/Ligue_nationale_d%27improvisation)
 
 <img src="https://github.com/frederikstonge/mon-pacing/assets/5427239/f5214a96-dfdb-4eb8-9a5b-6e7cffbe083d" height="20%" width="20%" />
 <img src="https://github.com/frederikstonge/mon-pacing/assets/5427239/f906abd6-a684-4feb-b2ba-a89af030948d" height="20%" width="20%" />
