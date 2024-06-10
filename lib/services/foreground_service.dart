@@ -23,7 +23,6 @@ void initForegroundTask() {
       channelId: 'foreground_service',
       channelName: 'Foreground Service Notification',
       channelDescription: 'This notification appears when the foreground service is running.',
-      foregroundServiceType: AndroidForegroundServiceType.SPECIAL_USE,
       channelImportance: NotificationChannelImportance.LOW,
       priority: NotificationPriority.LOW,
       iconData: const NotificationIconData(
@@ -38,10 +37,11 @@ void initForegroundTask() {
     ),
     foregroundTaskOptions: const ForegroundTaskOptions(
       interval: 1000,
+      allowWakeLock: true,
       isOnceEvent: false,
       autoRunOnBoot: false,
-      allowWakeLock: true,
-      allowWifiLock: true,
+      autoRunOnMyPackageReplaced: false,
+      allowWifiLock: false,
     ),
   );
 }
