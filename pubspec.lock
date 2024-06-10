@@ -101,18 +101,18 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "1414d6d733a85d8ad2f1dfcb3ea7945759e35a123cb99ccfac75d0758f75edfa"
+      sha256: "644dc98a0f179b872f612d3eb627924b578897c629788e858157fa5e704ca0c7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.10"
+    version: "2.4.11"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
-      sha256: "4ae8ffe5ac758da294ecf1802f2aff01558d8b1b00616aa7538ea9a8a5d50799"
+      sha256: e3c79f69a64bdfcd8a776a3c28db4eb6e3fb5356d013ae5eb2e52007706d5dbe
       url: "https://pub.dev"
     source: hosted
-    version: "7.3.0"
+    version: "7.3.1"
   built_collection:
     dependency: transitive
     description:
@@ -370,10 +370,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_foreground_task
-      sha256: d40a1ddd5f275450d2e32055e7f884796c028a02ac26c751c20916576f79e132
+      sha256: "1f9974fa9b322cca33d091857926165f5be46387f489d2335395b3cf6ac91b74"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "6.4.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -473,10 +473,10 @@ packages:
     dependency: "direct main"
     description:
       name: haptic_feedback
-      sha256: ef6df60bd92ac75c87774c3300dd19732f5fbd81734371ea62196c3f55013408
+      sha256: "69df7f9498457db56e905ea6d8dc124265c1b1ce9ea852ce273d337a51efd982"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.2"
+    version: "0.5.1"
   hive:
     dependency: transitive
     description:
@@ -545,7 +545,7 @@ packages:
     dependency: "direct main"
     description:
       name: isar
-      sha256: "6bb67f9844a643d1a925b0b8018e27bec1f79c6ae23e0671a8ec87fa2d48cf78"
+      sha256: "52bc5314fcabcab89c847510fa39eae65e8c98d8b4f863d2cfae6193bbf7101d"
       url: "https://pub.isar-community.dev"
     source: hosted
     version: "4.0.3"
@@ -553,7 +553,7 @@ packages:
     dependency: "direct main"
     description:
       name: isar_flutter_libs
-      sha256: "60c52866fb407ca9f9234977bc006249521408eea284c3625d477c602f640b0d"
+      sha256: "9d53728a01291a13d84d0dbc05f6aa4e620034d8cd675c2c12fa8aa994ffa817"
       url: "https://pub.isar-community.dev"
     source: hosted
     version: "4.0.3"
@@ -761,10 +761,10 @@ packages:
     dependency: transitive
     description:
       name: platform
-      sha256: "12220bb4b65720483f8fa9450b4332347737cf8213dd2840d8b2c823e47243ec"
+      sha256: "9b71283fc13df574056616011fb138fd3b793ea47cc509c189a6c3fa5f8a1a65"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.4"
+    version: "3.1.5"
   plugin_platform_interface:
     dependency: transitive
     description:
