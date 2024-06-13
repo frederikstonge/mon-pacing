@@ -84,9 +84,24 @@ class TimerWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              LoadingIconButton.tonal(
+                onPressed: isActive
+                    ? () async => await context.read<TimerCubit>().start(
+                          match.id,
+                          match.name,
+                          improvisation.id,
+                          durationIndex,
+                          durations.elementAt(durationIndex),
+                        )
+                    : null,
+                icon: const Icon(Icons.replay),
+                tooltip: S.of(context).pause,
+              ),
               LoadingIconButton.filled(
-                onPressed: isActive && state.timer!.status == TimerStatus.paused
-                    ? () async => await context.read<TimerCubit>().resume()
+                onPressed: isActive
+                    ? state.timer!.status == TimerStatus.paused
+                        ? () async => await context.read<TimerCubit>().resume()
+                        : () async => await context.read<TimerCubit>().pause()
                     : () async => await context.read<TimerCubit>().start(
                           match.id,
                           match.name,
@@ -94,15 +109,15 @@ class TimerWidget extends StatelessWidget {
                           durationIndex,
                           durations.elementAt(durationIndex),
                         ),
-                icon: isActive && state.timer!.status == TimerStatus.started ? const Icon(Icons.replay) : const Icon(Icons.play_arrow),
-                tooltip: S.of(context).start,
+                icon: isActive
+                    ? state.timer!.status == TimerStatus.paused
+                        ? const Icon(Icons.play_arrow)
+                        : const Icon(Icons.pause)
+                    : const Icon(Icons.play_arrow),
+                size: IconButtonSize.large,
+                tooltip: isActive && state.timer!.status == TimerStatus.paused ? S.of(context).pause : S.of(context).start,
               ),
-              LoadingIconButton.filled(
-                onPressed: isActive && state.timer!.status == TimerStatus.started ? () async => await context.read<TimerCubit>().pause() : null,
-                icon: const Icon(Icons.pause),
-                tooltip: S.of(context).pause,
-              ),
-              LoadingIconButton.filled(
+              LoadingIconButton.tonal(
                 onPressed: isActive ? () async => await context.read<TimerCubit>().stop() : null,
                 icon: const Icon(Icons.stop),
                 tooltip: S.of(context).stop,
