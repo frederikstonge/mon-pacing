@@ -9,6 +9,7 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
+import '../../components/form/tags_field_element.dart';
 import '../../components/form/text_field_element.dart';
 import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
@@ -84,6 +85,14 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                         },
                         onChanged: (value) {
                           context.read<MatchDetailCubit>().edit(state.match.copyWith(name: value));
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      TagsFieldElement(
+                        label: 'Tags (Separated by a comma)',
+                        initialTags: state.match.tags,
+                        onChanged: (value) {
+                          context.read<MatchDetailCubit>().edit(state.match.copyWith(tags: value));
                         },
                       ),
                       const SizedBox(height: 8),

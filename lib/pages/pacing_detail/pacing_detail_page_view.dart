@@ -5,6 +5,7 @@ import '../../components/actions/loading_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
+import '../../components/form/tags_field_element.dart';
 import '../../components/form/text_field_element.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/text_header/text_header.dart';
@@ -69,6 +70,14 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                       },
                       onChanged: (value) {
                         context.read<PacingDetailCubit>().edit(state.pacing.copyWith(name: value));
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    TagsFieldElement(
+                      label: 'Tags (Separated by a comma)',
+                      initialTags: state.pacing.tags,
+                      onChanged: (value) {
+                        context.read<PacingDetailCubit>().edit(state.pacing.copyWith(tags: value));
                       },
                     ),
                     Padding(

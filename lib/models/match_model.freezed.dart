@@ -31,6 +31,7 @@ mixin _$MatchModel {
       throw _privateConstructorUsedError;
   List<PenaltyModel> get penalties => throw _privateConstructorUsedError;
   List<PointModel> get points => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
   List<StarModel> get stars => throw _privateConstructorUsedError;
   bool get enableStatistics => throw _privateConstructorUsedError;
   bool get enablePenaltiesImpactPoints => throw _privateConstructorUsedError;
@@ -61,6 +62,7 @@ abstract class $MatchModelCopyWith<$Res> {
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
       List<PointModel> points,
+      List<String> tags,
       List<StarModel> stars,
       bool enableStatistics,
       bool enablePenaltiesImpactPoints,
@@ -91,6 +93,7 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? improvisations = null,
     Object? penalties = null,
     Object? points = null,
+    Object? tags = null,
     Object? stars = null,
     Object? enableStatistics = null,
     Object? enablePenaltiesImpactPoints = null,
@@ -132,6 +135,10 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       stars: null == stars
           ? _value.stars
           : stars // ignore: cast_nullable_to_non_nullable
@@ -181,6 +188,7 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
       List<PointModel> points,
+      List<String> tags,
       List<StarModel> stars,
       bool enableStatistics,
       bool enablePenaltiesImpactPoints,
@@ -209,6 +217,7 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? improvisations = null,
     Object? penalties = null,
     Object? points = null,
+    Object? tags = null,
     Object? stars = null,
     Object? enableStatistics = null,
     Object? enablePenaltiesImpactPoints = null,
@@ -250,6 +259,10 @@ class __$$MatchModelImplCopyWithImpl<$Res>
           ? _value._points
           : points // ignore: cast_nullable_to_non_nullable
               as List<PointModel>,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       stars: null == stars
           ? _value._stars
           : stars // ignore: cast_nullable_to_non_nullable
@@ -294,6 +307,7 @@ class _$MatchModelImpl extends _MatchModel {
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
+      final List<String> tags = const [],
       final List<StarModel> stars = const [],
       this.enableStatistics = true,
       this.enablePenaltiesImpactPoints = true,
@@ -305,6 +319,7 @@ class _$MatchModelImpl extends _MatchModel {
         _improvisations = improvisations,
         _penalties = penalties,
         _points = points,
+        _tags = tags,
         _stars = stars,
         super._();
 
@@ -353,6 +368,15 @@ class _$MatchModelImpl extends _MatchModel {
     return EqualUnmodifiableListView(_points);
   }
 
+  final List<String> _tags;
+  @override
+  @JsonKey()
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
   final List<StarModel> _stars;
   @override
   @JsonKey()
@@ -383,7 +407,7 @@ class _$MatchModelImpl extends _MatchModel {
 
   @override
   String toString() {
-    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, stars: $stars, enableStatistics: $enableStatistics, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints, enableMatchExpulsion: $enableMatchExpulsion, penaltiesRequiredToExpel: $penaltiesRequiredToExpel)';
+    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, tags: $tags, stars: $stars, enableStatistics: $enableStatistics, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints, enableMatchExpulsion: $enableMatchExpulsion, penaltiesRequiredToExpel: $penaltiesRequiredToExpel)';
   }
 
   @override
@@ -403,6 +427,7 @@ class _$MatchModelImpl extends _MatchModel {
             const DeepCollectionEquality()
                 .equals(other._penalties, _penalties) &&
             const DeepCollectionEquality().equals(other._points, _points) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality().equals(other._stars, _stars) &&
             (identical(other.enableStatistics, enableStatistics) ||
                 other.enableStatistics == enableStatistics) &&
@@ -435,6 +460,7 @@ class _$MatchModelImpl extends _MatchModel {
       const DeepCollectionEquality().hash(_improvisations),
       const DeepCollectionEquality().hash(_penalties),
       const DeepCollectionEquality().hash(_points),
+      const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_stars),
       enableStatistics,
       enablePenaltiesImpactPoints,
@@ -467,6 +493,7 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
+      final List<String> tags,
       final List<StarModel> stars,
       final bool enableStatistics,
       final bool enablePenaltiesImpactPoints,
@@ -497,6 +524,8 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
   List<PenaltyModel> get penalties;
   @override
   List<PointModel> get points;
+  @override
+  List<String> get tags;
   @override
   List<StarModel> get stars;
   @override

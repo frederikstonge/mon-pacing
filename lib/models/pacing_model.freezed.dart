@@ -29,6 +29,7 @@ mixin _$PacingModel {
   List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
   int get defaultNumberOfTeams => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +49,8 @@ abstract class $PacingModelCopyWith<$Res> {
       @index DateTime? createdDate,
       DateTime? modifiedDate,
       List<ImprovisationModel> improvisations,
-      int defaultNumberOfTeams});
+      int defaultNumberOfTeams,
+      List<String> tags});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? modifiedDate = freezed,
     Object? improvisations = null,
     Object? defaultNumberOfTeams = null,
+    Object? tags = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -96,6 +99,10 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
           ? _value.defaultNumberOfTeams
           : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
               as int,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -114,7 +121,8 @@ abstract class _$$PacingModelImplCopyWith<$Res>
       @index DateTime? createdDate,
       DateTime? modifiedDate,
       List<ImprovisationModel> improvisations,
-      int defaultNumberOfTeams});
+      int defaultNumberOfTeams,
+      List<String> tags});
 }
 
 /// @nodoc
@@ -134,6 +142,7 @@ class __$$PacingModelImplCopyWithImpl<$Res>
     Object? modifiedDate = freezed,
     Object? improvisations = null,
     Object? defaultNumberOfTeams = null,
+    Object? tags = null,
   }) {
     return _then(_$PacingModelImpl(
       id: null == id
@@ -160,6 +169,10 @@ class __$$PacingModelImplCopyWithImpl<$Res>
           ? _value.defaultNumberOfTeams
           : defaultNumberOfTeams // ignore: cast_nullable_to_non_nullable
               as int,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -173,8 +186,10 @@ class _$PacingModelImpl extends _PacingModel {
       @index required this.createdDate,
       required this.modifiedDate,
       required final List<ImprovisationModel> improvisations,
-      this.defaultNumberOfTeams = 2})
+      this.defaultNumberOfTeams = 2,
+      final List<String> tags = const []})
       : _improvisations = improvisations,
+        _tags = tags,
         super._();
 
   factory _$PacingModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -201,10 +216,18 @@ class _$PacingModelImpl extends _PacingModel {
   @override
   @JsonKey()
   final int defaultNumberOfTeams;
+  final List<String> _tags;
+  @override
+  @JsonKey()
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
 
   @override
   String toString() {
-    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations, defaultNumberOfTeams: $defaultNumberOfTeams)';
+    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations, defaultNumberOfTeams: $defaultNumberOfTeams, tags: $tags)';
   }
 
   @override
@@ -221,7 +244,8 @@ class _$PacingModelImpl extends _PacingModel {
             const DeepCollectionEquality()
                 .equals(other._improvisations, _improvisations) &&
             (identical(other.defaultNumberOfTeams, defaultNumberOfTeams) ||
-                other.defaultNumberOfTeams == defaultNumberOfTeams));
+                other.defaultNumberOfTeams == defaultNumberOfTeams) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(ignore: true)
@@ -233,7 +257,8 @@ class _$PacingModelImpl extends _PacingModel {
       createdDate,
       modifiedDate,
       const DeepCollectionEquality().hash(_improvisations),
-      defaultNumberOfTeams);
+      defaultNumberOfTeams,
+      const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
   @override
@@ -256,7 +281,8 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
       @index required final DateTime? createdDate,
       required final DateTime? modifiedDate,
       required final List<ImprovisationModel> improvisations,
-      final int defaultNumberOfTeams}) = _$PacingModelImpl;
+      final int defaultNumberOfTeams,
+      final List<String> tags}) = _$PacingModelImpl;
   const _PacingModel._() : super._();
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
@@ -276,6 +302,8 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
   List<ImprovisationModel> get improvisations;
   @override
   int get defaultNumberOfTeams;
+  @override
+  List<String> get tags;
   @override
   @JsonKey(ignore: true)
   _$$PacingModelImplCopyWith<_$PacingModelImpl> get copyWith =>

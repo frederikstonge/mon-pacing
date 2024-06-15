@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import '../extensions/iterable_extensions.dart';
 import '../models/match_model.dart';
 import 'database_repository.dart';
 
@@ -49,5 +50,11 @@ class MatchesRepository {
         .teamNamesElementContains(search, caseSensitive: false)
         .sortByCreatedDateDesc()
         .findAllAsync(offset: skip, limit: take);
+  }
+
+  Future<List<String>> getAllTags() async {
+    final db = await databaseRepository.database;
+    final tags = await db.matchModels.where().tagsProperty().findAllAsync();
+    return tags.selectMany((t) => t).toList();
   }
 }
