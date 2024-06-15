@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 
+import '../extensions/iterable_extensions.dart';
 import '../models/pacing_model.dart';
 import 'database_repository.dart';
 
@@ -52,5 +53,11 @@ class PacingsRepository {
         .themesElementContains(search, caseSensitive: false)
         .sortByCreatedDateDesc()
         .findAllAsync(offset: skip, limit: take);
+  }
+
+  Future<List<String>> getAllTags() async {
+    final db = await databaseRepository.database;
+    final tags = await db.pacingModels.where().tagsProperty().findAllAsync();
+    return tags.selectMany((t) => t).toList();
   }
 }

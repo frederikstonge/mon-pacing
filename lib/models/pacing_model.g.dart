@@ -49,6 +49,10 @@ const PacingModelSchema = IsarGeneratedSchema(
         name: 'defaultNumberOfTeams',
         type: IsarType.long,
       ),
+      IsarPropertySchema(
+        name: 'tags',
+        type: IsarType.stringList,
+      ),
     ],
     indexes: [
       IsarIndexSchema(
@@ -120,6 +124,14 @@ int serializePacingModel(IsarWriter writer, PacingModel object) {
     IsarCore.endList(writer, listWriter);
   }
   IsarCore.writeLong(writer, 7, object.defaultNumberOfTeams);
+  {
+    final list = object.tags;
+    final listWriter = IsarCore.beginList(writer, 8, list.length);
+    for (var i = 0; i < list.length; i++) {
+      IsarCore.writeString(listWriter, i, list[i]);
+    }
+    IsarCore.endList(writer, listWriter);
+  }
   return object.id;
 }
 
@@ -196,6 +208,23 @@ PacingModel deserializePacingModel(IsarReader reader) {
   }
   final int _defaultNumberOfTeams;
   _defaultNumberOfTeams = IsarCore.readLong(reader, 7);
+  final List<String> _tags;
+  {
+    final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
+    {
+      final reader = IsarCore.readerPtr;
+      if (reader.isNull) {
+        _tags = const <String>[];
+      } else {
+        final list = List<String>.filled(length, '', growable: true);
+        for (var i = 0; i < length; i++) {
+          list[i] = IsarCore.readString(reader, i) ?? '';
+        }
+        IsarCore.freeReader(reader);
+        _tags = list;
+      }
+    }
+  }
   final object = PacingModel(
     id: _id,
     createdDate: _createdDate,
@@ -203,6 +232,7 @@ PacingModel deserializePacingModel(IsarReader reader) {
     name: _name,
     improvisations: _improvisations,
     defaultNumberOfTeams: _defaultNumberOfTeams,
+    tags: _tags,
   );
   return object;
 }
@@ -315,6 +345,23 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
       }
     case 7:
       return IsarCore.readLong(reader, 7);
+    case 8:
+      {
+        final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
+            return const <String>[];
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
+        }
+      }
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -1413,6 +1460,199 @@ extension PacingModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 8,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 8,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 8,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 8,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 8,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition> tagsIsEmpty() {
+    return not().tagsIsNotEmpty();
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      tagsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 8, value: null),
+      );
+    });
+  }
 }
 
 extension PacingModelQueryObject
@@ -1603,6 +1843,12 @@ extension PacingModelQueryWhereDistinct
       return query.addDistinctBy(7);
     });
   }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterDistinct> distinctByTags() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(8);
+    });
+  }
 }
 
 extension PacingModelQueryProperty1
@@ -1654,6 +1900,12 @@ extension PacingModelQueryProperty1
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
+    });
+  }
+
+  QueryBuilder<PacingModel, List<String>, QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
     });
   }
 }
@@ -1713,6 +1965,12 @@ extension PacingModelQueryProperty2<R>
       return query.addProperty(7);
     });
   }
+
+  QueryBuilder<PacingModel, (R, List<String>), QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
+    });
+  }
 }
 
 extension PacingModelQueryProperty3<R1, R2>
@@ -1770,6 +2028,13 @@ extension PacingModelQueryProperty3<R1, R2>
       return query.addProperty(7);
     });
   }
+
+  QueryBuilder<PacingModel, (R1, R2, List<String>), QOperations>
+      tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
+    });
+  }
 }
 
 // **************************************************************************
@@ -1791,6 +2056,9 @@ _$PacingModelImpl _$$PacingModelImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       defaultNumberOfTeams:
           (json['defaultNumberOfTeams'] as num?)?.toInt() ?? 2,
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
     );
 
 Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
@@ -1801,4 +2069,5 @@ Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
       'modifiedDate': instance.modifiedDate?.toIso8601String(),
       'improvisations': instance.improvisations,
       'defaultNumberOfTeams': instance.defaultNumberOfTeams,
+      'tags': instance.tags,
     };

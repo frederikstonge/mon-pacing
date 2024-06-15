@@ -31,6 +31,7 @@ class MatchModel with _$MatchModel implements BaseModel {
     required List<ImprovisationModel> improvisations,
     required List<PenaltyModel> penalties,
     required List<PointModel> points,
+    @Default([]) List<String> tags,
     @Default([]) List<StarModel> stars,
     @Default(true) bool enableStatistics,
     @Default(true) bool enablePenaltiesImpactPoints,

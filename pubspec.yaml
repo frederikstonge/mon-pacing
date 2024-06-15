@@ -39,6 +39,7 @@ dependencies:
   json_annotation: ^4.8.1
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5
+  textfield_tags: ^3.0.1
   toastification: ^2.0.0
 
 dev_dependencies:

@@ -23,6 +23,7 @@ class PacingModel with _$PacingModel implements BaseModel {
     required DateTime? modifiedDate,
     required List<ImprovisationModel> improvisations,
     @Default(2) int defaultNumberOfTeams,
+    @Default([]) List<String> tags,
   }) = _PacingModel;
 
   List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
