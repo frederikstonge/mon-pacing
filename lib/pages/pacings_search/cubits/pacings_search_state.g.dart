@@ -14,6 +14,11 @@ _$PacingsSearchStateImpl _$$PacingsSearchStateImplFromJson(
           .map((e) => PacingModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       hasMore: json['hasMore'] as bool,
+      tags: Map<String, int>.from(json['tags'] as Map),
+      selectedTags: (json['selectedTags'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$PacingsSearchStateImplToJson(
@@ -22,4 +27,6 @@ Map<String, dynamic> _$$PacingsSearchStateImplToJson(
       'searchQuery': instance.searchQuery,
       'pacings': instance.pacings,
       'hasMore': instance.hasMore,
+      'tags': instance.tags,
+      'selectedTags': instance.selectedTags,
     };

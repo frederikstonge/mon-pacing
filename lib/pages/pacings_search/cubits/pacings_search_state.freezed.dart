@@ -23,6 +23,8 @@ mixin _$PacingsSearchState {
   String get searchQuery => throw _privateConstructorUsedError;
   List<PacingModel> get pacings => throw _privateConstructorUsedError;
   bool get hasMore => throw _privateConstructorUsedError;
+  Map<String, int> get tags => throw _privateConstructorUsedError;
+  List<String> get selectedTags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,12 @@ abstract class $PacingsSearchStateCopyWith<$Res> {
           PacingsSearchState value, $Res Function(PacingsSearchState) then) =
       _$PacingsSearchStateCopyWithImpl<$Res, PacingsSearchState>;
   @useResult
-  $Res call({String searchQuery, List<PacingModel> pacings, bool hasMore});
+  $Res call(
+      {String searchQuery,
+      List<PacingModel> pacings,
+      bool hasMore,
+      Map<String, int> tags,
+      List<String> selectedTags});
 }
 
 /// @nodoc
@@ -55,6 +62,8 @@ class _$PacingsSearchStateCopyWithImpl<$Res, $Val extends PacingsSearchState>
     Object? searchQuery = null,
     Object? pacings = null,
     Object? hasMore = null,
+    Object? tags = null,
+    Object? selectedTags = null,
   }) {
     return _then(_value.copyWith(
       searchQuery: null == searchQuery
@@ -69,6 +78,14 @@ class _$PacingsSearchStateCopyWithImpl<$Res, $Val extends PacingsSearchState>
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
+      selectedTags: null == selectedTags
+          ? _value.selectedTags
+          : selectedTags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -81,7 +98,12 @@ abstract class _$$PacingsSearchStateImplCopyWith<$Res>
       __$$PacingsSearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String searchQuery, List<PacingModel> pacings, bool hasMore});
+  $Res call(
+      {String searchQuery,
+      List<PacingModel> pacings,
+      bool hasMore,
+      Map<String, int> tags,
+      List<String> selectedTags});
 }
 
 /// @nodoc
@@ -98,6 +120,8 @@ class __$$PacingsSearchStateImplCopyWithImpl<$Res>
     Object? searchQuery = null,
     Object? pacings = null,
     Object? hasMore = null,
+    Object? tags = null,
+    Object? selectedTags = null,
   }) {
     return _then(_$PacingsSearchStateImpl(
       searchQuery: null == searchQuery
@@ -112,6 +136,14 @@ class __$$PacingsSearchStateImplCopyWithImpl<$Res>
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
+      selectedTags: null == selectedTags
+          ? _value._selectedTags
+          : selectedTags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -122,8 +154,12 @@ class _$PacingsSearchStateImpl implements _PacingsSearchState {
   const _$PacingsSearchStateImpl(
       {required this.searchQuery,
       required final List<PacingModel> pacings,
-      required this.hasMore})
-      : _pacings = pacings;
+      required this.hasMore,
+      required final Map<String, int> tags,
+      final List<String> selectedTags = const []})
+      : _pacings = pacings,
+        _tags = tags,
+        _selectedTags = selectedTags;
 
   factory _$PacingsSearchStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$PacingsSearchStateImplFromJson(json);
@@ -140,10 +176,26 @@ class _$PacingsSearchStateImpl implements _PacingsSearchState {
 
   @override
   final bool hasMore;
+  final Map<String, int> _tags;
+  @override
+  Map<String, int> get tags {
+    if (_tags is EqualUnmodifiableMapView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_tags);
+  }
+
+  final List<String> _selectedTags;
+  @override
+  @JsonKey()
+  List<String> get selectedTags {
+    if (_selectedTags is EqualUnmodifiableListView) return _selectedTags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedTags);
+  }
 
   @override
   String toString() {
-    return 'PacingsSearchState(searchQuery: $searchQuery, pacings: $pacings, hasMore: $hasMore)';
+    return 'PacingsSearchState(searchQuery: $searchQuery, pacings: $pacings, hasMore: $hasMore, tags: $tags, selectedTags: $selectedTags)';
   }
 
   @override
@@ -154,13 +206,21 @@ class _$PacingsSearchStateImpl implements _PacingsSearchState {
             (identical(other.searchQuery, searchQuery) ||
                 other.searchQuery == searchQuery) &&
             const DeepCollectionEquality().equals(other._pacings, _pacings) &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedTags, _selectedTags));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, searchQuery,
-      const DeepCollectionEquality().hash(_pacings), hasMore);
+  int get hashCode => Object.hash(
+      runtimeType,
+      searchQuery,
+      const DeepCollectionEquality().hash(_pacings),
+      hasMore,
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_selectedTags));
 
   @JsonKey(ignore: true)
   @override
@@ -181,7 +241,9 @@ abstract class _PacingsSearchState implements PacingsSearchState {
   const factory _PacingsSearchState(
       {required final String searchQuery,
       required final List<PacingModel> pacings,
-      required final bool hasMore}) = _$PacingsSearchStateImpl;
+      required final bool hasMore,
+      required final Map<String, int> tags,
+      final List<String> selectedTags}) = _$PacingsSearchStateImpl;
 
   factory _PacingsSearchState.fromJson(Map<String, dynamic> json) =
       _$PacingsSearchStateImpl.fromJson;
@@ -192,6 +254,10 @@ abstract class _PacingsSearchState implements PacingsSearchState {
   List<PacingModel> get pacings;
   @override
   bool get hasMore;
+  @override
+  Map<String, int> get tags;
+  @override
+  List<String> get selectedTags;
   @override
   @JsonKey(ignore: true)
   _$$PacingsSearchStateImplCopyWith<_$PacingsSearchStateImpl> get copyWith =>

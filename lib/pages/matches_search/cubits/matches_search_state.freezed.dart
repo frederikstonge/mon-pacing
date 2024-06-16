@@ -23,6 +23,8 @@ mixin _$MatchesSearchState {
   String get searchQuery => throw _privateConstructorUsedError;
   List<MatchModel> get matches => throw _privateConstructorUsedError;
   bool get hasMore => throw _privateConstructorUsedError;
+  Map<String, int> get tags => throw _privateConstructorUsedError;
+  List<String> get selectedTags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,12 @@ abstract class $MatchesSearchStateCopyWith<$Res> {
           MatchesSearchState value, $Res Function(MatchesSearchState) then) =
       _$MatchesSearchStateCopyWithImpl<$Res, MatchesSearchState>;
   @useResult
-  $Res call({String searchQuery, List<MatchModel> matches, bool hasMore});
+  $Res call(
+      {String searchQuery,
+      List<MatchModel> matches,
+      bool hasMore,
+      Map<String, int> tags,
+      List<String> selectedTags});
 }
 
 /// @nodoc
@@ -55,6 +62,8 @@ class _$MatchesSearchStateCopyWithImpl<$Res, $Val extends MatchesSearchState>
     Object? searchQuery = null,
     Object? matches = null,
     Object? hasMore = null,
+    Object? tags = null,
+    Object? selectedTags = null,
   }) {
     return _then(_value.copyWith(
       searchQuery: null == searchQuery
@@ -69,6 +78,14 @@ class _$MatchesSearchStateCopyWithImpl<$Res, $Val extends MatchesSearchState>
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
+      selectedTags: null == selectedTags
+          ? _value.selectedTags
+          : selectedTags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -81,7 +98,12 @@ abstract class _$$MatchesSearchStateImplCopyWith<$Res>
       __$$MatchesSearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String searchQuery, List<MatchModel> matches, bool hasMore});
+  $Res call(
+      {String searchQuery,
+      List<MatchModel> matches,
+      bool hasMore,
+      Map<String, int> tags,
+      List<String> selectedTags});
 }
 
 /// @nodoc
@@ -98,6 +120,8 @@ class __$$MatchesSearchStateImplCopyWithImpl<$Res>
     Object? searchQuery = null,
     Object? matches = null,
     Object? hasMore = null,
+    Object? tags = null,
+    Object? selectedTags = null,
   }) {
     return _then(_$MatchesSearchStateImpl(
       searchQuery: null == searchQuery
@@ -112,6 +136,14 @@ class __$$MatchesSearchStateImplCopyWithImpl<$Res>
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
+      selectedTags: null == selectedTags
+          ? _value._selectedTags
+          : selectedTags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -122,8 +154,12 @@ class _$MatchesSearchStateImpl implements _MatchesSearchState {
   const _$MatchesSearchStateImpl(
       {required this.searchQuery,
       required final List<MatchModel> matches,
-      required this.hasMore})
-      : _matches = matches;
+      required this.hasMore,
+      required final Map<String, int> tags,
+      final List<String> selectedTags = const []})
+      : _matches = matches,
+        _tags = tags,
+        _selectedTags = selectedTags;
 
   factory _$MatchesSearchStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$MatchesSearchStateImplFromJson(json);
@@ -140,10 +176,26 @@ class _$MatchesSearchStateImpl implements _MatchesSearchState {
 
   @override
   final bool hasMore;
+  final Map<String, int> _tags;
+  @override
+  Map<String, int> get tags {
+    if (_tags is EqualUnmodifiableMapView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_tags);
+  }
+
+  final List<String> _selectedTags;
+  @override
+  @JsonKey()
+  List<String> get selectedTags {
+    if (_selectedTags is EqualUnmodifiableListView) return _selectedTags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedTags);
+  }
 
   @override
   String toString() {
-    return 'MatchesSearchState(searchQuery: $searchQuery, matches: $matches, hasMore: $hasMore)';
+    return 'MatchesSearchState(searchQuery: $searchQuery, matches: $matches, hasMore: $hasMore, tags: $tags, selectedTags: $selectedTags)';
   }
 
   @override
@@ -154,13 +206,21 @@ class _$MatchesSearchStateImpl implements _MatchesSearchState {
             (identical(other.searchQuery, searchQuery) ||
                 other.searchQuery == searchQuery) &&
             const DeepCollectionEquality().equals(other._matches, _matches) &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedTags, _selectedTags));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, searchQuery,
-      const DeepCollectionEquality().hash(_matches), hasMore);
+  int get hashCode => Object.hash(
+      runtimeType,
+      searchQuery,
+      const DeepCollectionEquality().hash(_matches),
+      hasMore,
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_selectedTags));
 
   @JsonKey(ignore: true)
   @override
@@ -181,7 +241,9 @@ abstract class _MatchesSearchState implements MatchesSearchState {
   const factory _MatchesSearchState(
       {required final String searchQuery,
       required final List<MatchModel> matches,
-      required final bool hasMore}) = _$MatchesSearchStateImpl;
+      required final bool hasMore,
+      required final Map<String, int> tags,
+      final List<String> selectedTags}) = _$MatchesSearchStateImpl;
 
   factory _MatchesSearchState.fromJson(Map<String, dynamic> json) =
       _$MatchesSearchStateImpl.fromJson;
@@ -192,6 +254,10 @@ abstract class _MatchesSearchState implements MatchesSearchState {
   List<MatchModel> get matches;
   @override
   bool get hasMore;
+  @override
+  Map<String, int> get tags;
+  @override
+  List<String> get selectedTags;
   @override
   @JsonKey(ignore: true)
   _$$MatchesSearchStateImplCopyWith<_$MatchesSearchStateImpl> get copyWith =>

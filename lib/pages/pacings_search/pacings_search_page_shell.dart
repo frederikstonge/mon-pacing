@@ -17,7 +17,7 @@ class PacingsSearchPageShell extends StatelessWidget {
         pacingsRepository: blocContext.read<PacingsRepository>(),
         toasterService: blocContext.read<ToasterService>(),
         settingsCubit: blocContext.read<SettingsCubit>(),
-      ),
+      )..initialize(),
       child: const PacingsSearchPageView(),
     );
   }
