@@ -146,6 +146,8 @@
   "startMatch": "Start match",
   "stop": "Stop",
   "subtotal": "Subtotal",
+  "tags": "Tags",
+  "tagsHint": "Enter tags separated by comma (,).",
   "team": "Team",
   "teams": "Teams",
   "theme": "Theme",

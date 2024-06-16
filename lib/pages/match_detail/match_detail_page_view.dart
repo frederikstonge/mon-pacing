@@ -89,7 +89,8 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                       ),
                       const SizedBox(height: 8),
                       TagsFieldElement(
-                        label: 'Tags (Separated by a comma)',
+                        label: S.of(context).tags,
+                        hintText: S.of(context).tagsHint,
                         initialTags: state.match.tags,
                         onChanged: (value) {
                           context.read<MatchDetailCubit>().edit(state.match.copyWith(tags: value));
