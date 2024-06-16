@@ -74,7 +74,8 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                     ),
                     const SizedBox(height: 8),
                     TagsFieldElement(
-                      label: 'Tags (Separated by a comma)',
+                      label: S.of(context).tags,
+                      hintText: S.of(context).tagsHint,
                       initialTags: state.pacing.tags,
                       onChanged: (value) {
                         context.read<PacingDetailCubit>().edit(state.pacing.copyWith(tags: value));

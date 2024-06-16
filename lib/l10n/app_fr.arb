@@ -101,6 +101,8 @@
   "startMatch": "Commencer un match",
   "stop": "Arrêter",
   "subtotal": "Sous-total",
+  "tags": "Étiquettes",
+  "tagsHint": "Entrez les étiquettes séparées par des virgules (,).",
   "team": "Équipe",
   "teams": "Équipes",
   "theme": "Thème",

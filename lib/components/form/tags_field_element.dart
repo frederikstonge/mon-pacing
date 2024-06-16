@@ -5,6 +5,7 @@ import 'package:textfield_tags/textfield_tags.dart';
 
 class TagsFieldElement extends StatefulWidget {
   final String label;
+  final String? hintText;
   final List<String> initialTags;
   final bool autoFocus;
   final bool autoUnfocus;
@@ -15,6 +16,7 @@ class TagsFieldElement extends StatefulWidget {
     super.key,
     required this.label,
     required this.initialTags,
+    this.hintText,
     this.autoFocus = false,
     this.autoUnfocus = true,
     this.onChanged,
@@ -65,10 +67,11 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
           textSeparators: const [','],
           textfieldTagsController: _tagController,
           initialTags: widget.initialTags,
-          letterCase: LetterCase.normal,
+          letterCase: LetterCase.small,
           inputFieldBuilder: (context, textFieldValues) => TextField(
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
+              hintText: widget.hintText,
               helper: textFieldValues.tags.isNotEmpty
                   ? Wrap(
                       spacing: 8.0,
