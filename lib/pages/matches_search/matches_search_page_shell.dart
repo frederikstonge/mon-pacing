@@ -17,7 +17,7 @@ class MatchesSearchPageShell extends StatelessWidget {
         matchesRepository: blocContext.read<MatchesRepository>(),
         toasterService: blocContext.read<ToasterService>(),
         settingsCubit: blocContext.read<SettingsCubit>(),
-      ),
+      )..initialize(),
       child: const MatchesSearchPageView(),
     );
   }

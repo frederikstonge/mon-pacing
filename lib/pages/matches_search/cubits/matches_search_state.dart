@@ -11,6 +11,8 @@ class MatchesSearchState with _$MatchesSearchState {
     required String searchQuery,
     required List<MatchModel> matches,
     required bool hasMore,
+    required Map<String, int> tags,
+    @Default([]) List<String> selectedTags,
   }) = _MatchesSearchState;
 
   factory MatchesSearchState.fromJson(Map<String, dynamic> json) => _$MatchesSearchStateFromJson(json);

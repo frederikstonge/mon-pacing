@@ -14,6 +14,11 @@ _$MatchesSearchStateImpl _$$MatchesSearchStateImplFromJson(
           .map((e) => MatchModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       hasMore: json['hasMore'] as bool,
+      tags: Map<String, int>.from(json['tags'] as Map),
+      selectedTags: (json['selectedTags'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$MatchesSearchStateImplToJson(
@@ -22,4 +27,6 @@ Map<String, dynamic> _$$MatchesSearchStateImplToJson(
       'searchQuery': instance.searchQuery,
       'matches': instance.matches,
       'hasMore': instance.hasMore,
+      'tags': instance.tags,
+      'selectedTags': instance.selectedTags,
     };

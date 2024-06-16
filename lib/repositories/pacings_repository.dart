@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
@@ -41,7 +42,7 @@ class PacingsRepository {
     return await db.pacingModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<PacingModel>> search(String search, int skip, int take) async {
+  Future<List<PacingModel>> search(String search, int skip, int take, List<String> selectedTags) async {
     final db = await databaseRepository.database;
 
     return await db.pacingModels
@@ -51,13 +52,15 @@ class PacingsRepository {
         .categoriesElementContains(search, caseSensitive: false)
         .or()
         .themesElementContains(search, caseSensitive: false)
+        .or()
+        .anyOf(selectedTags, (q, t) => q.tagsElementContains(t))
         .sortByCreatedDateDesc()
         .findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<String>> getAllTags() async {
+  Future<Map<String, int>> getAllTags() async {
     final db = await databaseRepository.database;
     final tags = await db.pacingModels.where().tagsProperty().findAllAsync();
-    return tags.selectMany((t) => t).toList();
+    return tags.selectMany((t) => t).groupListsBy((g) => g).map((k, v) => MapEntry(k, v.length));
   }
 }
