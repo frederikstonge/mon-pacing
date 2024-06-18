@@ -74,7 +74,7 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
           textSeparators: const [','],
           textfieldTagsController: _tagController,
           initialTags: widget.initialTags,
-          letterCase: LetterCase.small,
+          letterCase: LetterCase.normal,
           inputFieldBuilder: (context, textFieldValues) => TextField(
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
