@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
+import '../actions/loading_icon_button.dart';
+
 class TagsFieldElement extends StatefulWidget {
   final String label;
   final String? hintText;
@@ -11,11 +13,13 @@ class TagsFieldElement extends StatefulWidget {
   final bool autoUnfocus;
   final FutureOr<void> Function(List<String> value)? onChanged;
   final FocusNode? focusNode;
+  final List<String> allTags;
 
   const TagsFieldElement({
     super.key,
     required this.label,
     required this.initialTags,
+    required this.allTags,
     this.hintText,
     this.autoFocus = false,
     this.autoUnfocus = true,
@@ -29,9 +33,11 @@ class TagsFieldElement extends StatefulWidget {
 
 class _TagsFieldElementState extends State<TagsFieldElement> {
   late final StringTagController _tagController;
+  late final SearchController _searchController;
 
   @override
   void initState() {
+    _searchController = SearchController();
     _tagController = StringTagController();
     _tagController.addListener(_onChange);
     super.initState();
@@ -39,6 +45,7 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
 
   @override
   void dispose() {
+    _searchController.dispose();
     _tagController.dispose();
     _tagController.removeListener(_onChange);
     super.dispose();
@@ -71,6 +78,22 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
           inputFieldBuilder: (context, textFieldValues) => TextField(
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
+              suffixIcon: SearchAnchor(
+                searchController: _searchController,
+                builder: (context, controller) => LoadingIconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () => controller.openView(),
+                ),
+                suggestionsBuilder: (context, controller) => widget.allTags.where((t) => t.contains(controller.text)).map(
+                      (e) => ListTile(
+                        title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        onTap: () {
+                          _tagController.onTagSubmitted(e);
+                          controller.closeView(null);
+                        },
+                      ),
+                    ),
+              ),
               hintText: widget.hintText,
               helper: textFieldValues.tags.isNotEmpty
                   ? Wrap(

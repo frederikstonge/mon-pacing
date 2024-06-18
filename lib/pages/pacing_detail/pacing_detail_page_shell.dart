@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubits/settings/settings_cubit.dart';
 import '../../models/pacing_model.dart';
+import '../../repositories/pacings_repository.dart';
 import 'cubits/pacing_detail_cubit.dart';
 import 'pacing_detail_page_view.dart';
 
@@ -24,11 +25,12 @@ class PacingDetailPageShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PacingDetailCubit(
+        pacingsRepository: context.read<PacingsRepository>(),
         settingsCubit: context.read<SettingsCubit>(),
         editMode: editMode,
         onConfirm: onConfirm,
         pacing: pacing,
-      ),
+      )..initialize(),
       child: const PacingDetailPageView(),
     );
   }
