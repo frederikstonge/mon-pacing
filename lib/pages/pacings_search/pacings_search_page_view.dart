@@ -75,6 +75,7 @@ class _PacingsSearchPageViewState extends State<PacingsSearchPageView> {
               return InkWell(
                 onTap: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
                 child: ListTile(
+                  leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
                   isThreeLine: true,
                   title: Text(
                     pacing.name,

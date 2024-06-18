@@ -95,6 +95,7 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
               final allCategories = await widget.getAllCategories();
               return allCategories.where((t) => t.contains(controller.text)).map(
                     (e) => ListTile(
+                      leading: const Icon(Icons.search),
                       title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
                       onTap: () {
                         _categoryController.text = e;
