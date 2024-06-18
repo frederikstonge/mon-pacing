@@ -20,10 +20,8 @@ PacingDetailState _$PacingDetailStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PacingDetailState {
-  bool get initialized => throw _privateConstructorUsedError;
   bool get editMode => throw _privateConstructorUsedError;
   PacingModel get pacing => throw _privateConstructorUsedError;
-  List<String> get allTags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +35,7 @@ abstract class $PacingDetailStateCopyWith<$Res> {
           PacingDetailState value, $Res Function(PacingDetailState) then) =
       _$PacingDetailStateCopyWithImpl<$Res, PacingDetailState>;
   @useResult
-  $Res call(
-      {bool initialized,
-      bool editMode,
-      PacingModel pacing,
-      List<String> allTags});
+  $Res call({bool editMode, PacingModel pacing});
 
   $PacingModelCopyWith<$Res> get pacing;
 }
@@ -59,16 +53,10 @@ class _$PacingDetailStateCopyWithImpl<$Res, $Val extends PacingDetailState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? initialized = null,
     Object? editMode = null,
     Object? pacing = null,
-    Object? allTags = null,
   }) {
     return _then(_value.copyWith(
-      initialized: null == initialized
-          ? _value.initialized
-          : initialized // ignore: cast_nullable_to_non_nullable
-              as bool,
       editMode: null == editMode
           ? _value.editMode
           : editMode // ignore: cast_nullable_to_non_nullable
@@ -77,10 +65,6 @@ class _$PacingDetailStateCopyWithImpl<$Res, $Val extends PacingDetailState>
           ? _value.pacing
           : pacing // ignore: cast_nullable_to_non_nullable
               as PacingModel,
-      allTags: null == allTags
-          ? _value.allTags
-          : allTags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ) as $Val);
   }
 
@@ -101,11 +85,7 @@ abstract class _$$PacingDetailStateImplCopyWith<$Res>
       __$$PacingDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool initialized,
-      bool editMode,
-      PacingModel pacing,
-      List<String> allTags});
+  $Res call({bool editMode, PacingModel pacing});
 
   @override
   $PacingModelCopyWith<$Res> get pacing;
@@ -122,16 +102,10 @@ class __$$PacingDetailStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? initialized = null,
     Object? editMode = null,
     Object? pacing = null,
-    Object? allTags = null,
   }) {
     return _then(_$PacingDetailStateImpl(
-      initialized: null == initialized
-          ? _value.initialized
-          : initialized // ignore: cast_nullable_to_non_nullable
-              as bool,
       editMode: null == editMode
           ? _value.editMode
           : editMode // ignore: cast_nullable_to_non_nullable
@@ -140,10 +114,6 @@ class __$$PacingDetailStateImplCopyWithImpl<$Res>
           ? _value.pacing
           : pacing // ignore: cast_nullable_to_non_nullable
               as PacingModel,
-      allTags: null == allTags
-          ? _value._allTags
-          : allTags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -151,33 +121,19 @@ class __$$PacingDetailStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PacingDetailStateImpl implements _PacingDetailState {
-  const _$PacingDetailStateImpl(
-      {required this.initialized,
-      required this.editMode,
-      required this.pacing,
-      required final List<String> allTags})
-      : _allTags = allTags;
+  const _$PacingDetailStateImpl({required this.editMode, required this.pacing});
 
   factory _$PacingDetailStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$PacingDetailStateImplFromJson(json);
 
   @override
-  final bool initialized;
-  @override
   final bool editMode;
   @override
   final PacingModel pacing;
-  final List<String> _allTags;
-  @override
-  List<String> get allTags {
-    if (_allTags is EqualUnmodifiableListView) return _allTags;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allTags);
-  }
 
   @override
   String toString() {
-    return 'PacingDetailState(initialized: $initialized, editMode: $editMode, pacing: $pacing, allTags: $allTags)';
+    return 'PacingDetailState(editMode: $editMode, pacing: $pacing)';
   }
 
   @override
@@ -185,18 +141,14 @@ class _$PacingDetailStateImpl implements _PacingDetailState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PacingDetailStateImpl &&
-            (identical(other.initialized, initialized) ||
-                other.initialized == initialized) &&
             (identical(other.editMode, editMode) ||
                 other.editMode == editMode) &&
-            (identical(other.pacing, pacing) || other.pacing == pacing) &&
-            const DeepCollectionEquality().equals(other._allTags, _allTags));
+            (identical(other.pacing, pacing) || other.pacing == pacing));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, initialized, editMode, pacing,
-      const DeepCollectionEquality().hash(_allTags));
+  int get hashCode => Object.hash(runtimeType, editMode, pacing);
 
   @JsonKey(ignore: true)
   @override
@@ -215,22 +167,16 @@ class _$PacingDetailStateImpl implements _PacingDetailState {
 
 abstract class _PacingDetailState implements PacingDetailState {
   const factory _PacingDetailState(
-      {required final bool initialized,
-      required final bool editMode,
-      required final PacingModel pacing,
-      required final List<String> allTags}) = _$PacingDetailStateImpl;
+      {required final bool editMode,
+      required final PacingModel pacing}) = _$PacingDetailStateImpl;
 
   factory _PacingDetailState.fromJson(Map<String, dynamic> json) =
       _$PacingDetailStateImpl.fromJson;
 
   @override
-  bool get initialized;
-  @override
   bool get editMode;
   @override
   PacingModel get pacing;
-  @override
-  List<String> get allTags;
   @override
   @JsonKey(ignore: true)
   _$$PacingDetailStateImplCopyWith<_$PacingDetailStateImpl> get copyWith =>

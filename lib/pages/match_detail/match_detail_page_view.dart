@@ -16,6 +16,7 @@ import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/text_header/text_header.dart';
 import '../../components/tooltip/custom_tooltip.dart';
+import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
@@ -62,278 +63,274 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
             title: state.editMode ? S.of(context).editMatch : S.of(context).startMatch,
           ),
           isBodyExpanded: true,
-          body: state.initialized
-              ? Form(
-                  key: formKey,
-                  autovalidateMode: AutovalidateMode.always,
-                  child: ListView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
+          body: Form(
+            key: formKey,
+            autovalidateMode: AutovalidateMode.always,
+            child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                  child: TextHeader(title: S.of(context).general),
+                ),
+                CustomCard(
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                        child: TextHeader(title: S.of(context).general),
+                      TextFieldElement(
+                        autoFocus: true,
+                        label: '${S.of(context).name}*',
+                        controller: _nameController,
+                        validator: (value) {
+                          return Validators.stringRequired(value);
+                        },
+                        onChanged: (value) {
+                          context.read<MatchDetailCubit>().edit(state.match.copyWith(name: value));
+                        },
                       ),
-                      CustomCard(
-                        child: Column(
+                      const SizedBox(height: 8),
+                      TagsFieldElement(
+                        label: S.of(context).tags,
+                        hintText: S.of(context).tagsHint,
+                        initialTags: state.match.tags,
+                        getAllTags: context.read<MatchesCubit>().getAllTags,
+                        onChanged: (value) {
+                          context.read<MatchDetailCubit>().edit(state.match.copyWith(tags: value));
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      SettingsTile(
+                        leading: const Icon(Icons.sports),
+                        title: Row(
                           children: [
-                            TextFieldElement(
-                              autoFocus: true,
-                              label: '${S.of(context).name}*',
-                              controller: _nameController,
-                              validator: (value) {
-                                return Validators.stringRequired(value);
-                              },
-                              onChanged: (value) {
-                                context.read<MatchDetailCubit>().edit(state.match.copyWith(name: value));
-                              },
-                            ),
-                            const SizedBox(height: 8),
-                            TagsFieldElement(
-                              label: S.of(context).tags,
-                              hintText: S.of(context).tagsHint,
-                              initialTags: state.match.tags,
-                              allTags: state.allTags,
-                              onChanged: (value) {
-                                context.read<MatchDetailCubit>().edit(state.match.copyWith(tags: value));
-                              },
-                            ),
-                            const SizedBox(height: 8),
-                            SettingsTile(
-                              leading: const Icon(Icons.sports),
-                              title: Row(
-                                children: [
-                                  Flexible(child: Text(S.of(context).enableStatistics)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 4),
-                                    child: CustomTooltip(
-                                      tooltip: S.of(context).enableStatisticsTooltip,
-                                    ),
-                                  )
-                                ],
+                            Flexible(child: Text(S.of(context).enableStatistics)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(
+                                tooltip: S.of(context).enableStatisticsTooltip,
                               ),
-                              trailing: HapticSwitch(
-                                value: state.match.enableStatistics,
-                                onChanged: !state.editMode
-                                    ? (value) {
-                                        context.read<MatchDetailCubit>().edit(state.match.copyWith(enableStatistics: value));
+                            )
+                          ],
+                        ),
+                        trailing: HapticSwitch(
+                          value: state.match.enableStatistics,
+                          onChanged: !state.editMode
+                              ? (value) {
+                                  context.read<MatchDetailCubit>().edit(state.match.copyWith(enableStatistics: value));
+                                }
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (state.match.enableStatistics) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                    child: TextHeader(
+                      title: S.of(context).teams,
+                      trailing: LoadingIconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: !state.editMode && state.match.teams.length < Constants.maximumTeams
+                            ? () {
+                                context.read<MatchDetailCubit>().addTeam();
+                              }
+                            : null,
+                      ),
+                    ),
+                  ),
+                  CustomCard(
+                    child: Column(
+                      children: [
+                        ...state.match.teams.asMap().entries.map(
+                              (e) => TeamTile(
+                                team: e.value,
+                                onChanged: (value) {
+                                  context.read<MatchDetailCubit>().editTeam(e.key, value);
+                                },
+                                onDelete: !state.editMode && state.match.teams.length > Constants.minimumTeams
+                                    ? () {
+                                        context.read<MatchDetailCubit>().removeTeam(e.key);
                                       }
                                     : null,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      if (state.match.enableStatistics) ...[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                          child: TextHeader(
-                            title: S.of(context).teams,
-                            trailing: LoadingIconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: !state.editMode && state.match.teams.length < Constants.maximumTeams
-                                  ? () {
-                                      context.read<MatchDetailCubit>().addTeam();
-                                    }
-                                  : null,
-                            ),
-                          ),
-                        ),
-                        CustomCard(
-                          child: Column(
-                            children: [
-                              ...state.match.teams.asMap().entries.map(
-                                    (e) => TeamTile(
-                                      team: e.value,
-                                      onChanged: (value) {
-                                        context.read<MatchDetailCubit>().editTeam(e.key, value);
-                                      },
-                                      onDelete: !state.editMode && state.match.teams.length > Constants.minimumTeams
-                                          ? () {
-                                              context.read<MatchDetailCubit>().removeTeam(e.key);
-                                            }
-                                          : null,
-                                    ),
+                        SegmentedButton(
+                          style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
+                          segments: state.match.teams
+                              .asMap()
+                              .entries
+                              .map(
+                                (e) => ButtonSegment(
+                                  value: e.key,
+                                  label: Text(
+                                    e.value.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                              SegmentedButton(
-                                style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-                                segments: state.match.teams
-                                    .asMap()
-                                    .entries
-                                    .map(
-                                      (e) => ButtonSegment(
-                                        value: e.key,
-                                        label: Text(
-                                          e.value.name,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                                selected: {state.selectedTeamIndex},
-                                onSelectionChanged: (values) async {
-                                  context.read<MatchDetailCubit>().selectTeam(values.first);
-                                },
+                                ),
+                              )
+                              .toList(),
+                          selected: {state.selectedTeamIndex},
+                          onSelectionChanged: (values) async {
+                            context.read<MatchDetailCubit>().selectTeam(values.first);
+                          },
+                        ),
+                        TeamPerformers(
+                          label: S.of(context).performers,
+                          performers: selectedTeam.performers,
+                          teamId: selectedTeam.id,
+                          addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
+                          editPerformer: context.read<MatchDetailCubit>().editPerformer,
+                          removePerformer:
+                              selectedTeam.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
+                          onDrag: context.read<MatchDetailCubit>().movePerformer,
+                          onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                    child: TextHeader(
+                      title: S.of(context).penalty,
+                    ),
+                  ),
+                  CustomCard(
+                    child: Column(
+                      children: [
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).penaltiesImpactPointsTooltip,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: HapticSwitch(
+                              value: state.match.enablePenaltiesImpactPoints,
+                              onChanged: (value) {
+                                context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));
+                              }),
+                        ),
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Text(S.of(context).penaltiesImpactType),
+                          subTitle: Text(
+                            switch (state.match.penaltiesImpactType) {
+                              PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                              PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
+                            },
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () {
+                            BottomSheetDialog.showDialog(
+                              context: context,
+                              child: PenaltiesImpactTypeView(
+                                currentPenaltiesImpactType: state.match.penaltiesImpactType,
+                                onChanged: (penaltiesImpactType) =>
+                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
                               ),
-                              TeamPerformers(
-                                label: S.of(context).performers,
-                                performers: selectedTeam.performers,
-                                teamId: selectedTeam.id,
-                                addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
-                                editPerformer: context.read<MatchDetailCubit>().editPerformer,
-                                removePerformer:
-                                    selectedTeam.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
-                                onDrag: context.read<MatchDetailCubit>().movePerformer,
-                                onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                            );
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).penaltiesRequiredToImpactPoints,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              QuantityStepperFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                initialValue: state.match.penaltiesRequiredToImpactPoints,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToImpactPoints: value));
+                                  }
+                                },
+                                minValue: 1,
                               ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                          child: TextHeader(
-                            title: S.of(context).penalty,
-                          ),
-                        ),
-                        CustomCard(
-                          child: Column(
+                        const Divider(),
+                        SettingsTile(
+                          leading: const Icon(Icons.sports),
+                          title: Row(
                             children: [
-                              SettingsTile(
-                                leading: const Icon(Icons.sports),
-                                title: Row(
-                                  children: [
-                                    Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: CustomTooltip(
-                                        tooltip: S.of(context).penaltiesImpactPointsTooltip,
-                                      ),
-                                    )
-                                  ],
+                              Flexible(child: Text(S.of(context).enableMatchExpulsion)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).enableMatchExpulsionTooltip,
                                 ),
-                                trailing: HapticSwitch(
-                                    value: state.match.enablePenaltiesImpactPoints,
-                                    onChanged: (value) {
-                                      context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));
-                                    }),
+                              )
+                            ],
+                          ),
+                          trailing: HapticSwitch(
+                              value: state.match.enableMatchExpulsion,
+                              onChanged: (value) {
+                                context.read<MatchDetailCubit>().edit(state.match.copyWith(enableMatchExpulsion: value));
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).penaltiesRequiredToExpel,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              SettingsTile(
-                                leading: const Icon(Icons.sports),
-                                title: Text(S.of(context).penaltiesImpactType),
-                                subTitle: Text(
-                                  switch (state.match.penaltiesImpactType) {
-                                    PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
-                                    PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
-                                  },
-                                ),
-                                trailing: const Icon(Icons.chevron_right),
-                                onTap: () {
-                                  BottomSheetDialog.showDialog(
-                                    context: context,
-                                    child: PenaltiesImpactTypeView(
-                                      currentPenaltiesImpactType: state.match.penaltiesImpactType,
-                                      onChanged: (penaltiesImpactType) =>
-                                          context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
-                                    ),
-                                  );
+                              QuantityStepperFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                initialValue: state.match.penaltiesRequiredToExpel,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToExpel: value));
+                                  }
                                 },
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        S.of(context).penaltiesRequiredToImpactPoints,
-                                        style: Theme.of(context).textTheme.titleMedium,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    QuantityStepperFormField(
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      initialValue: state.match.penaltiesRequiredToImpactPoints,
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToImpactPoints: value));
-                                        }
-                                      },
-                                      minValue: 1,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Divider(),
-                              SettingsTile(
-                                leading: const Icon(Icons.sports),
-                                title: Row(
-                                  children: [
-                                    Flexible(child: Text(S.of(context).enableMatchExpulsion)),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: CustomTooltip(
-                                        tooltip: S.of(context).enableMatchExpulsionTooltip,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                trailing: HapticSwitch(
-                                    value: state.match.enableMatchExpulsion,
-                                    onChanged: (value) {
-                                      context.read<MatchDetailCubit>().edit(state.match.copyWith(enableMatchExpulsion: value));
-                                    }),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        S.of(context).penaltiesRequiredToExpel,
-                                        style: Theme.of(context).textTheme.titleMedium,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    QuantityStepperFormField(
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      initialValue: state.match.penaltiesRequiredToExpel,
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToExpel: value));
-                                        }
-                                      },
-                                      minValue: 1,
-                                    ),
-                                  ],
-                                ),
+                                minValue: 1,
                               ),
                             ],
                           ),
                         ),
                       ],
-                    ],
+                    ),
                   ),
-                )
-              : const Center(child: CircularProgressIndicator()),
+                ],
+              ],
+            ),
+          ),
           bottom: Row(
             children: [
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: LoadingButton.filled(
-                    onPressed: state.initialized
-                        ? () async {
-                            if (formKey.currentState?.validate() ?? false) {
-                              final navigator = Navigator.of(context);
-                              final result = await context.read<MatchDetailCubit>().onConfirm(state.match);
-                              if (result) {
-                                navigator.pop();
-                              }
-                            }
-                          }
-                        : null,
+                    onPressed: () async {
+                      if (formKey.currentState?.validate() ?? false) {
+                        final navigator = Navigator.of(context);
+                        final result = await context.read<MatchDetailCubit>().onConfirm(state.match);
+                        if (result) {
+                          navigator.pop();
+                        }
+                      }
+                    },
                     child: Text(
                       state.editMode ? S.of(context).edit : S.of(context).create,
                       maxLines: 1,
