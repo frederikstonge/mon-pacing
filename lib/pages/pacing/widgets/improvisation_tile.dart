@@ -22,6 +22,7 @@ class ImprovisationTile extends StatefulWidget {
   final FutureOr<bool?> Function(ImprovisationModel value) onConfirmDelete;
   final bool dragEnabled;
   final FutureOr<void> Function() onDragStart;
+  final Future<List<String>> Function() getAllCategories;
 
   const ImprovisationTile({
     super.key,
@@ -33,6 +34,7 @@ class ImprovisationTile extends StatefulWidget {
     required this.onConfirmDelete,
     required this.dragEnabled,
     required this.onDragStart,
+    required this.getAllCategories,
   });
 
   @override
@@ -133,6 +135,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
                 improvisation: widget.improvisation,
                 onChanged: widget.onChanged,
                 onDragStart: widget.onDragStart,
+                getAllCategories: widget.getAllCategories,
               ),
               const SizedBox(height: 8),
               LoadingButton.tonalIcon(

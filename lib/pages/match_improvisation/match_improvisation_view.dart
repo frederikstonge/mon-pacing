@@ -8,6 +8,7 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/improvisation_detail/improvisation_detail.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
+import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import 'cubits/match_improvisation_cubit.dart';
@@ -80,6 +81,7 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                       onChanged: (value) {
                         context.read<MatchImprovisationCubit>().edit(value);
                       },
+                      getAllCategories: context.read<PacingsCubit>().getAllCategories,
                       onDragStart: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
                     ),
                   ],

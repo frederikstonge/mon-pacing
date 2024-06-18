@@ -6,6 +6,7 @@ import '../../extensions/duration_extensions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
+import '../actions/loading_icon_button.dart';
 import '../bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../duration_picker/duration_picker.dart';
 import '../form/drop_down_element.dart';
@@ -18,12 +19,14 @@ class ImprovisationDetail extends StatefulWidget {
   final ImprovisationModel improvisation;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
   final FutureOr<void> Function() onDragStart;
+  final Future<List<String>> Function() getAllCategories;
 
   const ImprovisationDetail({
     super.key,
     required this.improvisation,
     required this.onChanged,
     required this.onDragStart,
+    required this.getAllCategories,
   });
 
   @override
@@ -83,6 +86,24 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           controller: _categoryController,
           onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
           hintText: S.of(context).free,
+          suffixIcon: SearchAnchor(
+            builder: (context, controller) => LoadingIconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () => controller.openView(),
+            ),
+            suggestionsBuilder: (context, controller) async {
+              final allCategories = await widget.getAllCategories();
+              return allCategories.where((t) => t.contains(controller.text)).map(
+                    (e) => ListTile(
+                      title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      onTap: () {
+                        _categoryController.text = e;
+                        controller.closeView(null);
+                      },
+                    ),
+                  );
+            },
+          ),
         ),
         const SizedBox(height: 8),
         TextFieldElement(

@@ -9,6 +9,7 @@ import '../../components/form/tags_field_element.dart';
 import '../../components/form/text_field_element.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/text_header/text_header.dart';
+import '../../cubits/pacings/pacings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../validators/validator.dart';
@@ -47,92 +48,88 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
           title: state.editMode ? S.of(context).editPacing : S.of(context).createPacing,
         ),
         isBodyExpanded: true,
-        body: state.initialized
-            ? Form(
-                key: formKey,
-                autovalidateMode: AutovalidateMode.always,
-                child: ListView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
+        body: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.always,
+          child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                child: TextHeader(title: S.of(context).general),
+              ),
+              CustomCard(
+                child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                      child: TextHeader(title: S.of(context).general),
+                    TextFieldElement(
+                      autoFocus: true,
+                      label: '${S.of(context).name}*',
+                      controller: _nameController,
+                      validator: (value) {
+                        return Validators.stringRequired(value);
+                      },
+                      onChanged: (value) {
+                        context.read<PacingDetailCubit>().edit(state.pacing.copyWith(name: value));
+                      },
                     ),
-                    CustomCard(
-                      child: Column(
+                    const SizedBox(height: 8),
+                    TagsFieldElement(
+                      label: S.of(context).tags,
+                      hintText: S.of(context).tagsHint,
+                      initialTags: state.pacing.tags,
+                      getAllTags: context.read<PacingsCubit>().getAllTags,
+                      onChanged: (value) {
+                        context.read<PacingDetailCubit>().edit(state.pacing.copyWith(tags: value));
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
                         children: [
-                          TextFieldElement(
-                            autoFocus: true,
-                            label: '${S.of(context).name}*',
-                            controller: _nameController,
-                            validator: (value) {
-                              return Validators.stringRequired(value);
-                            },
-                            onChanged: (value) {
-                              context.read<PacingDetailCubit>().edit(state.pacing.copyWith(name: value));
-                            },
-                          ),
-                          const SizedBox(height: 8),
-                          TagsFieldElement(
-                            label: S.of(context).tags,
-                            hintText: S.of(context).tagsHint,
-                            initialTags: state.pacing.tags,
-                            allTags: state.allTags,
-                            onChanged: (value) {
-                              context.read<PacingDetailCubit>().edit(state.pacing.copyWith(tags: value));
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    S.of(context).numberOfTeamsByDefault,
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                QuantityStepperFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  initialValue: state.pacing.defaultNumberOfTeams,
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      context.read<PacingDetailCubit>().edit(state.pacing.copyWith(defaultNumberOfTeams: value));
-                                    }
-                                  },
-                                  minValue: Constants.minimumTeams,
-                                  maxValue: Constants.maximumTeams,
-                                ),
-                              ],
+                          Expanded(
+                            child: Text(
+                              S.of(context).numberOfTeamsByDefault,
+                              style: Theme.of(context).textTheme.titleMedium,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
+                          ),
+                          QuantityStepperFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: state.pacing.defaultNumberOfTeams,
+                            onChanged: (value) {
+                              if (value != null) {
+                                context.read<PacingDetailCubit>().edit(state.pacing.copyWith(defaultNumberOfTeams: value));
+                              }
+                            },
+                            minValue: Constants.minimumTeams,
+                            maxValue: Constants.maximumTeams,
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-              )
-            : const Center(child: CircularProgressIndicator()),
+              ),
+            ],
+          ),
+        ),
         bottom: Row(
           children: [
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: LoadingButton.filled(
-                  onPressed: state.initialized
-                      ? () async {
-                          if (formKey.currentState?.validate() ?? false) {
-                            final navigator = Navigator.of(context);
-                            final result = await context.read<PacingDetailCubit>().onConfirm(state.pacing);
-                            if (result) {
-                              navigator.pop();
-                            }
-                          }
-                        }
-                      : null,
+                  onPressed: () async {
+                    if (formKey.currentState?.validate() ?? false) {
+                      final navigator = Navigator.of(context);
+                      final result = await context.read<PacingDetailCubit>().onConfirm(state.pacing);
+                      if (result) {
+                        navigator.pop();
+                      }
+                    }
+                  },
                   child: Text(
                     state.editMode ? S.of(context).save : S.of(context).create,
                     maxLines: 1,

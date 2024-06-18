@@ -12,6 +12,7 @@ class TextFieldElement extends StatelessWidget {
   final String? Function(String?)? validator;
   final FocusNode? focusNode;
   final String? hintText;
+  final Widget? suffixIcon;
 
   const TextFieldElement({
     super.key,
@@ -24,6 +25,7 @@ class TextFieldElement extends StatelessWidget {
     this.validator,
     this.focusNode,
     this.hintText,
+    this.suffixIcon,
   });
 
   @override
@@ -43,7 +45,10 @@ class TextFieldElement extends StatelessWidget {
         TextFormField(
           textCapitalization: TextCapitalization.sentences,
           focusNode: focusNode,
-          decoration: InputDecoration(hintText: hintText),
+          decoration: InputDecoration(
+            hintText: hintText,
+            suffixIcon: suffixIcon,
+          ),
           controller: controller,
           autofocus: autoFocus,
           maxLines: multiline ? null : 1,

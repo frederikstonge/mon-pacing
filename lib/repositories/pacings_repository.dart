@@ -63,4 +63,10 @@ class PacingsRepository {
     final tags = await db.pacingModels.where().tagsProperty().findAllAsync();
     return tags.selectMany((t) => t).groupListsBy((g) => g).map((k, v) => MapEntry(k, v.length));
   }
+
+  Future<List<String>> getAllCategories() async {
+    final db = await databaseRepository.database;
+    final categories = await db.pacingModels.where().categoriesProperty().findAllAsync();
+    return categories.selectMany((t) => t).toList();
+  }
 }

@@ -13,13 +13,13 @@ class TagsFieldElement extends StatefulWidget {
   final bool autoUnfocus;
   final FutureOr<void> Function(List<String> value)? onChanged;
   final FocusNode? focusNode;
-  final List<String> allTags;
+  final Future<List<String>> Function() getAllTags;
 
   const TagsFieldElement({
     super.key,
     required this.label,
     required this.initialTags,
-    required this.allTags,
+    required this.getAllTags,
     this.hintText,
     this.autoFocus = false,
     this.autoUnfocus = true,
@@ -84,15 +84,18 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
                   icon: const Icon(Icons.search),
                   onPressed: () => controller.openView(),
                 ),
-                suggestionsBuilder: (context, controller) => widget.allTags.where((t) => t.contains(controller.text)).map(
-                      (e) => ListTile(
-                        title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
-                        onTap: () {
-                          _tagController.onTagSubmitted(e);
-                          controller.closeView(null);
-                        },
-                      ),
-                    ),
+                suggestionsBuilder: (context, controller) async {
+                  final allTags = await widget.getAllTags();
+                  return allTags.where((t) => t.contains(controller.text)).map(
+                        (e) => ListTile(
+                          title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
+                          onTap: () {
+                            _tagController.onTagSubmitted(e);
+                            controller.closeView(null);
+                          },
+                        ),
+                      );
+                },
               ),
               hintText: widget.hintText,
               helper: textFieldValues.tags.isNotEmpty

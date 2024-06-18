@@ -10,14 +10,14 @@ import 'matches_state.dart';
 
 class MatchesCubit extends Cubit<MatchesState> {
   static const int _pageSize = 20;
-  final MatchesRepository repository;
+  final MatchesRepository matchesRepository;
   final ToasterService toasterService;
   final SettingsCubit settingsCubit;
   final AnalyticsService analyticsService;
   bool _isFetching = false;
 
   MatchesCubit({
-    required this.repository,
+    required this.matchesRepository,
     required this.toasterService,
     required this.settingsCubit,
     required this.analyticsService,
@@ -40,7 +40,7 @@ class MatchesCubit extends Cubit<MatchesState> {
         return null;
       }
 
-      final matchModel = await repository.add(model);
+      final matchModel = await matchesRepository.add(model);
       await analyticsService.logStartMatch(matchModel);
       return matchModel;
     } catch (exception) {
@@ -54,7 +54,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> edit(MatchModel model) async {
     try {
-      await repository.edit(model);
+      await matchesRepository.edit(model);
     } catch (exception) {
       toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -64,7 +64,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> delete(MatchModel model) async {
     try {
-      await repository.delete(model.id);
+      await matchesRepository.delete(model.id);
       toasterService.show(title: settingsCubit.localizer.toasterMatchDeleted);
     } catch (exception) {
       toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
@@ -82,15 +82,15 @@ class MatchesCubit extends Cubit<MatchesState> {
     try {
       await state.when(
         initial: () async {
-          final response = await repository.getList(0, _pageSize);
+          final response = await matchesRepository.getList(0, _pageSize);
           emit(MatchesState.success(response, response.length == _pageSize));
         },
         error: (error) async {
-          final response = await repository.getList(0, _pageSize);
+          final response = await matchesRepository.getList(0, _pageSize);
           emit(MatchesState.success(response, response.length == _pageSize));
         },
         success: (matches, hasReachedMax) async {
-          final response = await repository.getList(matches.length, _pageSize);
+          final response = await matchesRepository.getList(matches.length, _pageSize);
           emit(MatchesState.success(matches + response, response.length == _pageSize));
         },
       );
@@ -100,6 +100,11 @@ class MatchesCubit extends Cubit<MatchesState> {
     } finally {
       _isFetching = false;
     }
+  }
+
+  Future<List<String>> getAllTags() async {
+    final allTags = await matchesRepository.getAllTags();
+    return allTags.keys.toList();
   }
 
   Future<void> refresh() async {

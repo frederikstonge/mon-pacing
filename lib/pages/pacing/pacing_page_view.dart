@@ -152,6 +152,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                         pacing: pacing,
                         improvisation: improvisation,
                         index: index,
+                        getAllCategories: context.read<PacingsCubit>().getAllCategories,
                         onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
                         onConfirmDelete: (value) async => await MessageBoxDialog.questionShow(
                           context,
