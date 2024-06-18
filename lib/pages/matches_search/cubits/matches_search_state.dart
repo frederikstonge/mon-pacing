@@ -11,7 +11,7 @@ class MatchesSearchState with _$MatchesSearchState {
     required String searchQuery,
     required List<MatchModel> matches,
     required bool hasMore,
-    required Map<String, int> tags,
+    required List<String> tags,
     @Default([]) List<String> selectedTags,
   }) = _MatchesSearchState;
 

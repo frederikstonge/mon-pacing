@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
@@ -17,7 +18,7 @@ class PacingsSearchCubit extends Cubit<PacingsSearchState> {
     required this.pacingsRepository,
     required this.toasterService,
     required this.settingsCubit,
-  }) : super(const PacingsSearchState(searchQuery: '', pacings: [], hasMore: true, tags: {}));
+  }) : super(const PacingsSearchState(searchQuery: '', pacings: [], hasMore: true, tags: []));
 
   Future<void> initialize() async {
     _isFetching = true;
@@ -31,7 +32,7 @@ class PacingsSearchCubit extends Cubit<PacingsSearchState> {
     }
   }
 
-  Future<void> fetch(String query, {List<String> selectedTags = const []}) async {
+  Future<void> fetch(String query, List<String> selectedTags) async {
     if (_isFetching) {
       return;
     }
@@ -48,11 +49,12 @@ class PacingsSearchCubit extends Cubit<PacingsSearchState> {
 
     _isFetching = true;
     try {
-      final skip = query == state.searchQuery ? state.pacings.length : 0;
+      final sameQuery = query == state.searchQuery && selectedTags.equals(state.selectedTags);
+      final skip = sameQuery ? state.pacings.length : 0;
       final response = await pacingsRepository.search(query, skip, _pageSize, selectedTags);
       emit(state.copyWith(
         searchQuery: query,
-        pacings: query == state.searchQuery ? state.pacings + response : response,
+        pacings: sameQuery ? state.pacings + response : response,
         hasMore: response.length == _pageSize,
         selectedTags: selectedTags,
       ));

@@ -91,13 +91,6 @@ class Themes {
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
     return themeData.copyWith(
-      chipTheme: const ChipThemeData(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-      ),
       textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
       cardTheme: CardTheme(
         clipBehavior: Clip.antiAlias,

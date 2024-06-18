@@ -11,7 +11,7 @@ class PacingsSearchState with _$PacingsSearchState {
     required String searchQuery,
     required List<PacingModel> pacings,
     required bool hasMore,
-    required Map<String, int> tags,
+    required List<String> tags,
     @Default([]) List<String> selectedTags,
   }) = _PacingsSearchState;
 

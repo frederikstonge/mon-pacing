@@ -23,7 +23,7 @@ mixin _$MatchesSearchState {
   String get searchQuery => throw _privateConstructorUsedError;
   List<MatchModel> get matches => throw _privateConstructorUsedError;
   bool get hasMore => throw _privateConstructorUsedError;
-  Map<String, int> get tags => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
   List<String> get selectedTags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $MatchesSearchStateCopyWith<$Res> {
       {String searchQuery,
       List<MatchModel> matches,
       bool hasMore,
-      Map<String, int> tags,
+      List<String> tags,
       List<String> selectedTags});
 }
 
@@ -81,7 +81,7 @@ class _$MatchesSearchStateCopyWithImpl<$Res, $Val extends MatchesSearchState>
       tags: null == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
+              as List<String>,
       selectedTags: null == selectedTags
           ? _value.selectedTags
           : selectedTags // ignore: cast_nullable_to_non_nullable
@@ -102,7 +102,7 @@ abstract class _$$MatchesSearchStateImplCopyWith<$Res>
       {String searchQuery,
       List<MatchModel> matches,
       bool hasMore,
-      Map<String, int> tags,
+      List<String> tags,
       List<String> selectedTags});
 }
 
@@ -139,7 +139,7 @@ class __$$MatchesSearchStateImplCopyWithImpl<$Res>
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
+              as List<String>,
       selectedTags: null == selectedTags
           ? _value._selectedTags
           : selectedTags // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ class _$MatchesSearchStateImpl implements _MatchesSearchState {
       {required this.searchQuery,
       required final List<MatchModel> matches,
       required this.hasMore,
-      required final Map<String, int> tags,
+      required final List<String> tags,
       final List<String> selectedTags = const []})
       : _matches = matches,
         _tags = tags,
@@ -176,12 +176,12 @@ class _$MatchesSearchStateImpl implements _MatchesSearchState {
 
   @override
   final bool hasMore;
-  final Map<String, int> _tags;
+  final List<String> _tags;
   @override
-  Map<String, int> get tags {
-    if (_tags is EqualUnmodifiableMapView) return _tags;
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_tags);
+    return EqualUnmodifiableListView(_tags);
   }
 
   final List<String> _selectedTags;
@@ -242,7 +242,7 @@ abstract class _MatchesSearchState implements MatchesSearchState {
       {required final String searchQuery,
       required final List<MatchModel> matches,
       required final bool hasMore,
-      required final Map<String, int> tags,
+      required final List<String> tags,
       final List<String> selectedTags}) = _$MatchesSearchStateImpl;
 
   factory _MatchesSearchState.fromJson(Map<String, dynamic> json) =
@@ -255,7 +255,7 @@ abstract class _MatchesSearchState implements MatchesSearchState {
   @override
   bool get hasMore;
   @override
-  Map<String, int> get tags;
+  List<String> get tags;
   @override
   List<String> get selectedTags;
   @override

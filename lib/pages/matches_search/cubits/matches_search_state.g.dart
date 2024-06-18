@@ -14,7 +14,7 @@ _$MatchesSearchStateImpl _$$MatchesSearchStateImplFromJson(
           .map((e) => MatchModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       hasMore: json['hasMore'] as bool,
-      tags: Map<String, int>.from(json['tags'] as Map),
+      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
       selectedTags: (json['selectedTags'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??

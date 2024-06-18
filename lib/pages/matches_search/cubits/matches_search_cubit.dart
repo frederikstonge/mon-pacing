@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
@@ -17,7 +18,7 @@ class MatchesSearchCubit extends Cubit<MatchesSearchState> {
     required this.matchesRepository,
     required this.toasterService,
     required this.settingsCubit,
-  }) : super(const MatchesSearchState(searchQuery: '', matches: [], hasMore: true, tags: {}));
+  }) : super(const MatchesSearchState(searchQuery: '', matches: [], hasMore: true, tags: []));
 
   Future<void> initialize() async {
     _isFetching = true;
@@ -31,12 +32,12 @@ class MatchesSearchCubit extends Cubit<MatchesSearchState> {
     }
   }
 
-  Future<void> fetch(String query, {List<String> selectedTags = const []}) async {
+  Future<void> fetch(String query, List<String> selectedTags) async {
     if (_isFetching) {
       return;
     }
 
-    if (query.isEmpty) {
+    if (query.isEmpty && selectedTags.isEmpty) {
       emit(state.copyWith(
         searchQuery: '',
         matches: [],
@@ -48,11 +49,12 @@ class MatchesSearchCubit extends Cubit<MatchesSearchState> {
 
     _isFetching = true;
     try {
-      final skip = query == state.searchQuery ? state.matches.length : 0;
+      final sameQuery = query == state.searchQuery && selectedTags.equals(state.selectedTags);
+      final skip = sameQuery ? state.matches.length : 0;
       final response = await matchesRepository.search(query, skip, _pageSize, selectedTags);
       emit(state.copyWith(
         searchQuery: query,
-        matches: query == state.searchQuery ? state.matches + response : response,
+        matches: sameQuery ? state.matches + response : response,
         hasMore: response.length == _pageSize,
         selectedTags: selectedTags,
       ));
