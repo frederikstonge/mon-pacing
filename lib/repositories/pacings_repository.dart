@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
@@ -47,26 +46,32 @@ class PacingsRepository {
 
     return await db.pacingModels
         .where()
-        .nameContains(search, caseSensitive: false)
-        .or()
-        .categoriesElementContains(search, caseSensitive: false)
-        .or()
-        .themesElementContains(search, caseSensitive: false)
-        .or()
-        .anyOf(selectedTags, (q, t) => q.tagsElementContains(t))
+        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementContains(t)))
+        .and()
+        .optional(
+          search.isNotEmpty,
+          (q) => q.group(
+            (g) => g
+                .nameContains(search, caseSensitive: false)
+                .or()
+                .categoriesElementContains(search, caseSensitive: false)
+                .or()
+                .themesElementContains(search, caseSensitive: false),
+          ),
+        )
         .sortByCreatedDateDesc()
         .findAllAsync(offset: skip, limit: take);
   }
 
-  Future<Map<String, int>> getAllTags() async {
+  Future<List<String>> getAllTags() async {
     final db = await databaseRepository.database;
     final tags = await db.pacingModels.where().tagsProperty().findAllAsync();
-    return tags.selectMany((t) => t).groupListsBy((g) => g).map((k, v) => MapEntry(k, v.length));
+    return tags.selectMany((t) => t).toSet().toList();
   }
 
   Future<List<String>> getAllCategories() async {
     final db = await databaseRepository.database;
     final categories = await db.pacingModels.where().categoriesProperty().findAllAsync();
-    return categories.selectMany((t) => t).toList();
+    return categories.selectMany((t) => t).toSet().toList();
   }
 }

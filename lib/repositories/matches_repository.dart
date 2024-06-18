@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:isar/isar.dart';
 import '../extensions/iterable_extensions.dart';
 import '../models/match_model.dart';
@@ -46,18 +45,21 @@ class MatchesRepository {
 
     return await db.matchModels
         .where()
-        .nameContains(search, caseSensitive: false)
-        .or()
-        .teamNamesElementContains(search, caseSensitive: false)
-        .or()
-        .anyOf(selectedTags, (q, t) => q.tagsElementContains(t))
+        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementContains(t)))
+        .and()
+        .optional(
+          search.isNotEmpty,
+          (q) => q.group(
+            (g) => g.nameContains(search, caseSensitive: false).or().teamNamesElementContains(search, caseSensitive: false),
+          ),
+        )
         .sortByCreatedDateDesc()
         .findAllAsync(offset: skip, limit: take);
   }
 
-  Future<Map<String, int>> getAllTags() async {
+  Future<List<String>> getAllTags() async {
     final db = await databaseRepository.database;
     final tags = await db.matchModels.where().tagsProperty().findAllAsync();
-    return tags.selectMany((t) => t).groupListsBy((g) => g).map((k, v) => MapEntry(k, v.length));
+    return tags.selectMany((t) => t).toSet().toList();
   }
 }

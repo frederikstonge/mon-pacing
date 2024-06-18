@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../components/tag_filters/tag_filters.dart';
 import '../../l10n/app_localizations.dart';
 import '../../router/routes.dart';
 import 'cubits/matches_search_cubit.dart';
@@ -38,82 +39,105 @@ class _MatchesSearchPageViewState extends State<MatchesSearchPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: TextFormField(
-          textCapitalization: TextCapitalization.sentences,
-          textInputAction: TextInputAction.search,
-          autofocus: true,
-          decoration: InputDecoration(
-            hintText: S.of(context).search,
-            hintStyle: const TextStyle(
-              fontSize: 18,
-            ),
-            border: InputBorder.none,
-          ),
-          onChanged: _onChanged,
-          onFieldSubmitted: _onChanged,
-        ),
-      ),
-      body: BlocBuilder<MatchesSearchCubit, MatchesSearchState>(
-        builder: (context, state) {
-          return ListView.builder(
-            controller: _scrollController,
-            itemCount: state.hasMore ? state.matches.length + 1 : state.matches.length,
-            itemBuilder: (context, index) {
-              if (state.hasMore && index != 0 && index == state.matches.length) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              final match = state.matches.elementAtOrNull(index);
-              if (match == null) {
-                return const SizedBox.shrink();
-              }
-
-              return InkWell(
-                onTap: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
-                child: ListTile(
-                  leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
-                  isThreeLine: true,
-                  title: Text(
-                    match.name,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        match.teams.map((e) => e.name).join(' ${S.of(context).versus} '),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        S.of(context).modifiedDate(date: match.modifiedDate!),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
+    return BlocBuilder<MatchesSearchCubit, MatchesSearchState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: TextFormField(
+              textCapitalization: TextCapitalization.sentences,
+              textInputAction: TextInputAction.search,
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: S.of(context).search,
+                hintStyle: const TextStyle(
+                  fontSize: 18,
                 ),
-              );
-            },
-          );
-        },
-      ),
+                border: InputBorder.none,
+              ),
+              onChanged: (value) => _onChanged(value, state.selectedTags),
+              onFieldSubmitted: (value) => _onChanged(value, state.selectedTags),
+            ),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TagFilters(
+                    allTags: state.tags,
+                    selectedTags: state.selectedTags,
+                    onTagSelected: (tag, selected) async {
+                      final tags = List<String>.from(state.selectedTags);
+                      if (selected) {
+                        tags.add(tag);
+                      } else {
+                        tags.remove(tag);
+                      }
+
+                      await context.read<MatchesSearchCubit>().fetch(state.searchQuery, tags);
+                    },
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    controller: _scrollController,
+                    itemCount: state.hasMore ? state.matches.length + 1 : state.matches.length,
+                    itemBuilder: (context, index) {
+                      if (state.hasMore && index != 0 && index == state.matches.length) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      final match = state.matches.elementAtOrNull(index);
+                      if (match == null) {
+                        return const SizedBox.shrink();
+                      }
+
+                      return InkWell(
+                        onTap: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
+                        child: ListTile(
+                          leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
+                          isThreeLine: true,
+                          title: Text(
+                            match.name,
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                match.teams.map((e) => e.name).join(' ${S.of(context).versus} '),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                S.of(context).modifiedDate(date: match.modifiedDate!),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  void _onChanged(String value) {
+  void _onChanged(String value, List<String> selectedTags) {
     if (_debounce?.isActive ?? false) {
       _debounce?.cancel();
     }
 
     _debounce = Timer(const Duration(milliseconds: 250), () {
-      context.read<MatchesSearchCubit>().fetch(value);
+      context.read<MatchesSearchCubit>().fetch(value, selectedTags);
     });
   }
 
@@ -123,7 +147,8 @@ class _MatchesSearchPageViewState extends State<MatchesSearchPageView> {
     if (maxScroll - currentScroll <= _scrollThreshold) {
       final pacingsSearchCubit = context.read<MatchesSearchCubit>();
       final query = pacingsSearchCubit.state.searchQuery;
-      await pacingsSearchCubit.fetch(query);
+      final selectedTags = pacingsSearchCubit.state.selectedTags;
+      await pacingsSearchCubit.fetch(query, selectedTags);
     }
   }
 }
