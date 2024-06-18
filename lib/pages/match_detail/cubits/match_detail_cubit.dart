@@ -11,15 +11,18 @@ import '../../../models/match_model.dart';
 import '../../../models/pacing_model.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
+import '../../../repositories/matches_repository.dart';
 import 'match_detail_state.dart';
 
 class MatchDetailCubit extends Cubit<MatchDetailState> {
+  final MatchesRepository matchesRepository;
   final SettingsCubit settingsCubit;
   final PacingModel? pacing;
   final MatchModel? match;
   final FutureOr<bool> Function(MatchModel value) onConfirm;
 
   MatchDetailCubit({
+    required this.matchesRepository,
     required this.settingsCubit,
     required this.onConfirm,
     this.pacing,
@@ -27,6 +30,8 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }) : super(
           MatchDetailState(
             editMode: match != null,
+            initialized: false,
+            allTags: [],
             match: match != null
                 ? match.copyWith()
                 : MatchModel(
@@ -49,6 +54,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
         );
 
   Future<void> initialize() async {
+    final allTags = await matchesRepository.getAllTags();
     if (!state.editMode) {
       final teams = List<TeamModel>.from(state.match.teams);
       for (int i = 0; i < pacing!.defaultNumberOfTeams; i++) {
@@ -56,7 +62,9 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
       }
 
       final match = state.match.copyWith(teams: teams);
-      emit(state.copyWith(match: match));
+      emit(state.copyWith(match: match, allTags: allTags.keys.toList(), initialized: true));
+    } else {
+      emit(state.copyWith(allTags: allTags.keys.toList(), initialized: true));
     }
   }
 
