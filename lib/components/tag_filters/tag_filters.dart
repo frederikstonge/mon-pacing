@@ -49,6 +49,7 @@ class _TagFiltersState extends State<TagFilters> {
       height: 50,
       width: double.infinity,
       child: SingleChildScrollView(
+        controller: _scrollController,
         scrollDirection: Axis.horizontal,
         child: ListView.builder(
           shrinkWrap: true,
@@ -62,8 +63,9 @@ class _TagFiltersState extends State<TagFilters> {
               child: FilterChip(
                 label: Text(tag),
                 selected: isSelected,
-                onSelected: (value) {
-                  widget.onTagSelected(tag, value);
+                onSelected: (value) async {
+                  await widget.onTagSelected(tag, value);
+                  _scrollController.jumpTo(0);
                 },
               ),
             );
