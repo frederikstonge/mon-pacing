@@ -75,6 +75,7 @@ class _MatchesSearchPageViewState extends State<MatchesSearchPageView> {
               return InkWell(
                 onTap: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
                 child: ListTile(
+                  leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
                   isThreeLine: true,
                   title: Text(
                     match.name,

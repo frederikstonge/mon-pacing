@@ -88,6 +88,7 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
                   final allTags = await widget.getAllTags();
                   return allTags.where((t) => t.contains(controller.text)).map(
                         (e) => ListTile(
+                          leading: const Icon(Icons.search),
                           title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
                           onTap: () {
                             _tagController.onTagSubmitted(e);
