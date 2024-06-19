@@ -119,6 +119,10 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
             keyboardType: TextInputType.text,
             onTapOutside: (event) {
               if (widget.autoUnfocus) {
+                if (textFieldValues.textEditingController.text.isNotEmpty) {
+                  textFieldValues.onTagSubmitted(textFieldValues.textEditingController.text);
+                }
+
                 FocusScope.of(context).unfocus();
               }
             },
