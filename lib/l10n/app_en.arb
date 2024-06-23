@@ -29,6 +29,7 @@
   "defaultPenaltySettingsTooltip": "These settings will be used as default when creating new penalties, but can be changed individually.",
   "delete": "Delete",
   "duplicate": "Duplicate",
+  "duplicateTag": "Duplicate tag {tag}",
   "duration": "Duration",
   "edit": "Edit",
   "editImprovisation": "Edit improvisation",

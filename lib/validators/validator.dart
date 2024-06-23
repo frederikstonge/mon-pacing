@@ -26,4 +26,8 @@ class Validators {
   static String? intMultipleOf(int value, int? multiple) {
     return multiple != null && value % multiple != 0 ? S.of(_context).multipleOf(multiple: multiple) : null;
   }
+
+  static String? duplicateTag(String value, List<String> tags) {
+    return tags.contains(value) ? S.of(_context).duplicateTag(tag: value) : null;
+  }
 }

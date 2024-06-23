@@ -19,6 +19,7 @@
   "defaultPenaltySettingsTooltip": "Ces paramètres seront utilisés par défaut lors de la création de nouvelles pénalités, mais pourront être changés individuellement.",
   "delete": "Supprimer",
   "duplicate": "Dupliquer",
+  "duplicateTag": "Étiquette {tag} dupliquée ",
   "duration": "Durée",
   "edit": "Modifier",
   "editImprovisation": "Modifier une improvisation",
