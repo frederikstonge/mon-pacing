@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   collection: ^1.18.0
-  country_flags: ^2.2.0
+  country_flags: ^3.0.0
   cupertino_icons: ^1.0.6
   excel: ^4.0.3
   firebase_analytics: ^11.0.0
