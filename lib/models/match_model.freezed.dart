@@ -26,7 +26,7 @@ mixin _$MatchModel {
   @index
   DateTime? get createdDate => throw _privateConstructorUsedError;
   DateTime? get modifiedDate => throw _privateConstructorUsedError;
-  List<TeamModel> get teams => throw _privateConstructorUsedError;
+  List<MatchTeamModel> get teams => throw _privateConstructorUsedError;
   List<ImprovisationModel> get improvisations =>
       throw _privateConstructorUsedError;
   List<PenaltyModel> get penalties => throw _privateConstructorUsedError;
@@ -58,7 +58,7 @@ abstract class $MatchModelCopyWith<$Res> {
       @index String name,
       @index DateTime? createdDate,
       DateTime? modifiedDate,
-      List<TeamModel> teams,
+      List<MatchTeamModel> teams,
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
       List<PointModel> points,
@@ -122,7 +122,7 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
       teams: null == teams
           ? _value.teams
           : teams // ignore: cast_nullable_to_non_nullable
-              as List<TeamModel>,
+              as List<MatchTeamModel>,
       improvisations: null == improvisations
           ? _value.improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
@@ -184,7 +184,7 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       @index String name,
       @index DateTime? createdDate,
       DateTime? modifiedDate,
-      List<TeamModel> teams,
+      List<MatchTeamModel> teams,
       List<ImprovisationModel> improvisations,
       List<PenaltyModel> penalties,
       List<PointModel> points,
@@ -246,7 +246,7 @@ class __$$MatchModelImplCopyWithImpl<$Res>
       teams: null == teams
           ? _value._teams
           : teams // ignore: cast_nullable_to_non_nullable
-              as List<TeamModel>,
+              as List<MatchTeamModel>,
       improvisations: null == improvisations
           ? _value._improvisations
           : improvisations // ignore: cast_nullable_to_non_nullable
@@ -303,7 +303,7 @@ class _$MatchModelImpl extends _MatchModel {
       @index required this.name,
       @index required this.createdDate,
       required this.modifiedDate,
-      required final List<TeamModel> teams,
+      required final List<MatchTeamModel> teams,
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
@@ -336,9 +336,9 @@ class _$MatchModelImpl extends _MatchModel {
   final DateTime? createdDate;
   @override
   final DateTime? modifiedDate;
-  final List<TeamModel> _teams;
+  final List<MatchTeamModel> _teams;
   @override
-  List<TeamModel> get teams {
+  List<MatchTeamModel> get teams {
     if (_teams is EqualUnmodifiableListView) return _teams;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_teams);
@@ -489,7 +489,7 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
       @index required final String name,
       @index required final DateTime? createdDate,
       required final DateTime? modifiedDate,
-      required final List<TeamModel> teams,
+      required final List<MatchTeamModel> teams,
       required final List<ImprovisationModel> improvisations,
       required final List<PenaltyModel> penalties,
       required final List<PointModel> points,
@@ -517,7 +517,7 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
   @override
   DateTime? get modifiedDate;
   @override
-  List<TeamModel> get teams;
+  List<MatchTeamModel> get teams;
   @override
   List<ImprovisationModel> get improvisations;
   @override

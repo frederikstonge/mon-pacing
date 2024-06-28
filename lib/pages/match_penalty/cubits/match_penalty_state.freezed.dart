@@ -21,7 +21,7 @@ MatchPenaltyState _$MatchPenaltyStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MatchPenaltyState {
   bool get editMode => throw _privateConstructorUsedError;
-  List<TeamModel> get teams => throw _privateConstructorUsedError;
+  List<MatchTeamModel> get teams => throw _privateConstructorUsedError;
   PenaltyModel get penalty => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $MatchPenaltyStateCopyWith<$Res> {
           MatchPenaltyState value, $Res Function(MatchPenaltyState) then) =
       _$MatchPenaltyStateCopyWithImpl<$Res, MatchPenaltyState>;
   @useResult
-  $Res call({bool editMode, List<TeamModel> teams, PenaltyModel penalty});
+  $Res call({bool editMode, List<MatchTeamModel> teams, PenaltyModel penalty});
 
   $PenaltyModelCopyWith<$Res> get penalty;
 }
@@ -66,7 +66,7 @@ class _$MatchPenaltyStateCopyWithImpl<$Res, $Val extends MatchPenaltyState>
       teams: null == teams
           ? _value.teams
           : teams // ignore: cast_nullable_to_non_nullable
-              as List<TeamModel>,
+              as List<MatchTeamModel>,
       penalty: null == penalty
           ? _value.penalty
           : penalty // ignore: cast_nullable_to_non_nullable
@@ -91,7 +91,7 @@ abstract class _$$MatchPenaltyStateImplCopyWith<$Res>
       __$$MatchPenaltyStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool editMode, List<TeamModel> teams, PenaltyModel penalty});
+  $Res call({bool editMode, List<MatchTeamModel> teams, PenaltyModel penalty});
 
   @override
   $PenaltyModelCopyWith<$Res> get penalty;
@@ -120,7 +120,7 @@ class __$$MatchPenaltyStateImplCopyWithImpl<$Res>
       teams: null == teams
           ? _value._teams
           : teams // ignore: cast_nullable_to_non_nullable
-              as List<TeamModel>,
+              as List<MatchTeamModel>,
       penalty: null == penalty
           ? _value.penalty
           : penalty // ignore: cast_nullable_to_non_nullable
@@ -134,7 +134,7 @@ class __$$MatchPenaltyStateImplCopyWithImpl<$Res>
 class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
   const _$MatchPenaltyStateImpl(
       {required this.editMode,
-      required final List<TeamModel> teams,
+      required final List<MatchTeamModel> teams,
       required this.penalty})
       : _teams = teams;
 
@@ -143,9 +143,9 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
 
   @override
   final bool editMode;
-  final List<TeamModel> _teams;
+  final List<MatchTeamModel> _teams;
   @override
-  List<TeamModel> get teams {
+  List<MatchTeamModel> get teams {
     if (_teams is EqualUnmodifiableListView) return _teams;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_teams);
@@ -193,7 +193,7 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
 abstract class _MatchPenaltyState implements MatchPenaltyState {
   const factory _MatchPenaltyState(
       {required final bool editMode,
-      required final List<TeamModel> teams,
+      required final List<MatchTeamModel> teams,
       required final PenaltyModel penalty}) = _$MatchPenaltyStateImpl;
 
   factory _MatchPenaltyState.fromJson(Map<String, dynamic> json) =
@@ -202,7 +202,7 @@ abstract class _MatchPenaltyState implements MatchPenaltyState {
   @override
   bool get editMode;
   @override
-  List<TeamModel> get teams;
+  List<MatchTeamModel> get teams;
   @override
   PenaltyModel get penalty;
   @override

@@ -39,7 +39,7 @@ const MatchModelSchema = IsarGeneratedSchema(
       IsarPropertySchema(
         name: 'teams',
         type: IsarType.objectList,
-        target: 'TeamModel',
+        target: 'MatchTeamModel',
       ),
       IsarPropertySchema(
         name: 'improvisations',
@@ -116,7 +116,7 @@ const MatchModelSchema = IsarGeneratedSchema(
     deserializeProperty: deserializeMatchModelProp,
   ),
   embeddedSchemas: [
-    TeamModelSchema,
+    MatchTeamModelSchema,
     PerformerModelSchema,
     ImprovisationModelSchema,
     PenaltyModelSchema,
@@ -153,7 +153,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
       {
         final value = list[i];
         final objectWriter = IsarCore.beginObject(listWriter, i);
-        serializeTeamModel(objectWriter, value);
+        serializeMatchTeamModel(objectWriter, value);
         IsarCore.endObject(listWriter, objectWriter);
       }
     }
@@ -254,17 +254,17 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final String _name;
   _name = IsarCore.readString(reader, 4) ?? '';
-  final List<TeamModel> _teams;
+  final List<MatchTeamModel> _teams;
   {
     final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
-        _teams = const <TeamModel>[];
+        _teams = const <MatchTeamModel>[];
       } else {
-        final list = List<TeamModel>.filled(
+        final list = List<MatchTeamModel>.filled(
             length,
-            TeamModel(
+            MatchTeamModel(
               id: -9223372036854775808,
               name: '',
               color: -9223372036854775808,
@@ -274,13 +274,13 @@ MatchModel deserializeMatchModel(IsarReader reader) {
           {
             final objectReader = IsarCore.readObject(reader, i);
             if (objectReader.isNull) {
-              list[i] = TeamModel(
+              list[i] = MatchTeamModel(
                 id: -9223372036854775808,
                 name: '',
                 color: -9223372036854775808,
               );
             } else {
-              final embedded = deserializeTeamModel(objectReader);
+              final embedded = deserializeMatchTeamModel(objectReader);
               IsarCore.freeReader(objectReader);
               list[i] = embedded;
             }
@@ -563,11 +563,11 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
-            return const <TeamModel>[];
+            return const <MatchTeamModel>[];
           } else {
-            final list = List<TeamModel>.filled(
+            final list = List<MatchTeamModel>.filled(
                 length,
-                TeamModel(
+                MatchTeamModel(
                   id: -9223372036854775808,
                   name: '',
                   color: -9223372036854775808,
@@ -577,13 +577,13 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
               {
                 final objectReader = IsarCore.readObject(reader, i);
                 if (objectReader.isNull) {
-                  list[i] = TeamModel(
+                  list[i] = MatchTeamModel(
                     id: -9223372036854775808,
                     name: '',
                     color: -9223372036854775808,
                   );
                 } else {
-                  final embedded = deserializeTeamModel(objectReader);
+                  final embedded = deserializeMatchTeamModel(objectReader);
                   IsarCore.freeReader(objectReader);
                   list[i] = embedded;
                 }
@@ -2626,7 +2626,8 @@ extension MatchModelQueryProperty1
     });
   }
 
-  QueryBuilder<MatchModel, List<TeamModel>, QAfterProperty> teamsProperty() {
+  QueryBuilder<MatchModel, List<MatchTeamModel>, QAfterProperty>
+      teamsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
@@ -2741,7 +2742,7 @@ extension MatchModelQueryProperty2<R>
     });
   }
 
-  QueryBuilder<MatchModel, (R, List<TeamModel>), QAfterProperty>
+  QueryBuilder<MatchModel, (R, List<MatchTeamModel>), QAfterProperty>
       teamsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
@@ -2860,7 +2861,7 @@ extension MatchModelQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<MatchModel, (R1, R2, List<TeamModel>), QOperations>
+  QueryBuilder<MatchModel, (R1, R2, List<MatchTeamModel>), QOperations>
       teamsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
@@ -2959,7 +2960,7 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['modifiedDate'] as String),
       teams: (json['teams'] as List<dynamic>)
-          .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => MatchTeamModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       improvisations: (json['improvisations'] as List<dynamic>)
           .map((e) => ImprovisationModel.fromJson(e as Map<String, dynamic>))

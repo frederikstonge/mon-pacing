@@ -11,7 +11,7 @@ _$MatchPenaltyStateImpl _$$MatchPenaltyStateImplFromJson(
     _$MatchPenaltyStateImpl(
       editMode: json['editMode'] as bool,
       teams: (json['teams'] as List<dynamic>)
-          .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => MatchTeamModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       penalty: PenaltyModel.fromJson(json['penalty'] as Map<String, dynamic>),
     );

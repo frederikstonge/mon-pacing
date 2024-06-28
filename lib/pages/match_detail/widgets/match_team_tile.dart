@@ -8,15 +8,15 @@ import '../../../components/color_picker/color_picker.dart';
 import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../models/team_model.dart';
+import '../../../models/match_team_model.dart';
 import '../../../validators/validator.dart';
 
-class TeamTile extends StatelessWidget {
-  final TeamModel team;
-  final FutureOr<void> Function(TeamModel team) onChanged;
+class MatchTeamTile extends StatelessWidget {
+  final MatchTeamModel team;
+  final FutureOr<void> Function(MatchTeamModel team) onChanged;
   final FutureOr<void> Function()? onDelete;
 
-  const TeamTile({
+  const MatchTeamTile({
     super.key,
     required this.team,
     required this.onChanged,

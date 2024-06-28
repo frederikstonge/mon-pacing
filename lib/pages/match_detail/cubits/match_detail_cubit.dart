@@ -8,9 +8,9 @@ import '../../../extensions/iterable_extensions.dart';
 import '../../../models/constants.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
+import '../../../models/match_team_model.dart';
 import '../../../models/pacing_model.dart';
 import '../../../models/performer_model.dart';
-import '../../../models/team_model.dart';
 import 'match_detail_state.dart';
 
 class MatchDetailCubit extends Cubit<MatchDetailState> {
@@ -50,7 +50,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   Future<void> initialize() async {
     if (!state.editMode || state.match.teams.isEmpty) {
-      final teams = List<TeamModel>.from(state.match.teams);
+      final teams = List<MatchTeamModel>.from(state.match.teams);
       for (int i = 0; i < pacing!.defaultNumberOfTeams; i++) {
         teams.add(_createTeam(teams));
       }
@@ -69,21 +69,21 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   void addTeam() {
-    final teams = List<TeamModel>.from(state.match.teams);
+    final teams = List<MatchTeamModel>.from(state.match.teams);
     teams.add(_createTeam(teams));
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
   }
 
-  void editTeam(int index, TeamModel team) {
-    final teams = List<TeamModel>.from(state.match.teams);
+  void editTeam(int index, MatchTeamModel team) {
+    final teams = List<MatchTeamModel>.from(state.match.teams);
     teams[index] = team;
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
   }
 
   void removeTeam(int index) {
-    final teams = List<TeamModel>.from(state.match.teams);
+    final teams = List<MatchTeamModel>.from(state.match.teams);
     teams.removeAt(index);
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
@@ -125,11 +125,11 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
-  TeamModel _createTeam(List<TeamModel> teams) {
+  MatchTeamModel _createTeam(List<MatchTeamModel> teams) {
     final nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
     final allPerformers = List<PerformerModel>.from(teams.selectMany((t) => t.performers));
     final random = Random();
-    return TeamModel(
+    return MatchTeamModel(
       id: nextId,
       name: '${settingsCubit.localizer.team} ${teams.length + 1}',
       color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).value,

@@ -9,18 +9,16 @@ import '../../../validators/validator.dart';
 class TeamPerformers extends StatelessWidget {
   final String label;
   final List<PerformerModel> performers;
-  final int teamId;
-  final FutureOr<void> Function(int teamId)? addPerformer;
-  final FutureOr<void> Function(int teamId, int index, PerformerModel performer) editPerformer;
-  final FutureOr<void> Function(int teamId, int index)? removePerformer;
-  final FutureOr<void> Function(int teamId, int oldIndex, int newIndex) onDrag;
+  final FutureOr<void> Function()? addPerformer;
+  final FutureOr<void> Function(int index, PerformerModel performer) editPerformer;
+  final FutureOr<void> Function(int index)? removePerformer;
+  final FutureOr<void> Function(int oldIndex, int newIndex) onDrag;
   final FutureOr<void> Function() onDragStart;
 
   const TeamPerformers({
     super.key,
     required this.label,
     required this.performers,
-    required this.teamId,
     required this.addPerformer,
     required this.editPerformer,
     required this.removePerformer,
@@ -47,7 +45,7 @@ class TeamPerformers extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
-          onReorder: (oldIndex, newIndex) => onDrag(teamId, oldIndex, newIndex),
+          onReorder: (oldIndex, newIndex) => onDrag(oldIndex, newIndex),
           children: performers
               .asMap()
               .entries
@@ -71,7 +69,7 @@ class TeamPerformers extends StatelessWidget {
                             key: ValueKey(d.value.id),
                             performer: d.value,
                             valueChanged: (value) async {
-                              await editPerformer(teamId, d.key, value);
+                              await editPerformer(d.key, value);
                             },
                           ),
                         ),
@@ -79,7 +77,7 @@ class TeamPerformers extends StatelessWidget {
                           icon: const Icon(Icons.add),
                           onPressed: addPerformer != null
                               ? () async {
-                                  await addPerformer!(teamId);
+                                  await addPerformer!();
                                 }
                               : null,
                         ),
@@ -87,7 +85,7 @@ class TeamPerformers extends StatelessWidget {
                           icon: const Icon(Icons.remove),
                           onPressed: removePerformer != null
                               ? () async {
-                                  await removePerformer!(teamId, d.key);
+                                  await removePerformer!(d.key);
                                 }
                               : null,
                         ),

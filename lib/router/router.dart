@@ -9,6 +9,7 @@ import '../pages/pacings/pacings_page_shell.dart';
 import '../pages/pacings_search/pacings_search_page_shell.dart';
 import '../pages/settings/settings_page_shell.dart';
 import '../pages/shell/shell_page_shell.dart';
+import '../pages/teams/teams_page_shell.dart';
 import 'routes.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -100,6 +101,22 @@ final router = GoRouter(
                   },
                 ),
               ],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          initialLocation: '/teams',
+          routes: [
+            GoRoute(
+              name: Routes.teams,
+              path: '/teams',
+              pageBuilder: (context, state) {
+                return NoTransitionPage(
+                  child: TeamsPageShell(
+                    key: state.pageKey,
+                  ),
+                );
+              },
             ),
           ],
         ),
