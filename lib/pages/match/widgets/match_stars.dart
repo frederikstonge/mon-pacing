@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
+import '../../../models/match_team_model.dart';
 import '../../../models/star_model.dart';
-import '../../../models/team_model.dart';
 
 class MatchStars extends StatelessWidget {
   final List<StarModel> stars;
-  final List<TeamModel> teams;
+  final List<MatchTeamModel> teams;
   final FutureOr<void> Function(StarModel star) onChanged;
   final FutureOr<void> Function(int starId) onRemove;
   final FutureOr<void> Function(int oldIndex, int newIndex) onDrag;
@@ -59,7 +59,7 @@ class MatchStars extends StatelessWidget {
 class MatchStarItem extends StatelessWidget {
   final StarModel star;
   final int index;
-  final List<TeamModel> teams;
+  final List<MatchTeamModel> teams;
   final ValueChanged<StarModel> valueChanged;
   final FutureOr<void> Function(int starId) onRemove;
 

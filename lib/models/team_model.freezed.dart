@@ -21,9 +21,13 @@ TeamModel _$TeamModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TeamModel {
   int get id => throw _privateConstructorUsedError;
+  @index
+  DateTime? get createdDate => throw _privateConstructorUsedError;
+  DateTime? get modifiedDate => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get color => throw _privateConstructorUsedError;
   List<PerformerModel> get performers => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +40,14 @@ abstract class $TeamModelCopyWith<$Res> {
   factory $TeamModelCopyWith(TeamModel value, $Res Function(TeamModel) then) =
       _$TeamModelCopyWithImpl<$Res, TeamModel>;
   @useResult
-  $Res call({int id, String name, int color, List<PerformerModel> performers});
+  $Res call(
+      {int id,
+      @index DateTime? createdDate,
+      DateTime? modifiedDate,
+      String name,
+      int color,
+      List<PerformerModel> performers,
+      List<String> tags});
 }
 
 /// @nodoc
@@ -53,15 +64,26 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
   @override
   $Res call({
     Object? id = null,
+    Object? createdDate = freezed,
+    Object? modifiedDate = freezed,
     Object? name = null,
     Object? color = null,
     Object? performers = null,
+    Object? tags = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      createdDate: freezed == createdDate
+          ? _value.createdDate
+          : createdDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      modifiedDate: freezed == modifiedDate
+          ? _value.modifiedDate
+          : modifiedDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -74,6 +96,10 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
           ? _value.performers
           : performers // ignore: cast_nullable_to_non_nullable
               as List<PerformerModel>,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -86,7 +112,14 @@ abstract class _$$TeamModelImplCopyWith<$Res>
       __$$TeamModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, int color, List<PerformerModel> performers});
+  $Res call(
+      {int id,
+      @index DateTime? createdDate,
+      DateTime? modifiedDate,
+      String name,
+      int color,
+      List<PerformerModel> performers,
+      List<String> tags});
 }
 
 /// @nodoc
@@ -101,15 +134,26 @@ class __$$TeamModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? createdDate = freezed,
+    Object? modifiedDate = freezed,
     Object? name = null,
     Object? color = null,
     Object? performers = null,
+    Object? tags = null,
   }) {
     return _then(_$TeamModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      createdDate: freezed == createdDate
+          ? _value.createdDate
+          : createdDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      modifiedDate: freezed == modifiedDate
+          ? _value.modifiedDate
+          : modifiedDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -122,25 +166,39 @@ class __$$TeamModelImplCopyWithImpl<$Res>
           ? _value._performers
           : performers // ignore: cast_nullable_to_non_nullable
               as List<PerformerModel>,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$TeamModelImpl implements _TeamModel {
+class _$TeamModelImpl extends _TeamModel {
   const _$TeamModelImpl(
       {required this.id,
+      @index required this.createdDate,
+      required this.modifiedDate,
       required this.name,
       required this.color,
-      final List<PerformerModel> performers = const []})
-      : _performers = performers;
+      final List<PerformerModel> performers = const [],
+      final List<String> tags = const []})
+      : _performers = performers,
+        _tags = tags,
+        super._();
 
   factory _$TeamModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamModelImplFromJson(json);
 
   @override
   final int id;
+  @override
+  @index
+  final DateTime? createdDate;
+  @override
+  final DateTime? modifiedDate;
   @override
   final String name;
   @override
@@ -154,9 +212,18 @@ class _$TeamModelImpl implements _TeamModel {
     return EqualUnmodifiableListView(_performers);
   }
 
+  final List<String> _tags;
+  @override
+  @JsonKey()
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
   @override
   String toString() {
-    return 'TeamModel(id: $id, name: $name, color: $color, performers: $performers)';
+    return 'TeamModel(id: $id, createdDate: $createdDate, modifiedDate: $modifiedDate, name: $name, color: $color, performers: $performers, tags: $tags)';
   }
 
   @override
@@ -165,16 +232,28 @@ class _$TeamModelImpl implements _TeamModel {
         (other.runtimeType == runtimeType &&
             other is _$TeamModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdDate, createdDate) ||
+                other.createdDate == createdDate) &&
+            (identical(other.modifiedDate, modifiedDate) ||
+                other.modifiedDate == modifiedDate) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.color, color) || other.color == color) &&
             const DeepCollectionEquality()
-                .equals(other._performers, _performers));
+                .equals(other._performers, _performers) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, color,
-      const DeepCollectionEquality().hash(_performers));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      createdDate,
+      modifiedDate,
+      name,
+      color,
+      const DeepCollectionEquality().hash(_performers),
+      const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
   @override
@@ -190,12 +269,16 @@ class _$TeamModelImpl implements _TeamModel {
   }
 }
 
-abstract class _TeamModel implements TeamModel {
+abstract class _TeamModel extends TeamModel implements BaseModel {
   const factory _TeamModel(
       {required final int id,
+      @index required final DateTime? createdDate,
+      required final DateTime? modifiedDate,
       required final String name,
       required final int color,
-      final List<PerformerModel> performers}) = _$TeamModelImpl;
+      final List<PerformerModel> performers,
+      final List<String> tags}) = _$TeamModelImpl;
+  const _TeamModel._() : super._();
 
   factory _TeamModel.fromJson(Map<String, dynamic> json) =
       _$TeamModelImpl.fromJson;
@@ -203,11 +286,18 @@ abstract class _TeamModel implements TeamModel {
   @override
   int get id;
   @override
+  @index
+  DateTime? get createdDate;
+  @override
+  DateTime? get modifiedDate;
+  @override
   String get name;
   @override
   int get color;
   @override
   List<PerformerModel> get performers;
+  @override
+  List<String> get tags;
   @override
   @JsonKey(ignore: true)
   _$$TeamModelImplCopyWith<_$TeamModelImpl> get copyWith =>

@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../models/match_team_model.dart';
 import '../../../models/penalty_model.dart';
-import '../../../models/team_model.dart';
 import 'match_penalty_state.dart';
 
 class MatchPenaltyCubit extends Cubit<MatchPenaltyState> {
   final int improvisationId;
-  final List<TeamModel> teams;
+  final List<MatchTeamModel> teams;
   final FutureOr<void> Function(PenaltyModel penalty) onSave;
   final PenaltyModel? penalty;
 

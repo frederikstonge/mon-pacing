@@ -24,8 +24,8 @@ import '../../models/penalties_impact_type.dart';
 import '../../validators/validator.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
-import 'widgets/team_performers.dart';
-import 'widgets/team_tile.dart';
+import 'widgets/match_team_performers.dart';
+import 'widgets/match_team_tile.dart';
 
 class MatchDetailPageView extends StatefulWidget {
   const MatchDetailPageView({
@@ -143,7 +143,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                     child: Column(
                       children: [
                         ...state.match.teams.asMap().entries.map(
-                              (e) => TeamTile(
+                              (e) => MatchTeamTile(
                                 team: e.value,
                                 onChanged: (value) {
                                   context.read<MatchDetailCubit>().editTeam(e.key, value);
@@ -176,7 +176,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             context.read<MatchDetailCubit>().selectTeam(values.first);
                           },
                         ),
-                        TeamPerformers(
+                        MatchTeamPerformers(
                           label: S.of(context).performers,
                           performers: selectedTeam.performers,
                           teamId: selectedTeam.id,
