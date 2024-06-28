@@ -49,7 +49,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
         );
 
   Future<void> initialize() async {
-    if (!state.editMode) {
+    if (!state.editMode || state.match.teams.isEmpty) {
       final teams = List<TeamModel>.from(state.match.teams);
       for (int i = 0; i < pacing!.defaultNumberOfTeams; i++) {
         teams.add(_createTeam(teams));
