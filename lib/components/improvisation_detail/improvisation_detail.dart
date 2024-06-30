@@ -19,7 +19,7 @@ class ImprovisationDetail extends StatefulWidget {
   final ImprovisationModel improvisation;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
   final FutureOr<void> Function() onDragStart;
-  final Future<List<String>> Function() getAllCategories;
+  final Future<List<String>> Function({String query}) getAllCategories;
 
   const ImprovisationDetail({
     super.key,
@@ -92,17 +92,17 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
               onPressed: () => controller.openView(),
             ),
             suggestionsBuilder: (context, controller) async {
-              final allCategories = await widget.getAllCategories();
-              return allCategories.where((t) => t.contains(controller.text)).map(
-                    (e) => ListTile(
-                      leading: const Icon(Icons.search),
-                      title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
-                      onTap: () {
-                        _categoryController.text = e;
-                        controller.closeView(null);
-                      },
-                    ),
-                  );
+              final allCategories = await widget.getAllCategories(query: controller.text);
+              return allCategories.map(
+                (e) => ListTile(
+                  leading: const Icon(Icons.search),
+                  title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  onTap: () {
+                    _categoryController.text = e;
+                    controller.closeView(null);
+                  },
+                ),
+              );
             },
           ),
         ),

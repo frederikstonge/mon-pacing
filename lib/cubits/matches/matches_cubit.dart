@@ -102,8 +102,8 @@ class MatchesCubit extends Cubit<MatchesState> {
     }
   }
 
-  Future<List<String>> getAllTags() async {
-    return await matchesRepository.getAllTags();
+  Future<List<String>> getAllTags({String query = ''}) async {
+    return await matchesRepository.getAllTags(query: query);
   }
 
   Future<void> refresh() async {

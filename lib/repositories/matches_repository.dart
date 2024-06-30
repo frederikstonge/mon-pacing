@@ -45,7 +45,7 @@ class MatchesRepository {
 
     return await db.matchModels
         .where()
-        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementContains(t)))
+        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementEqualTo(t)))
         .and()
         .optional(
           search.isNotEmpty,
@@ -57,9 +57,9 @@ class MatchesRepository {
         .findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<String>> getAllTags() async {
+  Future<List<String>> getAllTags({String query = ''}) async {
     final db = await databaseRepository.database;
-    final tags = await db.matchModels.where().tagsProperty().findAllAsync();
+    final tags = await db.matchModels.where().optional(query.isNotEmpty, (q) => q.tagsElementContains(query)).tagsProperty().findAllAsync();
     return tags.selectMany((t) => t).toSet().toList();
   }
 }
