@@ -46,7 +46,7 @@ class PacingsRepository {
 
     return await db.pacingModels
         .where()
-        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementContains(t)))
+        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementEqualTo(t)))
         .and()
         .optional(
           search.isNotEmpty,
@@ -63,15 +63,16 @@ class PacingsRepository {
         .findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<String>> getAllTags() async {
+  Future<List<String>> getAllTags({String query = ''}) async {
     final db = await databaseRepository.database;
-    final tags = await db.pacingModels.where().tagsProperty().findAllAsync();
+    final tags = await db.pacingModels.where().optional(query.isNotEmpty, (q) => q.tagsElementContains(query)).tagsProperty().findAllAsync();
     return tags.selectMany((t) => t).toSet().toList();
   }
 
-  Future<List<String>> getAllCategories() async {
+  Future<List<String>> getAllCategories({String query = ''}) async {
     final db = await databaseRepository.database;
-    final categories = await db.pacingModels.where().categoriesProperty().findAllAsync();
+    final categories =
+        await db.pacingModels.where().optional(query.isNotEmpty, (q) => q.categoriesElementContains(query)).categoriesProperty().findAllAsync();
     return categories.selectMany((t) => t).toSet().toList();
   }
 }

@@ -14,7 +14,7 @@ class TagsFieldElement extends StatefulWidget {
   final bool autoUnfocus;
   final FutureOr<void> Function(List<String> value)? onChanged;
   final FocusNode? focusNode;
-  final Future<List<String>> Function() getAllTags;
+  final Future<List<String>> Function({String query}) getAllTags;
 
   const TagsFieldElement({
     super.key,
@@ -89,17 +89,17 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
                       onPressed: () => controller.openView(),
                     ),
                     suggestionsBuilder: (context, controller) async {
-                      final allTags = await widget.getAllTags();
-                      return allTags.where((t) => t.contains(controller.text)).map(
-                            (e) => ListTile(
-                              leading: const Icon(Icons.search),
-                              title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
-                              onTap: () {
-                                _tagController.onTagSubmitted(e);
-                                controller.closeView(null);
-                              },
-                            ),
-                          );
+                      final allTags = await widget.getAllTags(query: controller.text);
+                      return allTags.map(
+                        (e) => ListTile(
+                          leading: const Icon(Icons.search),
+                          title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
+                          onTap: () {
+                            _tagController.onTagSubmitted(e);
+                            controller.closeView(null);
+                          },
+                        ),
+                      );
                     },
                   ),
                   hintText: widget.hintText,

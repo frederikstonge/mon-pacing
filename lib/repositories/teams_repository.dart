@@ -42,24 +42,24 @@ class TeamsRepository {
     return await db.teamModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<TeamModel>> search(String search, int skip, int take, List<String> selectedTags) async {
+  Future<List<TeamModel>> search(String search, List<String> selectedTags) async {
     final db = await databaseRepository.database;
 
     return await db.teamModels
         .where()
-        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementContains(t)))
+        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementEqualTo(t)))
         .and()
         .optional(
           search.isNotEmpty,
           (q) => q.group((g) => g.nameContains(search, caseSensitive: false).or().performerNamesElementContains(search, caseSensitive: false)),
         )
         .sortByCreatedDateDesc()
-        .findAllAsync(offset: skip, limit: take);
+        .findAllAsync();
   }
 
-  Future<List<String>> getAllTags() async {
+  Future<List<String>> getAllTags({String query = ''}) async {
     final db = await databaseRepository.database;
-    final tags = await db.teamModels.where().tagsProperty().findAllAsync();
+    final tags = await db.teamModels.where().optional(query.isNotEmpty, (q) => q.tagsElementContains(query)).tagsProperty().findAllAsync();
     return tags.selectMany((t) => t).toSet().toList();
   }
 }

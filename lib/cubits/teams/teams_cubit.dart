@@ -90,8 +90,8 @@ class TeamsCubit extends Cubit<TeamsState> {
     }
   }
 
-  Future<List<String>> getAllTags() async {
-    return await teamsRepository.getAllTags();
+  Future<List<String>> getAllTags({String query = ''}) async {
+    return await teamsRepository.getAllTags(query: query);
   }
 
   Future<void> refresh() async {
