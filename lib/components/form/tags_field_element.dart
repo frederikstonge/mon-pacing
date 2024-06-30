@@ -34,11 +34,9 @@ class TagsFieldElement extends StatefulWidget {
 
 class _TagsFieldElementState extends State<TagsFieldElement> {
   late final StringTagController _tagController;
-  late final SearchController _searchController;
 
   @override
   void initState() {
-    _searchController = SearchController();
     _tagController = StringTagController();
     _tagController.addListener(_onChange);
     super.initState();
@@ -46,7 +44,6 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
 
   @override
   void dispose() {
-    _searchController.dispose();
     _tagController.dispose();
     _tagController.removeListener(_onChange);
     super.dispose();
@@ -83,7 +80,6 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   suffixIcon: SearchAnchor(
-                    searchController: _searchController,
                     builder: (context, controller) => LoadingIconButton(
                       icon: const Icon(Icons.search),
                       onPressed: () => controller.openView(),
