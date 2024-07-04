@@ -21,6 +21,7 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
+import '../../repositories/teams_repository.dart';
 import '../../validators/validator.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
@@ -145,6 +146,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                         ...state.match.teams.asMap().entries.map(
                               (e) => MatchTeamTile(
                                 team: e.value,
+                                allowSearch: !state.editMode,
                                 onChanged: (value) {
                                   context.read<MatchDetailCubit>().editTeam(e.key, value);
                                 },
@@ -153,6 +155,9 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                         context.read<MatchDetailCubit>().removeTeam(e.key);
                                       }
                                     : null,
+                                getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
+                                getAllTeams: (query, selectedTags) => context.read<TeamsRepository>().search(query, selectedTags),
+                                onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
                               ),
                             ),
                         SegmentedButton(
