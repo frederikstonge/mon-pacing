@@ -34,6 +34,10 @@ class ShellPageView extends StatelessWidget {
             label: S.of(context).matches,
           ),
           NavigationDestination(
+            icon: const Icon(Icons.group),
+            label: S.of(context).teams,
+          ),
+          NavigationDestination(
             icon: const Icon(Icons.settings),
             label: S.of(context).settings,
           ),

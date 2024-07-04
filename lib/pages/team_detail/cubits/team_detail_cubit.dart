@@ -40,7 +40,10 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   Future<void> initialize() async {
     if (!state.editMode) {
       final random = Random();
-      final newTeam = state.team.copyWith(color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).value);
+      final newTeam = state.team.copyWith(
+        color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).value,
+        performers: [_createPerformer(state.team.performers)],
+      );
       emit(state.copyWith(team: newTeam));
     }
   }

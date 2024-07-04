@@ -14,6 +14,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // GOOGLE FONTS
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
@@ -21,6 +22,7 @@ Future<void> main() async {
 
   GoogleFonts.config.allowRuntimeFetching = false;
 
+  // FIREBASE
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -41,13 +43,15 @@ Future<void> main() async {
     return true;
   };
 
+  // SYSTEM CHROME
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
+  // BLOC
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
 
+  // APP
   runApp(const Bootstrapper());
 }

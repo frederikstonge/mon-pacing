@@ -40,7 +40,11 @@ class MatchesRepository {
     return await db.matchModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<MatchModel>> search(String search, int skip, int take, List<String> selectedTags) async {
+  Future<List<MatchModel>> search(String search, List<String> selectedTags) async {
+    if (search.isEmpty && selectedTags.isEmpty) {
+      return [];
+    }
+
     final db = await databaseRepository.database;
 
     return await db.matchModels
@@ -54,7 +58,7 @@ class MatchesRepository {
           ),
         )
         .sortByCreatedDateDesc()
-        .findAllAsync(offset: skip, limit: take);
+        .findAllAsync();
   }
 
   Future<List<String>> getAllTags({String query = ''}) async {

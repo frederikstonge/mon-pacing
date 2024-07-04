@@ -129,7 +129,7 @@ class TeamsCubit extends Cubit<TeamsState> {
   Future<bool> export(TeamModel model) async {
     try {
       final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
-      final fileName = sanitizeFilename('${model.name}.json', replacement: '-');
+      final fileName = sanitizeFilename('${settingsCubit.localizer.team}-${model.name}.json', replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {

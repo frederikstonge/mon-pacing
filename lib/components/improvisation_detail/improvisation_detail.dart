@@ -11,6 +11,7 @@ import '../bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../duration_picker/duration_picker.dart';
 import '../form/drop_down_element.dart';
 import '../form/text_field_element.dart';
+import '../search_dialog/categories_search.dart';
 import '../settings_tile/settings_tile.dart';
 import '../tooltip/custom_tooltip.dart';
 import 'improvisation_durations.dart';
@@ -86,24 +87,13 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           controller: _categoryController,
           onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
           hintText: S.of(context).free,
-          suffixIcon: SearchAnchor(
-            builder: (context, controller) => LoadingIconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () => controller.openView(),
+          suffixIcon: LoadingIconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => CategoriesSearch.showDialog(
+              context,
+              (category) => _categoryController.text = category,
+              widget.getAllCategories,
             ),
-            suggestionsBuilder: (context, controller) async {
-              final allCategories = await widget.getAllCategories(query: controller.text);
-              return allCategories.map(
-                (e) => ListTile(
-                  leading: const Icon(Icons.search),
-                  title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
-                  onTap: () {
-                    _categoryController.text = e;
-                    controller.closeView(null);
-                  },
-                ),
-              );
-            },
           ),
         ),
         const SizedBox(height: 8),
