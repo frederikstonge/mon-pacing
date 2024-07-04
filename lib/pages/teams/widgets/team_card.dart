@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
+import '../../../components/tags_display/tags_display.dart';
 import '../../../components/team_menu/team_menu.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/team_model.dart';
@@ -69,9 +70,9 @@ class TeamCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    TagsDisplay(tags: team.tags),
                     Text(
-                      // TODO
-                      S.of(context).improvisationCount(count: team.performers.length),
+                      S.of(context).performerCount(count: team.performers.length),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

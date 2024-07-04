@@ -54,7 +54,7 @@ class TeamMenu extends StatelessWidget {
             child: ListTile(
               leading: const Icon(Icons.upload),
               title: Text(
-                S.of(context).exportPacing,
+                S.of(context).exportTeam,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
