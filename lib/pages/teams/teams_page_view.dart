@@ -63,14 +63,16 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                   ),
                 );
               },
+              // TODO
               tooltip: S.of(context).createNewPacingTooltip,
               child: const Icon(Icons.add),
             ),
             appBar: SliverLogoAppbar(
-              title: S.of(context).pacings,
+              title: S.of(context).teams,
               actions: [
                 LoadingIconButton(
                   icon: const Icon(Icons.download),
+                  // TODO
                   tooltip: S.of(context).importPacingTooltip,
                   onPressed: () async => context.read<TeamsCubit>().import(),
                 ),
@@ -107,8 +109,8 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                         child: TeamDetailPageShell(
                           team: team,
                           editMode: true,
-                          onConfirm: (pacing) async {
-                            await context.read<TeamsCubit>().edit(pacing);
+                          onConfirm: (team) async {
+                            await context.read<TeamsCubit>().edit(team);
                           },
                         ),
                       ),
@@ -125,8 +127,8 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                         child: TeamDetailPageShell(
                           editMode: false,
                           team: team,
-                          onConfirm: (pacing) async {
-                            await context.read<TeamsCubit>().add(pacing);
+                          onConfirm: (team) async {
+                            await context.read<TeamsCubit>().add(team);
                           },
                         ),
                       ),

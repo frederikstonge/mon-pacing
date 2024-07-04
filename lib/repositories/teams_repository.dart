@@ -43,6 +43,10 @@ class TeamsRepository {
   }
 
   Future<List<TeamModel>> search(String search, List<String> selectedTags) async {
+    if (search.isEmpty && selectedTags.isEmpty) {
+      return [];
+    }
+
     final db = await databaseRepository.database;
 
     return await db.teamModels

@@ -3,10 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
-import '../pages/matches_search/matches_search_page_shell.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
-import '../pages/pacings_search/pacings_search_page_shell.dart';
 import '../pages/settings/settings_page_shell.dart';
 import '../pages/shell/shell_page_shell.dart';
 import '../pages/teams/teams_page_shell.dart';
@@ -38,14 +36,6 @@ final router = GoRouter(
               routes: [
                 GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.pacingsSearch,
-                  path: 'search',
-                  builder: (context, state) => PacingsSearchPageShell(
-                    key: state.pageKey,
-                  ),
-                ),
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
                   name: Routes.pacing,
                   path: 'details/:id',
                   builder: (context, state) => PacingPageShell(
@@ -73,14 +63,6 @@ final router = GoRouter(
                 );
               },
               routes: [
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.matchesSearch,
-                  path: 'search',
-                  builder: (context, state) => MatchesSearchPageShell(
-                    key: state.pageKey,
-                  ),
-                ),
                 GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.match,

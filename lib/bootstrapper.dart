@@ -33,16 +33,24 @@ class Bootstrapper extends StatelessWidget {
           create: (_) => ExcelService(),
         ),
         RepositoryProvider(
-          create: (_) => AnalyticsService(analytics: FirebaseAnalytics.instance),
+          create: (_) => AnalyticsService(
+            analytics: FirebaseAnalytics.instance,
+          ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => PacingsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
+          create: (repositoryContext) => PacingsRepository(
+            databaseRepository: repositoryContext.read<DatabaseRepository>(),
+          ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => MatchesRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
+          create: (repositoryContext) => MatchesRepository(
+            databaseRepository: repositoryContext.read<DatabaseRepository>(),
+          ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => TeamsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
+          create: (repositoryContext) => TeamsRepository(
+            databaseRepository: repositoryContext.read<DatabaseRepository>(),
+          ),
         ),
       ],
       child: MultiBlocProvider(

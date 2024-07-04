@@ -41,7 +41,11 @@ class PacingsRepository {
     return await db.pacingModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<PacingModel>> search(String search, int skip, int take, List<String> selectedTags) async {
+  Future<List<PacingModel>> search(String search, List<String> selectedTags) async {
+    if (search.isEmpty && selectedTags.isEmpty) {
+      return [];
+    }
+
     final db = await databaseRepository.database;
 
     return await db.pacingModels
@@ -60,7 +64,7 @@ class PacingsRepository {
           ),
         )
         .sortByCreatedDateDesc()
-        .findAllAsync(offset: skip, limit: take);
+        .findAllAsync();
   }
 
   Future<List<String>> getAllTags({String query = ''}) async {

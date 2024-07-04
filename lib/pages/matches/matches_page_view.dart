@@ -5,6 +5,7 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/actions/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
+import '../../components/search_dialog/matches_search.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -57,7 +58,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                 LoadingIconButton(
                   icon: const Icon(Icons.search),
                   tooltip: S.of(context).search,
-                  onPressed: () => context.goNamed(Routes.matchesSearch),
+                  onPressed: () => MatchesSearch.showDialog(context),
                 ),
               ],
             ),

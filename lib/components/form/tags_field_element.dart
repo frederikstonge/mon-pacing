@@ -5,6 +5,7 @@ import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../validators/validator.dart';
 import '../actions/loading_icon_button.dart';
+import '../search_dialog/tags_search.dart';
 
 class TagsFieldElement extends StatefulWidget {
   final String label;
@@ -75,28 +76,18 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
           initialTags: widget.initialTags,
           letterCase: LetterCase.normal,
           inputFieldBuilder: (context, textFieldValues) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  suffixIcon: SearchAnchor(
-                    builder: (context, controller) => LoadingIconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () => controller.openView(),
+                  suffixIcon: LoadingIconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () => TagsSearch.showDialog(
+                      context,
+                      textFieldValues.onTagSubmitted,
+                      widget.getAllTags,
                     ),
-                    suggestionsBuilder: (context, controller) async {
-                      final allTags = await widget.getAllTags(query: controller.text);
-                      return allTags.map(
-                        (e) => ListTile(
-                          leading: const Icon(Icons.search),
-                          title: Text(e, maxLines: 1, overflow: TextOverflow.ellipsis),
-                          onTap: () {
-                            _tagController.onTagSubmitted(e);
-                            controller.closeView(null);
-                          },
-                        ),
-                      );
-                    },
                   ),
                   hintText: widget.hintText,
                   errorText: textFieldValues.error,

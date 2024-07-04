@@ -4,10 +4,13 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/actions/loading_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
+import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../components/color_picker/color_picker.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/tags_field_element.dart';
-import '../../components/form/text_field_element.dart';
+import '../../components/settings_tile/settings_tile.dart';
+import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/text_header/text_header.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/teams/teams_cubit.dart';
@@ -49,6 +52,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
       builder: (context, state) {
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
+            // TODO
             title: state.editMode ? S.of(context).editMatch : S.of(context).startMatch,
           ),
           isBodyExpanded: true,
@@ -61,21 +65,36 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                  child: TextHeader(title: S.of(context).general),
+                  child: TextHeader(title: S.of(context).team),
                 ),
                 CustomCard(
                   child: Column(
                     children: [
-                      TextFieldElement(
-                        autoFocus: true,
-                        label: '${S.of(context).name}*',
-                        controller: _nameController,
-                        validator: (value) {
-                          return Validators.stringRequired(value);
-                        },
-                        onChanged: (value) {
-                          context.read<TeamDetailCubit>().edit(state.team.copyWith(name: value));
-                        },
+                      SettingsTile(
+                        leading: InkWell(
+                          onTap: () async {
+                            final teamDetailCubit = context.read<TeamDetailCubit>();
+                            final newColor = await BottomSheetDialog.showDialog<Color>(
+                              context: context,
+                              child: ColorPicker(initialColor: Color(state.team.color), title: S.of(context).color),
+                            );
+                            if (newColor != null) {
+                              teamDetailCubit.edit(state.team.copyWith(color: newColor.value));
+                            }
+                          },
+                          child: TeamColorAvatar(
+                            color: Color(state.team.color),
+                            height: 36,
+                            width: 36,
+                            borderWidth: 2,
+                          ),
+                        ),
+                        title: TextFormField(
+                          initialValue: state.team.name,
+                          textCapitalization: TextCapitalization.sentences,
+                          onChanged: (value) => context.read<TeamDetailCubit>().edit(state.team.copyWith(name: value)),
+                          validator: (value) => Validators.stringRequired(value),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       TagsFieldElement(
