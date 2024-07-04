@@ -11,6 +11,7 @@ import '../../../models/match_model.dart';
 import '../../../models/match_team_model.dart';
 import '../../../models/pacing_model.dart';
 import '../../../models/performer_model.dart';
+import '../../../models/team_model.dart';
 import 'match_detail_state.dart';
 
 class MatchDetailCubit extends Cubit<MatchDetailState> {
@@ -123,6 +124,20 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
     performers.insert(newIndex, performer);
     editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
+  }
+
+  void onTeamSelected(int teamId, TeamModel team) {
+    final matchTeam = state.match.teams.firstWhere((t) => t.id == teamId);
+    final allPerformers = List<PerformerModel>.from(state.match.teams.where((t) => t.id != teamId).selectMany((t) => t.performers));
+    var nextId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(max) + 1 : 0;
+
+    final newTeam = matchTeam.copyWith(
+      name: team.name,
+      color: team.color,
+      performers: team.performers.map((p) => p.copyWith(id: nextId++)).toList(),
+    );
+
+    editTeam(state.match.teams.indexOf(matchTeam), newTeam);
   }
 
   MatchTeamModel _createTeam(List<MatchTeamModel> teams) {
