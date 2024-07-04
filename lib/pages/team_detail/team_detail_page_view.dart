@@ -106,6 +106,8 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                         },
                       ),
                       const SizedBox(height: 8),
+                      const Divider(),
+                      const SizedBox(height: 8),
                       TeamPerformers(
                         label: S.of(context).performers,
                         performers: state.team.performers,
