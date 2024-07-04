@@ -52,8 +52,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
       builder: (context, state) {
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
-            // TODO
-            title: state.editMode ? S.of(context).editMatch : S.of(context).startMatch,
+            title: state.editMode ? S.of(context).editTeam : S.of(context).createTeam,
           ),
           isBodyExpanded: true,
           body: Form(

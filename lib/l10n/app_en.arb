@@ -21,7 +21,9 @@
   "confirm": "Confirm",
   "create": "Create",
   "createNewPacingTooltip": "Create new pacing",
+  "createNewTeamTooltip": "Create new team",
   "createPacing": "Create pacing",
+  "createTeam": "Create team",
   "dark": "Dark",
   "defaultImprovisationSettingsTooltip": "These settings will be used as default when creating new improvisations, but can be changed individually.",
   "defaultMatchSettingsTooltip": "These settings will be used as default when creating new matches, but can be changed individually.",
@@ -36,6 +38,7 @@
   "editMatch": "Edit match",
   "editPacing": "Edit pacing",
   "editPenalty": "Edit penalty",
+  "editTeam": "Edit team",
   "enableHapticFeedback": "Enable haptic feedback",
   "enableMatchExpulsion": "Enable match expulsion",
   "enableMatchExpulsionTooltip": "A performer with too many penalty points will be expelled from the match.",
@@ -45,6 +48,7 @@
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
   "exportMatchSheet": "Export match sheet",
   "exportPacing": "Export pacing",
+  "exportTeam": "Export team",
   "free": "Free",
   "general": "General",
   "greaterThan": "Must be greater than {min}",
@@ -59,6 +63,7 @@
   "huddleTimer": "Huddle timer",
   "huddleTimerTooltip": "Time allowed for the huddle before the improvisation starts. A timer will be added during the match.",
   "importPacingTooltip": "Import pacing",
+  "importTeamTooltip": "Import team",
   "improvisation": "Improvisation",
   "improvisationCount": "Improvisation count: {count}",
   "@improvisationCount": {
@@ -134,6 +139,14 @@
   "penaltiesRequiredToImpactPoints": "Penalties required to impact points",
   "penalty": "Penalty",
   "performer": "Performer",
+  "performerCount": "Performer count: {count}",
+  "@performerCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "performers": "Performers",
   "points": "Points",
   "previousImprovisation": "Previous improvisation",
@@ -169,6 +182,9 @@
   "toasterPacingDeleted": "Pacing deleted.",
   "toasterPacingExported": "Pacing exported.",
   "toasterPacingImported": "Pacing imported.",
+  "toasterTeamDeleted": "Team deleted.",
+  "toasterTeamExported": "Team exported.",
+  "toasterTeamImported": "Team imported.",
   "toasterYouCantStartAMatchWithAnEmptyTeam": "You can''t start a match with an empty. team",
   "toasterYouCantStartAMatchWithoutImprovisation": "You can''t start a match without improvisation.",
   "toasterYouMustFillAllPerformersName": "You must fill all performers'' name.",

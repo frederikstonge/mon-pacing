@@ -6,6 +6,7 @@ import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/pacing_menu/pacing_menu.dart';
+import '../../../components/tags_display/tags_display.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/pacing_model.dart';
 
@@ -92,6 +93,7 @@ class PacingCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    TagsDisplay(tags: pacing.tags),
                     Text(
                       S.of(context).improvisationCount(count: pacing.improvisations.length),
                       maxLines: 1,

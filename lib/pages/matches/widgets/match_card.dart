@@ -6,6 +6,7 @@ import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/match_menu/match_menu.dart';
+import '../../../components/tags_display/tags_display.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 
@@ -65,6 +66,7 @@ class MatchCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    TagsDisplay(tags: match.tags),
                     Text(
                       match.teams.map((e) => e.name).join(' ${S.of(context).versus} '),
                       maxLines: 1,

@@ -52,8 +52,7 @@ class TeamsCubit extends Cubit<TeamsState> {
   Future<void> delete(TeamModel model) async {
     try {
       await teamsRepository.delete(model.id);
-      // TODO
-      toasterService.show(title: settingsCubit.localizer.toasterPacingDeleted);
+      toasterService.show(title: settingsCubit.localizer.toasterTeamDeleted);
     } catch (exception) {
       toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -112,8 +111,7 @@ class TeamsCubit extends Cubit<TeamsState> {
         final teamValue = await File(filePath).readAsString();
         final team = TeamModel.fromJson(jsonDecode(teamValue));
         final newTeam = await teamsRepository.add(team.copyWith(id: 0));
-        // TODO
-        toasterService.show(title: settingsCubit.localizer.toasterPacingImported);
+        toasterService.show(title: settingsCubit.localizer.toasterTeamImported);
 
         return newTeam;
       }
@@ -133,8 +131,7 @@ class TeamsCubit extends Cubit<TeamsState> {
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {
-        // TODO
-        toasterService.show(title: settingsCubit.localizer.toasterPacingExported);
+        toasterService.show(title: settingsCubit.localizer.toasterTeamExported);
         return true;
       }
     } catch (exception) {

@@ -63,8 +63,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                   ),
                 );
               },
-              // TODO
-              tooltip: S.of(context).createNewPacingTooltip,
+              tooltip: S.of(context).createNewTeamTooltip,
               child: const Icon(Icons.add),
             ),
             appBar: SliverLogoAppbar(
@@ -72,8 +71,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
               actions: [
                 LoadingIconButton(
                   icon: const Icon(Icons.download),
-                  // TODO
-                  tooltip: S.of(context).importPacingTooltip,
+                  tooltip: S.of(context).importTeamTooltip,
                   onPressed: () async => context.read<TeamsCubit>().import(),
                 ),
               ],
