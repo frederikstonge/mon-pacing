@@ -160,6 +160,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                 onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
                               ),
                             ),
+                        const Divider(),
                         SegmentedButton(
                           style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
                           segments: state.match.teams
