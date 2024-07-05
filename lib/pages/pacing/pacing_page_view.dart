@@ -60,19 +60,6 @@ class _PacingPageViewState extends State<PacingPageView> {
                       context: context,
                       child: PacingMenu(
                         pacing: pacing,
-                        edit: () async {
-                          await BottomSheetDialog.showDialog(
-                            context: context,
-                            child: PacingDetailPageShell(
-                              pacing: pacing,
-                              editMode: true,
-                              onConfirm: (pacing) async {
-                                await context.read<PacingCubit>().edit(pacing);
-                                return true;
-                              },
-                            ),
-                          );
-                        },
                         startMatch: () {
                           BottomSheetDialog.showDialog(
                             context: context,
@@ -88,6 +75,19 @@ class _PacingPageViewState extends State<PacingPageView> {
                                 }
 
                                 return false;
+                              },
+                            ),
+                          );
+                        },
+                        edit: () async {
+                          await BottomSheetDialog.showDialog(
+                            context: context,
+                            child: PacingDetailPageShell(
+                              pacing: pacing,
+                              editMode: true,
+                              onConfirm: (pacing) async {
+                                await context.read<PacingCubit>().edit(pacing);
+                                return true;
                               },
                             ),
                           );

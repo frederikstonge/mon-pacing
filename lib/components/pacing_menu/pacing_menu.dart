@@ -9,8 +9,8 @@ import '../../../models/pacing_model.dart';
 
 class PacingMenu extends StatelessWidget {
   final PacingModel pacing;
-  final FutureOr<void> Function() edit;
   final FutureOr<void> Function() startMatch;
+  final FutureOr<void> Function() edit;
   final FutureOr<void> Function() export;
   final FutureOr<void> Function() duplicate;
   final FutureOr<void> Function() delete;
@@ -18,8 +18,8 @@ class PacingMenu extends StatelessWidget {
   const PacingMenu({
     super.key,
     required this.pacing,
-    required this.edit,
     required this.startMatch,
+    required this.edit,
     required this.export,
     required this.duplicate,
     required this.delete,
@@ -37,12 +37,12 @@ class PacingMenu extends StatelessWidget {
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();
-              await edit.call();
+              await startMatch.call();
             },
             child: ListTile(
-              leading: const Icon(Icons.edit),
+              leading: const Icon(Icons.play_arrow),
               title: Text(
-                S.of(context).edit,
+                S.of(context).startMatch,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -51,12 +51,12 @@ class PacingMenu extends StatelessWidget {
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();
-              await startMatch.call();
+              await edit.call();
             },
             child: ListTile(
-              leading: const Icon(Icons.play_arrow),
+              leading: const Icon(Icons.edit),
               title: Text(
-                S.of(context).startMatch,
+                S.of(context).edit,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
