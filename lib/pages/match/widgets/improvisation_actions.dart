@@ -37,7 +37,13 @@ class ImprovisationActions extends StatelessWidget {
                   children: [
                     TeamColorAvatar(color: Color(team.color)),
                     const SizedBox(width: 6),
-                    Text(team.name),
+                    Expanded(
+                      child: Text(
+                        team.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
               ),

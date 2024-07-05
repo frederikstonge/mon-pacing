@@ -23,26 +23,30 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: match.teams
           .map(
-            (team) => Column(
-              children: [
-                Row(
-                  children: [
-                    TeamColorAvatar(color: Color(team.color)),
-                    const SizedBox(width: 6),
-                    Text(
-                      team.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-                Text(
-                  '${match.getTotalPointsByTeamId(team.id)}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.displayLarge!,
-                ),
-              ],
+            (team) => Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      TeamColorAvatar(color: Color(team.color)),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          team.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '${match.getTotalPointsByTeamId(team.id)}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.displayLarge!,
+                  ),
+                ],
+              ),
             ),
           )
           .toList(),

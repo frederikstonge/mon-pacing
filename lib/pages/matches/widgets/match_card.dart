@@ -7,6 +7,7 @@ import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/match_menu/match_menu.dart';
 import '../../../components/tags_display/tags_display.dart';
+import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/match_model.dart';
 
@@ -67,11 +68,41 @@ class MatchCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     TagsDisplay(tags: match.tags),
-                    Text(
-                      match.teams.map((e) => e.name).join(' ${S.of(context).versus} '),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    if (match.enableStatistics) ...[
+                      Row(
+                        children: match.teams
+                            .asMap()
+                            .entries
+                            .map(
+                              (e) => Expanded(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (e.key != 0) ...[
+                                      Text(
+                                        ' ${S.of(context).versus} ',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                    TeamColorAvatar(
+                                      color: Color(e.value.color),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Flexible(
+                                      child: Text(
+                                        e.value.name,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
                     Text(
                       S.of(context).modifiedDate(date: match.modifiedDate!),
                       maxLines: 1,
