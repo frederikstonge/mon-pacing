@@ -6,6 +6,7 @@ import '../../../components/actions/loading_icon_button.dart';
 import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/tags_display/tags_display.dart';
+import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../components/team_menu/team_menu.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/team_model.dart';
@@ -64,11 +65,21 @@ class TeamCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      team.name,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    Row(
+                      children: [
+                        TeamColorAvatar(
+                          color: Color(team.color),
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            team.name,
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
                     TagsDisplay(tags: team.tags),
                     Text(
