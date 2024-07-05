@@ -107,7 +107,15 @@ class PacingCard extends StatelessWidget {
                   ],
                 ),
               ),
-              LoadingIconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert))
+              LoadingIconButton.tonal(
+                onPressed: () => startMatch(),
+                tooltip: S.of(context).startMatch,
+                icon: const Icon(Icons.play_arrow),
+              ),
+              LoadingIconButton.filled(
+                onPressed: () => _openMenu(context),
+                icon: const Icon(Icons.more_vert),
+              ),
             ],
           ),
         ),
@@ -120,8 +128,8 @@ class PacingCard extends StatelessWidget {
       context: context,
       child: PacingMenu(
         pacing: pacing,
-        edit: edit,
         startMatch: startMatch,
+        edit: edit,
         export: export,
         duplicate: duplicate,
         delete: () async {
