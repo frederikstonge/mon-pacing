@@ -78,20 +78,20 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
         onChanged: (value) => widget.onChanged.call(widget.team.copyWith(name: value)),
         validator: (value) => Validators.stringRequired(value),
         decoration: InputDecoration(
-          suffixIcon: LoadingIconButton(
-            icon: const Icon(Icons.search),
-            onPressed: widget.allowSearch
-                ? () => TeamsSearch.showDialog(
-                      context,
-                      widget.getAllTeamTags,
-                      (team) {
-                        widget.onTeamSelected(team);
-                        teamNameController.text = team.name;
-                      },
-                      widget.getAllTeams,
-                    )
-                : null,
-          ),
+          suffixIcon: widget.allowSearch
+              ? LoadingIconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () => TeamsSearch.showDialog(
+                    context,
+                    widget.getAllTeamTags,
+                    (team) {
+                      widget.onTeamSelected(team);
+                      teamNameController.text = team.name;
+                    },
+                    widget.getAllTeams,
+                  ),
+                )
+              : null,
         ),
       ),
       trailing: LoadingIconButton(
