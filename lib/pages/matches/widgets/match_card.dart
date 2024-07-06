@@ -74,7 +74,7 @@ class MatchCard extends StatelessWidget {
                             .asMap()
                             .entries
                             .map(
-                              (e) => Expanded(
+                              (e) => Flexible(
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
