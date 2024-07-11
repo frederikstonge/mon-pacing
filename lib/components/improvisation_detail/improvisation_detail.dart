@@ -91,7 +91,10 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
             icon: const Icon(Icons.search),
             onPressed: () => CategoriesSearch.showDialog(
               context,
-              (category) => _categoryController.text = category,
+              (category) async {
+                _categoryController.text = category;
+                await widget.onChanged.call(widget.improvisation.copyWith(category: category));
+              },
               widget.getAllCategories,
             ),
           ),
