@@ -10,6 +10,7 @@ import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/tags_field_element.dart';
 import '../../components/form/text_field_element.dart';
+import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
@@ -140,8 +141,18 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                 context.read<MatchDetailCubit>().editTeam(e.key, value);
                               },
                               onDelete: !state.editMode && state.match.teams.length > Constants.minimumTeams
-                                  ? () {
-                                      context.read<MatchDetailCubit>().removeTeam(e.key);
+                                  ? () async {
+                                      final cubit = context.read<MatchDetailCubit>();
+                                      final result = await MessageBoxDialog.questionShow(
+                                        context,
+                                        S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: e.value.name),
+                                        S.of(context).delete,
+                                        S.of(context).cancel,
+                                      );
+
+                                      if (result == true) {
+                                        cubit.removeTeam(e.key);
+                                      }
                                     }
                                   : null,
                               getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
