@@ -4,7 +4,6 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/actions/haptic_switch.dart';
 import '../../components/actions/loading_button.dart';
-import '../../components/actions/loading_icon_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
@@ -25,7 +24,6 @@ import '../../repositories/teams_repository.dart';
 import '../../validators/validator.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
-import 'widgets/match_team_performers.dart';
 import 'widgets/match_team_tile.dart';
 
 class MatchDetailPageView extends StatefulWidget {
@@ -58,7 +56,6 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
   Widget build(BuildContext context) {
     return BlocBuilder<MatchDetailCubit, MatchDetailState>(
       builder: (context, state) {
-        final selectedTeam = state.match.teams.elementAt(state.selectedTeamIndex);
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
             title: state.editMode ? S.of(context).editMatch : S.of(context).startMatch,
@@ -130,71 +127,48 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                     padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                     child: TextHeader(
                       title: S.of(context).teams,
-                      trailing: LoadingIconButton(
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      ...state.match.teams.asMap().entries.map(
+                            (e) => MatchTeamTile(
+                              key: ValueKey(e.value.id),
+                              team: e.value,
+                              allowSearch: !state.editMode,
+                              onChanged: (value) {
+                                context.read<MatchDetailCubit>().editTeam(e.key, value);
+                              },
+                              onDelete: !state.editMode && state.match.teams.length > Constants.minimumTeams
+                                  ? () {
+                                      context.read<MatchDetailCubit>().removeTeam(e.key);
+                                    }
+                                  : null,
+                              getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
+                              getAllTeams: (query, selectedTags) => context.read<TeamsRepository>().search(query, selectedTags),
+                              onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
+                              addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
+                              editPerformer: context.read<MatchDetailCubit>().editPerformer,
+                              removePerformer:
+                                  e.value.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
+                              onDrag: context.read<MatchDetailCubit>().movePerformer,
+                              onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                            ),
+                          ),
+                      LoadingButton.filledIcon(
                         icon: const Icon(Icons.add),
                         onPressed: !state.editMode && state.match.teams.length < Constants.maximumTeams
                             ? () {
                                 context.read<MatchDetailCubit>().addTeam();
                               }
                             : null,
-                      ),
-                    ),
-                  ),
-                  CustomCard(
-                    child: Column(
-                      children: [
-                        ...state.match.teams.asMap().entries.map(
-                              (e) => MatchTeamTile(
-                                team: e.value,
-                                allowSearch: !state.editMode,
-                                onChanged: (value) {
-                                  context.read<MatchDetailCubit>().editTeam(e.key, value);
-                                },
-                                onDelete: !state.editMode && state.match.teams.length > Constants.minimumTeams
-                                    ? () {
-                                        context.read<MatchDetailCubit>().removeTeam(e.key);
-                                      }
-                                    : null,
-                                getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
-                                getAllTeams: (query, selectedTags) => context.read<TeamsRepository>().search(query, selectedTags),
-                                onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
-                              ),
-                            ),
-                        const Divider(),
-                        SegmentedButton(
-                          style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-                          segments: state.match.teams
-                              .asMap()
-                              .entries
-                              .map(
-                                (e) => ButtonSegment(
-                                  value: e.key,
-                                  label: Text(
-                                    e.value.name,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          selected: {state.selectedTeamIndex},
-                          onSelectionChanged: (values) async {
-                            context.read<MatchDetailCubit>().selectTeam(values.first);
-                          },
+                        child: Text(
+                          S.of(context).addTeam,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        MatchTeamPerformers(
-                          label: S.of(context).performers,
-                          performers: selectedTeam.performers,
-                          teamId: selectedTeam.id,
-                          addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
-                          editPerformer: context.read<MatchDetailCubit>().editPerformer,
-                          removePerformer:
-                              selectedTeam.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
-                          onDrag: context.read<MatchDetailCubit>().movePerformer,
-                          onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                        ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 16, right: 16),

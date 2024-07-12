@@ -68,7 +68,15 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                 ),
                 CustomCard(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
+                      Text(
+                        S.of(context).name,
+                        style: Theme.of(context).textTheme.labelMedium,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       SettingsTile(
                         leading: InkWell(
                           onTap: () async {
@@ -85,7 +93,6 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                             color: Color(state.team.color),
                             height: 36,
                             width: 36,
-                            borderWidth: 2,
                           ),
                         ),
                         title: TextFormField(
