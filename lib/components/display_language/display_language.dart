@@ -4,13 +4,15 @@ import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 
 class DisplayLanguage extends StatelessWidget {
   final Locale locale;
-  final double flagSize;
+  final double flagHeight;
+  final double flagWidth;
   final TextStyle? textStyle;
 
   const DisplayLanguage({
     super.key,
     required this.locale,
-    this.flagSize = 20,
+    this.flagHeight = 14,
+    this.flagWidth = 20,
     this.textStyle,
   });
 
@@ -27,13 +29,15 @@ class DisplayLanguage extends StatelessWidget {
                     FlagCode.fromLanguageCode(locale.languageCode.toLowerCase()) != null
                         ? CountryFlag.fromLanguageCode(
                             locale.languageCode,
-                            height: flagSize,
-                            width: flagSize,
+                            height: flagHeight,
+                            width: flagWidth,
+                            shape: const RoundedRectangle(2),
                           )
                         : CountryFlag.fromCountryCode(
                             locale.languageCode,
-                            height: flagSize,
-                            width: flagSize,
+                            height: flagHeight,
+                            width: flagWidth,
+                            shape: const RoundedRectangle(2),
                           ),
                     const SizedBox(width: 4),
                     Text(
