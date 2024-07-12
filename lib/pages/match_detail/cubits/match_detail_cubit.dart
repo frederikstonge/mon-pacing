@@ -65,10 +65,6 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     emit(state.copyWith(match: match));
   }
 
-  void selectTeam(int index) {
-    emit(state.copyWith(selectedTeamIndex: index));
-  }
-
   void addTeam() {
     final teams = List<MatchTeamModel>.from(state.match.teams);
     teams.add(_createTeam(teams));

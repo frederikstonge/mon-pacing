@@ -2,6 +2,7 @@
   "@@locale": "en",
   "addImprovisation": "Add improvisation",
   "addPenalty": "Add penalty",
+  "addTeam": "Add team",
   "appTitle": "Mon Pacing",
   "areYouSure": "Are you sure you want to {action} {name}?",
   "@areYouSure": {

@@ -2,6 +2,7 @@
   "@@locale": "fr",
   "addImprovisation": "Ajouter une improvisation",
   "addPenalty": "Ajouter une pénalité",
+  "addTeam": "Ajouter une équipe",
   "appTitle": "Mon Pacing",
   "areYouSure": "Êtes-vous sûr de vouloir {action} {name}?",
   "cancel": "Annuler",
