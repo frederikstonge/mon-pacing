@@ -79,7 +79,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                             ),
                           );
                         },
-                        edit: () async {
+                        editDetails: () async {
                           await BottomSheetDialog.showDialog(
                             context: context,
                             child: PacingDetailPageShell(

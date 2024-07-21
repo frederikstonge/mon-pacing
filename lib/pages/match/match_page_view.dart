@@ -81,7 +81,7 @@ class MatchPageView extends StatelessWidget {
                           context: context,
                           child: MatchMenu(
                             match: match,
-                            edit: () async {
+                            editDetails: () async {
                               await BottomSheetDialog.showDialog(
                                 context: context,
                                 child: MatchDetailPageShell(

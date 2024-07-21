@@ -19,7 +19,7 @@ class DatabaseRepository {
 
   Future<Isar> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
-    return Isar.open(
+    return await Isar.openAsync(
       schemas: [PacingModelSchema, MatchModelSchema, TeamModelSchema],
       directory: dir.path,
     );

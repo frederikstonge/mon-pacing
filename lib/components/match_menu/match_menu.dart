@@ -9,14 +9,16 @@ import '../../../models/match_model.dart';
 
 class MatchMenu extends StatelessWidget {
   final MatchModel match;
-  final FutureOr<void> Function() edit;
+  final FutureOr<void> Function()? edit;
+  final FutureOr<void> Function()? editDetails;
   final FutureOr<void> Function() delete;
 
   const MatchMenu({
     super.key,
     required this.match,
-    required this.edit,
     required this.delete,
+    this.edit,
+    this.editDetails,
   });
 
   @override
@@ -28,20 +30,38 @@ class MatchMenu extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
-          InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await edit.call();
-            },
-            child: ListTile(
-              leading: const Icon(Icons.edit),
-              title: Text(
-                S.of(context).edit,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+          if (editDetails != null) ...[
+            InkWell(
+              onTap: () async {
+                Navigator.of(context).pop();
+                await editDetails!.call();
+              },
+              child: ListTile(
+                leading: const Icon(Icons.edit_document),
+                title: Text(
+                  S.of(context).editDetails,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-          ),
+          ],
+          if (edit != null) ...[
+            InkWell(
+              onTap: () async {
+                Navigator.of(context).pop();
+                await edit!.call();
+              },
+              child: ListTile(
+                leading: const Icon(Icons.edit),
+                title: Text(
+                  S.of(context).edit,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();

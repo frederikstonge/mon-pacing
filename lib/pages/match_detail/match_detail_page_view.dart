@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
-import '../../components/actions/haptic_switch.dart';
 import '../../components/actions/loading_button.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
@@ -111,7 +110,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             )
                           ],
                         ),
-                        trailing: HapticSwitch(
+                        trailing: Switch(
                           value: state.match.enableStatistics,
                           onChanged: !state.editMode
                               ? (value) {
@@ -203,7 +202,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               )
                             ],
                           ),
-                          trailing: HapticSwitch(
+                          trailing: Switch(
                               value: state.match.enablePenaltiesImpactPoints,
                               onChanged: (value) {
                                 context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));
@@ -269,7 +268,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               )
                             ],
                           ),
-                          trailing: HapticSwitch(
+                          trailing: Switch(
                               value: state.match.enableMatchExpulsion,
                               onChanged: (value) {
                                 context.read<MatchDetailCubit>().edit(state.match.copyWith(enableMatchExpulsion: value));

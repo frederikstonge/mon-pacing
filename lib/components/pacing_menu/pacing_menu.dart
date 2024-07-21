@@ -10,7 +10,8 @@ import '../../../models/pacing_model.dart';
 class PacingMenu extends StatelessWidget {
   final PacingModel pacing;
   final FutureOr<void> Function() startMatch;
-  final FutureOr<void> Function() edit;
+  final FutureOr<void> Function()? edit;
+  final FutureOr<void> Function()? editDetails;
   final FutureOr<void> Function() export;
   final FutureOr<void> Function() duplicate;
   final FutureOr<void> Function() delete;
@@ -19,10 +20,11 @@ class PacingMenu extends StatelessWidget {
     super.key,
     required this.pacing,
     required this.startMatch,
-    required this.edit,
     required this.export,
     required this.duplicate,
     required this.delete,
+    this.edit,
+    this.editDetails,
   });
 
   @override
@@ -34,6 +36,22 @@ class PacingMenu extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
+          if (editDetails != null) ...[
+            InkWell(
+              onTap: () async {
+                Navigator.of(context).pop();
+                await editDetails!.call();
+              },
+              child: ListTile(
+                leading: const Icon(Icons.edit_document),
+                title: Text(
+                  S.of(context).editDetails,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();
@@ -48,20 +66,22 @@ class PacingMenu extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await edit.call();
-            },
-            child: ListTile(
-              leading: const Icon(Icons.edit),
-              title: Text(
-                S.of(context).edit,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+          if (edit != null) ...[
+            InkWell(
+              onTap: () async {
+                Navigator.of(context).pop();
+                await edit!.call();
+              },
+              child: ListTile(
+                leading: const Icon(Icons.edit),
+                title: Text(
+                  S.of(context).edit,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-          ),
+          ],
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();

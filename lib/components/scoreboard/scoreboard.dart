@@ -27,6 +27,7 @@ class Scoreboard extends StatelessWidget implements PreferredSizeWidget {
               child: Column(
                 children: [
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       TeamColorAvatar(color: Color(team.color)),
                       const SizedBox(width: 6),
