@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'app.dart';
 import 'bootstrapper.dart';
 import 'firebase_options.dart';
 
@@ -53,5 +54,5 @@ Future<void> main() async {
   );
 
   // APP
-  runApp(const Bootstrapper());
+  runApp(const Bootstrapper(child: App()));
 }

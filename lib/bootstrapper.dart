@@ -3,7 +3,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'app.dart';
 import 'cubits/matches/matches_cubit.dart';
 import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
@@ -18,10 +17,12 @@ import 'services/excel_service.dart';
 import 'services/toaster_service.dart';
 
 class Bootstrapper extends StatelessWidget {
+  final Widget child;
   final List<Object> overrides;
 
   const Bootstrapper({
     super.key,
+    required this.child,
     this.overrides = const [],
   });
 
@@ -117,7 +118,7 @@ class Bootstrapper extends StatelessWidget {
             )..initialize(),
           ),
         ],
-        child: const App(),
+        child: child,
       ),
     );
   }

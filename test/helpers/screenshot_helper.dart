@@ -1,38 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
-import 'package:mon_pacing/repositories/pacings_repository.dart';
-import 'package:mon_pacing/router/router.dart';
 
+import 'package:flutter_test/flutter_test.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
+import 'package:isar/isar.dart';
+
+import 'package:mockito/mockito.dart';
+import 'package:mon_pacing/models/match_model.dart';
+import 'package:mon_pacing/models/pacing_model.dart';
+import 'package:mon_pacing/models/team_model.dart';
+import 'package:mon_pacing/repositories/database_repository.dart';
+import 'package:mon_pacing/services/analytics_service.dart';
+
+import '../mocks/repositories.mocks.dart';
 import 'app_wrapper.dart';
-import 'data_helper.dart';
 
 Future<void> takeScreenshot({
   required WidgetTester tester,
-  required String path,
+  required Widget child,
   required String pageName,
   required bool isFinal,
   required Size sizeDp,
   required double density,
   CustomPump? customPump,
 }) async {
-  await tester.pumpWidgetBuilder(getAppWrapper());
+  final DatabaseRepository databaseRepository = MockDatabaseRepository();
 
-  final context = rootNavigatorKey.currentContext!;
-  final goRouter = GoRouter.of(context);
-  final pacingsRepository = context.read<PacingsRepository>();
-
-  await pacingsRepository.add(
-    DataHelper.getPacing(
-      'Pacing #1',
-      [],
+  when(databaseRepository.database).thenReturn(
+    Isar.openAsync(
+      schemas: [
+        PacingModelSchema,
+        MatchModelSchema,
+        TeamModelSchema,
+      ],
+      directory: Isar.sqliteInMemory,
+      engine: IsarEngine.sqlite,
     ),
   );
 
-  goRouter.go(path);
+  final AnalyticsService analyticsService = MockAnalyticsService();
 
+  await tester.pumpWidgetBuilder(
+    getAppWrapper(
+      child,
+      overrides: [
+        databaseRepository,
+        analyticsService,
+      ],
+    ),
+  );
   await multiScreenGolden(
     tester,
     pageName,
