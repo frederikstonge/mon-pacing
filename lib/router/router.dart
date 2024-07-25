@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../cubits/settings/settings_cubit.dart';
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
+import '../pages/onboarding/onboarding_page_view.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
 import '../pages/settings/settings_page_shell.dart';
@@ -14,10 +17,21 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: '/pacings',
+  redirect: (context, state) {
+    final settingsCubit = context.read<SettingsCubit>();
+    if (settingsCubit.state.isOnboarded) {
+      return null;
+    }
+
+    return '/onboarding';
+  },
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return ShellPageShell(navigationShell: navigationShell);
+        return ShellPageShell(
+          navigationShell: navigationShell,
+          key: state.pageKey,
+        );
       },
       branches: [
         StatefulShellBranch(
@@ -118,6 +132,14 @@ final router = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      name: Routes.onboarding,
+      path: '/onboarding',
+      builder: (context, state) => OnboardingPageView(
+        key: state.pageKey,
+      ),
     ),
   ],
 );

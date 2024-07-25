@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+
+import '../../../cubits/settings/settings_state.dart';
+
+class OnboardingPacing extends StatelessWidget {
+  final SettingsState state;
+  final void Function(SettingsState model) edit;
+
+  const OnboardingPacing({
+    super.key,
+    required this.state,
+    required this.edit,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
