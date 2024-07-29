@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
@@ -75,20 +74,20 @@ class TimerTaskHandler extends TaskHandler {
   TimerModel? _timer;
 
   @override
-  Future<void> onStart(DateTime timestamp, SendPort? sendPort) async {
+  Future<void> onStart(DateTime timestamp) async {
     _timer = await getTimer();
     _stopwatch = Stopwatch();
-    await onTick(sendPort);
+    await onTick();
   }
 
   @override
-  Future<void> onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
+  Future<void> onRepeatEvent(DateTime timestamp) async {
     _timer = await getTimer();
-    await onTick(sendPort);
+    await onTick();
   }
 
   @override
-  Future<void> onDestroy(DateTime timestamp, SendPort? sendPort) async {
+  Future<void> onDestroy(DateTime timestamp) async {
     _timer = null;
     _stopwatch?.stop();
     _stopwatch = null;
@@ -108,7 +107,7 @@ class TimerTaskHandler extends TaskHandler {
     FlutterForegroundTask.launchApp(path);
   }
 
-  Future<void> onTick(SendPort? sendPort) async {
+  Future<void> onTick() async {
     var timer = _timer?.copyWith();
 
     // Handle STOP
@@ -132,7 +131,7 @@ class TimerTaskHandler extends TaskHandler {
     final remainingMilliseconds = timer.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
     timer = timer.copyWith(remainingMilliseconds: remainingMilliseconds);
-    sendPort?.send(timer.toJson());
+    FlutterForegroundTask.sendDataToMain(timer.toJson());
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
 

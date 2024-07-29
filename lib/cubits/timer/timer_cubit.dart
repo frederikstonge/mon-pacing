@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:isolate';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -13,7 +12,6 @@ import '../settings/settings_cubit.dart';
 import 'timer_state.dart';
 
 class TimerCubit extends Cubit<TimerState> {
-  ReceivePort? _receivePort;
   final SettingsCubit settingsCubit;
   final ToasterService toasterService;
 
@@ -25,8 +23,8 @@ class TimerCubit extends Cubit<TimerState> {
   Future<void> initialize() async {
     await _requestPermissions();
     initForegroundTask();
-    _receivePort = FlutterForegroundTask.receivePort;
-    _receivePort?.listen(_onReceiveData);
+    FlutterForegroundTask.initCommunicationPort();
+    FlutterForegroundTask.addTaskDataCallback(_onReceiveData);
   }
 
   Future<bool> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
@@ -52,11 +50,13 @@ class TimerCubit extends Cubit<TimerState> {
 
     await _updateTimer(timer);
 
-    return await FlutterForegroundTask.startService(
+    final result = await FlutterForegroundTask.startService(
       notificationTitle: settingsCubit.localizer.notificationTitle,
       notificationText: '',
       callback: startCallback,
     );
+
+    return result.success;
   }
 
   Future<bool> resume() async {
@@ -73,14 +73,13 @@ class TimerCubit extends Cubit<TimerState> {
     final result = await FlutterForegroundTask.stopService();
     await FlutterForegroundTask.removeData(key: timerDataKey);
     emit(const TimerState());
-    return result;
+    return result.success;
   }
 
   @override
   Future<void> close() async {
     await stop();
-    _receivePort?.close();
-    _receivePort = null;
+    FlutterForegroundTask.removeTaskDataCallback(_onReceiveData);
     return await super.close();
   }
 
