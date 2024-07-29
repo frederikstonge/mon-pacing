@@ -19,7 +19,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.4
   flutter_file_dialog: ^3.0.2
-  flutter_foreground_task: ^7.1.0
+  flutter_foreground_task: ^8.0.0
   flutter_localizations:
     sdk: flutter
   flutter_localized_locales: ^2.0.5
