@@ -114,7 +114,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 child: CustomTooltip(
                                   tooltip: S.of(context).timerHapticFeedbackTooltip,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           trailing: Switch(

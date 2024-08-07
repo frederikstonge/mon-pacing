@@ -19,6 +19,8 @@ class OnboardingPageView extends StatefulWidget {
 }
 
 class _OnboardingPageViewState extends State<OnboardingPageView> {
+  static Duration transitionDuration = const Duration(milliseconds: 200);
+  static Curve transitionCurve = Curves.linear;
   late final PageController controller;
 
   @override
@@ -37,41 +39,82 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(),
-          body: PageView(
-            controller: controller,
-            children: [
-              OnboardingGeneral(
-                state: state,
-                edit: context.read<SettingsCubit>().edit,
+        return Stack(
+          children: [
+            Container(color: Theme.of(context).colorScheme.primary),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.secondary.withOpacity(0.0),
+                    Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                    Theme.of(context).colorScheme.secondary,
+                  ],
+                  begin: FractionalOffset.topLeft,
+                  end: FractionalOffset.bottomRight,
+                  stops: const [0.0, 0.5, 0.7],
+                  tileMode: TileMode.clamp,
+                ),
               ),
-              OnboardingPacing(
-                state: state,
-                edit: context.read<SettingsCubit>().edit,
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                body: PageView(
+                  controller: controller,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    OnboardingGeneral(
+                      state: state,
+                      edit: context.read<SettingsCubit>().edit,
+                      next: () => nextPage(),
+                      skip: () => onFinish(),
+                    ),
+                    OnboardingPacing(
+                      state: state,
+                      edit: context.read<SettingsCubit>().edit,
+                      next: () => nextPage(),
+                      previous: () => previousPage(),
+                      skip: () => onFinish(),
+                    ),
+                    OnboardingImprovisation(
+                      state: state,
+                      edit: context.read<SettingsCubit>().edit,
+                      next: () => nextPage(),
+                      previous: () => previousPage(),
+                      skip: () => onFinish(),
+                    ),
+                    OnboardingMatch(
+                      state: state,
+                      edit: context.read<SettingsCubit>().edit,
+                      next: () => nextPage(),
+                      previous: () => previousPage(),
+                      skip: () => onFinish(),
+                    ),
+                    OnboardingPenalties(
+                      state: state,
+                      edit: context.read<SettingsCubit>().edit,
+                      finish: () => onFinish(),
+                      previous: () => previousPage(),
+                    ),
+                  ],
+                ),
               ),
-              OnboardingImprovisation(
-                state: state,
-                edit: context.read<SettingsCubit>().edit,
-              ),
-              OnboardingMatch(
-                state: state,
-                edit: context.read<SettingsCubit>().edit,
-              ),
-              OnboardingPenalties(
-                state: state,
-                edit: context.read<SettingsCubit>().edit,
-              ),
-            ],
-          ),
-          bottomNavigationBar: Container(),
+            ),
+          ],
         );
       },
     );
   }
 
+  void nextPage() {
+    controller.nextPage(duration: transitionDuration, curve: transitionCurve);
+  }
+
+  void previousPage() {
+    controller.previousPage(duration: transitionDuration, curve: transitionCurve);
+  }
+
   void onFinish() {
     context.read<SettingsCubit>().edit(context.read<SettingsCubit>().state.copyWith(isOnboarded: true));
-    context.go(Routes.pacings);
+    context.goNamed(Routes.pacings);
   }
 }
