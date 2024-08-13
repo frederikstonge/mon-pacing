@@ -24,8 +24,12 @@ mixin _$TeamDetailState {
   TeamModel get team => throw _privateConstructorUsedError;
   int get selectedTeamIndex => throw _privateConstructorUsedError;
 
+  /// Serializes this TeamDetailState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TeamDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TeamDetailStateCopyWith<TeamDetailState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$TeamDetailStateCopyWithImpl<$Res, $Val extends TeamDetailState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TeamDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -74,6 +80,8 @@ class _$TeamDetailStateCopyWithImpl<$Res, $Val extends TeamDetailState>
     ) as $Val);
   }
 
+  /// Create a copy of TeamDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TeamModelCopyWith<$Res> get team {
@@ -105,6 +113,8 @@ class __$$TeamDetailStateImplCopyWithImpl<$Res>
       _$TeamDetailStateImpl _value, $Res Function(_$TeamDetailStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TeamDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -163,12 +173,14 @@ class _$TeamDetailStateImpl implements _TeamDetailState {
                 other.selectedTeamIndex == selectedTeamIndex));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, editMode, team, selectedTeamIndex);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TeamDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TeamDetailStateImplCopyWith<_$TeamDetailStateImpl> get copyWith =>
@@ -198,8 +210,11 @@ abstract class _TeamDetailState implements TeamDetailState {
   TeamModel get team;
   @override
   int get selectedTeamIndex;
+
+  /// Create a copy of TeamDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TeamDetailStateImplCopyWith<_$TeamDetailStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

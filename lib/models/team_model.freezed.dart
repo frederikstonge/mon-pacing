@@ -29,8 +29,12 @@ mixin _$TeamModel {
   List<PerformerModel> get performers => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
 
+  /// Serializes this TeamModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TeamModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TeamModelCopyWith<TeamModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -60,6 +64,8 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TeamModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,6 +136,8 @@ class __$$TeamModelImplCopyWithImpl<$Res>
       _$TeamModelImpl _value, $Res Function(_$TeamModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TeamModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,7 +251,7 @@ class _$TeamModelImpl extends _TeamModel {
             const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -255,7 +263,9 @@ class _$TeamModelImpl extends _TeamModel {
       const DeepCollectionEquality().hash(_performers),
       const DeepCollectionEquality().hash(_tags));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TeamModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TeamModelImplCopyWith<_$TeamModelImpl> get copyWith =>
@@ -298,8 +308,11 @@ abstract class _TeamModel extends TeamModel implements BaseModel {
   List<PerformerModel> get performers;
   @override
   List<String> get tags;
+
+  /// Create a copy of TeamModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TeamModelImplCopyWith<_$TeamModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

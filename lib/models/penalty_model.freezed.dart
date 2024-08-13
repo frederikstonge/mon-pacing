@@ -27,8 +27,12 @@ mixin _$PenaltyModel {
   int get teamId => throw _privateConstructorUsedError;
   int get improvisationId => throw _privateConstructorUsedError;
 
+  /// Serializes this PenaltyModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PenaltyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PenaltyModelCopyWith<PenaltyModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,6 +62,8 @@ class _$PenaltyModelCopyWithImpl<$Res, $Val extends PenaltyModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PenaltyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -122,6 +128,8 @@ class __$$PenaltyModelImplCopyWithImpl<$Res>
       _$PenaltyModelImpl _value, $Res Function(_$PenaltyModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PenaltyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -208,12 +216,14 @@ class _$PenaltyModelImpl implements _PenaltyModel {
                 other.improvisationId == improvisationId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, major, type, performerId, teamId, improvisationId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PenaltyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PenaltyModelImplCopyWith<_$PenaltyModelImpl> get copyWith =>
@@ -251,8 +261,11 @@ abstract class _PenaltyModel implements PenaltyModel {
   int get teamId;
   @override
   int get improvisationId;
+
+  /// Create a copy of PenaltyModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PenaltyModelImplCopyWith<_$PenaltyModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

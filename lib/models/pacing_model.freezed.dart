@@ -31,8 +31,12 @@ mixin _$PacingModel {
   int get defaultNumberOfTeams => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
 
+  /// Serializes this PacingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PacingModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PacingModelCopyWith<PacingModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -63,6 +67,8 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PacingModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,6 +139,8 @@ class __$$PacingModelImplCopyWithImpl<$Res>
       _$PacingModelImpl _value, $Res Function(_$PacingModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PacingModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -248,7 +256,7 @@ class _$PacingModelImpl extends _PacingModel {
             const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -260,7 +268,9 @@ class _$PacingModelImpl extends _PacingModel {
       defaultNumberOfTeams,
       const DeepCollectionEquality().hash(_tags));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PacingModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PacingModelImplCopyWith<_$PacingModelImpl> get copyWith =>
@@ -304,8 +314,11 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
   int get defaultNumberOfTeams;
   @override
   List<String> get tags;
+
+  /// Create a copy of PacingModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PacingModelImplCopyWith<_$PacingModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

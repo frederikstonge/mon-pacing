@@ -29,8 +29,12 @@ mixin _$TimerModel {
   bool get hapticFeedback => throw _privateConstructorUsedError;
   String get notificationTitle => throw _privateConstructorUsedError;
 
+  /// Serializes this TimerModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimerModelCopyWith<TimerModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +66,8 @@ class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -138,6 +144,8 @@ class __$$TimerModelImplCopyWithImpl<$Res>
       _$TimerModelImpl _value, $Res Function(_$TimerModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -246,7 +254,7 @@ class _$TimerModelImpl implements _TimerModel {
                 other.notificationTitle == notificationTitle));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -259,7 +267,9 @@ class _$TimerModelImpl implements _TimerModel {
       hapticFeedback,
       notificationTitle);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
@@ -303,8 +313,11 @@ abstract class _TimerModel implements TimerModel {
   bool get hapticFeedback;
   @override
   String get notificationTitle;
+
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

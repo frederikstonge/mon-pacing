@@ -78,6 +78,9 @@ class _$PacingStateCopyWithImpl<$Res, $Val extends PacingState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$PacingInitialStateImplCopyWithImpl<$Res>
   __$$PacingInitialStateImplCopyWithImpl(_$PacingInitialStateImpl _value,
       $Res Function(_$PacingInitialStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -205,6 +211,8 @@ class __$$PacingErrorStateImplCopyWithImpl<$Res>
       $Res Function(_$PacingErrorStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,7 +251,9 @@ class _$PacingErrorStateImpl implements PacingErrorState {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PacingErrorStateImplCopyWith<_$PacingErrorStateImpl> get copyWith =>
@@ -323,7 +333,10 @@ abstract class PacingErrorState implements PacingState {
   const factory PacingErrorState(final String error) = _$PacingErrorStateImpl;
 
   String get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PacingErrorStateImplCopyWith<_$PacingErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -347,6 +360,8 @@ class __$$PacingSuccessStateImplCopyWithImpl<$Res>
       $Res Function(_$PacingSuccessStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -360,6 +375,8 @@ class __$$PacingSuccessStateImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PacingModelCopyWith<$Res> get pacing {
@@ -393,7 +410,9 @@ class _$PacingSuccessStateImpl implements PacingSuccessState {
   @override
   int get hashCode => Object.hash(runtimeType, pacing);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PacingSuccessStateImplCopyWith<_$PacingSuccessStateImpl> get copyWith =>
@@ -474,7 +493,10 @@ abstract class PacingSuccessState implements PacingState {
       _$PacingSuccessStateImpl;
 
   PacingModel get pacing;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PacingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PacingSuccessStateImplCopyWith<_$PacingSuccessStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

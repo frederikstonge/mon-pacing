@@ -22,8 +22,12 @@ TimerState _$TimerStateFromJson(Map<String, dynamic> json) {
 mixin _$TimerState {
   TimerModel? get timer => throw _privateConstructorUsedError;
 
+  /// Serializes this TimerState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TimerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimerStateCopyWith<TimerState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$TimerStateCopyWithImpl<$Res, $Val extends TimerState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TimerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -62,6 +68,8 @@ class _$TimerStateCopyWithImpl<$Res, $Val extends TimerState>
     ) as $Val);
   }
 
+  /// Create a copy of TimerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerModelCopyWith<$Res>? get timer {
@@ -97,6 +105,8 @@ class __$$TimerStateImplCopyWithImpl<$Res>
       _$TimerStateImpl _value, $Res Function(_$TimerStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TimerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -135,11 +145,13 @@ class _$TimerStateImpl implements _TimerState {
             (identical(other.timer, timer) || other.timer == timer));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, timer);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimerStateImplCopyWith<_$TimerStateImpl> get copyWith =>
@@ -161,8 +173,11 @@ abstract class _TimerState implements TimerState {
 
   @override
   TimerModel? get timer;
+
+  /// Create a copy of TimerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimerStateImplCopyWith<_$TimerStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

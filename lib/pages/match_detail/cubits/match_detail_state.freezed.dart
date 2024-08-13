@@ -23,8 +23,12 @@ mixin _$MatchDetailState {
   bool get editMode => throw _privateConstructorUsedError;
   MatchModel get match => throw _privateConstructorUsedError;
 
+  /// Serializes this MatchDetailState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MatchDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MatchDetailStateCopyWith<MatchDetailState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$MatchDetailStateCopyWithImpl<$Res, $Val extends MatchDetailState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MatchDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -68,6 +74,8 @@ class _$MatchDetailStateCopyWithImpl<$Res, $Val extends MatchDetailState>
     ) as $Val);
   }
 
+  /// Create a copy of MatchDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $MatchModelCopyWith<$Res> get match {
@@ -99,6 +107,8 @@ class __$$MatchDetailStateImplCopyWithImpl<$Res>
       $Res Function(_$MatchDetailStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MatchDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -146,11 +156,13 @@ class _$MatchDetailStateImpl implements _MatchDetailState {
             (identical(other.match, match) || other.match == match));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, editMode, match);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MatchDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MatchDetailStateImplCopyWith<_$MatchDetailStateImpl> get copyWith =>
@@ -177,8 +189,11 @@ abstract class _MatchDetailState implements MatchDetailState {
   bool get editMode;
   @override
   MatchModel get match;
+
+  /// Create a copy of MatchDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MatchDetailStateImplCopyWith<_$MatchDetailStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

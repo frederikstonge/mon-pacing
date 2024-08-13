@@ -78,6 +78,9 @@ class _$TeamsStateCopyWithImpl<$Res, $Val extends TeamsState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$TeamsInitialStateImplCopyWithImpl<$Res>
   __$$TeamsInitialStateImplCopyWithImpl(_$TeamsInitialStateImpl _value,
       $Res Function(_$TeamsInitialStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -205,6 +211,8 @@ class __$$TeamsErrorStateImplCopyWithImpl<$Res>
       _$TeamsErrorStateImpl _value, $Res Function(_$TeamsErrorStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,7 +251,9 @@ class _$TeamsErrorStateImpl implements TeamsErrorState {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TeamsErrorStateImplCopyWith<_$TeamsErrorStateImpl> get copyWith =>
@@ -323,7 +333,10 @@ abstract class TeamsErrorState implements TeamsState {
   const factory TeamsErrorState(final String error) = _$TeamsErrorStateImpl;
 
   String get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TeamsErrorStateImplCopyWith<_$TeamsErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -345,6 +358,8 @@ class __$$TeamsSuccessStateImplCopyWithImpl<$Res>
       $Res Function(_$TeamsSuccessStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -399,7 +414,9 @@ class _$TeamsSuccessStateImpl implements TeamsSuccessState {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_teams), hasMore);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TeamsSuccessStateImplCopyWith<_$TeamsSuccessStateImpl> get copyWith =>
@@ -482,7 +499,10 @@ abstract class TeamsSuccessState implements TeamsState {
 
   List<TeamModel> get teams;
   bool get hasMore;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TeamsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TeamsSuccessStateImplCopyWith<_$TeamsSuccessStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

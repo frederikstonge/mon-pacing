@@ -24,8 +24,12 @@ mixin _$StarModel {
   int get performerId => throw _privateConstructorUsedError;
   int get teamId => throw _privateConstructorUsedError;
 
+  /// Serializes this StarModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StarModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StarModelCopyWith<StarModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$StarModelCopyWithImpl<$Res, $Val extends StarModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StarModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +97,8 @@ class __$$StarModelImplCopyWithImpl<$Res>
       _$StarModelImpl _value, $Res Function(_$StarModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StarModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -147,11 +155,13 @@ class _$StarModelImpl implements _StarModel {
             (identical(other.teamId, teamId) || other.teamId == teamId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, performerId, teamId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StarModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StarModelImplCopyWith<_$StarModelImpl> get copyWith =>
@@ -180,8 +190,11 @@ abstract class _StarModel implements StarModel {
   int get performerId;
   @override
   int get teamId;
+
+  /// Create a copy of StarModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StarModelImplCopyWith<_$StarModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

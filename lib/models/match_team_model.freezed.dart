@@ -25,8 +25,12 @@ mixin _$MatchTeamModel {
   int get color => throw _privateConstructorUsedError;
   List<PerformerModel> get performers => throw _privateConstructorUsedError;
 
+  /// Serializes this MatchTeamModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MatchTeamModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MatchTeamModelCopyWith<MatchTeamModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$MatchTeamModelCopyWithImpl<$Res, $Val extends MatchTeamModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MatchTeamModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +104,8 @@ class __$$MatchTeamModelImplCopyWithImpl<$Res>
       _$MatchTeamModelImpl _value, $Res Function(_$MatchTeamModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MatchTeamModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -172,12 +180,14 @@ class _$MatchTeamModelImpl implements _MatchTeamModel {
                 .equals(other._performers, _performers));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, color,
       const DeepCollectionEquality().hash(_performers));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MatchTeamModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MatchTeamModelImplCopyWith<_$MatchTeamModelImpl> get copyWith =>
@@ -210,8 +220,11 @@ abstract class _MatchTeamModel implements MatchTeamModel {
   int get color;
   @override
   List<PerformerModel> get performers;
+
+  /// Create a copy of MatchTeamModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MatchTeamModelImplCopyWith<_$MatchTeamModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

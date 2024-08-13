@@ -41,8 +41,12 @@ mixin _$MatchModel {
   bool get enableMatchExpulsion => throw _privateConstructorUsedError;
   int get penaltiesRequiredToExpel => throw _privateConstructorUsedError;
 
+  /// Serializes this MatchModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MatchModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MatchModelCopyWith<MatchModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -82,6 +86,8 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MatchModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -206,6 +212,8 @@ class __$$MatchModelImplCopyWithImpl<$Res>
       _$MatchModelImpl _value, $Res Function(_$MatchModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MatchModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -448,7 +456,7 @@ class _$MatchModelImpl extends _MatchModel {
                 other.penaltiesRequiredToExpel == penaltiesRequiredToExpel));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -469,7 +477,9 @@ class _$MatchModelImpl extends _MatchModel {
       enableMatchExpulsion,
       penaltiesRequiredToExpel);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MatchModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MatchModelImplCopyWith<_$MatchModelImpl> get copyWith =>
@@ -540,8 +550,11 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
   bool get enableMatchExpulsion;
   @override
   int get penaltiesRequiredToExpel;
+
+  /// Create a copy of MatchModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MatchModelImplCopyWith<_$MatchModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

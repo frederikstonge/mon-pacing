@@ -25,8 +25,12 @@ mixin _$PointModel {
   int get improvisationId => throw _privateConstructorUsedError;
   int get value => throw _privateConstructorUsedError;
 
+  /// Serializes this PointModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PointModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PointModelCopyWith<PointModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$PointModelCopyWithImpl<$Res, $Val extends PointModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PointModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +104,8 @@ class __$$PointModelImplCopyWithImpl<$Res>
       _$PointModelImpl _value, $Res Function(_$PointModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PointModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -165,12 +173,14 @@ class _$PointModelImpl implements _PointModel {
             (identical(other.value, value) || other.value == value));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, teamId, improvisationId, value);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PointModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PointModelImplCopyWith<_$PointModelImpl> get copyWith =>
@@ -202,8 +212,11 @@ abstract class _PointModel implements PointModel {
   int get improvisationId;
   @override
   int get value;
+
+  /// Create a copy of PointModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PointModelImplCopyWith<_$PointModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

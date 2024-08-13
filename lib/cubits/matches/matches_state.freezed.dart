@@ -79,6 +79,9 @@ class _$MatchesStateCopyWithImpl<$Res, $Val extends MatchesState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -95,6 +98,9 @@ class __$$MatchesInitialStateImplCopyWithImpl<$Res>
   __$$MatchesInitialStateImplCopyWithImpl(_$MatchesInitialStateImpl _value,
       $Res Function(_$MatchesInitialStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -208,6 +214,8 @@ class __$$MatchesErrorStateImplCopyWithImpl<$Res>
       $Res Function(_$MatchesErrorStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -246,7 +254,9 @@ class _$MatchesErrorStateImpl implements MatchesErrorState {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MatchesErrorStateImplCopyWith<_$MatchesErrorStateImpl> get copyWith =>
@@ -327,7 +337,10 @@ abstract class MatchesErrorState implements MatchesState {
   const factory MatchesErrorState(final String error) = _$MatchesErrorStateImpl;
 
   String get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MatchesErrorStateImplCopyWith<_$MatchesErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -349,6 +362,8 @@ class __$$MatchesSuccessStateImplCopyWithImpl<$Res>
       $Res Function(_$MatchesSuccessStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -405,7 +420,9 @@ class _$MatchesSuccessStateImpl implements MatchesSuccessState {
   int get hashCode => Object.hash(runtimeType,
       const DeepCollectionEquality().hash(_matches), hasReachedMax);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MatchesSuccessStateImplCopyWith<_$MatchesSuccessStateImpl> get copyWith =>
@@ -489,7 +506,10 @@ abstract class MatchesSuccessState implements MatchesState {
 
   List<MatchModel> get matches;
   bool get hasReachedMax;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MatchesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MatchesSuccessStateImplCopyWith<_$MatchesSuccessStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

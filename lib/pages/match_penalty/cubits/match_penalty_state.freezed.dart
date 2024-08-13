@@ -24,8 +24,12 @@ mixin _$MatchPenaltyState {
   List<MatchTeamModel> get teams => throw _privateConstructorUsedError;
   PenaltyModel get penalty => throw _privateConstructorUsedError;
 
+  /// Serializes this MatchPenaltyState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MatchPenaltyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MatchPenaltyStateCopyWith<MatchPenaltyState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$MatchPenaltyStateCopyWithImpl<$Res, $Val extends MatchPenaltyState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MatchPenaltyState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -74,6 +80,8 @@ class _$MatchPenaltyStateCopyWithImpl<$Res, $Val extends MatchPenaltyState>
     ) as $Val);
   }
 
+  /// Create a copy of MatchPenaltyState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PenaltyModelCopyWith<$Res> get penalty {
@@ -105,6 +113,8 @@ class __$$MatchPenaltyStateImplCopyWithImpl<$Res>
       $Res Function(_$MatchPenaltyStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MatchPenaltyState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -170,12 +180,14 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
             (identical(other.penalty, penalty) || other.penalty == penalty));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, editMode,
       const DeepCollectionEquality().hash(_teams), penalty);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MatchPenaltyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MatchPenaltyStateImplCopyWith<_$MatchPenaltyStateImpl> get copyWith =>
@@ -205,8 +217,11 @@ abstract class _MatchPenaltyState implements MatchPenaltyState {
   List<MatchTeamModel> get teams;
   @override
   PenaltyModel get penalty;
+
+  /// Create a copy of MatchPenaltyState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MatchPenaltyStateImplCopyWith<_$MatchPenaltyStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

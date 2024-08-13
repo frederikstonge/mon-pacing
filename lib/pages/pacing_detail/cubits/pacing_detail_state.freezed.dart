@@ -23,8 +23,12 @@ mixin _$PacingDetailState {
   bool get editMode => throw _privateConstructorUsedError;
   PacingModel get pacing => throw _privateConstructorUsedError;
 
+  /// Serializes this PacingDetailState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PacingDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PacingDetailStateCopyWith<PacingDetailState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$PacingDetailStateCopyWithImpl<$Res, $Val extends PacingDetailState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PacingDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -68,6 +74,8 @@ class _$PacingDetailStateCopyWithImpl<$Res, $Val extends PacingDetailState>
     ) as $Val);
   }
 
+  /// Create a copy of PacingDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PacingModelCopyWith<$Res> get pacing {
@@ -99,6 +107,8 @@ class __$$PacingDetailStateImplCopyWithImpl<$Res>
       $Res Function(_$PacingDetailStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PacingDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -146,11 +156,13 @@ class _$PacingDetailStateImpl implements _PacingDetailState {
             (identical(other.pacing, pacing) || other.pacing == pacing));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, editMode, pacing);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PacingDetailState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PacingDetailStateImplCopyWith<_$PacingDetailStateImpl> get copyWith =>
@@ -177,8 +189,11 @@ abstract class _PacingDetailState implements PacingDetailState {
   bool get editMode;
   @override
   PacingModel get pacing;
+
+  /// Create a copy of PacingDetailState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PacingDetailStateImplCopyWith<_$PacingDetailStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
