@@ -48,8 +48,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
   mockito: ^5.4.4
 
-dependency_overrides: 
-  archive: ^3.6.1 #excel??
+dependency_overrides:
   isar:
     version: ^4.0.3
     hosted: https://pub.isar-community.dev/

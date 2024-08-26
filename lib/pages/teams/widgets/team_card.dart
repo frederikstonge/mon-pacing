@@ -106,7 +106,7 @@ class TeamCard extends StatelessWidget {
   void _openMenu(BuildContext context) {
     BottomSheetDialog.showDialog(
       context: context,
-      child: TeamMenu(
+      builder: (context) => TeamMenu(
         team: team,
         edit: edit,
         export: export,

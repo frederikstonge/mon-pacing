@@ -144,7 +144,7 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           onTap: () async {
             final newDuration = await BottomSheetDialog.showDialog<Duration>(
               context: context,
-              child: DurationPicker(
+              builder: (context) => DurationPicker(
                 title: S.of(context).huddleTimer,
                 initialDuration: Duration(seconds: widget.improvisation.huddleTimerInSeconds),
               ),
@@ -173,7 +173,7 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           onTap: () async {
             final newDuration = await BottomSheetDialog.showDialog<Duration>(
               context: context,
-              child: DurationPicker(
+              builder: (context) => DurationPicker(
                 title: S.of(context).timeBuffer,
                 initialDuration: Duration(seconds: widget.improvisation.timeBufferInSeconds),
               ),

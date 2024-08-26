@@ -126,7 +126,7 @@ class PacingCard extends StatelessWidget {
   void _openMenu(BuildContext context) {
     BottomSheetDialog.showDialog(
       context: context,
-      child: PacingMenu(
+      builder: (context) => PacingMenu(
         pacing: pacing,
         startMatch: startMatch,
         edit: edit,

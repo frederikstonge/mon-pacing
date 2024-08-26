@@ -55,7 +55,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
               onPressed: () {
                 BottomSheetDialog.showDialog(
                   context: context,
-                  child: TeamDetailPageShell(
+                  builder: (context) => TeamDetailPageShell(
                     editMode: false,
                     onConfirm: (team) async {
                       await context.read<TeamsCubit>().add(team);
@@ -104,7 +104,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                       onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       edit: () => BottomSheetDialog.showDialog(
                         context: context,
-                        child: TeamDetailPageShell(
+                        builder: (context) => TeamDetailPageShell(
                           team: team,
                           editMode: true,
                           onConfirm: (team) async {
@@ -122,7 +122,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                       export: () => context.read<TeamsCubit>().export(team),
                       duplicate: () => BottomSheetDialog.showDialog(
                         context: context,
-                        child: TeamDetailPageShell(
+                        builder: (context) => TeamDetailPageShell(
                           editMode: false,
                           team: team,
                           onConfirm: (team) async {

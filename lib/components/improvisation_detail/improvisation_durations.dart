@@ -148,7 +148,7 @@ class _ImprovisationDurationItemState extends State<ImprovisationDurationItem> {
       onTap: () async {
         final newDuration = await BottomSheetDialog.showDialog<Duration>(
           context: context,
-          child: DurationPicker(
+          builder: (context) => DurationPicker(
             title: S.of(context).duration,
             initialDuration: widget.duration,
           ),

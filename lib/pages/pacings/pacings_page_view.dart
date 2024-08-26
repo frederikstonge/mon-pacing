@@ -60,7 +60,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
               onPressed: () {
                 BottomSheetDialog.showDialog(
                   context: context,
-                  child: PacingDetailPageShell(
+                  builder: (context) => PacingDetailPageShell(
                     editMode: false,
                     onConfirm: (pacing) async {
                       final router = GoRouter.of(context);
@@ -130,7 +130,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       export: () => context.read<PacingsCubit>().export(pacing),
                       duplicate: () => BottomSheetDialog.showDialog(
                         context: context,
-                        child: PacingDetailPageShell(
+                        builder: (context) => PacingDetailPageShell(
                           editMode: false,
                           pacing: pacing,
                           onConfirm: (pacing) async {
@@ -147,7 +147,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       ),
                       startMatch: () => BottomSheetDialog.showDialog(
                         context: context,
-                        child: MatchDetailPageShell(
+                        builder: (context) => MatchDetailPageShell(
                           pacing: pacing,
                           onConfirm: (match) async {
                             final router = GoRouter.of(context);

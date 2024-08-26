@@ -58,12 +58,12 @@ class _PacingPageViewState extends State<PacingPageView> {
                   LoadingIconButton(
                     onPressed: () => BottomSheetDialog.showDialog(
                       context: context,
-                      child: PacingMenu(
+                      builder: (context) => PacingMenu(
                         pacing: pacing,
                         startMatch: () {
                           BottomSheetDialog.showDialog(
                             context: context,
-                            child: MatchDetailPageShell(
+                            builder: (context) => MatchDetailPageShell(
                               pacing: pacing,
                               onConfirm: (match) async {
                                 final router = GoRouter.of(context);
@@ -82,7 +82,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                         editDetails: () async {
                           await BottomSheetDialog.showDialog(
                             context: context,
-                            child: PacingDetailPageShell(
+                            builder: (context) => PacingDetailPageShell(
                               pacing: pacing,
                               editMode: true,
                               onConfirm: (pacing) async {
@@ -112,7 +112,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                         duplicate: () {
                           return BottomSheetDialog.showDialog(
                             context: context,
-                            child: PacingDetailPageShell(
+                            builder: (context) => PacingDetailPageShell(
                               editMode: false,
                               pacing: pacing,
                               onConfirm: (pacing) async {

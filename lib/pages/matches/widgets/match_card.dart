@@ -122,7 +122,7 @@ class MatchCard extends StatelessWidget {
   void _openMenu(BuildContext context) {
     BottomSheetDialog.showDialog(
       context: context,
-      child: MatchMenu(
+      builder: (context) => MatchMenu(
         match: match,
         edit: edit,
         delete: () async {

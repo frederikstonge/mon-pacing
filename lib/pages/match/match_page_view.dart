@@ -50,7 +50,7 @@ class MatchPageView extends StatelessWidget {
                     onPressed: () {
                       BottomSheetDialog.showDialog(
                         context: context,
-                        child: MatchImprovisationShell(
+                        builder: (context) => MatchImprovisationShell(
                           match: match,
                           onConfirm: (improvisation, index) async => await context.read<MatchCubit>().addImprovisation(improvisation, index),
                         ),
@@ -67,7 +67,7 @@ class MatchPageView extends StatelessWidget {
                           onPressed: () async {
                             await BottomSheetDialog.showDialog(
                               context: context,
-                              child: MatchScoreboardShell(
+                              builder: (context) => MatchScoreboardShell(
                                 match: match,
                               ),
                             );
@@ -79,12 +79,12 @@ class MatchPageView extends StatelessWidget {
                       LoadingIconButton(
                         onPressed: () => BottomSheetDialog.showDialog(
                           context: context,
-                          child: MatchMenu(
+                          builder: (context) => MatchMenu(
                             match: match,
                             editDetails: () async {
                               await BottomSheetDialog.showDialog(
                                 context: context,
-                                child: MatchDetailPageShell(
+                                builder: (context) => MatchDetailPageShell(
                                   match: match,
                                   onConfirm: (match) async {
                                     await context.read<MatchCubit>().edit(match);
@@ -143,7 +143,7 @@ class MatchPageView extends StatelessWidget {
 
                             await BottomSheetDialog.showDialog(
                               context: context,
-                              child: MatchImprovisationShell(
+                              builder: (context) => MatchImprovisationShell(
                                 improvisation: improvisation,
                                 match: match,
                                 onConfirm: (improvisation, index) async => await context.read<MatchCubit>().editImprovisation(improvisation, index),
@@ -209,7 +209,7 @@ class MatchPageView extends StatelessWidget {
                                     tooltip: S.of(context).addPenalty,
                                     onPressed: () async => await BottomSheetDialog.showDialog(
                                       context: context,
-                                      child: MatchPenaltyShell(
+                                      builder: (context) => MatchPenaltyShell(
                                         improvisationId: improvisation.id,
                                         teams: match.teams,
                                         onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
@@ -221,7 +221,7 @@ class MatchPageView extends StatelessWidget {
                                       (e) => InkWell(
                                         onTap: () => BottomSheetDialog.showDialog(
                                           context: context,
-                                          child: MatchPenaltyShell(
+                                          builder: (context) => MatchPenaltyShell(
                                             improvisationId: improvisation.id,
                                             teams: match.teams,
                                             penalty: e,

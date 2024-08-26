@@ -71,7 +71,7 @@ class MatchSummary extends StatelessWidget {
             onPressed: () async {
               await BottomSheetDialog.showDialog(
                 context: context,
-                child: MatchScoreboardShell(
+                builder: (context) => MatchScoreboardShell(
                   match: match,
                 ),
               );
