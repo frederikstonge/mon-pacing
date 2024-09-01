@@ -82,7 +82,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
               onTap: () async {
                 final newColor = await BottomSheetDialog.showDialog<Color>(
                   context: context,
-                  builder: (context) => ColorPicker(initialColor: Color(widget.team.color), title: S.of(context).color),
+                  child: ColorPicker(initialColor: Color(widget.team.color), title: S.of(context).color),
                 );
                 if (newColor != null) {
                   widget.onChanged.call(widget.team.copyWith(color: newColor.value));

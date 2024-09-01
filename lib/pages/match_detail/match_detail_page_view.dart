@@ -221,7 +221,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                           onTap: () {
                             BottomSheetDialog.showDialog(
                               context: context,
-                              builder: (context) => PenaltiesImpactTypeView(
+                              child: PenaltiesImpactTypeView(
                                 currentPenaltiesImpactType: state.match.penaltiesImpactType,
                                 onChanged: (penaltiesImpactType) =>
                                     context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesImpactType: penaltiesImpactType)),

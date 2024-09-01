@@ -5,7 +5,7 @@ import '../../router/router.dart';
 class BottomSheetDialog {
   static Future<T?> showDialog<T>({
     required BuildContext context,
-    required Widget Function(BuildContext context) builder,
+    required Widget child,
   }) async {
     return await showModalBottomSheet(
       barrierColor: Theme.of(context).colorScheme.onSurface.withAlpha(100),
@@ -22,7 +22,7 @@ class BottomSheetDialog {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Flexible(child: builder(context)),
+              Flexible(child: child),
             ],
           ),
         );

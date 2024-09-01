@@ -66,7 +66,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           onTap: () {
                             BottomSheetDialog.showDialog(
                               context: context,
-                              builder: (context) => LanguageView(
+                              child: LanguageView(
                                 currentLocale: Locale(state.language),
                                 availableLocales: S.supportedLocales,
                                 onChanged: (locale) => context.read<SettingsCubit>().edit(state.copyWith(language: locale.toLanguageTag())),
@@ -88,7 +88,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           onTap: () {
                             BottomSheetDialog.showDialog(
                               context: context,
-                              builder: (context) => ThemeView(
+                              child: ThemeView(
                                 currentTheme: state.theme,
                                 onChanged: (theme) => context.read<SettingsCubit>().edit(state.copyWith(theme: theme)),
                               ),
@@ -184,7 +184,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                             final settingsCubit = context.read<SettingsCubit>();
                             final newDuration = await BottomSheetDialog.showDialog<Duration>(
                               context: context,
-                              builder: (context) => DurationPicker(
+                              child: DurationPicker(
                                 title: S.of(context).improvisationDurationInSeconds,
                                 initialDuration: Duration(seconds: state.defaultImprovisationDurationInSeconds),
                               ),
@@ -214,7 +214,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                             final settingsCubit = context.read<SettingsCubit>();
                             final newDuration = await BottomSheetDialog.showDialog<Duration>(
                               context: context,
-                              builder: (context) => DurationPicker(
+                              child: DurationPicker(
                                 title: S.of(context).huddleTimer,
                                 initialDuration: Duration(seconds: state.defaultHuddleTimerInSeconds),
                               ),
@@ -244,7 +244,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                             final settingsCubit = context.read<SettingsCubit>();
                             final newDuration = await BottomSheetDialog.showDialog<Duration>(
                               context: context,
-                              builder: (context) => DurationPicker(
+                              child: DurationPicker(
                                 title: S.of(context).timeBuffer,
                                 initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
                               ),
@@ -332,7 +332,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           onTap: () {
                             BottomSheetDialog.showDialog(
                               context: context,
-                              builder: (context) => PenaltiesImpactTypeView(
+                              child: PenaltiesImpactTypeView(
                                 currentPenaltiesImpactType: state.defaultPenaltiesImpactType,
                                 onChanged: (penaltiesImpactType) =>
                                     context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesImpactType: penaltiesImpactType)),
