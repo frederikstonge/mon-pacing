@@ -9,6 +9,7 @@ import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/settings/settings_cubit.dart';
+import '../../cubits/settings/settings_state.dart';
 import '../../cubits/teams/teams_cubit.dart';
 import '../../cubits/teams/teams_state.dart';
 import '../../l10n/app_localizations.dart';
@@ -66,15 +67,20 @@ class _TeamsPageViewState extends State<TeamsPageView> {
               tooltip: S.of(context).createNewTeamTooltip,
               child: const Icon(Icons.add),
             ),
-            appBar: SliverLogoAppbar(
-              title: S.of(context).teams,
-              actions: [
-                LoadingIconButton(
-                  icon: const Icon(Icons.download),
-                  tooltip: S.of(context).importTeamTooltip,
-                  onPressed: () async => context.read<TeamsCubit>().import(),
-                ),
-              ],
+            appBar: BlocBuilder<SettingsCubit, SettingsState>(
+              builder: (context, state) {
+                return SliverLogoAppbar(
+                  title: S.of(context).teams,
+                  theme: state.theme,
+                  actions: [
+                    LoadingIconButton(
+                      icon: const Icon(Icons.download),
+                      tooltip: S.of(context).importTeamTooltip,
+                      onPressed: () async => context.read<TeamsCubit>().import(),
+                    ),
+                  ],
+                );
+              },
             ),
             slivers: [
               const TimerBanner(),

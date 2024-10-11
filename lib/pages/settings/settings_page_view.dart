@@ -41,13 +41,16 @@ class _SettingsPageViewState extends State<SettingsPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverScaffold(
-      appBar: SliverLogoAppbar(title: S.of(context).settings),
-      slivers: [
-        const TimerBanner(),
-        BlocBuilder<SettingsCubit, SettingsState>(
-          builder: (context, state) {
-            return Form(
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
+        return SliverScaffold(
+          appBar: SliverLogoAppbar(
+            title: S.of(context).settings,
+            theme: state.theme,
+          ),
+          slivers: [
+            const TimerBanner(),
+            Form(
               key: formKey,
               child: SliverList.list(
                 children: [
@@ -415,10 +418,10 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                   ),
                 ],
               ),
-            );
-          },
-        ),
-      ],
+            )
+          ],
+        );
+      },
     );
   }
 }

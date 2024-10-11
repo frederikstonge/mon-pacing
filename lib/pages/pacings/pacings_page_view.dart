@@ -14,6 +14,7 @@ import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
 import '../../cubits/settings/settings_cubit.dart';
+import '../../cubits/settings/settings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
@@ -78,20 +79,25 @@ class _PacingsPageViewState extends State<PacingsPageView> {
               tooltip: S.of(context).createNewPacingTooltip,
               child: const Icon(Icons.add),
             ),
-            appBar: SliverLogoAppbar(
-              title: S.of(context).pacings,
-              actions: [
-                LoadingIconButton(
-                  icon: const Icon(Icons.download),
-                  tooltip: S.of(context).importPacingTooltip,
-                  onPressed: () async => context.read<PacingsCubit>().import(),
-                ),
-                LoadingIconButton(
-                  icon: const Icon(Icons.search),
-                  tooltip: S.of(context).search,
-                  onPressed: () => PacingsSearch.showDialog(context),
-                ),
-              ],
+            appBar: BlocBuilder<SettingsCubit, SettingsState>(
+              builder: (context, state) {
+                return SliverLogoAppbar(
+                  title: S.of(context).pacings,
+                  theme: state.theme,
+                  actions: [
+                    LoadingIconButton(
+                      icon: const Icon(Icons.download),
+                      tooltip: S.of(context).importPacingTooltip,
+                      onPressed: () async => context.read<PacingsCubit>().import(),
+                    ),
+                    LoadingIconButton(
+                      icon: const Icon(Icons.search),
+                      tooltip: S.of(context).search,
+                      onPressed: () => PacingsSearch.showDialog(context),
+                    ),
+                  ],
+                );
+              },
             ),
             slivers: [
               const TimerBanner(),
