@@ -12,6 +12,7 @@ import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/matches/matches_state.dart';
 import '../../cubits/settings/settings_cubit.dart';
+import '../../cubits/settings/settings_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
@@ -52,15 +53,20 @@ class _MatchesPageViewState extends State<MatchesPageView> {
           child: SliverScaffold(
             scrollController: _scrollController,
             scrollPhysics: const AlwaysScrollableScrollPhysics(),
-            appBar: SliverLogoAppbar(
-              title: S.of(context).matches,
-              actions: [
-                LoadingIconButton(
-                  icon: const Icon(Icons.search),
-                  tooltip: S.of(context).search,
-                  onPressed: () => MatchesSearch.showDialog(context),
-                ),
-              ],
+            appBar: BlocBuilder<SettingsCubit, SettingsState>(
+              builder: (context, state) {
+                return SliverLogoAppbar(
+                  title: S.of(context).matches,
+                  theme: state.theme,
+                  actions: [
+                    LoadingIconButton(
+                      icon: const Icon(Icons.search),
+                      tooltip: S.of(context).search,
+                      onPressed: () => MatchesSearch.showDialog(context),
+                    ),
+                  ],
+                );
+              },
             ),
             slivers: [
               const TimerBanner(),

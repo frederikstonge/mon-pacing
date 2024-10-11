@@ -13,6 +13,8 @@ import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
+import '../../cubits/settings/settings_cubit.dart';
+import '../../cubits/settings/settings_state.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../extensions/match_extensions.dart';
 import '../../extensions/penalty_extensions.dart';
@@ -59,59 +61,64 @@ class MatchPageView extends StatelessWidget {
                     tooltip: S.of(context).addImprovisation,
                     child: const Icon(Icons.add),
                   ),
-                  appBar: SliverLogoAppbar(
-                    title: match.name,
-                    actions: [
-                      if (match.enableStatistics) ...[
-                        LoadingIconButton(
-                          onPressed: () async {
-                            await BottomSheetDialog.showDialog(
+                  appBar: BlocBuilder<SettingsCubit, SettingsState>(
+                    builder: (context, state) {
+                      return SliverLogoAppbar(
+                        title: match.name,
+                        theme: state.theme,
+                        actions: [
+                          if (match.enableStatistics) ...[
+                            LoadingIconButton(
+                              onPressed: () async {
+                                await BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: MatchScoreboardShell(
+                                    match: match,
+                                  ),
+                                );
+                              },
+                              tooltip: S.of(context).scoreboard,
+                              icon: const Icon(Icons.scoreboard),
+                            ),
+                          ],
+                          LoadingIconButton(
+                            onPressed: () => BottomSheetDialog.showDialog(
                               context: context,
-                              child: MatchScoreboardShell(
+                              child: MatchMenu(
                                 match: match,
+                                editDetails: () async {
+                                  await BottomSheetDialog.showDialog(
+                                    context: context,
+                                    child: MatchDetailPageShell(
+                                      match: match,
+                                      onConfirm: (match) async {
+                                        await context.read<MatchCubit>().edit(match);
+                                        return true;
+                                      },
+                                    ),
+                                  );
+                                },
+                                delete: () async {
+                                  final matchesCubit = context.read<MatchesCubit>();
+                                  final router = GoRouter.of(context);
+                                  final result = await MessageBoxDialog.questionShow(
+                                    context,
+                                    S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
+                                    S.of(context).delete,
+                                    S.of(context).cancel,
+                                  );
+                                  if (result == true) {
+                                    await matchesCubit.delete(match);
+                                    router.pop();
+                                  }
+                                },
                               ),
-                            );
-                          },
-                          tooltip: S.of(context).scoreboard,
-                          icon: const Icon(Icons.scoreboard),
-                        ),
-                      ],
-                      LoadingIconButton(
-                        onPressed: () => BottomSheetDialog.showDialog(
-                          context: context,
-                          child: MatchMenu(
-                            match: match,
-                            editDetails: () async {
-                              await BottomSheetDialog.showDialog(
-                                context: context,
-                                child: MatchDetailPageShell(
-                                  match: match,
-                                  onConfirm: (match) async {
-                                    await context.read<MatchCubit>().edit(match);
-                                    return true;
-                                  },
-                                ),
-                              );
-                            },
-                            delete: () async {
-                              final matchesCubit = context.read<MatchesCubit>();
-                              final router = GoRouter.of(context);
-                              final result = await MessageBoxDialog.questionShow(
-                                context,
-                                S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
-                                S.of(context).delete,
-                                S.of(context).cancel,
-                              );
-                              if (result == true) {
-                                await matchesCubit.delete(match);
-                                router.pop();
-                              }
-                            },
+                            ),
+                            icon: const Icon(Icons.more_vert),
                           ),
-                        ),
-                        icon: const Icon(Icons.more_vert),
-                      ),
-                    ],
+                        ],
+                      );
+                    },
                   ),
                   slivers: [
                     TimerBanner(
