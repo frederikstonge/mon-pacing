@@ -101,7 +101,7 @@ class MatchSummary extends StatelessWidget {
               onPressed: () async {
                 await onExportIntegration!();
               },
-              child: Text(S.of(context).exportMatchSheet),
+              child: Text(S.of(context).exportMatchSheetTo(integrationId: match.integrationId!)),
             ),
           )
         ]

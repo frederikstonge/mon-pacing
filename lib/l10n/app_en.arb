@@ -49,6 +49,14 @@
   "enableStatisticsTooltip": "Add team lineups and track points, penalties etc",
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
   "exportMatchSheet": "Export match sheet",
+  "exportMatchSheetTo": "Export match sheet to {integrationId}",
+  "@exportMatchSheetTo": {
+    "placeholders": {
+      "integrationId": {
+        "type": "String"
+      }
+    }
+  },
   "exportPacing": "Export pacing",
   "exportTeam": "Export team",
   "free": "Free",
