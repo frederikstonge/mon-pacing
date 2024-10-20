@@ -60,6 +60,11 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                   theme: state.theme,
                   actions: [
                     LoadingIconButton(
+                      icon: const Icon(Icons.qr_code),
+                      tooltip: S.of(context).scanner,
+                      onPressed: () async => context.pushNamed(Routes.scanner),
+                    ),
+                    LoadingIconButton(
                       icon: const Icon(Icons.search),
                       tooltip: S.of(context).search,
                       onPressed: () => MatchesSearch.showDialog(context),
