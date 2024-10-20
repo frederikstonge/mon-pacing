@@ -35,6 +35,7 @@ dependencies:
   isar: ^4.0.0-dev.14
   isar_flutter_libs: ^4.0.0-dev.14
   json_annotation: ^4.8.1
+  mobile_scanner: ^6.0.1
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5
   textfield_tags: ^3.0.1

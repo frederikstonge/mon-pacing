@@ -91,6 +91,11 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       onPressed: () async => context.read<PacingsCubit>().import(),
                     ),
                     LoadingIconButton(
+                      icon: const Icon(Icons.qr_code),
+                      tooltip: S.of(context).scanner,
+                      onPressed: () async => context.pushNamed(Routes.scanner),
+                    ),
+                    LoadingIconButton(
                       icon: const Icon(Icons.search),
                       tooltip: S.of(context).search,
                       onPressed: () => PacingsSearch.showDialog(context),
