@@ -3,7 +3,7 @@ import '../models/pacing_model.dart';
 import 'match_integration_base.dart';
 import 'pacing_integration_base.dart';
 
-class CitrusScan implements PacingIntegrationBase, MatchIntegrationBase {
+class CitrusIntegration implements PacingIntegrationBase, MatchIntegrationBase {
   @override
   String get integrationId => 'Citrus';
 
@@ -26,7 +26,7 @@ class CitrusScan implements PacingIntegrationBase, MatchIntegrationBase {
   }
 
   @override
-  bool sendReport(MatchModel match) {
+  bool exportMatch(MatchModel match) {
     // TODO: implement sendReport
     throw UnimplementedError();
   }

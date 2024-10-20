@@ -20,11 +20,13 @@ import 'match_stars.dart';
 class MatchSummary extends StatelessWidget {
   final MatchModel match;
   final FutureOr<void> Function() onExport;
+  final FutureOr<void> Function()? onExportIntegration;
 
   const MatchSummary({
     super.key,
     required this.match,
     required this.onExport,
+    this.onExportIntegration,
   });
 
   @override
@@ -89,7 +91,20 @@ class MatchSummary extends StatelessWidget {
             },
             child: Text(S.of(context).exportMatchSheet),
           ),
-        )
+        ),
+        if (onExportIntegration != null) ...[
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: LoadingButton.tonalIcon(
+              icon: const Icon(Icons.cloud_done),
+              onPressed: () async {
+                await onExportIntegration!();
+              },
+              child: Text(S.of(context).exportMatchSheet),
+            ),
+          )
+        ]
       ],
     );
   }
