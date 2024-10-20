@@ -39,6 +39,7 @@
   "enableStatisticsTooltip": "Ajouter les alignements des équipes et calculer les points, pénalités etc",
   "enableTimerHapticFeedback": "Activer la vibration du chronomètre",
   "exportMatchSheet": "Exporter la feuille de match",
+  "exportMatchSheetTo": "Exporter la feuille de match à {integrationId}",
   "exportPacing": "Exporter le pacing",
   "exportTeam": "Exporter une équipe",
   "free": "Libre",
