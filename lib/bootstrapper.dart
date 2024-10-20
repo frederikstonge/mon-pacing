@@ -14,6 +14,7 @@ import 'repositories/pacings_repository.dart';
 import 'repositories/teams_repository.dart';
 import 'services/analytics_service.dart';
 import 'services/excel_service.dart';
+import 'services/integration_service.dart';
 import 'services/toaster_service.dart';
 
 class Bootstrapper extends StatelessWidget {
@@ -43,6 +44,11 @@ class Bootstrapper extends StatelessWidget {
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(
             () => ExcelService(),
+          ),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => _createOrGetOverride(
+            () => IntegrationService(),
           ),
         ),
         RepositoryProvider(
