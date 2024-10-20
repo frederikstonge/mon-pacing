@@ -18,7 +18,10 @@ import '../../cubits/settings/settings_state.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../extensions/match_extensions.dart';
 import '../../extensions/penalty_extensions.dart';
+import '../../integrations/match_integration_base.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../models/match_model.dart';
+import '../../services/integration_service.dart';
 import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_improvisation/match_improvisation_shell.dart';
@@ -272,10 +275,16 @@ class MatchPageView extends StatelessWidget {
                       ],
                     ] else ...[
                       SliverToBoxAdapter(
-                          child: MatchSummary(
-                        match: match,
-                        onExport: () => context.read<MatchCubit>().exportExcel(match),
-                      )),
+                        child: MatchSummary(
+                          match: match,
+                          onExport: () => context.read<MatchCubit>().exportExcel(match),
+                          onExportIntegration: match.integrationId != null && match.integrationEntityId != null
+                              ? () async {
+                                  await _onExportIntegration(context, match);
+                                }
+                              : null,
+                        ),
+                      ),
                     ],
                   ],
                 );
@@ -285,5 +294,26 @@ class MatchPageView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> _onExportIntegration(BuildContext context, MatchModel match) async {
+    final integration = context.read<IntegrationService>().getIntegration<MatchIntegrationBase>(match.integrationId!);
+    final toasterService = context.read<ToasterService>();
+    final localizer = S.of(context);
+    final result = await MessageBoxDialog.questionShow(
+      context,
+      localizer.areYouSure(action: localizer.exportMatchSheet.toLowerCase(), name: match.name),
+      localizer.exportMatchSheet,
+      localizer.cancel,
+    );
+    if (result ?? false) {
+      final exportResult = integration.exportMatch(match);
+      if (exportResult) {
+        toasterService.show(
+          title: localizer.toasterMatchResultExported,
+          type: ToastificationType.success,
+        );
+      }
+    }
   }
 }

@@ -5,5 +5,5 @@ import 'integration_base.dart';
 abstract class MatchIntegrationBase extends IntegrationBase {
   MatchModel getMatch(String scanData, PacingModel pacing);
 
-  bool sendReport(MatchModel match);
+  bool exportMatch(MatchModel match);
 }
