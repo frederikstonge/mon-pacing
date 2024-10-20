@@ -24,6 +24,8 @@ class PacingModel with _$PacingModel implements BaseModel {
     required List<ImprovisationModel> improvisations,
     @Default(2) int defaultNumberOfTeams,
     @Default([]) List<String> tags,
+    String? integrationId,
+    String? integrationEntityId,
   }) = _PacingModel;
 
   List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
