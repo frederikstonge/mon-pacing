@@ -79,6 +79,7 @@
   "multipleOf": "Doit être un multiple de {multiple}",
   "name": "Nom",
   "nextImprovisation": "Improvisation suivante",
+  "noIntegrationFound": "Aucune intégration trouvée.",
   "noPenalty": "Aucune pénalité.",
   "noStar": "Aucune étoile.",
   "notes": "Notes",
