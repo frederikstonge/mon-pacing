@@ -29,10 +29,9 @@ void initForegroundTask() {
       showNotification: false,
       playSound: false,
     ),
-    foregroundTaskOptions: const ForegroundTaskOptions(
-      interval: 1000,
+    foregroundTaskOptions: ForegroundTaskOptions(
+      eventAction: ForegroundTaskEventAction.repeat(1000),
       allowWakeLock: true,
-      isOnceEvent: false,
       autoRunOnBoot: false,
       autoRunOnMyPackageReplaced: false,
       allowWifiLock: false,
@@ -74,7 +73,7 @@ class TimerTaskHandler extends TaskHandler {
   TimerModel? _timer;
 
   @override
-  Future<void> onStart(DateTime timestamp) async {
+  Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
     _timer = await getTimer();
     _stopwatch = Stopwatch();
     await onTick();

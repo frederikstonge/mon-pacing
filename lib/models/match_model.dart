@@ -39,6 +39,8 @@ class MatchModel with _$MatchModel implements BaseModel {
     @Default(3) int penaltiesRequiredToImpactPoints,
     @Default(true) bool enableMatchExpulsion,
     @Default(3) int penaltiesRequiredToExpel,
+    String? integrationId,
+    String? integrationEntityId,
   }) = _MatchModel;
 
   List<String> get teamNames => teams.map((e) => e.name).toList();
