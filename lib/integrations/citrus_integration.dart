@@ -1,21 +1,14 @@
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
 import 'match_integration_base.dart';
-import 'pacing_integration_base.dart';
 
-class CitrusIntegration implements PacingIntegrationBase, MatchIntegrationBase {
+class CitrusIntegration implements MatchIntegrationBase {
   @override
   String get integrationId => 'Citrus';
 
   @override
   bool integrationIsValid(String data) {
     // TODO: implement integrationIsValid
-    throw UnimplementedError();
-  }
-
-  @override
-  PacingModel getPacing(String data) {
-    // TODO: implement getPacing
     throw UnimplementedError();
   }
 

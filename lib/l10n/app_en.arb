@@ -33,6 +33,13 @@
   "delete": "Delete",
   "duplicate": "Duplicate",
   "duplicateTag": "Duplicate tag {tag}",
+  "@duplicateTag": {
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
   "duration": "Duration",
   "edit": "Edit",
   "editDetails": "Edit details",
