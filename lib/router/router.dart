@@ -5,6 +5,7 @@ import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
+import '../pages/scanner/scanner_page_shell.dart';
 import '../pages/settings/settings_page_shell.dart';
 import '../pages/shell/shell_page_shell.dart';
 import '../pages/teams/teams_page_shell.dart';
@@ -118,6 +119,11 @@ final router = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      name: Routes.scanner,
+      path: '/scanner',
+      builder: (context, state) => const ScannerPageShell(),
     ),
   ],
 );
