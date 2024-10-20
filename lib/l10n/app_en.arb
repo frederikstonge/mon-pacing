@@ -138,6 +138,7 @@
   },
   "name": "Name",
   "nextImprovisation": "Next improvisation",
+  "noIntegrationFound": "No integration found.",
   "noPenalty": "No penalty.",
   "noStar": "No star.",
   "notes": "Notes",
