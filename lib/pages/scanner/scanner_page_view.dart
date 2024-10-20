@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../integrations/integration_base.dart';
 import '../../integrations/match_integration_base.dart';
@@ -11,6 +12,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
 import '../../services/integration_service.dart';
+import '../../services/toaster_service.dart';
 
 class ScannerPageView extends StatefulWidget {
   const ScannerPageView({super.key});
@@ -28,7 +30,11 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
   @override
   void initState() {
     super.initState();
-    controller = MobileScannerController(torchEnabled: torchEnabled, facing: isBackCamera ? CameraFacing.back : CameraFacing.front);
+    controller = MobileScannerController(
+      torchEnabled: torchEnabled,
+      facing: isBackCamera ? CameraFacing.back : CameraFacing.front,
+      autoStart: false,
+    );
     WidgetsBinding.instance.addObserver(this);
     _subscription = controller.barcodes.listen(_handleBarcode);
     unawaited(controller.start());
@@ -66,12 +72,6 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    final scanWindow = Rect.fromCenter(
-      center: MediaQuery.of(context).size.center(Offset.zero),
-      width: MediaQuery.of(context).size.shortestSide / 2,
-      height: MediaQuery.of(context).size.shortestSide / 2,
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).scanner),
@@ -98,7 +98,6 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       ),
       body: MobileScanner(
         controller: controller,
-        scanWindow: scanWindow,
       ),
     );
   }
@@ -120,22 +119,26 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
         if (integration is MatchIntegrationBase) {
           if (pacing == null) {
-            // Prompt pacing selection
+            // TODO: Prompt pacing selection
           }
 
           match = integration.getMatch(barcodeData, pacing!);
         }
 
         if (pacing != null && match == null) {
-          // Create pacing
+          // TODO: Create pacing
         } else if (match != null) {
-          // Create match
+          // TODO: Create match
         }
 
         return;
       }
     }
 
-    // No integration found
+    context.read<ToasterService>().show(
+          title: S.of(context).toasterGenericError,
+          description: S.of(context).noIntegrationFound,
+          type: ToastificationType.error,
+        );
   }
 }
