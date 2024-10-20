@@ -30,6 +30,8 @@ mixin _$PacingModel {
       throw _privateConstructorUsedError;
   int get defaultNumberOfTeams => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
+  String? get integrationId => throw _privateConstructorUsedError;
+  String? get integrationEntityId => throw _privateConstructorUsedError;
 
   /// Serializes this PacingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,7 +56,9 @@ abstract class $PacingModelCopyWith<$Res> {
       DateTime? modifiedDate,
       List<ImprovisationModel> improvisations,
       int defaultNumberOfTeams,
-      List<String> tags});
+      List<String> tags,
+      String? integrationId,
+      String? integrationEntityId});
 }
 
 /// @nodoc
@@ -79,6 +83,8 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? improvisations = null,
     Object? defaultNumberOfTeams = null,
     Object? tags = null,
+    Object? integrationId = freezed,
+    Object? integrationEntityId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -109,6 +115,14 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      integrationId: freezed == integrationId
+          ? _value.integrationId
+          : integrationId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      integrationEntityId: freezed == integrationEntityId
+          ? _value.integrationEntityId
+          : integrationEntityId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -128,7 +142,9 @@ abstract class _$$PacingModelImplCopyWith<$Res>
       DateTime? modifiedDate,
       List<ImprovisationModel> improvisations,
       int defaultNumberOfTeams,
-      List<String> tags});
+      List<String> tags,
+      String? integrationId,
+      String? integrationEntityId});
 }
 
 /// @nodoc
@@ -151,6 +167,8 @@ class __$$PacingModelImplCopyWithImpl<$Res>
     Object? improvisations = null,
     Object? defaultNumberOfTeams = null,
     Object? tags = null,
+    Object? integrationId = freezed,
+    Object? integrationEntityId = freezed,
   }) {
     return _then(_$PacingModelImpl(
       id: null == id
@@ -181,6 +199,14 @@ class __$$PacingModelImplCopyWithImpl<$Res>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      integrationId: freezed == integrationId
+          ? _value.integrationId
+          : integrationId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      integrationEntityId: freezed == integrationEntityId
+          ? _value.integrationEntityId
+          : integrationEntityId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -195,7 +221,9 @@ class _$PacingModelImpl extends _PacingModel {
       required this.modifiedDate,
       required final List<ImprovisationModel> improvisations,
       this.defaultNumberOfTeams = 2,
-      final List<String> tags = const []})
+      final List<String> tags = const [],
+      this.integrationId,
+      this.integrationEntityId})
       : _improvisations = improvisations,
         _tags = tags,
         super._();
@@ -234,8 +262,13 @@ class _$PacingModelImpl extends _PacingModel {
   }
 
   @override
+  final String? integrationId;
+  @override
+  final String? integrationEntityId;
+
+  @override
   String toString() {
-    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations, defaultNumberOfTeams: $defaultNumberOfTeams, tags: $tags)';
+    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations, defaultNumberOfTeams: $defaultNumberOfTeams, tags: $tags, integrationId: $integrationId, integrationEntityId: $integrationEntityId)';
   }
 
   @override
@@ -253,7 +286,11 @@ class _$PacingModelImpl extends _PacingModel {
                 .equals(other._improvisations, _improvisations) &&
             (identical(other.defaultNumberOfTeams, defaultNumberOfTeams) ||
                 other.defaultNumberOfTeams == defaultNumberOfTeams) &&
-            const DeepCollectionEquality().equals(other._tags, _tags));
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            (identical(other.integrationId, integrationId) ||
+                other.integrationId == integrationId) &&
+            (identical(other.integrationEntityId, integrationEntityId) ||
+                other.integrationEntityId == integrationEntityId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -266,7 +303,9 @@ class _$PacingModelImpl extends _PacingModel {
       modifiedDate,
       const DeepCollectionEquality().hash(_improvisations),
       defaultNumberOfTeams,
-      const DeepCollectionEquality().hash(_tags));
+      const DeepCollectionEquality().hash(_tags),
+      integrationId,
+      integrationEntityId);
 
   /// Create a copy of PacingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -292,7 +331,9 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
       required final DateTime? modifiedDate,
       required final List<ImprovisationModel> improvisations,
       final int defaultNumberOfTeams,
-      final List<String> tags}) = _$PacingModelImpl;
+      final List<String> tags,
+      final String? integrationId,
+      final String? integrationEntityId}) = _$PacingModelImpl;
   const _PacingModel._() : super._();
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
@@ -314,6 +355,10 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
   int get defaultNumberOfTeams;
   @override
   List<String> get tags;
+  @override
+  String? get integrationId;
+  @override
+  String? get integrationEntityId;
 
   /// Create a copy of PacingModel
   /// with the given fields replaced by the non-null parameter values.
