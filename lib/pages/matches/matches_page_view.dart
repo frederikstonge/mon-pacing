@@ -9,6 +9,8 @@ import '../../components/search_dialog/matches_search.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
+import '../../cubits/feature_flags/feature_flags_cubit.dart';
+import '../../cubits/feature_flags/feature_flags_state.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/matches/matches_state.dart';
 import '../../cubits/settings/settings_cubit.dart';
@@ -59,10 +61,17 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                   title: S.of(context).matches,
                   theme: state.theme,
                   actions: [
-                    LoadingIconButton(
-                      icon: const Icon(Icons.qr_code),
-                      tooltip: S.of(context).scanner,
-                      onPressed: () async => context.pushNamed(Routes.scanner),
+                    BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
+                      builder: (context, state) {
+                        if (state.enableIntegrations ?? false) {
+                          return LoadingIconButton(
+                            icon: const Icon(Icons.qr_code),
+                            tooltip: S.of(context).scanner,
+                            onPressed: () async => context.pushNamed(Routes.scanner),
+                          );
+                        }
+                        return SizedBox();
+                      },
                     ),
                     LoadingIconButton(
                       icon: const Icon(Icons.search),
