@@ -10,6 +10,8 @@ import '../../components/search_dialog/pacings_search.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
+import '../../cubits/feature_flags/feature_flags_cubit.dart';
+import '../../cubits/feature_flags/feature_flags_state.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
@@ -90,10 +92,17 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                       tooltip: S.of(context).importPacingTooltip,
                       onPressed: () async => context.read<PacingsCubit>().import(),
                     ),
-                    LoadingIconButton(
-                      icon: const Icon(Icons.qr_code),
-                      tooltip: S.of(context).scanner,
-                      onPressed: () async => context.pushNamed(Routes.scanner),
+                    BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
+                      builder: (context, state) {
+                        if (state.enableIntegrations ?? false) {
+                          return LoadingIconButton(
+                            icon: const Icon(Icons.qr_code),
+                            tooltip: S.of(context).scanner,
+                            onPressed: () async => context.pushNamed(Routes.scanner),
+                          );
+                        }
+                        return SizedBox();
+                      },
                     ),
                     LoadingIconButton(
                       icon: const Icon(Icons.search),
