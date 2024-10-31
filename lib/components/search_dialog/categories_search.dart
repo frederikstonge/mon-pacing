@@ -5,25 +5,21 @@ import 'package:flutter/material.dart';
 import 'search_dialog.dart';
 
 class CategoriesSearch extends StatelessWidget {
-  final void Function(String category) onCategorySubmitted;
-  final FutureOr<List<String>> Function({String query}) getAllCategories;
+  final FutureOr<List<String>> Function({String query}) fetch;
 
   const CategoriesSearch({
     super.key,
-    required this.getAllCategories,
-    required this.onCategorySubmitted,
+    required this.fetch,
   });
 
-  static void showDialog(
+  static Future<String?> showDialog(
     BuildContext context,
-    void Function(String tag) onCategorySubmitted,
-    FutureOr<List<String>> Function({String query}) getAllCategories,
-  ) {
-    Navigator.of(context).push(
+    FutureOr<List<String>> Function({String query}) fetch,
+  ) async {
+    return await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CategoriesSearch(
-          onCategorySubmitted: onCategorySubmitted,
-          getAllCategories: getAllCategories,
+          fetch: fetch,
         ),
       ),
     );
@@ -32,11 +28,10 @@ class CategoriesSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SearchDialog(
-      onChanged: (query, _) => getAllCategories(query: query),
+      onChanged: (query, _) => fetch(query: query),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
-          Navigator.of(context).pop();
-          onCategorySubmitted(item);
+          Navigator.of(context).pop(item);
         },
         child: ListTile(
           leading: const Icon(Icons.search),

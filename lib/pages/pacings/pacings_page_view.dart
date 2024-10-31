@@ -19,6 +19,7 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -107,7 +108,17 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                     LoadingIconButton(
                       icon: const Icon(Icons.search),
                       tooltip: S.of(context).search,
-                      onPressed: () => PacingsSearch.showDialog(context),
+                      onPressed: () async {
+                        final router = GoRouter.of(context);
+                        final result = await PacingsSearch.showDialog(
+                          context,
+                          context.read<PacingsRepository>().search,
+                          context.read<PacingsRepository>().getAllTags,
+                        );
+                        if (result != null) {
+                          router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
+                        }
+                      },
                     ),
                   ],
                 );

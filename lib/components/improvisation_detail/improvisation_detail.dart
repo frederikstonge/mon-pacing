@@ -89,14 +89,16 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           hintText: S.of(context).free,
           suffixIcon: LoadingIconButton(
             icon: const Icon(Icons.search),
-            onPressed: () => CategoriesSearch.showDialog(
-              context,
-              (category) async {
-                _categoryController.text = category;
-                await widget.onChanged.call(widget.improvisation.copyWith(category: category));
-              },
-              widget.getAllCategories,
-            ),
+            onPressed: () async {
+              final result = await CategoriesSearch.showDialog(
+                context,
+                widget.getAllCategories,
+              );
+              if (result != null) {
+                _categoryController.text = result;
+                await widget.onChanged.call(widget.improvisation.copyWith(category: result));
+              }
+            },
           ),
         ),
         const SizedBox(height: 8),
