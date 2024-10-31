@@ -1,31 +1,47 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../l10n/generated/app_localizations.dart';
-import '../../repositories/matches_repository.dart';
-import '../../router/routes.dart';
+import '../../models/match_model.dart';
 import 'search_dialog.dart';
 
 class MatchesSearch extends StatelessWidget {
-  const MatchesSearch({super.key});
+  final FutureOr<List<MatchModel>> Function(String query, List<String> selectedTags) fetch;
+  final Future<List<String>> Function() fetchTags;
 
-  static void showDialog(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MatchesSearch()));
+  const MatchesSearch({
+    super.key,
+    required this.fetch,
+    required this.fetchTags,
+  });
+
+  static Future<MatchModel?> showDialog(
+    BuildContext context,
+    FutureOr<List<MatchModel>> Function(String query, List<String> selectedTags) fetch,
+    Future<List<String>> Function() fetchTags,
+  ) async {
+    return await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MatchesSearch(
+          fetch: fetch,
+          fetchTags: fetchTags,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: context.read<MatchesRepository>().getAllTags(),
+        future: fetchTags(),
         builder: (context, snapshot) {
           return SearchDialog(
-            onChanged: (query, selectedTags) => context.read<MatchesRepository>().search(query, selectedTags),
+            onChanged: (query, selectedTags) => fetch(query, selectedTags),
             tags: snapshot.data,
             itemBuilder: (context, item) => InkWell(
               onTap: () {
-                Navigator.of(context).pop();
-                GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${item.id}'});
+                Navigator.of(context).pop(item);
               },
               child: ListTile(
                 leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),

@@ -61,11 +61,23 @@ class MatchCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      match.name,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            match.name,
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        if (match.integrationId != null) ...[
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(Icons.cloud_done, size: 16),
+                          ),
+                        ],
+                      ],
                     ),
                     TagsDisplay(tags: match.tags),
                     if (match.enableStatistics) ...[

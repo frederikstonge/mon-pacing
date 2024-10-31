@@ -1,30 +1,46 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../l10n/generated/app_localizations.dart';
-import '../../repositories/pacings_repository.dart';
-import '../../router/routes.dart';
+import '../../models/pacing_model.dart';
 import 'search_dialog.dart';
 
 class PacingsSearch extends StatelessWidget {
-  const PacingsSearch({super.key});
+  final FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) fetch;
+  final Future<List<String>> Function() fetchTags;
 
-  static void showDialog(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PacingsSearch()));
+  const PacingsSearch({
+    super.key,
+    required this.fetchTags,
+    required this.fetch,
+  });
+
+  static Future<PacingModel?> showDialog(
+    BuildContext context,
+    FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) fetch,
+    Future<List<String>> Function() fetchTags,
+  ) async {
+    return await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => PacingsSearch(
+          fetchTags: fetchTags,
+          fetch: fetch,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: context.read<PacingsRepository>().getAllTags(),
+      future: fetchTags(),
       builder: (context, snapshot) => SearchDialog(
-        onChanged: (query, selectedTags) => context.read<PacingsRepository>().search(query, selectedTags),
+        onChanged: (query, selectedTags) => fetch(query, selectedTags),
         tags: snapshot.data,
         itemBuilder: (context, item) => InkWell(
           onTap: () {
-            Navigator.of(context).pop();
-            GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${item.id}'});
+            Navigator.of(context).pop(item);
           },
           child: ListTile(
             leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),

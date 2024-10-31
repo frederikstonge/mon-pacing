@@ -103,15 +103,17 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                 suffixIcon: widget.allowSearch
                     ? LoadingIconButton(
                         icon: const Icon(Icons.search),
-                        onPressed: () => TeamsSearch.showDialog(
-                          context,
-                          widget.getAllTeamTags,
-                          (team) {
-                            widget.onTeamSelected(team);
-                            teamNameController.text = team.name;
-                          },
-                          widget.getAllTeams,
-                        ),
+                        onPressed: () async {
+                          final result = await TeamsSearch.showDialog(
+                            context,
+                            widget.getAllTeams,
+                            widget.getAllTeamTags,
+                          );
+                          if (result != null) {
+                            widget.onTeamSelected(result);
+                            teamNameController.text = result.name;
+                          }
+                        },
                       )
                     : null,
               ),

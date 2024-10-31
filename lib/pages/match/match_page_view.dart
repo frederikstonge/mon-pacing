@@ -278,7 +278,7 @@ class MatchPageView extends StatelessWidget {
                         child: MatchSummary(
                           match: match,
                           onExport: () => context.read<MatchCubit>().exportExcel(match),
-                          onExportIntegration: match.integrationId != null && match.integrationEntityId != null
+                          onExportIntegration: match.integrationId != null
                               ? () async {
                                   await _onExportIntegration(context, match);
                                 }

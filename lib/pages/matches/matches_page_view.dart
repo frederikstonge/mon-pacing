@@ -17,6 +17,7 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../repositories/matches_repository.dart';
 import '../../router/routes.dart';
 import 'widgets/match_card.dart';
 
@@ -76,7 +77,17 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                     LoadingIconButton(
                       icon: const Icon(Icons.search),
                       tooltip: S.of(context).search,
-                      onPressed: () => MatchesSearch.showDialog(context),
+                      onPressed: () async {
+                        final router = GoRouter.of(context);
+                        final result = await MatchesSearch.showDialog(
+                          context,
+                          context.read<MatchesRepository>().search,
+                          context.read<MatchesRepository>().getAllTags,
+                        );
+                        if (result != null) {
+                          router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
+                        }
+                      },
                     ),
                   ],
                 );
