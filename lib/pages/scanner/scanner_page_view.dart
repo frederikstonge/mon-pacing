@@ -114,7 +114,9 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       return;
     }
 
+    unawaited(controller.stop());
     final router = GoRouter.of(context);
+    final pacingsRepository = context.read<PacingsRepository>();
     final pacingsCubit = context.read<PacingsCubit>();
     final matchesCubit = context.read<MatchesCubit>();
     final toasterService = context.read<ToasterService>();
@@ -131,7 +133,6 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
         if (integration is MatchIntegrationBase) {
           if (pacing == null) {
-            final pacingsRepository = context.read<PacingsRepository>();
             final result = await PacingsSearch.showDialog(
               context,
               pacingsRepository.search,
@@ -139,6 +140,8 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             );
 
             if (result == null) {
+              // No pacing selected, restart scanner
+              unawaited(controller.start());
               return;
             }
 
@@ -153,6 +156,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           final pacingModel = await pacingsCubit.add(pacing);
           if (pacingModel != null) {
             router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+            return;
           } else {
             toasterService.show(
               title: localizer.toasterGenericError,
@@ -165,6 +169,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           final matchModel = await matchesCubit.add(match);
           if (matchModel != null) {
             router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+            return;
           } else {
             toasterService.show(
               title: localizer.toasterGenericError,
@@ -173,10 +178,14 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           }
         }
 
+        // Integration found but no pacing or match created, restart scanner
+        unawaited(controller.start());
         return;
       }
     }
 
+    // No integration found, restart scanner
+    unawaited(controller.start());
     toasterService.show(
       title: localizer.toasterGenericError,
       description: localizer.noIntegrationFound,
