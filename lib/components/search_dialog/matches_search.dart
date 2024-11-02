@@ -7,25 +7,25 @@ import '../../models/match_model.dart';
 import 'search_dialog.dart';
 
 class MatchesSearch extends StatelessWidget {
-  final FutureOr<List<MatchModel>> Function(String query, List<String> selectedTags) fetch;
-  final Future<List<String>> Function() fetchTags;
+  final FutureOr<List<MatchModel>> Function(String query, List<String> selectedTags) search;
+  final Future<List<String>> Function() getAllTags;
 
   const MatchesSearch({
     super.key,
-    required this.fetch,
-    required this.fetchTags,
+    required this.search,
+    required this.getAllTags,
   });
 
   static Future<MatchModel?> showDialog(
     BuildContext context,
-    FutureOr<List<MatchModel>> Function(String query, List<String> selectedTags) fetch,
-    Future<List<String>> Function() fetchTags,
+    FutureOr<List<MatchModel>> Function(String query, List<String> selectedTags) search,
+    Future<List<String>> Function() getAllTags,
   ) async {
     return await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => MatchesSearch(
-          fetch: fetch,
-          fetchTags: fetchTags,
+          search: search,
+          getAllTags: getAllTags,
         ),
       ),
     );
@@ -34,10 +34,10 @@ class MatchesSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: fetchTags(),
+        future: getAllTags(),
         builder: (context, snapshot) {
           return SearchDialog(
-            onChanged: (query, selectedTags) => fetch(query, selectedTags),
+            onChanged: (query, selectedTags) => search(query, selectedTags),
             tags: snapshot.data,
             itemBuilder: (context, item) => InkWell(
               onTap: () {
