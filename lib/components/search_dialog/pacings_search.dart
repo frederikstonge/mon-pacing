@@ -7,25 +7,25 @@ import '../../models/pacing_model.dart';
 import 'search_dialog.dart';
 
 class PacingsSearch extends StatelessWidget {
-  final FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) fetch;
-  final Future<List<String>> Function() fetchTags;
+  final FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) search;
+  final Future<List<String>> Function() getAllTags;
 
   const PacingsSearch({
     super.key,
-    required this.fetchTags,
-    required this.fetch,
+    required this.getAllTags,
+    required this.search,
   });
 
   static Future<PacingModel?> showDialog(
     BuildContext context,
-    FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) fetch,
-    Future<List<String>> Function() fetchTags,
+    FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) search,
+    Future<List<String>> Function() getAllTags,
   ) async {
     return await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => PacingsSearch(
-          fetchTags: fetchTags,
-          fetch: fetch,
+          getAllTags: getAllTags,
+          search: search,
         ),
       ),
     );
@@ -34,9 +34,9 @@ class PacingsSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchTags(),
+      future: getAllTags(),
       builder: (context, snapshot) => SearchDialog(
-        onChanged: (query, selectedTags) => fetch(query, selectedTags),
+        onChanged: (query, selectedTags) => search(query, selectedTags),
         tags: snapshot.data,
         itemBuilder: (context, item) => InkWell(
           onTap: () {
