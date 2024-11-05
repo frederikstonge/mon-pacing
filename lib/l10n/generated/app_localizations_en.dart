@@ -77,7 +77,7 @@ class SEn extends S {
   String get duplicate => 'Duplicate';
 
   @override
-  String duplicateTag({required Object tag}) {
+  String duplicateTag({required String tag}) {
     return 'Duplicate tag $tag';
   }
 
@@ -128,6 +128,11 @@ class SEn extends S {
 
   @override
   String get exportMatchSheet => 'Export match sheet';
+
+  @override
+  String exportMatchSheetTo({required String integrationId}) {
+    return 'Export match sheet to $integrationId';
+  }
 
   @override
   String get exportPacing => 'Export pacing';
@@ -238,6 +243,9 @@ class SEn extends S {
   String get nextImprovisation => 'Next improvisation';
 
   @override
+  String get noIntegrationFound => 'No integration found.';
+
+  @override
   String get noPenalty => 'No penalty.';
 
   @override
@@ -310,6 +318,9 @@ class SEn extends S {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get scanner => 'Scanner';
 
   @override
   String get scoreboard => 'Scoreboard';
