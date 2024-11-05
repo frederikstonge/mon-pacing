@@ -8,7 +8,7 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../components/tags_display/tags_display.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../components/team_menu/team_menu.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/team_model.dart';
 
 class TeamCard extends StatelessWidget {

@@ -9,7 +9,7 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../components/search_dialog/teams_search.dart';
 import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_team_model.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';

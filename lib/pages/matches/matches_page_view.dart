@@ -13,7 +13,7 @@ import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/matches/matches_state.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
 import 'widgets/match_card.dart';

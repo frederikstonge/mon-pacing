@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mon_pacing/bootstrapper.dart';
 import 'package:mon_pacing/cubits/settings/settings_cubit.dart';
 import 'package:mon_pacing/cubits/settings/settings_state.dart';
-import 'package:mon_pacing/l10n/app_localizations.dart';
+import 'package:mon_pacing/l10n/generated/app_localizations.dart';
 import 'package:mon_pacing/models/theme_type.dart';
 import 'package:mon_pacing/router/router.dart';
 import 'package:mon_pacing/themes/themes.dart';

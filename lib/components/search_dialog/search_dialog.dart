@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../components/tag_filters/tag_filters.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class SearchDialog<T> extends StatefulWidget {
   final FutureOr<List<T>> Function(String query, List<String> selectedTags) onChanged;

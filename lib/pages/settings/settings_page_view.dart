@@ -16,7 +16,7 @@ import '../../components/tooltip/custom_tooltip.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../extensions/duration_extensions.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';

@@ -7,7 +7,7 @@ import '../../../components/actions/loading_icon_button.dart';
 import '../../../cubits/timer/timer_cubit.dart';
 import '../../../cubits/timer/timer_state.dart';
 import '../../../extensions/duration_extensions.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/timer_status.dart';

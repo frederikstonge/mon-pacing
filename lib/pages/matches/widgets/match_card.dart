@@ -8,7 +8,7 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../components/match_menu/match_menu.dart';
 import '../../../components/tags_display/tags_display.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
 
 class MatchCard extends StatelessWidget {

@@ -14,7 +14,7 @@ import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';

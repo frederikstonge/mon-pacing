@@ -5,7 +5,7 @@ import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../components/text_header/text_header.dart';
 import '../../../extensions/match_extensions.dart';
 import '../../../extensions/penalty_extensions.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
 
 class ScoreDetail extends StatelessWidget {

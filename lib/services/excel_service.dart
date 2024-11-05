@@ -3,7 +3,7 @@ import 'package:excel/excel.dart' as excel;
 
 import '../extensions/match_extensions.dart';
 import '../extensions/penalty_extensions.dart';
-import '../l10n/app_localizations.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/match_model.dart';
 
 class ExcelService {

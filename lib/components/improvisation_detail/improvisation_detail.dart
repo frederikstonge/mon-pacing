@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../extensions/duration_extensions.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../actions/loading_icon_button.dart';

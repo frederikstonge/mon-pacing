@@ -11,7 +11,7 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../components/scoreboard/scoreboard.dart';
 import '../../../components/text_header/text_header.dart';
 import '../../../cubits/settings/settings_cubit.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
 import '../../match_scoreboard/match_scoreboard_shell.dart';
 import '../cubits/match_cubit.dart';

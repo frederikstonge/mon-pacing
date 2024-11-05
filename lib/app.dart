@@ -6,7 +6,7 @@ import 'package:toastification/toastification.dart';
 
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/settings/settings_state.dart';
-import 'l10n/app_localizations.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'models/theme_type.dart';
 import 'router/router.dart';
 import 'themes/themes.dart';

@@ -14,7 +14,7 @@ import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/text_header/text_header.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/teams/teams_cubit.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../validators/validator.dart';
 import 'cubits/team_detail_cubit.dart';
 import 'cubits/team_detail_state.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../actions/loading_button.dart';
 import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';
 

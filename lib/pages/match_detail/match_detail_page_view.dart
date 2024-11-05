@@ -17,7 +17,7 @@ import '../../components/text_header/text_header.dart';
 import '../../components/tooltip/custom_tooltip.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../repositories/teams_repository.dart';

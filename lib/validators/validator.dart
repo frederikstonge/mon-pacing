@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../l10n/app_localizations.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../router/router.dart';
 
 class Validators {

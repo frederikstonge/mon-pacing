@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/penalties_impact_type.dart';
 import '../bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';

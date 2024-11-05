@@ -18,7 +18,7 @@ import '../../cubits/settings/settings_state.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../extensions/match_extensions.dart';
 import '../../extensions/penalty_extensions.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_improvisation/match_improvisation_shell.dart';

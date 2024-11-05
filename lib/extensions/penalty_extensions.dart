@@ -1,4 +1,4 @@
-import '../l10n/app_localizations.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/match_model.dart';
 import '../models/penalty_model.dart';
 

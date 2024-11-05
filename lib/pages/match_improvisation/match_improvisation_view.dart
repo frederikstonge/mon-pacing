@@ -10,7 +10,7 @@ import '../../components/improvisation_detail/improvisation_detail.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import 'cubits/match_improvisation_cubit.dart';
 import 'cubits/match_improvisation_state.dart';
 

@@ -7,7 +7,7 @@ import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/pacing_menu/pacing_menu.dart';
 import '../../../components/tags_display/tags_display.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/pacing_model.dart';
 
 class PacingCard extends StatelessWidget {

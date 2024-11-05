@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../cubits/settings/settings_cubit.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class ShellPageView extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
