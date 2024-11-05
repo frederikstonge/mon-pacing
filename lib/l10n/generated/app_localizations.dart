@@ -231,7 +231,7 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'Duplicate tag {tag}'**
-  String duplicateTag({required Object tag});
+  String duplicateTag({required String tag});
 
   /// No description provided for @duration.
   ///
@@ -328,6 +328,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Export match sheet'**
   String get exportMatchSheet;
+
+  /// No description provided for @exportMatchSheetTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Export match sheet to {integrationId}'**
+  String exportMatchSheetTo({required String integrationId});
 
   /// No description provided for @exportPacing.
   ///
@@ -515,6 +521,12 @@ abstract class S {
   /// **'Next improvisation'**
   String get nextImprovisation;
 
+  /// No description provided for @noIntegrationFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No integration found.'**
+  String get noIntegrationFound;
+
   /// No description provided for @noPenalty.
   ///
   /// In en, this message translates to:
@@ -658,6 +670,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @scanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanner'**
+  String get scanner;
 
   /// No description provided for @scoreboard.
   ///

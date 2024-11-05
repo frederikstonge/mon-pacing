@@ -77,7 +77,7 @@ class SFr extends S {
   String get duplicate => 'Dupliquer';
 
   @override
-  String duplicateTag({required Object tag}) {
+  String duplicateTag({required String tag}) {
     return 'Étiquette $tag dupliquée ';
   }
 
@@ -128,6 +128,11 @@ class SFr extends S {
 
   @override
   String get exportMatchSheet => 'Exporter la feuille de match';
+
+  @override
+  String exportMatchSheetTo({required String integrationId}) {
+    return 'Exporter la feuille de match à $integrationId';
+  }
 
   @override
   String get exportPacing => 'Exporter le pacing';
@@ -238,6 +243,9 @@ class SFr extends S {
   String get nextImprovisation => 'Improvisation suivante';
 
   @override
+  String get noIntegrationFound => 'Aucune intégration trouvée.';
+
+  @override
   String get noPenalty => 'Aucune pénalité.';
 
   @override
@@ -310,6 +318,9 @@ class SFr extends S {
 
   @override
   String get save => 'Sauvegarder';
+
+  @override
+  String get scanner => 'Scan';
 
   @override
   String get scoreboard => 'Panneau de résultats';
