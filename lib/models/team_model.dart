@@ -23,8 +23,6 @@ class TeamModel with _$TeamModel implements BaseModel {
     required int color,
     @Default([]) List<PerformerModel> performers,
     @Default([]) List<String> tags,
-    String? integrationId,
-    String? integrationEntityId,
   }) = _TeamModel;
 
   List<String> get performerNames => performers.map((p) => p.name).toList();

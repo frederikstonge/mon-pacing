@@ -37,14 +37,6 @@ const PacingModelSchema = IsarGeneratedSchema(
         type: IsarType.dateTime,
       ),
       IsarPropertySchema(
-        name: 'integrationId',
-        type: IsarType.string,
-      ),
-      IsarPropertySchema(
-        name: 'integrationEntityId',
-        type: IsarType.string,
-      ),
-      IsarPropertySchema(
         name: 'name',
         type: IsarType.string,
       ),
@@ -60,6 +52,14 @@ const PacingModelSchema = IsarGeneratedSchema(
       IsarPropertySchema(
         name: 'tags',
         type: IsarType.stringList,
+      ),
+      IsarPropertySchema(
+        name: 'integrationId',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'integrationEntityId',
+        type: IsarType.string,
       ),
     ],
     indexes: [
@@ -117,26 +117,10 @@ int serializePacingModel(IsarWriter writer, PacingModel object) {
       4,
       object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
-  {
-    final value = object.integrationId;
-    if (value == null) {
-      IsarCore.writeNull(writer, 5);
-    } else {
-      IsarCore.writeString(writer, 5, value);
-    }
-  }
-  {
-    final value = object.integrationEntityId;
-    if (value == null) {
-      IsarCore.writeNull(writer, 6);
-    } else {
-      IsarCore.writeString(writer, 6, value);
-    }
-  }
-  IsarCore.writeString(writer, 7, object.name);
+  IsarCore.writeString(writer, 5, object.name);
   {
     final list = object.improvisations;
-    final listWriter = IsarCore.beginList(writer, 8, list.length);
+    final listWriter = IsarCore.beginList(writer, 6, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -147,14 +131,30 @@ int serializePacingModel(IsarWriter writer, PacingModel object) {
     }
     IsarCore.endList(writer, listWriter);
   }
-  IsarCore.writeLong(writer, 9, object.defaultNumberOfTeams);
+  IsarCore.writeLong(writer, 7, object.defaultNumberOfTeams);
   {
     final list = object.tags;
-    final listWriter = IsarCore.beginList(writer, 10, list.length);
+    final listWriter = IsarCore.beginList(writer, 8, list.length);
     for (var i = 0; i < list.length; i++) {
       IsarCore.writeString(listWriter, i, list[i]);
     }
     IsarCore.endList(writer, listWriter);
+  }
+  {
+    final value = object.integrationId;
+    if (value == null) {
+      IsarCore.writeNull(writer, 9);
+    } else {
+      IsarCore.writeString(writer, 9, value);
+    }
+  }
+  {
+    final value = object.integrationEntityId;
+    if (value == null) {
+      IsarCore.writeNull(writer, 10);
+    } else {
+      IsarCore.writeString(writer, 10, value);
+    }
   }
   return object.id;
 }
@@ -183,15 +183,11 @@ PacingModel deserializePacingModel(IsarReader reader) {
           DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
     }
   }
-  final String? _integrationId;
-  _integrationId = IsarCore.readString(reader, 5);
-  final String? _integrationEntityId;
-  _integrationEntityId = IsarCore.readString(reader, 6);
   final String _name;
-  _name = IsarCore.readString(reader, 7) ?? '';
+  _name = IsarCore.readString(reader, 5) ?? '';
   final List<ImprovisationModel> _improvisations;
   {
-    final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -235,10 +231,10 @@ PacingModel deserializePacingModel(IsarReader reader) {
     }
   }
   final int _defaultNumberOfTeams;
-  _defaultNumberOfTeams = IsarCore.readLong(reader, 9);
+  _defaultNumberOfTeams = IsarCore.readLong(reader, 7);
   final List<String> _tags;
   {
-    final length = IsarCore.readList(reader, 10, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -253,16 +249,20 @@ PacingModel deserializePacingModel(IsarReader reader) {
       }
     }
   }
+  final String? _integrationId;
+  _integrationId = IsarCore.readString(reader, 9);
+  final String? _integrationEntityId;
+  _integrationEntityId = IsarCore.readString(reader, 10);
   final object = PacingModel(
     id: _id,
     createdDate: _createdDate,
     modifiedDate: _modifiedDate,
-    integrationId: _integrationId,
-    integrationEntityId: _integrationEntityId,
     name: _name,
     improvisations: _improvisations,
     defaultNumberOfTeams: _defaultNumberOfTeams,
     tags: _tags,
+    integrationId: _integrationId,
+    integrationEntityId: _integrationEntityId,
   );
   return object;
 }
@@ -327,14 +327,10 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
         }
       }
     case 5:
-      return IsarCore.readString(reader, 5);
+      return IsarCore.readString(reader, 5) ?? '';
     case 6:
-      return IsarCore.readString(reader, 6);
-    case 7:
-      return IsarCore.readString(reader, 7) ?? '';
-    case 8:
       {
-        final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -377,11 +373,11 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
           }
         }
       }
-    case 9:
-      return IsarCore.readLong(reader, 9);
-    case 10:
+    case 7:
+      return IsarCore.readLong(reader, 7);
+    case 8:
       {
-        final length = IsarCore.readList(reader, 10, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -396,6 +392,10 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
           }
         }
       }
+    case 9:
+      return IsarCore.readString(reader, 9);
+    case 10:
+      return IsarCore.readString(reader, 10);
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -406,10 +406,10 @@ sealed class _PacingModelUpdate {
     required int id,
     DateTime? createdDate,
     DateTime? modifiedDate,
-    String? integrationId,
-    String? integrationEntityId,
     String? name,
     int? defaultNumberOfTeams,
+    String? integrationId,
+    String? integrationEntityId,
   });
 }
 
@@ -423,20 +423,20 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
     required int id,
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
-    Object? integrationId = ignore,
-    Object? integrationEntityId = ignore,
     Object? name = ignore,
     Object? defaultNumberOfTeams = ignore,
+    Object? integrationId = ignore,
+    Object? integrationEntityId = ignore,
   }) {
     return collection.updateProperties([
           id
         ], {
           if (createdDate != ignore) 3: createdDate as DateTime?,
           if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
-          if (integrationId != ignore) 5: integrationId as String?,
-          if (integrationEntityId != ignore) 6: integrationEntityId as String?,
-          if (name != ignore) 7: name as String?,
-          if (defaultNumberOfTeams != ignore) 9: defaultNumberOfTeams as int?,
+          if (name != ignore) 5: name as String?,
+          if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
+          if (integrationId != ignore) 9: integrationId as String?,
+          if (integrationEntityId != ignore) 10: integrationEntityId as String?,
         }) >
         0;
   }
@@ -447,10 +447,10 @@ sealed class _PacingModelUpdateAll {
     required List<int> id,
     DateTime? createdDate,
     DateTime? modifiedDate,
-    String? integrationId,
-    String? integrationEntityId,
     String? name,
     int? defaultNumberOfTeams,
+    String? integrationId,
+    String? integrationEntityId,
   });
 }
 
@@ -464,18 +464,18 @@ class _PacingModelUpdateAllImpl implements _PacingModelUpdateAll {
     required List<int> id,
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
-    Object? integrationId = ignore,
-    Object? integrationEntityId = ignore,
     Object? name = ignore,
     Object? defaultNumberOfTeams = ignore,
+    Object? integrationId = ignore,
+    Object? integrationEntityId = ignore,
   }) {
     return collection.updateProperties(id, {
       if (createdDate != ignore) 3: createdDate as DateTime?,
       if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
-      if (integrationId != ignore) 5: integrationId as String?,
-      if (integrationEntityId != ignore) 6: integrationEntityId as String?,
-      if (name != ignore) 7: name as String?,
-      if (defaultNumberOfTeams != ignore) 9: defaultNumberOfTeams as int?,
+      if (name != ignore) 5: name as String?,
+      if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
+      if (integrationId != ignore) 9: integrationId as String?,
+      if (integrationEntityId != ignore) 10: integrationEntityId as String?,
     });
   }
 }
@@ -490,10 +490,10 @@ sealed class _PacingModelQueryUpdate {
   int call({
     DateTime? createdDate,
     DateTime? modifiedDate,
-    String? integrationId,
-    String? integrationEntityId,
     String? name,
     int? defaultNumberOfTeams,
+    String? integrationId,
+    String? integrationEntityId,
   });
 }
 
@@ -507,18 +507,18 @@ class _PacingModelQueryUpdateImpl implements _PacingModelQueryUpdate {
   int call({
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
-    Object? integrationId = ignore,
-    Object? integrationEntityId = ignore,
     Object? name = ignore,
     Object? defaultNumberOfTeams = ignore,
+    Object? integrationId = ignore,
+    Object? integrationEntityId = ignore,
   }) {
     return query.updateProperties(limit: limit, {
       if (createdDate != ignore) 3: createdDate as DateTime?,
       if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
-      if (integrationId != ignore) 5: integrationId as String?,
-      if (integrationEntityId != ignore) 6: integrationEntityId as String?,
-      if (name != ignore) 7: name as String?,
-      if (defaultNumberOfTeams != ignore) 9: defaultNumberOfTeams as int?,
+      if (name != ignore) 5: name as String?,
+      if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
+      if (integrationId != ignore) 9: integrationId as String?,
+      if (integrationEntityId != ignore) 10: integrationEntityId as String?,
     });
   }
 }
@@ -540,20 +540,20 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
   int call({
     Object? createdDate = ignore,
     Object? modifiedDate = ignore,
-    Object? integrationId = ignore,
-    Object? integrationEntityId = ignore,
     Object? name = ignore,
     Object? defaultNumberOfTeams = ignore,
+    Object? integrationId = ignore,
+    Object? integrationEntityId = ignore,
   }) {
     final q = query.build();
     try {
       return q.updateProperties(limit: limit, {
         if (createdDate != ignore) 3: createdDate as DateTime?,
         if (modifiedDate != ignore) 4: modifiedDate as DateTime?,
-        if (integrationId != ignore) 5: integrationId as String?,
-        if (integrationEntityId != ignore) 6: integrationEntityId as String?,
-        if (name != ignore) 7: name as String?,
-        if (defaultNumberOfTeams != ignore) 9: defaultNumberOfTeams as int?,
+        if (name != ignore) 5: name as String?,
+        if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
+        if (integrationId != ignore) 9: integrationId as String?,
+        if (integrationEntityId != ignore) 10: integrationEntityId as String?,
       });
     } finally {
       q.close();
@@ -1242,394 +1242,6 @@ extension PacingModelQueryFilter
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 5));
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 5));
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdGreaterThan(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdGreaterThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdLessThan(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdLessThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdBetween(
-    String? lower,
-    String? upper, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 5,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 5,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 5,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 5,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 5,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdGreaterThan(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdGreaterThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdLessThan(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdLessThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdBetween(
-    String? lower,
-    String? upper, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 6,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 6,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 6,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 6,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
-      integrationEntityIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 6,
-          value: '',
-        ),
-      );
-    });
-  }
-
   QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition> nameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1637,7 +1249,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1652,7 +1264,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1668,7 +1280,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1683,7 +1295,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1699,7 +1311,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1715,7 +1327,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 7,
+          property: 5,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1731,7 +1343,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1746,7 +1358,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1760,7 +1372,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 7,
+          property: 5,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1774,7 +1386,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 7,
+          property: 5,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1786,7 +1398,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 7,
+          property: 5,
           value: '',
         ),
       );
@@ -1798,7 +1410,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 7,
+          property: 5,
           value: '',
         ),
       );
@@ -1814,7 +1426,7 @@ extension PacingModelQueryFilter
       improvisationsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 8, value: null),
+        const GreaterOrEqualCondition(property: 6, value: null),
       );
     });
   }
@@ -1826,7 +1438,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 9,
+          property: 7,
           value: value,
         ),
       );
@@ -1840,7 +1452,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 9,
+          property: 7,
           value: value,
         ),
       );
@@ -1854,7 +1466,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 9,
+          property: 7,
           value: value,
         ),
       );
@@ -1868,7 +1480,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 9,
+          property: 7,
           value: value,
         ),
       );
@@ -1882,7 +1494,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 9,
+          property: 7,
           value: value,
         ),
       );
@@ -1897,7 +1509,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 9,
+          property: 7,
           lower: lower,
           upper: upper,
         ),
@@ -1913,7 +1525,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1929,7 +1541,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1945,7 +1557,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1961,7 +1573,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1977,7 +1589,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1994,7 +1606,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 10,
+          property: 8,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -2011,7 +1623,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2027,7 +1639,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2040,7 +1652,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 10,
+          property: 8,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2053,7 +1665,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 10,
+          property: 8,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -2066,7 +1678,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 10,
+          property: 8,
           value: '',
         ),
       );
@@ -2078,7 +1690,7 @@ extension PacingModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 10,
+          property: 8,
           value: '',
         ),
       );
@@ -2093,7 +1705,395 @@ extension PacingModelQueryFilter
       tagsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 10, value: null),
+        const GreaterOrEqualCondition(property: 8, value: null),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 9));
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 9));
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 9,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 9,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 9,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 9,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 9,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 10));
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 10));
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 10,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 10,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 10,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationEntityIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 10,
+          value: '',
+        ),
       );
     });
   }
@@ -2141,7 +2141,7 @@ extension PacingModelQuerySortBy
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByIntegrationId(
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -2151,11 +2151,46 @@ extension PacingModelQuerySortBy
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByIntegrationIdDesc(
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
         5,
+        sort: Sort.desc,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      sortByDefaultNumberOfTeams() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      sortByDefaultNumberOfTeamsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(7, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByIntegrationId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        9,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByIntegrationIdDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        9,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -2166,7 +2201,7 @@ extension PacingModelQuerySortBy
       sortByIntegrationEntityId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        6,
+        10,
         caseSensitive: caseSensitive,
       );
     });
@@ -2176,45 +2211,10 @@ extension PacingModelQuerySortBy
       sortByIntegrationEntityIdDesc({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        6,
+        10,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        7,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> sortByNameDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        7,
-        sort: Sort.desc,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByDefaultNumberOfTeams() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      sortByDefaultNumberOfTeamsDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9, sort: Sort.desc);
     });
   }
 }
@@ -2258,14 +2258,14 @@ extension PacingModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByIntegrationId(
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(5, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByIntegrationIdDesc(
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(5, sort: Sort.desc, caseSensitive: caseSensitive);
@@ -2273,44 +2273,44 @@ extension PacingModelQuerySortThenBy
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByIntegrationEntityId({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
-      thenByIntegrationEntityIdDesc({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(6, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(7, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByNameDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(7, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       thenByDefaultNumberOfTeams() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9);
+      return query.addSortBy(7);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
       thenByDefaultNumberOfTeamsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(9, sort: Sort.desc);
+      return query.addSortBy(7, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByIntegrationId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(9, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy> thenByIntegrationIdDesc(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(9, sort: Sort.desc, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByIntegrationEntityId({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(10, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByIntegrationEntityIdDesc({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(10, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 }
@@ -2344,37 +2344,37 @@ extension PacingModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
-      distinctByIntegrationId({bool caseSensitive = true}) {
+  QueryBuilder<PacingModel, PacingModel, QAfterDistinct> distinctByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(5, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
-      distinctByIntegrationEntityId({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(6, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterDistinct> distinctByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(7, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
       distinctByDefaultNumberOfTeams() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(9);
+      return query.addDistinctBy(7);
     });
   }
 
   QueryBuilder<PacingModel, PacingModel, QAfterDistinct> distinctByTags() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(10);
+      return query.addDistinctBy(8);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
+      distinctByIntegrationId({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(9, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
+      distinctByIntegrationEntityId({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(10, caseSensitive: caseSensitive);
     });
   }
 }
@@ -2411,40 +2411,40 @@ extension PacingModelQueryProperty1
     });
   }
 
-  QueryBuilder<PacingModel, String?, QAfterProperty> integrationIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
-    });
-  }
-
-  QueryBuilder<PacingModel, String?, QAfterProperty>
-      integrationEntityIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
-    });
-  }
-
   QueryBuilder<PacingModel, String, QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<PacingModel, List<ImprovisationModel>, QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, int, QAfterProperty>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<PacingModel, List<String>, QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
+    });
+  }
+
+  QueryBuilder<PacingModel, String?, QAfterProperty> integrationIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(9);
+    });
+  }
+
+  QueryBuilder<PacingModel, String?, QAfterProperty>
+      integrationEntityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
     });
@@ -2487,41 +2487,41 @@ extension PacingModelQueryProperty2<R>
     });
   }
 
-  QueryBuilder<PacingModel, (R, String?), QAfterProperty>
-      integrationIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
-    });
-  }
-
-  QueryBuilder<PacingModel, (R, String?), QAfterProperty>
-      integrationEntityIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
-    });
-  }
-
   QueryBuilder<PacingModel, (R, String), QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<PacingModel, (R, List<ImprovisationModel>), QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, (R, int), QAfterProperty>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<PacingModel, (R, List<String>), QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
+    });
+  }
+
+  QueryBuilder<PacingModel, (R, String?), QAfterProperty>
+      integrationIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(9);
+    });
+  }
+
+  QueryBuilder<PacingModel, (R, String?), QAfterProperty>
+      integrationEntityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
     });
@@ -2564,42 +2564,42 @@ extension PacingModelQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<PacingModel, (R1, R2, String?), QOperations>
-      integrationIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
-    });
-  }
-
-  QueryBuilder<PacingModel, (R1, R2, String?), QOperations>
-      integrationEntityIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
-    });
-  }
-
   QueryBuilder<PacingModel, (R1, R2, String), QOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, List<ImprovisationModel>), QOperations>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(8);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, int), QOperations>
       defaultNumberOfTeamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(9);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<PacingModel, (R1, R2, List<String>), QOperations>
       tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(8);
+    });
+  }
+
+  QueryBuilder<PacingModel, (R1, R2, String?), QOperations>
+      integrationIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(9);
+    });
+  }
+
+  QueryBuilder<PacingModel, (R1, R2, String?), QOperations>
+      integrationEntityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
     });

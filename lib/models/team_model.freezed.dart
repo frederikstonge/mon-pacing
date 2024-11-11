@@ -28,8 +28,6 @@ mixin _$TeamModel {
   int get color => throw _privateConstructorUsedError;
   List<PerformerModel> get performers => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
-  String? get integrationId => throw _privateConstructorUsedError;
-  String? get integrationEntityId => throw _privateConstructorUsedError;
 
   /// Serializes this TeamModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,9 +51,7 @@ abstract class $TeamModelCopyWith<$Res> {
       String name,
       int color,
       List<PerformerModel> performers,
-      List<String> tags,
-      String? integrationId,
-      String? integrationEntityId});
+      List<String> tags});
 }
 
 /// @nodoc
@@ -80,8 +76,6 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
     Object? color = null,
     Object? performers = null,
     Object? tags = null,
-    Object? integrationId = freezed,
-    Object? integrationEntityId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -112,14 +106,6 @@ class _$TeamModelCopyWithImpl<$Res, $Val extends TeamModel>
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      integrationId: freezed == integrationId
-          ? _value.integrationId
-          : integrationId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      integrationEntityId: freezed == integrationEntityId
-          ? _value.integrationEntityId
-          : integrationEntityId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -139,9 +125,7 @@ abstract class _$$TeamModelImplCopyWith<$Res>
       String name,
       int color,
       List<PerformerModel> performers,
-      List<String> tags,
-      String? integrationId,
-      String? integrationEntityId});
+      List<String> tags});
 }
 
 /// @nodoc
@@ -164,8 +148,6 @@ class __$$TeamModelImplCopyWithImpl<$Res>
     Object? color = null,
     Object? performers = null,
     Object? tags = null,
-    Object? integrationId = freezed,
-    Object? integrationEntityId = freezed,
   }) {
     return _then(_$TeamModelImpl(
       id: null == id
@@ -196,14 +178,6 @@ class __$$TeamModelImplCopyWithImpl<$Res>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      integrationId: freezed == integrationId
-          ? _value.integrationId
-          : integrationId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      integrationEntityId: freezed == integrationEntityId
-          ? _value.integrationEntityId
-          : integrationEntityId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -218,9 +192,7 @@ class _$TeamModelImpl extends _TeamModel {
       required this.name,
       required this.color,
       final List<PerformerModel> performers = const [],
-      final List<String> tags = const [],
-      this.integrationId,
-      this.integrationEntityId})
+      final List<String> tags = const []})
       : _performers = performers,
         _tags = tags,
         super._();
@@ -258,13 +230,8 @@ class _$TeamModelImpl extends _TeamModel {
   }
 
   @override
-  final String? integrationId;
-  @override
-  final String? integrationEntityId;
-
-  @override
   String toString() {
-    return 'TeamModel(id: $id, createdDate: $createdDate, modifiedDate: $modifiedDate, name: $name, color: $color, performers: $performers, tags: $tags, integrationId: $integrationId, integrationEntityId: $integrationEntityId)';
+    return 'TeamModel(id: $id, createdDate: $createdDate, modifiedDate: $modifiedDate, name: $name, color: $color, performers: $performers, tags: $tags)';
   }
 
   @override
@@ -281,11 +248,7 @@ class _$TeamModelImpl extends _TeamModel {
             (identical(other.color, color) || other.color == color) &&
             const DeepCollectionEquality()
                 .equals(other._performers, _performers) &&
-            const DeepCollectionEquality().equals(other._tags, _tags) &&
-            (identical(other.integrationId, integrationId) ||
-                other.integrationId == integrationId) &&
-            (identical(other.integrationEntityId, integrationEntityId) ||
-                other.integrationEntityId == integrationEntityId));
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -298,9 +261,7 @@ class _$TeamModelImpl extends _TeamModel {
       name,
       color,
       const DeepCollectionEquality().hash(_performers),
-      const DeepCollectionEquality().hash(_tags),
-      integrationId,
-      integrationEntityId);
+      const DeepCollectionEquality().hash(_tags));
 
   /// Create a copy of TeamModel
   /// with the given fields replaced by the non-null parameter values.
@@ -326,9 +287,7 @@ abstract class _TeamModel extends TeamModel implements BaseModel {
       required final String name,
       required final int color,
       final List<PerformerModel> performers,
-      final List<String> tags,
-      final String? integrationId,
-      final String? integrationEntityId}) = _$TeamModelImpl;
+      final List<String> tags}) = _$TeamModelImpl;
   const _TeamModel._() : super._();
 
   factory _TeamModel.fromJson(Map<String, dynamic> json) =
@@ -349,10 +308,6 @@ abstract class _TeamModel extends TeamModel implements BaseModel {
   List<PerformerModel> get performers;
   @override
   List<String> get tags;
-  @override
-  String? get integrationId;
-  @override
-  String? get integrationEntityId;
 
   /// Create a copy of TeamModel
   /// with the given fields replaced by the non-null parameter values.

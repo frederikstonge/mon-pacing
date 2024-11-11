@@ -10,6 +10,7 @@ class PerformerModel with _$PerformerModel {
   const factory PerformerModel({
     required int id,
     required String name,
+    String? integrationEntityId,
   }) = _PerformerModel;
 
   factory PerformerModel.fromJson(Map<String, dynamic> json) => _$PerformerModelFromJson(json);
