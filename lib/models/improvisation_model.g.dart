@@ -52,6 +52,10 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
         name: 'huddleTimerInSeconds',
         type: IsarType.long,
       ),
+      IsarPropertySchema(
+        name: 'integrationEntityId',
+        type: IsarType.string,
+      ),
     ],
     indexes: [],
   ),
@@ -79,6 +83,14 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
   IsarCore.writeString(writer, 7, object.notes);
   IsarCore.writeLong(writer, 8, object.timeBufferInSeconds);
   IsarCore.writeLong(writer, 9, object.huddleTimerInSeconds);
+  {
+    final value = object.integrationEntityId;
+    if (value == null) {
+      IsarCore.writeNull(writer, 10);
+    } else {
+      IsarCore.writeString(writer, 10, value);
+    }
+  }
   return 0;
 }
 
@@ -125,6 +137,8 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   _timeBufferInSeconds = IsarCore.readLong(reader, 8);
   final int _huddleTimerInSeconds;
   _huddleTimerInSeconds = IsarCore.readLong(reader, 9);
+  final String? _integrationEntityId;
+  _integrationEntityId = IsarCore.readString(reader, 10);
   final object = ImprovisationModel(
     id: _id,
     type: _type,
@@ -135,6 +149,7 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
     notes: _notes,
     timeBufferInSeconds: _timeBufferInSeconds,
     huddleTimerInSeconds: _huddleTimerInSeconds,
+    integrationEntityId: _integrationEntityId,
   );
   return object;
 }
@@ -1309,6 +1324,200 @@ extension ImprovisationModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 10));
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 10));
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 10,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 10,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 10,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 10,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationEntityIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 10,
+          value: '',
+        ),
+      );
+    });
+  }
 }
 
 extension ImprovisationModelQueryObject
@@ -1333,6 +1542,7 @@ _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
       timeBufferInSeconds: (json['timeBufferInSeconds'] as num?)?.toInt() ?? 30,
       huddleTimerInSeconds:
           (json['huddleTimerInSeconds'] as num?)?.toInt() ?? 30,
+      integrationEntityId: json['integrationEntityId'] as String?,
     );
 
 Map<String, dynamic> _$$ImprovisationModelImplToJson(
@@ -1347,6 +1557,7 @@ Map<String, dynamic> _$$ImprovisationModelImplToJson(
       'notes': instance.notes,
       'timeBufferInSeconds': instance.timeBufferInSeconds,
       'huddleTimerInSeconds': instance.huddleTimerInSeconds,
+      'integrationEntityId': instance.integrationEntityId,
     };
 
 const _$ImprovisationTypeEnumMap = {

@@ -12,7 +12,7 @@ import '../../cubits/pacings/pacings_cubit.dart';
 import '../../integrations/integration_base.dart';
 import '../../integrations/match_integration_base.dart';
 import '../../integrations/pacing_integration_base.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';

@@ -23,6 +23,10 @@ const PerformerModelSchema = IsarGeneratedSchema(
         name: 'name',
         type: IsarType.string,
       ),
+      IsarPropertySchema(
+        name: 'integrationEntityId',
+        type: IsarType.string,
+      ),
     ],
     indexes: [],
   ),
@@ -36,6 +40,14 @@ const PerformerModelSchema = IsarGeneratedSchema(
 int serializePerformerModel(IsarWriter writer, PerformerModel object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeString(writer, 2, object.name);
+  {
+    final value = object.integrationEntityId;
+    if (value == null) {
+      IsarCore.writeNull(writer, 3);
+    } else {
+      IsarCore.writeString(writer, 3, value);
+    }
+  }
   return 0;
 }
 
@@ -45,9 +57,12 @@ PerformerModel deserializePerformerModel(IsarReader reader) {
   _id = IsarCore.readLong(reader, 1);
   final String _name;
   _name = IsarCore.readString(reader, 2) ?? '';
+  final String? _integrationEntityId;
+  _integrationEntityId = IsarCore.readString(reader, 3);
   final object = PerformerModel(
     id: _id,
     name: _name,
+    integrationEntityId: _integrationEntityId,
   );
   return object;
 }
@@ -317,6 +332,200 @@ extension PerformerModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 3));
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 3));
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 3,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 3,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 3,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+      integrationEntityIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 3,
+          value: '',
+        ),
+      );
+    });
+  }
 }
 
 extension PerformerModelQueryObject
@@ -330,6 +539,7 @@ _$PerformerModelImpl _$$PerformerModelImplFromJson(Map<String, dynamic> json) =>
     _$PerformerModelImpl(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
+      integrationEntityId: json['integrationEntityId'] as String?,
     );
 
 Map<String, dynamic> _$$PerformerModelImplToJson(
@@ -337,4 +547,5 @@ Map<String, dynamic> _$$PerformerModelImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'integrationEntityId': instance.integrationEntityId,
     };

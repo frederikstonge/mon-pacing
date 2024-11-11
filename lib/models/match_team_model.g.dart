@@ -32,6 +32,10 @@ const MatchTeamModelSchema = IsarGeneratedSchema(
         type: IsarType.objectList,
         target: 'PerformerModel',
       ),
+      IsarPropertySchema(
+        name: 'integrationEntityId',
+        type: IsarType.string,
+      ),
     ],
     indexes: [],
   ),
@@ -58,6 +62,14 @@ int serializeMatchTeamModel(IsarWriter writer, MatchTeamModel object) {
       }
     }
     IsarCore.endList(writer, listWriter);
+  }
+  {
+    final value = object.integrationEntityId;
+    if (value == null) {
+      IsarCore.writeNull(writer, 5);
+    } else {
+      IsarCore.writeString(writer, 5, value);
+    }
   }
   return 0;
 }
@@ -105,11 +117,14 @@ MatchTeamModel deserializeMatchTeamModel(IsarReader reader) {
       }
     }
   }
+  final String? _integrationEntityId;
+  _integrationEntityId = IsarCore.readString(reader, 5);
   final object = MatchTeamModel(
     id: _id,
     name: _name,
     color: _color,
     performers: _performers,
+    integrationEntityId: _integrationEntityId,
   );
   return object;
 }
@@ -479,6 +494,200 @@ extension MatchTeamModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 5));
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 5));
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 5,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 5,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 5,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 5,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+      integrationEntityIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 5,
+          value: '',
+        ),
+      );
+    });
+  }
 }
 
 extension MatchTeamModelQueryObject
@@ -497,6 +706,7 @@ _$MatchTeamModelImpl _$$MatchTeamModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => PerformerModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      integrationEntityId: json['integrationEntityId'] as String?,
     );
 
 Map<String, dynamic> _$$MatchTeamModelImplToJson(
@@ -506,4 +716,5 @@ Map<String, dynamic> _$$MatchTeamModelImplToJson(
       'name': instance.name,
       'color': instance.color,
       'performers': instance.performers,
+      'integrationEntityId': instance.integrationEntityId,
     };

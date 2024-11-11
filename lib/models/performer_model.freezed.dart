@@ -22,6 +22,7 @@ PerformerModel _$PerformerModelFromJson(Map<String, dynamic> json) {
 mixin _$PerformerModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get integrationEntityId => throw _privateConstructorUsedError;
 
   /// Serializes this PerformerModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $PerformerModelCopyWith<$Res> {
           PerformerModel value, $Res Function(PerformerModel) then) =
       _$PerformerModelCopyWithImpl<$Res, PerformerModel>;
   @useResult
-  $Res call({int id, String name});
+  $Res call({int id, String name, String? integrationEntityId});
 }
 
 /// @nodoc
@@ -59,6 +60,7 @@ class _$PerformerModelCopyWithImpl<$Res, $Val extends PerformerModel>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? integrationEntityId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +71,10 @@ class _$PerformerModelCopyWithImpl<$Res, $Val extends PerformerModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      integrationEntityId: freezed == integrationEntityId
+          ? _value.integrationEntityId
+          : integrationEntityId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$PerformerModelImplCopyWith<$Res>
       __$$PerformerModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call({int id, String name, String? integrationEntityId});
 }
 
 /// @nodoc
@@ -99,6 +105,7 @@ class __$$PerformerModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? integrationEntityId = freezed,
   }) {
     return _then(_$PerformerModelImpl(
       id: null == id
@@ -109,6 +116,10 @@ class __$$PerformerModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      integrationEntityId: freezed == integrationEntityId
+          ? _value.integrationEntityId
+          : integrationEntityId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -116,7 +127,8 @@ class __$$PerformerModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PerformerModelImpl implements _PerformerModel {
-  const _$PerformerModelImpl({required this.id, required this.name});
+  const _$PerformerModelImpl(
+      {required this.id, required this.name, this.integrationEntityId});
 
   factory _$PerformerModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PerformerModelImplFromJson(json);
@@ -125,10 +137,12 @@ class _$PerformerModelImpl implements _PerformerModel {
   final int id;
   @override
   final String name;
+  @override
+  final String? integrationEntityId;
 
   @override
   String toString() {
-    return 'PerformerModel(id: $id, name: $name)';
+    return 'PerformerModel(id: $id, name: $name, integrationEntityId: $integrationEntityId)';
   }
 
   @override
@@ -137,12 +151,14 @@ class _$PerformerModelImpl implements _PerformerModel {
         (other.runtimeType == runtimeType &&
             other is _$PerformerModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.integrationEntityId, integrationEntityId) ||
+                other.integrationEntityId == integrationEntityId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode => Object.hash(runtimeType, id, name, integrationEntityId);
 
   /// Create a copy of PerformerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -164,7 +180,8 @@ class _$PerformerModelImpl implements _PerformerModel {
 abstract class _PerformerModel implements PerformerModel {
   const factory _PerformerModel(
       {required final int id,
-      required final String name}) = _$PerformerModelImpl;
+      required final String name,
+      final String? integrationEntityId}) = _$PerformerModelImpl;
 
   factory _PerformerModel.fromJson(Map<String, dynamic> json) =
       _$PerformerModelImpl.fromJson;
@@ -173,6 +190,8 @@ abstract class _PerformerModel implements PerformerModel {
   int get id;
   @override
   String get name;
+  @override
+  String? get integrationEntityId;
 
   /// Create a copy of PerformerModel
   /// with the given fields replaced by the non-null parameter values.
