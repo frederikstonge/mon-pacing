@@ -16,7 +16,7 @@ class CategoriesSearch extends StatelessWidget {
     BuildContext context,
     FutureOr<List<String>> Function({String query}) search,
   ) async {
-    return await Navigator.of(context).push(
+    return await Navigator.of(context).push<String>(
       MaterialPageRoute(
         builder: (context) => CategoriesSearch(
           search: search,

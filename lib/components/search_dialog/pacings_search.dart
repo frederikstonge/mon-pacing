@@ -21,7 +21,7 @@ class PacingsSearch extends StatelessWidget {
     FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) search,
     Future<List<String>> Function() getAllTags,
   ) async {
-    return await Navigator.of(context).push(
+    return await Navigator.of(context).push<PacingModel>(
       MaterialPageRoute(
         builder: (context) => PacingsSearch(
           getAllTags: getAllTags,
