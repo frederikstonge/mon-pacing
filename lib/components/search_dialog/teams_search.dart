@@ -21,7 +21,7 @@ class TeamsSearch extends StatelessWidget {
     Future<List<TeamModel>> Function(String query, List<String> selectedTags) search,
     Future<List<String>> Function() getAllTags,
   ) async {
-    return await Navigator.of(context).push(
+    return await Navigator.of(context).push<TeamModel>(
       MaterialPageRoute(
         builder: (context) => TeamsSearch(
           getAllTags: getAllTags,

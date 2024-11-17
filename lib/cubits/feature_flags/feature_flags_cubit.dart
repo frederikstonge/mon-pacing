@@ -25,10 +25,15 @@ class FeatureFlagsCubit extends Cubit<FeatureFlagsState> {
   }
 
   Future<void> init() async {
-    await remoteConfig.fetchAndActivate();
-    emit(state.copyWith(
-      status: FeatureFlagsStatus.success,
-      enableIntegrations: remoteConfig.getBool(FeatureFlagsName.enableIntegrations),
-    ));
+    try {
+      emit(state.copyWith(status: FeatureFlagsStatus.loading));
+      await remoteConfig.fetchAndActivate();
+      emit(state.copyWith(
+        status: FeatureFlagsStatus.success,
+        enableIntegrations: remoteConfig.getBool(FeatureFlagsName.enableIntegrations),
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: FeatureFlagsStatus.failure));
+    }
   }
 }

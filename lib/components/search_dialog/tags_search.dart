@@ -17,7 +17,7 @@ class TagsSearch extends StatelessWidget {
     void Function(String tag) onTap,
     FutureOr<List<String>> Function({String query}) search,
   ) async {
-    return await Navigator.of(context).push(
+    return await Navigator.of(context).push<String>(
       MaterialPageRoute(
         builder: (context) => TagsSearch(
           search: search,
