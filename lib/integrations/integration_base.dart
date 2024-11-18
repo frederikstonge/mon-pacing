@@ -1,5 +1,7 @@
+import 'dart:async';
+
 abstract class IntegrationBase {
   String get integrationId;
 
-  bool integrationIsValid(String data);
+  FutureOr<bool> integrationIsValid(String data);
 }

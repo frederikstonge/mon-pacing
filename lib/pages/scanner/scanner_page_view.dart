@@ -124,15 +124,20 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
     final integrations = context.read<IntegrationService>().getIntegrationsByType<IntegrationBase>();
     for (final integration in integrations) {
-      if (integration.integrationIsValid(barcodeCapture.barcodes.first.rawValue!)) {
+      if (await integration.integrationIsValid(barcodeCapture.barcodes.first.rawValue!)) {
         PacingModel? pacing;
         MatchModel? match;
         if (integration is PacingIntegrationBase) {
-          pacing = integration.getPacing(barcodeData);
+          pacing = await integration.getPacing(barcodeData);
         }
 
         if (integration is MatchIntegrationBase) {
           if (pacing == null) {
+            if (!mounted) {
+              unawaited(controller.start());
+              return;
+            }
+
             final result = await PacingsSearch.showDialog(
               context,
               pacingsRepository.search,
@@ -148,7 +153,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             pacing = result;
           }
 
-          match = integration.getMatch(barcodeData, pacing);
+          match = await integration.getMatch(barcodeData, pacing);
         }
 
         // Create pacing
