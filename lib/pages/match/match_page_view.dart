@@ -307,7 +307,7 @@ class MatchPageView extends StatelessWidget {
       localizer.cancel,
     );
     if (result ?? false) {
-      final exportResult = integration.exportMatch(match);
+      final exportResult = await integration.exportMatch(match);
       if (exportResult) {
         toasterService.show(
           title: localizer.toasterMatchResultExported,
