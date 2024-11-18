@@ -41,6 +41,7 @@ mixin _$MatchModel {
   bool get enableMatchExpulsion => throw _privateConstructorUsedError;
   int get penaltiesRequiredToExpel => throw _privateConstructorUsedError;
   String? get integrationId => throw _privateConstructorUsedError;
+  String? get integrationExportData => throw _privateConstructorUsedError;
   String? get integrationEntityId => throw _privateConstructorUsedError;
 
   /// Serializes this MatchModel to a JSON map.
@@ -77,6 +78,7 @@ abstract class $MatchModelCopyWith<$Res> {
       bool enableMatchExpulsion,
       int penaltiesRequiredToExpel,
       String? integrationId,
+      String? integrationExportData,
       String? integrationEntityId});
 }
 
@@ -112,6 +114,7 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? enableMatchExpulsion = null,
     Object? penaltiesRequiredToExpel = null,
     Object? integrationId = freezed,
+    Object? integrationExportData = freezed,
     Object? integrationEntityId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -183,6 +186,10 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
           ? _value.integrationId
           : integrationId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationExportData: freezed == integrationExportData
+          ? _value.integrationExportData
+          : integrationExportData // ignore: cast_nullable_to_non_nullable
+              as String?,
       integrationEntityId: freezed == integrationEntityId
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
@@ -217,6 +224,7 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       bool enableMatchExpulsion,
       int penaltiesRequiredToExpel,
       String? integrationId,
+      String? integrationExportData,
       String? integrationEntityId});
 }
 
@@ -250,6 +258,7 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? enableMatchExpulsion = null,
     Object? penaltiesRequiredToExpel = null,
     Object? integrationId = freezed,
+    Object? integrationExportData = freezed,
     Object? integrationEntityId = freezed,
   }) {
     return _then(_$MatchModelImpl(
@@ -321,6 +330,10 @@ class __$$MatchModelImplCopyWithImpl<$Res>
           ? _value.integrationId
           : integrationId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationExportData: freezed == integrationExportData
+          ? _value.integrationExportData
+          : integrationExportData // ignore: cast_nullable_to_non_nullable
+              as String?,
       integrationEntityId: freezed == integrationEntityId
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
@@ -350,6 +363,7 @@ class _$MatchModelImpl extends _MatchModel {
       this.enableMatchExpulsion = true,
       this.penaltiesRequiredToExpel = 3,
       this.integrationId,
+      this.integrationExportData,
       this.integrationEntityId})
       : _teams = teams,
         _improvisations = improvisations,
@@ -443,11 +457,13 @@ class _$MatchModelImpl extends _MatchModel {
   @override
   final String? integrationId;
   @override
+  final String? integrationExportData;
+  @override
   final String? integrationEntityId;
 
   @override
   String toString() {
-    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, tags: $tags, stars: $stars, enableStatistics: $enableStatistics, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints, enableMatchExpulsion: $enableMatchExpulsion, penaltiesRequiredToExpel: $penaltiesRequiredToExpel, integrationId: $integrationId, integrationEntityId: $integrationEntityId)';
+    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, tags: $tags, stars: $stars, enableStatistics: $enableStatistics, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints, enableMatchExpulsion: $enableMatchExpulsion, penaltiesRequiredToExpel: $penaltiesRequiredToExpel, integrationId: $integrationId, integrationExportData: $integrationExportData, integrationEntityId: $integrationEntityId)';
   }
 
   @override
@@ -488,32 +504,36 @@ class _$MatchModelImpl extends _MatchModel {
                 other.penaltiesRequiredToExpel == penaltiesRequiredToExpel) &&
             (identical(other.integrationId, integrationId) ||
                 other.integrationId == integrationId) &&
+            (identical(other.integrationExportData, integrationExportData) ||
+                other.integrationExportData == integrationExportData) &&
             (identical(other.integrationEntityId, integrationEntityId) ||
                 other.integrationEntityId == integrationEntityId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      name,
-      createdDate,
-      modifiedDate,
-      const DeepCollectionEquality().hash(_teams),
-      const DeepCollectionEquality().hash(_improvisations),
-      const DeepCollectionEquality().hash(_penalties),
-      const DeepCollectionEquality().hash(_points),
-      const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(_stars),
-      enableStatistics,
-      enablePenaltiesImpactPoints,
-      penaltiesImpactType,
-      penaltiesRequiredToImpactPoints,
-      enableMatchExpulsion,
-      penaltiesRequiredToExpel,
-      integrationId,
-      integrationEntityId);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        name,
+        createdDate,
+        modifiedDate,
+        const DeepCollectionEquality().hash(_teams),
+        const DeepCollectionEquality().hash(_improvisations),
+        const DeepCollectionEquality().hash(_penalties),
+        const DeepCollectionEquality().hash(_points),
+        const DeepCollectionEquality().hash(_tags),
+        const DeepCollectionEquality().hash(_stars),
+        enableStatistics,
+        enablePenaltiesImpactPoints,
+        penaltiesImpactType,
+        penaltiesRequiredToImpactPoints,
+        enableMatchExpulsion,
+        penaltiesRequiredToExpel,
+        integrationId,
+        integrationExportData,
+        integrationEntityId
+      ]);
 
   /// Create a copy of MatchModel
   /// with the given fields replaced by the non-null parameter values.
@@ -550,6 +570,7 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
       final bool enableMatchExpulsion,
       final int penaltiesRequiredToExpel,
       final String? integrationId,
+      final String? integrationExportData,
       final String? integrationEntityId}) = _$MatchModelImpl;
   const _MatchModel._() : super._();
 
@@ -592,6 +613,8 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
   int get penaltiesRequiredToExpel;
   @override
   String? get integrationId;
+  @override
+  String? get integrationExportData;
   @override
   String? get integrationEntityId;
 
