@@ -95,6 +95,10 @@ const MatchModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
+        name: 'integrationExportData',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
         name: 'integrationEntityId',
         type: IsarType.string,
       ),
@@ -242,11 +246,19 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
     }
   }
   {
-    final value = object.integrationEntityId;
+    final value = object.integrationExportData;
     if (value == null) {
       IsarCore.writeNull(writer, 18);
     } else {
       IsarCore.writeString(writer, 18, value);
+    }
+  }
+  {
+    final value = object.integrationEntityId;
+    if (value == null) {
+      IsarCore.writeNull(writer, 19);
+    } else {
+      IsarCore.writeString(writer, 19, value);
     }
   }
   return object.id;
@@ -518,8 +530,10 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   _penaltiesRequiredToExpel = IsarCore.readLong(reader, 16);
   final String? _integrationId;
   _integrationId = IsarCore.readString(reader, 17);
+  final String? _integrationExportData;
+  _integrationExportData = IsarCore.readString(reader, 18);
   final String? _integrationEntityId;
-  _integrationEntityId = IsarCore.readString(reader, 18);
+  _integrationEntityId = IsarCore.readString(reader, 19);
   final object = MatchModel(
     id: _id,
     createdDate: _createdDate,
@@ -538,6 +552,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
     enableMatchExpulsion: _enableMatchExpulsion,
     penaltiesRequiredToExpel: _penaltiesRequiredToExpel,
     integrationId: _integrationId,
+    integrationExportData: _integrationExportData,
     integrationEntityId: _integrationEntityId,
   );
   return object;
@@ -829,6 +844,8 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
       return IsarCore.readString(reader, 17);
     case 18:
       return IsarCore.readString(reader, 18);
+    case 19:
+      return IsarCore.readString(reader, 19);
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -847,6 +864,7 @@ sealed class _MatchModelUpdate {
     bool? enableMatchExpulsion,
     int? penaltiesRequiredToExpel,
     String? integrationId,
+    String? integrationExportData,
     String? integrationEntityId,
   });
 }
@@ -869,6 +887,7 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
     Object? enableMatchExpulsion = ignore,
     Object? penaltiesRequiredToExpel = ignore,
     Object? integrationId = ignore,
+    Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
   }) {
     return collection.updateProperties([
@@ -888,7 +907,9 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
           if (penaltiesRequiredToExpel != ignore)
             16: penaltiesRequiredToExpel as int?,
           if (integrationId != ignore) 17: integrationId as String?,
-          if (integrationEntityId != ignore) 18: integrationEntityId as String?,
+          if (integrationExportData != ignore)
+            18: integrationExportData as String?,
+          if (integrationEntityId != ignore) 19: integrationEntityId as String?,
         }) >
         0;
   }
@@ -907,6 +928,7 @@ sealed class _MatchModelUpdateAll {
     bool? enableMatchExpulsion,
     int? penaltiesRequiredToExpel,
     String? integrationId,
+    String? integrationExportData,
     String? integrationEntityId,
   });
 }
@@ -929,6 +951,7 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
     Object? enableMatchExpulsion = ignore,
     Object? penaltiesRequiredToExpel = ignore,
     Object? integrationId = ignore,
+    Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
   }) {
     return collection.updateProperties(id, {
@@ -946,7 +969,8 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
       if (penaltiesRequiredToExpel != ignore)
         16: penaltiesRequiredToExpel as int?,
       if (integrationId != ignore) 17: integrationId as String?,
-      if (integrationEntityId != ignore) 18: integrationEntityId as String?,
+      if (integrationExportData != ignore) 18: integrationExportData as String?,
+      if (integrationEntityId != ignore) 19: integrationEntityId as String?,
     });
   }
 }
@@ -969,6 +993,7 @@ sealed class _MatchModelQueryUpdate {
     bool? enableMatchExpulsion,
     int? penaltiesRequiredToExpel,
     String? integrationId,
+    String? integrationExportData,
     String? integrationEntityId,
   });
 }
@@ -991,6 +1016,7 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
     Object? enableMatchExpulsion = ignore,
     Object? penaltiesRequiredToExpel = ignore,
     Object? integrationId = ignore,
+    Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
   }) {
     return query.updateProperties(limit: limit, {
@@ -1008,7 +1034,8 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
       if (penaltiesRequiredToExpel != ignore)
         16: penaltiesRequiredToExpel as int?,
       if (integrationId != ignore) 17: integrationId as String?,
-      if (integrationEntityId != ignore) 18: integrationEntityId as String?,
+      if (integrationExportData != ignore) 18: integrationExportData as String?,
+      if (integrationEntityId != ignore) 19: integrationEntityId as String?,
     });
   }
 }
@@ -1038,6 +1065,7 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
     Object? enableMatchExpulsion = ignore,
     Object? penaltiesRequiredToExpel = ignore,
     Object? integrationId = ignore,
+    Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
   }) {
     final q = query.build();
@@ -1057,7 +1085,9 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
         if (penaltiesRequiredToExpel != ignore)
           16: penaltiesRequiredToExpel as int?,
         if (integrationId != ignore) 17: integrationId as String?,
-        if (integrationEntityId != ignore) 18: integrationEntityId as String?,
+        if (integrationExportData != ignore)
+          18: integrationExportData as String?,
+        if (integrationEntityId != ignore) 19: integrationEntityId as String?,
       });
     } finally {
       q.close();
@@ -2485,21 +2515,21 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdIsNull() {
+      integrationExportDataIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 18));
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdIsNotNull() {
+      integrationExportDataIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 18));
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdEqualTo(
+      integrationExportDataEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -2515,7 +2545,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdGreaterThan(
+      integrationExportDataGreaterThan(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -2531,7 +2561,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdGreaterThanOrEqualTo(
+      integrationExportDataGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -2547,7 +2577,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdLessThan(
+      integrationExportDataLessThan(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -2563,7 +2593,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdLessThanOrEqualTo(
+      integrationExportDataLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -2579,7 +2609,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdBetween(
+      integrationExportDataBetween(
     String? lower,
     String? upper, {
     bool caseSensitive = true,
@@ -2597,7 +2627,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdStartsWith(
+      integrationExportDataStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -2613,7 +2643,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdEndsWith(
+      integrationExportDataEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -2629,7 +2659,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdContains(String value, {bool caseSensitive = true}) {
+      integrationExportDataContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -2642,7 +2672,8 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
+      integrationExportDataMatches(String pattern,
+          {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
@@ -2655,7 +2686,7 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdIsEmpty() {
+      integrationExportDataIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -2667,11 +2698,205 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationEntityIdIsNotEmpty() {
+      integrationExportDataIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
           property: 18,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 19));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 19));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 19,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 19,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 19,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 19,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationEntityIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 19,
           value: '',
         ),
       );
@@ -2845,8 +3070,8 @@ extension MatchModelQuerySortBy
     });
   }
 
-  QueryBuilder<MatchModel, MatchModel, QAfterSortBy> sortByIntegrationEntityId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationExportData({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
         18,
@@ -2856,10 +3081,31 @@ extension MatchModelQuerySortBy
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
-      sortByIntegrationEntityIdDesc({bool caseSensitive = true}) {
+      sortByIntegrationExportDataDesc({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
         18,
+        sort: Sort.desc,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy> sortByIntegrationEntityId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        19,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationEntityIdDesc({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        19,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -3016,17 +3262,31 @@ extension MatchModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByIntegrationEntityId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationExportData({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(18, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
-      thenByIntegrationEntityIdDesc({bool caseSensitive = true}) {
+      thenByIntegrationExportDataDesc({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(18, sort: Sort.desc, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy> thenByIntegrationEntityId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(19, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationEntityIdDesc({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(19, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 }
@@ -3115,9 +3375,16 @@ extension MatchModelQueryWhereDistinct
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
-      distinctByIntegrationEntityId({bool caseSensitive = true}) {
+      distinctByIntegrationExportData({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(18, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
+      distinctByIntegrationEntityId({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(19, caseSensitive: caseSensitive);
     });
   }
 }
@@ -3241,9 +3508,16 @@ extension MatchModelQueryProperty1
   }
 
   QueryBuilder<MatchModel, String?, QAfterProperty>
-      integrationEntityIdProperty() {
+      integrationExportDataProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(18);
+    });
+  }
+
+  QueryBuilder<MatchModel, String?, QAfterProperty>
+      integrationEntityIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(19);
     });
   }
 }
@@ -3374,9 +3648,16 @@ extension MatchModelQueryProperty2<R>
   }
 
   QueryBuilder<MatchModel, (R, String?), QAfterProperty>
-      integrationEntityIdProperty() {
+      integrationExportDataProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(18);
+    });
+  }
+
+  QueryBuilder<MatchModel, (R, String?), QAfterProperty>
+      integrationEntityIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(19);
     });
   }
 }
@@ -3507,9 +3788,16 @@ extension MatchModelQueryProperty3<R1, R2>
   }
 
   QueryBuilder<MatchModel, (R1, R2, String?), QOperations>
-      integrationEntityIdProperty() {
+      integrationExportDataProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(18);
+    });
+  }
+
+  QueryBuilder<MatchModel, (R1, R2, String?), QOperations>
+      integrationEntityIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(19);
     });
   }
 }
@@ -3559,6 +3847,7 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
       penaltiesRequiredToExpel:
           (json['penaltiesRequiredToExpel'] as num?)?.toInt() ?? 3,
       integrationId: json['integrationId'] as String?,
+      integrationExportData: json['integrationExportData'] as String?,
       integrationEntityId: json['integrationEntityId'] as String?,
     );
 
@@ -3583,6 +3872,7 @@ Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
       'enableMatchExpulsion': instance.enableMatchExpulsion,
       'penaltiesRequiredToExpel': instance.penaltiesRequiredToExpel,
       'integrationId': instance.integrationId,
+      'integrationExportData': instance.integrationExportData,
       'integrationEntityId': instance.integrationEntityId,
     };
 

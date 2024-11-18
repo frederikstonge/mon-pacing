@@ -40,6 +40,7 @@ class MatchModel with _$MatchModel implements BaseModel {
     @Default(true) bool enableMatchExpulsion,
     @Default(3) int penaltiesRequiredToExpel,
     String? integrationId,
+    String? integrationExportData,
     String? integrationEntityId,
   }) = _MatchModel;
 
