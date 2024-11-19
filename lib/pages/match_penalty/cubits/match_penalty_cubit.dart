@@ -11,16 +11,19 @@ class MatchPenaltyCubit extends Cubit<MatchPenaltyState> {
   final List<MatchTeamModel> teams;
   final FutureOr<void> Function(PenaltyModel penalty) onSave;
   final PenaltyModel? penalty;
+  final List<String>? integrationPenaltyTypes;
 
   MatchPenaltyCubit({
     required this.improvisationId,
     required this.teams,
     required this.onSave,
+    required this.integrationPenaltyTypes,
     this.penalty,
   }) : super(
           MatchPenaltyState(
             editMode: penalty != null,
             teams: teams,
+            integrationPenaltyTypes: integrationPenaltyTypes,
             penalty: penalty != null
                 ? penalty.copyWith()
                 : PenaltyModel(

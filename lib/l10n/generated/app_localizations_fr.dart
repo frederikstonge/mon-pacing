@@ -320,7 +320,7 @@ class SFr extends S {
   String get save => 'Sauvegarder';
 
   @override
-  String get scanner => 'Scan';
+  String get scanner => 'Scan pour les intégrations';
 
   @override
   String get scoreboard => 'Panneau de résultats';

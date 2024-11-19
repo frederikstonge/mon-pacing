@@ -320,7 +320,7 @@ class SEn extends S {
   String get save => 'Save';
 
   @override
-  String get scanner => 'Scanner';
+  String get scanner => 'Scanner for integrations';
 
   @override
   String get scoreboard => 'Scoreboard';

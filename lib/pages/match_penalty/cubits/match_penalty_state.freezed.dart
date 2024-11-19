@@ -23,6 +23,8 @@ mixin _$MatchPenaltyState {
   bool get editMode => throw _privateConstructorUsedError;
   List<MatchTeamModel> get teams => throw _privateConstructorUsedError;
   PenaltyModel get penalty => throw _privateConstructorUsedError;
+  List<String>? get integrationPenaltyTypes =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this MatchPenaltyState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +42,11 @@ abstract class $MatchPenaltyStateCopyWith<$Res> {
           MatchPenaltyState value, $Res Function(MatchPenaltyState) then) =
       _$MatchPenaltyStateCopyWithImpl<$Res, MatchPenaltyState>;
   @useResult
-  $Res call({bool editMode, List<MatchTeamModel> teams, PenaltyModel penalty});
+  $Res call(
+      {bool editMode,
+      List<MatchTeamModel> teams,
+      PenaltyModel penalty,
+      List<String>? integrationPenaltyTypes});
 
   $PenaltyModelCopyWith<$Res> get penalty;
 }
@@ -63,6 +69,7 @@ class _$MatchPenaltyStateCopyWithImpl<$Res, $Val extends MatchPenaltyState>
     Object? editMode = null,
     Object? teams = null,
     Object? penalty = null,
+    Object? integrationPenaltyTypes = freezed,
   }) {
     return _then(_value.copyWith(
       editMode: null == editMode
@@ -77,6 +84,10 @@ class _$MatchPenaltyStateCopyWithImpl<$Res, $Val extends MatchPenaltyState>
           ? _value.penalty
           : penalty // ignore: cast_nullable_to_non_nullable
               as PenaltyModel,
+      integrationPenaltyTypes: freezed == integrationPenaltyTypes
+          ? _value.integrationPenaltyTypes
+          : integrationPenaltyTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 
@@ -99,7 +110,11 @@ abstract class _$$MatchPenaltyStateImplCopyWith<$Res>
       __$$MatchPenaltyStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool editMode, List<MatchTeamModel> teams, PenaltyModel penalty});
+  $Res call(
+      {bool editMode,
+      List<MatchTeamModel> teams,
+      PenaltyModel penalty,
+      List<String>? integrationPenaltyTypes});
 
   @override
   $PenaltyModelCopyWith<$Res> get penalty;
@@ -121,6 +136,7 @@ class __$$MatchPenaltyStateImplCopyWithImpl<$Res>
     Object? editMode = null,
     Object? teams = null,
     Object? penalty = null,
+    Object? integrationPenaltyTypes = freezed,
   }) {
     return _then(_$MatchPenaltyStateImpl(
       editMode: null == editMode
@@ -135,6 +151,10 @@ class __$$MatchPenaltyStateImplCopyWithImpl<$Res>
           ? _value.penalty
           : penalty // ignore: cast_nullable_to_non_nullable
               as PenaltyModel,
+      integrationPenaltyTypes: freezed == integrationPenaltyTypes
+          ? _value._integrationPenaltyTypes
+          : integrationPenaltyTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -145,8 +165,10 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
   const _$MatchPenaltyStateImpl(
       {required this.editMode,
       required final List<MatchTeamModel> teams,
-      required this.penalty})
-      : _teams = teams;
+      required this.penalty,
+      required final List<String>? integrationPenaltyTypes})
+      : _teams = teams,
+        _integrationPenaltyTypes = integrationPenaltyTypes;
 
   factory _$MatchPenaltyStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$MatchPenaltyStateImplFromJson(json);
@@ -163,10 +185,20 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
 
   @override
   final PenaltyModel penalty;
+  final List<String>? _integrationPenaltyTypes;
+  @override
+  List<String>? get integrationPenaltyTypes {
+    final value = _integrationPenaltyTypes;
+    if (value == null) return null;
+    if (_integrationPenaltyTypes is EqualUnmodifiableListView)
+      return _integrationPenaltyTypes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'MatchPenaltyState(editMode: $editMode, teams: $teams, penalty: $penalty)';
+    return 'MatchPenaltyState(editMode: $editMode, teams: $teams, penalty: $penalty, integrationPenaltyTypes: $integrationPenaltyTypes)';
   }
 
   @override
@@ -177,13 +209,19 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
             (identical(other.editMode, editMode) ||
                 other.editMode == editMode) &&
             const DeepCollectionEquality().equals(other._teams, _teams) &&
-            (identical(other.penalty, penalty) || other.penalty == penalty));
+            (identical(other.penalty, penalty) || other.penalty == penalty) &&
+            const DeepCollectionEquality().equals(
+                other._integrationPenaltyTypes, _integrationPenaltyTypes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, editMode,
-      const DeepCollectionEquality().hash(_teams), penalty);
+  int get hashCode => Object.hash(
+      runtimeType,
+      editMode,
+      const DeepCollectionEquality().hash(_teams),
+      penalty,
+      const DeepCollectionEquality().hash(_integrationPenaltyTypes));
 
   /// Create a copy of MatchPenaltyState
   /// with the given fields replaced by the non-null parameter values.
@@ -204,9 +242,11 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
 
 abstract class _MatchPenaltyState implements MatchPenaltyState {
   const factory _MatchPenaltyState(
-      {required final bool editMode,
-      required final List<MatchTeamModel> teams,
-      required final PenaltyModel penalty}) = _$MatchPenaltyStateImpl;
+          {required final bool editMode,
+          required final List<MatchTeamModel> teams,
+          required final PenaltyModel penalty,
+          required final List<String>? integrationPenaltyTypes}) =
+      _$MatchPenaltyStateImpl;
 
   factory _MatchPenaltyState.fromJson(Map<String, dynamic> json) =
       _$MatchPenaltyStateImpl.fromJson;
@@ -217,6 +257,8 @@ abstract class _MatchPenaltyState implements MatchPenaltyState {
   List<MatchTeamModel> get teams;
   @override
   PenaltyModel get penalty;
+  @override
+  List<String>? get integrationPenaltyTypes;
 
   /// Create a copy of MatchPenaltyState
   /// with the given fields replaced by the non-null parameter values.

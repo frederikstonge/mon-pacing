@@ -52,6 +52,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
               children: [
                 CustomCard(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DropdownButtonFormField<int>(
                         isExpanded: true,
@@ -86,17 +87,59 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                                 ))
                             .toList(),
                       ),
-                      TextFieldElement(
-                        autoFocus: true,
-                        label: '${S.of(context).type}*',
-                        controller: _typeController,
-                        validator: (value) {
-                          return Validators.stringRequired(value);
-                        },
-                        onChanged: (value) {
-                          context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(type: value));
-                        },
-                      ),
+                      if (state.integrationPenaltyTypes != null) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Text(
+                            '${S.of(context).type}*',
+                            style: Theme.of(context).textTheme.labelMedium,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        DropdownButtonFormField<int>(
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                            ),
+                          ),
+                          icon: const Icon(Icons.arrow_downward),
+                          value: state.penalty.type.isNotEmpty ? state.integrationPenaltyTypes!.indexOf(state.penalty.type) : 0,
+                          onChanged: (value) {
+                            if (value != null) {
+                              context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(type: state.integrationPenaltyTypes!.elementAt(value)));
+                            }
+                          },
+                          validator: (value) {
+                            return Validators.stringRequired(state.integrationPenaltyTypes!.elementAt(value!));
+                          },
+                          items: state.integrationPenaltyTypes!
+                              .asMap()
+                              .entries
+                              .map((e) => DropdownMenuItem(
+                                    value: e.key,
+                                    child: Text(
+                                      e.value,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
+                      ] else ...[
+                        TextFieldElement(
+                          autoFocus: true,
+                          label: '${S.of(context).type}*',
+                          controller: _typeController,
+                          validator: (value) {
+                            return Validators.stringRequired(value);
+                          },
+                          onChanged: (value) {
+                            context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(type: value));
+                          },
+                        ),
+                      ],
                       SettingsTile(
                         leading: const Icon(Icons.sports),
                         title: Text(S.of(context).major),

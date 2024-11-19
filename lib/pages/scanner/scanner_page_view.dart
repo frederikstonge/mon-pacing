@@ -102,8 +102,13 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           ),
         ],
       ),
-      body: MobileScanner(
-        controller: controller,
+      body: Stack(
+        children: [
+          MobileScanner(
+            controller: controller,
+          ),
+          _buildLoading(),
+        ],
       ),
     );
   }
@@ -113,7 +118,6 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     if (barcodeData == null) {
       return;
     }
-
     unawaited(controller.stop());
     final router = GoRouter.of(context);
     final pacingsRepository = context.read<PacingsRepository>();
@@ -195,6 +199,22 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       title: localizer.toasterGenericError,
       description: localizer.noIntegrationFound,
       type: ToastificationType.error,
+    );
+  }
+
+  Widget _buildLoading() {
+    return ValueListenableBuilder(
+      valueListenable: controller,
+      builder: (context, value, child) {
+        // Not ready.
+        if (!value.isInitialized || !value.isRunning || value.error != null || value.size.isEmpty) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return const SizedBox();
+      },
     );
   }
 }

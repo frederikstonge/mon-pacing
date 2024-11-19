@@ -674,7 +674,7 @@ abstract class S {
   /// No description provided for @scanner.
   ///
   /// In en, this message translates to:
-  /// **'Scanner'**
+  /// **'Scanner for integrations'**
   String get scanner;
 
   /// No description provided for @scoreboard.

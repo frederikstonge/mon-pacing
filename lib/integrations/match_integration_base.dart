@@ -6,6 +6,5 @@ import 'integration_base.dart';
 
 abstract class MatchIntegrationBase extends IntegrationBase {
   FutureOr<MatchModel> getMatch(String scanData, PacingModel pacing);
-
   FutureOr<bool> exportMatch(MatchModel match);
 }

@@ -102,6 +102,14 @@ const MatchModelSchema = IsarGeneratedSchema(
         name: 'integrationEntityId',
         type: IsarType.string,
       ),
+      IsarPropertySchema(
+        name: 'integrationRestrictMaximumPointPerImprovisation',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'integrationPenaltyTypes',
+        type: IsarType.stringList,
+      ),
     ],
     indexes: [
       IsarIndexSchema(
@@ -259,6 +267,23 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
       IsarCore.writeNull(writer, 19);
     } else {
       IsarCore.writeString(writer, 19, value);
+    }
+  }
+  IsarCore.writeLong(
+      writer,
+      20,
+      object.integrationRestrictMaximumPointPerImprovisation ??
+          -9223372036854775808);
+  {
+    final list = object.integrationPenaltyTypes;
+    if (list == null) {
+      IsarCore.writeNull(writer, 21);
+    } else {
+      final listWriter = IsarCore.beginList(writer, 21, list.length);
+      for (var i = 0; i < list.length; i++) {
+        IsarCore.writeString(listWriter, i, list[i]);
+      }
+      IsarCore.endList(writer, listWriter);
     }
   }
   return object.id;
@@ -534,6 +559,32 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   _integrationExportData = IsarCore.readString(reader, 18);
   final String? _integrationEntityId;
   _integrationEntityId = IsarCore.readString(reader, 19);
+  final int? _integrationRestrictMaximumPointPerImprovisation;
+  {
+    final value = IsarCore.readLong(reader, 20);
+    if (value == -9223372036854775808) {
+      _integrationRestrictMaximumPointPerImprovisation = null;
+    } else {
+      _integrationRestrictMaximumPointPerImprovisation = value;
+    }
+  }
+  final List<String>? _integrationPenaltyTypes;
+  {
+    final length = IsarCore.readList(reader, 21, IsarCore.readerPtrPtr);
+    {
+      final reader = IsarCore.readerPtr;
+      if (reader.isNull) {
+        _integrationPenaltyTypes = null;
+      } else {
+        final list = List<String>.filled(length, '', growable: true);
+        for (var i = 0; i < length; i++) {
+          list[i] = IsarCore.readString(reader, i) ?? '';
+        }
+        IsarCore.freeReader(reader);
+        _integrationPenaltyTypes = list;
+      }
+    }
+  }
   final object = MatchModel(
     id: _id,
     createdDate: _createdDate,
@@ -554,6 +605,9 @@ MatchModel deserializeMatchModel(IsarReader reader) {
     integrationId: _integrationId,
     integrationExportData: _integrationExportData,
     integrationEntityId: _integrationEntityId,
+    integrationRestrictMaximumPointPerImprovisation:
+        _integrationRestrictMaximumPointPerImprovisation,
+    integrationPenaltyTypes: _integrationPenaltyTypes,
   );
   return object;
 }
@@ -846,6 +900,32 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
       return IsarCore.readString(reader, 18);
     case 19:
       return IsarCore.readString(reader, 19);
+    case 20:
+      {
+        final value = IsarCore.readLong(reader, 20);
+        if (value == -9223372036854775808) {
+          return null;
+        } else {
+          return value;
+        }
+      }
+    case 21:
+      {
+        final length = IsarCore.readList(reader, 21, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
+            return null;
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
+        }
+      }
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -866,6 +946,7 @@ sealed class _MatchModelUpdate {
     String? integrationId,
     String? integrationExportData,
     String? integrationEntityId,
+    int? integrationRestrictMaximumPointPerImprovisation,
   });
 }
 
@@ -889,6 +970,7 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
     Object? integrationId = ignore,
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationRestrictMaximumPointPerImprovisation = ignore,
   }) {
     return collection.updateProperties([
           id
@@ -910,6 +992,8 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
           if (integrationExportData != ignore)
             18: integrationExportData as String?,
           if (integrationEntityId != ignore) 19: integrationEntityId as String?,
+          if (integrationRestrictMaximumPointPerImprovisation != ignore)
+            20: integrationRestrictMaximumPointPerImprovisation as int?,
         }) >
         0;
   }
@@ -930,6 +1014,7 @@ sealed class _MatchModelUpdateAll {
     String? integrationId,
     String? integrationExportData,
     String? integrationEntityId,
+    int? integrationRestrictMaximumPointPerImprovisation,
   });
 }
 
@@ -953,6 +1038,7 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
     Object? integrationId = ignore,
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationRestrictMaximumPointPerImprovisation = ignore,
   }) {
     return collection.updateProperties(id, {
       if (createdDate != ignore) 2: createdDate as DateTime?,
@@ -971,6 +1057,8 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
       if (integrationId != ignore) 17: integrationId as String?,
       if (integrationExportData != ignore) 18: integrationExportData as String?,
       if (integrationEntityId != ignore) 19: integrationEntityId as String?,
+      if (integrationRestrictMaximumPointPerImprovisation != ignore)
+        20: integrationRestrictMaximumPointPerImprovisation as int?,
     });
   }
 }
@@ -995,6 +1083,7 @@ sealed class _MatchModelQueryUpdate {
     String? integrationId,
     String? integrationExportData,
     String? integrationEntityId,
+    int? integrationRestrictMaximumPointPerImprovisation,
   });
 }
 
@@ -1018,6 +1107,7 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
     Object? integrationId = ignore,
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationRestrictMaximumPointPerImprovisation = ignore,
   }) {
     return query.updateProperties(limit: limit, {
       if (createdDate != ignore) 2: createdDate as DateTime?,
@@ -1036,6 +1126,8 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
       if (integrationId != ignore) 17: integrationId as String?,
       if (integrationExportData != ignore) 18: integrationExportData as String?,
       if (integrationEntityId != ignore) 19: integrationEntityId as String?,
+      if (integrationRestrictMaximumPointPerImprovisation != ignore)
+        20: integrationRestrictMaximumPointPerImprovisation as int?,
     });
   }
 }
@@ -1067,6 +1159,7 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
     Object? integrationId = ignore,
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationRestrictMaximumPointPerImprovisation = ignore,
   }) {
     final q = query.build();
     try {
@@ -1088,6 +1181,8 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
         if (integrationExportData != ignore)
           18: integrationExportData as String?,
         if (integrationEntityId != ignore) 19: integrationEntityId as String?,
+        if (integrationRestrictMaximumPointPerImprovisation != ignore)
+          20: integrationRestrictMaximumPointPerImprovisation as int?,
       });
     } finally {
       q.close();
@@ -2902,6 +2997,321 @@ extension MatchModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 20));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 20));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 20,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationGreaterThan(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 20,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationGreaterThanOrEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 20,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationLessThan(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 20,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationLessThanOrEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 20,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationRestrictMaximumPointPerImprovisationBetween(
+    int? lower,
+    int? upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 20,
+          lower: lower,
+          upper: upper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 21));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 21));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 21,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementContains(String value,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 21,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementMatches(String pattern,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 21,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 21,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 21,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesIsEmpty() {
+    return not().group(
+      (q) => q
+          .integrationPenaltyTypesIsNull()
+          .or()
+          .integrationPenaltyTypesIsNotEmpty(),
+    );
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 21, value: null),
+      );
+    });
+  }
 }
 
 extension MatchModelQueryObject
@@ -3111,6 +3521,20 @@ extension MatchModelQuerySortBy
       );
     });
   }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationRestrictMaximumPointPerImprovisation() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(20);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationRestrictMaximumPointPerImprovisationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(20, sort: Sort.desc);
+    });
+  }
 }
 
 extension MatchModelQuerySortThenBy
@@ -3289,6 +3713,20 @@ extension MatchModelQuerySortThenBy
       return query.addSortBy(19, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationRestrictMaximumPointPerImprovisation() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(20);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationRestrictMaximumPointPerImprovisationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(20, sort: Sort.desc);
+    });
+  }
 }
 
 extension MatchModelQueryWhereDistinct
@@ -3385,6 +3823,20 @@ extension MatchModelQueryWhereDistinct
       distinctByIntegrationEntityId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(19, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
+      distinctByIntegrationRestrictMaximumPointPerImprovisation() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(20);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
+      distinctByIntegrationPenaltyTypes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(21);
     });
   }
 }
@@ -3518,6 +3970,20 @@ extension MatchModelQueryProperty1
       integrationEntityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(19);
+    });
+  }
+
+  QueryBuilder<MatchModel, int?, QAfterProperty>
+      integrationRestrictMaximumPointPerImprovisationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(20);
+    });
+  }
+
+  QueryBuilder<MatchModel, List<String>?, QAfterProperty>
+      integrationPenaltyTypesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(21);
     });
   }
 }
@@ -3660,6 +4126,20 @@ extension MatchModelQueryProperty2<R>
       return query.addProperty(19);
     });
   }
+
+  QueryBuilder<MatchModel, (R, int?), QAfterProperty>
+      integrationRestrictMaximumPointPerImprovisationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(20);
+    });
+  }
+
+  QueryBuilder<MatchModel, (R, List<String>?), QAfterProperty>
+      integrationPenaltyTypesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(21);
+    });
+  }
 }
 
 extension MatchModelQueryProperty3<R1, R2>
@@ -3800,6 +4280,20 @@ extension MatchModelQueryProperty3<R1, R2>
       return query.addProperty(19);
     });
   }
+
+  QueryBuilder<MatchModel, (R1, R2, int?), QOperations>
+      integrationRestrictMaximumPointPerImprovisationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(20);
+    });
+  }
+
+  QueryBuilder<MatchModel, (R1, R2, List<String>?), QOperations>
+      integrationPenaltyTypesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(21);
+    });
+  }
 }
 
 // **************************************************************************
@@ -3849,6 +4343,13 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
       integrationId: json['integrationId'] as String?,
       integrationExportData: json['integrationExportData'] as String?,
       integrationEntityId: json['integrationEntityId'] as String?,
+      integrationRestrictMaximumPointPerImprovisation:
+          (json['integrationRestrictMaximumPointPerImprovisation'] as num?)
+              ?.toInt(),
+      integrationPenaltyTypes:
+          (json['integrationPenaltyTypes'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList(),
     );
 
 Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
@@ -3874,6 +4375,9 @@ Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
       'integrationId': instance.integrationId,
       'integrationExportData': instance.integrationExportData,
       'integrationEntityId': instance.integrationEntityId,
+      'integrationRestrictMaximumPointPerImprovisation':
+          instance.integrationRestrictMaximumPointPerImprovisation,
+      'integrationPenaltyTypes': instance.integrationPenaltyTypes,
     };
 
 const _$PenaltiesImpactTypeEnumMap = {

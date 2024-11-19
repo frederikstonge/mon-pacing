@@ -56,6 +56,7 @@ class ImprovisationActions extends StatelessWidget {
                   }
                 },
                 minValue: 0,
+                maxValue: match.integrationRestrictMaximumPointPerImprovisation,
               ),
             ],
           ),

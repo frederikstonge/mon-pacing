@@ -223,6 +223,7 @@ class MatchPageView extends StatelessWidget {
                                         improvisationId: improvisation.id,
                                         teams: match.teams,
                                         onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
+                                        integrationPenaltyTypes: match.integrationPenaltyTypes,
                                       ),
                                     ),
                                   ),
@@ -235,6 +236,7 @@ class MatchPageView extends StatelessWidget {
                                             improvisationId: improvisation.id,
                                             teams: match.teams,
                                             penalty: e,
+                                            integrationPenaltyTypes: match.integrationPenaltyTypes,
                                             onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
                                           ),
                                         ),
@@ -242,13 +244,13 @@ class MatchPageView extends StatelessWidget {
                                           contentPadding: EdgeInsets.zero,
                                           leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
                                           title: Text(e.getPenaltyString(S.of(context), match, includePerformerName: false)),
-                                          subtitle: Text(e.performerId != null
-                                              ? match.teams
+                                          subtitle: e.performerId != null
+                                              ? Text(match.teams
                                                   .firstWhere((t) => t.id == e.teamId)
                                                   .performers
                                                   .firstWhere((p) => p.id == e.performerId)
-                                                  .name
-                                              : ''),
+                                                  .name)
+                                              : null,
                                           trailing: LoadingIconButton(
                                             icon: const Icon(Icons.remove),
                                             tooltip: S.of(context).delete,
@@ -312,6 +314,11 @@ class MatchPageView extends StatelessWidget {
         toasterService.show(
           title: localizer.toasterMatchResultExported,
           type: ToastificationType.success,
+        );
+      } else {
+        toasterService.show(
+          title: localizer.toasterGenericError,
+          type: ToastificationType.error,
         );
       }
     }

@@ -42,6 +42,8 @@ class MatchModel with _$MatchModel implements BaseModel {
     String? integrationId,
     String? integrationExportData,
     String? integrationEntityId,
+    int? integrationRestrictMaximumPointPerImprovisation,
+    List<String>? integrationPenaltyTypes,
   }) = _MatchModel;
 
   List<String> get teamNames => teams.map((e) => e.name).toList();
