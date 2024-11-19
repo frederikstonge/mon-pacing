@@ -12,6 +12,7 @@ class MatchPenaltyState with _$MatchPenaltyState {
     required bool editMode,
     required List<MatchTeamModel> teams,
     required PenaltyModel penalty,
+    required List<String>? integrationPenaltyTypes,
   }) = _MatchPenaltyState;
 
   factory MatchPenaltyState.fromJson(Map<String, dynamic> json) => _$MatchPenaltyStateFromJson(json);

@@ -13,12 +13,14 @@ class MatchPenaltyShell extends StatelessWidget {
   final List<MatchTeamModel> teams;
   final FutureOr<void> Function(PenaltyModel penalty) onSave;
   final PenaltyModel? penalty;
+  final List<String>? integrationPenaltyTypes;
 
   const MatchPenaltyShell({
     super.key,
     required this.improvisationId,
     required this.teams,
     required this.onSave,
+    required this.integrationPenaltyTypes,
     this.penalty,
   });
 
@@ -29,6 +31,7 @@ class MatchPenaltyShell extends StatelessWidget {
         improvisationId: improvisationId,
         teams: teams,
         onSave: onSave,
+        integrationPenaltyTypes: integrationPenaltyTypes,
         penalty: penalty,
       ),
       child: const MatchPenaltyView(),

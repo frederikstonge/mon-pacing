@@ -14,6 +14,10 @@ _$MatchPenaltyStateImpl _$$MatchPenaltyStateImplFromJson(
           .map((e) => MatchTeamModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       penalty: PenaltyModel.fromJson(json['penalty'] as Map<String, dynamic>),
+      integrationPenaltyTypes:
+          (json['integrationPenaltyTypes'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList(),
     );
 
 Map<String, dynamic> _$$MatchPenaltyStateImplToJson(
@@ -22,4 +26,5 @@ Map<String, dynamic> _$$MatchPenaltyStateImplToJson(
       'editMode': instance.editMode,
       'teams': instance.teams,
       'penalty': instance.penalty,
+      'integrationPenaltyTypes': instance.integrationPenaltyTypes,
     };

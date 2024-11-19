@@ -30,6 +30,8 @@ dependencies:
   go_router: ^14.0.1
   google_fonts: ^6.1.0
   haptic_feedback: ^0.5.1
+  html: ^0.15.5
+  http: ^1.2.2
   hydrated_bloc: ^9.1.4
   icons_launcher: ^3.0.0
   intl: any
@@ -41,6 +43,7 @@ dependencies:
   sanitize_filename: ^1.0.5
   textfield_tags: ^3.0.1
   toastification: ^2.0.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   build_runner: ^2.4.8
