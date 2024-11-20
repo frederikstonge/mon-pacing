@@ -56,6 +56,8 @@
   "improvisationIndex": "Position de l'improvisation",
   "improvisationNumber": "Improvisation #{order}",
   "improvisations": "Improvisations",
+  "integrationPacingMustHaveAtLeastXImprovisations": "Le pacing doit avoir au moins {count, plural, one{{count} improvisation} other{{count} improvisations}}.",
+  "integrationPacingMustHaveAtMostXImprovisations": "Le pacing doit avoir au plus {count, plural, one{{count} improvisation} other{{count} improvisations}}.",
   "language": "Langue",
   "lesserThan": "Doit être plus petit que {max}",
   "light": "Clair",

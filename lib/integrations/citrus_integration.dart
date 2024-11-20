@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../extensions/match_extensions.dart';
+import '../l10n/localizer.dart';
 import '../models/constants.dart';
 import '../models/match_model.dart';
 import '../models/match_team_model.dart';
@@ -32,13 +33,21 @@ class CitrusIntegration implements MatchIntegrationBase {
 
   @override
   Future<MatchModel> getMatch(String data, PacingModel pacing) async {
+    if (pacing.improvisations.length < 12) {
+      throw Exception(Localizer.current.integrationPacingMustHaveAtLeastXImprovisations(count: 12));
+    }
+
+    if (pacing.improvisations.length > 13) {
+      throw Exception(Localizer.current.integrationPacingMustHaveAtMostXImprovisations(count: 13));
+    }
+
     final url = Uri.parse(data);
     final response = await http.get(url);
     final document = parse(response.body);
 
     final matchNameSelector = document.querySelector('.teamBoard');
     if (matchNameSelector == null) {
-      throw Exception('Match name not found');
+      throw Exception();
     }
 
     final matchName = _sanitize(matchNameSelector.text);
@@ -133,7 +142,7 @@ class CitrusIntegration implements MatchIntegrationBase {
   MatchTeamModel _extractTeam(Document document, int teamId, String selector, int color, int Function() getPerformerId) {
     final teamSelector = document.querySelector(selector);
     if (teamSelector == null) {
-      throw Exception('Team $teamId not found');
+      throw Exception();
     }
 
     final teamName = _sanitize(teamSelector.getElementsByTagName('h3').map((e) => e.text).join(' - '));
@@ -212,9 +221,7 @@ class CitrusIntegration implements MatchIntegrationBase {
     return '[${match.improvisations.map((e) {
       final points = match.points.where((point) => point.improvisationId == e.id);
       var teamWhoWon = '';
-      if (points.length > 2) {
-        throw Exception('Too many points for improvisation ${e.theme}');
-      } else if (points.isEmpty) {
+      if (points.isEmpty) {
         teamWhoWon = '';
       } else if (points.length == 2 && points.first.value == points.last.value) {
         teamWhoWon = 'both';

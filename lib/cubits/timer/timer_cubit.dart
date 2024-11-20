@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../l10n/localizer.dart';
 import '../../models/timer_model.dart';
 import '../../models/timer_status.dart';
 import '../../services/foreground_service.dart';
@@ -51,7 +52,7 @@ class TimerCubit extends Cubit<TimerState> {
     await _updateTimer(timer);
 
     final result = await FlutterForegroundTask.startService(
-      notificationTitle: settingsCubit.localizer.notificationTitle,
+      notificationTitle: Localizer.current.notificationTitle,
       notificationText: '',
       callback: startCallback,
     );
@@ -106,8 +107,8 @@ class TimerCubit extends Cubit<TimerState> {
     if (!notificationPermission) {
       toasterService.show(
         type: ToastificationType.error,
-        title: settingsCubit.localizer.toasterGenericError,
-        description: settingsCubit.localizer.missingNotificationPermissionError,
+        title: Localizer.current.toasterGenericError,
+        description: Localizer.current.missingNotificationPermissionError,
       );
       return false;
     }
@@ -116,8 +117,8 @@ class TimerCubit extends Cubit<TimerState> {
     if (!ignoreBatteryOptimization) {
       toasterService.show(
         type: ToastificationType.error,
-        title: settingsCubit.localizer.toasterGenericError,
-        description: settingsCubit.localizer.missingIgnoreBatteryOptimizationError,
+        title: Localizer.current.toasterGenericError,
+        description: Localizer.current.missingIgnoreBatteryOptimizationError,
       );
       return false;
     }

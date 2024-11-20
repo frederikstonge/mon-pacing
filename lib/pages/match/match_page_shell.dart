@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubits/matches/matches_cubit.dart';
-import '../../cubits/settings/settings_cubit.dart';
 import '../../repositories/matches_repository.dart';
 import '../../services/analytics_service.dart';
 import '../../services/excel_service.dart';
@@ -28,7 +27,6 @@ class MatchPageShell extends StatelessWidget {
       create: (context) => MatchCubit(
         matchesRepository: context.read<MatchesRepository>(),
         matchesCubit: context.read<MatchesCubit>(),
-        settingsCubit: context.read<SettingsCubit>(),
         toasterService: context.read<ToasterService>(),
         excelService: context.read<ExcelService>(),
         analyticsService: context.read<AnalyticsService>(),

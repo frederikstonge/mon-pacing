@@ -189,6 +189,28 @@ class SEn extends S {
   String get improvisations => 'Improvisations';
 
   @override
+  String integrationPacingMustHaveAtLeastXImprovisations({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count improvisations',
+      one: '$count improvisation',
+    );
+    return 'Pacing must have at least $_temp0.';
+  }
+
+  @override
+  String integrationPacingMustHaveAtMostXImprovisations({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count improvisations',
+      one: '$count improvisation',
+    );
+    return 'Pacing must have at most $_temp0.';
+  }
+
+  @override
   String get language => 'Language';
 
   @override

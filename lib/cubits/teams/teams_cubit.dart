@@ -7,23 +7,21 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../l10n/localizer.dart';
 import '../../models/team_model.dart';
 import '../../repositories/teams_repository.dart';
 import '../../services/toaster_service.dart';
-import '../settings/settings_cubit.dart';
 import 'teams_state.dart';
 
 class TeamsCubit extends Cubit<TeamsState> {
   static const int _pageSize = 20;
   final TeamsRepository teamsRepository;
   final ToasterService toasterService;
-  final SettingsCubit settingsCubit;
   bool _isFetching = false;
 
   TeamsCubit({
     required this.teamsRepository,
     required this.toasterService,
-    required this.settingsCubit,
   }) : super(const TeamsState.initial());
 
   Future<TeamModel?> add(TeamModel model) async {
@@ -31,7 +29,7 @@ class TeamsCubit extends Cubit<TeamsState> {
       final team = await teamsRepository.add(model);
       return team;
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -43,7 +41,7 @@ class TeamsCubit extends Cubit<TeamsState> {
     try {
       await teamsRepository.edit(model);
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -52,9 +50,9 @@ class TeamsCubit extends Cubit<TeamsState> {
   Future<void> delete(TeamModel model) async {
     try {
       await teamsRepository.delete(model.id);
-      toasterService.show(title: settingsCubit.localizer.toasterTeamDeleted);
+      toasterService.show(title: Localizer.current.toasterTeamDeleted);
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -83,7 +81,7 @@ class TeamsCubit extends Cubit<TeamsState> {
       );
     } catch (exception) {
       emit(TeamsState.error(exception.toString()));
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       _isFetching = false;
     }
@@ -111,12 +109,12 @@ class TeamsCubit extends Cubit<TeamsState> {
         final teamValue = await File(filePath).readAsString();
         final team = TeamModel.fromJson(jsonDecode(teamValue));
         final newTeam = await teamsRepository.add(team.copyWith(id: 0));
-        toasterService.show(title: settingsCubit.localizer.toasterTeamImported);
+        toasterService.show(title: Localizer.current.toasterTeamImported);
 
         return newTeam;
       }
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -127,15 +125,15 @@ class TeamsCubit extends Cubit<TeamsState> {
   Future<bool> export(TeamModel model) async {
     try {
       final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
-      final fileName = sanitizeFilename('${settingsCubit.localizer.team}-${model.name}.json', replacement: '-');
+      final fileName = sanitizeFilename('${Localizer.current.team}-${model.name}.json', replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {
-        toasterService.show(title: settingsCubit.localizer.toasterTeamExported);
+        toasterService.show(title: Localizer.current.toasterTeamExported);
         return true;
       }
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     }
 
     return false;

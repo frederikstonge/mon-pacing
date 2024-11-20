@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:intl/intl.dart';
 import 'package:toastification/toastification.dart';
 
 import 'cubits/settings/settings_cubit.dart';
@@ -19,6 +20,8 @@ class App extends StatelessWidget {
     return WithForegroundTask(
       child: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, state) {
+          // Required to set the current language
+          Intl.defaultLocale = state.language;
           return AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle(
               statusBarIconBrightness: switch (state.theme) {

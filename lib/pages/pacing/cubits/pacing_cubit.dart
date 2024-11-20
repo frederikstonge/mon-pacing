@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/pacings/pacings_cubit.dart';
 import '../../../cubits/settings/settings_cubit.dart';
+import '../../../l10n/localizer.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
 import '../../../models/pacing_model.dart';
@@ -24,7 +25,7 @@ class PacingCubit extends Cubit<PacingState> {
   Future<void> initialize(int id) async {
     final pacing = await pacingsRepository.get(id);
     if (pacing == null) {
-      emit(PacingState.error(settingsCubit.localizer.toasterGenericError));
+      emit(PacingState.error(Localizer.current.toasterGenericError));
       return;
     }
 

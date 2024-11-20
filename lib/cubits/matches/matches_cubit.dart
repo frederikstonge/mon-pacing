@@ -1,42 +1,40 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../l10n/localizer.dart';
 import '../../models/match_model.dart';
 import '../../repositories/matches_repository.dart';
 import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
-import '../settings/settings_cubit.dart';
 import 'matches_state.dart';
 
 class MatchesCubit extends Cubit<MatchesState> {
   static const int _pageSize = 20;
   final MatchesRepository matchesRepository;
   final ToasterService toasterService;
-  final SettingsCubit settingsCubit;
   final AnalyticsService analyticsService;
   bool _isFetching = false;
 
   MatchesCubit({
     required this.matchesRepository,
     required this.toasterService,
-    required this.settingsCubit,
     required this.analyticsService,
   }) : super(const MatchesState.initial());
 
   Future<MatchModel?> add(MatchModel model) async {
     try {
       if (model.improvisations.isEmpty) {
-        toasterService.show(title: settingsCubit.localizer.toasterYouCantStartAMatchWithoutImprovisation, type: ToastificationType.error);
+        toasterService.show(title: Localizer.current.toasterYouCantStartAMatchWithoutImprovisation, type: ToastificationType.error);
         return null;
       }
 
       if (model.enableStatistics && model.teams.any((t) => t.performers.isEmpty)) {
-        toasterService.show(title: settingsCubit.localizer.toasterYouCantStartAMatchWithAnEmptyTeam, type: ToastificationType.error);
+        toasterService.show(title: Localizer.current.toasterYouCantStartAMatchWithAnEmptyTeam, type: ToastificationType.error);
         return null;
       }
 
       if (model.enableStatistics && model.teams.any((t) => t.performers.any((p) => p.name.isEmpty))) {
-        toasterService.show(title: settingsCubit.localizer.toasterYouMustFillAllPerformersName, type: ToastificationType.error);
+        toasterService.show(title: Localizer.current.toasterYouMustFillAllPerformersName, type: ToastificationType.error);
         return null;
       }
 
@@ -44,7 +42,7 @@ class MatchesCubit extends Cubit<MatchesState> {
       await analyticsService.logStartMatch(matchModel);
       return matchModel;
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -56,7 +54,7 @@ class MatchesCubit extends Cubit<MatchesState> {
     try {
       await matchesRepository.edit(model);
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -65,9 +63,9 @@ class MatchesCubit extends Cubit<MatchesState> {
   Future<void> delete(MatchModel model) async {
     try {
       await matchesRepository.delete(model.id);
-      toasterService.show(title: settingsCubit.localizer.toasterMatchDeleted);
+      toasterService.show(title: Localizer.current.toasterMatchDeleted);
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       await refresh();
     }
@@ -96,7 +94,7 @@ class MatchesCubit extends Cubit<MatchesState> {
       );
     } catch (exception) {
       emit(MatchesState.error(exception.toString()));
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
       _isFetching = false;
     }
