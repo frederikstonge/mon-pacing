@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/generated/app_localizations.dart';
 import 'search_dialog.dart';
 
 class CategoriesSearch extends StatelessWidget {
@@ -29,6 +30,7 @@ class CategoriesSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return SearchDialog(
       onChanged: (query, _) => search(query: query),
+      hintText: S.of(context).search(category: S.of(context).categories),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
           Navigator.of(context).pop(item);

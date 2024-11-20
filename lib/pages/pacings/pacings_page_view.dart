@@ -107,7 +107,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                     ),
                     LoadingIconButton(
                       icon: const Icon(Icons.search),
-                      tooltip: S.of(context).search,
+                      tooltip: S.of(context).search(category: S.of(context).pacings),
                       onPressed: () async {
                         final router = GoRouter.of(context);
                         final result = await PacingsSearch.showDialog(

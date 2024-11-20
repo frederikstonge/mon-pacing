@@ -38,6 +38,7 @@ class MatchesSearch extends StatelessWidget {
         builder: (context, snapshot) {
           return SearchDialog(
             onChanged: (query, selectedTags) => search(query, selectedTags),
+            hintText: S.of(context).search(category: S.of(context).matches),
             tags: snapshot.data,
             itemBuilder: (context, item) => InkWell(
               onTap: () {

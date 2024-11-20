@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/team_model.dart';
 import '../team_color_avatar/team_color_avatar.dart';
 import 'search_dialog.dart';
@@ -38,6 +39,7 @@ class TeamsSearch extends StatelessWidget {
         builder: (context, snapshot) {
           return SearchDialog(
             onChanged: (query, selectedTags) => search(query, selectedTags),
+            hintText: S.of(context).search(category: S.of(context).teams),
             tags: snapshot.data,
             itemBuilder: (context, item) => InkWell(
               onTap: () {

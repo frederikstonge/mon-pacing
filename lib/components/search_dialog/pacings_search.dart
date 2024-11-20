@@ -37,6 +37,7 @@ class PacingsSearch extends StatelessWidget {
       future: getAllTags(),
       builder: (context, snapshot) => SearchDialog(
         onChanged: (query, selectedTags) => search(query, selectedTags),
+        hintText: S.of(context).search(category: S.of(context).pacings),
         tags: snapshot.data,
         itemBuilder: (context, item) => InkWell(
           onTap: () {

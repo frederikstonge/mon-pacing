@@ -137,6 +137,12 @@ abstract class S {
   /// **'Category'**
   String get category;
 
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
   /// No description provided for @color.
   ///
   /// In en, this message translates to:
@@ -698,8 +704,8 @@ abstract class S {
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
-  /// **'Search...'**
-  String get search;
+  /// **'Search {category}...'**
+  String search({required String category});
 
   /// No description provided for @settings.
   ///

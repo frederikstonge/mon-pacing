@@ -32,6 +32,9 @@ class SFr extends S {
   String get category => 'Catégorie';
 
   @override
+  String get categories => 'Catégories';
+
+  @override
   String get color => 'Couleur';
 
   @override
@@ -348,7 +351,9 @@ class SFr extends S {
   String get scoreboard => 'Panneau de résultats';
 
   @override
-  String get search => 'Rechercher...';
+  String search({required String category}) {
+    return 'Rechercher $category...';
+  }
 
   @override
   String get settings => 'Paramètres';

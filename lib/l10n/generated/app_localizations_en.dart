@@ -32,6 +32,9 @@ class SEn extends S {
   String get category => 'Category';
 
   @override
+  String get categories => 'Categories';
+
+  @override
   String get color => 'Color';
 
   @override
@@ -348,7 +351,9 @@ class SEn extends S {
   String get scoreboard => 'Scoreboard';
 
   @override
-  String get search => 'Search...';
+  String search({required String category}) {
+    return 'Search $category...';
+  }
 
   @override
   String get settings => 'Settings';

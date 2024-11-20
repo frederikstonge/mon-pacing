@@ -3,17 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../components/tag_filters/tag_filters.dart';
-import '../../l10n/generated/app_localizations.dart';
 
 class SearchDialog<T> extends StatefulWidget {
   final FutureOr<List<T>> Function(String query, List<String> selectedTags) onChanged;
   final Widget Function(BuildContext context, T item) itemBuilder;
   final List<String>? tags;
+  final String hintText;
 
   const SearchDialog({
     super.key,
     required this.onChanged,
     required this.itemBuilder,
+    required this.hintText,
     this.tags,
   });
 
@@ -42,7 +43,7 @@ class _SearchDialogState<T> extends State<SearchDialog<T>> {
           textInputAction: TextInputAction.search,
           autofocus: true,
           decoration: InputDecoration(
-            hintText: S.of(context).search,
+            hintText: widget.hintText,
             hintStyle: const TextStyle(
               fontSize: 18,
             ),

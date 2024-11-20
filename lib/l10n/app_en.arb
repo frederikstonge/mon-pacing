@@ -17,6 +17,7 @@
   },
   "cancel": "Cancel",
   "category": "Category",
+  "categories": "Categories",
   "color": "Color",
   "compared": "Compared",
   "confirm": "Confirm",
@@ -188,7 +189,14 @@
   "save": "Save",
   "scanner": "Scanner for integrations",
   "scoreboard": "Scoreboard",
-  "search": "Search...",
+  "search": "Search {category}...",
+  "@search": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
   "settings": "Settings",
   "stars": "Stars",
   "start": "Start",
