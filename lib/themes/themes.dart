@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Themes {
   static ThemeData light() {
@@ -91,7 +90,7 @@ class Themes {
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
     return themeData.copyWith(
-      textTheme: GoogleFonts.poppinsTextTheme(themeData.textTheme),
+      textTheme: themeData.textTheme.apply(fontFamily: 'Poppins'),
       cardTheme: CardTheme(
         clipBehavior: Clip.antiAlias,
         color: cardBackgroundColor,

@@ -146,7 +146,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               Expanded(
                                 child: Text(
                                   S.of(context).numberOfTeamsByDefault,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -350,7 +350,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               Expanded(
                                 child: Text(
                                   S.of(context).penaltiesRequiredToImpactPoints,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -395,7 +395,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               Expanded(
                                 child: Text(
                                   S.of(context).penaltiesRequiredToExpel,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),

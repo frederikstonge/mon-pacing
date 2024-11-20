@@ -1,6 +1,6 @@
 flutter_native_splash:
   color: "#FFFFFF"
-  image: assets/MonPacingLight.png
+  image: assets/ic_logo.png
   android_12:
-    image: assets/MonPacingLight.png
+    image: assets/ic_logo_adaptive.png
     icon_background_color: "#FFFFFF"

@@ -236,7 +236,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               Expanded(
                                 child: Text(
                                   S.of(context).penaltiesRequiredToImpactPoints,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -281,7 +281,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               Expanded(
                                 child: Text(
                                   S.of(context).penaltiesRequiredToExpel,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),

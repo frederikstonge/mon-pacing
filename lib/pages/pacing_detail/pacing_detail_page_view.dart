@@ -90,7 +90,7 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                           Expanded(
                             child: Text(
                               S.of(context).numberOfTeamsByDefault,
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: Theme.of(context).textTheme.bodyLarge,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
