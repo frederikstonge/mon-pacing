@@ -45,6 +45,10 @@ mixin _$MatchModel {
   String? get integrationEntityId => throw _privateConstructorUsedError;
   int? get integrationRestrictMaximumPointPerImprovisation =>
       throw _privateConstructorUsedError;
+  int? get integrationMinNumberOfImprovisations =>
+      throw _privateConstructorUsedError;
+  int? get integrationMaxNumberOfImprovisations =>
+      throw _privateConstructorUsedError;
   List<String>? get integrationPenaltyTypes =>
       throw _privateConstructorUsedError;
 
@@ -85,6 +89,8 @@ abstract class $MatchModelCopyWith<$Res> {
       String? integrationExportData,
       String? integrationEntityId,
       int? integrationRestrictMaximumPointPerImprovisation,
+      int? integrationMinNumberOfImprovisations,
+      int? integrationMaxNumberOfImprovisations,
       List<String>? integrationPenaltyTypes});
 }
 
@@ -123,6 +129,8 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
     Object? integrationExportData = freezed,
     Object? integrationEntityId = freezed,
     Object? integrationRestrictMaximumPointPerImprovisation = freezed,
+    Object? integrationMinNumberOfImprovisations = freezed,
+    Object? integrationMaxNumberOfImprovisations = freezed,
     Object? integrationPenaltyTypes = freezed,
   }) {
     return _then(_value.copyWith(
@@ -207,6 +215,16 @@ class _$MatchModelCopyWithImpl<$Res, $Val extends MatchModel>
           ? _value.integrationRestrictMaximumPointPerImprovisation
           : integrationRestrictMaximumPointPerImprovisation // ignore: cast_nullable_to_non_nullable
               as int?,
+      integrationMinNumberOfImprovisations: freezed ==
+              integrationMinNumberOfImprovisations
+          ? _value.integrationMinNumberOfImprovisations
+          : integrationMinNumberOfImprovisations // ignore: cast_nullable_to_non_nullable
+              as int?,
+      integrationMaxNumberOfImprovisations: freezed ==
+              integrationMaxNumberOfImprovisations
+          ? _value.integrationMaxNumberOfImprovisations
+          : integrationMaxNumberOfImprovisations // ignore: cast_nullable_to_non_nullable
+              as int?,
       integrationPenaltyTypes: freezed == integrationPenaltyTypes
           ? _value.integrationPenaltyTypes
           : integrationPenaltyTypes // ignore: cast_nullable_to_non_nullable
@@ -244,6 +262,8 @@ abstract class _$$MatchModelImplCopyWith<$Res>
       String? integrationExportData,
       String? integrationEntityId,
       int? integrationRestrictMaximumPointPerImprovisation,
+      int? integrationMinNumberOfImprovisations,
+      int? integrationMaxNumberOfImprovisations,
       List<String>? integrationPenaltyTypes});
 }
 
@@ -280,6 +300,8 @@ class __$$MatchModelImplCopyWithImpl<$Res>
     Object? integrationExportData = freezed,
     Object? integrationEntityId = freezed,
     Object? integrationRestrictMaximumPointPerImprovisation = freezed,
+    Object? integrationMinNumberOfImprovisations = freezed,
+    Object? integrationMaxNumberOfImprovisations = freezed,
     Object? integrationPenaltyTypes = freezed,
   }) {
     return _then(_$MatchModelImpl(
@@ -364,6 +386,16 @@ class __$$MatchModelImplCopyWithImpl<$Res>
           ? _value.integrationRestrictMaximumPointPerImprovisation
           : integrationRestrictMaximumPointPerImprovisation // ignore: cast_nullable_to_non_nullable
               as int?,
+      integrationMinNumberOfImprovisations: freezed ==
+              integrationMinNumberOfImprovisations
+          ? _value.integrationMinNumberOfImprovisations
+          : integrationMinNumberOfImprovisations // ignore: cast_nullable_to_non_nullable
+              as int?,
+      integrationMaxNumberOfImprovisations: freezed ==
+              integrationMaxNumberOfImprovisations
+          ? _value.integrationMaxNumberOfImprovisations
+          : integrationMaxNumberOfImprovisations // ignore: cast_nullable_to_non_nullable
+              as int?,
       integrationPenaltyTypes: freezed == integrationPenaltyTypes
           ? _value._integrationPenaltyTypes
           : integrationPenaltyTypes // ignore: cast_nullable_to_non_nullable
@@ -396,6 +428,8 @@ class _$MatchModelImpl extends _MatchModel {
       this.integrationExportData,
       this.integrationEntityId,
       this.integrationRestrictMaximumPointPerImprovisation,
+      this.integrationMinNumberOfImprovisations,
+      this.integrationMaxNumberOfImprovisations,
       final List<String>? integrationPenaltyTypes})
       : _teams = teams,
         _improvisations = improvisations,
@@ -495,6 +529,10 @@ class _$MatchModelImpl extends _MatchModel {
   final String? integrationEntityId;
   @override
   final int? integrationRestrictMaximumPointPerImprovisation;
+  @override
+  final int? integrationMinNumberOfImprovisations;
+  @override
+  final int? integrationMaxNumberOfImprovisations;
   final List<String>? _integrationPenaltyTypes;
   @override
   List<String>? get integrationPenaltyTypes {
@@ -508,7 +546,7 @@ class _$MatchModelImpl extends _MatchModel {
 
   @override
   String toString() {
-    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, tags: $tags, stars: $stars, enableStatistics: $enableStatistics, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints, enableMatchExpulsion: $enableMatchExpulsion, penaltiesRequiredToExpel: $penaltiesRequiredToExpel, integrationId: $integrationId, integrationExportData: $integrationExportData, integrationEntityId: $integrationEntityId, integrationRestrictMaximumPointPerImprovisation: $integrationRestrictMaximumPointPerImprovisation, integrationPenaltyTypes: $integrationPenaltyTypes)';
+    return 'MatchModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, teams: $teams, improvisations: $improvisations, penalties: $penalties, points: $points, tags: $tags, stars: $stars, enableStatistics: $enableStatistics, enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, penaltiesImpactType: $penaltiesImpactType, penaltiesRequiredToImpactPoints: $penaltiesRequiredToImpactPoints, enableMatchExpulsion: $enableMatchExpulsion, penaltiesRequiredToExpel: $penaltiesRequiredToExpel, integrationId: $integrationId, integrationExportData: $integrationExportData, integrationEntityId: $integrationEntityId, integrationRestrictMaximumPointPerImprovisation: $integrationRestrictMaximumPointPerImprovisation, integrationMinNumberOfImprovisations: $integrationMinNumberOfImprovisations, integrationMaxNumberOfImprovisations: $integrationMaxNumberOfImprovisations, integrationPenaltyTypes: $integrationPenaltyTypes)';
   }
 
   @override
@@ -532,20 +570,17 @@ class _$MatchModelImpl extends _MatchModel {
             const DeepCollectionEquality().equals(other._stars, _stars) &&
             (identical(other.enableStatistics, enableStatistics) ||
                 other.enableStatistics == enableStatistics) &&
-            (identical(other.enablePenaltiesImpactPoints,
-                    enablePenaltiesImpactPoints) ||
+            (identical(other.enablePenaltiesImpactPoints, enablePenaltiesImpactPoints) ||
                 other.enablePenaltiesImpactPoints ==
                     enablePenaltiesImpactPoints) &&
             (identical(other.penaltiesImpactType, penaltiesImpactType) ||
                 other.penaltiesImpactType == penaltiesImpactType) &&
-            (identical(other.penaltiesRequiredToImpactPoints,
-                    penaltiesRequiredToImpactPoints) ||
+            (identical(other.penaltiesRequiredToImpactPoints, penaltiesRequiredToImpactPoints) ||
                 other.penaltiesRequiredToImpactPoints ==
                     penaltiesRequiredToImpactPoints) &&
             (identical(other.enableMatchExpulsion, enableMatchExpulsion) ||
                 other.enableMatchExpulsion == enableMatchExpulsion) &&
-            (identical(
-                    other.penaltiesRequiredToExpel, penaltiesRequiredToExpel) ||
+            (identical(other.penaltiesRequiredToExpel, penaltiesRequiredToExpel) ||
                 other.penaltiesRequiredToExpel == penaltiesRequiredToExpel) &&
             (identical(other.integrationId, integrationId) ||
                 other.integrationId == integrationId) &&
@@ -557,8 +592,15 @@ class _$MatchModelImpl extends _MatchModel {
                     integrationRestrictMaximumPointPerImprovisation) ||
                 other.integrationRestrictMaximumPointPerImprovisation ==
                     integrationRestrictMaximumPointPerImprovisation) &&
-            const DeepCollectionEquality().equals(
-                other._integrationPenaltyTypes, _integrationPenaltyTypes));
+            (identical(other.integrationMinNumberOfImprovisations, integrationMinNumberOfImprovisations) ||
+                other.integrationMinNumberOfImprovisations ==
+                    integrationMinNumberOfImprovisations) &&
+            (identical(other.integrationMaxNumberOfImprovisations,
+                    integrationMaxNumberOfImprovisations) ||
+                other.integrationMaxNumberOfImprovisations ==
+                    integrationMaxNumberOfImprovisations) &&
+            const DeepCollectionEquality()
+                .equals(other._integrationPenaltyTypes, _integrationPenaltyTypes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -585,6 +627,8 @@ class _$MatchModelImpl extends _MatchModel {
         integrationExportData,
         integrationEntityId,
         integrationRestrictMaximumPointPerImprovisation,
+        integrationMinNumberOfImprovisations,
+        integrationMaxNumberOfImprovisations,
         const DeepCollectionEquality().hash(_integrationPenaltyTypes)
       ]);
 
@@ -626,6 +670,8 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
       final String? integrationExportData,
       final String? integrationEntityId,
       final int? integrationRestrictMaximumPointPerImprovisation,
+      final int? integrationMinNumberOfImprovisations,
+      final int? integrationMaxNumberOfImprovisations,
       final List<String>? integrationPenaltyTypes}) = _$MatchModelImpl;
   const _MatchModel._() : super._();
 
@@ -674,6 +720,10 @@ abstract class _MatchModel extends MatchModel implements BaseModel {
   String? get integrationEntityId;
   @override
   int? get integrationRestrictMaximumPointPerImprovisation;
+  @override
+  int? get integrationMinNumberOfImprovisations;
+  @override
+  int? get integrationMaxNumberOfImprovisations;
   @override
   List<String>? get integrationPenaltyTypes;
 

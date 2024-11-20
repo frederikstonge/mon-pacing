@@ -18,6 +18,9 @@ import '../models/performer_model.dart';
 import 'match_integration_base.dart';
 
 class CitrusIntegration implements MatchIntegrationBase {
+  static const int MinNumberOfImprovisations = 12;
+  static const int MaxNumberOfImprovisations = 13;
+
   @override
   String get integrationId => 'Citrus';
 
@@ -33,12 +36,12 @@ class CitrusIntegration implements MatchIntegrationBase {
 
   @override
   Future<MatchModel> getMatch(String data, PacingModel pacing) async {
-    if (pacing.improvisations.length < 12) {
-      throw Exception(Localizer.current.integrationPacingMustHaveAtLeastXImprovisations(count: 12));
+    if (pacing.improvisations.length < MinNumberOfImprovisations) {
+      throw Exception(Localizer.current.integrationPacingMustHaveAtLeastXImprovisations(count: MinNumberOfImprovisations));
     }
 
-    if (pacing.improvisations.length > 13) {
-      throw Exception(Localizer.current.integrationPacingMustHaveAtMostXImprovisations(count: 13));
+    if (pacing.improvisations.length > MaxNumberOfImprovisations) {
+      throw Exception(Localizer.current.integrationPacingMustHaveAtMostXImprovisations(count: MaxNumberOfImprovisations));
     }
 
     final url = Uri.parse(data);
@@ -96,6 +99,8 @@ class CitrusIntegration implements MatchIntegrationBase {
       integrationId: integrationId,
       integrationEntityId: matchId,
       integrationRestrictMaximumPointPerImprovisation: 1,
+      integrationMinNumberOfImprovisations: MinNumberOfImprovisations,
+      integrationMaxNumberOfImprovisations: MaxNumberOfImprovisations,
       integrationPenaltyTypes: penaltyTypes.isNotEmpty ? penaltyTypes : null,
       integrationExportData: jsonEncode({
         'csrfToken': csrfToken,

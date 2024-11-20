@@ -43,6 +43,8 @@ class MatchModel with _$MatchModel implements BaseModel {
     String? integrationExportData,
     String? integrationEntityId,
     int? integrationRestrictMaximumPointPerImprovisation,
+    int? integrationMinNumberOfImprovisations,
+    int? integrationMaxNumberOfImprovisations,
     List<String>? integrationPenaltyTypes,
   }) = _MatchModel;
 

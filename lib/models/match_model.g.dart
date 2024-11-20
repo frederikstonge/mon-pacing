@@ -107,6 +107,14 @@ const MatchModelSchema = IsarGeneratedSchema(
         type: IsarType.long,
       ),
       IsarPropertySchema(
+        name: 'integrationMinNumberOfImprovisations',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'integrationMaxNumberOfImprovisations',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
         name: 'integrationPenaltyTypes',
         type: IsarType.stringList,
       ),
@@ -274,12 +282,16 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
       20,
       object.integrationRestrictMaximumPointPerImprovisation ??
           -9223372036854775808);
+  IsarCore.writeLong(writer, 21,
+      object.integrationMinNumberOfImprovisations ?? -9223372036854775808);
+  IsarCore.writeLong(writer, 22,
+      object.integrationMaxNumberOfImprovisations ?? -9223372036854775808);
   {
     final list = object.integrationPenaltyTypes;
     if (list == null) {
-      IsarCore.writeNull(writer, 21);
+      IsarCore.writeNull(writer, 23);
     } else {
-      final listWriter = IsarCore.beginList(writer, 21, list.length);
+      final listWriter = IsarCore.beginList(writer, 23, list.length);
       for (var i = 0; i < list.length; i++) {
         IsarCore.writeString(listWriter, i, list[i]);
       }
@@ -568,9 +580,27 @@ MatchModel deserializeMatchModel(IsarReader reader) {
       _integrationRestrictMaximumPointPerImprovisation = value;
     }
   }
+  final int? _integrationMinNumberOfImprovisations;
+  {
+    final value = IsarCore.readLong(reader, 21);
+    if (value == -9223372036854775808) {
+      _integrationMinNumberOfImprovisations = null;
+    } else {
+      _integrationMinNumberOfImprovisations = value;
+    }
+  }
+  final int? _integrationMaxNumberOfImprovisations;
+  {
+    final value = IsarCore.readLong(reader, 22);
+    if (value == -9223372036854775808) {
+      _integrationMaxNumberOfImprovisations = null;
+    } else {
+      _integrationMaxNumberOfImprovisations = value;
+    }
+  }
   final List<String>? _integrationPenaltyTypes;
   {
-    final length = IsarCore.readList(reader, 21, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 23, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -607,6 +637,8 @@ MatchModel deserializeMatchModel(IsarReader reader) {
     integrationEntityId: _integrationEntityId,
     integrationRestrictMaximumPointPerImprovisation:
         _integrationRestrictMaximumPointPerImprovisation,
+    integrationMinNumberOfImprovisations: _integrationMinNumberOfImprovisations,
+    integrationMaxNumberOfImprovisations: _integrationMaxNumberOfImprovisations,
     integrationPenaltyTypes: _integrationPenaltyTypes,
   );
   return object;
@@ -911,7 +943,25 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
       }
     case 21:
       {
-        final length = IsarCore.readList(reader, 21, IsarCore.readerPtrPtr);
+        final value = IsarCore.readLong(reader, 21);
+        if (value == -9223372036854775808) {
+          return null;
+        } else {
+          return value;
+        }
+      }
+    case 22:
+      {
+        final value = IsarCore.readLong(reader, 22);
+        if (value == -9223372036854775808) {
+          return null;
+        } else {
+          return value;
+        }
+      }
+    case 23:
+      {
+        final length = IsarCore.readList(reader, 23, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -947,6 +997,8 @@ sealed class _MatchModelUpdate {
     String? integrationExportData,
     String? integrationEntityId,
     int? integrationRestrictMaximumPointPerImprovisation,
+    int? integrationMinNumberOfImprovisations,
+    int? integrationMaxNumberOfImprovisations,
   });
 }
 
@@ -971,6 +1023,8 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
     Object? integrationRestrictMaximumPointPerImprovisation = ignore,
+    Object? integrationMinNumberOfImprovisations = ignore,
+    Object? integrationMaxNumberOfImprovisations = ignore,
   }) {
     return collection.updateProperties([
           id
@@ -994,6 +1048,10 @@ class _MatchModelUpdateImpl implements _MatchModelUpdate {
           if (integrationEntityId != ignore) 19: integrationEntityId as String?,
           if (integrationRestrictMaximumPointPerImprovisation != ignore)
             20: integrationRestrictMaximumPointPerImprovisation as int?,
+          if (integrationMinNumberOfImprovisations != ignore)
+            21: integrationMinNumberOfImprovisations as int?,
+          if (integrationMaxNumberOfImprovisations != ignore)
+            22: integrationMaxNumberOfImprovisations as int?,
         }) >
         0;
   }
@@ -1015,6 +1073,8 @@ sealed class _MatchModelUpdateAll {
     String? integrationExportData,
     String? integrationEntityId,
     int? integrationRestrictMaximumPointPerImprovisation,
+    int? integrationMinNumberOfImprovisations,
+    int? integrationMaxNumberOfImprovisations,
   });
 }
 
@@ -1039,6 +1099,8 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
     Object? integrationRestrictMaximumPointPerImprovisation = ignore,
+    Object? integrationMinNumberOfImprovisations = ignore,
+    Object? integrationMaxNumberOfImprovisations = ignore,
   }) {
     return collection.updateProperties(id, {
       if (createdDate != ignore) 2: createdDate as DateTime?,
@@ -1059,6 +1121,10 @@ class _MatchModelUpdateAllImpl implements _MatchModelUpdateAll {
       if (integrationEntityId != ignore) 19: integrationEntityId as String?,
       if (integrationRestrictMaximumPointPerImprovisation != ignore)
         20: integrationRestrictMaximumPointPerImprovisation as int?,
+      if (integrationMinNumberOfImprovisations != ignore)
+        21: integrationMinNumberOfImprovisations as int?,
+      if (integrationMaxNumberOfImprovisations != ignore)
+        22: integrationMaxNumberOfImprovisations as int?,
     });
   }
 }
@@ -1084,6 +1150,8 @@ sealed class _MatchModelQueryUpdate {
     String? integrationExportData,
     String? integrationEntityId,
     int? integrationRestrictMaximumPointPerImprovisation,
+    int? integrationMinNumberOfImprovisations,
+    int? integrationMaxNumberOfImprovisations,
   });
 }
 
@@ -1108,6 +1176,8 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
     Object? integrationRestrictMaximumPointPerImprovisation = ignore,
+    Object? integrationMinNumberOfImprovisations = ignore,
+    Object? integrationMaxNumberOfImprovisations = ignore,
   }) {
     return query.updateProperties(limit: limit, {
       if (createdDate != ignore) 2: createdDate as DateTime?,
@@ -1128,6 +1198,10 @@ class _MatchModelQueryUpdateImpl implements _MatchModelQueryUpdate {
       if (integrationEntityId != ignore) 19: integrationEntityId as String?,
       if (integrationRestrictMaximumPointPerImprovisation != ignore)
         20: integrationRestrictMaximumPointPerImprovisation as int?,
+      if (integrationMinNumberOfImprovisations != ignore)
+        21: integrationMinNumberOfImprovisations as int?,
+      if (integrationMaxNumberOfImprovisations != ignore)
+        22: integrationMaxNumberOfImprovisations as int?,
     });
   }
 }
@@ -1160,6 +1234,8 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
     Object? integrationExportData = ignore,
     Object? integrationEntityId = ignore,
     Object? integrationRestrictMaximumPointPerImprovisation = ignore,
+    Object? integrationMinNumberOfImprovisations = ignore,
+    Object? integrationMaxNumberOfImprovisations = ignore,
   }) {
     final q = query.build();
     try {
@@ -1183,6 +1259,10 @@ class _MatchModelQueryBuilderUpdateImpl implements _MatchModelQueryUpdate {
         if (integrationEntityId != ignore) 19: integrationEntityId as String?,
         if (integrationRestrictMaximumPointPerImprovisation != ignore)
           20: integrationRestrictMaximumPointPerImprovisation as int?,
+        if (integrationMinNumberOfImprovisations != ignore)
+          21: integrationMinNumberOfImprovisations as int?,
+        if (integrationMaxNumberOfImprovisations != ignore)
+          22: integrationMaxNumberOfImprovisations as int?,
       });
     } finally {
       q.close();
@@ -3099,16 +3179,216 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationPenaltyTypesIsNull() {
+      integrationMinNumberOfImprovisationsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 21));
     });
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      integrationPenaltyTypesIsNotNull() {
+      integrationMinNumberOfImprovisationsIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 21));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMinNumberOfImprovisationsEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 21,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMinNumberOfImprovisationsGreaterThan(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 21,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMinNumberOfImprovisationsGreaterThanOrEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 21,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMinNumberOfImprovisationsLessThan(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 21,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMinNumberOfImprovisationsLessThanOrEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 21,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMinNumberOfImprovisationsBetween(
+    int? lower,
+    int? upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 21,
+          lower: lower,
+          upper: upper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 22));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 22));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 22,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsGreaterThan(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 22,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsGreaterThanOrEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 22,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsLessThan(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 22,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsLessThanOrEqualTo(
+    int? value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 22,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationMaxNumberOfImprovisationsBetween(
+    int? lower,
+    int? upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 22,
+          lower: lower,
+          upper: upper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 23));
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      integrationPenaltyTypesIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 23));
     });
   }
 
@@ -3120,7 +3400,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3136,7 +3416,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3152,7 +3432,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3168,7 +3448,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3184,7 +3464,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3201,7 +3481,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 21,
+          property: 23,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -3218,7 +3498,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3234,7 +3514,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3248,7 +3528,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 21,
+          property: 23,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -3262,7 +3542,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 21,
+          property: 23,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -3275,7 +3555,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 21,
+          property: 23,
           value: '',
         ),
       );
@@ -3287,7 +3567,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 21,
+          property: 23,
           value: '',
         ),
       );
@@ -3308,7 +3588,7 @@ extension MatchModelQueryFilter
       integrationPenaltyTypesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 21, value: null),
+        const GreaterOrEqualCondition(property: 23, value: null),
       );
     });
   }
@@ -3535,6 +3815,34 @@ extension MatchModelQuerySortBy
       return query.addSortBy(20, sort: Sort.desc);
     });
   }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationMinNumberOfImprovisations() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(21);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationMinNumberOfImprovisationsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(21, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationMaxNumberOfImprovisations() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(22);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      sortByIntegrationMaxNumberOfImprovisationsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(22, sort: Sort.desc);
+    });
+  }
 }
 
 extension MatchModelQuerySortThenBy
@@ -3727,6 +4035,34 @@ extension MatchModelQuerySortThenBy
       return query.addSortBy(20, sort: Sort.desc);
     });
   }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationMinNumberOfImprovisations() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(21);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationMinNumberOfImprovisationsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(21, sort: Sort.desc);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationMaxNumberOfImprovisations() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(22);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterSortBy>
+      thenByIntegrationMaxNumberOfImprovisationsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(22, sort: Sort.desc);
+    });
+  }
 }
 
 extension MatchModelQueryWhereDistinct
@@ -3834,9 +4170,23 @@ extension MatchModelQueryWhereDistinct
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
-      distinctByIntegrationPenaltyTypes() {
+      distinctByIntegrationMinNumberOfImprovisations() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(21);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
+      distinctByIntegrationMaxNumberOfImprovisations() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(22);
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterDistinct>
+      distinctByIntegrationPenaltyTypes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(23);
     });
   }
 }
@@ -3980,10 +4330,24 @@ extension MatchModelQueryProperty1
     });
   }
 
+  QueryBuilder<MatchModel, int?, QAfterProperty>
+      integrationMinNumberOfImprovisationsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(21);
+    });
+  }
+
+  QueryBuilder<MatchModel, int?, QAfterProperty>
+      integrationMaxNumberOfImprovisationsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(22);
+    });
+  }
+
   QueryBuilder<MatchModel, List<String>?, QAfterProperty>
       integrationPenaltyTypesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(21);
+      return query.addProperty(23);
     });
   }
 }
@@ -4134,10 +4498,24 @@ extension MatchModelQueryProperty2<R>
     });
   }
 
+  QueryBuilder<MatchModel, (R, int?), QAfterProperty>
+      integrationMinNumberOfImprovisationsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(21);
+    });
+  }
+
+  QueryBuilder<MatchModel, (R, int?), QAfterProperty>
+      integrationMaxNumberOfImprovisationsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(22);
+    });
+  }
+
   QueryBuilder<MatchModel, (R, List<String>?), QAfterProperty>
       integrationPenaltyTypesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(21);
+      return query.addProperty(23);
     });
   }
 }
@@ -4288,10 +4666,24 @@ extension MatchModelQueryProperty3<R1, R2>
     });
   }
 
+  QueryBuilder<MatchModel, (R1, R2, int?), QOperations>
+      integrationMinNumberOfImprovisationsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(21);
+    });
+  }
+
+  QueryBuilder<MatchModel, (R1, R2, int?), QOperations>
+      integrationMaxNumberOfImprovisationsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(22);
+    });
+  }
+
   QueryBuilder<MatchModel, (R1, R2, List<String>?), QOperations>
       integrationPenaltyTypesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(21);
+      return query.addProperty(23);
     });
   }
 }
@@ -4346,6 +4738,10 @@ _$MatchModelImpl _$$MatchModelImplFromJson(Map<String, dynamic> json) =>
       integrationRestrictMaximumPointPerImprovisation:
           (json['integrationRestrictMaximumPointPerImprovisation'] as num?)
               ?.toInt(),
+      integrationMinNumberOfImprovisations:
+          (json['integrationMinNumberOfImprovisations'] as num?)?.toInt(),
+      integrationMaxNumberOfImprovisations:
+          (json['integrationMaxNumberOfImprovisations'] as num?)?.toInt(),
       integrationPenaltyTypes:
           (json['integrationPenaltyTypes'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -4377,6 +4773,10 @@ Map<String, dynamic> _$$MatchModelImplToJson(_$MatchModelImpl instance) =>
       'integrationEntityId': instance.integrationEntityId,
       'integrationRestrictMaximumPointPerImprovisation':
           instance.integrationRestrictMaximumPointPerImprovisation,
+      'integrationMinNumberOfImprovisations':
+          instance.integrationMinNumberOfImprovisations,
+      'integrationMaxNumberOfImprovisations':
+          instance.integrationMaxNumberOfImprovisations,
       'integrationPenaltyTypes': instance.integrationPenaltyTypes,
     };
 

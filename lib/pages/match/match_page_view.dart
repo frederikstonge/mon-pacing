@@ -50,17 +50,23 @@ class MatchPageView extends StatelessWidget {
               builder: (context) {
                 final summarySelected = match.enableStatistics && selectedImprovisationIndex == match.improvisations.length;
                 final improvisation = match.improvisations.elementAtOrNull(selectedImprovisationIndex);
+                final canAddImprovisation =
+                    match.integrationMaxNumberOfImprovisations == null || match.improvisations.length < match.integrationMaxNumberOfImprovisations!;
+                final canRemoveImprovisation = match.improvisations.length > (match.integrationMinNumberOfImprovisations ?? 1);
+
                 return SliverScaffold(
                   floatingActionButton: FloatingActionButton(
-                    onPressed: () {
-                      BottomSheetDialog.showDialog(
-                        context: context,
-                        child: MatchImprovisationShell(
-                          match: match,
-                          onConfirm: (improvisation, index) async => await context.read<MatchCubit>().addImprovisation(improvisation, index),
-                        ),
-                      );
-                    },
+                    onPressed: canAddImprovisation
+                        ? () {
+                            BottomSheetDialog.showDialog(
+                              context: context,
+                              child: MatchImprovisationShell(
+                                match: match,
+                                onConfirm: (improvisation, index) async => await context.read<MatchCubit>().addImprovisation(improvisation, index),
+                              ),
+                            );
+                          }
+                        : null,
                     tooltip: S.of(context).addImprovisation,
                     child: const Icon(Icons.add),
                   ),
@@ -160,7 +166,7 @@ class MatchPageView extends StatelessWidget {
                               ),
                             );
                           },
-                          onDelete: match.improvisations.length > 1
+                          onDelete: canRemoveImprovisation
                               ? (improvisation) async {
                                   if (improvisation.id == context.read<TimerCubit>().state.timer?.improvisationId) {
                                     context.read<ToasterService>().show(
