@@ -94,7 +94,6 @@ class Bootstrapper extends StatelessWidget {
               () => PacingsCubit(
                 pacingsRepository: blocContext.read<PacingsRepository>(),
                 toasterService: blocContext.read<ToasterService>(),
-                settingsCubit: blocContext.read<SettingsCubit>(),
               ),
             )..fetch(),
           ),
@@ -103,7 +102,6 @@ class Bootstrapper extends StatelessWidget {
               () => MatchesCubit(
                 matchesRepository: blocContext.read<MatchesRepository>(),
                 toasterService: blocContext.read<ToasterService>(),
-                settingsCubit: blocContext.read<SettingsCubit>(),
                 analyticsService: blocContext.read<AnalyticsService>(),
               ),
             )..fetch(),
@@ -113,7 +111,6 @@ class Bootstrapper extends StatelessWidget {
               () => TeamsCubit(
                 teamsRepository: blocContext.read<TeamsRepository>(),
                 toasterService: blocContext.read<ToasterService>(),
-                settingsCubit: blocContext.read<SettingsCubit>(),
               ),
             )..fetch(),
           ),

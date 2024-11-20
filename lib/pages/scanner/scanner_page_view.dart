@@ -156,8 +156,17 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
             pacing = result;
           }
-
-          match = await integration.getMatch(barcodeData, pacing);
+          try {
+            match = await integration.getMatch(barcodeData, pacing);
+          } catch (e) {
+            unawaited(controller.start());
+            toasterService.show(
+              title: localizer.toasterGenericError,
+              description: e.toString(),
+              type: ToastificationType.error,
+            );
+            return;
+          }
         }
 
         // Create pacing
@@ -169,6 +178,8 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           } else {
             toasterService.show(
               title: localizer.toasterGenericError,
+              // TODO: Use Localizer.current
+              description: 'Unable to create pacing',
               type: ToastificationType.error,
             );
           }
@@ -182,6 +193,8 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           } else {
             toasterService.show(
               title: localizer.toasterGenericError,
+              // TODO: Use Localizer.current
+              description: 'Unable to create match',
               type: ToastificationType.error,
             );
           }

@@ -7,8 +7,8 @@ import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../cubits/matches/matches_cubit.dart';
-import '../../../cubits/settings/settings_cubit.dart';
 import '../../../extensions/match_extensions.dart';
+import '../../../l10n/localizer.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/penalty_model.dart';
@@ -23,7 +23,6 @@ import 'match_state.dart';
 class MatchCubit extends Cubit<MatchState> {
   final MatchesRepository matchesRepository;
   final MatchesCubit matchesCubit;
-  final SettingsCubit settingsCubit;
   final ToasterService toasterService;
   final ExcelService excelService;
   final AnalyticsService analyticsService;
@@ -31,7 +30,6 @@ class MatchCubit extends Cubit<MatchState> {
   MatchCubit({
     required this.matchesRepository,
     required this.matchesCubit,
-    required this.settingsCubit,
     required this.toasterService,
     required this.excelService,
     required this.analyticsService,
@@ -40,7 +38,7 @@ class MatchCubit extends Cubit<MatchState> {
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
     final match = await matchesRepository.get(id);
     if (match == null) {
-      emit(MatchState.error(settingsCubit.localizer.toasterGenericError));
+      emit(MatchState.error(Localizer.current.toasterGenericError));
       return;
     }
 
@@ -272,7 +270,7 @@ class MatchCubit extends Cubit<MatchState> {
 
   Future<bool> exportExcel(MatchModel match) async {
     try {
-      final bytes = excelService.exportMatchToExcel(match, settingsCubit.localizer);
+      final bytes = excelService.exportMatchToExcel(match, Localizer.current);
 
       if (bytes == null) {
         return false;
@@ -284,11 +282,11 @@ class MatchCubit extends Cubit<MatchState> {
       await analyticsService.logExportToExcel();
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {
-        toasterService.show(title: settingsCubit.localizer.toasterMatchResultExported);
+        toasterService.show(title: Localizer.current.toasterMatchResultExported);
         return true;
       }
     } catch (exception) {
-      toasterService.show(title: settingsCubit.localizer.toasterGenericError, type: ToastificationType.error);
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     }
 
     return false;
@@ -304,8 +302,8 @@ class MatchCubit extends Cubit<MatchState> {
       if (penaltyPoints >= match.penaltiesRequiredToExpel) {
         final performer = match.teams.firstWhere((t) => t.id == penalty.teamId).performers.firstWhere((p) => p.id == penalty.performerId);
         toasterService.show(
-          title: settingsCubit.localizer.warningExpelPlayerTitle,
-          description: settingsCubit.localizer.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
+          title: Localizer.current.warningExpelPlayerTitle,
+          description: Localizer.current.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
           type: ToastificationType.warning,
           autoClose: false,
         );
@@ -324,8 +322,8 @@ class MatchCubit extends Cubit<MatchState> {
 
           if (penaltyPoints >= match.penaltiesRequiredToExpel) {
             toasterService.show(
-              title: settingsCubit.localizer.warningExpelPlayerTitle,
-              description: settingsCubit.localizer.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
+              title: Localizer.current.warningExpelPlayerTitle,
+              description: Localizer.current.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
               type: ToastificationType.warning,
               autoClose: false,
             );

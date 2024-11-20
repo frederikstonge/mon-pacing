@@ -431,6 +431,18 @@ abstract class S {
   /// **'Improvisations'**
   String get improvisations;
 
+  /// No description provided for @integrationPacingMustHaveAtLeastXImprovisations.
+  ///
+  /// In en, this message translates to:
+  /// **'Pacing must have at least {count, plural, one{{count} improvisation} other{{count} improvisations}}.'**
+  String integrationPacingMustHaveAtLeastXImprovisations({required int count});
+
+  /// No description provided for @integrationPacingMustHaveAtMostXImprovisations.
+  ///
+  /// In en, this message translates to:
+  /// **'Pacing must have at most {count, plural, one{{count} improvisation} other{{count} improvisations}}.'**
+  String integrationPacingMustHaveAtMostXImprovisations({required int count});
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:

@@ -101,6 +101,22 @@
     }
   },
   "improvisations": "Improvisations",
+  "integrationPacingMustHaveAtLeastXImprovisations": "Pacing must have at least {count, plural, one{{count} improvisation} other{{count} improvisations}}.",
+  "@integrationPacingMustHaveAtLeastXImprovisations": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "integrationPacingMustHaveAtMostXImprovisations": "Pacing must have at most {count, plural, one{{count} improvisation} other{{count} improvisations}}.",
+  "@integrationPacingMustHaveAtMostXImprovisations": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "language": "Language",
   "lesserThan": "Must be lesser than {max}",
   "@lesserThan": {

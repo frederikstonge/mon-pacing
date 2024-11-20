@@ -189,6 +189,28 @@ class SFr extends S {
   String get improvisations => 'Improvisations';
 
   @override
+  String integrationPacingMustHaveAtLeastXImprovisations({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count improvisations',
+      one: '$count improvisation',
+    );
+    return 'Le pacing doit avoir au moins $_temp0.';
+  }
+
+  @override
+  String integrationPacingMustHaveAtMostXImprovisations({required int count}) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count improvisations',
+      one: '$count improvisation',
+    );
+    return 'Le pacing doit avoir au plus $_temp0.';
+  }
+
+  @override
   String get language => 'Langue';
 
   @override
