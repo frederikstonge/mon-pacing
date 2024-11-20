@@ -57,7 +57,7 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                           Expanded(
                             child: Text(
                               S.of(context).improvisationIndex,
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: Theme.of(context).textTheme.bodyLarge,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
