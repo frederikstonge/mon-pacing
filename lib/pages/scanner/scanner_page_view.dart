@@ -178,8 +178,6 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           } else {
             toasterService.show(
               title: localizer.toasterGenericError,
-              // TODO: Use Localizer.current
-              description: 'Unable to create pacing',
               type: ToastificationType.error,
             );
           }
@@ -193,8 +191,6 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           } else {
             toasterService.show(
               title: localizer.toasterGenericError,
-              // TODO: Use Localizer.current
-              description: 'Unable to create match',
               type: ToastificationType.error,
             );
           }
