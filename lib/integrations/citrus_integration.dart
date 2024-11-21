@@ -134,7 +134,7 @@ class CitrusIntegration implements MatchIntegrationBase {
     );
     final isSuccessful = response.statusCode >= 200 && response.statusCode < 300;
     if (isSuccessful) {
-      await launchUrl(urlString);
+      await launchUrl(url);
     }
 
     return isSuccessful;
