@@ -55,6 +55,15 @@ class Themes {
     );
   }
 
+  static ShapeBorder getCardShapeBorder(Color borderColor) {
+    return RoundedRectangleBorder(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(8),
+      ),
+      side: BorderSide(color: borderColor),
+    );
+  }
+
   static ThemeData _generateTheme(
     Brightness brightness,
     Color primaryColor,
@@ -95,12 +104,7 @@ class Themes {
         clipBehavior: Clip.antiAlias,
         color: cardBackgroundColor,
         margin: const EdgeInsets.all(8),
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(12),
-          ),
-          side: BorderSide(color: cardBorderColor),
-        ),
+        shape: getCardShapeBorder(cardBorderColor),
         elevation: 2,
       ),
       dividerTheme: DividerThemeData(color: dividerColor),
