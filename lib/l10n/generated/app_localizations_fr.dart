@@ -94,7 +94,7 @@ class SFr extends S {
   String get editDetails => 'Modifier les détails';
 
   @override
-  String get editImprovisation => 'Modifier une improvisation';
+  String get editImprovisation => 'Modifier l\'improvisation';
 
   @override
   String get editMatch => 'Modifier le match';

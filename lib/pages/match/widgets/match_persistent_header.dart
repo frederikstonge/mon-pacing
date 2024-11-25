@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../components/actions/loading_icon_button.dart';
@@ -9,11 +11,13 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
   final MatchModel match;
   final int selectedImprovisationIndex;
   final void Function(int page) changePage;
+  final FutureOr<void> Function()? onAdd;
 
   MatchPersistentHeader({
     required this.match,
     required this.selectedImprovisationIndex,
     required this.changePage,
+    required this.onAdd,
   });
 
   @override
@@ -77,12 +81,22 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
             ],
           ],
         ),
-        trailing: LoadingIconButton(
-          icon: const Icon(Icons.arrow_forward),
-          tooltip: S.of(context).nextImprovisation,
-          onPressed: selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
-              ? () => changePage(selectedImprovisationIndex + 1)
-              : null,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            LoadingIconButton(
+              icon: const Icon(Icons.add),
+              tooltip: S.of(context).addImprovisation,
+              onPressed: onAdd,
+            ),
+            LoadingIconButton(
+              icon: const Icon(Icons.arrow_forward),
+              tooltip: S.of(context).nextImprovisation,
+              onPressed: selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
+                  ? () => changePage(selectedImprovisationIndex + 1)
+                  : null,
+            ),
+          ],
         ),
       ),
     );

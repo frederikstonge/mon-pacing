@@ -55,21 +55,6 @@ class MatchPageView extends StatelessWidget {
                 final canRemoveImprovisation = match.improvisations.length > (match.integrationMinNumberOfImprovisations ?? 1);
 
                 return SliverScaffold(
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: canAddImprovisation
-                        ? () {
-                            BottomSheetDialog.showDialog(
-                              context: context,
-                              child: MatchImprovisationShell(
-                                match: match,
-                                onConfirm: (improvisation, index) async => await context.read<MatchCubit>().addImprovisation(improvisation, index),
-                              ),
-                            );
-                          }
-                        : null,
-                    tooltip: S.of(context).addImprovisation,
-                    child: const Icon(Icons.add),
-                  ),
                   appBar: BlocBuilder<SettingsCubit, SettingsState>(
                     builder: (context, state) {
                       return SliverLogoAppbar(
@@ -140,6 +125,18 @@ class MatchPageView extends StatelessWidget {
                         match: match,
                         selectedImprovisationIndex: selectedImprovisationIndex,
                         changePage: context.read<MatchCubit>().changePage,
+                        onAdd: canAddImprovisation
+                            ? () {
+                                BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: MatchImprovisationShell(
+                                    match: match,
+                                    onConfirm: (improvisation, index) async =>
+                                        await context.read<MatchCubit>().addImprovisation(improvisation, index),
+                                  ),
+                                );
+                              }
+                            : null,
                       ),
                       pinned: true,
                     ),
