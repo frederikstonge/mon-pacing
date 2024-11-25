@@ -46,6 +46,8 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
 
   @override
   Widget build(BuildContext context) {
+    final borderColor =
+        widget.improvisation.type == ImprovisationType.compared ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary;
     return Material(
       child: Dismissible(
         key: ValueKey(widget.improvisation.id),
@@ -64,91 +66,102 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
         confirmDismiss: (direction) async => await widget.onConfirmDelete.call(widget.improvisation),
         onDismissed: (direction) async => await widget.onDelete.call(widget.improvisation),
         child: CustomCard(
+          borderColor: borderColor,
           contentPadding: 0,
-          child: ExpansionTile(
-            onExpansionChanged: (value) => setState(() {
-              isExpanded = value;
-            }),
-            leading: ReorderableDragStartListener(
-              index: widget.index,
-              enabled: widget.dragEnabled,
-              child: const Icon(Icons.drag_handle),
-            ),
-            title: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${widget.pacing.totalDuration(take: widget.index).toImprovDuration()} - ${S.of(context).improvisationNumber(order: widget.index + 1)}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: borderColor,
+                  width: 6,
                 ),
-                AnimatedSize(
-                  alignment: Alignment.topCenter,
-                  duration: const Duration(milliseconds: 200),
-                  child: SizedBox(
-                    height: !isExpanded ? null : 0.0,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).category}: ${widget.improvisation.getCategoryString(S.of(context))}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).performers}: ${widget.improvisation.getPerformersString(S.of(context))}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).duration}: ${widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).theme}: ${widget.improvisation.theme}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ],
+              ),
+            ),
+            child: ExpansionTile(
+              onExpansionChanged: (value) => setState(() {
+                isExpanded = value;
+              }),
+              leading: ReorderableDragStartListener(
+                index: widget.index,
+                enabled: widget.dragEnabled,
+                child: const Icon(Icons.drag_handle),
+              ),
+              title: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${widget.pacing.totalDuration(take: widget.index).toImprovDuration()} - ${S.of(context).improvisationNumber(order: widget.index + 1)}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  AnimatedSize(
+                    alignment: Alignment.topCenter,
+                    duration: const Duration(milliseconds: 200),
+                    child: SizedBox(
+                      height: !isExpanded ? null : 0.0,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            '${S.of(context).category}: ${widget.improvisation.getCategoryString(S.of(context))}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            '${S.of(context).performers}: ${widget.improvisation.getPerformersString(S.of(context))}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            '${S.of(context).duration}: ${widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            '${S.of(context).theme}: ${widget.improvisation.theme}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+                ],
+              ),
+              childrenPadding: const EdgeInsets.all(16),
+              children: [
+                ImprovisationDetail(
+                  improvisation: widget.improvisation,
+                  onChanged: widget.onChanged,
+                  onDragStart: widget.onDragStart,
+                  getAllCategories: widget.getAllCategories,
+                ),
+                const SizedBox(height: 8),
+                LoadingButton.tonalIcon(
+                  onPressed: () async {
+                    final response = await widget.onConfirmDelete(widget.improvisation);
+                    if (response == true) {
+                      await widget.onDelete.call(widget.improvisation);
+                    }
+                  },
+                  icon: const Icon(Icons.delete),
+                  child: Text(S.of(context).delete),
                 ),
               ],
             ),
-            childrenPadding: const EdgeInsets.all(16),
-            children: [
-              ImprovisationDetail(
-                improvisation: widget.improvisation,
-                onChanged: widget.onChanged,
-                onDragStart: widget.onDragStart,
-                getAllCategories: widget.getAllCategories,
-              ),
-              const SizedBox(height: 8),
-              LoadingButton.tonalIcon(
-                onPressed: () async {
-                  final response = await widget.onConfirmDelete(widget.improvisation);
-                  if (response == true) {
-                    await widget.onDelete.call(widget.improvisation);
-                  }
-                },
-                icon: const Icon(Icons.delete),
-                child: Text(S.of(context).delete),
-              ),
-            ],
           ),
         ),
       ),

@@ -11,6 +11,7 @@ import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../models/improvisation_type.dart';
 import 'cubits/match_improvisation_cubit.dart';
 import 'cubits/match_improvisation_state.dart';
 
@@ -36,6 +37,8 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
   Widget build(BuildContext context) {
     return BlocBuilder<MatchImprovisationCubit, MatchImprovisationState>(
       builder: (context, state) {
+        final borderColor =
+            state.improvisation.type == ImprovisationType.compared ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary;
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
             title: state.editMode ? S.of(context).editImprovisation : S.of(context).addImprovisation,
@@ -48,44 +51,58 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
               shrinkWrap: true,
               children: [
                 CustomCard(
-                    child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              S.of(context).improvisationIndex,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          QuantityStepperFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            initialValue: state.index + 1,
-                            onChanged: (value) {
-                              if (value != null) {
-                                context.read<MatchImprovisationCubit>().changeIndex(value - 1);
-                              }
-                            },
-                            minValue: 1,
-                            maxValue: context.read<MatchImprovisationCubit>().match.improvisations.length + (state.editMode ? 0 : 1),
-                          ),
-                        ],
+                  borderColor: borderColor,
+                  contentPadding: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          color: borderColor,
+                          width: 6,
+                        ),
                       ),
                     ),
-                    ImprovisationDetail(
-                      improvisation: state.improvisation,
-                      onChanged: (value) {
-                        context.read<MatchImprovisationCubit>().edit(value);
-                      },
-                      getAllCategories: context.read<PacingsCubit>().getAllCategories,
-                      onDragStart: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).improvisationIndex,
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              QuantityStepperFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                initialValue: state.index + 1,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    context.read<MatchImprovisationCubit>().changeIndex(value - 1);
+                                  }
+                                },
+                                minValue: 1,
+                                maxValue: context.read<MatchImprovisationCubit>().match.improvisations.length + (state.editMode ? 0 : 1),
+                              ),
+                            ],
+                          ),
+                        ),
+                        ImprovisationDetail(
+                          improvisation: state.improvisation,
+                          onChanged: (value) {
+                            context.read<MatchImprovisationCubit>().edit(value);
+                          },
+                          getAllCategories: context.read<PacingsCubit>().getAllCategories,
+                          onDragStart: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                        ),
+                      ],
                     ),
-                  ],
-                )),
+                  ),
+                ),
               ],
             ),
           ),
