@@ -12,7 +12,7 @@ class ToasterService {
       title: Text(title),
       description: description != null ? Text(description) : null,
       type: type,
-      style: ToastificationStyle.flatColored,
+      style: ToastificationStyle.minimal,
       boxShadow: lowModeShadow,
       autoCloseDuration: autoClose ? const Duration(seconds: 5) : null,
       showProgressBar: false,
