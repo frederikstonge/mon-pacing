@@ -10,6 +10,7 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
     _$SettingsStateImpl(
       language: json['language'] as String,
       theme: $enumDecode(_$ThemeTypeEnumMap, json['theme']),
+      enableWakelock: json['enableWakelock'] as bool? ?? true,
       enableHapticFeedback: json['enableHapticFeedback'] as bool? ?? true,
       enableTimerHapticFeedback:
           json['enableTimerHapticFeedback'] as bool? ?? true,
@@ -42,6 +43,7 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
     <String, dynamic>{
       'language': instance.language,
       'theme': _$ThemeTypeEnumMap[instance.theme]!,
+      'enableWakelock': instance.enableWakelock,
       'enableHapticFeedback': instance.enableHapticFeedback,
       'enableTimerHapticFeedback': instance.enableTimerHapticFeedback,
       'defaultNumberOfTeams': instance.defaultNumberOfTeams,

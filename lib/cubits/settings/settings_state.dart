@@ -11,6 +11,7 @@ class SettingsState with _$SettingsState {
   const factory SettingsState({
     required String language,
     required ThemeType theme,
+    @Default(true) bool enableWakelock,
     @Default(true) bool enableHapticFeedback,
     @Default(true) bool enableTimerHapticFeedback,
     @Default(2) int defaultNumberOfTeams,

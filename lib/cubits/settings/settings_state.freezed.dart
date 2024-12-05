@@ -22,6 +22,7 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 mixin _$SettingsState {
   String get language => throw _privateConstructorUsedError;
   ThemeType get theme => throw _privateConstructorUsedError;
+  bool get enableWakelock => throw _privateConstructorUsedError;
   bool get enableHapticFeedback => throw _privateConstructorUsedError;
   bool get enableTimerHapticFeedback => throw _privateConstructorUsedError;
   int get defaultNumberOfTeams => throw _privateConstructorUsedError;
@@ -58,6 +59,7 @@ abstract class $SettingsStateCopyWith<$Res> {
   $Res call(
       {String language,
       ThemeType theme,
+      bool enableWakelock,
       bool enableHapticFeedback,
       bool enableTimerHapticFeedback,
       int defaultNumberOfTeams,
@@ -89,6 +91,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   $Res call({
     Object? language = null,
     Object? theme = null,
+    Object? enableWakelock = null,
     Object? enableHapticFeedback = null,
     Object? enableTimerHapticFeedback = null,
     Object? defaultNumberOfTeams = null,
@@ -111,6 +114,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
+      enableWakelock: null == enableWakelock
+          ? _value.enableWakelock
+          : enableWakelock // ignore: cast_nullable_to_non_nullable
+              as bool,
       enableHapticFeedback: null == enableHapticFeedback
           ? _value.enableHapticFeedback
           : enableHapticFeedback // ignore: cast_nullable_to_non_nullable
@@ -177,6 +184,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   $Res call(
       {String language,
       ThemeType theme,
+      bool enableWakelock,
       bool enableHapticFeedback,
       bool enableTimerHapticFeedback,
       int defaultNumberOfTeams,
@@ -206,6 +214,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? language = null,
     Object? theme = null,
+    Object? enableWakelock = null,
     Object? enableHapticFeedback = null,
     Object? enableTimerHapticFeedback = null,
     Object? defaultNumberOfTeams = null,
@@ -228,6 +237,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeType,
+      enableWakelock: null == enableWakelock
+          ? _value.enableWakelock
+          : enableWakelock // ignore: cast_nullable_to_non_nullable
+              as bool,
       enableHapticFeedback: null == enableHapticFeedback
           ? _value.enableHapticFeedback
           : enableHapticFeedback // ignore: cast_nullable_to_non_nullable
@@ -289,6 +302,7 @@ class _$SettingsStateImpl implements _SettingsState {
   const _$SettingsStateImpl(
       {required this.language,
       required this.theme,
+      this.enableWakelock = true,
       this.enableHapticFeedback = true,
       this.enableTimerHapticFeedback = true,
       this.defaultNumberOfTeams = 2,
@@ -309,6 +323,9 @@ class _$SettingsStateImpl implements _SettingsState {
   final String language;
   @override
   final ThemeType theme;
+  @override
+  @JsonKey()
+  final bool enableWakelock;
   @override
   @JsonKey()
   final bool enableHapticFeedback;
@@ -348,7 +365,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(language: $language, theme: $theme, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultNumberOfTeams: $defaultNumberOfTeams, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, defaultHuddleTimerInSeconds: $defaultHuddleTimerInSeconds, defaultEnableStatistics: $defaultEnableStatistics, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints, enableDefaultMatchExpulsion: $enableDefaultMatchExpulsion, defaultPenaltiesRequiredToExpel: $defaultPenaltiesRequiredToExpel)';
+    return 'SettingsState(language: $language, theme: $theme, enableWakelock: $enableWakelock, enableHapticFeedback: $enableHapticFeedback, enableTimerHapticFeedback: $enableTimerHapticFeedback, defaultNumberOfTeams: $defaultNumberOfTeams, defaultImprovisationDurationInSeconds: $defaultImprovisationDurationInSeconds, defaultTimeBufferInSeconds: $defaultTimeBufferInSeconds, defaultHuddleTimerInSeconds: $defaultHuddleTimerInSeconds, defaultEnableStatistics: $defaultEnableStatistics, enableDefaultPenaltiesImpactPoints: $enableDefaultPenaltiesImpactPoints, defaultPenaltiesImpactType: $defaultPenaltiesImpactType, defaultPenaltiesRequiredToImpactPoints: $defaultPenaltiesRequiredToImpactPoints, enableDefaultMatchExpulsion: $enableDefaultMatchExpulsion, defaultPenaltiesRequiredToExpel: $defaultPenaltiesRequiredToExpel)';
   }
 
   @override
@@ -359,6 +376,8 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.theme, theme) || other.theme == theme) &&
+            (identical(other.enableWakelock, enableWakelock) ||
+                other.enableWakelock == enableWakelock) &&
             (identical(other.enableHapticFeedback, enableHapticFeedback) ||
                 other.enableHapticFeedback == enableHapticFeedback) &&
             (identical(other.enableTimerHapticFeedback, enableTimerHapticFeedback) ||
@@ -399,6 +418,7 @@ class _$SettingsStateImpl implements _SettingsState {
       runtimeType,
       language,
       theme,
+      enableWakelock,
       enableHapticFeedback,
       enableTimerHapticFeedback,
       defaultNumberOfTeams,
@@ -432,6 +452,7 @@ abstract class _SettingsState implements SettingsState {
   const factory _SettingsState(
       {required final String language,
       required final ThemeType theme,
+      final bool enableWakelock,
       final bool enableHapticFeedback,
       final bool enableTimerHapticFeedback,
       final int defaultNumberOfTeams,
@@ -452,6 +473,8 @@ abstract class _SettingsState implements SettingsState {
   String get language;
   @override
   ThemeType get theme;
+  @override
+  bool get enableWakelock;
   @override
   bool get enableHapticFeedback;
   @override

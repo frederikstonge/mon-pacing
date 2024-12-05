@@ -56,6 +56,8 @@
   "enableStatistics": "Enable statistics",
   "enableStatisticsTooltip": "Add team lineups and track points, penalties etc",
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
+  "enableWakelock": "Enable wakelock",
+  "enableWakelockTooltip": "Prevent your screen from turning off when the timer is active.",
   "exportMatchSheet": "Export match sheet",
   "exportMatchSheetTo": "Export match sheet to {integrationId}",
   "@exportMatchSheetTo": {

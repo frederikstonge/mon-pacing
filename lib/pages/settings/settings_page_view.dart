@@ -99,6 +99,25 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           },
                         ),
                         SettingsTile(
+                          leading: const Icon(Icons.screen_lock_portrait),
+                          title: Row(
+                            children: [
+                              Flexible(child: Text(S.of(context).enableWakelock)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: CustomTooltip(
+                                  tooltip: S.of(context).enableWakelockTooltip,
+                                ),
+                              )
+                            ],
+                          ),
+                          trailing: Switch(
+                              value: state.enableWakelock,
+                              onChanged: (value) {
+                                context.read<SettingsCubit>().edit(state.copyWith(enableWakelock: value));
+                              }),
+                        ),
+                        SettingsTile(
                           leading: const Icon(Icons.vibration),
                           title: Text(S.of(context).enableHapticFeedback),
                           trailing: Switch(

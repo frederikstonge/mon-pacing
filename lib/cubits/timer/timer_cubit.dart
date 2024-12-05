@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:toastification/toastification.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../l10n/localizer.dart';
 import '../../models/timer_model.dart';
@@ -57,6 +58,10 @@ class TimerCubit extends Cubit<TimerState> {
       callback: startCallback,
     );
 
+    if (settingsCubit.state.enableWakelock) {
+      await WakelockPlus.enable();
+    }
+
     return result.success;
   }
 
@@ -74,6 +79,9 @@ class TimerCubit extends Cubit<TimerState> {
     final result = await FlutterForegroundTask.stopService();
     await FlutterForegroundTask.removeData(key: timerDataKey);
     emit(const TimerState());
+
+    await WakelockPlus.disable();
+
     return result.success;
   }
 

@@ -329,6 +329,18 @@ abstract class S {
   /// **'Enable timer haptic feedback'**
   String get enableTimerHapticFeedback;
 
+  /// No description provided for @enableWakelock.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable wakelock'**
+  String get enableWakelock;
+
+  /// No description provided for @enableWakelockTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Prevent your screen from turning off when the timer is active.'**
+  String get enableWakelockTooltip;
+
   /// No description provided for @exportMatchSheet.
   ///
   /// In en, this message translates to:
