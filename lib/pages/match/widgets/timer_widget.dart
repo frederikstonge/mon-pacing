@@ -100,8 +100,8 @@ class TimerWidget extends StatelessWidget {
               LoadingIconButton.filled(
                 onPressed: isActive
                     ? state.timer!.status == TimerStatus.paused
-                        ? () async => await context.read<TimerCubit>().resume()
-                        : () async => await context.read<TimerCubit>().pause()
+                        ? () => context.read<TimerCubit>().resume()
+                        : () => context.read<TimerCubit>().pause()
                     : () async => await context.read<TimerCubit>().start(
                           match.id,
                           match.name,

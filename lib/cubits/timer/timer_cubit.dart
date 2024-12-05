@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:toastification/toastification.dart';
@@ -29,10 +27,10 @@ class TimerCubit extends Cubit<TimerState> {
     FlutterForegroundTask.addTaskDataCallback(_onReceiveData);
   }
 
-  Future<bool> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
+  Future<void> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
     final hasPermissions = await _requestPermissions();
     if (!hasPermissions) {
-      return false;
+      return;
     }
 
     if (await FlutterForegroundTask.isRunningService) {
@@ -50,9 +48,7 @@ class TimerCubit extends Cubit<TimerState> {
       notificationTitle: matchName,
     );
 
-    await _updateTimer(timer);
-
-    final result = await FlutterForegroundTask.startService(
+    await FlutterForegroundTask.startService(
       notificationTitle: Localizer.current.notificationTitle,
       notificationText: '',
       callback: startCallback,
@@ -62,52 +58,48 @@ class TimerCubit extends Cubit<TimerState> {
       await WakelockPlus.enable();
     }
 
-    return result.success;
+    _updateTimer(timer);
   }
 
-  Future<bool> resume() async {
+  void resume() {
     final timer = state.timer!.copyWith(status: TimerStatus.started);
-    return await _updateTimer(timer);
+    _updateTimer(timer);
   }
 
-  Future<bool> pause() async {
+  void pause() {
     final timer = state.timer!.copyWith(status: TimerStatus.paused);
-    return await _updateTimer(timer);
+    _updateTimer(timer);
   }
 
-  Future<bool> stop() async {
-    final result = await FlutterForegroundTask.stopService();
-    await FlutterForegroundTask.removeData(key: timerDataKey);
+  Future<void> stop() async {
     emit(const TimerState());
-
+    await FlutterForegroundTask.stopService();
     await WakelockPlus.disable();
-
-    return result.success;
   }
 
   @override
   Future<void> close() async {
-    await stop();
     FlutterForegroundTask.removeTaskDataCallback(_onReceiveData);
+    await stop();
     return await super.close();
   }
 
   Future<void> _onReceiveData(dynamic data) async {
     final event = TimerModel.fromJson(data);
-    if (Duration(milliseconds: event.remainingMilliseconds).inSeconds <= 0) {
+    if (state.timer != null) {
+      _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
+    }
+
+    final remainingDuration = Duration(milliseconds: event.remainingMilliseconds);
+    if (remainingDuration.inSeconds <= 0) {
       await stop();
       return;
     }
-
-    if (state.timer != null) {
-      await _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
-    }
   }
 
-  Future<bool> _updateTimer(TimerModel timer) async {
-    timer = timer.copyWith(hapticFeedback: settingsCubit.state.enableTimerHapticFeedback);
+  void _updateTimer(TimerModel timer) {
     emit(TimerState(timer: timer));
-    return await FlutterForegroundTask.saveData(key: timerDataKey, value: json.encode(timer.toJson()));
+    FlutterForegroundTask.sendDataToTask(timer.toJson());
   }
 
   Future<bool> _requestPermissions() async {
