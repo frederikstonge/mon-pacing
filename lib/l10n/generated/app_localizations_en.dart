@@ -130,6 +130,12 @@ class SEn extends S {
   String get enableTimerHapticFeedback => 'Enable timer haptic feedback';
 
   @override
+  String get enableWakelock => 'Enable wakelock';
+
+  @override
+  String get enableWakelockTooltip => 'Prevent your screen from turning off when the timer is active.';
+
+  @override
   String get exportMatchSheet => 'Export match sheet';
 
   @override

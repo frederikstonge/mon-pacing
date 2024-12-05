@@ -39,6 +39,8 @@
   "enableStatistics": "Activer les statistiques",
   "enableStatisticsTooltip": "Ajouter les alignements des équipes et calculer les points, pénalités etc",
   "enableTimerHapticFeedback": "Activer la vibration du chronomètre",
+  "enableWakelock": "Activer le vérouillage de réveil",
+  "enableWakelockTooltip": "Empêche l'écran de fermer lorsque le chronomètre est actif.",
   "exportMatchSheet": "Exporter la feuille de match",
   "exportMatchSheetTo": "Exporter la feuille de match à {integrationId}",
   "exportPacing": "Exporter le pacing",

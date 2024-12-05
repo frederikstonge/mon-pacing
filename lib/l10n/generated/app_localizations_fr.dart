@@ -130,6 +130,12 @@ class SFr extends S {
   String get enableTimerHapticFeedback => 'Activer la vibration du chronomètre';
 
   @override
+  String get enableWakelock => 'Activer le vérouillage de réveil';
+
+  @override
+  String get enableWakelockTooltip => 'Empêche l\'écran de fermer lorsque le chronomètre est actif.';
+
+  @override
   String get exportMatchSheet => 'Exporter la feuille de match';
 
   @override

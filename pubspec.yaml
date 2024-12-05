@@ -43,6 +43,7 @@ dependencies:
   textfield_tags: ^3.0.1
   toastification: ^2.0.0
   url_launcher: ^6.3.1
+  wakelock_plus: ^1.2.8
 
 dev_dependencies:
   build_runner: ^2.4.8
