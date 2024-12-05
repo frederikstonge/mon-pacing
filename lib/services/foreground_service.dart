@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -8,8 +7,6 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import '../extensions/duration_extensions.dart';
 import '../models/timer_model.dart';
 import '../models/timer_status.dart';
-
-const String timerDataKey = 'timer';
 
 @pragma('vm:entry-point')
 void startCallback() {
@@ -30,7 +27,7 @@ void initForegroundTask() {
       playSound: false,
     ),
     foregroundTaskOptions: ForegroundTaskOptions(
-      eventAction: ForegroundTaskEventAction.repeat(1000),
+      eventAction: ForegroundTaskEventAction.once(),
       allowWakeLock: true,
       autoRunOnBoot: false,
       autoRunOnMyPackageReplaced: false,
@@ -70,67 +67,68 @@ Future<bool> requestIgnoreBatteryOptimization() async {
 
 class TimerTaskHandler extends TaskHandler {
   Stopwatch? _stopwatch;
-  TimerModel? _timer;
+  TimerModel? _timerModel;
+  Timer? _timer;
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    _timer = await getTimer();
-    _stopwatch = Stopwatch();
-    await onTick();
+    // Does nothing
   }
 
   @override
   Future<void> onRepeatEvent(DateTime timestamp) async {
-    _timer = await getTimer();
-    await onTick();
-  }
-
-  @override
-  Future<void> onDestroy(DateTime timestamp) async {
-    _timer = null;
-    _stopwatch?.stop();
-    _stopwatch = null;
+    // Does nothing
   }
 
   @override
   void onNotificationButtonPressed(String id) {
-    // No button implemented
+    // Does nothing
+  }
+
+  @override
+  void onReceiveData(dynamic data) {
+    final event = TimerModel.fromJson(data);
+    if (_timerModel == null) {
+      _timerModel = event;
+      _stopwatch = Stopwatch();
+      _timer = Timer.periodic(Duration(milliseconds: 100), onTick);
+      _stopwatch!.start();
+    } else if (event.status == TimerStatus.started) {
+      _stopwatch!.start();
+    } else if (event.status == TimerStatus.paused) {
+      _stopwatch!.stop();
+    }
+  }
+
+  @override
+  Future<void> onDestroy(DateTime timestamp) async {
+    _timerModel = null;
+    _stopwatch?.stop();
+    _stopwatch = null;
+    _timer?.cancel();
+    _timer = null;
   }
 
   @override
   void onNotificationPressed() {
-    final matchId = _timer!.matchId;
-    final improvisationId = _timer!.improvisationId;
-    final durationIndex = _timer!.durationIndex;
+    final matchId = _timerModel!.matchId;
+    final improvisationId = _timerModel!.improvisationId;
+    final durationIndex = _timerModel!.durationIndex;
     final path = '/matches/details/$matchId?improvisationId=$improvisationId&durationIndex=$durationIndex';
     FlutterForegroundTask.launchApp(path);
   }
 
-  Future<void> onTick() async {
-    var timer = _timer?.copyWith();
+  void onTick(Timer timer) {
+    var timerModel = _timerModel?.copyWith();
 
-    // Handle STOP
-    if (timer == null) {
-      return;
-    }
-    if (timer.status == TimerStatus.started) {
-      // Handle RESUME
-      if (!_stopwatch!.isRunning) {
-        _stopwatch!.start();
-      }
-    } else {
-      // Handle PAUSED
-      if (_stopwatch!.isRunning) {
-        _stopwatch!.stop();
-      }
-
+    if (timerModel == null) {
       return;
     }
 
-    final remainingMilliseconds = timer.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
+    final remainingMilliseconds = timerModel.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
-    timer = timer.copyWith(remainingMilliseconds: remainingMilliseconds);
-    FlutterForegroundTask.sendDataToMain(timer.toJson());
+    timerModel = timerModel.copyWith(remainingMilliseconds: remainingMilliseconds);
+    FlutterForegroundTask.sendDataToMain(timerModel.toJson());
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
 
@@ -142,24 +140,17 @@ class TimerTaskHandler extends TaskHandler {
         unawaited(vibrate(HapticsType.light));
       }
 
-      await FlutterForegroundTask.updateService(
-        notificationTitle: timer.notificationTitle,
-        notificationText: remainingDuration.toImprovDuration(),
+      unawaited(
+        FlutterForegroundTask.updateService(
+          notificationTitle: timerModel.notificationTitle,
+          notificationText: remainingDuration.toImprovDuration(),
+        ),
       );
     }
   }
 
-  Future<TimerModel?> getTimer() async {
-    final data = await FlutterForegroundTask.getData<String>(key: timerDataKey);
-    if (data == null) {
-      return null;
-    }
-
-    return TimerModel.fromJson(json.decode(data));
-  }
-
   Future<void> vibrate(HapticsType type) async {
-    if ((_timer?.hapticFeedback ?? false) && await Haptics.canVibrate()) {
+    if ((_timerModel?.hapticFeedback ?? false) && await Haptics.canVibrate()) {
       await Haptics.vibrate(type);
     }
   }
