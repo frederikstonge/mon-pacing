@@ -1,25 +1,124 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-  desc "Push a new release build to the App Store"
-  lane :release do
-    increment_build_number(xcodeproj: "Runner.xcodeproj")
-    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
-    upload_to_app_store
+
+  # options:
+  #  - build_number
+  #  - bundle_id
+  #  - git_url
+  #  - git_basic_authorization
+  #  - apple_team_id
+  #  - apple_key_id
+  #  - apple_issuer_id
+  #  - apple_key_filepath (path)
+  desc "Deploy a new build to the App Store"
+  lane :deploy do |options|
+    # Setup for CI
+    setup_ci()
+
+    # Get api_key from app store connect
+    app_store_connect_api_key(
+      key_id: options[:apple_key_id],
+      issuer_id: options[:apple_issuer_id],
+      key_filepath: options[:apple_key_filepath],
+      duration: 1200, # optional (maximum 1200)
+      in_house: false # optional but may be required if using match/sigh
+    )
+
+    # Sync code signing
+    sync_code_signing(
+      type: "appstore",
+      readonly: true,
+      app_identifier: options[:bundle_id],
+      team_id: options[:apple_team_id],
+      api_key: lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+      generate_apple_certs: true,
+      git_url: options[:git_url],
+      git_basic_authorization: options[:git_basic_authorization],
+      git_user_email: "ci@fastlane.tools",
+      git_full_name: "Fastlane",
+      git_branch: "main",
+    )
+
+    # Update code signing settings
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "Runner.xcodeproj",
+      targets: ["Runner"],
+      build_configurations: ["Release"],
+      team_id: options[:apple_team_id],
+      bundle_identifier: options[:bundle_id],
+      code_sign_identity: ENV["sigh_#{options[:bundle_id]}_appstore_certificate-name"],
+      profile_name: ENV["sigh_#{options[:bundle_id]}_appstore_profile-name"],
+      entitlements_file_path: "Runner/Runner.entitlements",
+    )
+
+    # https://docs.fastlane.tools/advanced/fastlane/#directory-behavior
+    Dir.chdir("../..") do
+      # https://docs.flutter.dev/deployment/cd#fastlane
+      sh "flutter build ipa --release --build-number=#{options[:build_number]}"
+    end
+
+    # https://docs.flutter.dev/deployment/cd#fastlane
+    build_app(
+      skip_build_archive: true,
+      scheme: "Runner",
+      configuration: "Release",
+      archive_path: "../build/ios/archive/Runner.xcarchive",
+    )
+
+    # Upload to App Store (Deliver)
+    upload_to_app_store(
+      app_identifier: options[:bundle_id],
+      api_key: lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+      team_id: options[:apple_team_id],
+      submit_for_review: true,
+      automatic_release: true,
+      force: true, # Skip HTML report verification
+      precheck_include_in_app_purchases: false,
+      skip_screenshots: false,
+      skip_metadata: false,
+    )
   end
+
+  # options:
+  #  - bundle_id
+  #  - git_url
+  #  - git_basic_authorization
+  #  - apple_team_id
+  #  - apple_key_id
+  #  - apple_issuer_id
+  #  - apple_key_filepath (path)
+  desc "Generate Certificate"
+  lane :generate_cert do |options|
+
+    # Setup for CI
+    setup_ci()
+
+    # Get api_key from app store connect
+    app_store_connect_api_key(
+      key_id: options[:apple_key_id],
+      issuer_id: options[:apple_issuer_id],
+      key_filepath: options[:apple_key_filepath],
+      duration: 1200, # optional (maximum 1200)
+      in_house: false, # Is App Store or Enterprise (in house) team
+    )
+
+    # Sync code signing 
+    sync_code_signing(
+      type: "appstore",
+      readonly: false,
+      app_identifier: options[:bundle_id],
+      force: true,
+      team_id: options[:apple_team_id],
+      api_key: lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+      generate_apple_certs: true,
+      git_url: options[:git_url],
+      git_basic_authorization: options[:git_basic_authorization],
+      git_user_email: "ci@fastlane.tools",
+      git_full_name: "Fastlane",
+      git_branch: "main",
+    )
+  end
+
 end
