@@ -1,0 +1,14 @@
+name: install-flutter
+description: Install Flutter
+      
+runs:
+  using: composite
+  steps:
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+
+    - name: Generate localization files
+      shell: bash
+      run: flutter gen-l10n
