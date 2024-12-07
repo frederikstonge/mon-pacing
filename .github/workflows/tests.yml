@@ -1,4 +1,4 @@
-name: "Run analyzers and tests"
+name: "[PR] Analyze and test"
 
 on:
   workflow_call:
@@ -12,9 +12,9 @@ on:
       - reopened
       - ready_for_review
 
-# concurrency:
-#   group: ${{ github.head_ref || github.run_id }}
-#   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   tests:
