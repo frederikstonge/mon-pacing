@@ -8,7 +8,7 @@ platform :android do
   #  - service_account_api_key (path)
   #     ** Requires a key.jks file in android/app directory and a key.properties file in android directory
   desc "Deploy a new build to the Google Play"
-  lane :deploy do |options|
+  lane :build_deploy do |options|
 
     # https://docs.fastlane.tools/advanced/fastlane/#directory-behavior
     Dir.chdir("../..") do

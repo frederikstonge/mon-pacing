@@ -12,7 +12,7 @@ platform :ios do
   #  - apple_issuer_id
   #  - apple_key_filepath (path)
   desc "Deploy a new build to the App Store"
-  lane :deploy do |options|
+  lane :build_deploy do |options|
     # Setup for CI
     setup_ci()
 
