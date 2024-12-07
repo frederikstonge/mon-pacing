@@ -2,6 +2,18 @@ name: "Build & Deploy"
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}   
 
 jobs:
   tests:
@@ -37,7 +49,7 @@ jobs:
           working-directory: ios
           shell: bash
           run: |
-            base64 -d <<< ${{ secrets.IOS_AUTH_KEY_BASE64 }} > ${{ env.APPLE_KEY_FILE }}
+            base64 -D <<< "${{ secrets.IOS_AUTH_KEY_BASE64 }}" > ${{ env.APPLE_KEY_FILE }}
           post: |
             rm -f ${{ env.APPLE_KEY_FILE }}
 
