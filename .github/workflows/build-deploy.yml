@@ -110,7 +110,6 @@ jobs:
           run: |
             base64 -D <<< "${{ secrets.ANDROID_SIGNING_KEY_BASE64 }}" > ${{ env.ANDROID_KEY_FILE }}
             base64 -D <<< "${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }}" > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
-
           post: |
             rm -f ${{ env.ANDROID_KEY_FILE }}
             rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}
