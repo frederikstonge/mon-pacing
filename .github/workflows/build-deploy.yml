@@ -65,7 +65,7 @@ jobs:
           post: |
             rm -f ${{ env.APPLE_KEY_FILE }}
       
-      - name: Set release notes
+      - name: Set Release Notes
         working-directory: ios
         shell: bash
         run: |
@@ -135,12 +135,12 @@ jobs:
             rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}
             rm -f ${{ env.PLAYSTORE_KEY_FILE }}            
 
-      - name: Set release notes
+      - name: Set Release Notes
         working-directory: android
         shell: bash
         run: |
-          echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/en-CA/changelogs/default.txt
-          echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/fr-CA/changelogs/default.txt
+          echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/android/en-CA/changelogs/default.txt
+          echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/android/fr-CA/changelogs/default.txt
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
