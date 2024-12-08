@@ -3,18 +3,18 @@ name: "[PR] Analyze and test"
 on:
   workflow_call:
   workflow_dispatch:
-#   pull_request:
-#     branches:
-#       - 'main'
-#     types:
-#       - opened
-#       - synchronize
-#       - reopened
-#       - ready_for_review
+  pull_request:
+    branches:
+      - 'main'
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
-# concurrency:
-#   group: ${{ github.head_ref || github.run_id }}
-#   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   tests:

@@ -9,10 +9,8 @@ runs:
       with:
         channel: stable
 
-    - name: Restore packages
+    - name: Initialize Flutter
       shell: bash
-      run: flutter pub get
-
-    - name: Generate localization files
-      shell: bash
-      run: flutter gen-l10n
+      run: |
+        flutter pub get
+        dart pub global activate flutterfire_cli

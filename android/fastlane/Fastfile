@@ -5,7 +5,7 @@ platform :android do
   # options:
   #  - build_number
   #  - package_name
-  #  - service_account_api_key (path)
+  #  - playstore_json_key (path)
   #     ** Requires a key.jks file in android/app directory and a key.properties file in android directory
   desc "Deploy a new build to the Google Play"
   lane :build_deploy do |options|
@@ -20,7 +20,7 @@ platform :android do
     upload_to_play_store(
       package_name: options[:package_name],
       aab: "../build/app/outputs/bundle/release/app-release.aab",
-      json_key: options[:service_account_api_key],
+      json_key: options[:playstore_json_key],
       track: "production",
       release_status: "completed",
       changes_not_sent_for_review: false,

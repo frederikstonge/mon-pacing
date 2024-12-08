@@ -2,22 +2,25 @@ name: "Build & Deploy"
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - 'main'
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
-
-concurrency:
-  group: ${{ github.head_ref || github.run_id }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}   
 
 jobs:
+  set_build_number:
+    name: Set Build Number
+    runs-on: ubuntu-latest
+    outputs:
+      build_number: ${{ steps.build_number_step.outputs.build_number }}
+    steps:
+      - name: Set Build Number
+        id: build_number_step
+        shell: bash
+        run: |  
+          BUILD_NUMBER=$(date +'%s')
+          echo "## 🚀 Build Number: $BUILD_NUMBER" >> $GITHUB_STEP_SUMMARY
+          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+
   tests:
     name: "Run Tests"
+    needs: set_build_number
     permissions: write-all
     uses: ./.github/workflows/tests.yml
     secrets: inherit
@@ -25,7 +28,7 @@ jobs:
   build_deploy_ios:
     name: "Build & Deploy iOS"
     runs-on: macos-latest
-    needs: tests
+    needs: [set_build_number, tests]
     environment: deploy-ios
 
     env:
@@ -49,7 +52,7 @@ jobs:
           working-directory: ios
           shell: bash
           run: |
-            base64 -D <<< "${{ secrets.IOS_AUTH_KEY_BASE64 }}" > ${{ env.APPLE_KEY_FILE }}
+            base64 -d <<< ${{ secrets.IOS_AUTH_KEY_BASE64 }} > ${{ env.APPLE_KEY_FILE }}
           post: |
             rm -f ${{ env.APPLE_KEY_FILE }}
 
@@ -69,7 +72,7 @@ jobs:
         shell: bash
         run: |
           bundle exec fastlane build_deploy \
-            build_number:'${{ github.run_number }}' \
+            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
             bundle_id:'com.stongef.monpacing' \
             git_url:'${{ env.GIT_URL }}' \
             git_basic_authorization:'${{ secrets.GIT_BASIC_AUTHORIZATION }}' \
@@ -81,7 +84,7 @@ jobs:
   build_deploy_android:
     name: "Build & Deploy Android"
     runs-on: ubuntu-latest
-    needs: tests
+    needs: [set_build_number, tests]
     environment: deploy-android
 
     env:
@@ -108,8 +111,8 @@ jobs:
           working-directory: android
           shell: bash
           run: |
-            base64 -D <<< "${{ secrets.ANDROID_SIGNING_KEY_BASE64 }}" > ${{ env.ANDROID_KEY_FILE }}
-            base64 -D <<< "${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }}" > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
+            base64 -d <<< ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }} > ${{ env.ANDROID_KEY_FILE }}
+            base64 -d <<< ${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }} > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
           post: |
             rm -f ${{ env.ANDROID_KEY_FILE }}
             rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}
@@ -120,7 +123,7 @@ jobs:
           working-directory: android
           shell: bash
           run: |
-            base64 -D <<< "${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }}" > ${{ env.PLAYSTORE_KEY_FILE }}
+            base64 -d <<< ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
           post: |
             rm -f ${{ env.PLAYSTORE_KEY_FILE }}
 
@@ -140,6 +143,6 @@ jobs:
         shell: bash
         run: |
           bundle exec fastlane build_deploy \
-            build_number:'${{ github.run_number }}' \
+            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
             package_name:'com.stongef.monpacing' \
             playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'
