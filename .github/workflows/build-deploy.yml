@@ -2,6 +2,15 @@ name: "Build & Deploy"
 
 on:
   workflow_dispatch:
+    inputs:
+      release_notes_fr_CA:
+        type: string
+        description: 'Release Notes (fr-CA):'
+        required: true
+      release_notes_en_CA:
+        type: string
+        description: 'Release Notes (en-CA):'
+        required: true
 
 jobs:
   set_build_number:
@@ -46,7 +55,7 @@ jobs:
       - name: Install Flutter
         uses: ./.github/actions/install-flutter
 
-      - name: Create Apple Key File
+      - name: Create Apple Required Files
         uses: gacts/run-and-post-run@v1.4.1
         with:
           working-directory: ios
@@ -55,6 +64,13 @@ jobs:
             base64 -d <<< ${{ secrets.IOS_AUTH_KEY_BASE64 }} > ${{ env.APPLE_KEY_FILE }}
           post: |
             rm -f ${{ env.APPLE_KEY_FILE }}
+      
+      - name: Set release notes
+        working-directory: ios
+        shell: bash
+        run: |
+          echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/en-CA/release_notes.txt
+          echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/fr-CA/release_notes.txt
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
@@ -105,7 +121,7 @@ jobs:
           distribution: 'temurin'
           java-version: '18'
 
-      - name: Create Android Signing Files
+      - name: Create Android Required Files
         uses: gacts/run-and-post-run@v1.4.1
         with:
           working-directory: android
@@ -113,19 +129,18 @@ jobs:
           run: |
             base64 -d <<< ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }} > ${{ env.ANDROID_KEY_FILE }}
             base64 -d <<< ${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }} > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
+            base64 -d <<< ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
           post: |
             rm -f ${{ env.ANDROID_KEY_FILE }}
             rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}
+            rm -f ${{ env.PLAYSTORE_KEY_FILE }}            
 
-      - name: Create Playstore File
-        uses: gacts/run-and-post-run@v1.4.1
-        with:
-          working-directory: android
-          shell: bash
-          run: |
-            base64 -d <<< ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
-          post: |
-            rm -f ${{ env.PLAYSTORE_KEY_FILE }}
+      - name: Set release notes
+        working-directory: android
+        shell: bash
+        run: |
+          echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/en-CA/changelogs/default.txt
+          echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/fr-CA/changelogs/default.txt
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
