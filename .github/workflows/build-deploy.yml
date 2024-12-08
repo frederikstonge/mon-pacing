@@ -1,0 +1,148 @@
+name: "Build & Deploy"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  set_build_number:
+    name: Set Build Number
+    runs-on: ubuntu-latest
+    outputs:
+      build_number: ${{ steps.build_number_step.outputs.build_number }}
+    steps:
+      - name: Set Build Number
+        id: build_number_step
+        shell: bash
+        run: |  
+          BUILD_NUMBER=$(date +'%s')
+          echo "## 🚀 Build Number: $BUILD_NUMBER" >> $GITHUB_STEP_SUMMARY
+          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+
+  tests:
+    name: "Run Tests"
+    needs: set_build_number
+    permissions: write-all
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+
+  build_deploy_ios:
+    name: "Build & Deploy iOS"
+    runs-on: macos-latest
+    needs: [set_build_number, tests]
+    environment: deploy-ios
+
+    env:
+      APPLE_KEY_FILE: apple_key.p8
+      APPLE_KEY_ID: ${{ secrets.IOS_KEY_ID }}
+      APPLE_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
+      APPLE_TEAM_ID: ${{ secrets.IOS_TEAM_ID }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      GIT_URL: "https://github.com/frederikstonge/mon-pacing-fastlane"
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: ./.github/actions/install-flutter
+
+      - name: Create Apple Key File
+        uses: gacts/run-and-post-run@v1.4.1
+        with:
+          working-directory: ios
+          shell: bash
+          run: |
+            base64 -d <<< ${{ secrets.IOS_AUTH_KEY_BASE64 }} > ${{ env.APPLE_KEY_FILE }}
+          post: |
+            rm -f ${{ env.APPLE_KEY_FILE }}
+
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.5'
+
+      - name: Install Bundle
+        working-directory: ios
+        shell: bash
+        run: |
+          bundle install
+
+      - name: Run Fastlane
+        working-directory: ios
+        shell: bash
+        run: |
+          bundle exec fastlane build_deploy \
+            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
+            bundle_id:'com.stongef.monpacing' \
+            git_url:'${{ env.GIT_URL }}' \
+            git_basic_authorization:'${{ secrets.GIT_BASIC_AUTHORIZATION }}' \
+            apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
+            apple_key_id:'${{ env.APPLE_KEY_ID }}' \
+            apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
+            apple_key_filepath:'${{ env.APPLE_KEY_FILE }}'
+
+  build_deploy_android:
+    name: "Build & Deploy Android"
+    runs-on: ubuntu-latest
+    needs: [set_build_number, tests]
+    environment: deploy-android
+
+    env:
+      ANDROID_KEY_FILE: app/android-signing-key.jks
+      ANDROID_KEY_PROPERTY_FILE: key.properties
+      PLAYSTORE_KEY_FILE: playstore_key.json
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: ./.github/actions/install-flutter
+
+      - name: Setup Java JDK       
+        uses: actions/setup-java@v4.3.0
+        with:
+          distribution: 'temurin'
+          java-version: '18'
+
+      - name: Create Android Signing Files
+        uses: gacts/run-and-post-run@v1.4.1
+        with:
+          working-directory: android
+          shell: bash
+          run: |
+            base64 -d <<< ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }} > ${{ env.ANDROID_KEY_FILE }}
+            base64 -d <<< ${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }} > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
+          post: |
+            rm -f ${{ env.ANDROID_KEY_FILE }}
+            rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}
+
+      - name: Create Playstore File
+        uses: gacts/run-and-post-run@v1.4.1
+        with:
+          working-directory: android
+          shell: bash
+          run: |
+            base64 -d <<< ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
+          post: |
+            rm -f ${{ env.PLAYSTORE_KEY_FILE }}
+
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.5'
+
+      - name: Install Bundle
+        working-directory: android
+        shell: bash
+        run: |
+          bundle install
+
+      - name: Run Fastlane
+        working-directory: android
+        shell: bash
+        run: |
+          bundle exec fastlane build_deploy \
+            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
+            package_name:'com.stongef.monpacing' \
+            playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'

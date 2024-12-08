@@ -1,0 +1,16 @@
+name: install-flutter
+description: Install Flutter
+      
+runs:
+  using: composite
+  steps:
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+
+    - name: Initialize Flutter
+      shell: bash
+      run: |
+        flutter pub get
+        dart pub global activate flutterfire_cli

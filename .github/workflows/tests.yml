@@ -1,0 +1,46 @@
+name: "[PR] Analyze and test"
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tests:
+    name: "Run Tests"
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: ./.github/actions/install-flutter
+        
+      - name: Dart Analyze
+        shell: bash
+        run: |
+            dart analyze
+
+      - name: Flutter Analyze
+        shell: bash
+        run: |
+            flutter analyze
+
+      # - name: Flutter Tests
+      #   shell: bash
+      #   run: |
+      #       flutter test --concurrency=$(nproc --all) --coverage --coverage-path=./coverage/lcov.info
