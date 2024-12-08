@@ -1,3 +1,0 @@
-Release notes are available here:
-
-https://github.com/frederikstonge/mon-pacing/blob/release/CHANGELOG.md
