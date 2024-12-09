@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -13,22 +15,6 @@ import 'bootstrapper.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // FIREBASE
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
-
-  await FirebaseRemoteConfig.instance.setConfigSettings(
-    RemoteConfigSettings(
-      fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(hours: 6),
-    ),
-  );
-
   FlutterError.onError = (errorDetails) {
     if (!kDebugMode) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -43,15 +29,37 @@ Future<void> main() async {
     return true;
   };
 
-  // SYSTEM CHROME
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  // BLOC
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
-  );
+    // FIREBASE
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  // APP
-  runApp(const Bootstrapper(child: App()));
+    await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
+
+    await FirebaseRemoteConfig.instance.setConfigSettings(
+      RemoteConfigSettings(
+        fetchTimeout: const Duration(minutes: 1),
+        minimumFetchInterval: const Duration(hours: 6),
+      ),
+    );
+
+    // SYSTEM CHROME
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    // BLOC
+    HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory(),
+    );
+
+    // APP
+    runApp(const Bootstrapper(child: App()));
+  }, (error, stackTrace) {
+    if (!kDebugMode) {
+      FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    }
+  });
 }
