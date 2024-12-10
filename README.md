@@ -2,7 +2,7 @@
 
 # Mon Pacing
 
-![example workflow](https://github.com/frederikstonge/mon-pacing/actions/workflows/build-deploy.yml/badge.svg)
+![Build & Deploy](https://github.com/frederikstonge/mon-pacing/actions/workflows/build-deploy.yml/badge.svg)
 
 A project used by referees for Robert Gravel's Improvisation style matches.
 
