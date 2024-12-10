@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/ada94008-2fd4-48a2-aece-40b922fa8e11)
+
 # Mon Pacing
 
 ![example workflow](https://github.com/frederikstonge/mon-pacing/actions/workflows/build-deploy.yml/badge.svg)
@@ -6,12 +8,6 @@ A project used by referees for Robert Gravel's Improvisation style matches.
 
 - [Mon Pacing](https://linktr.ee/monpacing)
 - [Ligue Nationale d'Improvisation](https://en.wikipedia.org/wiki/Ligue_nationale_d%27improvisation)
-
-<img src="https://github.com/frederikstonge/mon-pacing/assets/5427239/f5214a96-dfdb-4eb8-9a5b-6e7cffbe083d" height="20%" width="20%" />
-<img src="https://github.com/frederikstonge/mon-pacing/assets/5427239/f906abd6-a684-4feb-b2ba-a89af030948d" height="20%" width="20%" />
-<img src="https://github.com/frederikstonge/mon-pacing/assets/5427239/3e087e69-aae0-4a92-acf9-e59d85feb3d0" height="20%" width="20%" />
-<img src="https://github.com/frederikstonge/mon-pacing/assets/5427239/da6031ec-4a56-447f-a76d-76e64621aeb3" height="20%" width="20%" />
-<img src="https://github.com/frederikstonge/mon-pacing/assets/5427239/d529b8be-0757-4222-aebb-4555317296fe" height="20%" width="20%" />
 
 ## Development
 
