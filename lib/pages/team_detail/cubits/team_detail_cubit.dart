@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/settings/settings_cubit.dart';
+import '../../../extensions/color_extensions.dart';
 import '../../../models/constants.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
@@ -41,7 +42,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
     if (!state.editMode) {
       final random = Random();
       final newTeam = state.team.copyWith(
-        color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).value,
+        color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
         performers: [_createPerformer(state.team.performers)],
       );
       emit(state.copyWith(team: newTeam));

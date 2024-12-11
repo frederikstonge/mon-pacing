@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/settings/settings_cubit.dart';
+import '../../../extensions/color_extensions.dart';
 import '../../../extensions/iterable_extensions.dart';
 import '../../../l10n/localizer.dart';
 import '../../../models/constants.dart';
@@ -144,7 +145,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     return MatchTeamModel(
       id: nextId,
       name: '${Localizer.current.team} ${teams.length + 1}',
-      color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).value,
+      color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
       performers: [
         _createPerformer(allPerformers),
       ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../extensions/color_extensions.dart';
+
 class Constants {
   static const double expandedAppbarHeight = 112;
   static const int maximumTeams = 3;
@@ -28,7 +30,7 @@ class Constants {
     Colors.teal,
   ];
 
-  static MaterialColor _toMaterialColor(Color color) => MaterialColor(color.value, {
+  static MaterialColor _toMaterialColor(Color color) => MaterialColor(color.getIntvalue, {
         50: color,
         100: color,
         200: color,
