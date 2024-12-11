@@ -61,6 +61,10 @@ const PacingModelSchema = IsarGeneratedSchema(
         name: 'integrationEntityId',
         type: IsarType.string,
       ),
+      IsarPropertySchema(
+        name: 'integrationAdditionalData',
+        type: IsarType.string,
+      ),
     ],
     indexes: [
       IsarIndexSchema(
@@ -154,6 +158,14 @@ int serializePacingModel(IsarWriter writer, PacingModel object) {
       IsarCore.writeNull(writer, 10);
     } else {
       IsarCore.writeString(writer, 10, value);
+    }
+  }
+  {
+    final value = object.integrationAdditionalData;
+    if (value == null) {
+      IsarCore.writeNull(writer, 11);
+    } else {
+      IsarCore.writeString(writer, 11, value);
     }
   }
   return object.id;
@@ -253,6 +265,8 @@ PacingModel deserializePacingModel(IsarReader reader) {
   _integrationId = IsarCore.readString(reader, 9);
   final String? _integrationEntityId;
   _integrationEntityId = IsarCore.readString(reader, 10);
+  final String? _integrationAdditionalData;
+  _integrationAdditionalData = IsarCore.readString(reader, 11);
   final object = PacingModel(
     id: _id,
     createdDate: _createdDate,
@@ -263,6 +277,7 @@ PacingModel deserializePacingModel(IsarReader reader) {
     tags: _tags,
     integrationId: _integrationId,
     integrationEntityId: _integrationEntityId,
+    integrationAdditionalData: _integrationAdditionalData,
   );
   return object;
 }
@@ -396,6 +411,8 @@ dynamic deserializePacingModelProp(IsarReader reader, int property) {
       return IsarCore.readString(reader, 9);
     case 10:
       return IsarCore.readString(reader, 10);
+    case 11:
+      return IsarCore.readString(reader, 11);
     default:
       throw ArgumentError('Unknown property: $property');
   }
@@ -410,6 +427,7 @@ sealed class _PacingModelUpdate {
     int? defaultNumberOfTeams,
     String? integrationId,
     String? integrationEntityId,
+    String? integrationAdditionalData,
   });
 }
 
@@ -427,6 +445,7 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
     Object? defaultNumberOfTeams = ignore,
     Object? integrationId = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationAdditionalData = ignore,
   }) {
     return collection.updateProperties([
           id
@@ -437,6 +456,8 @@ class _PacingModelUpdateImpl implements _PacingModelUpdate {
           if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
           if (integrationId != ignore) 9: integrationId as String?,
           if (integrationEntityId != ignore) 10: integrationEntityId as String?,
+          if (integrationAdditionalData != ignore)
+            11: integrationAdditionalData as String?,
         }) >
         0;
   }
@@ -451,6 +472,7 @@ sealed class _PacingModelUpdateAll {
     int? defaultNumberOfTeams,
     String? integrationId,
     String? integrationEntityId,
+    String? integrationAdditionalData,
   });
 }
 
@@ -468,6 +490,7 @@ class _PacingModelUpdateAllImpl implements _PacingModelUpdateAll {
     Object? defaultNumberOfTeams = ignore,
     Object? integrationId = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationAdditionalData = ignore,
   }) {
     return collection.updateProperties(id, {
       if (createdDate != ignore) 3: createdDate as DateTime?,
@@ -476,6 +499,8 @@ class _PacingModelUpdateAllImpl implements _PacingModelUpdateAll {
       if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
       if (integrationId != ignore) 9: integrationId as String?,
       if (integrationEntityId != ignore) 10: integrationEntityId as String?,
+      if (integrationAdditionalData != ignore)
+        11: integrationAdditionalData as String?,
     });
   }
 }
@@ -494,6 +519,7 @@ sealed class _PacingModelQueryUpdate {
     int? defaultNumberOfTeams,
     String? integrationId,
     String? integrationEntityId,
+    String? integrationAdditionalData,
   });
 }
 
@@ -511,6 +537,7 @@ class _PacingModelQueryUpdateImpl implements _PacingModelQueryUpdate {
     Object? defaultNumberOfTeams = ignore,
     Object? integrationId = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationAdditionalData = ignore,
   }) {
     return query.updateProperties(limit: limit, {
       if (createdDate != ignore) 3: createdDate as DateTime?,
@@ -519,6 +546,8 @@ class _PacingModelQueryUpdateImpl implements _PacingModelQueryUpdate {
       if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
       if (integrationId != ignore) 9: integrationId as String?,
       if (integrationEntityId != ignore) 10: integrationEntityId as String?,
+      if (integrationAdditionalData != ignore)
+        11: integrationAdditionalData as String?,
     });
   }
 }
@@ -544,6 +573,7 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
     Object? defaultNumberOfTeams = ignore,
     Object? integrationId = ignore,
     Object? integrationEntityId = ignore,
+    Object? integrationAdditionalData = ignore,
   }) {
     final q = query.build();
     try {
@@ -554,6 +584,8 @@ class _PacingModelQueryBuilderUpdateImpl implements _PacingModelQueryUpdate {
         if (defaultNumberOfTeams != ignore) 7: defaultNumberOfTeams as int?,
         if (integrationId != ignore) 9: integrationId as String?,
         if (integrationEntityId != ignore) 10: integrationEntityId as String?,
+        if (integrationAdditionalData != ignore)
+          11: integrationAdditionalData as String?,
       });
     } finally {
       q.close();
@@ -2097,6 +2129,202 @@ extension PacingModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 11));
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 11));
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 11,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataContains(String value,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataMatches(String pattern,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 11,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 11,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterFilterCondition>
+      integrationAdditionalDataIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 11,
+          value: '',
+        ),
+      );
+    });
+  }
 }
 
 extension PacingModelQueryObject
@@ -2217,6 +2445,27 @@ extension PacingModelQuerySortBy
       );
     });
   }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      sortByIntegrationAdditionalData({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        11,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      sortByIntegrationAdditionalDataDesc({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(
+        11,
+        sort: Sort.desc,
+        caseSensitive: caseSensitive,
+      );
+    });
+  }
 }
 
 extension PacingModelQuerySortThenBy
@@ -2313,6 +2562,20 @@ extension PacingModelQuerySortThenBy
       return query.addSortBy(10, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByIntegrationAdditionalData({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(11, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterSortBy>
+      thenByIntegrationAdditionalDataDesc({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(11, sort: Sort.desc, caseSensitive: caseSensitive);
+    });
+  }
 }
 
 extension PacingModelQueryWhereDistinct
@@ -2375,6 +2638,13 @@ extension PacingModelQueryWhereDistinct
       distinctByIntegrationEntityId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(10, caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PacingModel, PacingModel, QAfterDistinct>
+      distinctByIntegrationAdditionalData({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(11, caseSensitive: caseSensitive);
     });
   }
 }
@@ -2447,6 +2717,13 @@ extension PacingModelQueryProperty1
       integrationEntityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
+    });
+  }
+
+  QueryBuilder<PacingModel, String?, QAfterProperty>
+      integrationAdditionalDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(11);
     });
   }
 }
@@ -2524,6 +2801,13 @@ extension PacingModelQueryProperty2<R>
       integrationEntityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(10);
+    });
+  }
+
+  QueryBuilder<PacingModel, (R, String?), QAfterProperty>
+      integrationAdditionalDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(11);
     });
   }
 }
@@ -2604,6 +2888,13 @@ extension PacingModelQueryProperty3<R1, R2>
       return query.addProperty(10);
     });
   }
+
+  QueryBuilder<PacingModel, (R1, R2, String?), QOperations>
+      integrationAdditionalDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(11);
+    });
+  }
 }
 
 // **************************************************************************
@@ -2630,6 +2921,7 @@ _$PacingModelImpl _$$PacingModelImplFromJson(Map<String, dynamic> json) =>
               const [],
       integrationId: json['integrationId'] as String?,
       integrationEntityId: json['integrationEntityId'] as String?,
+      integrationAdditionalData: json['integrationAdditionalData'] as String?,
     );
 
 Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
@@ -2643,4 +2935,5 @@ Map<String, dynamic> _$$PacingModelImplToJson(_$PacingModelImpl instance) =>
       'tags': instance.tags,
       'integrationId': instance.integrationId,
       'integrationEntityId': instance.integrationEntityId,
+      'integrationAdditionalData': instance.integrationAdditionalData,
     };

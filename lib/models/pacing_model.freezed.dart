@@ -32,6 +32,7 @@ mixin _$PacingModel {
   List<String> get tags => throw _privateConstructorUsedError;
   String? get integrationId => throw _privateConstructorUsedError;
   String? get integrationEntityId => throw _privateConstructorUsedError;
+  String? get integrationAdditionalData => throw _privateConstructorUsedError;
 
   /// Serializes this PacingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,7 +59,8 @@ abstract class $PacingModelCopyWith<$Res> {
       int defaultNumberOfTeams,
       List<String> tags,
       String? integrationId,
-      String? integrationEntityId});
+      String? integrationEntityId,
+      String? integrationAdditionalData});
 }
 
 /// @nodoc
@@ -85,6 +87,7 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
     Object? tags = null,
     Object? integrationId = freezed,
     Object? integrationEntityId = freezed,
+    Object? integrationAdditionalData = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -123,6 +126,10 @@ class _$PacingModelCopyWithImpl<$Res, $Val extends PacingModel>
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationAdditionalData: freezed == integrationAdditionalData
+          ? _value.integrationAdditionalData
+          : integrationAdditionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -144,7 +151,8 @@ abstract class _$$PacingModelImplCopyWith<$Res>
       int defaultNumberOfTeams,
       List<String> tags,
       String? integrationId,
-      String? integrationEntityId});
+      String? integrationEntityId,
+      String? integrationAdditionalData});
 }
 
 /// @nodoc
@@ -169,6 +177,7 @@ class __$$PacingModelImplCopyWithImpl<$Res>
     Object? tags = null,
     Object? integrationId = freezed,
     Object? integrationEntityId = freezed,
+    Object? integrationAdditionalData = freezed,
   }) {
     return _then(_$PacingModelImpl(
       id: null == id
@@ -207,6 +216,10 @@ class __$$PacingModelImplCopyWithImpl<$Res>
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationAdditionalData: freezed == integrationAdditionalData
+          ? _value.integrationAdditionalData
+          : integrationAdditionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -223,7 +236,8 @@ class _$PacingModelImpl extends _PacingModel {
       this.defaultNumberOfTeams = 2,
       final List<String> tags = const [],
       this.integrationId,
-      this.integrationEntityId})
+      this.integrationEntityId,
+      this.integrationAdditionalData})
       : _improvisations = improvisations,
         _tags = tags,
         super._();
@@ -265,10 +279,12 @@ class _$PacingModelImpl extends _PacingModel {
   final String? integrationId;
   @override
   final String? integrationEntityId;
+  @override
+  final String? integrationAdditionalData;
 
   @override
   String toString() {
-    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations, defaultNumberOfTeams: $defaultNumberOfTeams, tags: $tags, integrationId: $integrationId, integrationEntityId: $integrationEntityId)';
+    return 'PacingModel(id: $id, name: $name, createdDate: $createdDate, modifiedDate: $modifiedDate, improvisations: $improvisations, defaultNumberOfTeams: $defaultNumberOfTeams, tags: $tags, integrationId: $integrationId, integrationEntityId: $integrationEntityId, integrationAdditionalData: $integrationAdditionalData)';
   }
 
   @override
@@ -290,7 +306,10 @@ class _$PacingModelImpl extends _PacingModel {
             (identical(other.integrationId, integrationId) ||
                 other.integrationId == integrationId) &&
             (identical(other.integrationEntityId, integrationEntityId) ||
-                other.integrationEntityId == integrationEntityId));
+                other.integrationEntityId == integrationEntityId) &&
+            (identical(other.integrationAdditionalData,
+                    integrationAdditionalData) ||
+                other.integrationAdditionalData == integrationAdditionalData));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -305,7 +324,8 @@ class _$PacingModelImpl extends _PacingModel {
       defaultNumberOfTeams,
       const DeepCollectionEquality().hash(_tags),
       integrationId,
-      integrationEntityId);
+      integrationEntityId,
+      integrationAdditionalData);
 
   /// Create a copy of PacingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -333,7 +353,8 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
       final int defaultNumberOfTeams,
       final List<String> tags,
       final String? integrationId,
-      final String? integrationEntityId}) = _$PacingModelImpl;
+      final String? integrationEntityId,
+      final String? integrationAdditionalData}) = _$PacingModelImpl;
   const _PacingModel._() : super._();
 
   factory _PacingModel.fromJson(Map<String, dynamic> json) =
@@ -359,6 +380,8 @@ abstract class _PacingModel extends PacingModel implements BaseModel {
   String? get integrationId;
   @override
   String? get integrationEntityId;
+  @override
+  String? get integrationAdditionalData;
 
   /// Create a copy of PacingModel
   /// with the given fields replaced by the non-null parameter values.

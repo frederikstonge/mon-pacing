@@ -102,7 +102,7 @@ class CitrusIntegration implements MatchIntegrationBase {
       integrationMinNumberOfImprovisations: MinNumberOfImprovisations,
       integrationMaxNumberOfImprovisations: MaxNumberOfImprovisations,
       integrationPenaltyTypes: penaltyTypes.isNotEmpty ? penaltyTypes : null,
-      integrationExportData: jsonEncode({
+      integrationAdditionalData: jsonEncode({
         'csrfToken': csrfToken,
         'exportUrl': url.toString(),
       }),
@@ -111,7 +111,7 @@ class CitrusIntegration implements MatchIntegrationBase {
 
   @override
   Future<bool> exportMatch(MatchModel match) async {
-    final exportData = jsonDecode(match.integrationExportData!);
+    final exportData = jsonDecode(match.integrationAdditionalData!);
     final urlString = exportData['exportUrl'];
     final url = Uri.parse(urlString);
     final newUrl = Uri.https(url.authority, '/Citrus/SaveToDB/');
@@ -164,7 +164,7 @@ class CitrusIntegration implements MatchIntegrationBase {
       return PerformerModel(
         name: performerName,
         id: getPerformerId(),
-        integrationEntityId: jsonEncode(metadata),
+        integrationAdditionalData: jsonEncode(metadata),
       );
     }).toList();
 
@@ -218,7 +218,7 @@ class CitrusIntegration implements MatchIntegrationBase {
   }
 
   String _generatePerformerData(PerformerModel performer) {
-    final jsonData = jsonDecode(performer.integrationEntityId!);
+    final jsonData = jsonDecode(performer.integrationAdditionalData!);
     return '[\'${jsonData['role']}\',\'${jsonData['number']}\',\'${jsonData['pronoun']}\',\'${jsonData['name']}\']';
   }
 
