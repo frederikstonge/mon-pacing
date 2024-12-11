@@ -10,7 +10,6 @@ updates:
         update-types: ["version-update:semver-minor", "version-update:semver-patch"]
 
   - package-ecosystem: "bundler"
-    # Files stored in repository root
     directories: 
       - "/android"
       - "/ios"
