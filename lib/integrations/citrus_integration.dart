@@ -7,6 +7,7 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
+import '../extensions/color_extensions.dart';
 import '../extensions/match_extensions.dart';
 import '../l10n/localizer.dart';
 import '../models/constants.dart';
@@ -180,7 +181,7 @@ class CitrusIntegration implements MatchIntegrationBase {
   Future<int?> _getTeamColor(Uri imageUrl) async {
     try {
       final colorScheme = await ColorScheme.fromImageProvider(provider: Image.network(imageUrl.toString()).image);
-      return colorScheme.primary.value;
+      return colorScheme.primary.getIntvalue;
     } catch (_) {}
 
     return null;
@@ -188,8 +189,8 @@ class CitrusIntegration implements MatchIntegrationBase {
 
   int _getRandomTeamColor({int? except}) {
     final random = Random();
-    final colorList = Constants.colors.where((c) => c.value != except).toList();
-    return colorList.elementAt(random.nextInt(colorList.length)).value;
+    final colorList = Constants.colors.where((c) => c.getIntvalue != except).toList();
+    return colorList.elementAt(random.nextInt(colorList.length)).getIntvalue;
   }
 
   String? _extractMatchID(Document document) {

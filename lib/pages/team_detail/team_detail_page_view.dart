@@ -14,6 +14,7 @@ import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/text_header/text_header.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/teams/teams_cubit.dart';
+import '../../extensions/color_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../validators/validator.dart';
 import 'cubits/team_detail_cubit.dart';
@@ -86,7 +87,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                               child: ColorPicker(initialColor: Color(state.team.color), title: S.of(context).color),
                             );
                             if (newColor != null) {
-                              teamDetailCubit.edit(state.team.copyWith(color: newColor.value));
+                              teamDetailCubit.edit(state.team.copyWith(color: newColor.getIntvalue));
                             }
                           },
                           child: TeamColorAvatar(

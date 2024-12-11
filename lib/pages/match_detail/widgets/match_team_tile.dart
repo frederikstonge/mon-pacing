@@ -9,6 +9,7 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../components/search_dialog/teams_search.dart';
 import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
+import '../../../extensions/color_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_team_model.dart';
 import '../../../models/performer_model.dart';
@@ -85,7 +86,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                   child: ColorPicker(initialColor: Color(widget.team.color), title: S.of(context).color),
                 );
                 if (newColor != null) {
-                  widget.onChanged.call(widget.team.copyWith(color: newColor.value));
+                  widget.onChanged.call(widget.team.copyWith(color: newColor.getIntvalue));
                 }
               },
               child: TeamColorAvatar(
