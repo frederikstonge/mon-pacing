@@ -20,6 +20,7 @@ class ImprovisationModel with _$ImprovisationModel {
     @Default(30) int timeBufferInSeconds,
     @Default(30) int huddleTimerInSeconds,
     String? integrationEntityId,
+    String? integrationAdditionalData,
   }) = _ImprovisationModel;
 
   factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);

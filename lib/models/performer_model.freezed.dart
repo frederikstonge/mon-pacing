@@ -23,6 +23,7 @@ mixin _$PerformerModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get integrationEntityId => throw _privateConstructorUsedError;
+  String? get integrationAdditionalData => throw _privateConstructorUsedError;
 
   /// Serializes this PerformerModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +41,11 @@ abstract class $PerformerModelCopyWith<$Res> {
           PerformerModel value, $Res Function(PerformerModel) then) =
       _$PerformerModelCopyWithImpl<$Res, PerformerModel>;
   @useResult
-  $Res call({int id, String name, String? integrationEntityId});
+  $Res call(
+      {int id,
+      String name,
+      String? integrationEntityId,
+      String? integrationAdditionalData});
 }
 
 /// @nodoc
@@ -61,6 +66,7 @@ class _$PerformerModelCopyWithImpl<$Res, $Val extends PerformerModel>
     Object? id = null,
     Object? name = null,
     Object? integrationEntityId = freezed,
+    Object? integrationAdditionalData = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,6 +81,10 @@ class _$PerformerModelCopyWithImpl<$Res, $Val extends PerformerModel>
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationAdditionalData: freezed == integrationAdditionalData
+          ? _value.integrationAdditionalData
+          : integrationAdditionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -87,7 +97,11 @@ abstract class _$$PerformerModelImplCopyWith<$Res>
       __$$PerformerModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String? integrationEntityId});
+  $Res call(
+      {int id,
+      String name,
+      String? integrationEntityId,
+      String? integrationAdditionalData});
 }
 
 /// @nodoc
@@ -106,6 +120,7 @@ class __$$PerformerModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? integrationEntityId = freezed,
+    Object? integrationAdditionalData = freezed,
   }) {
     return _then(_$PerformerModelImpl(
       id: null == id
@@ -120,6 +135,10 @@ class __$$PerformerModelImplCopyWithImpl<$Res>
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationAdditionalData: freezed == integrationAdditionalData
+          ? _value.integrationAdditionalData
+          : integrationAdditionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -128,7 +147,10 @@ class __$$PerformerModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PerformerModelImpl implements _PerformerModel {
   const _$PerformerModelImpl(
-      {required this.id, required this.name, this.integrationEntityId});
+      {required this.id,
+      required this.name,
+      this.integrationEntityId,
+      this.integrationAdditionalData});
 
   factory _$PerformerModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PerformerModelImplFromJson(json);
@@ -139,10 +161,12 @@ class _$PerformerModelImpl implements _PerformerModel {
   final String name;
   @override
   final String? integrationEntityId;
+  @override
+  final String? integrationAdditionalData;
 
   @override
   String toString() {
-    return 'PerformerModel(id: $id, name: $name, integrationEntityId: $integrationEntityId)';
+    return 'PerformerModel(id: $id, name: $name, integrationEntityId: $integrationEntityId, integrationAdditionalData: $integrationAdditionalData)';
   }
 
   @override
@@ -153,12 +177,16 @@ class _$PerformerModelImpl implements _PerformerModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.integrationEntityId, integrationEntityId) ||
-                other.integrationEntityId == integrationEntityId));
+                other.integrationEntityId == integrationEntityId) &&
+            (identical(other.integrationAdditionalData,
+                    integrationAdditionalData) ||
+                other.integrationAdditionalData == integrationAdditionalData));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, integrationEntityId);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, integrationEntityId, integrationAdditionalData);
 
   /// Create a copy of PerformerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -181,7 +209,8 @@ abstract class _PerformerModel implements PerformerModel {
   const factory _PerformerModel(
       {required final int id,
       required final String name,
-      final String? integrationEntityId}) = _$PerformerModelImpl;
+      final String? integrationEntityId,
+      final String? integrationAdditionalData}) = _$PerformerModelImpl;
 
   factory _PerformerModel.fromJson(Map<String, dynamic> json) =
       _$PerformerModelImpl.fromJson;
@@ -192,6 +221,8 @@ abstract class _PerformerModel implements PerformerModel {
   String get name;
   @override
   String? get integrationEntityId;
+  @override
+  String? get integrationAdditionalData;
 
   /// Create a copy of PerformerModel
   /// with the given fields replaced by the non-null parameter values.

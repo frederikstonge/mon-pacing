@@ -15,6 +15,7 @@ class MatchTeamModel with _$MatchTeamModel {
     required int color,
     @Default([]) List<PerformerModel> performers,
     String? integrationEntityId,
+    String? integrationAdditionalData,
   }) = _MatchTeamModel;
 
   factory MatchTeamModel.fromJson(Map<String, dynamic> json) => _$MatchTeamModelFromJson(json);

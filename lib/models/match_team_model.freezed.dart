@@ -25,6 +25,7 @@ mixin _$MatchTeamModel {
   int get color => throw _privateConstructorUsedError;
   List<PerformerModel> get performers => throw _privateConstructorUsedError;
   String? get integrationEntityId => throw _privateConstructorUsedError;
+  String? get integrationAdditionalData => throw _privateConstructorUsedError;
 
   /// Serializes this MatchTeamModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,7 +48,8 @@ abstract class $MatchTeamModelCopyWith<$Res> {
       String name,
       int color,
       List<PerformerModel> performers,
-      String? integrationEntityId});
+      String? integrationEntityId,
+      String? integrationAdditionalData});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$MatchTeamModelCopyWithImpl<$Res, $Val extends MatchTeamModel>
     Object? color = null,
     Object? performers = null,
     Object? integrationEntityId = freezed,
+    Object? integrationAdditionalData = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -92,6 +95,10 @@ class _$MatchTeamModelCopyWithImpl<$Res, $Val extends MatchTeamModel>
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationAdditionalData: freezed == integrationAdditionalData
+          ? _value.integrationAdditionalData
+          : integrationAdditionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -109,7 +116,8 @@ abstract class _$$MatchTeamModelImplCopyWith<$Res>
       String name,
       int color,
       List<PerformerModel> performers,
-      String? integrationEntityId});
+      String? integrationEntityId,
+      String? integrationAdditionalData});
 }
 
 /// @nodoc
@@ -130,6 +138,7 @@ class __$$MatchTeamModelImplCopyWithImpl<$Res>
     Object? color = null,
     Object? performers = null,
     Object? integrationEntityId = freezed,
+    Object? integrationAdditionalData = freezed,
   }) {
     return _then(_$MatchTeamModelImpl(
       id: null == id
@@ -152,6 +161,10 @@ class __$$MatchTeamModelImplCopyWithImpl<$Res>
           ? _value.integrationEntityId
           : integrationEntityId // ignore: cast_nullable_to_non_nullable
               as String?,
+      integrationAdditionalData: freezed == integrationAdditionalData
+          ? _value.integrationAdditionalData
+          : integrationAdditionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -164,7 +177,8 @@ class _$MatchTeamModelImpl implements _MatchTeamModel {
       required this.name,
       required this.color,
       final List<PerformerModel> performers = const [],
-      this.integrationEntityId})
+      this.integrationEntityId,
+      this.integrationAdditionalData})
       : _performers = performers;
 
   factory _$MatchTeamModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -187,10 +201,12 @@ class _$MatchTeamModelImpl implements _MatchTeamModel {
 
   @override
   final String? integrationEntityId;
+  @override
+  final String? integrationAdditionalData;
 
   @override
   String toString() {
-    return 'MatchTeamModel(id: $id, name: $name, color: $color, performers: $performers, integrationEntityId: $integrationEntityId)';
+    return 'MatchTeamModel(id: $id, name: $name, color: $color, performers: $performers, integrationEntityId: $integrationEntityId, integrationAdditionalData: $integrationAdditionalData)';
   }
 
   @override
@@ -204,13 +220,22 @@ class _$MatchTeamModelImpl implements _MatchTeamModel {
             const DeepCollectionEquality()
                 .equals(other._performers, _performers) &&
             (identical(other.integrationEntityId, integrationEntityId) ||
-                other.integrationEntityId == integrationEntityId));
+                other.integrationEntityId == integrationEntityId) &&
+            (identical(other.integrationAdditionalData,
+                    integrationAdditionalData) ||
+                other.integrationAdditionalData == integrationAdditionalData));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, color,
-      const DeepCollectionEquality().hash(_performers), integrationEntityId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      color,
+      const DeepCollectionEquality().hash(_performers),
+      integrationEntityId,
+      integrationAdditionalData);
 
   /// Create a copy of MatchTeamModel
   /// with the given fields replaced by the non-null parameter values.
@@ -235,7 +260,8 @@ abstract class _MatchTeamModel implements MatchTeamModel {
       required final String name,
       required final int color,
       final List<PerformerModel> performers,
-      final String? integrationEntityId}) = _$MatchTeamModelImpl;
+      final String? integrationEntityId,
+      final String? integrationAdditionalData}) = _$MatchTeamModelImpl;
 
   factory _MatchTeamModel.fromJson(Map<String, dynamic> json) =
       _$MatchTeamModelImpl.fromJson;
@@ -250,6 +276,8 @@ abstract class _MatchTeamModel implements MatchTeamModel {
   List<PerformerModel> get performers;
   @override
   String? get integrationEntityId;
+  @override
+  String? get integrationAdditionalData;
 
   /// Create a copy of MatchTeamModel
   /// with the given fields replaced by the non-null parameter values.

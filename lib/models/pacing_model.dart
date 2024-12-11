@@ -26,6 +26,7 @@ class PacingModel with _$PacingModel implements BaseModel {
     @Default([]) List<String> tags,
     String? integrationId,
     String? integrationEntityId,
+    String? integrationAdditionalData,
   }) = _PacingModel;
 
   List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();

@@ -56,6 +56,10 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
         name: 'integrationEntityId',
         type: IsarType.string,
       ),
+      IsarPropertySchema(
+        name: 'integrationAdditionalData',
+        type: IsarType.string,
+      ),
     ],
     indexes: [],
   ),
@@ -89,6 +93,14 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
       IsarCore.writeNull(writer, 10);
     } else {
       IsarCore.writeString(writer, 10, value);
+    }
+  }
+  {
+    final value = object.integrationAdditionalData;
+    if (value == null) {
+      IsarCore.writeNull(writer, 11);
+    } else {
+      IsarCore.writeString(writer, 11, value);
     }
   }
   return 0;
@@ -139,6 +151,8 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   _huddleTimerInSeconds = IsarCore.readLong(reader, 9);
   final String? _integrationEntityId;
   _integrationEntityId = IsarCore.readString(reader, 10);
+  final String? _integrationAdditionalData;
+  _integrationAdditionalData = IsarCore.readString(reader, 11);
   final object = ImprovisationModel(
     id: _id,
     type: _type,
@@ -150,6 +164,7 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
     timeBufferInSeconds: _timeBufferInSeconds,
     huddleTimerInSeconds: _huddleTimerInSeconds,
     integrationEntityId: _integrationEntityId,
+    integrationAdditionalData: _integrationAdditionalData,
   );
   return object;
 }
@@ -1518,6 +1533,202 @@ extension ImprovisationModelQueryFilter
       );
     });
   }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 11));
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataIsNotNull() {
+    return QueryBuilder.apply(not(), (query) {
+      return query.addFilterCondition(const IsNullCondition(property: 11));
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataGreaterThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataGreaterThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataLessThan(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataLessThanOrEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataBetween(
+    String? lower,
+    String? upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 11,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataContains(String value,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 11,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataMatches(String pattern,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 11,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 11,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      integrationAdditionalDataIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 11,
+          value: '',
+        ),
+      );
+    });
+  }
 }
 
 extension ImprovisationModelQueryObject
@@ -1543,6 +1754,7 @@ _$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
       huddleTimerInSeconds:
           (json['huddleTimerInSeconds'] as num?)?.toInt() ?? 30,
       integrationEntityId: json['integrationEntityId'] as String?,
+      integrationAdditionalData: json['integrationAdditionalData'] as String?,
     );
 
 Map<String, dynamic> _$$ImprovisationModelImplToJson(
@@ -1558,6 +1770,7 @@ Map<String, dynamic> _$$ImprovisationModelImplToJson(
       'timeBufferInSeconds': instance.timeBufferInSeconds,
       'huddleTimerInSeconds': instance.huddleTimerInSeconds,
       'integrationEntityId': instance.integrationEntityId,
+      'integrationAdditionalData': instance.integrationAdditionalData,
     };
 
 const _$ImprovisationTypeEnumMap = {
