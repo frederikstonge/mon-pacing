@@ -1,13 +1,16 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/pacing_model.dart';
 
-part 'pacing_detail_state.freezed.dart';
+part 'pacing_detail_state.mapper.dart';
 
-@freezed
-class PacingDetailState with _$PacingDetailState {
-  const factory PacingDetailState({
-    required bool editMode,
-    required PacingModel pacing,
-  }) = _PacingDetailState;
+@MappableClass()
+class PacingDetailState with PacingDetailStateMappable {
+  final bool editMode;
+  final PacingModel pacing;
+
+  const PacingDetailState({
+    required this.editMode,
+    required this.pacing,
+  });
 }

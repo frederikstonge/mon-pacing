@@ -1,12 +1,14 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../models/timer_model.dart';
 
-part 'timer_state.freezed.dart';
+part 'timer_state.mapper.dart';
 
-@freezed
-class TimerState with _$TimerState {
-  const factory TimerState({
-    TimerModel? timer,
-  }) = _TimerState;
+@MappableClass()
+class TimerState with TimerStateMappable {
+  final TimerModel? timer;
+
+  const TimerState({
+    this.timer,
+  });
 }

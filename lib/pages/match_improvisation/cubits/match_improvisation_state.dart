@@ -1,14 +1,18 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/improvisation_model.dart';
 
-part 'match_improvisation_state.freezed.dart';
+part 'match_improvisation_state.mapper.dart';
 
-@freezed
-class MatchImprovisationState with _$MatchImprovisationState {
-  const factory MatchImprovisationState({
-    required ImprovisationModel improvisation,
-    required bool editMode,
-    required int index,
-  }) = _MatchImprovisationState;
+@MappableClass()
+class MatchImprovisationState with MatchImprovisationStateMappable {
+  final ImprovisationModel improvisation;
+  final bool editMode;
+  final int index;
+
+  const MatchImprovisationState({
+    required this.improvisation,
+    required this.editMode,
+    required this.index,
+  });
 }

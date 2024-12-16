@@ -27,11 +27,11 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
 
   @override
   SettingsState? fromJson(Map<String, dynamic> json) {
-    return SettingsState.fromJson(json);
+    return SettingsStateMapper.fromMap(json);
   }
 
   @override
   Map<String, dynamic>? toJson(SettingsState state) {
-    return state.toJson();
+    return state.toMap();
   }
 }

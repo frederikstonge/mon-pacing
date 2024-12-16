@@ -1,16 +1,21 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/match_team_model.dart';
 import '../../../models/penalty_model.dart';
 
-part 'match_penalty_state.freezed.dart';
+part 'match_penalty_state.mapper.dart';
 
-@freezed
-class MatchPenaltyState with _$MatchPenaltyState {
-  const factory MatchPenaltyState({
-    required bool editMode,
-    required List<MatchTeamModel> teams,
-    required PenaltyModel penalty,
-    required List<String>? integrationPenaltyTypes,
-  }) = _MatchPenaltyState;
+@MappableClass()
+class MatchPenaltyState with MatchPenaltyStateMappable {
+  final bool editMode;
+  final List<MatchTeamModel> teams;
+  final PenaltyModel penalty;
+  final List<String>? integrationPenaltyTypes;
+
+  const MatchPenaltyState({
+    required this.editMode,
+    required this.teams,
+    required this.penalty,
+    required this.integrationPenaltyTypes,
+  });
 }

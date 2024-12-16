@@ -64,7 +64,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                   actions: [
                     BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
                       builder: (context, state) {
-                        if (state.enableIntegrations ?? false) {
+                        if (state.enableIntegrations) {
                           return LoadingIconButton(
                             icon: const Icon(Icons.qr_code),
                             tooltip: S.of(context).scanner,

@@ -1,30 +1,43 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';
 
-part 'settings_state.freezed.dart';
-part 'settings_state.g.dart';
+part 'settings_state.mapper.dart';
 
-@freezed
-class SettingsState with _$SettingsState {
-  const factory SettingsState({
-    required String language,
-    required ThemeType theme,
-    @Default(true) bool enableWakelock,
-    @Default(true) bool enableHapticFeedback,
-    @Default(true) bool enableTimerHapticFeedback,
-    @Default(2) int defaultNumberOfTeams,
-    @Default(150) int defaultImprovisationDurationInSeconds,
-    @Default(30) int defaultTimeBufferInSeconds,
-    @Default(30) int defaultHuddleTimerInSeconds,
-    @Default(true) bool defaultEnableStatistics,
-    @Default(true) bool enableDefaultPenaltiesImpactPoints,
-    @Default(PenaltiesImpactType.addPoints) PenaltiesImpactType defaultPenaltiesImpactType,
-    @Default(3) int defaultPenaltiesRequiredToImpactPoints,
-    @Default(true) bool enableDefaultMatchExpulsion,
-    @Default(3) int defaultPenaltiesRequiredToExpel,
-  }) = _SettingsState;
+@MappableClass()
+class SettingsState with SettingsStateMappable {
+  final String language;
+  final ThemeType theme;
+  final bool enableWakelock;
+  final bool enableHapticFeedback;
+  final bool enableTimerHapticFeedback;
+  final int defaultNumberOfTeams;
+  final int defaultImprovisationDurationInSeconds;
+  final int defaultTimeBufferInSeconds;
+  final int defaultHuddleTimerInSeconds;
+  final bool defaultEnableStatistics;
+  final bool enableDefaultPenaltiesImpactPoints;
+  final PenaltiesImpactType defaultPenaltiesImpactType;
+  final int defaultPenaltiesRequiredToImpactPoints;
+  final bool enableDefaultMatchExpulsion;
+  final int defaultPenaltiesRequiredToExpel;
 
-  factory SettingsState.fromJson(Map<String, dynamic> json) => _$SettingsStateFromJson(json);
+  const SettingsState({
+    required this.language,
+    required this.theme,
+    this.enableWakelock = true,
+    this.enableHapticFeedback = true,
+    this.enableTimerHapticFeedback = true,
+    this.defaultNumberOfTeams = 2,
+    this.defaultImprovisationDurationInSeconds = 150,
+    this.defaultTimeBufferInSeconds = 30,
+    this.defaultHuddleTimerInSeconds = 30,
+    this.defaultEnableStatistics = true,
+    this.enableDefaultPenaltiesImpactPoints = true,
+    this.defaultPenaltiesImpactType = PenaltiesImpactType.addPoints,
+    this.defaultPenaltiesRequiredToImpactPoints = 3,
+    this.enableDefaultMatchExpulsion = true,
+    this.defaultPenaltiesRequiredToExpel = 3,
+  });
 }
