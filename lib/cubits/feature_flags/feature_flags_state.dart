@@ -1,16 +1,16 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import 'feature_flags_status.dart';
 
-part 'feature_flags_state.freezed.dart';
-part 'feature_flags_state.g.dart';
+part 'feature_flags_state.mapper.dart';
 
-@freezed
-class FeatureFlagsState with _$FeatureFlagsState {
-  const factory FeatureFlagsState({
-    required FeatureFlagsStatus status,
-    @Default(false) bool? enableIntegrations,
-  }) = _FeatureFlagsState;
+@MappableClass()
+class FeatureFlagsState with FeatureFlagsStateMappable {
+  final FeatureFlagsStatus status;
+  final bool enableIntegrations;
 
-  factory FeatureFlagsState.fromJson(Map<String, dynamic> json) => _$FeatureFlagsStateFromJson(json);
+  const FeatureFlagsState({
+    required this.status,
+    this.enableIntegrations = false,
+  });
 }

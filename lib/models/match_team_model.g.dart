@@ -100,7 +100,7 @@ MatchTeamModel deserializeMatchTeamModel(IsarReader reader) {
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
-        _performers = const <PerformerModel>[];
+        _performers = const [];
       } else {
         final list = List<PerformerModel>.filled(
             length,
@@ -903,31 +903,3 @@ extension MatchTeamModelQueryFilter
 
 extension MatchTeamModelQueryObject
     on QueryBuilder<MatchTeamModel, MatchTeamModel, QFilterCondition> {}
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$MatchTeamModelImpl _$$MatchTeamModelImplFromJson(Map<String, dynamic> json) =>
-    _$MatchTeamModelImpl(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      color: (json['color'] as num).toInt(),
-      performers: (json['performers'] as List<dynamic>?)
-              ?.map((e) => PerformerModel.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      integrationEntityId: json['integrationEntityId'] as String?,
-      integrationAdditionalData: json['integrationAdditionalData'] as String?,
-    );
-
-Map<String, dynamic> _$$MatchTeamModelImplToJson(
-        _$MatchTeamModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'color': instance.color,
-      'performers': instance.performers,
-      'integrationEntityId': instance.integrationEntityId,
-      'integrationAdditionalData': instance.integrationAdditionalData,
-    };

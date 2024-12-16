@@ -87,7 +87,7 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   void onReceiveData(dynamic data) {
-    final event = TimerModel.fromJson(data);
+    final event = TimerModelMapper.fromJson(data);
     if (_timerModel == null) {
       _timerModel = event;
       _stopwatch = Stopwatch();
@@ -125,7 +125,8 @@ class TimerTaskHandler extends TaskHandler {
       return;
     }
 
-    final remainingMilliseconds = timerModel.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
+    final duration = Duration(seconds: timerModel.durationInSeconds);
+    final remainingMilliseconds = duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
     timerModel = timerModel.copyWith(remainingMilliseconds: remainingMilliseconds);
     FlutterForegroundTask.sendDataToMain(timerModel.toJson());

@@ -1,16 +1,23 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../../models/match_model.dart';
+import 'match_status.dart';
 
-part 'match_state.freezed.dart';
+part 'match_state.mapper.dart';
 
-@freezed
-class MatchState with _$MatchState {
-  const factory MatchState.initial() = MatchInitialState;
-  const factory MatchState.error(String error) = MatchErrorState;
-  const factory MatchState.success(
-    MatchModel match,
-    int selectedImprovisationIndex,
-    int selectedDurationIndex,
-  ) = MatchSuccessState;
+@MappableClass()
+class MatchState with MatchStateMappable {
+  final MatchStatus status;
+  final String? error;
+  final MatchModel? match;
+  final int selectedImprovisationIndex;
+  final int selectedDurationIndex;
+
+  const MatchState({
+    required this.status,
+    this.error,
+    this.match,
+    this.selectedImprovisationIndex = 0,
+    this.selectedDurationIndex = 0,
+  });
 }

@@ -7,19 +7,19 @@ import '../../repositories/matches_repository.dart';
 import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
 import 'matches_state.dart';
+import 'matches_status.dart';
 
 class MatchesCubit extends Cubit<MatchesState> {
   static const int _pageSize = 20;
   final MatchesRepository matchesRepository;
   final ToasterService toasterService;
   final AnalyticsService analyticsService;
-  bool _isFetching = false;
 
   MatchesCubit({
     required this.matchesRepository,
     required this.toasterService,
     required this.analyticsService,
-  }) : super(const MatchesState.initial());
+  }) : super(const MatchesState(status: MatchesStatus.initial));
 
   Future<MatchModel?> add(MatchModel model) async {
     try {
@@ -72,31 +72,23 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   Future<void> fetch() async {
-    if (_isFetching) {
+    if (state.status == MatchesStatus.loading || state.hasMore) {
       return;
     }
 
-    _isFetching = true;
+    emit(state.copyWith(status: MatchesStatus.loading));
     try {
-      await state.when(
-        initial: () async {
-          final response = await matchesRepository.getList(0, _pageSize);
-          emit(MatchesState.success(response, response.length == _pageSize));
-        },
-        error: (error) async {
-          final response = await matchesRepository.getList(0, _pageSize);
-          emit(MatchesState.success(response, response.length == _pageSize));
-        },
-        success: (matches, hasReachedMax) async {
-          final response = await matchesRepository.getList(matches.length, _pageSize);
-          emit(MatchesState.success(matches + response, response.length == _pageSize));
-        },
+      final response = await matchesRepository.getList(state.matches.length, _pageSize);
+      emit(
+        state.copyWith(
+          status: MatchesStatus.success,
+          matches: state.matches + response,
+          hasMore: response.length == _pageSize,
+        ),
       );
     } catch (exception) {
-      emit(MatchesState.error(exception.toString()));
+      emit(MatchesState(status: MatchesStatus.error, error: exception.toString()));
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
-    } finally {
-      _isFetching = false;
     }
   }
 
@@ -105,7 +97,7 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   Future<void> refresh() async {
-    emit(const MatchesState.initial());
+    emit(const MatchesState(status: MatchesStatus.initial));
     await fetch();
   }
 }

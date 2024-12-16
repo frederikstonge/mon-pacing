@@ -405,23 +405,3 @@ extension PointModelQueryFilter
 
 extension PointModelQueryObject
     on QueryBuilder<PointModel, PointModel, QFilterCondition> {}
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$PointModelImpl _$$PointModelImplFromJson(Map<String, dynamic> json) =>
-    _$PointModelImpl(
-      id: (json['id'] as num).toInt(),
-      teamId: (json['teamId'] as num).toInt(),
-      improvisationId: (json['improvisationId'] as num).toInt(),
-      value: (json['value'] as num).toInt(),
-    );
-
-Map<String, dynamic> _$$PointModelImplToJson(_$PointModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'teamId': instance.teamId,
-      'improvisationId': instance.improvisationId,
-      'value': instance.value,
-    };

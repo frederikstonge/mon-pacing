@@ -146,9 +146,23 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   final String _notes;
   _notes = IsarCore.readString(reader, 7) ?? '';
   final int _timeBufferInSeconds;
-  _timeBufferInSeconds = IsarCore.readLong(reader, 8);
+  {
+    final value = IsarCore.readLong(reader, 8);
+    if (value == -9223372036854775808) {
+      _timeBufferInSeconds = 30;
+    } else {
+      _timeBufferInSeconds = value;
+    }
+  }
   final int _huddleTimerInSeconds;
-  _huddleTimerInSeconds = IsarCore.readLong(reader, 9);
+  {
+    final value = IsarCore.readLong(reader, 9);
+    if (value == -9223372036854775808) {
+      _huddleTimerInSeconds = 30;
+    } else {
+      _huddleTimerInSeconds = value;
+    }
+  }
   final String? _integrationEntityId;
   _integrationEntityId = IsarCore.readString(reader, 10);
   final String? _integrationAdditionalData;
@@ -1733,47 +1747,3 @@ extension ImprovisationModelQueryFilter
 
 extension ImprovisationModelQueryObject
     on QueryBuilder<ImprovisationModel, ImprovisationModel, QFilterCondition> {}
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$ImprovisationModelImpl _$$ImprovisationModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ImprovisationModelImpl(
-      id: (json['id'] as num).toInt(),
-      type: $enumDecode(_$ImprovisationTypeEnumMap, json['type']),
-      category: json['category'] as String,
-      theme: json['theme'] as String,
-      durationsInSeconds: (json['durationsInSeconds'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-      performers: json['performers'] as String,
-      notes: json['notes'] as String,
-      timeBufferInSeconds: (json['timeBufferInSeconds'] as num?)?.toInt() ?? 30,
-      huddleTimerInSeconds:
-          (json['huddleTimerInSeconds'] as num?)?.toInt() ?? 30,
-      integrationEntityId: json['integrationEntityId'] as String?,
-      integrationAdditionalData: json['integrationAdditionalData'] as String?,
-    );
-
-Map<String, dynamic> _$$ImprovisationModelImplToJson(
-        _$ImprovisationModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'type': _$ImprovisationTypeEnumMap[instance.type]!,
-      'category': instance.category,
-      'theme': instance.theme,
-      'durationsInSeconds': instance.durationsInSeconds,
-      'performers': instance.performers,
-      'notes': instance.notes,
-      'timeBufferInSeconds': instance.timeBufferInSeconds,
-      'huddleTimerInSeconds': instance.huddleTimerInSeconds,
-      'integrationEntityId': instance.integrationEntityId,
-      'integrationAdditionalData': instance.integrationAdditionalData,
-    };
-
-const _$ImprovisationTypeEnumMap = {
-  ImprovisationType.mixed: 'mixed',
-  ImprovisationType.compared: 'compared',
-};

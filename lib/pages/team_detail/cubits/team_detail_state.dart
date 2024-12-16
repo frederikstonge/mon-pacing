@@ -1,17 +1,18 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/team_model.dart';
 
-part 'team_detail_state.freezed.dart';
-part 'team_detail_state.g.dart';
+part 'team_detail_state.mapper.dart';
 
-@freezed
-class TeamDetailState with _$TeamDetailState {
-  const factory TeamDetailState({
-    required bool editMode,
-    required TeamModel team,
-    @Default(0) int selectedTeamIndex,
-  }) = _TeamDetailState;
+@MappableClass()
+class TeamDetailState with TeamDetailStateMappable {
+  final bool editMode;
+  final TeamModel team;
+  final int selectedTeamIndex;
 
-  factory TeamDetailState.fromJson(Map<String, dynamic> json) => _$TeamDetailStateFromJson(json);
+  const TeamDetailState({
+    required this.editMode,
+    required this.team,
+    this.selectedTeamIndex = 0,
+  });
 }

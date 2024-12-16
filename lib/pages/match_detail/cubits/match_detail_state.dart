@@ -1,16 +1,16 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/match_model.dart';
 
-part 'match_detail_state.freezed.dart';
-part 'match_detail_state.g.dart';
+part 'match_detail_state.mapper.dart';
 
-@freezed
-class MatchDetailState with _$MatchDetailState {
-  const factory MatchDetailState({
-    required bool editMode,
-    required MatchModel match,
-  }) = _MatchDetailState;
+@MappableClass()
+class MatchDetailState with MatchDetailStateMappable {
+  final bool editMode;
+  final MatchModel match;
 
-  factory MatchDetailState.fromJson(Map<String, dynamic> json) => _$MatchDetailStateFromJson(json);
+  const MatchDetailState({
+    required this.editMode,
+    required this.match,
+  });
 }

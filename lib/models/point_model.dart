@@ -1,18 +1,21 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-part 'point_model.freezed.dart';
+part 'point_model.mapper.dart';
 part 'point_model.g.dart';
 
-@freezed
+@MappableClass()
 @Embedded(ignore: {'copyWith'})
-class PointModel with _$PointModel {
-  const factory PointModel({
-    required int id,
-    required int teamId,
-    required int improvisationId,
-    required int value,
-  }) = _PointModel;
+class PointModel with PointModelMappable {
+  final int id;
+  final int teamId;
+  final int improvisationId;
+  final int value;
 
-  factory PointModel.fromJson(Map<String, dynamic> json) => _$PointModelFromJson(json);
+  const PointModel({
+    required this.id,
+    required this.teamId,
+    required this.improvisationId,
+    required this.value,
+  });
 }

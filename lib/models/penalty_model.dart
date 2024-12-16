@@ -1,20 +1,25 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-part 'penalty_model.freezed.dart';
+part 'penalty_model.mapper.dart';
 part 'penalty_model.g.dart';
 
-@freezed
+@MappableClass()
 @Embedded(ignore: {'copyWith'})
-class PenaltyModel with _$PenaltyModel {
-  const factory PenaltyModel({
-    required int id,
-    required bool major,
-    required String type,
-    required int? performerId,
-    required int teamId,
-    required int improvisationId,
-  }) = _PenaltyModel;
+class PenaltyModel with PenaltyModelMappable {
+  final int id;
+  final bool major;
+  final String type;
+  final int? performerId;
+  final int teamId;
+  final int improvisationId;
 
-  factory PenaltyModel.fromJson(Map<String, dynamic> json) => _$PenaltyModelFromJson(json);
+  const PenaltyModel({
+    required this.id,
+    required this.major,
+    required this.type,
+    required this.performerId,
+    required this.teamId,
+    required this.improvisationId,
+  });
 }

@@ -1,12 +1,21 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../models/team_model.dart';
+import 'teams_status.dart';
 
-part 'teams_state.freezed.dart';
+part 'teams_state.mapper.dart';
 
-@freezed
-class TeamsState with _$TeamsState {
-  const factory TeamsState.initial() = TeamsInitialState;
-  const factory TeamsState.error(String error) = TeamsErrorState;
-  const factory TeamsState.success(List<TeamModel> teams, bool hasMore) = TeamsSuccessState;
+@MappableClass()
+class TeamsState with TeamsStateMappable {
+  final TeamsStatus status;
+  final String? error;
+  final List<TeamModel> teams;
+  final bool hasMore;
+
+  const TeamsState({
+    required this.status,
+    this.error,
+    this.teams = const [],
+    this.hasMore = false,
+  });
 }

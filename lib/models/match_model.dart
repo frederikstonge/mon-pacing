@@ -1,9 +1,8 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-import 'base_model.dart';
 import 'improvisation_model.dart';
 import 'improvisation_type.dart';
 import 'match_team_model.dart';
@@ -13,42 +12,64 @@ import 'performer_model.dart';
 import 'point_model.dart';
 import 'star_model.dart';
 
-part 'match_model.freezed.dart';
+part 'match_model.mapper.dart';
 part 'match_model.g.dart';
 
-@freezed
+@MappableClass()
 @collection
-class MatchModel with _$MatchModel implements BaseModel {
-  const MatchModel._();
+class MatchModel with MatchModelMappable {
+  final int id;
+  @index
+  final String name;
+  @index
+  final DateTime? createdDate;
+  @index
+  final DateTime? modifiedDate;
+  final List<MatchTeamModel> teams;
+  final List<ImprovisationModel> improvisations;
+  final List<PenaltyModel> penalties;
+  final List<PointModel> points;
+  final List<String> tags;
+  final List<StarModel> stars;
+  final bool enableStatistics;
+  final bool enablePenaltiesImpactPoints;
+  final PenaltiesImpactType penaltiesImpactType;
+  final int penaltiesRequiredToImpactPoints;
+  final bool enableMatchExpulsion;
+  final int penaltiesRequiredToExpel;
+  final String? integrationId;
+  final String? integrationEntityId;
+  final String? integrationAdditionalData;
+  final int? integrationRestrictMaximumPointPerImprovisation;
+  final int? integrationMinNumberOfImprovisations;
+  final int? integrationMaxNumberOfImprovisations;
+  final List<String>? integrationPenaltyTypes;
 
-  @Implements<BaseModel>()
-  const factory MatchModel({
-    required int id,
-    @index required String name,
-    @index required DateTime? createdDate,
-    required DateTime? modifiedDate,
-    required List<MatchTeamModel> teams,
-    required List<ImprovisationModel> improvisations,
-    required List<PenaltyModel> penalties,
-    required List<PointModel> points,
-    @Default([]) List<String> tags,
-    @Default([]) List<StarModel> stars,
-    @Default(true) bool enableStatistics,
-    @Default(true) bool enablePenaltiesImpactPoints,
-    @Default(PenaltiesImpactType.addPoints) PenaltiesImpactType penaltiesImpactType,
-    @Default(3) int penaltiesRequiredToImpactPoints,
-    @Default(true) bool enableMatchExpulsion,
-    @Default(3) int penaltiesRequiredToExpel,
-    String? integrationId,
-    String? integrationEntityId,
-    String? integrationAdditionalData,
-    int? integrationRestrictMaximumPointPerImprovisation,
-    int? integrationMinNumberOfImprovisations,
-    int? integrationMaxNumberOfImprovisations,
-    List<String>? integrationPenaltyTypes,
-  }) = _MatchModel;
+  const MatchModel({
+    required this.id,
+    required this.name,
+    required this.createdDate,
+    required this.modifiedDate,
+    required this.teams,
+    required this.improvisations,
+    required this.penalties,
+    required this.points,
+    this.tags = const [],
+    this.stars = const [],
+    this.enableStatistics = true,
+    this.enablePenaltiesImpactPoints = true,
+    this.penaltiesImpactType = PenaltiesImpactType.addPoints,
+    this.penaltiesRequiredToImpactPoints = 3,
+    this.enableMatchExpulsion = true,
+    this.penaltiesRequiredToExpel = 3,
+    this.integrationId,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
+    this.integrationRestrictMaximumPointPerImprovisation,
+    this.integrationMinNumberOfImprovisations,
+    this.integrationMaxNumberOfImprovisations,
+    this.integrationPenaltyTypes,
+  });
 
   List<String> get teamNames => teams.map((e) => e.name).toList();
-
-  factory MatchModel.fromJson(Map<String, Object?> json) => _$MatchModelFromJson(json);
 }

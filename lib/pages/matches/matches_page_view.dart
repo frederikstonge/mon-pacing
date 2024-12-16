@@ -13,6 +13,7 @@ import '../../cubits/feature_flags/feature_flags_cubit.dart';
 import '../../cubits/feature_flags/feature_flags_state.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/matches/matches_state.dart';
+import '../../cubits/matches/matches_status.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -63,8 +64,8 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                   theme: state.theme,
                   actions: [
                     BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
-                      builder: (context, state) {
-                        if (state.enableIntegrations ?? false) {
+                      builder: (context, featureFlagState) {
+                        if (featureFlagState.enableIntegrations) {
                           return LoadingIconButton(
                             icon: const Icon(Icons.qr_code),
                             tooltip: S.of(context).scanner,
@@ -95,41 +96,41 @@ class _MatchesPageViewState extends State<MatchesPageView> {
             ),
             slivers: [
               const TimerBanner(),
-              state.when(
-                initial: () => const SliverFillRemaining(
-                  child: Center(
-                    child: CircularProgressIndicator(),
+              switch (state.status) {
+                MatchesStatus.initial => const SliverFillRemaining(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
-                ),
-                error: (error) => SliverFillRemaining(
-                  child: Center(
-                    child: Text(error),
+                MatchesStatus.error => SliverFillRemaining(
+                    child: Center(
+                      child: Text(state.error ?? ''),
+                    ),
                   ),
-                ),
-                success: (matches, hasMore) => SliverList.builder(
-                  itemCount: hasMore ? matches.length + 1 : matches.length,
-                  itemBuilder: (context, index) {
-                    if (hasMore && index != 0 && index == matches.length) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                _ => SliverList.builder(
+                    itemCount: state.hasMore ? state.matches.length + 1 : state.matches.length,
+                    itemBuilder: (context, index) {
+                      if (state.hasMore && index == state.matches.length) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      final match = state.matches.elementAt(index);
+                      return MatchCard(
+                        match: match,
+                        onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                        edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
+                        shouldDelete: () => MessageBoxDialog.questionShow(
+                          context,
+                          S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
+                          S.of(context).delete,
+                          S.of(context).cancel,
+                        ),
+                        delete: () => context.read<MatchesCubit>().delete(match),
                       );
-                    }
-                    final match = matches.elementAt(index);
-                    return MatchCard(
-                      match: match,
-                      onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                      edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
-                      shouldDelete: () => MessageBoxDialog.questionShow(
-                        context,
-                        S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
-                        S.of(context).delete,
-                        S.of(context).cancel,
-                      ),
-                      delete: () => context.read<MatchesCubit>().delete(match),
-                    );
-                  },
-                ),
-              ),
+                    },
+                  ),
+              },
             ],
           ),
         );

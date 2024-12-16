@@ -1,12 +1,21 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/pacing_model.dart';
+import 'pacings_status.dart';
 
-part 'pacings_state.freezed.dart';
+part 'pacings_state.mapper.dart';
 
-@freezed
-class PacingsState with _$PacingsState {
-  const factory PacingsState.initial() = PacingsInitialState;
-  const factory PacingsState.error(String error) = PacingsErrorState;
-  const factory PacingsState.success(List<PacingModel> pacings, bool hasMore) = PacingsSuccessState;
+@MappableClass()
+class PacingsState with PacingsStateMappable {
+  final PacingsStatus status;
+  final String? error;
+  final List<PacingModel> pacings;
+  final bool hasMore;
+
+  const PacingsState({
+    required this.status,
+    this.error,
+    this.pacings = const [],
+    this.hasMore = false,
+  });
 }

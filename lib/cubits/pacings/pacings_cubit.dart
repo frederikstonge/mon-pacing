@@ -12,17 +12,17 @@ import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../services/toaster_service.dart';
 import 'pacings_state.dart';
+import 'pacings_status.dart';
 
 class PacingsCubit extends Cubit<PacingsState> {
   static const int _pageSize = 20;
   final PacingsRepository pacingsRepository;
   final ToasterService toasterService;
-  bool _isFetching = false;
 
   PacingsCubit({
     required this.pacingsRepository,
     required this.toasterService,
-  }) : super(const PacingsState.initial());
+  }) : super(const PacingsState(status: PacingsStatus.initial));
 
   Future<PacingModel?> add(PacingModel model) async {
     try {
@@ -59,31 +59,23 @@ class PacingsCubit extends Cubit<PacingsState> {
   }
 
   Future<void> fetch() async {
-    if (_isFetching) {
+    if (state.status == PacingsStatus.loading || state.hasMore) {
       return;
     }
 
-    _isFetching = true;
+    emit(state.copyWith(status: PacingsStatus.loading));
     try {
-      await state.when(
-        initial: () async {
-          final response = await pacingsRepository.getList(0, _pageSize);
-          emit(PacingsState.success(response, response.length == _pageSize));
-        },
-        error: (error) async {
-          final response = await pacingsRepository.getList(0, _pageSize);
-          emit(PacingsState.success(response, response.length == _pageSize));
-        },
-        success: (pacings, hasReachedMax) async {
-          final response = await pacingsRepository.getList(pacings.length, _pageSize);
-          emit(PacingsState.success(pacings + response, response.length == _pageSize));
-        },
+      final response = await pacingsRepository.getList(state.pacings.length, _pageSize);
+      emit(
+        state.copyWith(
+          status: PacingsStatus.success,
+          pacings: state.pacings + response,
+          hasMore: response.length == _pageSize,
+        ),
       );
     } catch (exception) {
-      emit(PacingsState.error(exception.toString()));
+      emit(PacingsState(status: PacingsStatus.error, error: exception.toString()));
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
-    } finally {
-      _isFetching = false;
     }
   }
 
@@ -96,7 +88,7 @@ class PacingsCubit extends Cubit<PacingsState> {
   }
 
   Future<void> refresh() async {
-    emit(const PacingsState.initial());
+    emit(const PacingsState(status: PacingsStatus.initial));
     await fetch();
   }
 
@@ -111,7 +103,7 @@ class PacingsCubit extends Cubit<PacingsState> {
       final filePath = await FlutterFileDialog.pickFile(params: params);
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
-        final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
+        final pacing = PacingModelMapper.fromJson(pacingValue);
         final newPacing = await pacingsRepository.add(pacing.copyWith(id: 0));
         toasterService.show(title: Localizer.current.toasterPacingImported);
 

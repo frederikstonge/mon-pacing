@@ -21,10 +21,6 @@ const TeamModelSchema = IsarGeneratedSchema(
     embedded: false,
     properties: [
       IsarPropertySchema(
-        name: 'performerNames',
-        type: IsarType.stringList,
-      ),
-      IsarPropertySchema(
         name: 'createdDate',
         type: IsarType.dateTime,
       ),
@@ -49,12 +45,32 @@ const TeamModelSchema = IsarGeneratedSchema(
         name: 'tags',
         type: IsarType.stringList,
       ),
+      IsarPropertySchema(
+        name: 'performerNames',
+        type: IsarType.stringList,
+      ),
     ],
     indexes: [
       IsarIndexSchema(
         name: 'createdDate',
         properties: [
           "createdDate",
+        ],
+        unique: false,
+        hash: false,
+      ),
+      IsarIndexSchema(
+        name: 'modifiedDate',
+        properties: [
+          "modifiedDate",
+        ],
+        unique: false,
+        hash: false,
+      ),
+      IsarIndexSchema(
+        name: 'name',
+        properties: [
+          "name",
         ],
         unique: false,
         hash: false,
@@ -71,29 +87,21 @@ const TeamModelSchema = IsarGeneratedSchema(
 
 @isarProtected
 int serializeTeamModel(IsarWriter writer, TeamModel object) {
-  {
-    final list = object.performerNames;
-    final listWriter = IsarCore.beginList(writer, 1, list.length);
-    for (var i = 0; i < list.length; i++) {
-      IsarCore.writeString(listWriter, i, list[i]);
-    }
-    IsarCore.endList(writer, listWriter);
-  }
   IsarCore.writeLong(
       writer,
-      2,
+      1,
       object.createdDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
   IsarCore.writeLong(
       writer,
-      3,
+      2,
       object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
-  IsarCore.writeString(writer, 4, object.name);
-  IsarCore.writeLong(writer, 5, object.color);
+  IsarCore.writeString(writer, 3, object.name);
+  IsarCore.writeLong(writer, 4, object.color);
   {
     final list = object.performers;
-    final listWriter = IsarCore.beginList(writer, 6, list.length);
+    final listWriter = IsarCore.beginList(writer, 5, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -106,6 +114,14 @@ int serializeTeamModel(IsarWriter writer, TeamModel object) {
   }
   {
     final list = object.tags;
+    final listWriter = IsarCore.beginList(writer, 6, list.length);
+    for (var i = 0; i < list.length; i++) {
+      IsarCore.writeString(listWriter, i, list[i]);
+    }
+    IsarCore.endList(writer, listWriter);
+  }
+  {
+    final list = object.performerNames;
     final listWriter = IsarCore.beginList(writer, 7, list.length);
     for (var i = 0; i < list.length; i++) {
       IsarCore.writeString(listWriter, i, list[i]);
@@ -121,7 +137,7 @@ TeamModel deserializeTeamModel(IsarReader reader) {
   _id = IsarCore.readId(reader);
   final DateTime? _createdDate;
   {
-    final value = IsarCore.readLong(reader, 2);
+    final value = IsarCore.readLong(reader, 1);
     if (value == -9223372036854775808) {
       _createdDate = null;
     } else {
@@ -131,7 +147,7 @@ TeamModel deserializeTeamModel(IsarReader reader) {
   }
   final DateTime? _modifiedDate;
   {
-    final value = IsarCore.readLong(reader, 3);
+    final value = IsarCore.readLong(reader, 2);
     if (value == -9223372036854775808) {
       _modifiedDate = null;
     } else {
@@ -140,16 +156,16 @@ TeamModel deserializeTeamModel(IsarReader reader) {
     }
   }
   final String _name;
-  _name = IsarCore.readString(reader, 4) ?? '';
+  _name = IsarCore.readString(reader, 3) ?? '';
   final int _color;
-  _color = IsarCore.readLong(reader, 5);
+  _color = IsarCore.readLong(reader, 4);
   final List<PerformerModel> _performers;
   {
-    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
-        _performers = const <PerformerModel>[];
+        _performers = const [];
       } else {
         final list = List<PerformerModel>.filled(
             length,
@@ -180,11 +196,11 @@ TeamModel deserializeTeamModel(IsarReader reader) {
   }
   final List<String> _tags;
   {
-    final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
-        _tags = const <String>[];
+        _tags = const [];
       } else {
         final list = List<String>.filled(length, '', growable: true);
         for (var i = 0; i < length; i++) {
@@ -210,25 +226,18 @@ TeamModel deserializeTeamModel(IsarReader reader) {
 @isarProtected
 dynamic deserializeTeamModelProp(IsarReader reader, int property) {
   switch (property) {
-    case 1:
-      {
-        final length = IsarCore.readList(reader, 1, IsarCore.readerPtrPtr);
-        {
-          final reader = IsarCore.readerPtr;
-          if (reader.isNull) {
-            return const <String>[];
-          } else {
-            final list = List<String>.filled(length, '', growable: true);
-            for (var i = 0; i < length; i++) {
-              list[i] = IsarCore.readString(reader, i) ?? '';
-            }
-            IsarCore.freeReader(reader);
-            return list;
-          }
-        }
-      }
     case 0:
       return IsarCore.readId(reader);
+    case 1:
+      {
+        final value = IsarCore.readLong(reader, 1);
+        if (value == -9223372036854775808) {
+          return null;
+        } else {
+          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
+              .toLocal();
+        }
+      }
     case 2:
       {
         final value = IsarCore.readLong(reader, 2);
@@ -240,26 +249,16 @@ dynamic deserializeTeamModelProp(IsarReader reader, int property) {
         }
       }
     case 3:
-      {
-        final value = IsarCore.readLong(reader, 3);
-        if (value == -9223372036854775808) {
-          return null;
-        } else {
-          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
-              .toLocal();
-        }
-      }
+      return IsarCore.readString(reader, 3) ?? '';
     case 4:
-      return IsarCore.readString(reader, 4) ?? '';
+      return IsarCore.readLong(reader, 4);
     case 5:
-      return IsarCore.readLong(reader, 5);
-    case 6:
       {
-        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
-            return const <PerformerModel>[];
+            return const [];
           } else {
             final list = List<PerformerModel>.filled(
                 length,
@@ -282,6 +281,23 @@ dynamic deserializeTeamModelProp(IsarReader reader, int property) {
                   list[i] = embedded;
                 }
               }
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
+        }
+      }
+    case 6:
+      {
+        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
+            return const [];
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
             }
             IsarCore.freeReader(reader);
             return list;
@@ -336,10 +352,10 @@ class _TeamModelUpdateImpl implements _TeamModelUpdate {
     return collection.updateProperties([
           id
         ], {
-          if (createdDate != ignore) 2: createdDate as DateTime?,
-          if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-          if (name != ignore) 4: name as String?,
-          if (color != ignore) 5: color as int?,
+          if (createdDate != ignore) 1: createdDate as DateTime?,
+          if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+          if (name != ignore) 3: name as String?,
+          if (color != ignore) 4: color as int?,
         }) >
         0;
   }
@@ -369,10 +385,10 @@ class _TeamModelUpdateAllImpl implements _TeamModelUpdateAll {
     Object? color = ignore,
   }) {
     return collection.updateProperties(id, {
-      if (createdDate != ignore) 2: createdDate as DateTime?,
-      if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-      if (name != ignore) 4: name as String?,
-      if (color != ignore) 5: color as int?,
+      if (createdDate != ignore) 1: createdDate as DateTime?,
+      if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+      if (name != ignore) 3: name as String?,
+      if (color != ignore) 4: color as int?,
     });
   }
 }
@@ -406,10 +422,10 @@ class _TeamModelQueryUpdateImpl implements _TeamModelQueryUpdate {
     Object? color = ignore,
   }) {
     return query.updateProperties(limit: limit, {
-      if (createdDate != ignore) 2: createdDate as DateTime?,
-      if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-      if (name != ignore) 4: name as String?,
-      if (color != ignore) 5: color as int?,
+      if (createdDate != ignore) 1: createdDate as DateTime?,
+      if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+      if (name != ignore) 3: name as String?,
+      if (color != ignore) 4: color as int?,
     });
   }
 }
@@ -437,10 +453,10 @@ class _TeamModelQueryBuilderUpdateImpl implements _TeamModelQueryUpdate {
     final q = query.build();
     try {
       return q.updateProperties(limit: limit, {
-        if (createdDate != ignore) 2: createdDate as DateTime?,
-        if (modifiedDate != ignore) 3: modifiedDate as DateTime?,
-        if (name != ignore) 4: name as String?,
-        if (color != ignore) 5: color as int?,
+        if (createdDate != ignore) 1: createdDate as DateTime?,
+        if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+        if (name != ignore) 3: name as String?,
+        if (color != ignore) 4: color as int?,
       });
     } finally {
       q.close();
@@ -458,201 +474,6 @@ extension TeamModelQueryBuilderUpdate
 
 extension TeamModelQueryFilter
     on QueryBuilder<TeamModel, TeamModel, QFilterCondition> {
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementGreaterThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementLessThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementLessThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 1,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementMatches(String pattern,
-          {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 1,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesIsEmpty() {
-    return not().performerNamesIsNotEmpty();
-  }
-
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      performerNamesIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 1, value: null),
-      );
-    });
-  }
-
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> idEqualTo(
     int value,
   ) {
@@ -737,14 +558,14 @@ extension TeamModelQueryFilter
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
       createdDateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
+      return query.addFilterCondition(const IsNullCondition(property: 1));
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
       createdDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
+      return query.addFilterCondition(const IsNullCondition(property: 1));
     });
   }
 
@@ -754,7 +575,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -768,7 +589,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -782,7 +603,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -795,7 +616,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -809,7 +630,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
         ),
       );
@@ -823,7 +644,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 2,
+          property: 1,
           lower: lower,
           upper: upper,
         ),
@@ -834,14 +655,14 @@ extension TeamModelQueryFilter
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
       modifiedDateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
+      return query.addFilterCondition(const IsNullCondition(property: 2));
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
       modifiedDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
+      return query.addFilterCondition(const IsNullCondition(property: 2));
     });
   }
 
@@ -851,7 +672,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -865,7 +686,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -879,7 +700,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -893,7 +714,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -907,7 +728,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 3,
+          property: 2,
           value: value,
         ),
       );
@@ -921,7 +742,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 3,
+          property: 2,
           lower: lower,
           upper: upper,
         ),
@@ -936,7 +757,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -951,7 +772,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -967,7 +788,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -982,7 +803,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -998,7 +819,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1014,7 +835,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 4,
+          property: 3,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1030,7 +851,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1045,7 +866,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1059,7 +880,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 4,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1073,7 +894,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 4,
+          property: 3,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1085,7 +906,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 4,
+          property: 3,
           value: '',
         ),
       );
@@ -1096,7 +917,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 4,
+          property: 3,
           value: '',
         ),
       );
@@ -1109,7 +930,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 5,
+          property: 4,
           value: value,
         ),
       );
@@ -1122,7 +943,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 5,
+          property: 4,
           value: value,
         ),
       );
@@ -1136,7 +957,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 5,
+          property: 4,
           value: value,
         ),
       );
@@ -1149,7 +970,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 5,
+          property: 4,
           value: value,
         ),
       );
@@ -1163,7 +984,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 5,
+          property: 4,
           value: value,
         ),
       );
@@ -1177,7 +998,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 5,
+          property: 4,
           lower: lower,
           upper: upper,
         ),
@@ -1194,7 +1015,7 @@ extension TeamModelQueryFilter
       performersIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 6, value: null),
+        const GreaterOrEqualCondition(property: 5, value: null),
       );
     });
   }
@@ -1206,7 +1027,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1222,7 +1043,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1238,7 +1059,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1253,7 +1074,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1269,7 +1090,7 @@ extension TeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 7,
+          property: 6,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1278,6 +1099,199 @@ extension TeamModelQueryFilter
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsElementBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 6,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      tagsElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsElementContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsElementMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 6,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      tagsElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 6,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      tagsElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 6,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsIsEmpty() {
+    return not().tagsIsNotEmpty();
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 6, value: null),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -1295,7 +1309,7 @@ extension TeamModelQueryFilter
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      tagsElementStartsWith(
+      performerNamesElementStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1310,7 +1324,8 @@ extension TeamModelQueryFilter
     });
   }
 
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsElementEndsWith(
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1325,9 +1340,8 @@ extension TeamModelQueryFilter
     });
   }
 
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsElementContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -1339,9 +1353,9 @@ extension TeamModelQueryFilter
     });
   }
 
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsElementMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesElementMatches(String pattern,
+          {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
@@ -1354,7 +1368,7 @@ extension TeamModelQueryFilter
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      tagsElementIsEmpty() {
+      performerNamesElementIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -1366,7 +1380,7 @@ extension TeamModelQueryFilter
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
-      tagsElementIsNotEmpty() {
+      performerNamesElementIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -1377,11 +1391,13 @@ extension TeamModelQueryFilter
     });
   }
 
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsIsEmpty() {
-    return not().tagsIsNotEmpty();
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesIsEmpty() {
+    return not().performerNamesIsNotEmpty();
   }
 
-  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition> tagsIsNotEmpty() {
+  QueryBuilder<TeamModel, TeamModel, QAfterFilterCondition>
+      performerNamesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterOrEqualCondition(property: 7, value: null),
@@ -1408,25 +1424,25 @@ extension TeamModelQuerySortBy on QueryBuilder<TeamModel, TeamModel, QSortBy> {
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> sortByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
+      return query.addSortBy(1);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> sortByCreatedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
+      return query.addSortBy(1, sort: Sort.desc);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> sortByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3);
+      return query.addSortBy(2);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> sortByModifiedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc);
+      return query.addSortBy(2, sort: Sort.desc);
     });
   }
 
@@ -1434,7 +1450,7 @@ extension TeamModelQuerySortBy on QueryBuilder<TeamModel, TeamModel, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        4,
+        3,
         caseSensitive: caseSensitive,
       );
     });
@@ -1444,7 +1460,7 @@ extension TeamModelQuerySortBy on QueryBuilder<TeamModel, TeamModel, QSortBy> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
-        4,
+        3,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -1453,13 +1469,13 @@ extension TeamModelQuerySortBy on QueryBuilder<TeamModel, TeamModel, QSortBy> {
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> sortByColor() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5);
+      return query.addSortBy(4);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> sortByColorDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5, sort: Sort.desc);
+      return query.addSortBy(4, sort: Sort.desc);
     });
   }
 }
@@ -1480,90 +1496,90 @@ extension TeamModelQuerySortThenBy
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
+      return query.addSortBy(1);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByCreatedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
+      return query.addSortBy(1, sort: Sort.desc);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3);
+      return query.addSortBy(2);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByModifiedDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc);
+      return query.addSortBy(2, sort: Sort.desc);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4, caseSensitive: caseSensitive);
+      return query.addSortBy(3, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(3, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByColor() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5);
+      return query.addSortBy(4);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterSortBy> thenByColorDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5, sort: Sort.desc);
+      return query.addSortBy(4, sort: Sort.desc);
     });
   }
 }
 
 extension TeamModelQueryWhereDistinct
     on QueryBuilder<TeamModel, TeamModel, QDistinct> {
-  QueryBuilder<TeamModel, TeamModel, QAfterDistinct>
-      distinctByPerformerNames() {
+  QueryBuilder<TeamModel, TeamModel, QAfterDistinct> distinctByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(1);
     });
   }
 
-  QueryBuilder<TeamModel, TeamModel, QAfterDistinct> distinctByCreatedDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(2);
-    });
-  }
-
   QueryBuilder<TeamModel, TeamModel, QAfterDistinct> distinctByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(3);
+      return query.addDistinctBy(2);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(4, caseSensitive: caseSensitive);
+      return query.addDistinctBy(3, caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterDistinct> distinctByColor() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(5);
+      return query.addDistinctBy(4);
     });
   }
 
   QueryBuilder<TeamModel, TeamModel, QAfterDistinct> distinctByTags() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(6);
+    });
+  }
+
+  QueryBuilder<TeamModel, TeamModel, QAfterDistinct>
+      distinctByPerformerNames() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(7);
     });
@@ -1572,13 +1588,6 @@ extension TeamModelQueryWhereDistinct
 
 extension TeamModelQueryProperty1
     on QueryBuilder<TeamModel, TeamModel, QProperty> {
-  QueryBuilder<TeamModel, List<String>, QAfterProperty>
-      performerNamesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
   QueryBuilder<TeamModel, int, QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1587,36 +1596,43 @@ extension TeamModelQueryProperty1
 
   QueryBuilder<TeamModel, DateTime?, QAfterProperty> createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(1);
     });
   }
 
   QueryBuilder<TeamModel, DateTime?, QAfterProperty> modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(2);
     });
   }
 
   QueryBuilder<TeamModel, String, QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<TeamModel, int, QAfterProperty> colorProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<TeamModel, List<PerformerModel>, QAfterProperty>
       performersProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<TeamModel, List<String>, QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(6);
+    });
+  }
+
+  QueryBuilder<TeamModel, List<String>, QAfterProperty>
+      performerNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
@@ -1625,13 +1641,6 @@ extension TeamModelQueryProperty1
 
 extension TeamModelQueryProperty2<R>
     on QueryBuilder<TeamModel, R, QAfterProperty> {
-  QueryBuilder<TeamModel, (R, List<String>), QAfterProperty>
-      performerNamesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
   QueryBuilder<TeamModel, (R, int), QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1641,37 +1650,44 @@ extension TeamModelQueryProperty2<R>
   QueryBuilder<TeamModel, (R, DateTime?), QAfterProperty>
       createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(1);
     });
   }
 
   QueryBuilder<TeamModel, (R, DateTime?), QAfterProperty>
       modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(2);
     });
   }
 
   QueryBuilder<TeamModel, (R, String), QAfterProperty> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<TeamModel, (R, int), QAfterProperty> colorProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<TeamModel, (R, List<PerformerModel>), QAfterProperty>
       performersProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<TeamModel, (R, List<String>), QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(6);
+    });
+  }
+
+  QueryBuilder<TeamModel, (R, List<String>), QAfterProperty>
+      performerNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
@@ -1680,13 +1696,6 @@ extension TeamModelQueryProperty2<R>
 
 extension TeamModelQueryProperty3<R1, R2>
     on QueryBuilder<TeamModel, (R1, R2), QAfterProperty> {
-  QueryBuilder<TeamModel, (R1, R2, List<String>), QOperations>
-      performerNamesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
   QueryBuilder<TeamModel, (R1, R2, int), QOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1696,74 +1705,46 @@ extension TeamModelQueryProperty3<R1, R2>
   QueryBuilder<TeamModel, (R1, R2, DateTime?), QOperations>
       createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addProperty(1);
     });
   }
 
   QueryBuilder<TeamModel, (R1, R2, DateTime?), QOperations>
       modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addProperty(2);
     });
   }
 
   QueryBuilder<TeamModel, (R1, R2, String), QOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(3);
     });
   }
 
   QueryBuilder<TeamModel, (R1, R2, int), QOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(4);
     });
   }
 
   QueryBuilder<TeamModel, (R1, R2, List<PerformerModel>), QOperations>
       performersProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<TeamModel, (R1, R2, List<String>), QOperations> tagsProperty() {
     return QueryBuilder.apply(this, (query) {
+      return query.addProperty(6);
+    });
+  }
+
+  QueryBuilder<TeamModel, (R1, R2, List<String>), QOperations>
+      performerNamesProperty() {
+    return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
   }
 }
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$TeamModelImpl _$$TeamModelImplFromJson(Map<String, dynamic> json) =>
-    _$TeamModelImpl(
-      id: (json['id'] as num).toInt(),
-      createdDate: json['createdDate'] == null
-          ? null
-          : DateTime.parse(json['createdDate'] as String),
-      modifiedDate: json['modifiedDate'] == null
-          ? null
-          : DateTime.parse(json['modifiedDate'] as String),
-      name: json['name'] as String,
-      color: (json['color'] as num).toInt(),
-      performers: (json['performers'] as List<dynamic>?)
-              ?.map((e) => PerformerModel.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      tags:
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const [],
-    );
-
-Map<String, dynamic> _$$TeamModelImplToJson(_$TeamModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'createdDate': instance.createdDate?.toIso8601String(),
-      'modifiedDate': instance.modifiedDate?.toIso8601String(),
-      'name': instance.name,
-      'color': instance.color,
-      'performers': instance.performers,
-      'tags': instance.tags,
-    };

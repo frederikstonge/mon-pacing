@@ -15,7 +15,7 @@ Use Visual Studio Code, and install recommended extensions.
 
 
 ### Models
-- freezed (models)
+- dart_mappable (models)
 ```bash
 dart pub run build_runner build --delete-conflicting-outputs
 ```

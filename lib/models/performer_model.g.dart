@@ -741,24 +741,3 @@ extension PerformerModelQueryFilter
 
 extension PerformerModelQueryObject
     on QueryBuilder<PerformerModel, PerformerModel, QFilterCondition> {}
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$PerformerModelImpl _$$PerformerModelImplFromJson(Map<String, dynamic> json) =>
-    _$PerformerModelImpl(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      integrationEntityId: json['integrationEntityId'] as String?,
-      integrationAdditionalData: json['integrationAdditionalData'] as String?,
-    );
-
-Map<String, dynamic> _$$PerformerModelImplToJson(
-        _$PerformerModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'integrationEntityId': instance.integrationEntityId,
-      'integrationAdditionalData': instance.integrationAdditionalData,
-    };

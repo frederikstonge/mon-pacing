@@ -311,21 +311,3 @@ extension StarModelQueryFilter
 
 extension StarModelQueryObject
     on QueryBuilder<StarModel, StarModel, QFilterCondition> {}
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$StarModelImpl _$$StarModelImplFromJson(Map<String, dynamic> json) =>
-    _$StarModelImpl(
-      id: (json['id'] as num).toInt(),
-      performerId: (json['performerId'] as num).toInt(),
-      teamId: (json['teamId'] as num).toInt(),
-    );
-
-Map<String, dynamic> _$$StarModelImplToJson(_$StarModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'performerId': instance.performerId,
-      'teamId': instance.teamId,
-    };

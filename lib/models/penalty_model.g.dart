@@ -639,27 +639,3 @@ extension PenaltyModelQueryFilter
 
 extension PenaltyModelQueryObject
     on QueryBuilder<PenaltyModel, PenaltyModel, QFilterCondition> {}
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$PenaltyModelImpl _$$PenaltyModelImplFromJson(Map<String, dynamic> json) =>
-    _$PenaltyModelImpl(
-      id: (json['id'] as num).toInt(),
-      major: json['major'] as bool,
-      type: json['type'] as String,
-      performerId: (json['performerId'] as num?)?.toInt(),
-      teamId: (json['teamId'] as num).toInt(),
-      improvisationId: (json['improvisationId'] as num).toInt(),
-    );
-
-Map<String, dynamic> _$$PenaltyModelImplToJson(_$PenaltyModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'major': instance.major,
-      'type': instance.type,
-      'performerId': instance.performerId,
-      'teamId': instance.teamId,
-      'improvisationId': instance.improvisationId,
-    };
