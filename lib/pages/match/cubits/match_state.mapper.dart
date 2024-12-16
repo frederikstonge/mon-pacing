@@ -13,6 +13,7 @@ class MatchStateMapper extends ClassMapperBase<MatchState> {
   static MatchStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = MatchStateMapper._());
+      MatchStatusMapper.ensureInitialized();
       MatchModelMapper.ensureInitialized();
     }
     return _instance!;

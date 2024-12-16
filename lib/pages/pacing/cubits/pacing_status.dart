@@ -1,11 +1,11 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-part 'feature_flags_status.mapper.dart';
+part 'pacing_status.mapper.dart';
 
 @MappableEnum()
-enum FeatureFlagsStatus {
+enum PacingStatus {
   initial,
   loading,
+  error,
   success,
-  failure,
 }

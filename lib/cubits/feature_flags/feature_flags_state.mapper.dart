@@ -13,6 +13,7 @@ class FeatureFlagsStateMapper extends ClassMapperBase<FeatureFlagsState> {
   static FeatureFlagsStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = FeatureFlagsStateMapper._());
+      FeatureFlagsStatusMapper.ensureInitialized();
     }
     return _instance!;
   }

@@ -13,6 +13,7 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
   static TeamsStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = TeamsStateMapper._());
+      TeamsStatusMapper.ensureInitialized();
       TeamModelMapper.ensureInitialized();
     }
     return _instance!;

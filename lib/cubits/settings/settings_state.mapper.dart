@@ -13,6 +13,8 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
   static SettingsStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = SettingsStateMapper._());
+      ThemeTypeMapper.ensureInitialized();
+      PenaltiesImpactTypeMapper.ensureInitialized();
     }
     return _instance!;
   }

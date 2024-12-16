@@ -6,7 +6,7 @@ part 'timer_model.mapper.dart';
 
 @MappableClass()
 class TimerModel with TimerModelMappable {
-  final Duration duration;
+  final int durationInSeconds;
   final int matchId;
   final int improvisationId;
   final int durationIndex;
@@ -16,7 +16,7 @@ class TimerModel with TimerModelMappable {
   final String notificationTitle;
 
   const TimerModel({
-    required this.duration,
+    required this.durationInSeconds,
     required this.matchId,
     required this.improvisationId,
     required this.durationIndex,

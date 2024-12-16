@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/pacing_model.dart';
+import 'pacing_status.dart';
 
 part 'pacing_state.mapper.dart';
 
@@ -15,11 +16,4 @@ class PacingState with PacingStateMappable {
     this.error,
     this.pacing,
   });
-}
-
-enum PacingStatus {
-  initial,
-  loading,
-  error,
-  success,
 }

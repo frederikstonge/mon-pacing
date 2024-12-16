@@ -38,7 +38,7 @@ class TimerCubit extends Cubit<TimerState> {
     }
 
     final timer = TimerModel(
-      duration: duration,
+      durationInSeconds: duration.inSeconds,
       matchId: matchId,
       improvisationId: improvisationId,
       durationIndex: durationIndex,

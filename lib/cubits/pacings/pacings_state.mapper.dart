@@ -13,6 +13,7 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
   static PacingsStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = PacingsStateMapper._());
+      PacingsStatusMapper.ensureInitialized();
       PacingModelMapper.ensureInitialized();
     }
     return _instance!;

@@ -19,6 +19,7 @@ import '../../../services/analytics_service.dart';
 import '../../../services/excel_service.dart';
 import '../../../services/toaster_service.dart';
 import 'match_state.dart';
+import 'match_status.dart';
 
 class MatchCubit extends Cubit<MatchState> {
   final MatchesRepository matchesRepository;
@@ -46,7 +47,14 @@ class MatchCubit extends Cubit<MatchState> {
 
     var selectedImprovisationIndex = improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
-    emit(state.copyWith(match: match, selectedImprovisationIndex: selectedImprovisationIndex, selectedDurationIndex: durationIndex ?? 0));
+
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: match,
+      selectedImprovisationIndex: selectedImprovisationIndex,
+      selectedDurationIndex: durationIndex ?? 0,
+    ));
+
     _validatePenalties(match);
   }
 

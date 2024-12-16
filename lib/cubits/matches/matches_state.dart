@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../models/match_model.dart';
+import 'matches_status.dart';
 
 part 'matches_state.mapper.dart';
 
@@ -17,11 +18,4 @@ class MatchesState with MatchesStateMappable {
     this.matches = const [],
     this.hasMore = false,
   });
-}
-
-enum MatchesStatus {
-  initial,
-  loading,
-  error,
-  success,
 }

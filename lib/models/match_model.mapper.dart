@@ -18,6 +18,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
       PenaltyModelMapper.ensureInitialized();
       PointModelMapper.ensureInitialized();
       StarModelMapper.ensureInitialized();
+      PenaltiesImpactTypeMapper.ensureInitialized();
     }
     return _instance!;
   }

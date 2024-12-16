@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../../models/match_model.dart';
+import 'match_status.dart';
 
 part 'match_state.mapper.dart';
 
@@ -19,11 +20,4 @@ class MatchState with MatchStateMappable {
     this.selectedImprovisationIndex = 0,
     this.selectedDurationIndex = 0,
   });
-}
-
-enum MatchStatus {
-  initial,
-  loading,
-  error,
-  success,
 }

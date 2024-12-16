@@ -13,6 +13,7 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   static ImprovisationModelMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = ImprovisationModelMapper._());
+      ImprovisationTypeMapper.ensureInitialized();
     }
     return _instance!;
   }

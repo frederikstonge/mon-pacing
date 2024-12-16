@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../models/team_model.dart';
+import 'teams_status.dart';
 
 part 'teams_state.mapper.dart';
 
@@ -17,11 +18,4 @@ class TeamsState with TeamsStateMappable {
     this.teams = const [],
     this.hasMore = false,
   });
-}
-
-enum TeamsStatus {
-  initial,
-  loading,
-  error,
-  success,
 }

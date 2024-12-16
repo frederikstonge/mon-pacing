@@ -7,6 +7,7 @@ import '../../repositories/matches_repository.dart';
 import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
 import 'matches_state.dart';
+import 'matches_status.dart';
 
 class MatchesCubit extends Cubit<MatchesState> {
   static const int _pageSize = 20;

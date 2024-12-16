@@ -1,11 +1,11 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-part 'feature_flags_status.mapper.dart';
+part 'match_status.mapper.dart';
 
 @MappableEnum()
-enum FeatureFlagsStatus {
+enum MatchStatus {
   initial,
   loading,
+  error,
   success,
-  failure,
 }

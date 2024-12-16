@@ -125,7 +125,8 @@ class TimerTaskHandler extends TaskHandler {
       return;
     }
 
-    final remainingMilliseconds = timerModel.duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
+    final duration = Duration(seconds: timerModel.durationInSeconds);
+    final remainingMilliseconds = duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
     timerModel = timerModel.copyWith(remainingMilliseconds: remainingMilliseconds);
     FlutterForegroundTask.sendDataToMain(timerModel.toJson());

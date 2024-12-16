@@ -10,6 +10,7 @@ import '../../../models/improvisation_type.dart';
 import '../../../models/pacing_model.dart';
 import '../../../repositories/pacings_repository.dart';
 import 'pacing_state.dart';
+import 'pacing_status.dart';
 
 class PacingCubit extends Cubit<PacingState> {
   final PacingsRepository pacingsRepository;
