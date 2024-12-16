@@ -4,6 +4,7 @@ import 'package:isar/isar.dart';
 import 'improvisation_type.dart';
 
 part 'improvisation_model.mapper.dart';
+part 'improvisation_model.g.dart';
 
 @MappableClass()
 @Embedded(ignore: {'copyWith'})

@@ -4,6 +4,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
 import 'improvisation_model.dart';
+import 'improvisation_type.dart';
 
 part 'pacing_model.mapper.dart';
 part 'pacing_model.g.dart';

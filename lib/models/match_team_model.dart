@@ -4,6 +4,7 @@ import 'package:isar/isar.dart';
 import 'performer_model.dart';
 
 part 'match_team_model.mapper.dart';
+part 'match_team_model.g.dart';
 
 @MappableClass()
 @Embedded(ignore: {'copyWith'})

@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
 part 'point_model.mapper.dart';
+part 'point_model.g.dart';
 
 @MappableClass()
 @Embedded(ignore: {'copyWith'})

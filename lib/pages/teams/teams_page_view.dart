@@ -84,62 +84,62 @@ class _TeamsPageViewState extends State<TeamsPageView> {
             ),
             slivers: [
               const TimerBanner(),
-              state.when(
-                initial: () => const SliverFillRemaining(
-                  child: Center(
-                    child: CircularProgressIndicator(),
+              switch (state.status) {
+                TeamsStatus.initial => const SliverFillRemaining(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
-                ),
-                error: (error) => SliverFillRemaining(
-                  child: Center(
-                    child: Text(error),
+                TeamsStatus.error => SliverFillRemaining(
+                    child: Center(
+                      child: Text(state.error ?? ''),
+                    ),
                   ),
-                ),
-                success: (teams, hasMore) => SliverList.builder(
-                  itemCount: hasMore ? teams.length + 1 : teams.length,
-                  itemBuilder: (context, index) {
-                    if (hasMore && index != 0 && index == teams.length) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
+                _ => SliverList.builder(
+                    itemCount: state.hasMore ? state.teams.length + 1 : state.teams.length,
+                    itemBuilder: (context, index) {
+                      if (state.hasMore && index == state.teams.length) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
 
-                    final team = teams.elementAt(index);
-                    return TeamCard(
-                      team: team,
-                      onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                      edit: () => BottomSheetDialog.showDialog(
-                        context: context,
-                        child: TeamDetailPageShell(
-                          team: team,
-                          editMode: true,
-                          onConfirm: (team) async {
-                            await context.read<TeamsCubit>().edit(team);
-                          },
+                      final team = state.teams.elementAt(index);
+                      return TeamCard(
+                        team: team,
+                        onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                        edit: () => BottomSheetDialog.showDialog(
+                          context: context,
+                          child: TeamDetailPageShell(
+                            team: team,
+                            editMode: true,
+                            onConfirm: (team) async {
+                              await context.read<TeamsCubit>().edit(team);
+                            },
+                          ),
                         ),
-                      ),
-                      shouldDelete: () => MessageBoxDialog.questionShow(
-                        context,
-                        S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: team.name),
-                        S.of(context).delete,
-                        S.of(context).cancel,
-                      ),
-                      delete: () => context.read<TeamsCubit>().delete(team),
-                      export: () => context.read<TeamsCubit>().export(team),
-                      duplicate: () => BottomSheetDialog.showDialog(
-                        context: context,
-                        child: TeamDetailPageShell(
-                          editMode: false,
-                          team: team,
-                          onConfirm: (team) async {
-                            await context.read<TeamsCubit>().add(team);
-                          },
+                        shouldDelete: () => MessageBoxDialog.questionShow(
+                          context,
+                          S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: team.name),
+                          S.of(context).delete,
+                          S.of(context).cancel,
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                        delete: () => context.read<TeamsCubit>().delete(team),
+                        export: () => context.read<TeamsCubit>().export(team),
+                        duplicate: () => BottomSheetDialog.showDialog(
+                          context: context,
+                          child: TeamDetailPageShell(
+                            editMode: false,
+                            team: team,
+                            onConfirm: (team) async {
+                              await context.read<TeamsCubit>().add(team);
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+              },
             ],
           ),
         );

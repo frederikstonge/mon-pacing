@@ -4,9 +4,11 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
 import 'improvisation_model.dart';
+import 'improvisation_type.dart';
 import 'match_team_model.dart';
 import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
+import 'performer_model.dart';
 import 'point_model.dart';
 import 'star_model.dart';
 

@@ -1,12 +1,25 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../models/pacing_model.dart';
 
-part 'pacing_state.freezed.dart';
+part 'pacing_state.mapper.dart';
 
-@freezed
-class PacingState with _$PacingState {
-  const factory PacingState.initial() = PacingInitialState;
-  const factory PacingState.error(String error) = PacingErrorState;
-  const factory PacingState.success(PacingModel pacing) = PacingSuccessState;
+@MappableClass()
+class PacingState with PacingStateMappable {
+  final PacingStatus status;
+  final String? error;
+  final PacingModel? pacing;
+
+  const PacingState({
+    required this.status,
+    this.error,
+    this.pacing,
+  });
+}
+
+enum PacingStatus {
+  initial,
+  loading,
+  error,
+  success,
 }

@@ -33,251 +33,246 @@ class MatchCubit extends Cubit<MatchState> {
     required this.toasterService,
     required this.excelService,
     required this.analyticsService,
-  }) : super(const MatchState.initial());
+  }) : super(const MatchState(status: MatchStatus.initial));
 
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
+    emit(state.copyWith(status: MatchStatus.loading));
+
     final match = await matchesRepository.get(id);
     if (match == null) {
-      emit(MatchState.error(Localizer.current.toasterGenericError));
+      emit(state.copyWith(status: MatchStatus.error, error: Localizer.current.toasterGenericError));
       return;
     }
 
     var selectedImprovisationIndex = improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
-    emit(MatchState.success(match, selectedImprovisationIndex, durationIndex ?? 0));
+    emit(state.copyWith(match: match, selectedImprovisationIndex: selectedImprovisationIndex, selectedDurationIndex: durationIndex ?? 0));
     _validatePenalties(match);
   }
 
   Future<void> edit(MatchModel match) async {
-    await state.whenOrNull(
-      success: (_, selectedImprovisationIndex, selectedDurationIndex) async {
-        emit(MatchState.success(match, selectedImprovisationIndex, selectedDurationIndex));
-        await matchesCubit.edit(match);
-      },
-    );
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: match,
+    ));
+    await matchesCubit.edit(match);
   }
 
   Future<void> addImprovisation(ImprovisationModel improvisation, int index) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final improvisations = List<ImprovisationModel>.from(match.improvisations);
+    final improvisations = List<ImprovisationModel>.from(state.match!.improvisations);
 
-        improvisations.insert(index, improvisation);
-        final newMatch = match.copyWith(improvisations: improvisations);
-        emit(
-          MatchState.success(
-            newMatch,
-            index,
-            0,
-          ),
-        );
-
-        await matchesCubit.edit(newMatch);
-      },
+    improvisations.insert(index, improvisation);
+    final newMatch = state.match!.copyWith(improvisations: improvisations);
+    emit(
+      state.copyWith(
+        status: MatchStatus.success,
+        match: newMatch,
+        selectedImprovisationIndex: index,
+        selectedDurationIndex: 0,
+      ),
     );
+
+    await matchesCubit.edit(newMatch);
   }
 
   Future<void> editImprovisation(ImprovisationModel improvisation, int index) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final improvisations = List<ImprovisationModel>.from(match.improvisations.where((element) => element.id != improvisation.id));
+    final improvisations = List<ImprovisationModel>.from(state.match!.improvisations.where((element) => element.id != improvisation.id));
 
-        improvisations.insert(index, improvisation);
-        final newMatch = match.copyWith(improvisations: improvisations);
-        emit(
-          MatchState.success(
-            newMatch,
-            index,
-            0,
-          ),
-        );
-
-        await matchesCubit.edit(newMatch);
-      },
+    improvisations.insert(index, improvisation);
+    final newMatch = state.match!.copyWith(improvisations: improvisations);
+    emit(
+      state.copyWith(
+        status: MatchStatus.success,
+        match: newMatch,
+        selectedImprovisationIndex: index,
+        selectedDurationIndex: 0,
+      ),
     );
+
+    await matchesCubit.edit(newMatch);
   }
 
   Future<void> removeImprovisation(ImprovisationModel improvisation) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final improvisations = List<ImprovisationModel>.from(match.improvisations.where((element) => element.id != improvisation.id));
+    final improvisations = List<ImprovisationModel>.from(state.match!.improvisations.where((element) => element.id != improvisation.id));
 
-        final points = List<PointModel>.from(match.points.where((element) => element.improvisationId != improvisation.id));
+    final points = List<PointModel>.from(state.match!.points.where((element) => element.improvisationId != improvisation.id));
 
-        final penalties = List<PenaltyModel>.from(match.penalties.where((element) => element.improvisationId != improvisation.id));
+    final penalties = List<PenaltyModel>.from(state.match!.penalties.where((element) => element.improvisationId != improvisation.id));
 
-        final newSelectedImprovisationIndex =
-            selectedImprovisationIndex >= improvisations.length ? selectedImprovisationIndex - 1 : selectedImprovisationIndex;
+    final newSelectedImprovisationIndex =
+        state.selectedImprovisationIndex >= improvisations.length ? state.selectedImprovisationIndex - 1 : state.selectedImprovisationIndex;
 
-        final newMatch = match.copyWith(improvisations: improvisations, points: points, penalties: penalties);
+    final newMatch = state.match!.copyWith(improvisations: improvisations, points: points, penalties: penalties);
 
-        emit(
-          MatchState.success(
-            newMatch,
-            newSelectedImprovisationIndex,
-            0,
-          ),
-        );
-
-        await matchesCubit.edit(newMatch);
-      },
+    emit(
+      state.copyWith(
+        status: MatchStatus.success,
+        match: newMatch,
+        selectedImprovisationIndex: newSelectedImprovisationIndex,
+        selectedDurationIndex: 0,
+      ),
     );
+
+    await matchesCubit.edit(newMatch);
   }
 
   void changePage(int page) {
-    state.whenOrNull(
-      success: (match, _, selectedDurationIndex) => emit(
-        MatchState.success(
-          match,
-          page,
-          0,
-        ),
+    emit(
+      state.copyWith(
+        status: MatchStatus.success,
+        selectedImprovisationIndex: page,
       ),
     );
   }
 
   void changeDuration(int durationIndex) {
-    state.whenOrNull(
-      success: (match, selectedImprovisationIndex, _) => emit(
-        MatchState.success(
-          match,
-          selectedImprovisationIndex,
-          durationIndex,
-        ),
+    emit(
+      state.copyWith(
+        status: MatchStatus.success,
+        selectedDurationIndex: durationIndex,
       ),
     );
   }
 
   Future<void> setPoint(int improvisationId, int teamId, int value) async {
-    await state.whenOrNull(success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-      final points = List<PointModel>.from(match.copyWith().points);
-      if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
-        final index = points.indexWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
-        if (value > 0) {
-          points[index] = points[index].copyWith(value: value);
-        } else {
-          points.removeAt(index);
-        }
+    final points = List<PointModel>.from(state.match!.copyWith().points);
+    if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
+      final index = points.indexWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
+      if (value > 0) {
+        points[index] = points[index].copyWith(value: value);
       } else {
-        if (value > 0) {
-          final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
-          points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));
-        }
+        points.removeAt(index);
       }
+    } else {
+      if (value > 0) {
+        final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
+        points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));
+      }
+    }
 
-      final newMatch = match.copyWith(points: points);
+    final newMatch = state.match!.copyWith(points: points);
 
-      emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-      await matchesCubit.edit(newMatch);
-    });
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+    await matchesCubit.edit(newMatch);
   }
 
   Future<void> addPenalty(PenaltyModel penalty) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
-        final nextPenaltyId = penalties.isNotEmpty ? penalties.map((e) => e.id).reduce(max) + 1 : 0;
-        penalties.add(penalty.copyWith(id: nextPenaltyId));
-        final newMatch = match.copyWith(penalties: penalties);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-        await matchesCubit.edit(newMatch);
-        _validatePenalty(newMatch, penalty);
-      },
-    );
+    final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
+    final nextPenaltyId = penalties.isNotEmpty ? penalties.map((e) => e.id).reduce(max) + 1 : 0;
+    penalties.add(penalty.copyWith(id: nextPenaltyId));
+    final newMatch = state.match!.copyWith(penalties: penalties);
+
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+
+    await matchesCubit.edit(newMatch);
+    _validatePenalty(newMatch, penalty);
   }
 
   Future<void> editPenalty(PenaltyModel penalty) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
-        final index = penalties.indexWhere((element) => element.id == penalty.id);
-        penalties[index] = penalty;
-        final newMatch = match.copyWith(penalties: penalties);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-        await matchesCubit.edit(newMatch);
-        _validatePenalty(newMatch, penalty);
-      },
-    );
+    final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
+    final index = penalties.indexWhere((element) => element.id == penalty.id);
+    penalties[index] = penalty;
+    final newMatch = state.match!.copyWith(penalties: penalties);
+
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+
+    await matchesCubit.edit(newMatch);
+    _validatePenalty(newMatch, penalty);
   }
 
   Future<void> removePenalty(int penaltyId) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final penalties = List<PenaltyModel>.from(match.copyWith().penalties);
-        penalties.removeWhere((element) => element.id == penaltyId);
-        final newMatch = match.copyWith(penalties: penalties);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-        await matchesCubit.edit(newMatch);
-      },
-    );
+    final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
+    penalties.removeWhere((element) => element.id == penaltyId);
+    final newMatch = state.match!.copyWith(penalties: penalties);
+
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+
+    await matchesCubit.edit(newMatch);
   }
 
   Future<void> addStar() async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final stars = List<StarModel>.from(match.copyWith().stars);
-        final nextStarId = stars.isNotEmpty ? stars.map((e) => e.id).reduce(max) + 1 : 0;
-        stars.add(StarModel(id: nextStarId, teamId: match.teams.first.id, performerId: match.teams.first.performers.first.id));
-        final newMatch = match.copyWith(stars: stars);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-        await matchesCubit.edit(newMatch);
-      },
-    );
+    final stars = List<StarModel>.from(state.match!.copyWith().stars);
+    final nextStarId = stars.isNotEmpty ? stars.map((e) => e.id).reduce(max) + 1 : 0;
+    stars.add(StarModel(id: nextStarId, teamId: state.match!.teams.first.id, performerId: state.match!.teams.first.performers.first.id));
+    final newMatch = state.match!.copyWith(stars: stars);
+
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+
+    await matchesCubit.edit(newMatch);
   }
 
   Future<void> editStar(StarModel star) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final stars = List<StarModel>.from(match.copyWith().stars);
-        final index = stars.indexWhere((element) => element.id == star.id);
-        stars[index] = star;
-        final newMatch = match.copyWith(stars: stars);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-        await matchesCubit.edit(newMatch);
-      },
-    );
+    final stars = List<StarModel>.from(state.match!.copyWith().stars);
+    final index = stars.indexWhere((element) => element.id == star.id);
+    stars[index] = star;
+    final newMatch = state.match!.copyWith(stars: stars);
+
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+
+    await matchesCubit.edit(newMatch);
   }
 
   Future<void> removeStar(int starId) async {
-    await state.whenOrNull(
-      success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-        final stars = List<StarModel>.from(match.copyWith().stars);
-        stars.removeWhere((element) => element.id == starId);
-        final newMatch = match.copyWith(stars: stars);
-        emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-        await matchesCubit.edit(newMatch);
-      },
-    );
+    final stars = List<StarModel>.from(state.match!.copyWith().stars);
+    stars.removeWhere((element) => element.id == starId);
+    final newMatch = state.match!.copyWith(stars: stars);
+
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+
+    await matchesCubit.edit(newMatch);
   }
 
   Future<void> moveStar(int oldIndex, int newIndex) async {
-    await state.whenOrNull(success: (match, selectedImprovisationIndex, selectedDurationIndex) async {
-      final stars = List<StarModel>.from(match.copyWith().stars);
-      final star = stars.removeAt(oldIndex);
+    final stars = List<StarModel>.from(state.match!.copyWith().stars);
+    final star = stars.removeAt(oldIndex);
 
-      if (oldIndex < newIndex) {
-        newIndex--;
-      }
+    if (oldIndex < newIndex) {
+      newIndex--;
+    }
 
-      stars.insert(newIndex, star);
+    stars.insert(newIndex, star);
 
-      final newMatch = match.copyWith(stars: stars);
+    final newMatch = state.match!.copyWith(stars: stars);
 
-      emit(MatchState.success(newMatch, selectedImprovisationIndex, selectedDurationIndex));
-      await matchesCubit.edit(newMatch);
-    });
+    emit(state.copyWith(
+      status: MatchStatus.success,
+      match: newMatch,
+    ));
+
+    await matchesCubit.edit(newMatch);
   }
 
-  Future<bool> exportExcel(MatchModel match) async {
+  Future<bool> exportExcel() async {
     try {
-      final bytes = excelService.exportMatchToExcel(match, Localizer.current);
+      final bytes = excelService.exportMatchToExcel(state.match!, Localizer.current);
 
       if (bytes == null) {
         return false;
       }
 
       final data = Uint8List.fromList(bytes);
-      final fileName = sanitizeFilename('${match.name}.xlsx', replacement: '-');
+      final fileName = sanitizeFilename('${state.match!.name}.xlsx', replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       await analyticsService.logExportToExcel();
       final filePath = await FlutterFileDialog.saveFile(params: params);

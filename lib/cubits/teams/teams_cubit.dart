@@ -17,12 +17,11 @@ class TeamsCubit extends Cubit<TeamsState> {
   static const int _pageSize = 20;
   final TeamsRepository teamsRepository;
   final ToasterService toasterService;
-  bool _isFetching = false;
 
   TeamsCubit({
     required this.teamsRepository,
     required this.toasterService,
-  }) : super(const TeamsState.initial());
+  }) : super(const TeamsState(status: TeamsStatus.initial));
 
   Future<TeamModel?> add(TeamModel model) async {
     try {
@@ -59,31 +58,23 @@ class TeamsCubit extends Cubit<TeamsState> {
   }
 
   Future<void> fetch() async {
-    if (_isFetching) {
+    if (state.status == TeamsStatus.loading || state.hasMore) {
       return;
     }
 
-    _isFetching = true;
+    emit(state.copyWith(status: TeamsStatus.loading));
     try {
-      await state.when(
-        initial: () async {
-          final response = await teamsRepository.getList(0, _pageSize);
-          emit(TeamsState.success(response, response.length == _pageSize));
-        },
-        error: (error) async {
-          final response = await teamsRepository.getList(0, _pageSize);
-          emit(TeamsState.success(response, response.length == _pageSize));
-        },
-        success: (teams, hasReachedMax) async {
-          final response = await teamsRepository.getList(teams.length, _pageSize);
-          emit(TeamsState.success(teams + response, response.length == _pageSize));
-        },
+      final response = await teamsRepository.getList(state.teams.length, _pageSize);
+      emit(
+        state.copyWith(
+          status: TeamsStatus.success,
+          teams: state.teams + response,
+          hasMore: response.length == _pageSize,
+        ),
       );
     } catch (exception) {
-      emit(TeamsState.error(exception.toString()));
+      emit(TeamsState(status: TeamsStatus.error, error: exception.toString()));
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
-    } finally {
-      _isFetching = false;
     }
   }
 
@@ -92,7 +83,7 @@ class TeamsCubit extends Cubit<TeamsState> {
   }
 
   Future<void> refresh() async {
-    emit(const TeamsState.initial());
+    emit(const TeamsState(status: TeamsStatus.initial));
     await fetch();
   }
 

@@ -1,12 +1,27 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../models/match_model.dart';
 
-part 'matches_state.freezed.dart';
+part 'matches_state.mapper.dart';
 
-@freezed
-class MatchesState with _$MatchesState {
-  const factory MatchesState.initial() = MatchesInitialState;
-  const factory MatchesState.error(String error) = MatchesErrorState;
-  const factory MatchesState.success(List<MatchModel> matches, bool hasReachedMax) = MatchesSuccessState;
+@MappableClass()
+class MatchesState with MatchesStateMappable {
+  final MatchesStatus status;
+  final String? error;
+  final List<MatchModel> matches;
+  final bool hasMore;
+
+  const MatchesState({
+    required this.status,
+    this.error,
+    this.matches = const [],
+    this.hasMore = false,
+  });
+}
+
+enum MatchesStatus {
+  initial,
+  loading,
+  error,
+  success,
 }
