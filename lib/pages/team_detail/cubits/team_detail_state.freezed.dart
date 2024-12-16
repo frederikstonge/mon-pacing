@@ -14,18 +14,11 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-TeamDetailState _$TeamDetailStateFromJson(Map<String, dynamic> json) {
-  return _TeamDetailState.fromJson(json);
-}
-
 /// @nodoc
 mixin _$TeamDetailState {
   bool get editMode => throw _privateConstructorUsedError;
   TeamModel get team => throw _privateConstructorUsedError;
   int get selectedTeamIndex => throw _privateConstructorUsedError;
-
-  /// Serializes this TeamDetailState to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of TeamDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -41,8 +34,6 @@ abstract class $TeamDetailStateCopyWith<$Res> {
       _$TeamDetailStateCopyWithImpl<$Res, TeamDetailState>;
   @useResult
   $Res call({bool editMode, TeamModel team, int selectedTeamIndex});
-
-  $TeamModelCopyWith<$Res> get team;
 }
 
 /// @nodoc
@@ -79,16 +70,6 @@ class _$TeamDetailStateCopyWithImpl<$Res, $Val extends TeamDetailState>
               as int,
     ) as $Val);
   }
-
-  /// Create a copy of TeamDetailState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $TeamModelCopyWith<$Res> get team {
-    return $TeamModelCopyWith<$Res>(_value.team, (value) {
-      return _then(_value.copyWith(team: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -100,9 +81,6 @@ abstract class _$$TeamDetailStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({bool editMode, TeamModel team, int selectedTeamIndex});
-
-  @override
-  $TeamModelCopyWith<$Res> get team;
 }
 
 /// @nodoc
@@ -140,13 +118,10 @@ class __$$TeamDetailStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$TeamDetailStateImpl implements _TeamDetailState {
   const _$TeamDetailStateImpl(
       {required this.editMode, required this.team, this.selectedTeamIndex = 0});
-
-  factory _$TeamDetailStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TeamDetailStateImplFromJson(json);
 
   @override
   final bool editMode;
@@ -173,7 +148,6 @@ class _$TeamDetailStateImpl implements _TeamDetailState {
                 other.selectedTeamIndex == selectedTeamIndex));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, editMode, team, selectedTeamIndex);
@@ -186,13 +160,6 @@ class _$TeamDetailStateImpl implements _TeamDetailState {
   _$$TeamDetailStateImplCopyWith<_$TeamDetailStateImpl> get copyWith =>
       __$$TeamDetailStateImplCopyWithImpl<_$TeamDetailStateImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TeamDetailStateImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _TeamDetailState implements TeamDetailState {
@@ -200,9 +167,6 @@ abstract class _TeamDetailState implements TeamDetailState {
       {required final bool editMode,
       required final TeamModel team,
       final int selectedTeamIndex}) = _$TeamDetailStateImpl;
-
-  factory _TeamDetailState.fromJson(Map<String, dynamic> json) =
-      _$TeamDetailStateImpl.fromJson;
 
   @override
   bool get editMode;

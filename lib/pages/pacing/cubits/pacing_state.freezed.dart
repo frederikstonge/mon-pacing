@@ -348,8 +348,6 @@ abstract class _$$PacingSuccessStateImplCopyWith<$Res> {
       __$$PacingSuccessStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({PacingModel pacing});
-
-  $PacingModelCopyWith<$Res> get pacing;
 }
 
 /// @nodoc
@@ -373,16 +371,6 @@ class __$$PacingSuccessStateImplCopyWithImpl<$Res>
           : pacing // ignore: cast_nullable_to_non_nullable
               as PacingModel,
     ));
-  }
-
-  /// Create a copy of PacingState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PacingModelCopyWith<$Res> get pacing {
-    return $PacingModelCopyWith<$Res>(_value.pacing, (value) {
-      return _then(_value.copyWith(pacing: value));
-    });
   }
 }
 

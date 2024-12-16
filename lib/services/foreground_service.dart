@@ -87,7 +87,7 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   void onReceiveData(dynamic data) {
-    final event = TimerModel.fromJson(data);
+    final event = TimerModelMapper.fromJson(data);
     if (_timerModel == null) {
       _timerModel = event;
       _stopwatch = Stopwatch();

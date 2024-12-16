@@ -14,17 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-MatchDetailState _$MatchDetailStateFromJson(Map<String, dynamic> json) {
-  return _MatchDetailState.fromJson(json);
-}
-
 /// @nodoc
 mixin _$MatchDetailState {
   bool get editMode => throw _privateConstructorUsedError;
   MatchModel get match => throw _privateConstructorUsedError;
-
-  /// Serializes this MatchDetailState to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of MatchDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,8 +33,6 @@ abstract class $MatchDetailStateCopyWith<$Res> {
       _$MatchDetailStateCopyWithImpl<$Res, MatchDetailState>;
   @useResult
   $Res call({bool editMode, MatchModel match});
-
-  $MatchModelCopyWith<$Res> get match;
 }
 
 /// @nodoc
@@ -73,16 +64,6 @@ class _$MatchDetailStateCopyWithImpl<$Res, $Val extends MatchDetailState>
               as MatchModel,
     ) as $Val);
   }
-
-  /// Create a copy of MatchDetailState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MatchModelCopyWith<$Res> get match {
-    return $MatchModelCopyWith<$Res>(_value.match, (value) {
-      return _then(_value.copyWith(match: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -94,9 +75,6 @@ abstract class _$$MatchDetailStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({bool editMode, MatchModel match});
-
-  @override
-  $MatchModelCopyWith<$Res> get match;
 }
 
 /// @nodoc
@@ -129,12 +107,9 @@ class __$$MatchDetailStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$MatchDetailStateImpl implements _MatchDetailState {
   const _$MatchDetailStateImpl({required this.editMode, required this.match});
-
-  factory _$MatchDetailStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MatchDetailStateImplFromJson(json);
 
   @override
   final bool editMode;
@@ -156,7 +131,6 @@ class _$MatchDetailStateImpl implements _MatchDetailState {
             (identical(other.match, match) || other.match == match));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, editMode, match);
 
@@ -168,22 +142,12 @@ class _$MatchDetailStateImpl implements _MatchDetailState {
   _$$MatchDetailStateImplCopyWith<_$MatchDetailStateImpl> get copyWith =>
       __$$MatchDetailStateImplCopyWithImpl<_$MatchDetailStateImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MatchDetailStateImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _MatchDetailState implements MatchDetailState {
   const factory _MatchDetailState(
       {required final bool editMode,
       required final MatchModel match}) = _$MatchDetailStateImpl;
-
-  factory _MatchDetailState.fromJson(Map<String, dynamic> json) =
-      _$MatchDetailStateImpl.fromJson;
 
   @override
   bool get editMode;

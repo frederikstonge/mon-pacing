@@ -1,17 +1,18 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-part 'star_model.freezed.dart';
-part 'star_model.g.dart';
+part 'star_model.mapper.dart';
 
-@freezed
+@MappableClass()
 @Embedded(ignore: {'copyWith'})
-class StarModel with _$StarModel {
-  const factory StarModel({
-    required int id,
-    required int performerId,
-    required int teamId,
-  }) = _StarModel;
+class StarModel with StarModelMappable {
+  final int id;
+  final int performerId;
+  final int teamId;
 
-  factory StarModel.fromJson(Map<String, dynamic> json) => _$StarModelFromJson(json);
+  const StarModel({
+    required this.id,
+    required this.performerId,
+    required this.teamId,
+  });
 }

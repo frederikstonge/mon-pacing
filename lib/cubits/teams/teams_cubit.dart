@@ -107,7 +107,7 @@ class TeamsCubit extends Cubit<TeamsState> {
       final filePath = await FlutterFileDialog.pickFile(params: params);
       if (filePath != null) {
         final teamValue = await File(filePath).readAsString();
-        final team = TeamModel.fromJson(jsonDecode(teamValue));
+        final team = TeamModelMapper.fromJson(teamValue);
         final newTeam = await teamsRepository.add(team.copyWith(id: 0));
         toasterService.show(title: Localizer.current.toasterTeamImported);
 

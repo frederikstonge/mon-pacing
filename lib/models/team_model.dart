@@ -1,31 +1,36 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-import 'base_model.dart';
 import 'performer_model.dart';
 
-part 'team_model.freezed.dart';
+part 'team_model.mapper.dart';
 part 'team_model.g.dart';
 
-@freezed
+@MappableClass()
 @collection
-class TeamModel with _$TeamModel implements BaseModel {
-  const TeamModel._();
+class TeamModel with TeamModelMappable {
+  final int id;
+  @index
+  final DateTime? createdDate;
+  @index
+  final DateTime? modifiedDate;
+  @index
+  final String name;
+  final int color;
+  final List<PerformerModel> performers;
+  final List<String> tags;
 
-  @Implements<BaseModel>()
-  const factory TeamModel({
-    required int id,
-    @index required DateTime? createdDate,
-    required DateTime? modifiedDate,
-    required String name,
-    required int color,
-    @Default([]) List<PerformerModel> performers,
-    @Default([]) List<String> tags,
-  }) = _TeamModel;
+  const TeamModel({
+    required this.id,
+    required this.createdDate,
+    required this.modifiedDate,
+    required this.name,
+    required this.color,
+    this.performers = const [],
+    this.tags = const [],
+  });
 
   List<String> get performerNames => performers.map((p) => p.name).toList();
-
-  factory TeamModel.fromJson(Map<String, dynamic> json) => _$TeamModelFromJson(json);
 }

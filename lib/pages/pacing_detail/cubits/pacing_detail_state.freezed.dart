@@ -14,17 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PacingDetailState _$PacingDetailStateFromJson(Map<String, dynamic> json) {
-  return _PacingDetailState.fromJson(json);
-}
-
 /// @nodoc
 mixin _$PacingDetailState {
   bool get editMode => throw _privateConstructorUsedError;
   PacingModel get pacing => throw _privateConstructorUsedError;
-
-  /// Serializes this PacingDetailState to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of PacingDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,8 +33,6 @@ abstract class $PacingDetailStateCopyWith<$Res> {
       _$PacingDetailStateCopyWithImpl<$Res, PacingDetailState>;
   @useResult
   $Res call({bool editMode, PacingModel pacing});
-
-  $PacingModelCopyWith<$Res> get pacing;
 }
 
 /// @nodoc
@@ -73,16 +64,6 @@ class _$PacingDetailStateCopyWithImpl<$Res, $Val extends PacingDetailState>
               as PacingModel,
     ) as $Val);
   }
-
-  /// Create a copy of PacingDetailState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PacingModelCopyWith<$Res> get pacing {
-    return $PacingModelCopyWith<$Res>(_value.pacing, (value) {
-      return _then(_value.copyWith(pacing: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -94,9 +75,6 @@ abstract class _$$PacingDetailStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({bool editMode, PacingModel pacing});
-
-  @override
-  $PacingModelCopyWith<$Res> get pacing;
 }
 
 /// @nodoc
@@ -129,12 +107,9 @@ class __$$PacingDetailStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PacingDetailStateImpl implements _PacingDetailState {
   const _$PacingDetailStateImpl({required this.editMode, required this.pacing});
-
-  factory _$PacingDetailStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PacingDetailStateImplFromJson(json);
 
   @override
   final bool editMode;
@@ -156,7 +131,6 @@ class _$PacingDetailStateImpl implements _PacingDetailState {
             (identical(other.pacing, pacing) || other.pacing == pacing));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, editMode, pacing);
 
@@ -168,22 +142,12 @@ class _$PacingDetailStateImpl implements _PacingDetailState {
   _$$PacingDetailStateImplCopyWith<_$PacingDetailStateImpl> get copyWith =>
       __$$PacingDetailStateImplCopyWithImpl<_$PacingDetailStateImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PacingDetailStateImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PacingDetailState implements PacingDetailState {
   const factory _PacingDetailState(
       {required final bool editMode,
       required final PacingModel pacing}) = _$PacingDetailStateImpl;
-
-  factory _PacingDetailState.fromJson(Map<String, dynamic> json) =
-      _$PacingDetailStateImpl.fromJson;
 
   @override
   bool get editMode;

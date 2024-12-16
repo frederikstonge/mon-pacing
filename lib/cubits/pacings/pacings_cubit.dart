@@ -111,7 +111,7 @@ class PacingsCubit extends Cubit<PacingsState> {
       final filePath = await FlutterFileDialog.pickFile(params: params);
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
-        final pacing = PacingModel.fromJson(jsonDecode(pacingValue));
+        final pacing = PacingModelMapper.fromJson(pacingValue);
         final newPacing = await pacingsRepository.add(pacing.copyWith(id: 0));
         toasterService.show(title: Localizer.current.toasterPacingImported);
 

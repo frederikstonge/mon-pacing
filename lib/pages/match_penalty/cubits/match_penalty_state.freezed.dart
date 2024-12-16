@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-MatchPenaltyState _$MatchPenaltyStateFromJson(Map<String, dynamic> json) {
-  return _MatchPenaltyState.fromJson(json);
-}
-
 /// @nodoc
 mixin _$MatchPenaltyState {
   bool get editMode => throw _privateConstructorUsedError;
@@ -25,9 +21,6 @@ mixin _$MatchPenaltyState {
   PenaltyModel get penalty => throw _privateConstructorUsedError;
   List<String>? get integrationPenaltyTypes =>
       throw _privateConstructorUsedError;
-
-  /// Serializes this MatchPenaltyState to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of MatchPenaltyState
   /// with the given fields replaced by the non-null parameter values.
@@ -47,8 +40,6 @@ abstract class $MatchPenaltyStateCopyWith<$Res> {
       List<MatchTeamModel> teams,
       PenaltyModel penalty,
       List<String>? integrationPenaltyTypes});
-
-  $PenaltyModelCopyWith<$Res> get penalty;
 }
 
 /// @nodoc
@@ -90,16 +81,6 @@ class _$MatchPenaltyStateCopyWithImpl<$Res, $Val extends MatchPenaltyState>
               as List<String>?,
     ) as $Val);
   }
-
-  /// Create a copy of MatchPenaltyState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PenaltyModelCopyWith<$Res> get penalty {
-    return $PenaltyModelCopyWith<$Res>(_value.penalty, (value) {
-      return _then(_value.copyWith(penalty: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -115,9 +96,6 @@ abstract class _$$MatchPenaltyStateImplCopyWith<$Res>
       List<MatchTeamModel> teams,
       PenaltyModel penalty,
       List<String>? integrationPenaltyTypes});
-
-  @override
-  $PenaltyModelCopyWith<$Res> get penalty;
 }
 
 /// @nodoc
@@ -160,7 +138,7 @@ class __$$MatchPenaltyStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
   const _$MatchPenaltyStateImpl(
       {required this.editMode,
@@ -169,9 +147,6 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
       required final List<String>? integrationPenaltyTypes})
       : _teams = teams,
         _integrationPenaltyTypes = integrationPenaltyTypes;
-
-  factory _$MatchPenaltyStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MatchPenaltyStateImplFromJson(json);
 
   @override
   final bool editMode;
@@ -214,7 +189,6 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
                 other._integrationPenaltyTypes, _integrationPenaltyTypes));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -231,13 +205,6 @@ class _$MatchPenaltyStateImpl implements _MatchPenaltyState {
   _$$MatchPenaltyStateImplCopyWith<_$MatchPenaltyStateImpl> get copyWith =>
       __$$MatchPenaltyStateImplCopyWithImpl<_$MatchPenaltyStateImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MatchPenaltyStateImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _MatchPenaltyState implements MatchPenaltyState {
@@ -247,9 +214,6 @@ abstract class _MatchPenaltyState implements MatchPenaltyState {
           required final PenaltyModel penalty,
           required final List<String>? integrationPenaltyTypes}) =
       _$MatchPenaltyStateImpl;
-
-  factory _MatchPenaltyState.fromJson(Map<String, dynamic> json) =
-      _$MatchPenaltyStateImpl.fromJson;
 
   @override
   bool get editMode;

@@ -14,19 +14,11 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-MatchImprovisationState _$MatchImprovisationStateFromJson(
-    Map<String, dynamic> json) {
-  return _MatchImprovisationState.fromJson(json);
-}
-
 /// @nodoc
 mixin _$MatchImprovisationState {
   ImprovisationModel get improvisation => throw _privateConstructorUsedError;
   bool get editMode => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
-
-  /// Serializes this MatchImprovisationState to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of MatchImprovisationState
   /// with the given fields replaced by the non-null parameter values.
@@ -42,8 +34,6 @@ abstract class $MatchImprovisationStateCopyWith<$Res> {
       _$MatchImprovisationStateCopyWithImpl<$Res, MatchImprovisationState>;
   @useResult
   $Res call({ImprovisationModel improvisation, bool editMode, int index});
-
-  $ImprovisationModelCopyWith<$Res> get improvisation;
 }
 
 /// @nodoc
@@ -81,16 +71,6 @@ class _$MatchImprovisationStateCopyWithImpl<$Res,
               as int,
     ) as $Val);
   }
-
-  /// Create a copy of MatchImprovisationState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ImprovisationModelCopyWith<$Res> get improvisation {
-    return $ImprovisationModelCopyWith<$Res>(_value.improvisation, (value) {
-      return _then(_value.copyWith(improvisation: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -103,9 +83,6 @@ abstract class _$$MatchImprovisationStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({ImprovisationModel improvisation, bool editMode, int index});
-
-  @override
-  $ImprovisationModelCopyWith<$Res> get improvisation;
 }
 
 /// @nodoc
@@ -145,15 +122,12 @@ class __$$MatchImprovisationStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$MatchImprovisationStateImpl implements _MatchImprovisationState {
   const _$MatchImprovisationStateImpl(
       {required this.improvisation,
       required this.editMode,
       required this.index});
-
-  factory _$MatchImprovisationStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MatchImprovisationStateImplFromJson(json);
 
   @override
   final ImprovisationModel improvisation;
@@ -179,7 +153,6 @@ class _$MatchImprovisationStateImpl implements _MatchImprovisationState {
             (identical(other.index, index) || other.index == index));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, improvisation, editMode, index);
 
@@ -191,13 +164,6 @@ class _$MatchImprovisationStateImpl implements _MatchImprovisationState {
   _$$MatchImprovisationStateImplCopyWith<_$MatchImprovisationStateImpl>
       get copyWith => __$$MatchImprovisationStateImplCopyWithImpl<
           _$MatchImprovisationStateImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MatchImprovisationStateImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _MatchImprovisationState implements MatchImprovisationState {
@@ -205,9 +171,6 @@ abstract class _MatchImprovisationState implements MatchImprovisationState {
       {required final ImprovisationModel improvisation,
       required final bool editMode,
       required final int index}) = _$MatchImprovisationStateImpl;
-
-  factory _MatchImprovisationState.fromJson(Map<String, dynamic> json) =
-      _$MatchImprovisationStateImpl.fromJson;
 
   @override
   ImprovisationModel get improvisation;

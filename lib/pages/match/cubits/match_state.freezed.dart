@@ -369,8 +369,6 @@ abstract class _$$MatchSuccessStateImplCopyWith<$Res> {
       {MatchModel match,
       int selectedImprovisationIndex,
       int selectedDurationIndex});
-
-  $MatchModelCopyWith<$Res> get match;
 }
 
 /// @nodoc
@@ -404,16 +402,6 @@ class __$$MatchSuccessStateImplCopyWithImpl<$Res>
           : selectedDurationIndex // ignore: cast_nullable_to_non_nullable
               as int,
     ));
-  }
-
-  /// Create a copy of MatchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MatchModelCopyWith<$Res> get match {
-    return $MatchModelCopyWith<$Res>(_value.match, (value) {
-      return _then(_value.copyWith(match: value));
-    });
   }
 }
 

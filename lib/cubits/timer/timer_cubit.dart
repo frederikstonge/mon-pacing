@@ -85,7 +85,7 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   Future<void> _onReceiveData(dynamic data) async {
-    final event = TimerModel.fromJson(data);
+    final event = TimerModelMapper.fromJson(data);
     if (state.timer != null) {
       _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
     }

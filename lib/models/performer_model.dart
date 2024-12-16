@@ -1,18 +1,20 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-part 'performer_model.freezed.dart';
-part 'performer_model.g.dart';
+part 'performer_model.mapper.dart';
 
-@freezed
+@MappableClass()
 @Embedded(ignore: {'copyWith'})
-class PerformerModel with _$PerformerModel {
-  const factory PerformerModel({
-    required int id,
-    required String name,
-    String? integrationEntityId,
-    String? integrationAdditionalData,
-  }) = _PerformerModel;
+class PerformerModel with PerformerModelMappable {
+  final int id;
+  final String name;
+  final String? integrationEntityId;
+  final String? integrationAdditionalData;
 
-  factory PerformerModel.fromJson(Map<String, dynamic> json) => _$PerformerModelFromJson(json);
+  const PerformerModel({
+    required this.id,
+    required this.name,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
+  });
 }

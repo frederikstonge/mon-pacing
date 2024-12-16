@@ -4,7 +4,6 @@ import '../../../models/match_team_model.dart';
 import '../../../models/penalty_model.dart';
 
 part 'match_penalty_state.freezed.dart';
-part 'match_penalty_state.g.dart';
 
 @freezed
 class MatchPenaltyState with _$MatchPenaltyState {
@@ -14,6 +13,4 @@ class MatchPenaltyState with _$MatchPenaltyState {
     required PenaltyModel penalty,
     required List<String>? integrationPenaltyTypes,
   }) = _MatchPenaltyState;
-
-  factory MatchPenaltyState.fromJson(Map<String, dynamic> json) => _$MatchPenaltyStateFromJson(json);
 }

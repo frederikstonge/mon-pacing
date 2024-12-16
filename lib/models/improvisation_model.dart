@@ -1,27 +1,36 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
 import 'improvisation_type.dart';
 
-part 'improvisation_model.freezed.dart';
-part 'improvisation_model.g.dart';
+part 'improvisation_model.mapper.dart';
 
-@freezed
+@MappableClass()
 @Embedded(ignore: {'copyWith'})
-class ImprovisationModel with _$ImprovisationModel {
-  const factory ImprovisationModel({
-    required int id,
-    required ImprovisationType type,
-    required String category,
-    required String theme,
-    required List<int> durationsInSeconds,
-    required String performers,
-    required String notes,
-    @Default(30) int timeBufferInSeconds,
-    @Default(30) int huddleTimerInSeconds,
-    String? integrationEntityId,
-    String? integrationAdditionalData,
-  }) = _ImprovisationModel;
+class ImprovisationModel with ImprovisationModelMappable {
+  final int id;
+  final ImprovisationType type;
+  final String category;
+  final String theme;
+  final List<int> durationsInSeconds;
+  final String performers;
+  final String notes;
+  final int timeBufferInSeconds;
+  final int huddleTimerInSeconds;
+  final String? integrationEntityId;
+  final String? integrationAdditionalData;
 
-  factory ImprovisationModel.fromJson(Map<String, dynamic> json) => _$ImprovisationModelFromJson(json);
+  const ImprovisationModel({
+    required this.id,
+    required this.type,
+    required this.category,
+    required this.theme,
+    required this.durationsInSeconds,
+    required this.performers,
+    required this.notes,
+    this.timeBufferInSeconds = 30,
+    this.huddleTimerInSeconds = 30,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
+  });
 }
