@@ -25,6 +25,17 @@ dart pub run build_runner build --delete-conflicting-outputs
 flutter gen-l10n
 ```
 
+### Splash Screen
+To generate splash screens, update images/flutter_native_splash.yaml and run :
+```bash
+dart run flutter_native_splash:create
+```
+
+### App Icon
+To generate splash screens, update images/icons_launcher.yaml and run :
+```bash
+dart run icons_launcher:create
+```
 
 ### Update flutter/app
 - Get the latest Flutter/dart SDKs
