@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../extensions/color_extensions.dart';
@@ -21,6 +21,10 @@ import 'match_integration_base.dart';
 class CitrusIntegration implements MatchIntegrationBase {
   static const int MinNumberOfImprovisations = 12;
   static const int MaxNumberOfImprovisations = 13;
+
+  final Dio client;
+
+  const CitrusIntegration({required this.client});
 
   @override
   String get integrationId => 'Citrus';
@@ -46,8 +50,8 @@ class CitrusIntegration implements MatchIntegrationBase {
     }
 
     final url = Uri.parse(data);
-    final response = await http.get(url);
-    final document = parse(response.body);
+    final response = await client.get<String>(url.toString());
+    final document = parse(response.data);
 
     final matchNameSelector = document.querySelector('.teamBoard');
     if (matchNameSelector == null) {
@@ -118,22 +122,25 @@ class CitrusIntegration implements MatchIntegrationBase {
     final newUrl = Uri.https(url.authority, '/Citrus/SaveToDB/');
     final dataString = _generateExportData(match);
 
-    final response = await http.post(
-      newUrl,
-      body: jsonEncode({
+    final response = await client.post(
+      newUrl.toString(),
+      data: jsonEncode({
         'userID': 'MonPacing',
         'matchID': int.parse(match.integrationEntityId!),
         'dataString': dataString,
       }),
-      headers: {
-        'X-Csrftoken': exportData['csrfToken'],
-        'Referer': urlString,
-        'Content-Type': 'application/json',
-        'Cookie': 'csrftoken=${exportData['csrfToken']}',
-        'Origin': url.origin,
-      },
+      options: Options(
+        headers: {
+          'X-Csrftoken': exportData['csrfToken'],
+          'Referer': urlString,
+          'Content-Type': 'application/json',
+          'Cookie': 'csrftoken=${exportData['csrfToken']}',
+          'Origin': url.origin,
+        },
+      ),
     );
-    final isSuccessful = response.statusCode >= 200 && response.statusCode < 300;
+
+    final isSuccessful = response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300;
     if (isSuccessful) {
       await launchUrl(url);
     }
@@ -142,10 +149,42 @@ class CitrusIntegration implements MatchIntegrationBase {
   }
 
   static String _sanitize(String input) {
-    return input.replaceAll('\n', '').replaceAll('\r', '').replaceAll(RegExp(r'\s+'), ' ').trim();
+    return input.replaceAll('\r\n', ' ').replaceAll('\n', ' ').replaceAll('\r', ' ').replaceAll(RegExp(r'\s+'), ' ').trim();
   }
 
-  MatchTeamModel _extractTeam(Document document, int teamId, String selector, int color, int Function() getPerformerId) {
+  static Future<int?> _getTeamColor(Uri imageUrl) async {
+    try {
+      final colorScheme = await ColorScheme.fromImageProvider(provider: Image.network(imageUrl.toString()).image);
+      return colorScheme.primary.getIntvalue;
+    } catch (_) {}
+
+    return null;
+  }
+
+  static int _getRandomTeamColor({int? except}) {
+    final random = Random();
+    final colorList = Constants.colors.where((c) => c.getIntvalue != except).toList();
+    return colorList.elementAt(random.nextInt(colorList.length)).getIntvalue;
+  }
+
+  static String? _extractMatchID(Document document) {
+    final scriptTagSelector = document.querySelectorAll('script');
+    for (final scriptTag in scriptTagSelector) {
+      final regex = RegExp(r'let matchID = (.*?);');
+      final match = regex.firstMatch(scriptTag.innerHtml);
+      if (match?.group(1) != null) {
+        return match?.group(1);
+      }
+    }
+
+    return null;
+  }
+
+  static String _extractCsrfToken(Document document) {
+    return document.querySelector('meta[name=csrf-token]')!.attributes['content'].toString();
+  }
+
+  static MatchTeamModel _extractTeam(Document document, int teamId, String selector, int color, int Function() getPerformerId) {
     final teamSelector = document.querySelector(selector);
     if (teamSelector == null) {
       throw Exception();
@@ -178,52 +217,20 @@ class CitrusIntegration implements MatchIntegrationBase {
     );
   }
 
-  Future<int?> _getTeamColor(Uri imageUrl) async {
-    try {
-      final colorScheme = await ColorScheme.fromImageProvider(provider: Image.network(imageUrl.toString()).image);
-      return colorScheme.primary.getIntvalue;
-    } catch (_) {}
-
-    return null;
-  }
-
-  int _getRandomTeamColor({int? except}) {
-    final random = Random();
-    final colorList = Constants.colors.where((c) => c.getIntvalue != except).toList();
-    return colorList.elementAt(random.nextInt(colorList.length)).getIntvalue;
-  }
-
-  String? _extractMatchID(Document document) {
-    final scriptTagSelector = document.querySelectorAll('script');
-    for (final scriptTag in scriptTagSelector) {
-      final regex = RegExp(r'let matchID = (.*?);');
-      final match = regex.firstMatch(scriptTag.innerHtml);
-      if (match?.group(1) != null) {
-        return match?.group(1);
-      }
-    }
-
-    return null;
-  }
-
-  String _extractCsrfToken(Document document) {
-    return document.querySelector('meta[name=csrf-token]')!.attributes['content'].toString();
-  }
-
-  String _generateExportData(MatchModel match) {
+  static String _generateExportData(MatchModel match) {
     return '''[${match.teams.map(_generateTeamData).join(',')},${_generateImprovisationsData(match)},${_generatePenaltiesData(match)},[],${_generatePointsData(match)}]''';
   }
 
-  String _generateTeamData(MatchTeamModel team) {
+  static String _generateTeamData(MatchTeamModel team) {
     return '[${team.performers.map(_generatePerformerData).join(',')}]';
   }
 
-  String _generatePerformerData(PerformerModel performer) {
+  static String _generatePerformerData(PerformerModel performer) {
     final jsonData = jsonDecode(performer.integrationAdditionalData!);
     return '[\'${jsonData['role']}\',\'${jsonData['number']}\',\'${jsonData['pronoun']}\',\'${jsonData['name']}\']';
   }
 
-  String _generateImprovisationsData(MatchModel match) {
+  static String _generateImprovisationsData(MatchModel match) {
     return '[${match.improvisations.map((e) {
       final points = match.points.where((point) => point.improvisationId == e.id);
       var teamWhoWon = '';
@@ -240,14 +247,14 @@ class CitrusIntegration implements MatchIntegrationBase {
     }).join(',')}]';
   }
 
-  String _generatePenaltiesData(MatchModel match) {
+  static String _generatePenaltiesData(MatchModel match) {
     return '[${match.penalties.map((e) {
       final team = match.teams.firstWhere((team) => team.id == e.teamId);
       return '[\'${team.name.split(' - ').first}\',\'${e.type}\']';
     }).join(',')}]';
   }
 
-  String _generatePointsData(MatchModel match) {
+  static String _generatePointsData(MatchModel match) {
     return '[[${match.teams.map((t) {
       return match.getSubtotalPointsByTeamId(t.id);
     }).join(',')}],[${match.teams.map((t) {
