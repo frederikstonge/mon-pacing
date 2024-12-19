@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 import 'package:isar/isar.dart';
 
 part 'point_model.mapper.dart';
@@ -18,4 +19,9 @@ class PointModel with PointModelMappable {
     required this.improvisationId,
     required this.value,
   });
+
+  static JsonTypeConverter<PointModel, String> converter = TypeConverter.json(
+    fromJson: (json) => PointModelMapper.fromMap(json as Map<String, Object?>),
+    toJson: (pref) => pref.toMap(),
+  );
 }
