@@ -42,11 +42,16 @@ class PacingCubit extends Cubit<PacingState> {
 
   Future<void> addImprovisation() async {
     final improvisations = List<ImprovisationModel>.from(state.pacing!.copyWith().improvisations);
-    final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
+    final nextOrder = improvisations.isNotEmpty ? improvisations.map((e) => e.order).reduce(max) + 1 : 0;
     final nextType = ImprovisationType.values[improvisations.length % 2];
 
     final newImprovisation = ImprovisationModel(
-      id: nextId,
+      id: null,
+      order: nextOrder,
+      createdDate: DateTime.now(),
+      modifiedDate: DateTime.now(),
+      pacingId: state.pacing?.id,
+      matchId: null,
       type: nextType,
       durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
       category: '',
@@ -65,7 +70,7 @@ class PacingCubit extends Cubit<PacingState> {
     await pacingsCubit.edit(newPacing);
   }
 
-  Future<void> moveImprovisation(int oldIndex, int newIndex) async {
+  Future<void> moveImprovisation(int oldOrder, int newOrder) async {
     final improvisations = List<ImprovisationModel>.from(state.pacing!.copyWith().improvisations);
     final improvisation = improvisations.removeAt(oldIndex);
 

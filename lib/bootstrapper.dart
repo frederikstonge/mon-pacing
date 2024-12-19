@@ -11,7 +11,8 @@ import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/teams/teams_cubit.dart';
 import 'cubits/timer/timer_cubit.dart';
-import 'repositories/database_repository.dart';
+import 'repositories/app_database.dart';
+import 'repositories/legacy_database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 import 'repositories/teams_repository.dart';
@@ -48,22 +49,22 @@ class Bootstrapper extends StatelessWidget {
           ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => DatabaseRepository(),
+          create: (repositoryContext) => LegacyDatabaseRepository(),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => PacingsRepository(
-            databaseRepository: repositoryContext.read<DatabaseRepository>(),
+          create: (repositoryContext) => AppDatabase(
+            legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
+            toasterService: repositoryContext.read<ToasterService>(),
           ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => MatchesRepository(
-            databaseRepository: repositoryContext.read<DatabaseRepository>(),
-          ),
+          create: (repositoryContext) => repositoryContext.read<AppDatabase>().pacingsRepository,
         ),
         RepositoryProvider(
-          create: (repositoryContext) => TeamsRepository(
-            databaseRepository: repositoryContext.read<DatabaseRepository>(),
-          ),
+          create: (repositoryContext) => repositoryContext.read<AppDatabase>().matchesRepository,
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => repositoryContext.read<AppDatabase>().teamsRepository,
         ),
       ],
       child: MultiBlocProvider(

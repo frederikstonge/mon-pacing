@@ -119,7 +119,7 @@ class ExcelService {
       match.improvisations.forEachIndexed((index, element) {
         sheet.updateCell(
           excel.CellIndex.indexByColumnRow(columnIndex: index + 1, rowIndex: pointsRowIndex),
-          excel.IntCellValue(match.getImprovisationPointsByTeamId(element.id, team.id)),
+          excel.IntCellValue(match.getImprovisationPointsByTeamId(element.id!, team.id!)),
           cellStyle: excel.CellStyle(
             topBorder: border,
             bottomBorder: border,
@@ -131,7 +131,7 @@ class ExcelService {
 
       sheet.updateCell(
         excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 1, rowIndex: pointsRowIndex),
-        excel.IntCellValue(match.getSubtotalPointsByTeamId(team.id)),
+        excel.IntCellValue(match.getSubtotalPointsByTeamId(team.id!)),
         cellStyle: excel.CellStyle(
           topBorder: border,
           bottomBorder: border,
@@ -142,7 +142,7 @@ class ExcelService {
 
       sheet.updateCell(
         excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 2, rowIndex: pointsRowIndex++),
-        excel.IntCellValue(match.getTotalPointsByTeamId(team.id)),
+        excel.IntCellValue(match.getTotalPointsByTeamId(team.id!)),
         cellStyle: excel.CellStyle(
           bold: true,
           topBorder: border,

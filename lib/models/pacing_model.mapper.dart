@@ -21,16 +21,10 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
   @override
   final String id = 'PacingModel';
 
-  static int _$id(PacingModel v) => v.id;
+  static int? _$id(PacingModel v) => v.id;
   static const Field<PacingModel, int> _f$id = Field('id', _$id);
   static String _$name(PacingModel v) => v.name;
   static const Field<PacingModel, String> _f$name = Field('name', _$name);
-  static DateTime? _$createdDate(PacingModel v) => v.createdDate;
-  static const Field<PacingModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate);
-  static DateTime? _$modifiedDate(PacingModel v) => v.modifiedDate;
-  static const Field<PacingModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate);
   static List<ImprovisationModel> _$improvisations(PacingModel v) =>
       v.improvisations;
   static const Field<PacingModel, List<ImprovisationModel>> _f$improvisations =
@@ -41,6 +35,12 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
   static List<String> _$tags(PacingModel v) => v.tags;
   static const Field<PacingModel, List<String>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
+  static DateTime? _$createdDate(PacingModel v) => v.createdDate;
+  static const Field<PacingModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(PacingModel v) => v.modifiedDate;
+  static const Field<PacingModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
   static String? _$integrationId(PacingModel v) => v.integrationId;
   static const Field<PacingModel, String> _f$integrationId =
       Field('integrationId', _$integrationId, opt: true);
@@ -57,11 +57,11 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
   final MappableFields<PacingModel> fields = const {
     #id: _f$id,
     #name: _f$name,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
     #improvisations: _f$improvisations,
     #defaultNumberOfTeams: _f$defaultNumberOfTeams,
     #tags: _f$tags,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
     #integrationId: _f$integrationId,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
@@ -71,11 +71,11 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
     return PacingModel(
         id: data.dec(_f$id),
         name: data.dec(_f$name),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate),
         improvisations: data.dec(_f$improvisations),
         defaultNumberOfTeams: data.dec(_f$defaultNumberOfTeams),
         tags: data.dec(_f$tags),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate),
         integrationId: data.dec(_f$integrationId),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
@@ -141,11 +141,11 @@ abstract class PacingModelCopyWith<$R, $In extends PacingModel, $Out>
   $R call(
       {int? id,
       String? name,
-      DateTime? createdDate,
-      DateTime? modifiedDate,
       List<ImprovisationModel>? improvisations,
       int? defaultNumberOfTeams,
       List<String>? tags,
+      DateTime? createdDate,
+      DateTime? modifiedDate,
       String? integrationId,
       String? integrationEntityId,
       String? integrationAdditionalData});
@@ -175,25 +175,25 @@ class _PacingModelCopyWithImpl<$R, $Out>
           (v) => call(tags: v));
   @override
   $R call(
-          {int? id,
+          {Object? id = $none,
           String? name,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none,
           List<ImprovisationModel>? improvisations,
           int? defaultNumberOfTeams,
           List<String>? tags,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none,
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+        if (id != $none) #id: id,
         if (name != null) #name: name,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (improvisations != null) #improvisations: improvisations,
         if (defaultNumberOfTeams != null)
           #defaultNumberOfTeams: defaultNumberOfTeams,
         if (tags != null) #tags: tags,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (integrationId != $none) #integrationId: integrationId,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
@@ -204,12 +204,12 @@ class _PacingModelCopyWithImpl<$R, $Out>
   PacingModel $make(CopyWithData data) => PacingModel(
       id: data.get(#id, or: $value.id),
       name: data.get(#name, or: $value.name),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       improvisations: data.get(#improvisations, or: $value.improvisations),
       defaultNumberOfTeams:
           data.get(#defaultNumberOfTeams, or: $value.defaultNumberOfTeams),
       tags: data.get(#tags, or: $value.tags),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       integrationId: data.get(#integrationId, or: $value.integrationId),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),

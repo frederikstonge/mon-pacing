@@ -27,8 +27,8 @@ class PacingDetailCubit extends Cubit<PacingDetailState> {
                 : PacingModel(
                     id: 0,
                     name: '',
-                    createdDate: null,
-                    modifiedDate: null,
+                    createdDate: DateTime.now(),
+                    modifiedDate: DateTime.now(),
                     improvisations: [],
                     defaultNumberOfTeams: settingsCubit.state.defaultNumberOfTeams,
                   ),

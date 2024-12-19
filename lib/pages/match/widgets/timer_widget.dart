@@ -88,9 +88,9 @@ class TimerWidget extends StatelessWidget {
                 LoadingIconButton.tonal(
                   onPressed: isActive
                       ? () async => await context.read<TimerCubit>().start(
-                            match.id,
+                            match.id!,
                             match.name,
-                            improvisation.id,
+                            improvisation.id!,
                             durationIndex,
                             currentDuration,
                           )
@@ -104,9 +104,9 @@ class TimerWidget extends StatelessWidget {
                           ? () => context.read<TimerCubit>().resume()
                           : () => context.read<TimerCubit>().pause()
                       : () async => await context.read<TimerCubit>().start(
-                            match.id,
+                            match.id!,
                             match.name,
-                            improvisation.id,
+                            improvisation.id!,
                             durationIndex,
                             currentDuration,
                           ),

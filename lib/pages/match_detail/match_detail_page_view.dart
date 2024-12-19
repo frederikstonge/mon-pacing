@@ -156,7 +156,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                   : null,
                               getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
                               getAllTeams: (query, selectedTags) => context.read<TeamsRepository>().search(query, selectedTags),
-                              onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
+                              onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id!, team),
                               addPerformer: !matchDetailState.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
                               editPerformer: context.read<MatchDetailCubit>().editPerformer,
                               removePerformer: e.value.performers.length > 1 && !matchDetailState.editMode

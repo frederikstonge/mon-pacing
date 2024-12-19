@@ -20,10 +20,18 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
   @override
   final String id = 'PerformerModel';
 
-  static int _$id(PerformerModel v) => v.id;
+  static int? _$id(PerformerModel v) => v.id;
   static const Field<PerformerModel, int> _f$id = Field('id', _$id);
   static String _$name(PerformerModel v) => v.name;
   static const Field<PerformerModel, String> _f$name = Field('name', _$name);
+  static int? _$teamId(PerformerModel v) => v.teamId;
+  static const Field<PerformerModel, int> _f$teamId = Field('teamId', _$teamId);
+  static DateTime? _$createdDate(PerformerModel v) => v.createdDate;
+  static const Field<PerformerModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(PerformerModel v) => v.modifiedDate;
+  static const Field<PerformerModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
   static String? _$integrationEntityId(PerformerModel v) =>
       v.integrationEntityId;
   static const Field<PerformerModel, String> _f$integrationEntityId =
@@ -38,6 +46,9 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
   final MappableFields<PerformerModel> fields = const {
     #id: _f$id,
     #name: _f$name,
+    #teamId: _f$teamId,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
   };
@@ -46,6 +57,9 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
     return PerformerModel(
         id: data.dec(_f$id),
         name: data.dec(_f$name),
+        teamId: data.dec(_f$teamId),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
@@ -106,6 +120,9 @@ abstract class PerformerModelCopyWith<$R, $In extends PerformerModel, $Out>
   $R call(
       {int? id,
       String? name,
+      int? teamId,
+      DateTime? createdDate,
+      DateTime? modifiedDate,
       String? integrationEntityId,
       String? integrationAdditionalData});
   PerformerModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -122,13 +139,19 @@ class _PerformerModelCopyWithImpl<$R, $Out>
       PerformerModelMapper.ensureInitialized();
   @override
   $R call(
-          {int? id,
+          {Object? id = $none,
           String? name,
+          Object? teamId = $none,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+        if (id != $none) #id: id,
         if (name != null) #name: name,
+        if (teamId != $none) #teamId: teamId,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
         if (integrationAdditionalData != $none)
@@ -138,6 +161,9 @@ class _PerformerModelCopyWithImpl<$R, $Out>
   PerformerModel $make(CopyWithData data) => PerformerModel(
       id: data.get(#id, or: $value.id),
       name: data.get(#name, or: $value.name),
+      teamId: data.get(#teamId, or: $value.teamId),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),
       integrationAdditionalData: data.get(#integrationAdditionalData,

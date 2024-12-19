@@ -173,10 +173,10 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
         // Create pacing
         if (pacing != null && match == null) {
-          final pacingModel = await pacingsCubit.add(pacing);
-          if (pacingModel != null) {
+          final pacingId = await pacingsCubit.add(pacing);
+          if (pacingId != null) {
             await analyticsService.logIntegration(integration);
-            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+            router.goNamed(Routes.pacing, pathParameters: {'id': '$pacingId'});
             return;
           } else {
             toasterService.show(

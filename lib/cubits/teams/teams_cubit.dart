@@ -49,7 +49,7 @@ class TeamsCubit extends Cubit<TeamsState> {
 
   Future<void> delete(TeamModel model) async {
     try {
-      await teamsRepository.delete(model.id);
+      await teamsRepository.remove(model.id!);
       toasterService.show(title: Localizer.current.toasterTeamDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);

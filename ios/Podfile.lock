@@ -15,22 +15,22 @@ PODS:
   - Firebase/RemoteConfig (11.6.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 11.6.0)
-  - firebase_analytics (11.4.0):
+  - firebase_analytics (11.4.1):
     - Firebase/Analytics (= 11.6.0)
     - firebase_core
     - Flutter
-  - firebase_core (3.10.0):
+  - firebase_core (3.10.1):
     - Firebase/CoreOnly (= 11.6.0)
     - Flutter
-  - firebase_crashlytics (4.3.0):
+  - firebase_crashlytics (4.3.1):
     - Firebase/Crashlytics (= 11.6.0)
     - firebase_core
     - Flutter
-  - firebase_performance (0.10.1):
+  - firebase_performance (0.10.1-1):
     - Firebase/Performance (= 11.6.0)
     - firebase_core
     - Flutter
-  - firebase_remote_config (5.3.0):
+  - firebase_remote_config (5.3.1):
     - Firebase/RemoteConfig (= 11.6.0)
     - firebase_core
     - Flutter
@@ -213,6 +213,25 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - sqlite3 (3.48.0):
+    - sqlite3/common (= 3.48.0)
+  - sqlite3/common (3.48.0)
+  - sqlite3/dbstatvtab (3.48.0):
+    - sqlite3/common
+  - sqlite3/fts5 (3.48.0):
+    - sqlite3/common
+  - sqlite3/perf-threadsafe (3.48.0):
+    - sqlite3/common
+  - sqlite3/rtree (3.48.0):
+    - sqlite3/common
+  - sqlite3_flutter_libs (0.0.1):
+    - Flutter
+    - FlutterMacOS
+    - sqlite3 (~> 3.48.0)
+    - sqlite3/dbstatvtab
+    - sqlite3/fts5
+    - sqlite3/perf-threadsafe
+    - sqlite3/rtree
   - url_launcher_ios (0.0.1):
     - Flutter
   - wakelock_plus (0.0.1):
@@ -234,6 +253,7 @@ DEPENDENCIES:
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sqlite3_flutter_libs (from `.symlinks/plugins/sqlite3_flutter_libs/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
 
@@ -265,6 +285,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - PromisesSwift
+    - sqlite3
 
 EXTERNAL SOURCES:
   firebase_analytics:
@@ -297,6 +318,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sqlite3_flutter_libs:
+    :path: ".symlinks/plugins/sqlite3_flutter_libs/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   wakelock_plus:
@@ -304,11 +327,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 374a441a91ead896215703a674d58cdb3e9d772b
-  firebase_analytics: a5c6ef5a435d22870fe3cfdcb424f390f56ff752
-  firebase_core: 2337982fb78ee4d8d91e608b0a3d4f44346a93c8
-  firebase_crashlytics: 3b6a9a9cbdc5ab92afaf9b206e52c79c2321a0d4
-  firebase_performance: 15203ddb4a8ae30a08e1513f4ece0104f1b27e51
-  firebase_remote_config: 1250c62dcb0bb5a1333ea71d15eaff9183461308
+  firebase_analytics: 8ad276088e4f9ba7dfc8dd6be4ee93a29673dde1
+  firebase_core: d3deb82d05dac4bc13190f9d1770787fd6a1cda4
+  firebase_crashlytics: 4c7c77cf1825b70b031fef62e99441c3a423eaa2
+  firebase_performance: 96d93c5914325793c1f2d0202b187bc540aed7ac
+  firebase_remote_config: 6098e2aa252ed19471973710fdee82ae735b42a7
   FirebaseABTesting: 663ece168d2d65a31f71603d71937e326020a887
   FirebaseAnalytics: 7114c698cac995602e3b1b96663473e50d54d6e7
   FirebaseCore: 48b0dd707581cf9c1a1220da68223fb0a562afaa
@@ -344,6 +367,8 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  sqlite3: 3da10a59910c809fb584a93aa46a3f05b785e12e
+  sqlite3_flutter_libs: c26d86af4ad88f1465dc4e07e6dc6931eef228e4
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
   wakelock_plus: 04623e3f525556020ebd4034310f20fe7fda8b49
 

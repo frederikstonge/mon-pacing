@@ -12,10 +12,10 @@ import '../extensions/match_extensions.dart';
 import '../l10n/localizer.dart';
 import '../models/constants.dart';
 import '../models/match_model.dart';
-import '../models/match_team_model.dart';
 import '../models/pacing_model.dart';
 import '../models/penalties_impact_type.dart';
 import '../models/performer_model.dart';
+import '../models/team_model.dart';
 import 'match_integration_base.dart';
 
 class CitrusIntegration implements MatchIntegrationBase {
@@ -79,18 +79,17 @@ class CitrusIntegration implements MatchIntegrationBase {
 
     final penaltyTypes = document.querySelectorAll('form#addPunForm select#pun option').map((e) => e.text).where((e) => e.isNotEmpty).toList();
 
-    var performerId = 0;
     return MatchModel(
-      id: 0,
+      id: null,
       name: matchName,
-      createdDate: null,
-      modifiedDate: null,
+      createdDate: DateTime.now(),
+      modifiedDate: DateTime.now(),
       tags: [
         integrationId,
       ],
       teams: [
-        _extractTeam(document, 1, '#alignement1', team1Color!, () => performerId++),
-        _extractTeam(document, 2, '#alignement2', team2Color!, () => performerId++),
+        _extractTeam(document, 1, '#alignement1', team1Color!),
+        _extractTeam(document, 2, '#alignement2', team2Color!),
       ],
       improvisations: List.from(pacing.improvisations),
       penalties: [],
@@ -184,7 +183,7 @@ class CitrusIntegration implements MatchIntegrationBase {
     return document.head!.querySelector('meta[name=csrf-token]')!.attributes['content'].toString();
   }
 
-  static MatchTeamModel _extractTeam(Document document, int teamId, String selector, int color, int Function() getPerformerId) {
+  static TeamModel _extractTeam(Document document, int teamId, String selector, int color) {
     final teamSelector = document.querySelector(selector);
     if (teamSelector == null) {
       throw Exception();
@@ -202,18 +201,24 @@ class CitrusIntegration implements MatchIntegrationBase {
         'name': _sanitize(data[3].text),
       };
       return PerformerModel(
+        id: null,
+        createdDate: DateTime.now(),
+        modifiedDate: DateTime.now(),
         name: performerName,
-        id: getPerformerId(),
+        teamId: 0,
         integrationAdditionalData: jsonEncode(metadata),
       );
     }).toList();
 
-    return MatchTeamModel(
-      id: teamId,
+    return TeamModel(
+      id: null,
       name: teamName,
+      createdDate: DateTime.now(),
+      modifiedDate: DateTime.now(),
       color: color,
       performers: performers,
       integrationEntityId: 'team$teamId',
+      matchId: null,
     );
   }
 
@@ -221,7 +226,7 @@ class CitrusIntegration implements MatchIntegrationBase {
     return '''[${match.teams.map(_generateTeamData).join(',')},${_generateImprovisationsData(match)},${_generatePenaltiesData(match)},[],${_generatePointsData(match)}]''';
   }
 
-  static String _generateTeamData(MatchTeamModel team) {
+  static String _generateTeamData(TeamModel team) {
     return '[${team.performers.map(_generatePerformerData).join(',')}]';
   }
 
@@ -256,11 +261,11 @@ class CitrusIntegration implements MatchIntegrationBase {
 
   static String _generatePointsData(MatchModel match) {
     return '[[${match.teams.map((t) {
-      return match.getSubtotalPointsByTeamId(t.id);
+      return match.getSubtotalPointsByTeamId(t.id!);
     }).join(',')}],[${match.teams.map((t) {
-      return match.getTotalPenaltyValuesByTeamId(t.id);
+      return match.getTotalPenaltyValuesByTeamId(t.id!);
     }).join(',')}],[${match.teams.map((t) {
-      return match.getTotalPointsByTeamId(t.id);
+      return match.getTotalPointsByTeamId(t.id!);
     }).join(',')}]]';
   }
 }

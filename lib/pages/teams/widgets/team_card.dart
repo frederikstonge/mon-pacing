@@ -81,7 +81,7 @@ class TeamCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    TagsDisplay(tags: team.tags),
+                    TagsDisplay(tags: team.tags!),
                     Text(
                       S.of(context).performerCount(count: team.performers.length),
                       maxLines: 1,
