@@ -11,7 +11,7 @@ import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/teams/teams_cubit.dart';
 import 'cubits/timer/timer_cubit.dart';
-import 'repositories/database_repository.dart';
+import 'repositories/legacy_database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 import 'repositories/teams_repository.dart';
@@ -66,27 +66,27 @@ class Bootstrapper extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(
-            () => DatabaseRepository(),
+            () => LegacyDatabaseRepository(),
           ),
         ),
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(
             () => PacingsRepository(
-              databaseRepository: repositoryContext.read<DatabaseRepository>(),
+              databaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
             ),
           ),
         ),
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(
             () => MatchesRepository(
-              databaseRepository: repositoryContext.read<DatabaseRepository>(),
+              databaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
             ),
           ),
         ),
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(
             () => TeamsRepository(
-              databaseRepository: repositoryContext.read<DatabaseRepository>(),
+              databaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
             ),
           ),
         ),

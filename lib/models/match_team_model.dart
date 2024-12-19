@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 import 'package:isar/isar.dart';
 
 import 'performer_model.dart';
@@ -24,4 +25,9 @@ class MatchTeamModel with MatchTeamModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
+
+  static JsonTypeConverter<MatchTeamModel, String> converter = TypeConverter.json(
+    fromJson: (json) => MatchTeamModelMapper.fromMap(json as Map<String, Object?>),
+    toJson: (pref) => pref.toMap(),
+  );
 }
