@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 import 'package:isar/isar.dart';
 
 import 'improvisation_type.dart';
@@ -34,4 +35,9 @@ class ImprovisationModel with ImprovisationModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
+
+  static JsonTypeConverter<ImprovisationModel, String> converter = TypeConverter.json(
+    fromJson: (json) => ImprovisationModelMapper.fromMap(json as Map<String, Object?>),
+    toJson: (pref) => pref.toMap(),
+  );
 }

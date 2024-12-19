@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 import 'package:isar/isar.dart';
 
 part 'penalty_model.mapper.dart';
@@ -22,4 +23,9 @@ class PenaltyModel with PenaltyModelMappable {
     required this.teamId,
     required this.improvisationId,
   });
+
+  static JsonTypeConverter<PenaltyModel, String> converter = TypeConverter.json(
+    fromJson: (json) => PenaltyModelMapper.fromMap(json as Map<String, Object?>),
+    toJson: (pref) => pref.toMap(),
+  );
 }
