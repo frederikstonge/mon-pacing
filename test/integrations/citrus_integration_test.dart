@@ -9,11 +9,11 @@ import 'package:mon_pacing/models/improvisation_type.dart';
 import 'package:mon_pacing/models/pacing_model.dart';
 
 void main() {
-  CitrusIntegration? citrusIntegration;
-  DioAdapter? dioAdapter;
-
   group('Citrus static data', () {
-    final url = 'https://test.com/citrus';
+    const url = 'https://test.com/citrus';
+    late CitrusIntegration citrusIntegration;
+    late DioAdapter dioAdapter;
+
     setUp(() {
       final dio = Dio(BaseOptions());
       dioAdapter = DioAdapter(dio: dio);
@@ -21,11 +21,11 @@ void main() {
     });
 
     test('integrationIsValid should return true if path starts with integrationId', () {
-      expect(citrusIntegration!.integrationIsValid(url), isTrue);
+      expect(citrusIntegration.integrationIsValid(url), isTrue);
     });
 
     test('integrationIsValid should return false if path doesn\'t starts with integrationId', () {
-      expect(citrusIntegration!.integrationIsValid('https://test.com/citron'), isFalse);
+      expect(citrusIntegration.integrationIsValid('https://test.com/citron'), isFalse);
     });
 
     test('getMatch should throw an exception if improvisation length is lower than ${CitrusIntegration.MinNumberOfImprovisations}', () async {
@@ -48,7 +48,7 @@ void main() {
         ),
       );
 
-      expect(() async => await citrusIntegration!.getMatch(url, pacing), throwsA(isA<Exception>()));
+      expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
     });
 
     test('getMatch should throw an exception if improvisation length is higher than ${CitrusIntegration.MaxNumberOfImprovisations}', () async {
@@ -71,12 +71,10 @@ void main() {
         ),
       );
 
-      expect(() async => await citrusIntegration!.getMatch(url, pacing), throwsA(isA<Exception>()));
+      expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
     });
 
     test('getMatch should return match when data is good', () async {
-      final url = 'https://test.com/citrus';
-
       final pacing = PacingModel(
         id: 1,
         name: 'Pacing',
@@ -97,14 +95,15 @@ void main() {
       );
 
       final html = await File('./test/integrations/static_data.html').readAsString();
-      dioAdapter!.onGet(url, (server) => server.reply(200, html, delay: const Duration(seconds: 1)));
+      dioAdapter.onGet(url, (server) => server.reply(200, html, delay: const Duration(seconds: 1)));
 
-      // final match = await citrusIntegration!.getMatch(url, pacing);
-      expect(/*match*/ pacing, isNotNull);
+      final match = await citrusIntegration.getMatch(url, pacing);
+      expect(match, isNotNull);
     });
   });
 
   // group('Citrus web data', () {
+  //   late CitrusIntegration citrusIntegration;
   //   final url = 'https://test.com/citrus';
 
   //   setUp(() {
