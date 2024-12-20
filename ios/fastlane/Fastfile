@@ -79,6 +79,7 @@ platform :ios do
       skip_screenshots: false,
       overwrite_screenshots: true,
       skip_metadata: false,
+      reject_if_possible: true,
     )
   end
 
