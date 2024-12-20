@@ -99,28 +99,28 @@ class TimerTaskHandler extends TaskHandler {
     if (_timerModel == null) {
       _timerModel = event;
       _vibrationMap = {
-        for (var i = 1; i <= (event.durationInSeconds / 60).ceil(); i++) ...{
+        for (var i = 1; i < (event.durationInSeconds / 60).floor(); i++) ...{
           60 * i: false,
         },
-        if (event.durationInSeconds >= 30) ...{
+        if (event.durationInSeconds > 30) ...{
           30: false,
         },
-        if (event.durationInSeconds >= 10) ...{
+        if (event.durationInSeconds > 10) ...{
           10: false,
         },
-        if (event.durationInSeconds >= 5) ...{
+        if (event.durationInSeconds > 5) ...{
           5: false,
         },
-        if (event.durationInSeconds >= 4) ...{
+        if (event.durationInSeconds > 4) ...{
           4: false,
         },
-        if (event.durationInSeconds >= 3) ...{
+        if (event.durationInSeconds > 3) ...{
           3: false,
         },
-        if (event.durationInSeconds >= 2) ...{
+        if (event.durationInSeconds > 2) ...{
           2: false,
         },
-        if (event.durationInSeconds >= 1) ...{
+        if (event.durationInSeconds > 1) ...{
           1: false,
         },
       };

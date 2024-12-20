@@ -9,17 +9,17 @@ import UIKit
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
 
-    // flutter_foreground_service
-    SwiftFlutterForegroundTaskPlugin.setPluginRegistrantCallback(registerPlugins)
+    // START flutter_foreground_service
+     SwiftFlutterForegroundTaskPlugin.setPluginRegistrantCallback { registry in
+      GeneratedPluginRegistrant.register(with: registry)
+    }
+
     if #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
     }
 
+    // END flutter_foreground_service
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
-}
-
-// flutter_foreground_service
-func registerPlugins(registry: FlutterPluginRegistry) {
-  GeneratedPluginRegistrant.register(with: registry)
 }
