@@ -48,9 +48,12 @@ class TimerCubit extends Cubit<TimerState> {
       notificationTitle: matchName,
     );
 
+    final path = '/matches/details/$matchId?improvisationId=$improvisationId&durationIndex=$durationIndex';
+
     await FlutterForegroundTask.startService(
       notificationTitle: Localizer.current.notificationTitle,
       notificationText: '',
+      notificationInitialRoute: path,
       callback: startCallback,
     );
 
@@ -88,6 +91,19 @@ class TimerCubit extends Cubit<TimerState> {
     final event = TimerModelMapper.fromJson(data);
     if (state.timer != null) {
       _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
+    }
+
+    if (event.requestedStatus != null) {
+      switch (event.requestedStatus) {
+        case TimerStatus.started:
+          resume();
+          break;
+        case TimerStatus.paused:
+          pause();
+          break;
+        default:
+          break;
+      }
     }
 
     final remainingDuration = Duration(milliseconds: event.remainingMilliseconds);
