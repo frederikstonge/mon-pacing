@@ -5,6 +5,7 @@ import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../extensions/duration_extensions.dart';
+import '../l10n/localizer.dart';
 import '../models/timer_model.dart';
 import '../models/timer_status.dart';
 
@@ -69,6 +70,7 @@ class TimerTaskHandler extends TaskHandler {
   Stopwatch? _stopwatch;
   TimerModel? _timerModel;
   Timer? _timer;
+  Map<int, bool>? _vibrationMap;
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
@@ -82,7 +84,13 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   void onNotificationButtonPressed(String id) {
-    // Does nothing
+    if (id == 'resume') {
+      _timerModel = _timerModel?.copyWith(requestedStatus: TimerStatus.started);
+    }
+
+    if (id == 'pause') {
+      _timerModel = _timerModel?.copyWith(requestedStatus: TimerStatus.paused);
+    }
   }
 
   @override
@@ -90,13 +98,41 @@ class TimerTaskHandler extends TaskHandler {
     final event = TimerModelMapper.fromJson(data);
     if (_timerModel == null) {
       _timerModel = event;
+      _vibrationMap = {
+        for (var i = 1; i <= (event.durationInSeconds / 60).ceil(); i++) ...{
+          60 * i: false,
+        },
+        if (event.durationInSeconds >= 30) ...{
+          30: false,
+        },
+        if (event.durationInSeconds >= 10) ...{
+          10: false,
+        },
+        if (event.durationInSeconds >= 5) ...{
+          5: false,
+        },
+        if (event.durationInSeconds >= 4) ...{
+          4: false,
+        },
+        if (event.durationInSeconds >= 3) ...{
+          3: false,
+        },
+        if (event.durationInSeconds >= 2) ...{
+          2: false,
+        },
+        if (event.durationInSeconds >= 1) ...{
+          1: false,
+        },
+      };
       _stopwatch = Stopwatch();
       _timer = Timer.periodic(Duration(milliseconds: 100), onTick);
       _stopwatch!.start();
     } else if (event.status == TimerStatus.started) {
       _stopwatch!.start();
+      _timerModel = _timerModel?.copyWith(status: TimerStatus.started);
     } else if (event.status == TimerStatus.paused) {
       _stopwatch!.stop();
+      _timerModel = _timerModel?.copyWith(status: TimerStatus.paused);
     }
   }
 
@@ -107,44 +143,43 @@ class TimerTaskHandler extends TaskHandler {
     _stopwatch = null;
     _timer?.cancel();
     _timer = null;
-  }
-
-  @override
-  void onNotificationPressed() {
-    final matchId = _timerModel!.matchId;
-    final improvisationId = _timerModel!.improvisationId;
-    final durationIndex = _timerModel!.durationIndex;
-    final path = '/matches/details/$matchId?improvisationId=$improvisationId&durationIndex=$durationIndex';
-    FlutterForegroundTask.launchApp(path);
+    _vibrationMap = null;
   }
 
   void onTick(Timer timer) {
-    var timerModel = _timerModel?.copyWith();
-
-    if (timerModel == null) {
+    if (_timerModel == null) {
       return;
     }
 
-    final duration = Duration(seconds: timerModel.durationInSeconds);
+    final duration = Duration(seconds: _timerModel!.durationInSeconds);
     final remainingMilliseconds = duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
-    timerModel = timerModel.copyWith(remainingMilliseconds: remainingMilliseconds);
-    FlutterForegroundTask.sendDataToMain(timerModel.toJson());
+    FlutterForegroundTask.sendDataToMain(_timerModel!.copyWith(remainingMilliseconds: remainingMilliseconds).toJson());
+
+    if (_timerModel!.requestedStatus != null) {
+      _timerModel = _timerModel!.copyWith(requestedStatus: null);
+    }
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
 
     if (remainingDuration.inSeconds >= 0) {
-      if (remainingDuration.inSeconds % 60 == 0 ||
-          remainingDuration.inSeconds == 30 ||
-          remainingDuration.inSeconds == 10 ||
-          remainingDuration.inSeconds <= 5) {
+      if (_vibrationMap![remainingDuration.inSeconds] == false) {
         unawaited(vibrate(HapticsType.light));
+        _vibrationMap![remainingDuration.inSeconds] = true;
       }
 
       unawaited(
         FlutterForegroundTask.updateService(
-          notificationTitle: timerModel.notificationTitle,
+          notificationTitle: _timerModel!.notificationTitle,
           notificationText: remainingDuration.toImprovDuration(),
+          notificationButtons: [
+            if (_timerModel!.status == TimerStatus.paused) ...[
+              NotificationButton(id: 'resume', text: Localizer.current.start),
+            ],
+            if (_timerModel!.status == TimerStatus.started) ...[
+              NotificationButton(id: 'pause', text: Localizer.current.pause),
+            ],
+          ],
         ),
       );
     }

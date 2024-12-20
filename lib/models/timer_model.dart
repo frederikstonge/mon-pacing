@@ -14,6 +14,7 @@ class TimerModel with TimerModelMappable {
   final int remainingMilliseconds;
   final bool hapticFeedback;
   final String notificationTitle;
+  final TimerStatus? requestedStatus;
 
   const TimerModel({
     required this.durationInSeconds,
@@ -24,5 +25,6 @@ class TimerModel with TimerModelMappable {
     required this.remainingMilliseconds,
     required this.hapticFeedback,
     required this.notificationTitle,
+    this.requestedStatus,
   });
 }
