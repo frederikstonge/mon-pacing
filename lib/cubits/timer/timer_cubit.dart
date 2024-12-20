@@ -54,6 +54,7 @@ class TimerCubit extends Cubit<TimerState> {
       notificationTitle: Localizer.current.notificationTitle,
       notificationText: '',
       notificationInitialRoute: path,
+      notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
       callback: startCallback,
     );
 

@@ -3,7 +3,7 @@ icons_launcher:
   platforms:
     android:
       enable: true
-      notification_image: "assets/ic_logo_adaptive.png"
+      notification_image: "assets/MonPacingLight.png"
       adaptive_foreground_image: "assets/ic_logo_adaptive.png"
       adaptive_background_color: "#FFFFFF"
     ios:

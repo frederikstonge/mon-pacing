@@ -41,6 +41,9 @@
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="Stopwatch timer"/>
         </service>
+        <meta-data
+        android:name="com.stongef.monpacing.NOTIFICATION_ICON"
+        android:resource="@drawable/ic_notification" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
