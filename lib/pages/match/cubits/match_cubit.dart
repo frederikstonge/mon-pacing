@@ -129,6 +129,7 @@ class MatchCubit extends Cubit<MatchState> {
       state.copyWith(
         status: MatchStatus.success,
         selectedImprovisationIndex: page,
+        selectedDurationIndex: 0,
       ),
     );
   }

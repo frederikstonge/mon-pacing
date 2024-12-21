@@ -98,10 +98,10 @@ class TimerCubit extends Cubit<TimerState> {
       switch (event.requestedStatus) {
         case TimerStatus.started:
           resume();
-          break;
+          return;
         case TimerStatus.paused:
           pause();
-          break;
+          return;
         default:
           break;
       }

@@ -43,6 +43,8 @@ class TimerWidget extends StatelessWidget {
         ...improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
       ];
 
+      final currentDuration = durations.elementAt(durationIndex);
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -74,9 +76,7 @@ class TimerWidget extends StatelessWidget {
           ],
           const SizedBox(height: 6),
           Text(
-            isActive
-                ? Duration(milliseconds: state.timer!.remainingMilliseconds).toImprovDuration()
-                : durations.elementAt(durationIndex).toImprovDuration(),
+            isActive ? Duration(milliseconds: state.timer!.remainingMilliseconds).toImprovDuration() : currentDuration.toImprovDuration(),
             style: Theme.of(context).textTheme.displayLarge,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -91,7 +91,7 @@ class TimerWidget extends StatelessWidget {
                           match.name,
                           improvisation.id,
                           durationIndex,
-                          durations.elementAt(durationIndex),
+                          currentDuration,
                         )
                     : null,
                 icon: const Icon(Icons.replay),
@@ -107,7 +107,7 @@ class TimerWidget extends StatelessWidget {
                           match.name,
                           improvisation.id,
                           durationIndex,
-                          durations.elementAt(durationIndex),
+                          currentDuration,
                         ),
                 icon: isActive
                     ? state.timer!.status == TimerStatus.paused
