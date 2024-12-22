@@ -3,8 +3,9 @@ import 'package:drift/drift.dart';
 import '../../models/improvisation_type.dart';
 import '../converters/int_list_converter.dart';
 import 'match_entity.dart';
+import 'pacing_entity.dart';
 
-class MatchImprovisationEntity extends Table {
+class ImprovisationEntity extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
   DateTimeColumn get createdDate => dateTime().withDefault(Constant(DateTime.now()))();
@@ -19,5 +20,6 @@ class MatchImprovisationEntity extends Table {
   IntColumn get huddleTimerInSeconds => integer()();
   TextColumn get integrationEntityId => text().nullable()();
   TextColumn get integrationAdditionalData => text().nullable()();
-  IntColumn get match => integer().references(MatchEntity, #id)();
+  IntColumn get pacing => integer().references(PacingEntity, #id).nullable()();
+  IntColumn get match => integer().references(MatchEntity, #id).nullable()();
 }

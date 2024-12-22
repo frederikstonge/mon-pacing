@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import '../../models/penalties_impact_type.dart';
 import '../converters/string_list_converter.dart';
 
 class MatchEntity extends Table {
@@ -7,10 +8,6 @@ class MatchEntity extends Table {
   TextColumn get name => text()();
   DateTimeColumn get createdDate => dateTime().withDefault(Constant(DateTime.now()))();
   DateTimeColumn get modifiedDate => dateTime().withDefault(Constant(DateTime.now()))();
-  TextColumn get teams => text().map(MatchTeamModel.converter)();
-  TextColumn get penalties => text().map(MatchTeamModel.converter)();
-  TextColumn get points => text().map(MatchTeamModel.converter)();
-  TextColumn get stars => text().map(MatchTeamModel.converter)();
   BoolColumn get enableStatistics => boolean().withDefault(const Constant(true))();
   BoolColumn get enablePenaltiesImpactPoints => boolean().withDefault(const Constant(true))();
   IntColumn get penaltiesImpactType => intEnum<PenaltiesImpactType>().withDefault(Constant(PenaltiesImpactType.addPoints.index))();
