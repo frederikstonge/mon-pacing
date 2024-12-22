@@ -27,29 +27,18 @@ class $PacingEntityTable extends PacingEntity
       const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+      'created_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
   static const VerificationMeta _modifiedDateMeta =
       const VerificationMeta('modifiedDate');
   @override
   late final GeneratedColumn<DateTime> modifiedDate = GeneratedColumn<DateTime>(
-      'modified_date', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
-  @override
-  late final GeneratedColumnWithTypeConverter<List<String>, String> tags =
-      GeneratedColumn<String>('tags', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($PacingEntityTable.$convertertags);
-  static const VerificationMeta _improvisationsMeta =
-      const VerificationMeta('improvisations');
-  @override
-  late final GeneratedColumnWithTypeConverter<ImprovisationModel, String>
-      improvisations = GeneratedColumn<String>(
-              'improvisations', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<ImprovisationModel>(
-              $PacingEntityTable.$converterimprovisations);
+      'modified_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
   static const VerificationMeta _defaultNumberOfTeamsMeta =
       const VerificationMeta('defaultNumberOfTeams');
   @override
@@ -82,8 +71,6 @@ class $PacingEntityTable extends PacingEntity
         name,
         createdDate,
         modifiedDate,
-        tags,
-        improvisations,
         defaultNumberOfTeams,
         integrationId,
         integrationEntityId,
@@ -120,8 +107,6 @@ class $PacingEntityTable extends PacingEntity
           modifiedDate.isAcceptableOrUnknown(
               data['modified_date']!, _modifiedDateMeta));
     }
-    context.handle(_tagsMeta, const VerificationResult.success());
-    context.handle(_improvisationsMeta, const VerificationResult.success());
     if (data.containsKey('default_number_of_teams')) {
       context.handle(
           _defaultNumberOfTeamsMeta,
@@ -161,15 +146,9 @@ class $PacingEntityTable extends PacingEntity
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      modifiedDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified_date']),
-      tags: $PacingEntityTable.$convertertags.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tags'])!),
-      improvisations: $PacingEntityTable.$converterimprovisations.fromSql(
-          attachedDatabase.typeMapping.read(
-              DriftSqlType.string, data['${effectivePrefix}improvisations'])!),
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
+      modifiedDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
       defaultNumberOfTeams: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}default_number_of_teams'])!,
       integrationId: attachedDatabase.typeMapping
@@ -186,21 +165,14 @@ class $PacingEntityTable extends PacingEntity
   $PacingEntityTable createAlias(String alias) {
     return $PacingEntityTable(attachedDatabase, alias);
   }
-
-  static JsonTypeConverter2<List<String>, String, String> $convertertags =
-      const TagsConverter();
-  static JsonTypeConverter2<ImprovisationModel, String, String>
-      $converterimprovisations = ImprovisationModel.converter;
 }
 
 class PacingEntityData extends DataClass
     implements Insertable<PacingEntityData> {
   final int id;
   final String name;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
-  final List<String> tags;
-  final ImprovisationModel improvisations;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
   final int defaultNumberOfTeams;
   final String? integrationId;
   final String? integrationEntityId;
@@ -208,10 +180,8 @@ class PacingEntityData extends DataClass
   const PacingEntityData(
       {required this.id,
       required this.name,
-      this.createdDate,
-      this.modifiedDate,
-      required this.tags,
-      required this.improvisations,
+      required this.createdDate,
+      required this.modifiedDate,
       required this.defaultNumberOfTeams,
       this.integrationId,
       this.integrationEntityId,
@@ -221,20 +191,8 @@ class PacingEntityData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    if (!nullToAbsent || createdDate != null) {
-      map['created_date'] = Variable<DateTime>(createdDate);
-    }
-    if (!nullToAbsent || modifiedDate != null) {
-      map['modified_date'] = Variable<DateTime>(modifiedDate);
-    }
-    {
-      map['tags'] =
-          Variable<String>($PacingEntityTable.$convertertags.toSql(tags));
-    }
-    {
-      map['improvisations'] = Variable<String>(
-          $PacingEntityTable.$converterimprovisations.toSql(improvisations));
-    }
+    map['created_date'] = Variable<DateTime>(createdDate);
+    map['modified_date'] = Variable<DateTime>(modifiedDate);
     map['default_number_of_teams'] = Variable<int>(defaultNumberOfTeams);
     if (!nullToAbsent || integrationId != null) {
       map['integration_id'] = Variable<String>(integrationId);
@@ -253,14 +211,8 @@ class PacingEntityData extends DataClass
     return PacingEntityCompanion(
       id: Value(id),
       name: Value(name),
-      createdDate: createdDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdDate),
-      modifiedDate: modifiedDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(modifiedDate),
-      tags: Value(tags),
-      improvisations: Value(improvisations),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
       defaultNumberOfTeams: Value(defaultNumberOfTeams),
       integrationId: integrationId == null && nullToAbsent
           ? const Value.absent()
@@ -281,12 +233,8 @@ class PacingEntityData extends DataClass
     return PacingEntityData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      modifiedDate: serializer.fromJson<DateTime?>(json['modifiedDate']),
-      tags: $PacingEntityTable.$convertertags
-          .fromJson(serializer.fromJson<String>(json['tags'])),
-      improvisations: $PacingEntityTable.$converterimprovisations
-          .fromJson(serializer.fromJson<String>(json['improvisations'])),
+      createdDate: serializer.fromJson<DateTime>(json['createdDate']),
+      modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       defaultNumberOfTeams:
           serializer.fromJson<int>(json['defaultNumberOfTeams']),
       integrationId: serializer.fromJson<String?>(json['integrationId']),
@@ -302,12 +250,8 @@ class PacingEntityData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'modifiedDate': serializer.toJson<DateTime?>(modifiedDate),
-      'tags': serializer
-          .toJson<String>($PacingEntityTable.$convertertags.toJson(tags)),
-      'improvisations': serializer.toJson<String>(
-          $PacingEntityTable.$converterimprovisations.toJson(improvisations)),
+      'createdDate': serializer.toJson<DateTime>(createdDate),
+      'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'defaultNumberOfTeams': serializer.toJson<int>(defaultNumberOfTeams),
       'integrationId': serializer.toJson<String?>(integrationId),
       'integrationEntityId': serializer.toJson<String?>(integrationEntityId),
@@ -319,10 +263,8 @@ class PacingEntityData extends DataClass
   PacingEntityData copyWith(
           {int? id,
           String? name,
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<DateTime?> modifiedDate = const Value.absent(),
-          List<String>? tags,
-          ImprovisationModel? improvisations,
+          DateTime? createdDate,
+          DateTime? modifiedDate,
           int? defaultNumberOfTeams,
           Value<String?> integrationId = const Value.absent(),
           Value<String?> integrationEntityId = const Value.absent(),
@@ -330,11 +272,8 @@ class PacingEntityData extends DataClass
       PacingEntityData(
         id: id ?? this.id,
         name: name ?? this.name,
-        createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        modifiedDate:
-            modifiedDate.present ? modifiedDate.value : this.modifiedDate,
-        tags: tags ?? this.tags,
-        improvisations: improvisations ?? this.improvisations,
+        createdDate: createdDate ?? this.createdDate,
+        modifiedDate: modifiedDate ?? this.modifiedDate,
         defaultNumberOfTeams: defaultNumberOfTeams ?? this.defaultNumberOfTeams,
         integrationId:
             integrationId.present ? integrationId.value : this.integrationId,
@@ -354,10 +293,6 @@ class PacingEntityData extends DataClass
       modifiedDate: data.modifiedDate.present
           ? data.modifiedDate.value
           : this.modifiedDate,
-      tags: data.tags.present ? data.tags.value : this.tags,
-      improvisations: data.improvisations.present
-          ? data.improvisations.value
-          : this.improvisations,
       defaultNumberOfTeams: data.defaultNumberOfTeams.present
           ? data.defaultNumberOfTeams.value
           : this.defaultNumberOfTeams,
@@ -380,8 +315,6 @@ class PacingEntityData extends DataClass
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('tags: $tags, ')
-          ..write('improvisations: $improvisations, ')
           ..write('defaultNumberOfTeams: $defaultNumberOfTeams, ')
           ..write('integrationId: $integrationId, ')
           ..write('integrationEntityId: $integrationEntityId, ')
@@ -396,8 +329,6 @@ class PacingEntityData extends DataClass
       name,
       createdDate,
       modifiedDate,
-      tags,
-      improvisations,
       defaultNumberOfTeams,
       integrationId,
       integrationEntityId,
@@ -410,8 +341,6 @@ class PacingEntityData extends DataClass
           other.name == this.name &&
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
-          other.tags == this.tags &&
-          other.improvisations == this.improvisations &&
           other.defaultNumberOfTeams == this.defaultNumberOfTeams &&
           other.integrationId == this.integrationId &&
           other.integrationEntityId == this.integrationEntityId &&
@@ -421,10 +350,8 @@ class PacingEntityData extends DataClass
 class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
   final Value<int> id;
   final Value<String> name;
-  final Value<DateTime?> createdDate;
-  final Value<DateTime?> modifiedDate;
-  final Value<List<String>> tags;
-  final Value<ImprovisationModel> improvisations;
+  final Value<DateTime> createdDate;
+  final Value<DateTime> modifiedDate;
   final Value<int> defaultNumberOfTeams;
   final Value<String?> integrationId;
   final Value<String?> integrationEntityId;
@@ -434,8 +361,6 @@ class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
     this.name = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
-    this.tags = const Value.absent(),
-    this.improvisations = const Value.absent(),
     this.defaultNumberOfTeams = const Value.absent(),
     this.integrationId = const Value.absent(),
     this.integrationEntityId = const Value.absent(),
@@ -446,22 +371,16 @@ class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
     required String name,
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
-    required List<String> tags,
-    required ImprovisationModel improvisations,
     this.defaultNumberOfTeams = const Value.absent(),
     this.integrationId = const Value.absent(),
     this.integrationEntityId = const Value.absent(),
     this.integrationAdditionalData = const Value.absent(),
-  })  : name = Value(name),
-        tags = Value(tags),
-        improvisations = Value(improvisations);
+  }) : name = Value(name);
   static Insertable<PacingEntityData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
-    Expression<String>? tags,
-    Expression<String>? improvisations,
     Expression<int>? defaultNumberOfTeams,
     Expression<String>? integrationId,
     Expression<String>? integrationEntityId,
@@ -472,8 +391,6 @@ class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
       if (name != null) 'name': name,
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
-      if (tags != null) 'tags': tags,
-      if (improvisations != null) 'improvisations': improvisations,
       if (defaultNumberOfTeams != null)
         'default_number_of_teams': defaultNumberOfTeams,
       if (integrationId != null) 'integration_id': integrationId,
@@ -487,10 +404,8 @@ class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
   PacingEntityCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<DateTime?>? createdDate,
-      Value<DateTime?>? modifiedDate,
-      Value<List<String>>? tags,
-      Value<ImprovisationModel>? improvisations,
+      Value<DateTime>? createdDate,
+      Value<DateTime>? modifiedDate,
       Value<int>? defaultNumberOfTeams,
       Value<String?>? integrationId,
       Value<String?>? integrationEntityId,
@@ -500,8 +415,6 @@ class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
       name: name ?? this.name,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
-      tags: tags ?? this.tags,
-      improvisations: improvisations ?? this.improvisations,
       defaultNumberOfTeams: defaultNumberOfTeams ?? this.defaultNumberOfTeams,
       integrationId: integrationId ?? this.integrationId,
       integrationEntityId: integrationEntityId ?? this.integrationEntityId,
@@ -524,15 +437,6 @@ class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
     }
     if (modifiedDate.present) {
       map['modified_date'] = Variable<DateTime>(modifiedDate.value);
-    }
-    if (tags.present) {
-      map['tags'] =
-          Variable<String>($PacingEntityTable.$convertertags.toSql(tags.value));
-    }
-    if (improvisations.present) {
-      map['improvisations'] = Variable<String>($PacingEntityTable
-          .$converterimprovisations
-          .toSql(improvisations.value));
     }
     if (defaultNumberOfTeams.present) {
       map['default_number_of_teams'] =
@@ -559,8 +463,6 @@ class PacingEntityCompanion extends UpdateCompanion<PacingEntityData> {
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('tags: $tags, ')
-          ..write('improvisations: $improvisations, ')
           ..write('defaultNumberOfTeams: $defaultNumberOfTeams, ')
           ..write('integrationId: $integrationId, ')
           ..write('integrationEntityId: $integrationEntityId, ')
@@ -594,54 +496,18 @@ class $MatchEntityTable extends MatchEntity
       const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+      'created_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
   static const VerificationMeta _modifiedDateMeta =
       const VerificationMeta('modifiedDate');
   @override
   late final GeneratedColumn<DateTime> modifiedDate = GeneratedColumn<DateTime>(
-      'modified_date', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
-  @override
-  late final GeneratedColumnWithTypeConverter<List<String>, String> tags =
-      GeneratedColumn<String>('tags', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($MatchEntityTable.$convertertags);
-  static const VerificationMeta _teamsMeta = const VerificationMeta('teams');
-  @override
-  late final GeneratedColumnWithTypeConverter<MatchTeamModel, String> teams =
-      GeneratedColumn<String>('teams', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<MatchTeamModel>($MatchEntityTable.$converterteams);
-  static const VerificationMeta _improvisationsMeta =
-      const VerificationMeta('improvisations');
-  @override
-  late final GeneratedColumnWithTypeConverter<MatchTeamModel, String>
-      improvisations = GeneratedColumn<String>(
-              'improvisations', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<MatchTeamModel>(
-              $MatchEntityTable.$converterimprovisations);
-  static const VerificationMeta _penaltiesMeta =
-      const VerificationMeta('penalties');
-  @override
-  late final GeneratedColumnWithTypeConverter<MatchTeamModel, String>
-      penalties = GeneratedColumn<String>('penalties', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<MatchTeamModel>($MatchEntityTable.$converterpenalties);
-  static const VerificationMeta _pointsMeta = const VerificationMeta('points');
-  @override
-  late final GeneratedColumnWithTypeConverter<MatchTeamModel, String> points =
-      GeneratedColumn<String>('points', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<MatchTeamModel>($MatchEntityTable.$converterpoints);
-  static const VerificationMeta _starsMeta = const VerificationMeta('stars');
-  @override
-  late final GeneratedColumnWithTypeConverter<MatchTeamModel, String> stars =
-      GeneratedColumn<String>('stars', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<MatchTeamModel>($MatchEntityTable.$converterstars);
+      'modified_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
   static const VerificationMeta _enableStatisticsMeta =
       const VerificationMeta('enableStatistics');
   @override
@@ -759,12 +625,6 @@ class $MatchEntityTable extends MatchEntity
         name,
         createdDate,
         modifiedDate,
-        tags,
-        teams,
-        improvisations,
-        penalties,
-        points,
-        stars,
         enableStatistics,
         enablePenaltiesImpactPoints,
         penaltiesImpactType,
@@ -810,12 +670,6 @@ class $MatchEntityTable extends MatchEntity
           modifiedDate.isAcceptableOrUnknown(
               data['modified_date']!, _modifiedDateMeta));
     }
-    context.handle(_tagsMeta, const VerificationResult.success());
-    context.handle(_teamsMeta, const VerificationResult.success());
-    context.handle(_improvisationsMeta, const VerificationResult.success());
-    context.handle(_penaltiesMeta, const VerificationResult.success());
-    context.handle(_pointsMeta, const VerificationResult.success());
-    context.handle(_starsMeta, const VerificationResult.success());
     if (data.containsKey('enable_statistics')) {
       context.handle(
           _enableStatisticsMeta,
@@ -908,27 +762,9 @@ class $MatchEntityTable extends MatchEntity
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      modifiedDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified_date']),
-      tags: $MatchEntityTable.$convertertags.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tags'])!),
-      teams: $MatchEntityTable.$converterteams.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}teams'])!),
-      improvisations: $MatchEntityTable.$converterimprovisations.fromSql(
-          attachedDatabase.typeMapping.read(
-              DriftSqlType.string, data['${effectivePrefix}improvisations'])!),
-      penalties: $MatchEntityTable.$converterpenalties.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}penalties'])!),
-      points: $MatchEntityTable.$converterpoints.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}points'])!),
-      stars: $MatchEntityTable.$converterstars.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}stars'])!),
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
+      modifiedDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
       enableStatistics: attachedDatabase.typeMapping.read(
           DriftSqlType.bool, data['${effectivePrefix}enable_statistics'])!,
       enablePenaltiesImpactPoints: attachedDatabase.typeMapping.read(
@@ -975,23 +811,11 @@ class $MatchEntityTable extends MatchEntity
     return $MatchEntityTable(attachedDatabase, alias);
   }
 
-  static JsonTypeConverter2<List<String>, String, String> $convertertags =
-      const TagsConverter();
-  static JsonTypeConverter2<MatchTeamModel, String, String> $converterteams =
-      MatchTeamModel.converter;
-  static JsonTypeConverter2<MatchTeamModel, String, String>
-      $converterimprovisations = MatchTeamModel.converter;
-  static JsonTypeConverter2<MatchTeamModel, String, String>
-      $converterpenalties = MatchTeamModel.converter;
-  static JsonTypeConverter2<MatchTeamModel, String, String> $converterpoints =
-      MatchTeamModel.converter;
-  static JsonTypeConverter2<MatchTeamModel, String, String> $converterstars =
-      MatchTeamModel.converter;
   static JsonTypeConverter2<PenaltiesImpactType, int, int>
       $converterpenaltiesImpactType =
       const EnumIndexConverter<PenaltiesImpactType>(PenaltiesImpactType.values);
   static JsonTypeConverter2<List<String>, String, String>
-      $converterintegrationPenaltyTypes = const TagsConverter();
+      $converterintegrationPenaltyTypes = const StringListConverter();
   static JsonTypeConverter2<List<String>?, String?, String?>
       $converterintegrationPenaltyTypesn =
       JsonTypeConverter2.asNullable($converterintegrationPenaltyTypes);
@@ -1000,14 +824,8 @@ class $MatchEntityTable extends MatchEntity
 class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
   final int id;
   final String name;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
-  final List<String> tags;
-  final MatchTeamModel teams;
-  final MatchTeamModel improvisations;
-  final MatchTeamModel penalties;
-  final MatchTeamModel points;
-  final MatchTeamModel stars;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
   final bool enableStatistics;
   final bool enablePenaltiesImpactPoints;
   final PenaltiesImpactType penaltiesImpactType;
@@ -1024,14 +842,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
   const MatchEntityData(
       {required this.id,
       required this.name,
-      this.createdDate,
-      this.modifiedDate,
-      required this.tags,
-      required this.teams,
-      required this.improvisations,
-      required this.penalties,
-      required this.points,
-      required this.stars,
+      required this.createdDate,
+      required this.modifiedDate,
       required this.enableStatistics,
       required this.enablePenaltiesImpactPoints,
       required this.penaltiesImpactType,
@@ -1050,36 +862,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    if (!nullToAbsent || createdDate != null) {
-      map['created_date'] = Variable<DateTime>(createdDate);
-    }
-    if (!nullToAbsent || modifiedDate != null) {
-      map['modified_date'] = Variable<DateTime>(modifiedDate);
-    }
-    {
-      map['tags'] =
-          Variable<String>($MatchEntityTable.$convertertags.toSql(tags));
-    }
-    {
-      map['teams'] =
-          Variable<String>($MatchEntityTable.$converterteams.toSql(teams));
-    }
-    {
-      map['improvisations'] = Variable<String>(
-          $MatchEntityTable.$converterimprovisations.toSql(improvisations));
-    }
-    {
-      map['penalties'] = Variable<String>(
-          $MatchEntityTable.$converterpenalties.toSql(penalties));
-    }
-    {
-      map['points'] =
-          Variable<String>($MatchEntityTable.$converterpoints.toSql(points));
-    }
-    {
-      map['stars'] =
-          Variable<String>($MatchEntityTable.$converterstars.toSql(stars));
-    }
+    map['created_date'] = Variable<DateTime>(createdDate);
+    map['modified_date'] = Variable<DateTime>(modifiedDate);
     map['enable_statistics'] = Variable<bool>(enableStatistics);
     map['enable_penalties_impact_points'] =
         Variable<bool>(enablePenaltiesImpactPoints);
@@ -1128,18 +912,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
     return MatchEntityCompanion(
       id: Value(id),
       name: Value(name),
-      createdDate: createdDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdDate),
-      modifiedDate: modifiedDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(modifiedDate),
-      tags: Value(tags),
-      teams: Value(teams),
-      improvisations: Value(improvisations),
-      penalties: Value(penalties),
-      points: Value(points),
-      stars: Value(stars),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
       enableStatistics: Value(enableStatistics),
       enablePenaltiesImpactPoints: Value(enablePenaltiesImpactPoints),
       penaltiesImpactType: Value(penaltiesImpactType),
@@ -1181,20 +955,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
     return MatchEntityData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      modifiedDate: serializer.fromJson<DateTime?>(json['modifiedDate']),
-      tags: $MatchEntityTable.$convertertags
-          .fromJson(serializer.fromJson<String>(json['tags'])),
-      teams: $MatchEntityTable.$converterteams
-          .fromJson(serializer.fromJson<String>(json['teams'])),
-      improvisations: $MatchEntityTable.$converterimprovisations
-          .fromJson(serializer.fromJson<String>(json['improvisations'])),
-      penalties: $MatchEntityTable.$converterpenalties
-          .fromJson(serializer.fromJson<String>(json['penalties'])),
-      points: $MatchEntityTable.$converterpoints
-          .fromJson(serializer.fromJson<String>(json['points'])),
-      stars: $MatchEntityTable.$converterstars
-          .fromJson(serializer.fromJson<String>(json['stars'])),
+      createdDate: serializer.fromJson<DateTime>(json['createdDate']),
+      modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       enableStatistics: serializer.fromJson<bool>(json['enableStatistics']),
       enablePenaltiesImpactPoints:
           serializer.fromJson<bool>(json['enablePenaltiesImpactPoints']),
@@ -1229,20 +991,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'modifiedDate': serializer.toJson<DateTime?>(modifiedDate),
-      'tags': serializer
-          .toJson<String>($MatchEntityTable.$convertertags.toJson(tags)),
-      'teams': serializer
-          .toJson<String>($MatchEntityTable.$converterteams.toJson(teams)),
-      'improvisations': serializer.toJson<String>(
-          $MatchEntityTable.$converterimprovisations.toJson(improvisations)),
-      'penalties': serializer.toJson<String>(
-          $MatchEntityTable.$converterpenalties.toJson(penalties)),
-      'points': serializer
-          .toJson<String>($MatchEntityTable.$converterpoints.toJson(points)),
-      'stars': serializer
-          .toJson<String>($MatchEntityTable.$converterstars.toJson(stars)),
+      'createdDate': serializer.toJson<DateTime>(createdDate),
+      'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'enableStatistics': serializer.toJson<bool>(enableStatistics),
       'enablePenaltiesImpactPoints':
           serializer.toJson<bool>(enablePenaltiesImpactPoints),
@@ -1273,14 +1023,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
   MatchEntityData copyWith(
           {int? id,
           String? name,
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<DateTime?> modifiedDate = const Value.absent(),
-          List<String>? tags,
-          MatchTeamModel? teams,
-          MatchTeamModel? improvisations,
-          MatchTeamModel? penalties,
-          MatchTeamModel? points,
-          MatchTeamModel? stars,
+          DateTime? createdDate,
+          DateTime? modifiedDate,
           bool? enableStatistics,
           bool? enablePenaltiesImpactPoints,
           PenaltiesImpactType? penaltiesImpactType,
@@ -1301,15 +1045,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
       MatchEntityData(
         id: id ?? this.id,
         name: name ?? this.name,
-        createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        modifiedDate:
-            modifiedDate.present ? modifiedDate.value : this.modifiedDate,
-        tags: tags ?? this.tags,
-        teams: teams ?? this.teams,
-        improvisations: improvisations ?? this.improvisations,
-        penalties: penalties ?? this.penalties,
-        points: points ?? this.points,
-        stars: stars ?? this.stars,
+        createdDate: createdDate ?? this.createdDate,
+        modifiedDate: modifiedDate ?? this.modifiedDate,
         enableStatistics: enableStatistics ?? this.enableStatistics,
         enablePenaltiesImpactPoints:
             enablePenaltiesImpactPoints ?? this.enablePenaltiesImpactPoints,
@@ -1352,14 +1089,6 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
       modifiedDate: data.modifiedDate.present
           ? data.modifiedDate.value
           : this.modifiedDate,
-      tags: data.tags.present ? data.tags.value : this.tags,
-      teams: data.teams.present ? data.teams.value : this.teams,
-      improvisations: data.improvisations.present
-          ? data.improvisations.value
-          : this.improvisations,
-      penalties: data.penalties.present ? data.penalties.value : this.penalties,
-      points: data.points.present ? data.points.value : this.points,
-      stars: data.stars.present ? data.stars.value : this.stars,
       enableStatistics: data.enableStatistics.present
           ? data.enableStatistics.value
           : this.enableStatistics,
@@ -1413,12 +1142,6 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('tags: $tags, ')
-          ..write('teams: $teams, ')
-          ..write('improvisations: $improvisations, ')
-          ..write('penalties: $penalties, ')
-          ..write('points: $points, ')
-          ..write('stars: $stars, ')
           ..write('enableStatistics: $enableStatistics, ')
           ..write('enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, ')
           ..write('penaltiesImpactType: $penaltiesImpactType, ')
@@ -1441,31 +1164,24 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
   }
 
   @override
-  int get hashCode => Object.hashAll([
-        id,
-        name,
-        createdDate,
-        modifiedDate,
-        tags,
-        teams,
-        improvisations,
-        penalties,
-        points,
-        stars,
-        enableStatistics,
-        enablePenaltiesImpactPoints,
-        penaltiesImpactType,
-        penaltiesRequiredToImpactPoints,
-        enableMatchExpulsion,
-        penaltiesRequiredToExpel,
-        integrationId,
-        integrationEntityId,
-        integrationAdditionalData,
-        integrationRestrictMaximumPointPerImprovisation,
-        integrationMinNumberOfImprovisations,
-        integrationMaxNumberOfImprovisations,
-        integrationPenaltyTypes
-      ]);
+  int get hashCode => Object.hash(
+      id,
+      name,
+      createdDate,
+      modifiedDate,
+      enableStatistics,
+      enablePenaltiesImpactPoints,
+      penaltiesImpactType,
+      penaltiesRequiredToImpactPoints,
+      enableMatchExpulsion,
+      penaltiesRequiredToExpel,
+      integrationId,
+      integrationEntityId,
+      integrationAdditionalData,
+      integrationRestrictMaximumPointPerImprovisation,
+      integrationMinNumberOfImprovisations,
+      integrationMaxNumberOfImprovisations,
+      integrationPenaltyTypes);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1474,12 +1190,6 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
           other.name == this.name &&
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
-          other.tags == this.tags &&
-          other.teams == this.teams &&
-          other.improvisations == this.improvisations &&
-          other.penalties == this.penalties &&
-          other.points == this.points &&
-          other.stars == this.stars &&
           other.enableStatistics == this.enableStatistics &&
           other.enablePenaltiesImpactPoints ==
               this.enablePenaltiesImpactPoints &&
@@ -1503,14 +1213,8 @@ class MatchEntityData extends DataClass implements Insertable<MatchEntityData> {
 class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
   final Value<int> id;
   final Value<String> name;
-  final Value<DateTime?> createdDate;
-  final Value<DateTime?> modifiedDate;
-  final Value<List<String>> tags;
-  final Value<MatchTeamModel> teams;
-  final Value<MatchTeamModel> improvisations;
-  final Value<MatchTeamModel> penalties;
-  final Value<MatchTeamModel> points;
-  final Value<MatchTeamModel> stars;
+  final Value<DateTime> createdDate;
+  final Value<DateTime> modifiedDate;
   final Value<bool> enableStatistics;
   final Value<bool> enablePenaltiesImpactPoints;
   final Value<PenaltiesImpactType> penaltiesImpactType;
@@ -1529,12 +1233,6 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
     this.name = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
-    this.tags = const Value.absent(),
-    this.teams = const Value.absent(),
-    this.improvisations = const Value.absent(),
-    this.penalties = const Value.absent(),
-    this.points = const Value.absent(),
-    this.stars = const Value.absent(),
     this.enableStatistics = const Value.absent(),
     this.enablePenaltiesImpactPoints = const Value.absent(),
     this.penaltiesImpactType = const Value.absent(),
@@ -1554,12 +1252,6 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
     required String name,
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
-    required List<String> tags,
-    required MatchTeamModel teams,
-    required MatchTeamModel improvisations,
-    required MatchTeamModel penalties,
-    required MatchTeamModel points,
-    required MatchTeamModel stars,
     this.enableStatistics = const Value.absent(),
     this.enablePenaltiesImpactPoints = const Value.absent(),
     this.penaltiesImpactType = const Value.absent(),
@@ -1573,24 +1265,12 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
     this.integrationMinNumberOfImprovisations = const Value.absent(),
     this.integrationMaxNumberOfImprovisations = const Value.absent(),
     this.integrationPenaltyTypes = const Value.absent(),
-  })  : name = Value(name),
-        tags = Value(tags),
-        teams = Value(teams),
-        improvisations = Value(improvisations),
-        penalties = Value(penalties),
-        points = Value(points),
-        stars = Value(stars);
+  }) : name = Value(name);
   static Insertable<MatchEntityData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
-    Expression<String>? tags,
-    Expression<String>? teams,
-    Expression<String>? improvisations,
-    Expression<String>? penalties,
-    Expression<String>? points,
-    Expression<String>? stars,
     Expression<bool>? enableStatistics,
     Expression<bool>? enablePenaltiesImpactPoints,
     Expression<int>? penaltiesImpactType,
@@ -1610,12 +1290,6 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
       if (name != null) 'name': name,
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
-      if (tags != null) 'tags': tags,
-      if (teams != null) 'teams': teams,
-      if (improvisations != null) 'improvisations': improvisations,
-      if (penalties != null) 'penalties': penalties,
-      if (points != null) 'points': points,
-      if (stars != null) 'stars': stars,
       if (enableStatistics != null) 'enable_statistics': enableStatistics,
       if (enablePenaltiesImpactPoints != null)
         'enable_penalties_impact_points': enablePenaltiesImpactPoints,
@@ -1649,14 +1323,8 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
   MatchEntityCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<DateTime?>? createdDate,
-      Value<DateTime?>? modifiedDate,
-      Value<List<String>>? tags,
-      Value<MatchTeamModel>? teams,
-      Value<MatchTeamModel>? improvisations,
-      Value<MatchTeamModel>? penalties,
-      Value<MatchTeamModel>? points,
-      Value<MatchTeamModel>? stars,
+      Value<DateTime>? createdDate,
+      Value<DateTime>? modifiedDate,
       Value<bool>? enableStatistics,
       Value<bool>? enablePenaltiesImpactPoints,
       Value<PenaltiesImpactType>? penaltiesImpactType,
@@ -1675,12 +1343,6 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
       name: name ?? this.name,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
-      tags: tags ?? this.tags,
-      teams: teams ?? this.teams,
-      improvisations: improvisations ?? this.improvisations,
-      penalties: penalties ?? this.penalties,
-      points: points ?? this.points,
-      stars: stars ?? this.stars,
       enableStatistics: enableStatistics ?? this.enableStatistics,
       enablePenaltiesImpactPoints:
           enablePenaltiesImpactPoints ?? this.enablePenaltiesImpactPoints,
@@ -1722,31 +1384,6 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
     }
     if (modifiedDate.present) {
       map['modified_date'] = Variable<DateTime>(modifiedDate.value);
-    }
-    if (tags.present) {
-      map['tags'] =
-          Variable<String>($MatchEntityTable.$convertertags.toSql(tags.value));
-    }
-    if (teams.present) {
-      map['teams'] = Variable<String>(
-          $MatchEntityTable.$converterteams.toSql(teams.value));
-    }
-    if (improvisations.present) {
-      map['improvisations'] = Variable<String>($MatchEntityTable
-          .$converterimprovisations
-          .toSql(improvisations.value));
-    }
-    if (penalties.present) {
-      map['penalties'] = Variable<String>(
-          $MatchEntityTable.$converterpenalties.toSql(penalties.value));
-    }
-    if (points.present) {
-      map['points'] = Variable<String>(
-          $MatchEntityTable.$converterpoints.toSql(points.value));
-    }
-    if (stars.present) {
-      map['stars'] = Variable<String>(
-          $MatchEntityTable.$converterstars.toSql(stars.value));
     }
     if (enableStatistics.present) {
       map['enable_statistics'] = Variable<bool>(enableStatistics.value);
@@ -1810,12 +1447,6 @@ class MatchEntityCompanion extends UpdateCompanion<MatchEntityData> {
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('tags: $tags, ')
-          ..write('teams: $teams, ')
-          ..write('improvisations: $improvisations, ')
-          ..write('penalties: $penalties, ')
-          ..write('points: $points, ')
-          ..write('stars: $stars, ')
           ..write('enableStatistics: $enableStatistics, ')
           ..write('enablePenaltiesImpactPoints: $enablePenaltiesImpactPoints, ')
           ..write('penaltiesImpactType: $penaltiesImpactType, ')
@@ -1862,35 +1493,26 @@ class $TeamEntityTable extends TeamEntity
       const VerificationMeta('createdDate');
   @override
   late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+      'created_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
   static const VerificationMeta _modifiedDateMeta =
       const VerificationMeta('modifiedDate');
   @override
   late final GeneratedColumn<DateTime> modifiedDate = GeneratedColumn<DateTime>(
-      'modified_date', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+      'modified_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
   static const VerificationMeta _colorMeta = const VerificationMeta('color');
   @override
   late final GeneratedColumn<int> color = GeneratedColumn<int>(
       'color', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _performersMeta =
-      const VerificationMeta('performers');
-  @override
-  late final GeneratedColumnWithTypeConverter<PerformerModel, String>
-      performers = GeneratedColumn<String>('performers', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<PerformerModel>($TeamEntityTable.$converterperformers);
-  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
-  @override
-  late final GeneratedColumnWithTypeConverter<List<String>, String> tags =
-      GeneratedColumn<String>('tags', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<String>>($TeamEntityTable.$convertertags);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, createdDate, modifiedDate, color, performers, tags];
+      [id, name, createdDate, modifiedDate, color];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1928,8 +1550,6 @@ class $TeamEntityTable extends TeamEntity
     } else if (isInserting) {
       context.missing(_colorMeta);
     }
-    context.handle(_performersMeta, const VerificationResult.success());
-    context.handle(_tagsMeta, const VerificationResult.success());
     return context;
   }
 
@@ -1944,16 +1564,11 @@ class $TeamEntityTable extends TeamEntity
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date']),
-      modifiedDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}modified_date']),
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
+      modifiedDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
       color: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}color'])!,
-      performers: $TeamEntityTable.$converterperformers.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}performers'])!),
-      tags: $TeamEntityTable.$convertertags.fromSql(attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tags'])!),
     );
   }
 
@@ -1961,49 +1576,28 @@ class $TeamEntityTable extends TeamEntity
   $TeamEntityTable createAlias(String alias) {
     return $TeamEntityTable(attachedDatabase, alias);
   }
-
-  static JsonTypeConverter2<PerformerModel, String, String>
-      $converterperformers = PerformerModel.converter;
-  static JsonTypeConverter2<List<String>, String, String> $convertertags =
-      const TagsConverter();
 }
 
 class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
   final int id;
   final String name;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
   final int color;
-  final PerformerModel performers;
-  final List<String> tags;
   const TeamEntityData(
       {required this.id,
       required this.name,
-      this.createdDate,
-      this.modifiedDate,
-      required this.color,
-      required this.performers,
-      required this.tags});
+      required this.createdDate,
+      required this.modifiedDate,
+      required this.color});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    if (!nullToAbsent || createdDate != null) {
-      map['created_date'] = Variable<DateTime>(createdDate);
-    }
-    if (!nullToAbsent || modifiedDate != null) {
-      map['modified_date'] = Variable<DateTime>(modifiedDate);
-    }
+    map['created_date'] = Variable<DateTime>(createdDate);
+    map['modified_date'] = Variable<DateTime>(modifiedDate);
     map['color'] = Variable<int>(color);
-    {
-      map['performers'] = Variable<String>(
-          $TeamEntityTable.$converterperformers.toSql(performers));
-    }
-    {
-      map['tags'] =
-          Variable<String>($TeamEntityTable.$convertertags.toSql(tags));
-    }
     return map;
   }
 
@@ -2011,15 +1605,9 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
     return TeamEntityCompanion(
       id: Value(id),
       name: Value(name),
-      createdDate: createdDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdDate),
-      modifiedDate: modifiedDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(modifiedDate),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
       color: Value(color),
-      performers: Value(performers),
-      tags: Value(tags),
     );
   }
 
@@ -2029,13 +1617,9 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
     return TeamEntityData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      createdDate: serializer.fromJson<DateTime?>(json['createdDate']),
-      modifiedDate: serializer.fromJson<DateTime?>(json['modifiedDate']),
+      createdDate: serializer.fromJson<DateTime>(json['createdDate']),
+      modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       color: serializer.fromJson<int>(json['color']),
-      performers: $TeamEntityTable.$converterperformers
-          .fromJson(serializer.fromJson<String>(json['performers'])),
-      tags: $TeamEntityTable.$convertertags
-          .fromJson(serializer.fromJson<String>(json['tags'])),
     );
   }
   @override
@@ -2044,33 +1628,24 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'createdDate': serializer.toJson<DateTime?>(createdDate),
-      'modifiedDate': serializer.toJson<DateTime?>(modifiedDate),
+      'createdDate': serializer.toJson<DateTime>(createdDate),
+      'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'color': serializer.toJson<int>(color),
-      'performers': serializer.toJson<String>(
-          $TeamEntityTable.$converterperformers.toJson(performers)),
-      'tags': serializer
-          .toJson<String>($TeamEntityTable.$convertertags.toJson(tags)),
     };
   }
 
   TeamEntityData copyWith(
           {int? id,
           String? name,
-          Value<DateTime?> createdDate = const Value.absent(),
-          Value<DateTime?> modifiedDate = const Value.absent(),
-          int? color,
-          PerformerModel? performers,
-          List<String>? tags}) =>
+          DateTime? createdDate,
+          DateTime? modifiedDate,
+          int? color}) =>
       TeamEntityData(
         id: id ?? this.id,
         name: name ?? this.name,
-        createdDate: createdDate.present ? createdDate.value : this.createdDate,
-        modifiedDate:
-            modifiedDate.present ? modifiedDate.value : this.modifiedDate,
+        createdDate: createdDate ?? this.createdDate,
+        modifiedDate: modifiedDate ?? this.modifiedDate,
         color: color ?? this.color,
-        performers: performers ?? this.performers,
-        tags: tags ?? this.tags,
       );
   TeamEntityData copyWithCompanion(TeamEntityCompanion data) {
     return TeamEntityData(
@@ -2082,9 +1657,6 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
           ? data.modifiedDate.value
           : this.modifiedDate,
       color: data.color.present ? data.color.value : this.color,
-      performers:
-          data.performers.present ? data.performers.value : this.performers,
-      tags: data.tags.present ? data.tags.value : this.tags,
     );
   }
 
@@ -2095,16 +1667,13 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('color: $color, ')
-          ..write('performers: $performers, ')
-          ..write('tags: $tags')
+          ..write('color: $color')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, createdDate, modifiedDate, color, performers, tags);
+  int get hashCode => Object.hash(id, name, createdDate, modifiedDate, color);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2113,27 +1682,21 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
           other.name == this.name &&
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
-          other.color == this.color &&
-          other.performers == this.performers &&
-          other.tags == this.tags);
+          other.color == this.color);
 }
 
 class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
   final Value<int> id;
   final Value<String> name;
-  final Value<DateTime?> createdDate;
-  final Value<DateTime?> modifiedDate;
+  final Value<DateTime> createdDate;
+  final Value<DateTime> modifiedDate;
   final Value<int> color;
-  final Value<PerformerModel> performers;
-  final Value<List<String>> tags;
   const TeamEntityCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     this.color = const Value.absent(),
-    this.performers = const Value.absent(),
-    this.tags = const Value.absent(),
   });
   TeamEntityCompanion.insert({
     this.id = const Value.absent(),
@@ -2141,20 +1704,14 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     required int color,
-    required PerformerModel performers,
-    required List<String> tags,
   })  : name = Value(name),
-        color = Value(color),
-        performers = Value(performers),
-        tags = Value(tags);
+        color = Value(color);
   static Insertable<TeamEntityData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
     Expression<int>? color,
-    Expression<String>? performers,
-    Expression<String>? tags,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2162,27 +1719,21 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
       if (color != null) 'color': color,
-      if (performers != null) 'performers': performers,
-      if (tags != null) 'tags': tags,
     });
   }
 
   TeamEntityCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<DateTime?>? createdDate,
-      Value<DateTime?>? modifiedDate,
-      Value<int>? color,
-      Value<PerformerModel>? performers,
-      Value<List<String>>? tags}) {
+      Value<DateTime>? createdDate,
+      Value<DateTime>? modifiedDate,
+      Value<int>? color}) {
     return TeamEntityCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
       color: color ?? this.color,
-      performers: performers ?? this.performers,
-      tags: tags ?? this.tags,
     );
   }
 
@@ -2204,14 +1755,6 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
     if (color.present) {
       map['color'] = Variable<int>(color.value);
     }
-    if (performers.present) {
-      map['performers'] = Variable<String>(
-          $TeamEntityTable.$converterperformers.toSql(performers.value));
-    }
-    if (tags.present) {
-      map['tags'] =
-          Variable<String>($TeamEntityTable.$convertertags.toSql(tags.value));
-    }
     return map;
   }
 
@@ -2222,9 +1765,7 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('color: $color, ')
-          ..write('performers: $performers, ')
-          ..write('tags: $tags')
+          ..write('color: $color')
           ..write(')'))
         .toString();
   }
@@ -2248,10 +1789,8 @@ typedef $$PacingEntityTableCreateCompanionBuilder = PacingEntityCompanion
     Function({
   Value<int> id,
   required String name,
-  Value<DateTime?> createdDate,
-  Value<DateTime?> modifiedDate,
-  required List<String> tags,
-  required ImprovisationModel improvisations,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
   Value<int> defaultNumberOfTeams,
   Value<String?> integrationId,
   Value<String?> integrationEntityId,
@@ -2261,10 +1800,8 @@ typedef $$PacingEntityTableUpdateCompanionBuilder = PacingEntityCompanion
     Function({
   Value<int> id,
   Value<String> name,
-  Value<DateTime?> createdDate,
-  Value<DateTime?> modifiedDate,
-  Value<List<String>> tags,
-  Value<ImprovisationModel> improvisations,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
   Value<int> defaultNumberOfTeams,
   Value<String?> integrationId,
   Value<String?> integrationEntityId,
@@ -2291,16 +1828,6 @@ class $$PacingEntityTableFilterComposer
 
   ColumnFilters<DateTime> get modifiedDate => $composableBuilder(
       column: $table.modifiedDate, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<List<String>, List<String>, String> get tags =>
-      $composableBuilder(
-          column: $table.tags,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<ImprovisationModel, ImprovisationModel, String>
-      get improvisations => $composableBuilder(
-          column: $table.improvisations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<int> get defaultNumberOfTeams => $composableBuilder(
       column: $table.defaultNumberOfTeams,
@@ -2340,13 +1867,6 @@ class $$PacingEntityTableOrderingComposer
       column: $table.modifiedDate,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get tags => $composableBuilder(
-      column: $table.tags, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get improvisations => $composableBuilder(
-      column: $table.improvisations,
-      builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<int> get defaultNumberOfTeams => $composableBuilder(
       column: $table.defaultNumberOfTeams,
       builder: (column) => ColumnOrderings(column));
@@ -2384,13 +1904,6 @@ class $$PacingEntityTableAnnotationComposer
 
   GeneratedColumn<DateTime> get modifiedDate => $composableBuilder(
       column: $table.modifiedDate, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<List<String>, String> get tags =>
-      $composableBuilder(column: $table.tags, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<ImprovisationModel, String>
-      get improvisations => $composableBuilder(
-          column: $table.improvisations, builder: (column) => column);
 
   GeneratedColumn<int> get defaultNumberOfTeams => $composableBuilder(
       column: $table.defaultNumberOfTeams, builder: (column) => column);
@@ -2433,10 +1946,8 @@ class $$PacingEntityTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<DateTime?> modifiedDate = const Value.absent(),
-            Value<List<String>> tags = const Value.absent(),
-            Value<ImprovisationModel> improvisations = const Value.absent(),
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
             Value<int> defaultNumberOfTeams = const Value.absent(),
             Value<String?> integrationId = const Value.absent(),
             Value<String?> integrationEntityId = const Value.absent(),
@@ -2447,8 +1958,6 @@ class $$PacingEntityTableTableManager extends RootTableManager<
             name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
-            tags: tags,
-            improvisations: improvisations,
             defaultNumberOfTeams: defaultNumberOfTeams,
             integrationId: integrationId,
             integrationEntityId: integrationEntityId,
@@ -2457,10 +1966,8 @@ class $$PacingEntityTableTableManager extends RootTableManager<
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String name,
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<DateTime?> modifiedDate = const Value.absent(),
-            required List<String> tags,
-            required ImprovisationModel improvisations,
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
             Value<int> defaultNumberOfTeams = const Value.absent(),
             Value<String?> integrationId = const Value.absent(),
             Value<String?> integrationEntityId = const Value.absent(),
@@ -2471,8 +1978,6 @@ class $$PacingEntityTableTableManager extends RootTableManager<
             name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
-            tags: tags,
-            improvisations: improvisations,
             defaultNumberOfTeams: defaultNumberOfTeams,
             integrationId: integrationId,
             integrationEntityId: integrationEntityId,
@@ -2504,14 +2009,8 @@ typedef $$MatchEntityTableCreateCompanionBuilder = MatchEntityCompanion
     Function({
   Value<int> id,
   required String name,
-  Value<DateTime?> createdDate,
-  Value<DateTime?> modifiedDate,
-  required List<String> tags,
-  required MatchTeamModel teams,
-  required MatchTeamModel improvisations,
-  required MatchTeamModel penalties,
-  required MatchTeamModel points,
-  required MatchTeamModel stars,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
   Value<bool> enableStatistics,
   Value<bool> enablePenaltiesImpactPoints,
   Value<PenaltiesImpactType> penaltiesImpactType,
@@ -2530,14 +2029,8 @@ typedef $$MatchEntityTableUpdateCompanionBuilder = MatchEntityCompanion
     Function({
   Value<int> id,
   Value<String> name,
-  Value<DateTime?> createdDate,
-  Value<DateTime?> modifiedDate,
-  Value<List<String>> tags,
-  Value<MatchTeamModel> teams,
-  Value<MatchTeamModel> improvisations,
-  Value<MatchTeamModel> penalties,
-  Value<MatchTeamModel> points,
-  Value<MatchTeamModel> stars,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
   Value<bool> enableStatistics,
   Value<bool> enablePenaltiesImpactPoints,
   Value<PenaltiesImpactType> penaltiesImpactType,
@@ -2573,36 +2066,6 @@ class $$MatchEntityTableFilterComposer
 
   ColumnFilters<DateTime> get modifiedDate => $composableBuilder(
       column: $table.modifiedDate, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<List<String>, List<String>, String> get tags =>
-      $composableBuilder(
-          column: $table.tags,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<MatchTeamModel, MatchTeamModel, String>
-      get teams => $composableBuilder(
-          column: $table.teams,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<MatchTeamModel, MatchTeamModel, String>
-      get improvisations => $composableBuilder(
-          column: $table.improvisations,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<MatchTeamModel, MatchTeamModel, String>
-      get penalties => $composableBuilder(
-          column: $table.penalties,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<MatchTeamModel, MatchTeamModel, String>
-      get points => $composableBuilder(
-          column: $table.points,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<MatchTeamModel, MatchTeamModel, String>
-      get stars => $composableBuilder(
-          column: $table.stars,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<bool> get enableStatistics => $composableBuilder(
       column: $table.enableStatistics,
@@ -2683,25 +2146,6 @@ class $$MatchEntityTableOrderingComposer
       column: $table.modifiedDate,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get tags => $composableBuilder(
-      column: $table.tags, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get teams => $composableBuilder(
-      column: $table.teams, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get improvisations => $composableBuilder(
-      column: $table.improvisations,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get penalties => $composableBuilder(
-      column: $table.penalties, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get points => $composableBuilder(
-      column: $table.points, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get stars => $composableBuilder(
-      column: $table.stars, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<bool> get enableStatistics => $composableBuilder(
       column: $table.enableStatistics,
       builder: (column) => ColumnOrderings(column));
@@ -2779,25 +2223,6 @@ class $$MatchEntityTableAnnotationComposer
 
   GeneratedColumn<DateTime> get modifiedDate => $composableBuilder(
       column: $table.modifiedDate, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<List<String>, String> get tags =>
-      $composableBuilder(column: $table.tags, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<MatchTeamModel, String> get teams =>
-      $composableBuilder(column: $table.teams, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<MatchTeamModel, String> get improvisations =>
-      $composableBuilder(
-          column: $table.improvisations, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<MatchTeamModel, String> get penalties =>
-      $composableBuilder(column: $table.penalties, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<MatchTeamModel, String> get points =>
-      $composableBuilder(column: $table.points, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<MatchTeamModel, String> get stars =>
-      $composableBuilder(column: $table.stars, builder: (column) => column);
 
   GeneratedColumn<bool> get enableStatistics => $composableBuilder(
       column: $table.enableStatistics, builder: (column) => column);
@@ -2877,14 +2302,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<DateTime?> modifiedDate = const Value.absent(),
-            Value<List<String>> tags = const Value.absent(),
-            Value<MatchTeamModel> teams = const Value.absent(),
-            Value<MatchTeamModel> improvisations = const Value.absent(),
-            Value<MatchTeamModel> penalties = const Value.absent(),
-            Value<MatchTeamModel> points = const Value.absent(),
-            Value<MatchTeamModel> stars = const Value.absent(),
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
             Value<bool> enableStatistics = const Value.absent(),
             Value<bool> enablePenaltiesImpactPoints = const Value.absent(),
             Value<PenaltiesImpactType> penaltiesImpactType =
@@ -2908,12 +2327,6 @@ class $$MatchEntityTableTableManager extends RootTableManager<
             name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
-            tags: tags,
-            teams: teams,
-            improvisations: improvisations,
-            penalties: penalties,
-            points: points,
-            stars: stars,
             enableStatistics: enableStatistics,
             enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
             penaltiesImpactType: penaltiesImpactType,
@@ -2934,14 +2347,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String name,
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<DateTime?> modifiedDate = const Value.absent(),
-            required List<String> tags,
-            required MatchTeamModel teams,
-            required MatchTeamModel improvisations,
-            required MatchTeamModel penalties,
-            required MatchTeamModel points,
-            required MatchTeamModel stars,
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
             Value<bool> enableStatistics = const Value.absent(),
             Value<bool> enablePenaltiesImpactPoints = const Value.absent(),
             Value<PenaltiesImpactType> penaltiesImpactType =
@@ -2965,12 +2372,6 @@ class $$MatchEntityTableTableManager extends RootTableManager<
             name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
-            tags: tags,
-            teams: teams,
-            improvisations: improvisations,
-            penalties: penalties,
-            points: points,
-            stars: stars,
             enableStatistics: enableStatistics,
             enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
             penaltiesImpactType: penaltiesImpactType,
@@ -3013,20 +2414,16 @@ typedef $$MatchEntityTableProcessedTableManager = ProcessedTableManager<
 typedef $$TeamEntityTableCreateCompanionBuilder = TeamEntityCompanion Function({
   Value<int> id,
   required String name,
-  Value<DateTime?> createdDate,
-  Value<DateTime?> modifiedDate,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
   required int color,
-  required PerformerModel performers,
-  required List<String> tags,
 });
 typedef $$TeamEntityTableUpdateCompanionBuilder = TeamEntityCompanion Function({
   Value<int> id,
   Value<String> name,
-  Value<DateTime?> createdDate,
-  Value<DateTime?> modifiedDate,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
   Value<int> color,
-  Value<PerformerModel> performers,
-  Value<List<String>> tags,
 });
 
 class $$TeamEntityTableFilterComposer
@@ -3052,16 +2449,6 @@ class $$TeamEntityTableFilterComposer
 
   ColumnFilters<int> get color => $composableBuilder(
       column: $table.color, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<PerformerModel, PerformerModel, String>
-      get performers => $composableBuilder(
-          column: $table.performers,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<List<String>, List<String>, String> get tags =>
-      $composableBuilder(
-          column: $table.tags,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
 }
 
 class $$TeamEntityTableOrderingComposer
@@ -3088,12 +2475,6 @@ class $$TeamEntityTableOrderingComposer
 
   ColumnOrderings<int> get color => $composableBuilder(
       column: $table.color, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get performers => $composableBuilder(
-      column: $table.performers, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get tags => $composableBuilder(
-      column: $table.tags, builder: (column) => ColumnOrderings(column));
 }
 
 class $$TeamEntityTableAnnotationComposer
@@ -3119,13 +2500,6 @@ class $$TeamEntityTableAnnotationComposer
 
   GeneratedColumn<int> get color =>
       $composableBuilder(column: $table.color, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<PerformerModel, String> get performers =>
-      $composableBuilder(
-          column: $table.performers, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<List<String>, String> get tags =>
-      $composableBuilder(column: $table.tags, builder: (column) => column);
 }
 
 class $$TeamEntityTableTableManager extends RootTableManager<
@@ -3156,11 +2530,9 @@ class $$TeamEntityTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<DateTime?> modifiedDate = const Value.absent(),
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
             Value<int> color = const Value.absent(),
-            Value<PerformerModel> performers = const Value.absent(),
-            Value<List<String>> tags = const Value.absent(),
           }) =>
               TeamEntityCompanion(
             id: id,
@@ -3168,17 +2540,13 @@ class $$TeamEntityTableTableManager extends RootTableManager<
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             color: color,
-            performers: performers,
-            tags: tags,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String name,
-            Value<DateTime?> createdDate = const Value.absent(),
-            Value<DateTime?> modifiedDate = const Value.absent(),
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
             required int color,
-            required PerformerModel performers,
-            required List<String> tags,
           }) =>
               TeamEntityCompanion.insert(
             id: id,
@@ -3186,8 +2554,6 @@ class $$TeamEntityTableTableManager extends RootTableManager<
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             color: color,
-            performers: performers,
-            tags: tags,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
