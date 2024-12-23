@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
-import '../../components/actions/loading_button.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
+import '../../components/bottom_sheet/bottom_sheet_scaffold.dart';
+import '../../components/buttons/loading_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/improvisation_detail/improvisation_detail.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';

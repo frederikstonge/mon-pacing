@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../actions/loading_button.dart';
+import '../buttons/loading_button.dart';
 
 class MessageBoxDialog {
   static Future<bool?> questionShow(BuildContext context, String question, String yesLabel, String noLabel) => showDialog<bool?>(

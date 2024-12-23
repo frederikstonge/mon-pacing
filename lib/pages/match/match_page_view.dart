@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../components/actions/loading_icon_button.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
+import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/match_menu/match_menu.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';

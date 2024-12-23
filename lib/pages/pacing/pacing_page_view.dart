@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
-import '../../components/actions/loading_icon_button.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
+import '../../components/buttons/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/pacing_menu/pacing_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';

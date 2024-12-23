@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_icon_button.dart';
+import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../models/match_team_model.dart';
 import '../../../models/star_model.dart';

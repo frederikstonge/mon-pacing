@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_button.dart';
+import '../../../components/buttons/loading_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/improvisation_detail/improvisation_detail.dart';
 import '../../../extensions/duration_extensions.dart';

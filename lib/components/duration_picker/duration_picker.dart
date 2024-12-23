@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../actions/loading_button.dart';
-import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../bottom_sheet/bottom_sheet_appbar.dart';
+import '../bottom_sheet/bottom_sheet_scaffold.dart';
+import '../buttons/loading_button.dart';
 
 class DurationPicker extends StatefulWidget {
   final Duration initialDuration;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../tooltip/custom_tooltip.dart';
+import '../custom_tooltip/custom_tooltip.dart';
 
 class TextHeader extends StatelessWidget {
   final String title;

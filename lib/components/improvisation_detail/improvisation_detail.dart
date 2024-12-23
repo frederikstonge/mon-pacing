@@ -6,14 +6,14 @@ import '../../extensions/duration_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
-import '../actions/loading_icon_button.dart';
-import '../bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../bottom_sheet/bottom_sheet_dialog.dart';
+import '../buttons/loading_icon_button.dart';
+import '../custom_tooltip/custom_tooltip.dart';
 import '../duration_picker/duration_picker.dart';
 import '../form/drop_down_element.dart';
 import '../form/text_field_element.dart';
-import '../search_dialog/categories_search.dart';
+import '../search/categories_search.dart';
 import '../settings_tile/settings_tile.dart';
-import '../tooltip/custom_tooltip.dart';
 import 'improvisation_durations.dart';
 
 class ImprovisationDetail extends StatefulWidget {

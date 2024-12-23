@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../../components/bottom_sheet/bottom_sheet_appbar.dart';
+import '../../../components/bottom_sheet/bottom_sheet_scaffold.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/theme_type.dart';
 

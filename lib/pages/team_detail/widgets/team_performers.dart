@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_icon_button.dart';
+import '../../../components/buttons/loading_icon_button.dart';
 import '../../../models/performer_model.dart';
 import '../../../validators/validator.dart';
 

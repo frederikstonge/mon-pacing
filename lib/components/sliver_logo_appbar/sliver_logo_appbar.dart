@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../models/theme_type.dart';
-import '../actions/loading_icon_button.dart';
+import '../buttons/loading_icon_button.dart';
 
 class SliverLogoAppbar extends StatelessWidget {
   static const toolbarHeight = kToolbarHeight + 8;

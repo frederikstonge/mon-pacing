@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_icon_button.dart';
-import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
+import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/color_picker/color_picker.dart';
 import '../../../components/custom_card/custom_card.dart';
-import '../../../components/search_dialog/teams_search.dart';
+import '../../../components/search/teams_search.dart';
 import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../extensions/color_extensions.dart';

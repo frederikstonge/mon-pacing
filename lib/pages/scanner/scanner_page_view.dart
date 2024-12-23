@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../components/search_dialog/pacings_search.dart';
+import '../../components/search/pacings_search.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../integrations/integration_base.dart';

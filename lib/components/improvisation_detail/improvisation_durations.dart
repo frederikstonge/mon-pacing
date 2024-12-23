@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../../extensions/duration_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../actions/loading_icon_button.dart';
-import '../bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../bottom_sheet/bottom_sheet_dialog.dart';
+import '../buttons/loading_icon_button.dart';
 import '../duration_picker/duration_picker.dart';
 
 class ImprovisationDurations extends StatelessWidget {

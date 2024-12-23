@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../actions/loading_icon_button.dart';
+import '../buttons/loading_icon_button.dart';
 
 class QuantityStepper extends StatefulWidget {
   final int initialValue;

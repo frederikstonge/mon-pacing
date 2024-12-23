@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
-import '../../components/actions/loading_button.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
+import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
+import '../../components/bottom_sheet/bottom_sheet_scaffold.dart';
+import '../../components/buttons/loading_button.dart';
 import '../../components/color_picker/color_picker.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/tags_field_element.dart';

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
+import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/display_language/display_language.dart';
 import '../../components/duration_picker/duration_picker.dart';
 import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
@@ -12,7 +13,6 @@ import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/text_header/text_header.dart';
 import '../../components/timer_banner/timer_banner.dart';
-import '../../components/tooltip/custom_tooltip.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../extensions/duration_extensions.dart';

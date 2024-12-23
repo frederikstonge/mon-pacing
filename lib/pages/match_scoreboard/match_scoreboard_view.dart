@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
+import '../../components/bottom_sheet/bottom_sheet_scaffold.dart';
 import '../../components/scoreboard/scoreboard.dart';
 import '../../models/match_model.dart';
 import 'widgets/score_detail.dart';

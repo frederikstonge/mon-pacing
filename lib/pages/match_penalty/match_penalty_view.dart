@@ -2,9 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../components/actions/loading_button.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../../components/bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
+import '../../components/bottom_sheet/bottom_sheet_scaffold.dart';
+import '../../components/buttons/loading_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/drop_down_element.dart';
 import '../../components/form/text_field_element.dart';

@@ -10,7 +10,7 @@ import '../../models/match_model.dart';
 import '../../models/timer_model.dart';
 import '../../pages/match/cubits/match_cubit.dart';
 import '../../router/routes.dart';
-import '../actions/loading_icon_button.dart';
+import '../buttons/loading_icon_button.dart';
 
 class TimerBanner extends StatelessWidget {
   final MatchModel? match;

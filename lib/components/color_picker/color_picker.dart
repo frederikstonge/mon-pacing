@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 import '../../models/constants.dart';
-import '../bottom_sheet_dialog/bottom_sheet_appbar.dart';
-import '../bottom_sheet_dialog/bottom_sheet_scaffold.dart';
+import '../bottom_sheet/bottom_sheet_appbar.dart';
+import '../bottom_sheet/bottom_sheet_scaffold.dart';
 
 class ColorPicker extends StatelessWidget {
   final Color initialColor;

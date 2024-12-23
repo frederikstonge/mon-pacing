@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_icon_button.dart';
-import '../../../components/bottom_sheet_dialog/bottom_sheet_dialog.dart';
+import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
+import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/pacing_menu/pacing_menu.dart';
 import '../../../components/tags_display/tags_display.dart';

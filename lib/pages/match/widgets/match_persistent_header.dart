@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/actions/loading_icon_button.dart';
+import '../../../components/buttons/loading_icon_button.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
 
