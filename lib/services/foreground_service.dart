@@ -96,8 +96,10 @@ class ForegroundService {
   }
 
   Future<void> stop() async {
-    await FlutterForegroundTask.stopService();
-    await WakelockPlus.disable();
+    if (await isRunning) {
+      await FlutterForegroundTask.stopService();
+      await WakelockPlus.disable();
+    }
   }
 }
 
@@ -162,10 +164,10 @@ class TimerTaskHandler extends TaskHandler {
       _stopwatch = Stopwatch();
       _timer = Timer.periodic(Duration(milliseconds: 100), onTick);
       _stopwatch!.start();
-    } else if (event.status == TimerStatus.started) {
+    } else if (event.status == TimerStatus.started && _timerModel!.status != TimerStatus.started) {
       _stopwatch!.start();
       _timerModel = _timerModel?.copyWith(status: TimerStatus.started);
-    } else if (event.status == TimerStatus.paused) {
+    } else if (event.status == TimerStatus.paused && _timerModel!.status != TimerStatus.paused) {
       _stopwatch!.stop();
       _timerModel = _timerModel?.copyWith(status: TimerStatus.paused);
     }
@@ -202,7 +204,9 @@ class TimerTaskHandler extends TaskHandler {
         unawaited(vibrate(HapticsType.light));
         _vibrationMap![remainingDuration.inSeconds] = true;
       }
+    }
 
+    if (_timer!.tick % 10 == 0) {
       unawaited(
         FlutterForegroundTask.updateService(
           notificationTitle: _timerModel!.notificationTitle,
