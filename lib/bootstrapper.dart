@@ -17,6 +17,7 @@ import 'repositories/pacings_repository.dart';
 import 'repositories/teams_repository.dart';
 import 'services/analytics_service.dart';
 import 'services/excel_service.dart';
+import 'services/foreground_service.dart';
 import 'services/integration_service.dart';
 import 'services/toaster_service.dart';
 
@@ -36,11 +37,6 @@ class Bootstrapper extends StatelessWidget {
       providers: [
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(
-            () => DatabaseRepository(),
-          ),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
             () => ToasterService(
               toastification: Toastification(),
             ),
@@ -58,9 +54,19 @@ class Bootstrapper extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(
+            () => ForegroundService(),
+          ),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => _createOrGetOverride(
             () => AnalyticsService(
               analytics: FirebaseAnalytics.instance,
             ),
+          ),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => _createOrGetOverride(
+            () => DatabaseRepository(),
           ),
         ),
         RepositoryProvider(
@@ -122,6 +128,7 @@ class Bootstrapper extends StatelessWidget {
               () => TimerCubit(
                 toasterService: blocContext.read<ToasterService>(),
                 settingsCubit: blocContext.read<SettingsCubit>(),
+                foregroundService: blocContext.read<ForegroundService>(),
               ),
             )..initialize(),
           ),

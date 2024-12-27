@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:toastification/toastification.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../l10n/localizer.dart';
 import '../../models/timer_model.dart';
@@ -14,17 +12,17 @@ import 'timer_state.dart';
 class TimerCubit extends Cubit<TimerState> {
   final SettingsCubit settingsCubit;
   final ToasterService toasterService;
+  final ForegroundService foregroundService;
 
   TimerCubit({
     required this.settingsCubit,
     required this.toasterService,
+    required this.foregroundService,
   }) : super(const TimerState());
 
   Future<void> initialize() async {
     await _requestPermissions();
-    initForegroundTask();
-    FlutterForegroundTask.initCommunicationPort();
-    FlutterForegroundTask.addTaskDataCallback(_onReceiveData);
+    foregroundService.init(taskDataCallback: _onReceiveData);
   }
 
   Future<void> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
@@ -33,8 +31,8 @@ class TimerCubit extends Cubit<TimerState> {
       return;
     }
 
-    if (await FlutterForegroundTask.isRunningService) {
-      await FlutterForegroundTask.stopService();
+    if (await foregroundService.isRunning) {
+      await foregroundService.stop();
     }
 
     final timer = TimerModel(
@@ -50,17 +48,7 @@ class TimerCubit extends Cubit<TimerState> {
 
     final path = '/matches/details/$matchId?improvisationId=$improvisationId&durationIndex=$durationIndex';
 
-    await FlutterForegroundTask.startService(
-      notificationTitle: Localizer.current.notificationTitle,
-      notificationText: '',
-      notificationInitialRoute: path,
-      notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
-      callback: startCallback,
-    );
-
-    if (settingsCubit.state.enableWakelock) {
-      await WakelockPlus.enable();
-    }
+    await foregroundService.start(path, enableWakelock: settingsCubit.state.enableWakelock);
 
     _updateTimer(timer);
   }
@@ -77,13 +65,12 @@ class TimerCubit extends Cubit<TimerState> {
 
   Future<void> stop() async {
     emit(const TimerState());
-    await FlutterForegroundTask.stopService();
-    await WakelockPlus.disable();
+    await foregroundService.stop();
   }
 
   @override
   Future<void> close() async {
-    FlutterForegroundTask.removeTaskDataCallback(_onReceiveData);
+    foregroundService.dispose(taskDataCallback: _onReceiveData);
     await stop();
     return await super.close();
   }
@@ -116,11 +103,11 @@ class TimerCubit extends Cubit<TimerState> {
 
   void _updateTimer(TimerModel timer) {
     emit(TimerState(timer: timer));
-    FlutterForegroundTask.sendDataToTask(timer.toJson());
+    foregroundService.sendDataToTask(timer.toJson());
   }
 
   Future<bool> _requestPermissions() async {
-    final notificationPermission = await requestNotificationPermission();
+    final notificationPermission = await foregroundService.requestNotificationPermission();
     if (!notificationPermission) {
       toasterService.show(
         type: ToastificationType.error,
@@ -130,7 +117,7 @@ class TimerCubit extends Cubit<TimerState> {
       return false;
     }
 
-    final ignoreBatteryOptimization = await requestIgnoreBatteryOptimization();
+    final ignoreBatteryOptimization = await foregroundService.requestIgnoreBatteryOptimization();
     if (!ignoreBatteryOptimization) {
       toasterService.show(
         type: ToastificationType.error,

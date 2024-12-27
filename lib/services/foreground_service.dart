@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../extensions/duration_extensions.dart';
 import '../l10n/localizer.dart';
@@ -14,56 +15,90 @@ void startCallback() {
   FlutterForegroundTask.setTaskHandler(TimerTaskHandler());
 }
 
-void initForegroundTask() {
-  FlutterForegroundTask.init(
-    androidNotificationOptions: AndroidNotificationOptions(
-      channelId: 'foreground_service',
-      channelName: 'Foreground Service Notification',
-      channelDescription: 'This notification appears when the foreground service is running.',
-      channelImportance: NotificationChannelImportance.LOW,
-      priority: NotificationPriority.LOW,
-    ),
-    iosNotificationOptions: const IOSNotificationOptions(
-      showNotification: false,
-      playSound: false,
-    ),
-    foregroundTaskOptions: ForegroundTaskOptions(
-      eventAction: ForegroundTaskEventAction.once(),
-      allowWakeLock: true,
-      autoRunOnBoot: false,
-      autoRunOnMyPackageReplaced: false,
-      allowWifiLock: false,
-    ),
-  );
-}
+class ForegroundService {
+  Future<bool> get isRunning => FlutterForegroundTask.isRunningService;
 
-Future<bool> requestNotificationPermission() async {
-  if (!Platform.isAndroid) {
+  void init({required Function(Object data) taskDataCallback}) {
+    FlutterForegroundTask.init(
+      androidNotificationOptions: AndroidNotificationOptions(
+        channelId: 'foreground_service',
+        channelName: 'Foreground Service Notification',
+        channelDescription: 'This notification appears when the foreground service is running.',
+        channelImportance: NotificationChannelImportance.LOW,
+        priority: NotificationPriority.LOW,
+      ),
+      iosNotificationOptions: const IOSNotificationOptions(
+        showNotification: false,
+        playSound: false,
+      ),
+      foregroundTaskOptions: ForegroundTaskOptions(
+        eventAction: ForegroundTaskEventAction.once(),
+        allowWakeLock: true,
+        autoRunOnBoot: false,
+        autoRunOnMyPackageReplaced: false,
+        allowWifiLock: false,
+      ),
+    );
+
+    FlutterForegroundTask.initCommunicationPort();
+    FlutterForegroundTask.addTaskDataCallback(taskDataCallback);
+  }
+
+  void dispose({required Function(Object data) taskDataCallback}) {
+    FlutterForegroundTask.removeTaskDataCallback(taskDataCallback);
+  }
+
+  void sendDataToTask(Object data) {
+    FlutterForegroundTask.sendDataToTask(data);
+  }
+
+  Future<bool> requestNotificationPermission() async {
+    if (!Platform.isAndroid) {
+      return true;
+    }
+
+    final NotificationPermission notificationPermissionStatus = await FlutterForegroundTask.checkNotificationPermission();
+    if (notificationPermissionStatus != NotificationPermission.granted) {
+      final notificationPermission = await FlutterForegroundTask.requestNotificationPermission();
+      if (notificationPermission != NotificationPermission.granted) {
+        return false;
+      }
+    }
+
     return true;
   }
 
-  final NotificationPermission notificationPermissionStatus = await FlutterForegroundTask.checkNotificationPermission();
-  if (notificationPermissionStatus != NotificationPermission.granted) {
-    final notificationPermission = await FlutterForegroundTask.requestNotificationPermission();
-    if (notificationPermission != NotificationPermission.granted) {
-      return false;
+  Future<bool> requestIgnoreBatteryOptimization() async {
+    if (!Platform.isAndroid) {
+      return true;
+    }
+
+    if (!await FlutterForegroundTask.isIgnoringBatteryOptimizations) {
+      final batteryOptimization = await FlutterForegroundTask.requestIgnoreBatteryOptimization();
+      return batteryOptimization;
+    }
+
+    return true;
+  }
+
+  Future<void> start(String initialRoute, {bool enableWakelock = false}) async {
+    await FlutterForegroundTask.startService(
+      notificationTitle: Localizer.current.notificationTitle,
+      notificationText: '',
+      notificationInitialRoute: initialRoute,
+      notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
+      callback: startCallback,
+    );
+
+    if (enableWakelock) {
+      await WakelockPlus.enable();
     }
   }
 
-  return true;
-}
-
-Future<bool> requestIgnoreBatteryOptimization() async {
-  if (!Platform.isAndroid) {
-    return true;
+  Future<void> stop() async {
+    await FlutterForegroundTask.stopService();
+    await WakelockPlus.disable();
   }
-
-  if (!await FlutterForegroundTask.isIgnoringBatteryOptimizations) {
-    final batteryOptimization = await FlutterForegroundTask.requestIgnoreBatteryOptimization();
-    return batteryOptimization;
-  }
-
-  return true;
 }
 
 class TimerTaskHandler extends TaskHandler {
