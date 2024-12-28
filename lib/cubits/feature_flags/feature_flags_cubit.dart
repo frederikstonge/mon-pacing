@@ -14,7 +14,7 @@ class FeatureFlagsCubit extends Cubit<FeatureFlagsState> {
     required this.remoteConfig,
   }) : super(FeatureFlagsState(status: FeatureFlagsStatus.initial)) {
     _subscription = remoteConfig.onConfigUpdated.listen((data) async {
-      await init();
+      await initialize();
     });
   }
 
@@ -24,7 +24,7 @@ class FeatureFlagsCubit extends Cubit<FeatureFlagsState> {
     await super.close();
   }
 
-  Future<void> init() async {
+  Future<void> initialize() async {
     try {
       emit(state.copyWith(status: FeatureFlagsStatus.loading));
       await remoteConfig.fetchAndActivate();

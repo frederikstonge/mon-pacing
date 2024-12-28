@@ -137,7 +137,7 @@ class Bootstrapper extends StatelessWidget {
               () => FeatureFlagsCubit(
                 remoteConfig: FirebaseRemoteConfig.instance,
               ),
-            )..init(),
+            )..initialize(),
           ),
         ],
         child: child,
