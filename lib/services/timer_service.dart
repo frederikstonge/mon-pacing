@@ -18,7 +18,7 @@ void startCallback() {
 class TimerService {
   Future<bool> get isRunning => FlutterForegroundTask.isRunningService;
 
-  void init({required Function(Object data) taskDataCallback}) {
+  void initialize({required Function(Object data) taskDataCallback}) {
     FlutterForegroundTask.init(
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'foreground_service',

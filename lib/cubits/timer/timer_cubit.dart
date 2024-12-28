@@ -12,17 +12,17 @@ import 'timer_state.dart';
 class TimerCubit extends Cubit<TimerState> {
   final SettingsCubit settingsCubit;
   final ToasterService toasterService;
-  final TimerService foregroundService;
+  final TimerService timerService;
 
   TimerCubit({
     required this.settingsCubit,
     required this.toasterService,
-    required this.foregroundService,
+    required this.timerService,
   }) : super(const TimerState());
 
   Future<void> initialize() async {
     await _requestPermissions();
-    foregroundService.init(taskDataCallback: _onReceiveData);
+    timerService.initialize(taskDataCallback: _onReceiveData);
   }
 
   Future<void> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
@@ -31,8 +31,8 @@ class TimerCubit extends Cubit<TimerState> {
       return;
     }
 
-    if (await foregroundService.isRunning) {
-      await foregroundService.stop();
+    if (await timerService.isRunning) {
+      await timerService.stop();
     }
 
     final timer = TimerModel(
@@ -48,7 +48,7 @@ class TimerCubit extends Cubit<TimerState> {
 
     final path = '/matches/details/$matchId?improvisationId=$improvisationId&durationIndex=$durationIndex';
 
-    await foregroundService.start(path, enableWakelock: settingsCubit.state.enableWakelock);
+    await timerService.start(path, enableWakelock: settingsCubit.state.enableWakelock);
 
     _updateTimer(timer);
   }
@@ -65,12 +65,12 @@ class TimerCubit extends Cubit<TimerState> {
 
   Future<void> stop() async {
     emit(const TimerState());
-    await foregroundService.stop();
+    await timerService.stop();
   }
 
   @override
   Future<void> close() async {
-    foregroundService.dispose(taskDataCallback: _onReceiveData);
+    timerService.dispose(taskDataCallback: _onReceiveData);
     await stop();
     return await super.close();
   }
@@ -103,11 +103,11 @@ class TimerCubit extends Cubit<TimerState> {
 
   void _updateTimer(TimerModel timer) {
     emit(TimerState(timer: timer));
-    foregroundService.sendDataToTask(timer.toJson());
+    timerService.sendDataToTask(timer.toJson());
   }
 
   Future<bool> _requestPermissions() async {
-    final notificationPermission = await foregroundService.requestNotificationPermission();
+    final notificationPermission = await timerService.requestNotificationPermission();
     if (!notificationPermission) {
       toasterService.show(
         type: ToastificationType.error,
@@ -117,7 +117,7 @@ class TimerCubit extends Cubit<TimerState> {
       return false;
     }
 
-    final ignoreBatteryOptimization = await foregroundService.requestIgnoreBatteryOptimization();
+    final ignoreBatteryOptimization = await timerService.requestIgnoreBatteryOptimization();
     if (!ignoreBatteryOptimization) {
       toasterService.show(
         type: ToastificationType.error,

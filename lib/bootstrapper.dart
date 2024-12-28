@@ -128,7 +128,7 @@ class Bootstrapper extends StatelessWidget {
               () => TimerCubit(
                 toasterService: blocContext.read<ToasterService>(),
                 settingsCubit: blocContext.read<SettingsCubit>(),
-                foregroundService: blocContext.read<TimerService>(),
+                timerService: blocContext.read<TimerService>(),
               ),
             )..initialize(),
           ),
