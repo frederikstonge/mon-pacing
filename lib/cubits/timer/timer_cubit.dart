@@ -4,7 +4,7 @@ import 'package:toastification/toastification.dart';
 import '../../l10n/localizer.dart';
 import '../../models/timer_model.dart';
 import '../../models/timer_status.dart';
-import '../../services/foreground_service.dart';
+import '../../services/timer_service.dart';
 import '../../services/toaster_service.dart';
 import '../settings/settings_cubit.dart';
 import 'timer_state.dart';
@@ -12,7 +12,7 @@ import 'timer_state.dart';
 class TimerCubit extends Cubit<TimerState> {
   final SettingsCubit settingsCubit;
   final ToasterService toasterService;
-  final ForegroundService foregroundService;
+  final TimerService foregroundService;
 
   TimerCubit({
     required this.settingsCubit,

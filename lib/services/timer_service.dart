@@ -15,7 +15,7 @@ void startCallback() {
   FlutterForegroundTask.setTaskHandler(TimerTaskHandler());
 }
 
-class ForegroundService {
+class TimerService {
   Future<bool> get isRunning => FlutterForegroundTask.isRunningService;
 
   void init({required Function(Object data) taskDataCallback}) {
