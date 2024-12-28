@@ -21,7 +21,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../repositories/teams_repository.dart';
-import '../../validators/validator.dart';
+import '../../validators/validators.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
 import 'widgets/match_team_tile.dart';

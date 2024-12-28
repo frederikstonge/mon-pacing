@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../validators/validator.dart';
+import '../../validators/validators.dart';
 import 'quantity_stepper.dart';
 
 class QuantityStepperFormField extends FormField<int> {

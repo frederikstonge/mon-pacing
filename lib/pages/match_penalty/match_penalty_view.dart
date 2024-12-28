@@ -11,7 +11,7 @@ import '../../components/form/text_field_element.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../../validators/validator.dart';
+import '../../validators/validators.dart';
 import 'cubits/match_penalty_cubit.dart';
 import 'cubits/match_penalty_state.dart';
 

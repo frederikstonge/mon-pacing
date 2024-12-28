@@ -14,7 +14,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_team_model.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
-import '../../../validators/validator.dart';
+import '../../../validators/validators.dart';
 
 class MatchTeamTile extends StatefulWidget {
   final MatchTeamModel team;
