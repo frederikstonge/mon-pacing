@@ -2,10 +2,10 @@ import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
 import '../models/pacing_model.dart';
-import 'database_repository.dart';
+import 'legacy_database_repository.dart';
 
 class PacingsRepository {
-  final DatabaseRepository databaseRepository;
+  final LegacyDatabaseRepository databaseRepository;
 
   const PacingsRepository({
     required this.databaseRepository,

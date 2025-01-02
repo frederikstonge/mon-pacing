@@ -5,7 +5,7 @@ import '../models/match_model.dart';
 import '../models/pacing_model.dart';
 import '../models/team_model.dart';
 
-class DatabaseRepository {
+class LegacyDatabaseRepository {
   Isar? _database;
 
   Future<Isar> get database async {

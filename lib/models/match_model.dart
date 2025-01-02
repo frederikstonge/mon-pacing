@@ -25,11 +25,11 @@ class MatchModel with MatchModelMappable {
   final DateTime? createdDate;
   @index
   final DateTime? modifiedDate;
+  final List<String> tags;
   final List<MatchTeamModel> teams;
   final List<ImprovisationModel> improvisations;
   final List<PenaltyModel> penalties;
   final List<PointModel> points;
-  final List<String> tags;
   final List<StarModel> stars;
   final bool enableStatistics;
   final bool enablePenaltiesImpactPoints;
