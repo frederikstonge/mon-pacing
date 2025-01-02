@@ -1,20 +1,22 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
+import '../models/penalties_impact_type.dart';
 import '../services/toaster_service.dart';
+import 'converters/string_list_converter.dart';
 import 'entities/match_entity.dart';
 import 'entities/pacing_entity.dart';
 import 'entities/team_entity.dart';
 import 'legacy_database_repository.dart';
 
-part 'app_database_repository.g.dart';
+part 'app_database.g.dart';
 
 @DriftDatabase(tables: [PacingEntity, MatchEntity, TeamEntity])
-class AppDatabaseRepository extends _$AppDatabaseRepository {
+class AppDatabase extends _$AppDatabase {
   final LegacyDatabaseRepository legacyDatabaseRepository;
   final ToasterService toasterService;
 
-  AppDatabaseRepository({
+  AppDatabase({
     required this.legacyDatabaseRepository,
     required this.toasterService,
   }) : super(_openConnection());
