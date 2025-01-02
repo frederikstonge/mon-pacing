@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'database_repository.dart';
+part of 'app_database_repository.dart';
 
 // ignore_for_file: type=lint
 class $PacingEntityTable extends PacingEntity
@@ -1771,9 +1771,10 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
   }
 }
 
-abstract class _$AppDatabase extends GeneratedDatabase {
-  _$AppDatabase(QueryExecutor e) : super(e);
-  $AppDatabaseManager get managers => $AppDatabaseManager(this);
+abstract class _$AppDatabaseRepository extends GeneratedDatabase {
+  _$AppDatabaseRepository(QueryExecutor e) : super(e);
+  $AppDatabaseRepositoryManager get managers =>
+      $AppDatabaseRepositoryManager(this);
   late final $PacingEntityTable pacingEntity = $PacingEntityTable(this);
   late final $MatchEntityTable matchEntity = $MatchEntityTable(this);
   late final $TeamEntityTable teamEntity = $TeamEntityTable(this);
@@ -1809,7 +1810,7 @@ typedef $$PacingEntityTableUpdateCompanionBuilder = PacingEntityCompanion
 });
 
 class $$PacingEntityTableFilterComposer
-    extends Composer<_$AppDatabase, $PacingEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $PacingEntityTable> {
   $$PacingEntityTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -1846,7 +1847,7 @@ class $$PacingEntityTableFilterComposer
 }
 
 class $$PacingEntityTableOrderingComposer
-    extends Composer<_$AppDatabase, $PacingEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $PacingEntityTable> {
   $$PacingEntityTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1885,7 +1886,7 @@ class $$PacingEntityTableOrderingComposer
 }
 
 class $$PacingEntityTableAnnotationComposer
-    extends Composer<_$AppDatabase, $PacingEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $PacingEntityTable> {
   $$PacingEntityTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1919,7 +1920,7 @@ class $$PacingEntityTableAnnotationComposer
 }
 
 class $$PacingEntityTableTableManager extends RootTableManager<
-    _$AppDatabase,
+    _$AppDatabaseRepository,
     $PacingEntityTable,
     PacingEntityData,
     $$PacingEntityTableFilterComposer,
@@ -1929,11 +1930,13 @@ class $$PacingEntityTableTableManager extends RootTableManager<
     $$PacingEntityTableUpdateCompanionBuilder,
     (
       PacingEntityData,
-      BaseReferences<_$AppDatabase, $PacingEntityTable, PacingEntityData>
+      BaseReferences<_$AppDatabaseRepository, $PacingEntityTable,
+          PacingEntityData>
     ),
     PacingEntityData,
     PrefetchHooks Function()> {
-  $$PacingEntityTableTableManager(_$AppDatabase db, $PacingEntityTable table)
+  $$PacingEntityTableTableManager(
+      _$AppDatabaseRepository db, $PacingEntityTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1991,7 +1994,7 @@ class $$PacingEntityTableTableManager extends RootTableManager<
 }
 
 typedef $$PacingEntityTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
+    _$AppDatabaseRepository,
     $PacingEntityTable,
     PacingEntityData,
     $$PacingEntityTableFilterComposer,
@@ -2001,7 +2004,8 @@ typedef $$PacingEntityTableProcessedTableManager = ProcessedTableManager<
     $$PacingEntityTableUpdateCompanionBuilder,
     (
       PacingEntityData,
-      BaseReferences<_$AppDatabase, $PacingEntityTable, PacingEntityData>
+      BaseReferences<_$AppDatabaseRepository, $PacingEntityTable,
+          PacingEntityData>
     ),
     PacingEntityData,
     PrefetchHooks Function()>;
@@ -2047,7 +2051,7 @@ typedef $$MatchEntityTableUpdateCompanionBuilder = MatchEntityCompanion
 });
 
 class $$MatchEntityTableFilterComposer
-    extends Composer<_$AppDatabase, $MatchEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $MatchEntityTable> {
   $$MatchEntityTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2125,7 +2129,7 @@ class $$MatchEntityTableFilterComposer
 }
 
 class $$MatchEntityTableOrderingComposer
-    extends Composer<_$AppDatabase, $MatchEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $MatchEntityTable> {
   $$MatchEntityTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2204,7 +2208,7 @@ class $$MatchEntityTableOrderingComposer
 }
 
 class $$MatchEntityTableAnnotationComposer
-    extends Composer<_$AppDatabase, $MatchEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $MatchEntityTable> {
   $$MatchEntityTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2275,7 +2279,7 @@ class $$MatchEntityTableAnnotationComposer
 }
 
 class $$MatchEntityTableTableManager extends RootTableManager<
-    _$AppDatabase,
+    _$AppDatabaseRepository,
     $MatchEntityTable,
     MatchEntityData,
     $$MatchEntityTableFilterComposer,
@@ -2285,11 +2289,13 @@ class $$MatchEntityTableTableManager extends RootTableManager<
     $$MatchEntityTableUpdateCompanionBuilder,
     (
       MatchEntityData,
-      BaseReferences<_$AppDatabase, $MatchEntityTable, MatchEntityData>
+      BaseReferences<_$AppDatabaseRepository, $MatchEntityTable,
+          MatchEntityData>
     ),
     MatchEntityData,
     PrefetchHooks Function()> {
-  $$MatchEntityTableTableManager(_$AppDatabase db, $MatchEntityTable table)
+  $$MatchEntityTableTableManager(
+      _$AppDatabaseRepository db, $MatchEntityTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2397,7 +2403,7 @@ class $$MatchEntityTableTableManager extends RootTableManager<
 }
 
 typedef $$MatchEntityTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
+    _$AppDatabaseRepository,
     $MatchEntityTable,
     MatchEntityData,
     $$MatchEntityTableFilterComposer,
@@ -2407,7 +2413,8 @@ typedef $$MatchEntityTableProcessedTableManager = ProcessedTableManager<
     $$MatchEntityTableUpdateCompanionBuilder,
     (
       MatchEntityData,
-      BaseReferences<_$AppDatabase, $MatchEntityTable, MatchEntityData>
+      BaseReferences<_$AppDatabaseRepository, $MatchEntityTable,
+          MatchEntityData>
     ),
     MatchEntityData,
     PrefetchHooks Function()>;
@@ -2427,7 +2434,7 @@ typedef $$TeamEntityTableUpdateCompanionBuilder = TeamEntityCompanion Function({
 });
 
 class $$TeamEntityTableFilterComposer
-    extends Composer<_$AppDatabase, $TeamEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $TeamEntityTable> {
   $$TeamEntityTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2452,7 +2459,7 @@ class $$TeamEntityTableFilterComposer
 }
 
 class $$TeamEntityTableOrderingComposer
-    extends Composer<_$AppDatabase, $TeamEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $TeamEntityTable> {
   $$TeamEntityTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2478,7 +2485,7 @@ class $$TeamEntityTableOrderingComposer
 }
 
 class $$TeamEntityTableAnnotationComposer
-    extends Composer<_$AppDatabase, $TeamEntityTable> {
+    extends Composer<_$AppDatabaseRepository, $TeamEntityTable> {
   $$TeamEntityTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2503,7 +2510,7 @@ class $$TeamEntityTableAnnotationComposer
 }
 
 class $$TeamEntityTableTableManager extends RootTableManager<
-    _$AppDatabase,
+    _$AppDatabaseRepository,
     $TeamEntityTable,
     TeamEntityData,
     $$TeamEntityTableFilterComposer,
@@ -2513,11 +2520,12 @@ class $$TeamEntityTableTableManager extends RootTableManager<
     $$TeamEntityTableUpdateCompanionBuilder,
     (
       TeamEntityData,
-      BaseReferences<_$AppDatabase, $TeamEntityTable, TeamEntityData>
+      BaseReferences<_$AppDatabaseRepository, $TeamEntityTable, TeamEntityData>
     ),
     TeamEntityData,
     PrefetchHooks Function()> {
-  $$TeamEntityTableTableManager(_$AppDatabase db, $TeamEntityTable table)
+  $$TeamEntityTableTableManager(
+      _$AppDatabaseRepository db, $TeamEntityTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2563,7 +2571,7 @@ class $$TeamEntityTableTableManager extends RootTableManager<
 }
 
 typedef $$TeamEntityTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
+    _$AppDatabaseRepository,
     $TeamEntityTable,
     TeamEntityData,
     $$TeamEntityTableFilterComposer,
@@ -2573,14 +2581,14 @@ typedef $$TeamEntityTableProcessedTableManager = ProcessedTableManager<
     $$TeamEntityTableUpdateCompanionBuilder,
     (
       TeamEntityData,
-      BaseReferences<_$AppDatabase, $TeamEntityTable, TeamEntityData>
+      BaseReferences<_$AppDatabaseRepository, $TeamEntityTable, TeamEntityData>
     ),
     TeamEntityData,
     PrefetchHooks Function()>;
 
-class $AppDatabaseManager {
-  final _$AppDatabase _db;
-  $AppDatabaseManager(this._db);
+class $AppDatabaseRepositoryManager {
+  final _$AppDatabaseRepository _db;
+  $AppDatabaseRepositoryManager(this._db);
   $$PacingEntityTableTableManager get pacingEntity =>
       $$PacingEntityTableTableManager(_db, _db.pacingEntity);
   $$MatchEntityTableTableManager get matchEntity =>
