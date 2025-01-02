@@ -7,7 +7,8 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../extensions/duration_extensions.dart';
 import '../l10n/localizer.dart';
-import '../models/timer_model.dart';
+import '../models/main_message.dart';
+import '../models/task_message.dart';
 import '../models/timer_status.dart';
 
 @pragma('vm:entry-point')
@@ -48,8 +49,8 @@ class TimerService {
     FlutterForegroundTask.removeTaskDataCallback(taskDataCallback);
   }
 
-  void sendDataToTask(Object data) {
-    FlutterForegroundTask.sendDataToTask(data);
+  void sendDataToTask(TaskMessage data) {
+    FlutterForegroundTask.sendDataToTask(data.toJson());
   }
 
   Future<bool> requestNotificationPermission() async {
@@ -105,9 +106,10 @@ class TimerService {
 
 class TimerTaskHandler extends TaskHandler {
   Stopwatch? _stopwatch;
-  TimerModel? _timerModel;
   Timer? _timer;
   Map<int, bool>? _vibrationMap;
+  TaskMessage? _taskMessage;
+  TimerStatus? _requestedStatus;
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
@@ -122,19 +124,23 @@ class TimerTaskHandler extends TaskHandler {
   @override
   void onNotificationButtonPressed(String id) {
     if (id == 'resume') {
-      _timerModel = _timerModel?.copyWith(requestedStatus: TimerStatus.started);
+      _requestedStatus = TimerStatus.started;
     }
 
     if (id == 'pause') {
-      _timerModel = _timerModel?.copyWith(requestedStatus: TimerStatus.paused);
+      _requestedStatus = TimerStatus.paused;
+    }
+
+    if (id == 'stop') {
+      _requestedStatus = TimerStatus.stopped;
     }
   }
 
   @override
   void onReceiveData(dynamic data) {
-    final event = TimerModelMapper.fromJson(data);
-    if (_timerModel == null) {
-      _timerModel = event;
+    final event = TaskMessageMapper.fromJson(data);
+    if (_taskMessage == null) {
+      _taskMessage = event;
       _vibrationMap = {
         for (var i = 1; i < (event.durationInSeconds / 60).floor(); i++) ...{
           60 * i: false,
@@ -164,18 +170,18 @@ class TimerTaskHandler extends TaskHandler {
       _stopwatch = Stopwatch();
       _timer = Timer.periodic(Duration(milliseconds: 100), onTick);
       _stopwatch!.start();
-    } else if (event.status == TimerStatus.started && _timerModel!.status != TimerStatus.started) {
+    } else if (event.status == TimerStatus.started && _taskMessage!.status != TimerStatus.started) {
       _stopwatch!.start();
-      _timerModel = _timerModel?.copyWith(status: TimerStatus.started);
-    } else if (event.status == TimerStatus.paused && _timerModel!.status != TimerStatus.paused) {
+      _taskMessage = _taskMessage?.copyWith(status: TimerStatus.started);
+    } else if (event.status == TimerStatus.paused && _taskMessage!.status != TimerStatus.paused) {
       _stopwatch!.stop();
-      _timerModel = _timerModel?.copyWith(status: TimerStatus.paused);
+      _taskMessage = _taskMessage?.copyWith(status: TimerStatus.paused);
     }
   }
 
   @override
   Future<void> onDestroy(DateTime timestamp) async {
-    _timerModel = null;
+    _taskMessage = null;
     _stopwatch?.stop();
     _stopwatch = null;
     _timer?.cancel();
@@ -184,18 +190,17 @@ class TimerTaskHandler extends TaskHandler {
   }
 
   void onTick(Timer timer) {
-    if (_timerModel == null) {
+    if (_taskMessage == null) {
       return;
     }
 
-    final duration = Duration(seconds: _timerModel!.durationInSeconds);
+    final duration = Duration(seconds: _taskMessage!.durationInSeconds);
     final remainingMilliseconds = duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
 
-    FlutterForegroundTask.sendDataToMain(_timerModel!.copyWith(remainingMilliseconds: remainingMilliseconds).toJson());
+    final mainMessage = MainMessage(requestedStatus: _requestedStatus, remainingMilliseconds: remainingMilliseconds);
+    _requestedStatus = null;
 
-    if (_timerModel!.requestedStatus != null) {
-      _timerModel = _timerModel!.copyWith(requestedStatus: null);
-    }
+    FlutterForegroundTask.sendDataToMain(mainMessage.toJson());
 
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
 
@@ -206,18 +211,20 @@ class TimerTaskHandler extends TaskHandler {
       }
     }
 
-    if (_timer!.tick % 10 == 0) {
+    if (_timer!.tick % 10 == 0 || mainMessage.requestedStatus != null) {
+      final notificationStatus = mainMessage.requestedStatus ?? _taskMessage!.status;
       unawaited(
         FlutterForegroundTask.updateService(
-          notificationTitle: _timerModel!.notificationTitle,
+          notificationTitle: _taskMessage!.notificationTitle,
           notificationText: remainingDuration.toImprovDuration(),
           notificationButtons: [
-            if (_timerModel!.status == TimerStatus.paused) ...[
+            if (notificationStatus == TimerStatus.paused) ...[
               NotificationButton(id: 'resume', text: Localizer.current.start),
             ],
-            if (_timerModel!.status == TimerStatus.started) ...[
+            if (notificationStatus == TimerStatus.started) ...[
               NotificationButton(id: 'pause', text: Localizer.current.pause),
             ],
+            NotificationButton(id: 'stop', text: Localizer.current.stop),
           ],
         ),
       );
@@ -225,7 +232,7 @@ class TimerTaskHandler extends TaskHandler {
   }
 
   Future<void> vibrate(HapticsType type) async {
-    if ((_timerModel?.hapticFeedback ?? false) && await Haptics.canVibrate()) {
+    if ((_taskMessage?.hapticFeedback ?? false) && await Haptics.canVibrate()) {
       await Haptics.vibrate(type);
     }
   }

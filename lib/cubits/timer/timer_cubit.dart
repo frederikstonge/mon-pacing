@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../l10n/localizer.dart';
+import '../../models/main_message.dart';
+import '../../models/task_message.dart';
 import '../../models/timer_model.dart';
 import '../../models/timer_status.dart';
 import '../../services/timer_service.dart';
@@ -76,34 +78,34 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   Future<void> _onReceiveData(dynamic data) async {
-    final event = TimerModelMapper.fromJson(data);
+    final event = MainMessageMapper.fromJson(data);
     if (state.timer != null) {
-      _updateTimer(state.timer!.copyWith(remainingMilliseconds: event.remainingMilliseconds));
-    }
-
-    if (event.requestedStatus != null) {
-      switch (event.requestedStatus) {
-        case TimerStatus.started:
-          resume();
-          return;
-        case TimerStatus.paused:
-          pause();
-          return;
-        default:
-          break;
+      final remainingDuration = Duration(milliseconds: event.remainingMilliseconds);
+      if (event.requestedStatus == TimerStatus.stopped || remainingDuration.inSeconds <= 0) {
+        await stop();
+        return;
       }
-    }
 
-    final remainingDuration = Duration(milliseconds: event.remainingMilliseconds);
-    if (remainingDuration.inSeconds <= 0) {
-      await stop();
-      return;
+      _updateTimer(state.timer!.copyWith(
+        remainingMilliseconds: event.remainingMilliseconds,
+        status: event.requestedStatus ?? state.timer!.status,
+      ));
     }
   }
 
   void _updateTimer(TimerModel timer) {
-    emit(TimerState(timer: timer));
-    timerService.sendDataToTask(timer.toJson());
+    if (timer != state.timer) {
+      emit(TimerState(timer: timer));
+
+      final request = TaskMessage(
+        status: timer.status,
+        durationInSeconds: timer.durationInSeconds,
+        hapticFeedback: timer.hapticFeedback,
+        notificationTitle: timer.notificationTitle,
+      );
+
+      timerService.sendDataToTask(request);
+    }
   }
 
   Future<bool> _requestPermissions() async {

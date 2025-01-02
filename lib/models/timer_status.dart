@@ -6,4 +6,5 @@ part 'timer_status.mapper.dart';
 enum TimerStatus {
   started,
   paused,
+  stopped,
 }

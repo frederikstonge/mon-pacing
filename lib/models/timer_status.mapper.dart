@@ -29,6 +29,8 @@ class TimerStatusMapper extends EnumMapper<TimerStatus> {
         return TimerStatus.started;
       case 'paused':
         return TimerStatus.paused;
+      case 'stopped':
+        return TimerStatus.stopped;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -41,6 +43,8 @@ class TimerStatusMapper extends EnumMapper<TimerStatus> {
         return 'started';
       case TimerStatus.paused:
         return 'paused';
+      case TimerStatus.stopped:
+        return 'stopped';
     }
   }
 }
