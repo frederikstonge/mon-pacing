@@ -25,104 +25,124 @@ void main() {
       citrusIntegration = CitrusIntegration(client: dio);
     });
 
-    test('integrationIsValid should return true if path starts with integrationId', () {
-      expect(citrusIntegration.integrationIsValid(url), isTrue);
-    });
+    test(
+      'integrationIsValid should return true if path starts with integrationId',
+      () {
+        expect(citrusIntegration.integrationIsValid(url), isTrue);
+      },
+      tags: ['integration'],
+    );
 
-    test('integrationIsValid should return false if path doesn\'t starts with integrationId', () {
-      expect(citrusIntegration.integrationIsValid('https://test.com/citron'), isFalse);
-    });
+    test(
+      'integrationIsValid should return false if path doesn\'t starts with integrationId',
+      () {
+        expect(citrusIntegration.integrationIsValid('https://test.com/citron'), isFalse);
+      },
+      tags: ['integration'],
+    );
 
-    test('getMatch should throw an exception if improvisation length is lower than ${CitrusIntegration.MinNumberOfImprovisations}', () async {
-      final pacing = PacingModel(
-        id: 1,
-        name: 'Pacing',
-        createdDate: DateTime.now(),
-        modifiedDate: DateTime.now(),
-        improvisations: List.generate(
-          CitrusIntegration.MinNumberOfImprovisations - 1,
-          (index) => ImprovisationModel(
-            id: index,
-            type: ImprovisationType.values.elementAt(index % 2),
-            category: '',
-            theme: '',
-            durationsInSeconds: [Duration(minutes: 2).inSeconds],
-            performers: '',
-            notes: '',
+    test(
+      'getMatch should throw an exception if improvisation length is lower than ${CitrusIntegration.MinNumberOfImprovisations}',
+      () async {
+        final pacing = PacingModel(
+          id: 1,
+          name: 'Pacing',
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
+          improvisations: List.generate(
+            CitrusIntegration.MinNumberOfImprovisations - 1,
+            (index) => ImprovisationModel(
+              id: index,
+              type: ImprovisationType.values.elementAt(index % 2),
+              category: '',
+              theme: '',
+              durationsInSeconds: [Duration(minutes: 2).inSeconds],
+              performers: '',
+              notes: '',
+            ),
           ),
-        ),
-      );
+        );
 
-      expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
-    });
+        expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
+      },
+      tags: ['integration'],
+    );
 
-    test('getMatch should throw an exception if improvisation length is higher than ${CitrusIntegration.MaxNumberOfImprovisations}', () async {
-      final pacing = PacingModel(
-        id: 1,
-        name: 'Pacing',
-        createdDate: DateTime.now(),
-        modifiedDate: DateTime.now(),
-        improvisations: List.generate(
-          CitrusIntegration.MaxNumberOfImprovisations + 1,
-          (index) => ImprovisationModel(
-            id: index,
-            type: ImprovisationType.values.elementAt(index % 2),
-            category: '',
-            theme: '',
-            durationsInSeconds: [Duration(minutes: 2).inSeconds],
-            performers: '',
-            notes: '',
+    test(
+      'getMatch should throw an exception if improvisation length is higher than ${CitrusIntegration.MaxNumberOfImprovisations}',
+      () async {
+        final pacing = PacingModel(
+          id: 1,
+          name: 'Pacing',
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
+          improvisations: List.generate(
+            CitrusIntegration.MaxNumberOfImprovisations + 1,
+            (index) => ImprovisationModel(
+              id: index,
+              type: ImprovisationType.values.elementAt(index % 2),
+              category: '',
+              theme: '',
+              durationsInSeconds: [Duration(minutes: 2).inSeconds],
+              performers: '',
+              notes: '',
+            ),
           ),
-        ),
-      );
+        );
 
-      expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
-    });
+        expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
+      },
+      tags: ['integration'],
+    );
 
-    test('getMatch should return match when data is good', () async {
-      final pacing = PacingModel(
-        id: 1,
-        name: 'Pacing',
-        createdDate: DateTime.now(),
-        modifiedDate: DateTime.now(),
-        improvisations: List.generate(
-          12,
-          (index) => ImprovisationModel(
-            id: index,
-            type: ImprovisationType.values.elementAt(index % 2),
-            category: '',
-            theme: '',
-            durationsInSeconds: [Duration(minutes: 2).inSeconds],
-            performers: '',
-            notes: '',
+    test(
+      'getMatch should return match when data is good',
+      () async {
+        final pacing = PacingModel(
+          id: 1,
+          name: 'Pacing',
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
+          improvisations: List.generate(
+            12,
+            (index) => ImprovisationModel(
+              id: index,
+              type: ImprovisationType.values.elementAt(index % 2),
+              category: '',
+              theme: '',
+              durationsInSeconds: [Duration(minutes: 2).inSeconds],
+              performers: '',
+              notes: '',
+            ),
           ),
-        ),
-      );
+        );
 
-      final html = await File('./test/integrations/static_data.html').readAsString();
-      dioAdapter.onGet(
-        url,
-        (server) => server.reply(
-          200,
-          html,
-          headers: const {
-            Headers.contentTypeHeader: ['text/html']
-          },
-          delay: const Duration(seconds: 1),
-        ),
-      );
+        final html = await File('./test/integrations/static_data.html').readAsString();
+        dioAdapter.onGet(
+          url,
+          (server) => server.reply(
+            200,
+            html,
+            headers: const {
+              Headers.contentTypeHeader: ['text/html']
+            },
+            delay: const Duration(seconds: 1),
+          ),
+        );
 
-      final match = await citrusIntegration.getMatch(url, pacing);
-      expect(match, isNotNull);
-      expect(match.teams.length, 2);
-      expect(match.teams[0].performers.length, 6);
-      expect(match.teams[1].performers.length, 7);
-      expect(match.integrationId, citrusIntegration.integrationId);
-      expect(match.integrationEntityId, '9292');
-      expect(match.integrationAdditionalData, isNotNull);
-      final exportData = jsonDecode(match.integrationAdditionalData!);
-      expect(exportData['csrfToken'], '1mIBje6wUiC6ALqMl9EazrEyZlRtJTcpXhpOykU6iKHEb7jA8OgTj9zJ68pnvhNU');
-    });
+        final match = await citrusIntegration.getMatch(url, pacing);
+        expect(match, isNotNull);
+        expect(match.teams.length, 2);
+        expect(match.teams[0].performers.length, 6);
+        expect(match.teams[1].performers.length, 7);
+        expect(match.integrationId, citrusIntegration.integrationId);
+        expect(match.integrationEntityId, '9292');
+        expect(match.integrationAdditionalData, isNotNull);
+        final exportData = jsonDecode(match.integrationAdditionalData!);
+        expect(exportData['csrfToken'], '1mIBje6wUiC6ALqMl9EazrEyZlRtJTcpXhpOykU6iKHEb7jA8OgTj9zJ68pnvhNU');
+      },
+      tags: ['integration'],
+    );
   });
 
   group('Citrus web data', () {
@@ -135,49 +155,61 @@ void main() {
       citrusIntegration = CitrusIntegration(client: dio);
     });
 
-    test('Html body is the same', () async {
-      final html = File('./test/integrations/static_data.html').readAsStringSync();
-      final staticDocument = parse(html);
+    test(
+      'Html body is the same',
+      () async {
+        final html = File('./test/integrations/static_data.html').readAsStringSync();
+        final staticDocument = parse(html);
 
-      final response = await dio.get<String>(url.toString());
-      final document = parse(response.data);
+        final response = await dio.get<String>(url.toString());
+        final document = parse(response.data);
 
-      expect(document.body!.text, staticDocument.body!.text);
-    });
+        expect(document.body!.text, staticDocument.body!.text);
+      },
+      tags: ['integration'],
+    );
 
-    test('integrationIsValid should return true', () {
-      expect(citrusIntegration.integrationIsValid(url), isTrue);
-    });
+    test(
+      'integrationIsValid should return true',
+      () {
+        expect(citrusIntegration.integrationIsValid(url), isTrue);
+      },
+      tags: ['integration'],
+    );
 
-    test('getMatch should return match when data is good', () async {
-      final pacing = PacingModel(
-        id: 1,
-        name: 'Pacing',
-        createdDate: DateTime.now(),
-        modifiedDate: DateTime.now(),
-        improvisations: List.generate(
-          12,
-          (index) => ImprovisationModel(
-            id: index,
-            type: ImprovisationType.values.elementAt(index % 2),
-            category: '',
-            theme: '',
-            durationsInSeconds: [Duration(minutes: 2).inSeconds],
-            performers: '',
-            notes: '',
+    test(
+      'getMatch should return match when data is good',
+      () async {
+        final pacing = PacingModel(
+          id: 1,
+          name: 'Pacing',
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
+          improvisations: List.generate(
+            12,
+            (index) => ImprovisationModel(
+              id: index,
+              type: ImprovisationType.values.elementAt(index % 2),
+              category: '',
+              theme: '',
+              durationsInSeconds: [Duration(minutes: 2).inSeconds],
+              performers: '',
+              notes: '',
+            ),
           ),
-        ),
-      );
+        );
 
-      final match = await citrusIntegration.getMatch(url, pacing);
-      expect(match, isNotNull);
-      expect(match.teams.length, 2);
-      expect(match.teams[0].performers.length, 6);
-      expect(match.teams[1].performers.length, 7);
-      expect(match.integrationId, citrusIntegration.integrationId);
-      expect(match.integrationEntityId, '9292');
-      final exportData = jsonDecode(match.integrationAdditionalData!);
-      expect(exportData['csrfToken'], isNotNull);
-    });
+        final match = await citrusIntegration.getMatch(url, pacing);
+        expect(match, isNotNull);
+        expect(match.teams.length, 2);
+        expect(match.teams[0].performers.length, 6);
+        expect(match.teams[1].performers.length, 7);
+        expect(match.integrationId, citrusIntegration.integrationId);
+        expect(match.integrationEntityId, '9292');
+        final exportData = jsonDecode(match.integrationAdditionalData!);
+        expect(exportData['csrfToken'], isNotNull);
+      },
+      tags: ['integration'],
+    );
   });
 }

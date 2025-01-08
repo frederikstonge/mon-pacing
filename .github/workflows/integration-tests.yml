@@ -1,0 +1,34 @@
+name: "Integration tests"
+
+on:
+  schedule:
+    # Run every day at 6:00 AM
+    - cron: "0 6 * * *"
+
+jobs:
+  tests:
+    name: "Run Tests"
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: ./.github/actions/install-flutter
+        
+      - name: Dart Analyze
+        shell: bash
+        run: |
+            dart analyze
+
+      - name: Flutter Analyze
+        shell: bash
+        run: |
+            flutter analyze
+
+      - name: Flutter Tests
+        shell: bash
+        run: |
+            flutter test --concurrency=$(nproc --all) --coverage --coverage-path=./coverage/lcov.info --tags "integration" --exclude-tags "screenshots"
