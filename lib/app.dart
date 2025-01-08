@@ -28,8 +28,17 @@ class App extends StatelessWidget {
                 ThemeType.dark => Brightness.light,
                 _ => Brightness.dark,
               },
+              statusBarBrightness: switch (state.theme) {
+                ThemeType.dark => Brightness.dark,
+                _ => Brightness.light,
+              },
+              systemNavigationBarIconBrightness: switch (state.theme) {
+                ThemeType.dark => Brightness.light,
+                _ => Brightness.dark,
+              },
               statusBarColor: Colors.transparent,
               systemNavigationBarColor: Colors.transparent,
+              systemNavigationBarDividerColor: Colors.transparent,
             ),
             child: ToastificationWrapper(
               config: const ToastificationConfig(
