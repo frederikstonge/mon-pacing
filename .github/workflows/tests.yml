@@ -40,7 +40,7 @@ jobs:
         run: |
             flutter analyze
 
-      # - name: Flutter Tests
-      #   shell: bash
-      #   run: |
-      #       flutter test --concurrency=$(nproc --all) --coverage --coverage-path=./coverage/lcov.info
+      - name: Flutter Tests
+        shell: bash
+        run: |
+            flutter test --concurrency=$(nproc --all) --coverage --coverage-path=./coverage/lcov.info --exclude-tags "screenshots"
