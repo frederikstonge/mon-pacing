@@ -1,4 +1,1427 @@
-<html>
-    <head></head>
-    <body></body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="1mIBje6wUiC6ALqMl9EazrEyZlRtJTcpXhpOykU6iKHEb7jA8OgTj9zJ68pnvhNU">
+    <title>Formulaire de match</title>
+    <link rel="stylesheet" href="/static/stylesheets/components/generalStyles.css">
+</head>
+<body>
+    <h2 class="formTitle">Formulaire de match</h2>
+    <div class="topContainer">
+        <div class="logoBoard">
+            <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
+            <h2 class="logoX">Vs</h2>
+            <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
+        </div>
+        <div class="teamBoard">
+            <p>EQUIPE TEST Vs. Esquisse</p>
+            <p>16 Nov</p>
+        </div>
+    </div>
+    <div class="select tab-select" style="width: 100%;">
+        <select name="" id="" onchange="showSection(this)">
+            <option value="Alignement">Alignement</option>
+            <option value="Alignement" selected>Alignement</option>
+            <option value="Match">Match</option>
+            <option value="Pénalités">Pénalités</option>
+            <option value="Score">Score et signatures</option>
+        </select>
+    </div>
+    <section id="Alignement" class="">
+        <div class="team" id="alignement1">
+            <h3>EQUIPE TEST</h3>
+            <h3>Collège Montmorency</h3>
+            
+                
+                    <div class="player player">
+                        <p>C</p>
+                        <p>99</p>
+                        <p>Il</p>
+                        <p>Julien Provisation</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>1</p>
+                        <p>Il</p>
+                        <p>André Crochage</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p>A</p>
+                        <p>20</p>
+                        <p>Elle</p>
+                        <p>Sarah-Con Paré</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>45</p>
+                        <p>Iel</p>
+                        <p>Pat Inoire</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>72</p>
+                        <p>Elle</p>
+                        <p>Olga Zoo</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>37</p>
+                        <p>Elle</p>
+                        <p>Marie-Jersey Thibodeau</p>
+                    </div>
+                
+            
+        
+            
+                <div class="coach">
+                    <p>Coach</p>
+                    <p>Il/Elle/Iel</p>
+                    <p>User TEST</p>
+                </div>
+            
+                <div class="coach">
+                    <p>Coach</p>
+                    <p>Il</p>
+                    <p>Raphael Test</p>
+                </div>
+            
+        
+            <button class="btnPrimary btnStretch" onclick="openModal('addPlayerModal');document.getElementById('team').value = 1"><span>Ajouter un remplaçant</span></button>
+        </div>
+        <div class="team" id="alignement2">
+            <h3>Esquisse</h3>
+            <h3>Cégep Du Vieux-Montréal</h3>
+            
+                
+                    <div class="player player">
+                        <p>C</p>
+                        <p>7</p>
+                        <p>Il</p>
+                        <p>David White</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p>A</p>
+                        <p>12</p>
+                        <p>Elle</p>
+                        <p>Juliette Sauvageau-Hayet</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>6</p>
+                        <p>Il</p>
+                        <p>Nathan Beaudoin</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>2</p>
+                        <p>Elle/Il</p>
+                        <p>Elya Corbeil</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>4</p>
+                        <p>Il</p>
+                        <p>Matis Daigle</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>3</p>
+                        <p>Elle</p>
+                        <p>Annabelle Benoit</p>
+                    </div>
+                
+                    <div class="player player">
+                        <p></p>
+                        <p>27</p>
+                        <p>Il</p>
+                        <p>Jules-Olivier Monette</p>
+                    </div>
+                
+            
+        
+            
+                <div class="coach">
+                    <p>Coach</p>
+                    <p>Il/elle/iel</p>
+                    <p>Felix Caron</p>
+                </div>
+            
+            <button class="btnPrimary btnStretch" onclick="openModal('addPlayerModal');document.getElementById('team').value = 2"><span>Ajouter un remplaçant</span></button>
+        </div>
+    </section>
+    
+        <section id="Match" class="hidden">
+        <div class="impro">
+            <p>1.</p>
+            <input type="text" id="impro1" value="" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts1" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>2.</p>
+            <input type="text" value="" id="impro2" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts2" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>3.</p>
+            <input type="text" value="" id="impro3" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts3" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>4.</p>
+            <input type="text" value="" id="impro4" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts4" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>5.</p>
+            <input type="text" value="" id="impro5" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts5" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>6.</p>
+            <input type="text" value="" id="impro6" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts6" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>7.</p>
+            <input type="text" value="" id="impro7" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts7" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>8.</p>
+            <input type="text" value="" id="impro8" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts8" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>9.</p>
+            <input type="text" value="" id="impro9" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts9" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>10.</p>
+            <input type="text" value="" id="impro10" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts10" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>11.</p>
+            <input type="text" value="" id="impro11" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts11" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro">
+            <p>12.</p>
+            <input type="text" value="" id="impro12" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts12" class="point lastPoint" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                    <option value="both">Les deux</option>
+                </select>
+            </div>
+        </div>
+        <div class="impro" id="prolong">
+            <p>Pr.</p>
+            <input type="text" value="" id="impro13" onchange="saveToDB()">
+            <div class="select">
+                <select name="" id="improPts13" class="point" onchange="saveToDB(); updatePoint()">
+                    <option value="">Point</option>
+                    <option value="team1">Esquisse</option>
+                    <option value="team2">EQUIPE TEST</option>
+                </select>
+            </div>
+        </div>
+        <button class="btnPrimary btnStretch" style="margin-top: 1rem;"><span>Terminer le match</span></button>
+    </section>
+    
+    <section id="Pénalités" class="hidden">
+        <h3 class="nopenalty">Aucune pénalité</h3>
+        
+        <button class="btnPrimary btnStretch addPun" style="margin-top: 1rem;" onclick="openModal('addPunModal')"><span>Ajouter une pénalité</span></button>
+    </section>
+    <section id="Score" class="hidden">
+        <div class="scoreBoard">
+            <div class="logos">
+                <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
+                <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
+            </div>
+            <div class="results">
+                <span id="subTotalTeam1">0</span>
+                <span>Points</span>
+                <span id="subTotalTeam2">0</span>
+            </div>
+            <div class="results">
+                <span id="team1Puns">0</span>
+                <span>Pénalités</span>
+                <span id="team2Puns">0</span>
+            </div>
+            <div class="results">
+                <span class="biggerNum" id="team1Score">0</span>
+                <span class="biggerNum">Score</span>
+                <span class="biggerNum" id="team2Score">0</span>
+            </div>
+        </div>
+        <form method="post">
+            <div class="sign">
+                <input type="hidden" name="csrfmiddlewaretoken" value="1mIBje6wUiC6ALqMl9EazrEyZlRtJTcpXhpOykU6iKHEb7jA8OgTj9zJ68pnvhNU">
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Signatures</h3>
+                <label for="coach1" class="label onTop">Signature coach Esquisse</label>
+                <button type="button" id="signatureCoachBtn1" class="btnPrimary signBtn" onclick="openModal('signatureCoachModal1')">Signer</button>
+                <label for="coach2" class="label onTop">Signature coach EQUIPE TEST</label>
+                <button type="button" class="btnPrimary signBtn" id="signatureCoachBtn2" onclick="openModal('signatureCoachModal2')">Signer</button>
+                <button type="submit" id="finalizeMatchBtn" class="btnPrimary btnInline disabled-btn"><span>Confirmer l'envoi</span></button>
+            </div>
+        </form>
+        
+    </section>
+    <div id="modal" class="modal" data-modal="addPlayerModal">
+        <div class="modalContent">
+            <div class="modalHeader">
+                <h1>Ajouter un remplaçant</h1>
+                <span class="close" id="modalClose" onclick="closeModal('addPlayerModal')">&times;</span>
+            </div>
+            <form id="addPlayerForm">
+            <div class="modalBody">
+                    <label for="number" class="label onTop">Numéro</label>
+                    <input type="text" id="number">
+                    <label for="pronouns" class="label onTop">Pronom(s)</label>
+                    <input type="text" id="pronoun">
+                    <label for="name" class="label onTop">Prénom et nom</label>
+                    <input type="text" id="name">
+                    <input type="text" id="team" value="1" style="display: none;">
+            </div>
+            <div class="modalFooter">
+                <button type="button" class="btnSecondary btnInline" onclick="closeModal('addPlayerModal')"><span>Annuler</span></button>
+                <button type="submit" class="btnPrimary btnInline"><span>Ajouter</span></button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div id="modal" class="modal" data-modal="signatureCoachModal1">
+        <div class="modalContent">
+            <div class="modalHeader">
+                <h1>Signer le formulaire</h1>
+                <span class="close" id="modalClose" onclick="closeModal('signatureCoachModal1')">&times;</span>
+            </div>
+            <form id="signatureCoachForm1">
+            <div class="modalBody">
+                    <h2>Coach Esquisse</h2>
+                    <label for="passwordCoachTeam1" class="label onTop">Entrez votre mot de passe</label>
+                    <input type="password" id="passwordCoachTeam1">
+                    <label id="msgPasswordChangeTeam1" class="divMsgError"></label>
+            </div>
+            <div class="modalFooter">
+                <button type="button" class="btnSecondary btnInline" onclick="closeModal('signatureCoachModal1')"><span>Annuler</span></button>
+                <button type="button" class="btnPrimary btnInline" onclick="signCoach(26,1)"><span>Confirmer</span></button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div id="modal" class="modal" data-modal="signatureCoachModal2">
+        <div class="modalContent">
+            <div class="modalHeader">
+                <h1>Signer le formulaire</h1>
+                <span class="close" id="modalClose" onclick="closeModal('signatureCoachModal2')">&times;</span>
+            </div>
+            <form id="signatureCoachForm2">
+            <div class="modalBody">
+                    <h2>Coach EQUIPE TEST</h2>
+                    <label for="passwordCoachTeam2" class="label onTop">Entrez votre mot de passe</label>
+                    <input type="password" id="passwordCoachTeam2">
+                    <label id="msgPasswordChangeTeam2" class="divMsgError"></label>
+            </div>
+            <div class="modalFooter">
+                <button type="button" class="btnSecondary btnInline" onclick="closeModal('signatureCoachModal2')"><span>Annuler</span></button>
+                <button type="button" class="btnPrimary btnInline" onclick="signCoach(59,2)"><span>Confirmer</span></button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div id="modal" class="modal" data-modal="addPunModal">
+        <div class="modalContent">
+            <div class="modalHeader">
+                <h1>Ajouter une pénalité</h1>
+                <span class="close" id="modalClose" onclick="closeModal('addPunModal')">&times;</span>
+            </div>
+            <form id="addPunForm">
+            <div class="modalBody">
+                <label for="who" class="label onTop">Inteprète/Équipe</label>
+                <div class="select select-search">
+                    <select name="" id="who">
+                        <option value=""></option>
+                        <option value="team1">Esquisse</option>
+                        <option value="team2">EQUIPE TEST</option>
+                    </select>  
+                </div>
+                <label for="pun" class="label onTop">Punition</label>
+                <div class="select select-search">
+                    <select name="" id="pun">
+                        <option value=""></option>
+                        <option value="Cabotinage">Cabotinage</option>
+                        <option value="Rudesse">Rudesse</option>
+                        <option value="Refus de personnage">Refus de personnage</option>
+                        <option value="Obstruction">Obstruction (Majeure)</option>
+                        <option value="Décrochage">Décrochage</option>
+                        <option value="Manque d'écoute">Manque d'écoute</option>
+                        <option value="Confusion">Confusion</option>
+                        <option value="Cliché">Cliché</option>
+                        
+                        <option value="Mauvaise conduite">Mauvaise conduite (Majeure)</option>
+                        <option value="Nombre illégal">Nombre illégal d'interprètes</option>
+                        <option value="Accesoire illégal">Accesoire illégal</option>
+                        <option value="Retard de jeu">Retard de jeu</option>
+                        <option value="Procédure illégale">Procédure illégale</option>
+                        <option value="Non-respect de la carte">Non-respect de la carte</option>
+                    </select>
+                </div>
+                <label for="maj" class="label onTop">Majeure</label>
+                <div class="select">
+                    <select name="" id="maj">
+                        <option value=""></option>
+                        <option value="Oui">Oui</option>
+                        <option value="" selected>Non</option>
+                    </select>
+                </div>     
+            </div>
+            <div class="modalFooter">
+                <button class="btnSecondary btnInline" onclick="closeModal('addPunModal')"><span>Annuler</span></button>
+                <button type="submit" class="btnPrimary btnInline"><span>Ajouter</span></button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <style>
+        body {
+            background: var(--gradient);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--white);
+            padding: 1.5rem;
+            font-size: 15px !important;
+        }
+
+        h3 {
+            text-align: center;
+            margin: 0.75rem;
+        }
+
+        p {
+            color: var(--white);
+            font-weight: 500;
+            font-size: 1rem;
+            margin: 0.2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .formTitle {
+            color: var(--white);
+            margin-top: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .logoBoard {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .logoBoard .logo {
+            height: 6rem;
+        }
+
+        .logoX {
+            color: var(--white);
+            font-size: 3rem;
+            line-height: 1rem;
+            padding: 0 3rem;
+        }
+
+        .teamBoard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .teamBoard p {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        section {
+            width: 100%;
+        }
+
+        .player, .coach {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0.2rem 0;
+            position: relative;
+        }
+
+        .coach {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .player p, .coach p {
+            flex-basis: 8%;
+            text-align: center;
+            margin-right: 1rem;
+        }
+
+        .coach p:nth-child(1) {
+            flex-basis: 16%;
+            margin-right: 2.2rem;
+        }
+
+        .player p:nth-child(3), .coach p:nth-child(2) {
+            flex-basis: 15%;
+        }
+
+        .player p:nth-child(4), .coach p:nth-child(3) {
+            flex-grow: 1;
+            text-align: start;
+        }
+
+        .player.crossed::after, .coach.crossed::after, .pun.crossed::after {
+            content: "";
+            width: 100%;
+            height: 2px;
+            background: var(--white);
+            position: absolute;
+            top: 50%;
+        }
+        
+
+        @media (hover:hover) {
+            .player:hover::after, .coach:hover::after, .pun:hover::after {
+                content: "";
+                width: 100%;
+                height: 2px;
+                background: var(--white);
+                position: absolute;
+                top: 50%;
+            }
+        }
+
+        .modalBody input, .modalBody div {
+            width: 100%;
+        }
+
+        .impro {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0.2rem 0;
+            position: relative;
+        }
+
+        .impro p {
+            flex-basis: 8%;
+            text-align: center;
+        }
+        
+
+        .impro input{
+            width: auto;
+            margin-right: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        .impro .select {
+            width: 7rem;
+            margin-bottom: 0;
+        }
+
+        #prolong {
+            display: none;
+        }
+
+        .divMsgError{
+            text-align: center;
+            font-weight: 400;
+            padding-bottom: 2px;
+            color: red;
+        }
+
+        .impro .select .select-selected {
+            overflow: hidden;
+        }
+
+        .pun {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0.2rem 0;
+            position: relative;
+        }
+
+        .pun p {
+            flex-basis: 27%;
+            text-align: center;
+            margin-right: 1rem;
+        }
+
+        .pun i {
+            flex-basis: 9%;
+            text-align: center;
+            margin-right: 1rem;
+        }
+
+        .scoreBoard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .scoreBoard .logos{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .scoreBoard .logo {
+            height: 7rem;
+        }
+
+        .scoreBoard .results {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 3fr 2fr 3fr;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .scoreBoard .results * {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 500;
+        }
+
+        .scoreBoard .results span:nth-child(2) {
+            font-size: 1.2rem;
+        }
+
+        .scoreBoard .results .biggerNum {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .scoreBoard .results span.biggerNum:nth-child(2) {
+            font-size: 1.7rem;
+            font-weight: 600;
+        }
+
+        .sign{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .sign input {
+            width: 100%;
+        }
+
+        .sign label {
+            color: var(--white);
+            font-weight: 400;
+        }
+
+        .sign button {
+            width: fit-content;
+        }
+
+        .disabled-btn {
+            background-color: grey;
+            color: white;
+            cursor: default;
+
+            opacity: 0.6; /* Adds a dimmed look */
+            pointer-events: none; /* Disables hover animations */
+            transition: none; /* Disables any transition animations */
+        }
+
+    </style>
+
+    <script>
+        
+        
+        function disableAllInputs() {
+            document.querySelectorAll('button , input')
+                .forEach(element => element.disabled = true);
+
+            document.querySelectorAll('button, .impro .select')
+                .forEach(element => {
+                    element.disabled = true; // Disable the button
+                    element.classList.add('disabled-btn'); // Add a class
+                    element.style.pointerEvents = "none";
+                    element.style.borderRadius = "15px";
+                });
+
+
+        }
+        
+        const formSign1 = document.getElementById("signatureCoachForm1");
+
+        formSign1.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the page from refreshing
+        });
+        
+        const formSign2 = document.getElementById("signatureCoachForm2");
+
+        formSign2.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the page from refreshing
+        });
+        
+        async function signCoach(teamID,teamNum) {
+            let passwordElement = document.getElementById("passwordCoachTeam" + teamNum);
+            let password = passwordElement.value;
+            let divMsgError = document.getElementById('msgPasswordChangeTeam' + teamNum);
+            let btnSignCoach = document.getElementById('signatureCoachBtn' + teamNum);
+
+            // Hash the input password
+            let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            // Send a POST request with hashed password and team ID
+            try {
+                const response = await fetch('https://citrus.liguedespamplemousses.com/Citrus/checkPassword/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "X-CSRFToken": csrfToken  // Include the CSRF token here
+                    },
+                    body: JSON.stringify({
+                        password: password,
+                        teamID: teamID
+                    })
+                });
+
+                // Check the status of the response
+                if (response.ok) {
+                    const data = await response.json();
+                    closeModal('signatureCoachModal' + teamNum);
+                    btnSignCoach.innerText = "Signature enregistrée";
+                    btnSignCoach.disabled = true;
+
+                    btnSignCoach.classList.add("disabled-btn");
+                    
+                    let btn1 = document.getElementById('signatureCoachBtn1');
+                    let btn2 = document.getElementById('signatureCoachBtn2');
+                    let submitBtn = document.getElementById('finalizeMatchBtn');
+                    if(btn1.disabled === true && btn2.disabled === true){
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove("disabled-btn");
+                    }
+
+
+                } else if (response.status === 401) {
+                    console.log("Password does not match.");
+                    divMsgError.innerText = 'Le mot de passe est incorrect !'
+
+                } else {
+                    console.log("An error occurred:", response.status);
+                    divMsgError.innerText = "Une erreur s'est produite !"
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                divMsgError.innerText = "Une erreur s'est produite !"
+                // Handle network error, e.g., server is unreachable
+            }
+        }
+        
+        function getDataString(){
+            // On commence par prendre les alignements modifiés des équipes
+            let alignementEquipe1String = "[";
+            let alignementEquipe2String = "[";
+
+            let alignement1Div = document.getElementById('alignement1');
+            let childrenAlignement1 = alignement1Div.children;
+            
+            for(let i=0; i < childrenAlignement1.length; i++){
+                let player = childrenAlignement1[i];
+                if(player.classList.contains('player')){
+                    let playerInfo = player.children;
+                    alignementEquipe1String += "['" + playerInfo[0].innerHTML + "','"+ playerInfo[1].innerHTML + "','"+ playerInfo[2].innerHTML + "','"+ playerInfo[3].innerHTML + "']";
+                    
+                    if(i !== childrenAlignement1.length - 1 ){
+                        alignementEquipe1String += ","
+                    }
+                    
+                }
+            }
+            alignementEquipe1String += "]"
+            
+            let alignement2Div = document.getElementById('alignement2');
+            let childrenAlignement2 = alignement2Div.children;
+            
+            for(let i=0; i < childrenAlignement2.length; i++){
+                let player = childrenAlignement2[i];
+                if(player.classList.contains('player')){
+                    let playerInfo = player.children;
+                    alignementEquipe2String += "['" + playerInfo[0].innerHTML + "','"+ playerInfo[1].innerHTML + "','"+ playerInfo[2].innerHTML + "','"+ playerInfo[3].innerHTML + "']";
+                    
+                    if(i !== childrenAlignement2.length - 1 ){
+                        alignementEquipe2String += ","
+                    }
+                    
+                }
+            }
+            alignementEquipe2String += "]"
+            
+            // On va ensuite chercher les improvisations
+            let improString = "["
+            for(let i= 1; i <= 13; i++){
+                let improText = document.getElementById('impro' + i);
+                let improPts = document.getElementById('improPts' + i);
+                
+                improString += "['" + improText.value + "','" + improPts.value + "']";
+                
+                if(i !== 13 ){
+                    improString += ","
+                }
+            }
+            improString += "]";
+            
+            // Ensuite, on va chercher les punitions 
+            let punitionsString = "[";
+            let punitionDiv = document.getElementById("Pénalités");
+            let punitions = punitionDiv.children;
+            
+            
+            
+            for(let i =0; i< punitions.length; i++){
+                let punition = punitions[i];
+                let punitionInfo = punition.children;
+                if(punition.classList.contains("pun")){
+                    punitionsString += "['" + punitionInfo[0].innerHTML + "','" + punitionInfo[1].innerHTML + "','" + punitionInfo[2].innerHTML + "']"
+                    if(i !== punitions.length - 1 ){
+                        punitionsString += ","
+                    }
+                }
+                
+
+            }
+            punitionsString += "]";
+            
+            
+            let subTotalTeam1 = document.getElementById("subTotalTeam1").innerText;
+            let subTotalTeam2 = document.getElementById("subTotalTeam2").innerText;
+            
+            let team1Puns = document.getElementById("team1Puns").innerText;
+            let team2Puns = document.getElementById("team2Puns").innerText;
+            
+            let totalTeam1 = document.getElementById("team1Score").innerText;
+            let totalTeam2 = document.getElementById("team2Score").innerText;
+            
+            
+            
+            let subtotalString = "[" + subTotalTeam1 + "," + subTotalTeam2 + "]";
+            let totalPunString = "[" + team1Puns + "," + team2Puns + "]";
+            let totalString = "[" + totalTeam1 + "," + totalTeam2 + "]";
+            
+            let scoreString = "[" + subtotalString + "," + totalPunString + "," + totalString + "]";
+            
+            // On va chercher les étoiles
+            let etoilesString = "[]";
+            
+            // Finalise
+            let finalString = "[" + alignementEquipe1String + "," + alignementEquipe2String + "," + improString + "," + punitionsString + "," + etoilesString + "," + scoreString + "]";
+            return finalString;
+        }
+        
+        function saveToDB() {
+            console.log("SAVING...");
+            let dataString = getDataString();
+            let userID = saveID;
+            let matchID = 9292;
+        
+            // Retrieve CSRF token from the meta tag
+            let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+            let data = {
+                userID : userID,
+                dataString : dataString,
+                matchID : matchID
+            };
+        
+            fetch('https://citrus.liguedespamplemousses.com/Citrus/SaveToDB/', {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json',
+                    "X-CSRFToken": csrfToken  // Include the CSRF token here
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(result => {
+                console.log('SUCCESS', result);
+            })
+            .catch(error => {
+                console.error("ERROR:", error);
+            });
+        }
+
+
+        let score = [0, 0];
+        let points = [0, 0];
+        let puns = [0, 0];
+
+        function updatePoint() {
+            let pointsList = document.querySelectorAll(".point");
+            points = [0, 0];
+            for (i=0;i<pointsList.length;i++) {
+                if (pointsList[i].value == "team1") {
+                    points[0]++
+                } else if (pointsList[i].value == "team2") {
+                    points[1]++
+                } else if (pointsList[i].value == "both") {
+                    points[0]++
+                    points[1]++
+                }
+            }
+            updateScore();
+            console.log("Updating Points : " + points[0] + " - " + points[1])
+        }
+
+        function updatePun() {
+            let punsList = document.querySelectorAll(".pun");
+            puns = [0, 0];
+            for (i=0;i<punsList.length;i++) {
+                if (punsList[i].getAttribute("data-pun") == "team1") {
+                    puns[0] = puns[0] + Number(punsList[i].getAttribute("data-punvalue"));
+                } else if (punsList[i].getAttribute("data-pun") == "team2") {
+                    puns[1] = puns[1] + Number(punsList[i].getAttribute("data-punvalue"));
+                }
+            }
+            updateScore();
+            console.log("Updating Pun : " + puns[0] + " - " + puns[1])
+        }
+
+        function updateScore() {
+            let tradePun = Array.from(puns);
+            score = Array.from(points);
+            while (tradePun[0]>=3) {
+                score[1]++
+                tradePun[0] = tradePun[0]-3;
+            }
+            while (tradePun[1]>=3) {
+                score[0]++
+                tradePun[1] = tradePun[1]-3;
+            }
+            if (document.querySelector(".lastPoint").value != "unset" && score[0] == score[1]) {
+                document.getElementById("prolong").style.display="flex";
+            } else {
+                document.getElementById("prolong").style.display="none";
+                document.getElementById("prolong").getElementsByClassName("select").value="";
+                document.getElementById("prolong").getElementsByClassName("input").value="";
+            }
+
+            document.getElementById("subTotalTeam1").innerText = points[0];
+            document.getElementById("subTotalTeam2").innerText = points[1];
+            document.getElementById("team1Puns").innerText = puns[0];
+            document.getElementById("team2Puns").innerText = puns[1];
+            document.getElementById("team1Score").innerText = score[0];
+            document.getElementById("team2Score").innerText = score[1];
+        }
+
+        // Function to check for local storage and set saveID
+        function setSaveID() {
+            let saveID = null;
+            // Check if userID exists in local storage
+            if (localStorage.getItem('userID')) {
+                saveID = localStorage.getItem('userID');
+            } 
+            // Check if deviceID exists in local storage
+            else if (localStorage.getItem('deviceID')) {
+                saveID = localStorage.getItem('deviceID');
+            } 
+            // If neither userID nor deviceID exists, create a new deviceID
+            else {
+                // Detect the device type
+                let deviceType = detectDeviceType();
+                // Detect the browser
+                let browserName = detectBrowser();
+                // Generate a random 5-digit number
+                let randomNum = Math.floor(10000 + Math.random() * 90000);
+                // Create a new deviceID
+                let newID = `${deviceType}${browserName}${randomNum}`;
+                
+                // Set the new deviceID to local storage
+                localStorage.setItem('deviceID', newID);
+                saveID = newID;
+            }
+
+            // Return or use saveID as needed
+            return saveID;
+        }
+
+        // Function to detect the type of device
+        function detectDeviceType() {
+            let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            if (/iPhone/i.test(userAgent)) {
+                return 'iPhone';
+            } else if (/android/i.test(userAgent)) {
+                return 'Android';
+            } else if (/Macintosh/i.test(userAgent)) {
+                return 'Mac';
+            } else if (/Windows/i.test(userAgent)) {
+                return 'PC';
+            } else {
+                return 'Generic';
+            }
+        }
+
+        // Function to detect the browser
+        function detectBrowser() {
+            let userAgent = navigator.userAgent;
+
+            if (userAgent.indexOf("Firefox") > -1) {
+                return 'Firefox';
+            } else if (userAgent.indexOf("SamsungBrowser") > -1) {
+                return 'SamsungBrowser';
+            } else if (userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1) {
+                return 'Opera';
+            } else if (userAgent.indexOf("Trident") > -1) {
+                return 'IE'; // Internet Explorer
+            } else if (userAgent.indexOf("Edge") > -1) {
+                return 'Edge';
+            } else if (userAgent.indexOf("Chrome") > -1) {
+                return 'Chrome';
+            } else if (userAgent.indexOf("Safari") > -1) {
+                return 'Safari';
+            } else {
+                return 'UnknownBrowser';
+            }
+        }
+
+        // Example usage
+        let saveID = setSaveID();
+        console.log(saveID);
+
+        function showSection(el){
+            const sections = document.getElementsByTagName("section");
+            const section = el.value;
+            for (i=0;i<sections.length;i++) {
+                sections[i].classList.add("hidden");
+            }
+            document.getElementById(section).classList.remove("hidden");
+        }
+
+        let players = document.querySelectorAll('.player, .coach');
+        for (let i = 0; i<players.length;i++) {
+            players[i].addEventListener("click", function() {
+                players[i].classList.toggle("crossed")
+            })
+        }
+
+    </script>
+
+    <script>
+        /* À ajouter une fois si dropdowns présents */
+        // Variables globales
+        var selectContainers, selectElements, optionsCount, i, j;
+        var selectedDiv, optionsDiv, optionDiv, searchDiv, searchInput, clearSpan, noResultsDiv;
+
+        // Rechercher tous les éléments avec la classe "select"
+        selectContainers = document.getElementsByClassName("select");
+        var containerCount = selectContainers.length;
+
+        // Parcourir chaque conteneur de sélection
+        for (i = 0; i < containerCount; i++) {
+            // Sélectionner l'élément <select> à l'intérieur du conteneur
+            selectElements = selectContainers[i].getElementsByTagName("select")[0];
+            optionsCount = selectElements.length;
+
+            // Créer un nouveau DIV pour afficher l'élément sélectionné
+            selectedDiv = document.createElement("DIV");
+            selectedDiv.setAttribute("class", "select-selected");
+            selectedDiv.innerHTML = selectElements.options[selectElements.selectedIndex].innerHTML;
+            selectContainers[i].appendChild(selectedDiv);
+
+            // Créer un nouveau DIV pour contenir la liste des options
+            optionsDiv = document.createElement("DIV");
+            optionsDiv.setAttribute("class", "select-items select-hide");
+
+            // Si le conteneur de sélection a la classe "select-search", ajouter une barre de recherche
+            if (selectContainers[i].classList.contains("select-search")) {
+                searchDiv = document.createElement("div");
+                searchDiv.classList.add("select-search-bar");
+
+                searchInput = document.createElement("input");
+                searchInput.setAttribute("type", "text");
+                searchInput.setAttribute("placeholder", "Rechercher...");
+                searchInput.setAttribute("onkeyup", "filterSearch(this)");
+                searchInput.classList.add("select-search-bar-input");
+
+                clearSpan = document.createElement("span");
+                clearSpan.innerHTML = "×";
+                clearSpan.classList.add("select-search-clear");
+                clearSpan.addEventListener("click", function() {
+                    this.previousSibling.value = "";
+                    filterSearch(this.previousSibling);
+                });
+
+                searchDiv.appendChild(searchInput);
+                searchDiv.appendChild(clearSpan);
+                optionsDiv.appendChild(searchDiv);
+            }
+
+            // Parcourir chaque option dans l'élément <select>
+            for (j = 1; j < optionsCount; j++) {
+                // Créer un nouveau DIV pour chaque option
+                optionDiv = document.createElement("DIV");
+                optionDiv.innerHTML = selectElements.options[j].innerHTML;
+                optionDiv.classList.add("select-option");
+                if (selectElements.options[j].selected) {
+                    optionDiv.classList.add("same-as-selected");
+                }
+                optionDiv.addEventListener("click", function(e) {
+                    // Lorsque l'option est cliquée, mettre à jour l'élément <select> original et l'élément sélectionné
+                    var selectElement, optionsLength, optionText, selectedDiv, allSelectedDivs;
+
+                    selectElement = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                    optionsLength = selectElement.length;
+                    selectedDiv = this.parentNode.previousSibling;
+                    
+                    for (var k = 0; k < optionsLength; k++) {
+                        if (selectElement.options[k].innerText === this.innerText) {
+                            selectElement.selectedIndex = k;
+                            selectedDiv.innerHTML = this.innerHTML;
+                            allSelectedDivs = this.parentNode.getElementsByClassName("same-as-selected");
+                            
+                            for (var l = 0; l < allSelectedDivs.length; l++) {
+                                allSelectedDivs[l].removeAttribute("class");
+                            }
+                            
+                            this.setAttribute("class", "same-as-selected");
+                            selectElement.dispatchEvent(new Event('change'));
+                            break;
+                        }
+                        
+                    }
+
+                    selectedDiv.click();
+                });
+                optionsDiv.appendChild(optionDiv);
+            }
+
+            // Ajouter le DIV pour les résultats inexistants
+            noResultsDiv = document.createElement("DIV");
+            noResultsDiv.innerHTML = "Aucun résultats";
+            noResultsDiv.classList.add("select-noResults");
+            optionsDiv.appendChild(noResultsDiv);
+
+            // Ajouter le DIV des options au conteneur de sélection
+            selectContainers[i].appendChild(optionsDiv);
+
+            // Ajouter un événement de clic au DIV sélectionné pour ouvrir/fermer la liste des options
+            selectedDiv.addEventListener("click", function(e) {
+                e.stopPropagation();
+                closeAllSelect(this);
+                this.nextSibling.classList.toggle("select-hide");
+                this.classList.toggle("select-arrow-active");
+
+                // Si le conteneur de sélection a la classe "select-search", focaliser la barre de recherche
+                if (this.parentNode.classList.contains("select-search")) {
+                    let searchInput = selectContainers[i].parentNode.getElementsByClassName("select-search-bar-input")[0];
+                    searchInput.focus();
+                    this.nextElementSibling.scroll(0, 0);
+                }
+            });
+        }
+
+        // Fonction pour fermer tous les menus de sélection sauf celui spécifié
+        function closeAllSelect(elmnt) {
+            var selectItemsDivs, selectedDivs, i, totalItems, totalSelectedDivs, excludedIndexes = [];
+
+            selectItemsDivs = document.getElementsByClassName("select-items");
+            selectedDivs = document.getElementsByClassName("select-selected");
+            totalItems = selectItemsDivs.length;
+            totalSelectedDivs = selectedDivs.length;
+
+            for (i = 0; i < totalSelectedDivs; i++) {
+                if (elmnt === selectedDivs[i]) {
+                    excludedIndexes.push(i);
+                } else {
+                    selectedDivs[i].classList.remove("select-arrow-active");
+                }
+            }
+
+            for (i = 0; i < totalItems; i++) {
+                if (!excludedIndexes.includes(i)) {
+                    selectItemsDivs[i].classList.add("select-hide");
+                }
+            }
+
+            // Retirer le focus des barres de recherche
+            let searchInputs = document.getElementsByClassName("select-search-bar-input");
+            for (let i = 0; i < searchInputs.length; i++) {
+                searchInputs[i].blur();
+            }
+        }
+
+        // Fermer tous les menus de sélection si l'utilisateur clique en dehors
+        document.addEventListener("click", function(event) {
+            if (event.target.closest(".select-search-bar")) return;
+            closeAllSelect();
+        });
+
+        // Fonction pour filtrer les options en fonction de la recherche
+        function filterSearch(searchBar) {
+            let noResults = true;
+            let filter = searchBar.value.toUpperCase();
+            let optionsDiv = searchBar.parentNode.parentNode;
+            let options = optionsDiv.getElementsByClassName("select-option");
+
+            for (let i = 0; i < options.length; i++) {
+                let optionText = options[i].textContent || options[i].innerText;
+                if (optionText.toUpperCase().indexOf(filter) > -1) {
+                    options[i].style.display = "";
+                    noResults = false;
+                } else {
+                    options[i].style.display = "none";
+                }
+            }
+
+            // Afficher ou masquer le message "Aucun résultats"
+            optionsDiv.getElementsByClassName("select-noResults")[0].style.display = noResults ? "block" : "none";
+        }
+
+    </script>
+
+    <script>
+        function openModal(modalName) {
+            let modal = document.querySelector("[data-modal='"+modalName+"']");
+            modal.style.display="block";
+        }
+
+        function closeModal(modalName) {
+            let modal = document.querySelector("[data-modal='"+modalName+"']");
+            modal.style.display="none";
+        }
+    </script>
+    <script>
+        document.getElementById('addPlayerForm').addEventListener('submit', function (e) {
+            console.log("Submitted")
+            e.preventDefault();  // Prevent form from submitting and refreshing the page
+
+            // Collect input values
+            const playerName = document.getElementById('name').value;
+            const playerNumber = parseInt(document.getElementById('number').value);  // Ensure it's an integer
+            const playerPronoun = document.getElementById('pronoun').value;
+            const playerTeam = document.getElementById('team').value;
+
+            // Create player object
+            const newPlayer = {
+                name: playerName,
+                number: playerNumber,
+                pronoun: playerPronoun
+            };
+
+            // Call addPlayer function with the new player object
+            addPlayer(newPlayer, playerTeam);
+
+            // Close modal after adding the player
+            closeModal('addPlayerModal');
+            
+            // Optionally, clear the form for future use
+            document.getElementById('addPlayerForm').reset();
+        });
+
+        function addPlayer(playerInfo, team) {
+        const {name, number, pronoun} = playerInfo;
+        const teamDiv = document.getElementById("alignement"+team);  // Get the team container
+        const players = document.getElementsByClassName("player"+team);  // Get all players
+
+        const newPlayerHtml = `
+        <div class="player player${team}" onclick="this.classList.toggle('crossed')">
+            <p></p>
+            <p>${number}</p>
+            <p>${pronoun}</p>
+            <p>${name}</p>
+        </div>
+    `;
+
+        let inserted = false; // Flag to track if the player is inserted
+
+        // Loop through all existing players and find the correct position
+        for (let i = 0; i < players.length; i++) {
+            const player = players[i];
+            const playerPosition = player.querySelector('p:nth-child(1)').innerText;  // First 
+            const playerNumber = parseInt(player.querySelector('p:nth-child(2)').innerText);
+
+            // If there's a letter in the first column, skip it (do not consider for sorting)
+            if (playerPosition != '') {
+                player.insertAdjacentHTML('beforebegin', newPlayerHtml);
+                inserted = true;
+                break;
+            }
+
+            // Insert before the first player whose number is larger than the new player's number
+            if (playerNumber > number) {
+                player.insertAdjacentHTML('beforebegin', newPlayerHtml);
+                inserted = true;
+                break;
+            }
+        }
+
+        // If the player wasn't inserted, append them to the end
+        if (!inserted) {
+            teamDiv.insertAdjacentHTML('beforeend', newPlayerHtml);
+        }
+    }
+
+    document.getElementById('addPunForm').addEventListener('submit', function (e) {
+            console.log("Submitted")
+            e.preventDefault();
+
+            const punWho = document.getElementById('who').options[document.getElementById('who').selectedIndex].text;
+            const punValue = document.getElementById('who').value;
+            const punName = document.getElementById('pun').value;
+            const punMaj = document.getElementById('maj').value ;
+            let punMajValue = 0;
+            if (punMaj == "Oui") {
+                punMajValue = 2;
+            } else {
+                punMajValue = 1
+            }
+
+            let newPunHtml = `
+                <div class="pun" data-pun=${punValue} data-punValue=${punMajValue}>
+                    <p>${punWho}</p>
+                    <p>${punName}</p>
+                    <p>${punMaj}</p>
+                    <i class="fa-solid fa-trash" onclick="removePun(this)"></i>
+                </div>
+            `;
+            
+            document.querySelector(".nopenalty").style.display="none";
+            document.querySelector(".addPun").insertAdjacentHTML('beforebegin', newPunHtml)
+
+            // Close modal after adding the player
+            closeModal('addPunModal');
+            
+            // Optionally, clear the form for future use
+            saveToDB();
+            updatePun();
+            
+            });
+        
+        function removePun(el) {
+            el.parentNode.remove();
+            if (document.getElementsByClassName("pun").length === 0) {
+                document.querySelector(".nopenalty").style.display="block";
+            }
+            saveToDB();
+            updatePun();
+        }
+
+    </script>
+    <script src="https://kit.fontawesome.com/b6c9a53dc1.js" crossorigin="anonymous"></script>
+</body>
 </html>
