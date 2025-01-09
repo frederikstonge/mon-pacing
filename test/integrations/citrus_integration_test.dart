@@ -30,7 +30,6 @@ void main() {
       () {
         expect(citrusIntegration.integrationIsValid(url), isTrue);
       },
-      tags: ['integration'],
     );
 
     test(
@@ -38,7 +37,6 @@ void main() {
       () {
         expect(citrusIntegration.integrationIsValid('https://test.com/citron'), isFalse);
       },
-      tags: ['integration'],
     );
 
     test(
@@ -65,7 +63,6 @@ void main() {
 
         expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
       },
-      tags: ['integration'],
     );
 
     test(
@@ -92,7 +89,6 @@ void main() {
 
         expect(() async => await citrusIntegration.getMatch(url, pacing), throwsA(isA<Exception>()));
       },
-      tags: ['integration'],
     );
 
     test(
@@ -140,7 +136,6 @@ void main() {
         final exportData = jsonDecode(match.integrationAdditionalData!);
         expect(exportData['csrfToken'], '1mIBje6wUiC6ALqMl9EazrEyZlRtJTcpXhpOykU6iKHEb7jA8OgTj9zJ68pnvhNU');
       },
-      tags: ['integration'],
     );
   });
 
