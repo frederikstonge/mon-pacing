@@ -2,6 +2,29 @@ default_platform(:android)
 
 platform :android do
 
+  desc "Generate screenshots for Google Play Store"
+  lane :generate_screenshots do
+    Dir.chdir("../..") do
+      sh "flutter test test/screenshots/generate_screenshots_test.dart --update-goldens"
+    end
+
+    frameit(
+      path: "../screenshots/android",
+      use_platform: "ANDROID",
+    )
+
+    Dir.chdir("./metadata/android") do
+      sh "rm -f ./*/images/*/*.png"
+    end
+
+    Dir.chdir("../..") do
+      sh "rm ./screenshots/android/*/!(*_framed).png"
+      sh "cp -r screenshots/android/* android/fastlane/metadata/android"
+    end
+
+  end
+
+
   # options:
   #  - build_number
   #  - package_name
