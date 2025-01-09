@@ -126,7 +126,6 @@ void main() {
             headers: const {
               Headers.contentTypeHeader: ['text/html']
             },
-            delay: const Duration(seconds: 1),
           ),
         );
 
