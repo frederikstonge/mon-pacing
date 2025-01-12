@@ -167,18 +167,26 @@ void main() {
     when(matchCubit.state).thenReturn(MatchState(status: MatchStatus.success, match: match));
   });
 
-  group('Screenshot Homepage:', () {
+  group('Android', () {
+    final goldenDevices = [
+      CustomGoldenScreenshotDevices.android10InchTablet,
+      CustomGoldenScreenshotDevices.android7InchTablet,
+      CustomGoldenScreenshotDevices.androidPhone,
+    ];
+
     _screenshotWidget(
       goldenFileName: '1_pacings',
       child: ShellWrapper(
         body: PacingsPageView(),
         selectedIndex: 0,
       ),
+      goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
       goldenFileName: '2_pacing',
       child: PacingPageView(),
+      goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
@@ -187,11 +195,13 @@ void main() {
         body: MatchesPageView(),
         selectedIndex: 1,
       ),
+      goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
       goldenFileName: '4_match',
       child: MatchPageView(),
+      goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
@@ -200,6 +210,7 @@ void main() {
         body: TeamsPageView(),
         selectedIndex: 2,
       ),
+      goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
@@ -208,6 +219,64 @@ void main() {
         body: SettingsPageView(),
         selectedIndex: 3,
       ),
+      goldenDevices: goldenDevices,
+    );
+  });
+
+  group('iOS', () {
+    final goldenDevices = [
+      CustomGoldenScreenshotDevices.newerIphone,
+      CustomGoldenScreenshotDevices.newerIpad,
+      CustomGoldenScreenshotDevices.olderIphone,
+      CustomGoldenScreenshotDevices.olderIpad,
+    ];
+
+    _screenshotWidget(
+      goldenFileName: '1_pacings',
+      child: ShellWrapper(
+        body: PacingsPageView(),
+        selectedIndex: 0,
+      ),
+      goldenDevices: goldenDevices,
+    );
+
+    _screenshotWidget(
+      goldenFileName: '2_pacing',
+      child: PacingPageView(),
+      goldenDevices: goldenDevices,
+    );
+
+    _screenshotWidget(
+      goldenFileName: '3_matches',
+      child: ShellWrapper(
+        body: MatchesPageView(),
+        selectedIndex: 1,
+      ),
+      goldenDevices: goldenDevices,
+    );
+
+    _screenshotWidget(
+      goldenFileName: '4_match',
+      child: MatchPageView(),
+      goldenDevices: goldenDevices,
+    );
+
+    _screenshotWidget(
+      goldenFileName: '5_teams',
+      child: ShellWrapper(
+        body: TeamsPageView(),
+        selectedIndex: 2,
+      ),
+      goldenDevices: goldenDevices,
+    );
+
+    _screenshotWidget(
+      goldenFileName: '6_settings',
+      child: ShellWrapper(
+        body: SettingsPageView(),
+        selectedIndex: 3,
+      ),
+      goldenDevices: goldenDevices,
     );
   });
 }
@@ -215,11 +284,12 @@ void main() {
 void _screenshotWidget({
   required String goldenFileName,
   required Widget child,
+  required List<CustomGoldenScreenshotDevices> goldenDevices,
 }) {
   group(goldenFileName, () {
     final theme = ThemeType.light;
-    for (final locale in S.supportedLocales) {
-      for (final goldenDevice in CustomGoldenScreenshotDevices.values) {
+    for (final goldenDevice in goldenDevices) {
+      for (final locale in S.supportedLocales) {
         testWidgets('for ${goldenDevice.name}-${theme.name}-${locale.toLanguageTag()}', (tester) async {
           when(settingsCubit.state).thenReturn(SettingsState(language: locale.toLanguageTag(), theme: theme));
           final device = goldenDevice.device;
@@ -326,9 +396,9 @@ void _screenshotWidget({
               _ => throw UnimplementedError(),
             };
 
-            filePath = p.join('../../screenshots/android', storeLocale.toLanguageTag(), 'images', folder);
+            filePath = p.join('../../android/fastlane/metadata/android/', storeLocale.toLanguageTag(), 'images', folder);
           } else if (goldenDevice.device.platform == TargetPlatform.iOS) {
-            filePath = p.join('../../screenshots/ios', storeLocale.toLanguageTag());
+            filePath = p.join('../../ios/fastlane/screenshots', storeLocale.toLanguageTag());
           } else {
             throw UnimplementedError();
           }

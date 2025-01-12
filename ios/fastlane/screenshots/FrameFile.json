@@ -2,15 +2,15 @@
   "device_frame_version": "latest",
   "default": {
     "keyword": {
-      "font": "../../fonts/Poppins-Bold.ttf",
+      "font": "../../../fonts/Poppins-Bold.ttf",
       "color": "#8BC34A"
     },
     "title": {
-      "font": "../../fonts/Poppins-Regular.ttf",
+      "font": "../../../fonts/Poppins-Regular.ttf",
       "font_size": 128,
       "color": "#545454"
     },
-    "background": "../../assets/ic_logo.png",
+    "background": "../../../assets/ic_logo.png",
     "padding": 50,
     "show_complete_frame": false,
     "stack_title": false,

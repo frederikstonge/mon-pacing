@@ -4,22 +4,26 @@ platform :ios do
 
   desc "Generate screenshots for Apple Store"
   lane :generate_screenshots do
-    Dir.chdir("../..") do
-      sh "flutter test test/screenshots/generate_screenshots_test.dart --update-goldens"
-    end
 
-    frameit(
-      path: "../screenshots/ios",
-      use_platform: "IOS",
-    )
-
+    # Remove old screenshots
     Dir.chdir("./screenshots") do
       sh "rm -f ./*/*.png"
     end
 
+    # Generate new screenshots
     Dir.chdir("../..") do
-      sh "rm ./screenshots/ios/*/!(*_framed).png"
-      sh "cp -r screenshots/ios/* ios/fastlane/screenshots"
+      sh "flutter test test/screenshots/generate_screenshots_test.dart --name=iOS --update-goldens"
+    end
+
+    # Frame screenshots
+    frameit(
+      path: "./fastlane/screenshots",
+      use_platform: "IOS",
+    )
+
+    # Remove unframed screenshots
+    Dir.chdir("./screenshots") do
+      sh "find . -type f \( -name '*.png' -a ! \( -name '*_framed.png' \) \) -delete"
     end
 
   end

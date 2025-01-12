@@ -4,22 +4,26 @@ platform :android do
 
   desc "Generate screenshots for Google Play Store"
   lane :generate_screenshots do
-    Dir.chdir("../..") do
-      sh "flutter test test/screenshots/generate_screenshots_test.dart --update-goldens"
-    end
 
-    frameit(
-      path: "../screenshots/android",
-      use_platform: "ANDROID",
-    )
-
+    # Remove old screenshots
     Dir.chdir("./metadata/android") do
       sh "rm -f ./*/images/*/*.png"
     end
 
+    # Generate new screenshots
     Dir.chdir("../..") do
-      sh "rm ./screenshots/android/*/!(*_framed).png"
-      sh "cp -r screenshots/android/* android/fastlane/metadata/android"
+      sh "flutter test test/screenshots/generate_screenshots_test.dart --name=Android --update-goldens"
+    end
+
+    # Frame screenshots
+    frameit(
+      path: "./fastlane/metadata/android",
+      use_platform: "ANDROID",
+    )
+
+    # Remove unframed screenshots
+    Dir.chdir("./metadata/android") do
+      sh "find . -type f \( -name '*.png' -a ! \( -name '*_framed.png' \) \) -delete"
     end
 
   end
