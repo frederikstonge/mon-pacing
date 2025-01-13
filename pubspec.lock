@@ -66,10 +66,10 @@ packages:
     dependency: transitive
     description:
       name: bloc
-      sha256: "106842ad6569f0b60297619e9e0b1885c2fb9bf84812935490e6c5275777804e"
+      sha256: "52c10575f4445c61dd9e0cafcc6356fdd827c4c64dd7945ef3c4105f6b6ac189"
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.4"
+    version: "9.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -439,10 +439,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_bloc
-      sha256: b594505eac31a0518bdcb4b5b79573b8d9117b193cc80cc12e17d639b10aa27a
+      sha256: "153856bdaac302bbdc58a1d1403d50c40557254aa05eaeed40515d88a25a526b"
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.6"
+    version: "9.0.0"
   flutter_file_dialog:
     dependency: "direct main"
     description:
@@ -546,14 +546,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1+1"
-  hive:
+  hive_ce:
     dependency: transitive
     description:
-      name: hive
-      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      name: hive_ce
+      sha256: "918d3379fafea06d501a161805965f04d0ff164aa3948daeb746b31ed936a51b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.3"
+    version: "2.9.0"
   html:
     dependency: "direct main"
     description:
@@ -598,10 +598,10 @@ packages:
     dependency: "direct main"
     description:
       name: hydrated_bloc
-      sha256: af35b357739fe41728df10bec03aad422cdc725a1e702e03af9d2a41ea05160c
+      sha256: "5401d5df7d800256a0d1ae16b5d8b518dd44c50d412fe96c6a96d8a4ea85a938"
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.5"
+    version: "10.0.0"
   icons_launcher:
     dependency: "direct main"
     description:
@@ -646,7 +646,7 @@ packages:
     dependency: "direct main"
     description:
       name: isar
-      sha256: "52bc5314fcabcab89c847510fa39eae65e8c98d8b4f863d2cfae6193bbf7101d"
+      sha256: e987032e5d007a03ba4415cbf4d47add17b57ac664db8705db90fbfeb6a16737
       url: "https://pub.isar-community.dev"
     source: hosted
     version: "4.0.3"
@@ -654,7 +654,7 @@ packages:
     dependency: "direct main"
     description:
       name: isar_flutter_libs
-      sha256: "9d53728a01291a13d84d0dbc05f6aa4e620034d8cd675c2c12fa8aa994ffa817"
+      sha256: a6b86d8618fe2d7d0e2ac6aa7a7f21c0c8ae912ccbef94a45d9f6e1e519ef610
       url: "https://pub.isar-community.dev"
     source: hosted
     version: "4.0.3"
