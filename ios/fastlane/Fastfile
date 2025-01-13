@@ -23,7 +23,7 @@ platform :ios do
 
     # Remove unframed screenshots
     Dir.chdir("./screenshots") do
-      sh "find . -type f \( -name '*.png' -a ! \( -name '*_framed.png' \) \) -delete"
+      sh "find . -type f \\( -path '*/*.png' -a ! \\( -path '*/*_framed.png' \\) \\) -delete"
     end
 
   end

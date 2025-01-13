@@ -1,13 +1,9 @@
 @Tags(['screenshot'])
 library;
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -29,12 +25,12 @@ import 'package:mon_pacing/cubits/timer/timer_cubit.dart';
 import 'package:mon_pacing/cubits/timer/timer_state.dart';
 import 'package:mon_pacing/extensions/color_extensions.dart';
 import 'package:mon_pacing/l10n/generated/app_localizations.dart';
-import 'package:mon_pacing/models/constants.dart';
 import 'package:mon_pacing/models/improvisation_model.dart';
 import 'package:mon_pacing/models/improvisation_type.dart';
 import 'package:mon_pacing/models/match_model.dart';
 import 'package:mon_pacing/models/match_team_model.dart';
 import 'package:mon_pacing/models/pacing_model.dart';
+import 'package:mon_pacing/models/team_model.dart';
 import 'package:mon_pacing/models/theme_type.dart';
 import 'package:mon_pacing/pages/match/cubits/match_cubit.dart';
 import 'package:mon_pacing/pages/match/cubits/match_state.dart';
@@ -48,7 +44,6 @@ import 'package:mon_pacing/pages/pacing/pacing_page_view.dart';
 import 'package:mon_pacing/pages/pacings/pacings_page_view.dart';
 import 'package:mon_pacing/pages/settings/settings_page_view.dart';
 import 'package:mon_pacing/pages/teams/teams_page_view.dart';
-import 'package:mon_pacing/router/router.dart';
 import 'package:mon_pacing/services/analytics_service.dart';
 import 'package:mon_pacing/services/excel_service.dart';
 import 'package:mon_pacing/services/integration_service.dart';
@@ -126,7 +121,22 @@ void main() {
       ),
     );
 
-    final random = Random();
+    final teams = [
+      TeamModel(
+        id: 0,
+        createdDate: DateTime.now(),
+        modifiedDate: DateTime.now(),
+        name: 'Canadiens',
+        color: Colors.red.getIntvalue,
+      ),
+      TeamModel(
+        id: 1,
+        createdDate: DateTime.now(),
+        modifiedDate: DateTime.now(),
+        name: 'Maple Leafs',
+        color: Colors.blue.getIntvalue,
+      )
+    ];
 
     final match = MatchModel(
       id: 0,
@@ -134,14 +144,18 @@ void main() {
       tags: ['NHL', 'Hockey'],
       createdDate: DateTime.now(),
       modifiedDate: DateTime.now(),
-      teams: List.generate(
-        2,
-        (index) => MatchTeamModel(
-          id: index,
-          name: 'Team $index',
-          color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
+      teams: [
+        MatchTeamModel(
+          id: 0,
+          name: 'Canadiens',
+          color: Colors.red.getIntvalue,
         ),
-      ),
+        MatchTeamModel(
+          id: 1,
+          name: 'Maple Leafs',
+          color: Colors.blue.getIntvalue,
+        ),
+      ],
       improvisations: List.generate(
         12,
         (index) => ImprovisationModel(
@@ -161,7 +175,7 @@ void main() {
     when(featureFlagsCubit.state).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success, enableIntegrations: true));
     when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing]));
     when(matchesCubit.state).thenReturn(MatchesState(status: MatchesStatus.success, matches: [match]));
-    when(teamsCubit.state).thenReturn(const TeamsState(status: TeamsStatus.success, teams: []));
+    when(teamsCubit.state).thenReturn(TeamsState(status: TeamsStatus.success, teams: teams));
     when(timerCubit.state).thenReturn(const TimerState(timer: null));
     when(pacingCubit.state).thenReturn(PacingState(status: PacingStatus.success, pacing: pacing));
     when(matchCubit.state).thenReturn(MatchState(status: MatchStatus.success, match: match));
@@ -299,62 +313,59 @@ void _screenshotWidget({
           debugDisableShadows = false;
 
           // Build widget tree around our child widget.
-          final widget = InheritedGoRouter(
-            goRouter: router,
-            child: MultiRepositoryProvider(
+          final widget = MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider<ToasterService>(
+                create: (context) => toasterService,
+              ),
+              RepositoryProvider<ExcelService>(
+                create: (context) => excelService,
+              ),
+              RepositoryProvider<IntegrationService>(
+                create: (context) => integrationService,
+              ),
+              RepositoryProvider<AnalyticsService>(
+                create: (context) => analyticsService,
+              ),
+            ],
+            child: MultiBlocProvider(
               providers: [
-                RepositoryProvider<ToasterService>(
-                  create: (context) => toasterService,
+                BlocProvider<SettingsCubit>(
+                  create: (context) => settingsCubit,
                 ),
-                RepositoryProvider<ExcelService>(
-                  create: (context) => excelService,
+                BlocProvider<FeatureFlagsCubit>(
+                  create: (context) => featureFlagsCubit,
                 ),
-                RepositoryProvider<IntegrationService>(
-                  create: (context) => integrationService,
+                BlocProvider<PacingsCubit>(
+                  create: (context) => pacingsCubit,
                 ),
-                RepositoryProvider<AnalyticsService>(
-                  create: (context) => analyticsService,
+                BlocProvider<MatchesCubit>(
+                  create: (context) => matchesCubit,
+                ),
+                BlocProvider<TeamsCubit>(
+                  create: (context) => teamsCubit,
+                ),
+                BlocProvider<TimerCubit>(
+                  create: (context) => timerCubit,
+                ),
+                BlocProvider<PacingCubit>(
+                  create: (context) => pacingCubit,
+                ),
+                BlocProvider<MatchCubit>(
+                  create: (context) => matchCubit,
                 ),
               ],
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<SettingsCubit>(
-                    create: (context) => settingsCubit,
-                  ),
-                  BlocProvider<FeatureFlagsCubit>(
-                    create: (context) => featureFlagsCubit,
-                  ),
-                  BlocProvider<PacingsCubit>(
-                    create: (context) => pacingsCubit,
-                  ),
-                  BlocProvider<MatchesCubit>(
-                    create: (context) => matchesCubit,
-                  ),
-                  BlocProvider<TeamsCubit>(
-                    create: (context) => teamsCubit,
-                  ),
-                  BlocProvider<TimerCubit>(
-                    create: (context) => timerCubit,
-                  ),
-                  BlocProvider<PacingCubit>(
-                    create: (context) => pacingCubit,
-                  ),
-                  BlocProvider<MatchCubit>(
-                    create: (context) => matchCubit,
-                  ),
-                ],
-                child: ScreenshotApp(
-                  theme: switch (theme) {
-                    ThemeType.light => Themes.light(),
-                    ThemeType.dark => Themes.dark(),
-                    ThemeType.lni => Themes.lni(),
-                  },
-                  localizationsDelegates: S.localizationsDelegates,
-                  supportedLocales: S.supportedLocales,
-                  locale: locale,
-                  device: device,
-                  child: child,
-                ),
+              child: ScreenshotApp(
+                theme: switch (theme) {
+                  ThemeType.light => Themes.light(),
+                  ThemeType.dark => Themes.dark(),
+                  ThemeType.lni => Themes.lni(),
+                },
+                localizationsDelegates: S.localizationsDelegates,
+                supportedLocales: S.supportedLocales,
+                locale: locale,
+                device: device,
+                child: child,
               ),
             ),
           );

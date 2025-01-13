@@ -14,7 +14,7 @@
     "padding": 50,
     "show_complete_frame": false,
     "stack_title": false,
-    "title_below_image": true,
+    "title_below_image": false,
     "use_platform": "IOS"
   },
   "data": [

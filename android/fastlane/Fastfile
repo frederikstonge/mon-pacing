@@ -23,7 +23,7 @@ platform :android do
 
     # Remove unframed screenshots
     Dir.chdir("./metadata/android") do
-      sh "find . -type f \( -name '*.png' -a ! \( -name '*_framed.png' \) \) -delete"
+      sh "find . -type f \\( -path '*/images/*/*.png' -a ! \\( -path '*/images/*/*_framed.png' \\) \\) -delete"
     end
 
   end
