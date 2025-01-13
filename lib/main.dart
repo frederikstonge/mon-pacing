@@ -16,16 +16,11 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   FlutterError.onError = (errorDetails) {
-    if (!kDebugMode) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    }
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
 
   PlatformDispatcher.instance.onError = (error, stack) {
-    if (!kDebugMode) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    }
-
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
 
@@ -37,6 +32,7 @@ Future<void> main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
     await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
 
     await FirebaseRemoteConfig.instance.setConfigSettings(
@@ -59,8 +55,6 @@ Future<void> main() async {
     // APP
     runApp(const Bootstrapper(child: App()));
   }, (error, stackTrace) {
-    if (!kDebugMode) {
-      FirebaseCrashlytics.instance.recordError(error, stackTrace);
-    }
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 }
