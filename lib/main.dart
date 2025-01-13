@@ -51,8 +51,9 @@ Future<void> main() async {
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     // BLOC
+    final storageDirectory = await getApplicationDocumentsDirectory();
     HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: await getApplicationDocumentsDirectory(),
+      storageDirectory: HydratedStorageDirectory(storageDirectory.path),
     );
 
     // APP
