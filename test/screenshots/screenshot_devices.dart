@@ -35,8 +35,8 @@ enum CustomGoldenScreenshotDevices {
   ),
 
   /// iPhone 6.9" Display (the one without a home button)
-  /// based on the iPhone 16 Pro Max.
-  iphone(
+  /// based on the iPhone 14 Pro Max.
+  iPhone(
     ScreenshotDevice(
       platform: TargetPlatform.iOS,
       resolution: Size(1290, 2796),
@@ -50,10 +50,10 @@ enum CustomGoldenScreenshotDevices {
   /// labelled on App Store Connect as iPad 13" Display.
   ///
   /// This is the newer type of iPad with thinner bezels and no home button.
-  ipad(
+  iPad(
     ScreenshotDevice(
       platform: TargetPlatform.iOS,
-      resolution: Size(2048, 2732),
+      resolution: Size(2064, 2752),
       pixelRatio: 2,
       goldenSubFolder: 'ios/',
       frameBuilder: ScreenshotFrame.newerIpad,
