@@ -1,3 +1,6 @@
+@Tags(['integration'])
+library;
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -160,7 +163,6 @@ void main() {
 
         expect(document.body!.text, staticDocument.body!.text);
       },
-      tags: ['integration'],
     );
 
     test(
@@ -168,7 +170,6 @@ void main() {
       () {
         expect(citrusIntegration.integrationIsValid(url), isTrue);
       },
-      tags: ['integration'],
     );
 
     test(
@@ -203,7 +204,6 @@ void main() {
         final exportData = jsonDecode(match.integrationAdditionalData!);
         expect(exportData['csrfToken'], isNotNull);
       },
-      tags: ['integration'],
     );
   });
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../models/theme_type.dart';
 import '../buttons/loading_icon_button.dart';
@@ -22,7 +21,7 @@ class SliverLogoAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final canPop = GoRouter.of(context).canPop();
+    final canPop = Navigator.of(context).canPop();
     return SliverAppBar.large(
       leading: canPop
           ? LoadingIconButton(
@@ -39,6 +38,7 @@ class SliverLogoAppbar extends StatelessWidget {
                   ThemeType.lni => 'assets/MonPacingLNI.png',
                 },
                 filterQuality: FilterQuality.high,
+                errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
                 isAntiAlias: true,
               ),
             ),

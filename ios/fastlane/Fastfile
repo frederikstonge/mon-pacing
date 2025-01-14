@@ -2,6 +2,32 @@ default_platform(:ios)
 
 platform :ios do
 
+  desc "Generate screenshots for Apple Store"
+  lane :generate_screenshots do
+
+    # Remove old screenshots
+    Dir.chdir("./screenshots") do
+      sh "rm -f ./*/*.png"
+    end
+
+    # Generate new screenshots
+    Dir.chdir("../..") do
+      sh "flutter test test/screenshots/generate_screenshots_test.dart --name=iOS --update-goldens"
+    end
+
+    # Frame screenshots
+    frameit(
+      path: "./fastlane/screenshots",
+      use_platform: "IOS",
+    )
+
+    # Remove unframed screenshots
+    Dir.chdir("./screenshots") do
+      sh "find . -type f \\( -path '*/*.png' -a ! \\( -path '*/*_framed.png' \\) \\) -delete"
+    end
+
+  end
+
   # options:
   #  - build_number
   #  - bundle_id

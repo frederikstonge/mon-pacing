@@ -1,0 +1,34 @@
+{
+  "device_frame_version": "latest",
+  "default": {
+    "keyword": {
+      "font": "../../../fonts/Poppins-Bold.ttf",
+      "color": "#8BC34A"
+    },
+    "title": {
+      "font": "../../../fonts/Poppins-Regular.ttf",
+      "font_size": 128,
+      "color": "#545454"
+    },
+    "background": "../../../assets/ic_logo.png",
+    "padding": 50,
+    "show_complete_frame": false,
+    "stack_title": false,
+    "title_below_image": false,
+    "use_platform": "IOS"
+  },
+  "data": [
+    {
+      "filter": "IPHONE_69",
+      "force_device_type": "iPhone 14 Pro Max"
+    },
+    {
+      "filter": "IPAD_PRO_129",
+      "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
+    },
+    {
+      "filter": "IPAD_PRO_3GEN_129",
+      "force_device_type": "iPad Pro"
+    }
+  ]
+}

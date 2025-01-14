@@ -2,6 +2,33 @@ default_platform(:android)
 
 platform :android do
 
+  desc "Generate screenshots for Google Play Store"
+  lane :generate_screenshots do
+
+    # Remove old screenshots
+    Dir.chdir("./metadata/android") do
+      sh "rm -f ./*/images/*/*.png"
+    end
+
+    # Generate new screenshots
+    Dir.chdir("../..") do
+      sh "flutter test test/screenshots/generate_screenshots_test.dart --name=Android --update-goldens"
+    end
+
+    # Frame screenshots
+    frameit(
+      path: "./fastlane/metadata/android",
+      use_platform: "ANDROID",
+    )
+
+    # Remove unframed screenshots
+    Dir.chdir("./metadata/android") do
+      sh "find . -type f \\( -path '*/images/*/*.png' -a ! \\( -path '*/images/*/*_framed.png' \\) \\) -delete"
+    end
+
+  end
+
+
   # options:
   #  - build_number
   #  - package_name
