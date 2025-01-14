@@ -53,7 +53,7 @@ enum CustomGoldenScreenshotDevices {
   iPad(
     ScreenshotDevice(
       platform: TargetPlatform.iOS,
-      resolution: Size(2064, 2752),
+      resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'ios/',
       frameBuilder: ScreenshotFrame.newerIpad,
