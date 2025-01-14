@@ -34,41 +34,15 @@ enum CustomGoldenScreenshotDevices {
     ),
   ),
 
-  /// iPhone 5.5" Display (the one with a home button)
-  /// based on the iPhone 8 Plus.
-  olderIphone(
-    ScreenshotDevice(
-      platform: TargetPlatform.iOS,
-      resolution: Size(1242, 2208),
-      pixelRatio: 3,
-      goldenSubFolder: 'ios/',
-      frameBuilder: ScreenshotFrame.olderIphone,
-    ),
-  ),
-
   /// iPhone 6.9" Display (the one without a home button)
   /// based on the iPhone 16 Pro Max.
-  newerIphone(
+  iphone(
     ScreenshotDevice(
       platform: TargetPlatform.iOS,
-      resolution: Size(1320, 2868),
+      resolution: Size(1290, 2796),
       pixelRatio: 3,
       goldenSubFolder: 'ios/',
       frameBuilder: ScreenshotFrame.newerIphone,
-    ),
-  ),
-
-  /// iPad Pro 12.9" (2nd generation),
-  /// labelled on App Store Connect as iPad 12.9" Display.
-  ///
-  /// This is the older type of iPad with thicker bezels and a home button.
-  olderIpad(
-    ScreenshotDevice(
-      platform: TargetPlatform.iOS,
-      resolution: Size(2048, 2732),
-      pixelRatio: 2,
-      goldenSubFolder: 'ios/',
-      frameBuilder: ScreenshotFrame.olderIpad,
     ),
   ),
 
@@ -76,10 +50,10 @@ enum CustomGoldenScreenshotDevices {
   /// labelled on App Store Connect as iPad 13" Display.
   ///
   /// This is the newer type of iPad with thinner bezels and no home button.
-  newerIpad(
+  ipad(
     ScreenshotDevice(
       platform: TargetPlatform.iOS,
-      resolution: Size(2064, 2752),
+      resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'ios/',
       frameBuilder: ScreenshotFrame.newerIpad,

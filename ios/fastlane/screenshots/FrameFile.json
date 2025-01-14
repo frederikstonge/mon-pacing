@@ -19,19 +19,11 @@
   },
   "data": [
     {
-      "filter": "IPHONE_55",
-      "force_device_type": "iPhone 8"
-    },
-    {
-      "filter": "IPHONE_67",
+      "filter": "IPHONE",
       "force_device_type": "iPhone 14 Pro Max"
     },
     {
       "filter": "IPAD_PRO_129",
-      "force_device_type": "iPad Pro"
-    },
-    {
-      "filter": "IPAD_PRO_3GEN_129",
       "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
     }
   ]
