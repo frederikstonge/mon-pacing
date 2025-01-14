@@ -241,6 +241,7 @@ void main() {
     final goldenDevices = [
       CustomGoldenScreenshotDevices.iPhone,
       CustomGoldenScreenshotDevices.iPad,
+      CustomGoldenScreenshotDevices.olderIPad,
     ];
 
     _screenshotWidget(
@@ -388,7 +389,8 @@ void _screenshotWidget({
             CustomGoldenScreenshotDevices.android7InchTablet => 'ANDROID_7_TABLET',
             CustomGoldenScreenshotDevices.androidPhone => 'ANDROID_PHONE',
             CustomGoldenScreenshotDevices.iPhone => 'IPHONE_69',
-            CustomGoldenScreenshotDevices.iPad => 'IPAD_PRO_3GEN_129',
+            CustomGoldenScreenshotDevices.iPad => 'IPAD_PRO_129',
+            CustomGoldenScreenshotDevices.olderIPad => 'IPAD_PRO_3GEN_129',
           };
 
           final fileName = '${goldenFileName}_${screenshotName}_${theme.name}_${storeLocale.toLanguageTag()}';

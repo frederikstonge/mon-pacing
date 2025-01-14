@@ -58,6 +58,20 @@ enum CustomGoldenScreenshotDevices {
       goldenSubFolder: 'ios/',
       frameBuilder: ScreenshotFrame.newerIpad,
     ),
+  ),
+
+  /// iPad Pro 3rd GEN 12.9" (M1),
+  /// labelled on App Store Connect as iPad 13" Display.
+  ///
+  /// This is the newer type of iPad with thinner bezels and no home button.
+  olderIPad(
+    ScreenshotDevice(
+      platform: TargetPlatform.iOS,
+      resolution: Size(2048, 2732),
+      pixelRatio: 2,
+      goldenSubFolder: 'ios/',
+      frameBuilder: ScreenshotFrame.newerIpad,
+    ),
   );
 
   const CustomGoldenScreenshotDevices(this.device);
