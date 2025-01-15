@@ -25,6 +25,33 @@ dart pub run build_runner build --delete-conflicting-outputs
 flutter gen-l10n
 ```
 
+### Generate screenshots
+To generate screenshots, make sure you have [imagemagick](https://imagemagick.org/script/download.php).
+
+#### Android
+```bash
+# Change base path
+cd android
+
+# Install fastlane if you haven't already
+bundle install
+
+# Generate script
+fastlane generate_screenshots
+```
+
+#### iOS
+```bash
+# Change base path
+cd ios
+
+# Install fastlane if you haven't already
+bundle install
+
+# Generate script
+fastlane generate_screenshots
+```
+
 ### Splash Screen
 To generate splash screens, update images/flutter_native_splash.yaml and run :
 ```bash
