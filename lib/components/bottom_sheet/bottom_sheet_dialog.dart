@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../router/router.dart';
-
 class BottomSheetDialog {
   static Future<T?> showDialog<T>({
     required BuildContext context,
@@ -14,9 +12,8 @@ class BottomSheetDialog {
       useSafeArea: true,
       isScrollControlled: true,
       builder: (context) {
-        final bottomPadding = MediaQuery.of(rootNavigatorKey.currentContext ?? context).viewInsets.bottom > 0
-            ? MediaQuery.of(rootNavigatorKey.currentContext ?? context).viewInsets.bottom
-            : MediaQuery.of(rootNavigatorKey.currentContext ?? context).padding.bottom;
+        final mediaQuery = MediaQueryData.fromView(View.of(context));
+        final bottomPadding = mediaQuery.viewInsets.bottom > 0 ? mediaQuery.viewInsets.bottom : mediaQuery.padding.bottom;
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding),
           child: Column(
