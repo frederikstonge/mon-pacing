@@ -137,7 +137,7 @@ void main() {
         expect(match.integrationEntityId, '9292');
         expect(match.integrationAdditionalData, isNotNull);
         final exportData = jsonDecode(match.integrationAdditionalData!);
-        expect(exportData['csrfToken'], '1mIBje6wUiC6ALqMl9EazrEyZlRtJTcpXhpOykU6iKHEb7jA8OgTj9zJ68pnvhNU');
+        expect(exportData['csrfToken'], '49TOH4PvSIaofME0XxmL7NLzYTRBejVtaC7x3qXPl2RuFDALmaRwAAXkxQ5DrcO7');
       },
     );
   });
