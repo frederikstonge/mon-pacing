@@ -28,104 +28,106 @@ class TimerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TimerCubit, TimerState>(builder: (context, state) {
-      final isActive = state.timer != null &&
-          state.timer!.matchId == match.id &&
-          state.timer!.improvisationId == improvisation.id &&
-          state.timer!.durationIndex == durationIndex;
+    return BlocBuilder<TimerCubit, TimerState>(
+      builder: (context, timerState) {
+        final isActive = timerState.timer != null &&
+            timerState.timer!.matchId == match.id &&
+            timerState.timer!.improvisationId == improvisation.id &&
+            timerState.timer!.durationIndex == durationIndex;
 
-      final includeHuddleTimer = improvisation.huddleTimerInSeconds > 0;
+        final includeHuddleTimer = improvisation.huddleTimerInSeconds > 0;
 
-      final durations = [
-        if (includeHuddleTimer) ...[
-          Duration(seconds: improvisation.huddleTimerInSeconds),
-        ],
-        ...improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
-      ];
-
-      final currentDuration = durations.elementAt(durationIndex);
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (durations.length > 1) ...[
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SegmentedButton(
-                style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-                segments: durations
-                    .asMap()
-                    .entries
-                    .map(
-                      (e) => ButtonSegment(
-                        value: e.key,
-                        label: Text(
-                          includeHuddleTimer && e.key == 0 ? S.of(context).huddle : e.value.toImprovDuration(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    )
-                    .toList(),
-                selected: {durationIndex},
-                onSelectionChanged: (values) async {
-                  await onDurationIndexChanged(values.first);
-                },
-              ),
-            ),
+        final durations = [
+          if (includeHuddleTimer) ...[
+            Duration(seconds: improvisation.huddleTimerInSeconds),
           ],
-          const SizedBox(height: 6),
-          Text(
-            isActive ? Duration(milliseconds: state.timer!.remainingMilliseconds).toImprovDuration() : currentDuration.toImprovDuration(),
-            style: Theme.of(context).textTheme.displayLarge,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              LoadingIconButton.tonal(
-                onPressed: isActive
-                    ? () async => await context.read<TimerCubit>().start(
-                          match.id,
-                          match.name,
-                          improvisation.id,
-                          durationIndex,
-                          currentDuration,
-                        )
-                    : null,
-                icon: const Icon(Icons.replay),
-                tooltip: S.of(context).pause,
-              ),
-              LoadingIconButton.filled(
-                onPressed: isActive
-                    ? state.timer!.status == TimerStatus.paused
-                        ? () => context.read<TimerCubit>().resume()
-                        : () => context.read<TimerCubit>().pause()
-                    : () async => await context.read<TimerCubit>().start(
-                          match.id,
-                          match.name,
-                          improvisation.id,
-                          durationIndex,
-                          currentDuration,
+          ...improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
+        ];
+
+        final currentDuration = durations.elementAt(durationIndex);
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (durations.length > 1) ...[
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SegmentedButton(
+                  style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
+                  segments: durations
+                      .asMap()
+                      .entries
+                      .map(
+                        (e) => ButtonSegment(
+                          value: e.key,
+                          label: Text(
+                            includeHuddleTimer && e.key == 0 ? S.of(context).huddle : e.value.toImprovDuration(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                icon: isActive
-                    ? state.timer!.status == TimerStatus.paused
-                        ? const Icon(Icons.play_arrow)
-                        : const Icon(Icons.pause)
-                    : const Icon(Icons.play_arrow),
-                size: IconButtonSize.large,
-                tooltip: isActive && state.timer!.status == TimerStatus.paused ? S.of(context).pause : S.of(context).start,
-              ),
-              LoadingIconButton.tonal(
-                onPressed: isActive ? () async => await context.read<TimerCubit>().stop() : null,
-                icon: const Icon(Icons.stop),
-                tooltip: S.of(context).stop,
+                      )
+                      .toList(),
+                  selected: {durationIndex},
+                  onSelectionChanged: (values) async {
+                    await onDurationIndexChanged(values.first);
+                  },
+                ),
               ),
             ],
-          ),
-        ],
-      );
-    });
+            const SizedBox(height: 6),
+            Text(
+              isActive ? Duration(milliseconds: timerState.timer!.remainingMilliseconds).toImprovDuration() : currentDuration.toImprovDuration(),
+              style: Theme.of(context).textTheme.displayLarge,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                LoadingIconButton.tonal(
+                  onPressed: isActive
+                      ? () async => await context.read<TimerCubit>().start(
+                            match.id,
+                            match.name,
+                            improvisation.id,
+                            durationIndex,
+                            currentDuration,
+                          )
+                      : null,
+                  icon: const Icon(Icons.replay),
+                  tooltip: S.of(context).pause,
+                ),
+                LoadingIconButton.filled(
+                  onPressed: isActive
+                      ? timerState.timer!.status == TimerStatus.paused
+                          ? () => context.read<TimerCubit>().resume()
+                          : () => context.read<TimerCubit>().pause()
+                      : () async => await context.read<TimerCubit>().start(
+                            match.id,
+                            match.name,
+                            improvisation.id,
+                            durationIndex,
+                            currentDuration,
+                          ),
+                  icon: isActive
+                      ? timerState.timer!.status == TimerStatus.paused
+                          ? const Icon(Icons.play_arrow)
+                          : const Icon(Icons.pause)
+                      : const Icon(Icons.play_arrow),
+                  size: IconButtonSize.large,
+                  tooltip: isActive && timerState.timer!.status == TimerStatus.paused ? S.of(context).pause : S.of(context).start,
+                ),
+                LoadingIconButton.tonal(
+                  onPressed: isActive ? () async => await context.read<TimerCubit>().stop() : null,
+                  icon: const Icon(Icons.stop),
+                  tooltip: S.of(context).stop,
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 }

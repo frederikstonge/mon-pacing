@@ -50,10 +50,10 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TeamDetailCubit, TeamDetailState>(
-      builder: (context, state) {
+      builder: (context, teamDetailState) {
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
-            title: state.editMode ? S.of(context).editTeam : S.of(context).createTeam,
+            title: teamDetailState.editMode ? S.of(context).editTeam : S.of(context).createTeam,
           ),
           isBodyExpanded: true,
           body: Form(
@@ -84,22 +84,22 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                             final teamDetailCubit = context.read<TeamDetailCubit>();
                             final newColor = await BottomSheetDialog.showDialog<Color>(
                               context: context,
-                              child: ColorPicker(initialColor: Color(state.team.color), title: S.of(context).color),
+                              child: ColorPicker(initialColor: Color(teamDetailState.team.color), title: S.of(context).color),
                             );
                             if (newColor != null) {
-                              teamDetailCubit.edit(state.team.copyWith(color: newColor.getIntvalue));
+                              teamDetailCubit.edit(teamDetailState.team.copyWith(color: newColor.getIntvalue));
                             }
                           },
                           child: TeamColorAvatar(
-                            color: Color(state.team.color),
+                            color: Color(teamDetailState.team.color),
                             height: 36,
                             width: 36,
                           ),
                         ),
                         title: TextFormField(
-                          initialValue: state.team.name,
+                          initialValue: teamDetailState.team.name,
                           textCapitalization: TextCapitalization.sentences,
-                          onChanged: (value) => context.read<TeamDetailCubit>().edit(state.team.copyWith(name: value)),
+                          onChanged: (value) => context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(name: value)),
                           validator: (value) => Validators.stringRequired(value),
                         ),
                       ),
@@ -107,10 +107,10 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                       TagsFieldElement(
                         label: S.of(context).tags,
                         hintText: S.of(context).tagsHint,
-                        initialTags: state.team.tags,
+                        initialTags: teamDetailState.team.tags,
                         getAllTags: context.read<TeamsCubit>().getAllTags,
                         onChanged: (value) {
-                          context.read<TeamDetailCubit>().edit(state.team.copyWith(tags: value));
+                          context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(tags: value));
                         },
                       ),
                       const SizedBox(height: 8),
@@ -118,10 +118,12 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                       const SizedBox(height: 8),
                       TeamPerformers(
                         label: S.of(context).performers,
-                        performers: state.team.performers,
-                        addPerformer: !state.editMode ? context.read<TeamDetailCubit>().addPerformer : null,
+                        performers: teamDetailState.team.performers,
+                        addPerformer: !teamDetailState.editMode ? context.read<TeamDetailCubit>().addPerformer : null,
                         editPerformer: context.read<TeamDetailCubit>().editPerformer,
-                        removePerformer: state.team.performers.length > 1 && !state.editMode ? context.read<TeamDetailCubit>().removePerformer : null,
+                        removePerformer: teamDetailState.team.performers.length > 1 && !teamDetailState.editMode
+                            ? context.read<TeamDetailCubit>().removePerformer
+                            : null,
                         onDrag: context.read<TeamDetailCubit>().movePerformer,
                         onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       ),
@@ -140,12 +142,12 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
                         final navigator = Navigator.of(context);
-                        await context.read<TeamDetailCubit>().onConfirm(state.team);
+                        await context.read<TeamDetailCubit>().onConfirm(teamDetailState.team);
                         navigator.pop();
                       }
                     },
                     child: Text(
-                      state.editMode ? S.of(context).edit : S.of(context).create,
+                      teamDetailState.editMode ? S.of(context).edit : S.of(context).create,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

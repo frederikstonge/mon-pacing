@@ -19,20 +19,20 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return WithForegroundTask(
       child: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, state) {
+        builder: (context, settingsState) {
           // Required to set the current language
-          Intl.defaultLocale = state.language;
+          Intl.defaultLocale = settingsState.language;
           return AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle(
-              statusBarIconBrightness: switch (state.theme) {
+              statusBarIconBrightness: switch (settingsState.theme) {
                 ThemeType.dark => Brightness.light,
                 _ => Brightness.dark,
               },
-              statusBarBrightness: switch (state.theme) {
+              statusBarBrightness: switch (settingsState.theme) {
                 ThemeType.dark => Brightness.dark,
                 _ => Brightness.light,
               },
-              systemNavigationBarIconBrightness: switch (state.theme) {
+              systemNavigationBarIconBrightness: switch (settingsState.theme) {
                 ThemeType.dark => Brightness.light,
                 _ => Brightness.dark,
               },
@@ -48,7 +48,7 @@ class App extends StatelessWidget {
               child: MaterialApp.router(
                 onGenerateTitle: (context) => S.of(context).appTitle,
                 // Theme
-                theme: switch (state.theme) {
+                theme: switch (settingsState.theme) {
                   ThemeType.light => Themes.light(),
                   ThemeType.dark => Themes.dark(),
                   ThemeType.lni => Themes.lni(),
@@ -56,7 +56,7 @@ class App extends StatelessWidget {
                 // Locale
                 localizationsDelegates: S.localizationsDelegates,
                 supportedLocales: S.supportedLocales,
-                locale: Locale(state.language),
+                locale: Locale(settingsState.language),
                 // Router
                 routerConfig: router,
                 debugShowCheckedModeBanner: false,

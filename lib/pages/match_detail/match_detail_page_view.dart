@@ -55,10 +55,10 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MatchDetailCubit, MatchDetailState>(
-      builder: (context, state) {
+      builder: (context, matchDetailState) {
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
-            title: state.editMode ? S.of(context).editMatch : S.of(context).startMatch,
+            title: matchDetailState.editMode ? S.of(context).editMatch : S.of(context).startMatch,
           ),
           isBodyExpanded: true,
           body: Form(
@@ -83,17 +83,17 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                           return Validators.stringRequired(value);
                         },
                         onChanged: (value) {
-                          context.read<MatchDetailCubit>().edit(state.match.copyWith(name: value));
+                          context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(name: value));
                         },
                       ),
                       const SizedBox(height: 8),
                       TagsFieldElement(
                         label: S.of(context).tags,
                         hintText: S.of(context).tagsHint,
-                        initialTags: state.match.tags,
+                        initialTags: matchDetailState.match.tags,
                         getAllTags: context.read<MatchesCubit>().getAllTags,
                         onChanged: (value) {
-                          context.read<MatchDetailCubit>().edit(state.match.copyWith(tags: value));
+                          context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(tags: value));
                         },
                       ),
                       const SizedBox(height: 8),
@@ -111,10 +111,10 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                           ],
                         ),
                         trailing: Switch(
-                          value: state.match.enableStatistics,
-                          onChanged: !state.editMode
+                          value: matchDetailState.match.enableStatistics,
+                          onChanged: !matchDetailState.editMode
                               ? (value) {
-                                  context.read<MatchDetailCubit>().edit(state.match.copyWith(enableStatistics: value));
+                                  context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(enableStatistics: value));
                                 }
                               : null,
                         ),
@@ -122,7 +122,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                     ],
                   ),
                 ),
-                if (state.match.enableStatistics) ...[
+                if (matchDetailState.match.enableStatistics) ...[
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                     child: TextHeader(
@@ -131,15 +131,15 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                   ),
                   Column(
                     children: [
-                      ...state.match.teams.asMap().entries.map(
+                      ...matchDetailState.match.teams.asMap().entries.map(
                             (e) => MatchTeamTile(
                               key: ValueKey(e.value.id),
                               team: e.value,
-                              allowSearch: !state.editMode,
+                              allowSearch: !matchDetailState.editMode,
                               onChanged: (value) {
                                 context.read<MatchDetailCubit>().editTeam(e.key, value);
                               },
-                              onDelete: !state.editMode && state.match.teams.length > Constants.minimumTeams
+                              onDelete: !matchDetailState.editMode && matchDetailState.match.teams.length > Constants.minimumTeams
                                   ? () async {
                                       final cubit = context.read<MatchDetailCubit>();
                                       final result = await MessageBoxDialog.questionShow(
@@ -157,17 +157,18 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
                               getAllTeams: (query, selectedTags) => context.read<TeamsRepository>().search(query, selectedTags),
                               onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
-                              addPerformer: !state.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
+                              addPerformer: !matchDetailState.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
                               editPerformer: context.read<MatchDetailCubit>().editPerformer,
-                              removePerformer:
-                                  e.value.performers.length > 1 && !state.editMode ? context.read<MatchDetailCubit>().removePerformer : null,
+                              removePerformer: e.value.performers.length > 1 && !matchDetailState.editMode
+                                  ? context.read<MatchDetailCubit>().removePerformer
+                                  : null,
                               onDrag: context.read<MatchDetailCubit>().movePerformer,
                               onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                             ),
                           ),
                       LoadingButton.filledIcon(
                         icon: const Icon(Icons.add),
-                        onPressed: !state.editMode && state.match.teams.length < Constants.maximumTeams
+                        onPressed: !matchDetailState.editMode && matchDetailState.match.teams.length < Constants.maximumTeams
                             ? () {
                                 context.read<MatchDetailCubit>().addTeam();
                               }
@@ -203,16 +204,16 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             ],
                           ),
                           trailing: Switch(
-                              value: state.match.enablePenaltiesImpactPoints,
+                              value: matchDetailState.match.enablePenaltiesImpactPoints,
                               onChanged: (value) {
-                                context.read<MatchDetailCubit>().edit(state.match.copyWith(enablePenaltiesImpactPoints: value));
+                                context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(enablePenaltiesImpactPoints: value));
                               }),
                         ),
                         SettingsTile(
                           leading: const Icon(Icons.sports),
                           title: Text(S.of(context).penaltiesImpactType),
                           subTitle: Text(
-                            switch (state.match.penaltiesImpactType) {
+                            switch (matchDetailState.match.penaltiesImpactType) {
                               PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
                               PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
                             },
@@ -222,9 +223,9 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             BottomSheetDialog.showDialog(
                               context: context,
                               child: PenaltiesImpactTypeView(
-                                currentPenaltiesImpactType: state.match.penaltiesImpactType,
+                                currentPenaltiesImpactType: matchDetailState.match.penaltiesImpactType,
                                 onChanged: (penaltiesImpactType) =>
-                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
+                                    context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
                               ),
                             );
                           },
@@ -243,10 +244,10 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               ),
                               QuantityStepperFormField(
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                                initialValue: state.match.penaltiesRequiredToImpactPoints,
+                                initialValue: matchDetailState.match.penaltiesRequiredToImpactPoints,
                                 onChanged: (value) {
                                   if (value != null) {
-                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToImpactPoints: value));
+                                    context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(penaltiesRequiredToImpactPoints: value));
                                   }
                                 },
                                 minValue: 1,
@@ -269,9 +270,9 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             ],
                           ),
                           trailing: Switch(
-                              value: state.match.enableMatchExpulsion,
+                              value: matchDetailState.match.enableMatchExpulsion,
                               onChanged: (value) {
-                                context.read<MatchDetailCubit>().edit(state.match.copyWith(enableMatchExpulsion: value));
+                                context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(enableMatchExpulsion: value));
                               }),
                         ),
                         Padding(
@@ -288,10 +289,10 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               ),
                               QuantityStepperFormField(
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                                initialValue: state.match.penaltiesRequiredToExpel,
+                                initialValue: matchDetailState.match.penaltiesRequiredToExpel,
                                 onChanged: (value) {
                                   if (value != null) {
-                                    context.read<MatchDetailCubit>().edit(state.match.copyWith(penaltiesRequiredToExpel: value));
+                                    context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(penaltiesRequiredToExpel: value));
                                   }
                                 },
                                 minValue: 1,
@@ -315,14 +316,14 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
                         final navigator = Navigator.of(context);
-                        final result = await context.read<MatchDetailCubit>().onConfirm(state.match);
+                        final result = await context.read<MatchDetailCubit>().onConfirm(matchDetailState.match);
                         if (result) {
                           navigator.pop();
                         }
                       }
                     },
                     child: Text(
-                      state.editMode ? S.of(context).edit : S.of(context).create,
+                      matchDetailState.editMode ? S.of(context).edit : S.of(context).create,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

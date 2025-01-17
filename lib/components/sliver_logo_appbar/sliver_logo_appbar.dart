@@ -11,11 +11,13 @@ class SliverLogoAppbar extends StatelessWidget {
   final String title;
   final ThemeType theme;
   final List<Widget>? actions;
+  final bool primary;
 
   const SliverLogoAppbar({
     super.key,
     required this.title,
     required this.theme,
+    this.primary = true,
     this.actions,
   });
 
@@ -23,6 +25,7 @@ class SliverLogoAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     final canPop = Navigator.of(context).canPop();
     return SliverAppBar.large(
+      primary: primary,
       leading: canPop
           ? LoadingIconButton(
               icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),

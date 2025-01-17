@@ -16,6 +16,8 @@ import '../../cubits/matches/matches_state.dart';
 import '../../cubits/matches/matches_status.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
+import '../../cubits/timer/timer_cubit.dart';
+import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../repositories/matches_repository.dart';
@@ -50,88 +52,97 @@ class _MatchesPageViewState extends State<MatchesPageView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MatchesCubit, MatchesState>(
-      builder: (context, state) {
+      builder: (context, matchesState) {
         return RefreshIndicator(
           edgeOffset: MediaQuery.of(context).padding.top + Constants.expandedAppbarHeight,
           onRefresh: context.read<MatchesCubit>().refresh,
-          child: SliverScaffold(
-            scrollController: _scrollController,
-            scrollPhysics: const AlwaysScrollableScrollPhysics(),
-            appBar: BlocBuilder<SettingsCubit, SettingsState>(
-              builder: (context, state) {
-                return SliverLogoAppbar(
-                  title: S.of(context).matches,
-                  theme: state.theme,
-                  actions: [
-                    BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
-                      builder: (context, featureFlagState) {
-                        if (featureFlagState.enableIntegrations) {
-                          return LoadingIconButton(
-                            icon: const Icon(Icons.qr_code),
-                            tooltip: S.of(context).scanner,
-                            onPressed: () async => context.pushNamed(Routes.scanner),
-                          );
-                        }
-                        return SizedBox();
-                      },
-                    ),
-                    LoadingIconButton(
-                      icon: const Icon(Icons.search),
-                      tooltip: S.of(context).search(category: S.of(context).matches),
-                      onPressed: () async {
-                        final router = GoRouter.of(context);
-                        final result = await MatchesSearch.showDialog(
-                          context,
-                          context.read<MatchesRepository>().search,
-                          context.read<MatchesRepository>().getAllTags,
-                        );
-                        if (result != null) {
-                          router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
-                        }
-                      },
-                    ),
-                  ],
-                );
-              },
-            ),
-            slivers: [
-              const TimerBanner(),
-              switch (state.status) {
-                MatchesStatus.initial => const SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                MatchesStatus.error => SliverFillRemaining(
-                    child: Center(
-                      child: Text(state.error ?? ''),
-                    ),
-                  ),
-                _ => SliverList.builder(
-                    itemCount: state.hasMore ? state.matches.length + 1 : state.matches.length,
-                    itemBuilder: (context, index) {
-                      if (state.hasMore && index == state.matches.length) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      final match = state.matches.elementAt(index);
-                      return MatchCard(
-                        match: match,
-                        onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                        edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
-                        shouldDelete: () => MessageBoxDialog.questionShow(
-                          context,
-                          S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
-                          S.of(context).delete,
-                          S.of(context).cancel,
+          child: BlocBuilder<TimerCubit, TimerState>(
+            builder: (context, timerState) {
+              return SliverScaffold(
+                scrollController: _scrollController,
+                scrollPhysics: const AlwaysScrollableScrollPhysics(),
+                banner: timerState.timer != null
+                    ? TimerBanner(
+                        timer: timerState.timer!,
+                      )
+                    : null,
+                appBar: BlocBuilder<SettingsCubit, SettingsState>(
+                  builder: (context, settingsState) {
+                    return SliverLogoAppbar(
+                      title: S.of(context).matches,
+                      theme: settingsState.theme,
+                      primary: timerState.timer == null,
+                      actions: [
+                        BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
+                          builder: (context, featureFlagState) {
+                            if (featureFlagState.enableIntegrations) {
+                              return LoadingIconButton(
+                                icon: const Icon(Icons.qr_code),
+                                tooltip: S.of(context).scanner,
+                                onPressed: () async => context.pushNamed(Routes.scanner),
+                              );
+                            }
+                            return SizedBox();
+                          },
                         ),
-                        delete: () => context.read<MatchesCubit>().delete(match),
-                      );
-                    },
-                  ),
-              },
-            ],
+                        LoadingIconButton(
+                          icon: const Icon(Icons.search),
+                          tooltip: S.of(context).search(category: S.of(context).matches),
+                          onPressed: () async {
+                            final router = GoRouter.of(context);
+                            final result = await MatchesSearch.showDialog(
+                              context,
+                              context.read<MatchesRepository>().search,
+                              context.read<MatchesRepository>().getAllTags,
+                            );
+                            if (result != null) {
+                              router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
+                            }
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                slivers: [
+                  switch (matchesState.status) {
+                    MatchesStatus.initial => const SliverFillRemaining(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    MatchesStatus.error => SliverFillRemaining(
+                        child: Center(
+                          child: Text(matchesState.error ?? ''),
+                        ),
+                      ),
+                    _ => SliverList.builder(
+                        itemCount: matchesState.hasMore ? matchesState.matches.length + 1 : matchesState.matches.length,
+                        itemBuilder: (context, index) {
+                          if (matchesState.hasMore && index == matchesState.matches.length) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          final match = matchesState.matches.elementAt(index);
+                          return MatchCard(
+                            match: match,
+                            onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                            edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
+                            shouldDelete: () => MessageBoxDialog.questionShow(
+                              context,
+                              S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
+                              S.of(context).delete,
+                              S.of(context).cancel,
+                            ),
+                            delete: () => context.read<MatchesCubit>().delete(match),
+                          );
+                        },
+                      ),
+                  },
+                ],
+              );
+            },
           ),
         );
       },

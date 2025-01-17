@@ -36,10 +36,10 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MatchImprovisationCubit, MatchImprovisationState>(
-      builder: (context, state) {
+      builder: (context, matchImprovisationState) {
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
-            title: state.editMode ? S.of(context).editImprovisation : S.of(context).addImprovisation,
+            title: matchImprovisationState.editMode ? S.of(context).editImprovisation : S.of(context).addImprovisation,
           ),
           body: Form(
             key: formKey,
@@ -50,7 +50,7 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
               children: [
                 CustomCard(
                   showIndicator: true,
-                  indicatorColor: state.improvisation.type == ImprovisationType.compared
+                  indicatorColor: matchImprovisationState.improvisation.type == ImprovisationType.compared
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.secondary,
                   contentPadding: 16,
@@ -70,20 +70,21 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                             ),
                             QuantityStepperFormField(
                               autovalidateMode: AutovalidateMode.onUserInteraction,
-                              initialValue: state.index + 1,
+                              initialValue: matchImprovisationState.index + 1,
                               onChanged: (value) {
                                 if (value != null) {
                                   context.read<MatchImprovisationCubit>().changeIndex(value - 1);
                                 }
                               },
                               minValue: 1,
-                              maxValue: context.read<MatchImprovisationCubit>().match.improvisations.length + (state.editMode ? 0 : 1),
+                              maxValue:
+                                  context.read<MatchImprovisationCubit>().match.improvisations.length + (matchImprovisationState.editMode ? 0 : 1),
                             ),
                           ],
                         ),
                       ),
                       ImprovisationDetail(
-                        improvisation: state.improvisation,
+                        improvisation: matchImprovisationState.improvisation,
                         onChanged: (value) {
                           context.read<MatchImprovisationCubit>().edit(value);
                         },
@@ -105,12 +106,12 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
                         final navigator = Navigator.of(context);
-                        await context.read<MatchImprovisationCubit>().onConfirm(state.improvisation, state.index);
+                        await context.read<MatchImprovisationCubit>().onConfirm(matchImprovisationState.improvisation, matchImprovisationState.index);
                         navigator.pop();
                       }
                     },
                     child: Text(
-                      state.editMode ? S.of(context).save : S.of(context).create,
+                      matchImprovisationState.editMode ? S.of(context).save : S.of(context).create,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

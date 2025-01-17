@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../cubits/timer/timer_cubit.dart';
-import '../../cubits/timer/timer_state.dart';
 import '../../extensions/duration_extensions.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
@@ -13,12 +11,14 @@ import '../../router/routes.dart';
 import '../buttons/loading_icon_button.dart';
 
 class TimerBanner extends StatelessWidget {
+  final TimerModel timer;
   final MatchModel? match;
   final ImprovisationModel? improvisation;
   final int? selectedDurationIndex;
 
   const TimerBanner({
     super.key,
+    required this.timer,
     this.match,
     this.improvisation,
     this.selectedDurationIndex,
@@ -26,38 +26,37 @@ class TimerBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TimerCubit, TimerState>(
-      builder: (context, state) => SliverToBoxAdapter(
-        child: state.timer != null
-            ? Container(
-                color: Theme.of(context).colorScheme.primary,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.timer,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  title: Text(
-                    state.timer!.notificationTitle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                  subtitle: Text(
-                    Duration(milliseconds: state.timer!.remainingMilliseconds).toImprovDuration(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                  trailing: LoadingIconButton(
-                    onPressed: () => _onAction(context, state.timer!),
-                    icon: Icon(
-                      Icons.arrow_forward,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                ),
-              )
-            : null,
+    return SliverToBoxAdapter(
+      child: Container(
+        color: Theme.of(context).colorScheme.primary,
+        child: SafeArea(
+          bottom: false,
+          child: ListTile(
+            leading: Icon(
+              Icons.timer,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            title: Text(
+              timer.notificationTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
+            subtitle: Text(
+              Duration(milliseconds: timer.remainingMilliseconds).toImprovDuration(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
+            trailing: LoadingIconButton(
+              onPressed: () => _onAction(context, timer),
+              icon: Icon(
+                Icons.arrow_forward,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

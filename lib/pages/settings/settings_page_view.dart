@@ -15,6 +15,8 @@ import '../../components/text_header/text_header.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
+import '../../cubits/timer/timer_cubit.dart';
+import '../../cubits/timer/timer_state.dart';
 import '../../extensions/duration_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
@@ -42,403 +44,413 @@ class _SettingsPageViewState extends State<SettingsPageView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
-      builder: (context, state) {
-        return SliverScaffold(
-          appBar: SliverLogoAppbar(
-            title: S.of(context).settings,
-            theme: state.theme,
-          ),
-          slivers: [
-            const TimerBanner(),
-            Form(
-              key: formKey,
-              child: SliverList.list(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                    child: TextHeader(title: S.of(context).general),
-                  ),
-                  CustomCard(
-                    child: Column(
-                      children: [
-                        SettingsTile(
-                          leading: const Icon(Icons.language),
-                          title: Text(S.of(context).language),
-                          subTitle: DisplayLanguage(locale: Locale(state.language)),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            BottomSheetDialog.showDialog(
-                              context: context,
-                              child: LanguageView(
-                                currentLocale: Locale(state.language),
-                                availableLocales: S.supportedLocales,
-                                onChanged: (locale) => context.read<SettingsCubit>().edit(state.copyWith(language: locale.toLanguageTag())),
-                              ),
-                            );
-                          },
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.color_lens),
-                          title: Text(S.of(context).theme),
-                          subTitle: Text(
-                            switch (state.theme) {
-                              ThemeType.light => S.of(context).light,
-                              ThemeType.dark => S.of(context).dark,
-                              ThemeType.lni => S.of(context).lni,
-                            },
-                          ),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            BottomSheetDialog.showDialog(
-                              context: context,
-                              child: ThemeView(
-                                currentTheme: state.theme,
-                                onChanged: (theme) => context.read<SettingsCubit>().edit(state.copyWith(theme: theme)),
-                              ),
-                            );
-                          },
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.screen_lock_portrait),
-                          title: Row(
-                            children: [
-                              Flexible(child: Text(S.of(context).enableWakelock)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).enableWakelockTooltip,
-                                ),
-                              )
-                            ],
-                          ),
-                          trailing: Switch(
-                              value: state.enableWakelock,
-                              onChanged: (value) {
-                                context.read<SettingsCubit>().edit(state.copyWith(enableWakelock: value));
-                              }),
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.vibration),
-                          title: Text(S.of(context).enableHapticFeedback),
-                          trailing: Switch(
-                              value: state.enableHapticFeedback,
-                              onChanged: (value) {
-                                context.read<SettingsCubit>().edit(state.copyWith(enableHapticFeedback: value));
-                              }),
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.vibration),
-                          title: Row(
-                            children: [
-                              Flexible(child: Text(S.of(context).enableTimerHapticFeedback)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).timerHapticFeedbackTooltip,
-                                ),
-                              )
-                            ],
-                          ),
-                          trailing: Switch(
-                              value: state.enableTimerHapticFeedback,
-                              onChanged: (value) {
-                                context.read<SettingsCubit>().edit(state.copyWith(enableTimerHapticFeedback: value));
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                    child: TextHeader(
-                      title: S.of(context).pacing,
-                      tooltip: S.of(context).defaultPacingSettingsTooltip,
-                    ),
-                  ),
-                  CustomCard(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  S.of(context).numberOfTeamsByDefault,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              QuantityStepperFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                initialValue: state.defaultNumberOfTeams,
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    context.read<SettingsCubit>().edit(state.copyWith(defaultNumberOfTeams: value));
-                                  }
-                                },
-                                minValue: Constants.minimumTeams,
-                                maxValue: Constants.maximumTeams,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                    child: TextHeader(
-                      title: S.of(context).improvisation,
-                      tooltip: S.of(context).defaultImprovisationSettingsTooltip,
-                    ),
-                  ),
-                  CustomCard(
-                    child: Column(
-                      children: [
-                        SettingsTile(
-                          leading: const Icon(Icons.timer),
-                          title: Text(S.of(context).improvisationDurationInSeconds),
-                          subTitle: Text(Duration(seconds: state.defaultImprovisationDurationInSeconds).toImprovDuration()),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () async {
-                            final settingsCubit = context.read<SettingsCubit>();
-                            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                              context: context,
-                              child: DurationPicker(
-                                title: S.of(context).improvisationDurationInSeconds,
-                                initialDuration: Duration(seconds: state.defaultImprovisationDurationInSeconds),
-                              ),
-                            );
-
-                            if (newDuration != null) {
-                              settingsCubit.edit(state.copyWith(defaultImprovisationDurationInSeconds: newDuration.inSeconds));
-                            }
-                          },
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.timer),
-                          title: Row(
-                            children: [
-                              Flexible(child: Text(S.of(context).huddleTimer)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).huddleTimerTooltip,
-                                ),
-                              )
-                            ],
-                          ),
-                          subTitle: Text(Duration(seconds: state.defaultHuddleTimerInSeconds).toImprovDuration()),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () async {
-                            final settingsCubit = context.read<SettingsCubit>();
-                            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                              context: context,
-                              child: DurationPicker(
-                                title: S.of(context).huddleTimer,
-                                initialDuration: Duration(seconds: state.defaultHuddleTimerInSeconds),
-                              ),
-                            );
-
-                            if (newDuration != null) {
-                              settingsCubit.edit(state.copyWith(defaultHuddleTimerInSeconds: newDuration.inSeconds));
-                            }
-                          },
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.more_time),
-                          title: Row(
-                            children: [
-                              Flexible(child: Text(S.of(context).timeBuffer)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).timeBufferTooltip,
-                                ),
-                              )
-                            ],
-                          ),
-                          subTitle: Text(Duration(seconds: state.defaultTimeBufferInSeconds).toImprovDuration()),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () async {
-                            final settingsCubit = context.read<SettingsCubit>();
-                            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                              context: context,
-                              child: DurationPicker(
-                                title: S.of(context).timeBuffer,
-                                initialDuration: Duration(seconds: state.defaultTimeBufferInSeconds),
-                              ),
-                            );
-
-                            if (newDuration != null) {
-                              settingsCubit.edit(state.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds));
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                    child: TextHeader(
-                      title: S.of(context).match,
-                      tooltip: S.of(context).defaultMatchSettingsTooltip,
-                    ),
-                  ),
-                  CustomCard(
-                    child: Column(
-                      children: [
-                        SettingsTile(
-                          leading: const Icon(Icons.scoreboard),
-                          title: Row(
-                            children: [
-                              Flexible(child: Text(S.of(context).enableStatistics)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).enableStatisticsTooltip,
-                                ),
-                              )
-                            ],
-                          ),
-                          trailing: Switch(
-                              value: state.defaultEnableStatistics,
-                              onChanged: (value) {
-                                context.read<SettingsCubit>().edit(state.copyWith(defaultEnableStatistics: value));
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                    child: TextHeader(
-                      title: S.of(context).penalty,
-                      tooltip: S.of(context).defaultPenaltySettingsTooltip,
-                    ),
-                  ),
-                  CustomCard(
-                    child: Column(
-                      children: [
-                        SettingsTile(
-                          leading: const Icon(Icons.sports),
-                          title: Row(
-                            children: [
-                              Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).penaltiesImpactPointsTooltip,
-                                ),
-                              )
-                            ],
-                          ),
-                          trailing: Switch(
-                              value: state.enableDefaultPenaltiesImpactPoints,
-                              onChanged: (value) {
-                                context.read<SettingsCubit>().edit(state.copyWith(enableDefaultPenaltiesImpactPoints: value));
-                              }),
-                        ),
-                        SettingsTile(
-                          leading: const Icon(Icons.sports),
-                          title: Text(S.of(context).penaltiesImpactType),
-                          subTitle: Text(
-                            switch (state.defaultPenaltiesImpactType) {
-                              PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
-                              PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
-                            },
-                          ),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            BottomSheetDialog.showDialog(
-                              context: context,
-                              child: PenaltiesImpactTypeView(
-                                currentPenaltiesImpactType: state.defaultPenaltiesImpactType,
-                                onChanged: (penaltiesImpactType) =>
-                                    context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesImpactType: penaltiesImpactType)),
-                              ),
-                            );
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  S.of(context).penaltiesRequiredToImpactPoints,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              QuantityStepperFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                initialValue: state.defaultPenaltiesRequiredToImpactPoints,
-                                onChanged: (value) {
-                                  if (value != null && formKey.currentState!.validate()) {
-                                    context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesRequiredToImpactPoints: value));
-                                  }
-                                },
-                                minValue: 1,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Divider(),
-                        SettingsTile(
-                          leading: const Icon(Icons.sports),
-                          title: Row(
-                            children: [
-                              Flexible(child: Text(S.of(context).enableMatchExpulsion)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).enableMatchExpulsionTooltip,
-                                ),
-                              )
-                            ],
-                          ),
-                          trailing: Switch(
-                              value: state.enableDefaultMatchExpulsion,
-                              onChanged: (value) {
-                                context.read<SettingsCubit>().edit(state.copyWith(enableDefaultMatchExpulsion: value));
-                              }),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  S.of(context).penaltiesRequiredToExpel,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              QuantityStepperFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                initialValue: state.defaultPenaltiesRequiredToExpel,
-                                onChanged: (value) {
-                                  if (value != null && formKey.currentState!.validate()) {
-                                    context.read<SettingsCubit>().edit(state.copyWith(defaultPenaltiesRequiredToExpel: value));
-                                  }
-                                },
-                                minValue: 1,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+      builder: (context, settingsState) {
+        return BlocBuilder<TimerCubit, TimerState>(
+          builder: (context, timerState) {
+            return SliverScaffold(
+              banner: timerState.timer != null
+                  ? TimerBanner(
+                      timer: timerState.timer!,
+                    )
+                  : null,
+              appBar: SliverLogoAppbar(
+                title: S.of(context).settings,
+                theme: settingsState.theme,
+                primary: timerState.timer == null,
               ),
-            )
-          ],
+              slivers: [
+                Form(
+                  key: formKey,
+                  child: SliverList.list(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                        child: TextHeader(title: S.of(context).general),
+                      ),
+                      CustomCard(
+                        child: Column(
+                          children: [
+                            SettingsTile(
+                              leading: const Icon(Icons.language),
+                              title: Text(S.of(context).language),
+                              subTitle: DisplayLanguage(locale: Locale(settingsState.language)),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () {
+                                BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: LanguageView(
+                                    currentLocale: Locale(settingsState.language),
+                                    availableLocales: S.supportedLocales,
+                                    onChanged: (locale) =>
+                                        context.read<SettingsCubit>().edit(settingsState.copyWith(language: locale.toLanguageTag())),
+                                  ),
+                                );
+                              },
+                            ),
+                            SettingsTile(
+                              leading: const Icon(Icons.color_lens),
+                              title: Text(S.of(context).theme),
+                              subTitle: Text(
+                                switch (settingsState.theme) {
+                                  ThemeType.light => S.of(context).light,
+                                  ThemeType.dark => S.of(context).dark,
+                                  ThemeType.lni => S.of(context).lni,
+                                },
+                              ),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () {
+                                BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: ThemeView(
+                                    currentTheme: settingsState.theme,
+                                    onChanged: (theme) => context.read<SettingsCubit>().edit(settingsState.copyWith(theme: theme)),
+                                  ),
+                                );
+                              },
+                            ),
+                            SettingsTile(
+                              leading: const Icon(Icons.screen_lock_portrait),
+                              title: Row(
+                                children: [
+                                  Flexible(child: Text(S.of(context).enableWakelock)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: CustomTooltip(
+                                      tooltip: S.of(context).enableWakelockTooltip,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              trailing: Switch(
+                                  value: settingsState.enableWakelock,
+                                  onChanged: (value) {
+                                    context.read<SettingsCubit>().edit(settingsState.copyWith(enableWakelock: value));
+                                  }),
+                            ),
+                            SettingsTile(
+                              leading: const Icon(Icons.vibration),
+                              title: Text(S.of(context).enableHapticFeedback),
+                              trailing: Switch(
+                                  value: settingsState.enableHapticFeedback,
+                                  onChanged: (value) {
+                                    context.read<SettingsCubit>().edit(settingsState.copyWith(enableHapticFeedback: value));
+                                  }),
+                            ),
+                            SettingsTile(
+                              leading: const Icon(Icons.vibration),
+                              title: Row(
+                                children: [
+                                  Flexible(child: Text(S.of(context).enableTimerHapticFeedback)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: CustomTooltip(
+                                      tooltip: S.of(context).timerHapticFeedbackTooltip,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              trailing: Switch(
+                                  value: settingsState.enableTimerHapticFeedback,
+                                  onChanged: (value) {
+                                    context.read<SettingsCubit>().edit(settingsState.copyWith(enableTimerHapticFeedback: value));
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                        child: TextHeader(
+                          title: S.of(context).pacing,
+                          tooltip: S.of(context).defaultPacingSettingsTooltip,
+                        ),
+                      ),
+                      CustomCard(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      S.of(context).numberOfTeamsByDefault,
+                                      style: Theme.of(context).textTheme.bodyLarge,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  QuantityStepperFormField(
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    initialValue: settingsState.defaultNumberOfTeams,
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        context.read<SettingsCubit>().edit(settingsState.copyWith(defaultNumberOfTeams: value));
+                                      }
+                                    },
+                                    minValue: Constants.minimumTeams,
+                                    maxValue: Constants.maximumTeams,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                        child: TextHeader(
+                          title: S.of(context).improvisation,
+                          tooltip: S.of(context).defaultImprovisationSettingsTooltip,
+                        ),
+                      ),
+                      CustomCard(
+                        child: Column(
+                          children: [
+                            SettingsTile(
+                              leading: const Icon(Icons.timer),
+                              title: Text(S.of(context).improvisationDurationInSeconds),
+                              subTitle: Text(Duration(seconds: settingsState.defaultImprovisationDurationInSeconds).toImprovDuration()),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () async {
+                                final settingsCubit = context.read<SettingsCubit>();
+                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
+                                  context: context,
+                                  child: DurationPicker(
+                                    title: S.of(context).improvisationDurationInSeconds,
+                                    initialDuration: Duration(seconds: settingsState.defaultImprovisationDurationInSeconds),
+                                  ),
+                                );
+
+                                if (newDuration != null) {
+                                  settingsCubit.edit(settingsState.copyWith(defaultImprovisationDurationInSeconds: newDuration.inSeconds));
+                                }
+                              },
+                            ),
+                            SettingsTile(
+                              leading: const Icon(Icons.timer),
+                              title: Row(
+                                children: [
+                                  Flexible(child: Text(S.of(context).huddleTimer)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: CustomTooltip(
+                                      tooltip: S.of(context).huddleTimerTooltip,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              subTitle: Text(Duration(seconds: settingsState.defaultHuddleTimerInSeconds).toImprovDuration()),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () async {
+                                final settingsCubit = context.read<SettingsCubit>();
+                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
+                                  context: context,
+                                  child: DurationPicker(
+                                    title: S.of(context).huddleTimer,
+                                    initialDuration: Duration(seconds: settingsState.defaultHuddleTimerInSeconds),
+                                  ),
+                                );
+
+                                if (newDuration != null) {
+                                  settingsCubit.edit(settingsState.copyWith(defaultHuddleTimerInSeconds: newDuration.inSeconds));
+                                }
+                              },
+                            ),
+                            SettingsTile(
+                              leading: const Icon(Icons.more_time),
+                              title: Row(
+                                children: [
+                                  Flexible(child: Text(S.of(context).timeBuffer)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: CustomTooltip(
+                                      tooltip: S.of(context).timeBufferTooltip,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              subTitle: Text(Duration(seconds: settingsState.defaultTimeBufferInSeconds).toImprovDuration()),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () async {
+                                final settingsCubit = context.read<SettingsCubit>();
+                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
+                                  context: context,
+                                  child: DurationPicker(
+                                    title: S.of(context).timeBuffer,
+                                    initialDuration: Duration(seconds: settingsState.defaultTimeBufferInSeconds),
+                                  ),
+                                );
+
+                                if (newDuration != null) {
+                                  settingsCubit.edit(settingsState.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds));
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                        child: TextHeader(
+                          title: S.of(context).match,
+                          tooltip: S.of(context).defaultMatchSettingsTooltip,
+                        ),
+                      ),
+                      CustomCard(
+                        child: Column(
+                          children: [
+                            SettingsTile(
+                              leading: const Icon(Icons.scoreboard),
+                              title: Row(
+                                children: [
+                                  Flexible(child: Text(S.of(context).enableStatistics)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: CustomTooltip(
+                                      tooltip: S.of(context).enableStatisticsTooltip,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              trailing: Switch(
+                                  value: settingsState.defaultEnableStatistics,
+                                  onChanged: (value) {
+                                    context.read<SettingsCubit>().edit(settingsState.copyWith(defaultEnableStatistics: value));
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                        child: TextHeader(
+                          title: S.of(context).penalty,
+                          tooltip: S.of(context).defaultPenaltySettingsTooltip,
+                        ),
+                      ),
+                      CustomCard(
+                        child: Column(
+                          children: [
+                            SettingsTile(
+                              leading: const Icon(Icons.sports),
+                              title: Row(
+                                children: [
+                                  Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: CustomTooltip(
+                                      tooltip: S.of(context).penaltiesImpactPointsTooltip,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              trailing: Switch(
+                                  value: settingsState.enableDefaultPenaltiesImpactPoints,
+                                  onChanged: (value) {
+                                    context.read<SettingsCubit>().edit(settingsState.copyWith(enableDefaultPenaltiesImpactPoints: value));
+                                  }),
+                            ),
+                            SettingsTile(
+                              leading: const Icon(Icons.sports),
+                              title: Text(S.of(context).penaltiesImpactType),
+                              subTitle: Text(
+                                switch (settingsState.defaultPenaltiesImpactType) {
+                                  PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                                  PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
+                                },
+                              ),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () {
+                                BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: PenaltiesImpactTypeView(
+                                    currentPenaltiesImpactType: settingsState.defaultPenaltiesImpactType,
+                                    onChanged: (penaltiesImpactType) =>
+                                        context.read<SettingsCubit>().edit(settingsState.copyWith(defaultPenaltiesImpactType: penaltiesImpactType)),
+                                  ),
+                                );
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      S.of(context).penaltiesRequiredToImpactPoints,
+                                      style: Theme.of(context).textTheme.bodyLarge,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  QuantityStepperFormField(
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    initialValue: settingsState.defaultPenaltiesRequiredToImpactPoints,
+                                    onChanged: (value) {
+                                      if (value != null && formKey.currentState!.validate()) {
+                                        context.read<SettingsCubit>().edit(settingsState.copyWith(defaultPenaltiesRequiredToImpactPoints: value));
+                                      }
+                                    },
+                                    minValue: 1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Divider(),
+                            SettingsTile(
+                              leading: const Icon(Icons.sports),
+                              title: Row(
+                                children: [
+                                  Flexible(child: Text(S.of(context).enableMatchExpulsion)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: CustomTooltip(
+                                      tooltip: S.of(context).enableMatchExpulsionTooltip,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              trailing: Switch(
+                                  value: settingsState.enableDefaultMatchExpulsion,
+                                  onChanged: (value) {
+                                    context.read<SettingsCubit>().edit(settingsState.copyWith(enableDefaultMatchExpulsion: value));
+                                  }),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      S.of(context).penaltiesRequiredToExpel,
+                                      style: Theme.of(context).textTheme.bodyLarge,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  QuantityStepperFormField(
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    initialValue: settingsState.defaultPenaltiesRequiredToExpel,
+                                    onChanged: (value) {
+                                      if (value != null && formKey.currentState!.validate()) {
+                                        context.read<SettingsCubit>().edit(settingsState.copyWith(defaultPenaltiesRequiredToExpel: value));
+                                      }
+                                    },
+                                    minValue: 1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          },
         );
       },
     );

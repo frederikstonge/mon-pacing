@@ -38,10 +38,10 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MatchPenaltyCubit, MatchPenaltyState>(
-      builder: (context, state) {
+      builder: (context, matchPenaltyState) {
         return BottomSheetScaffold(
           appBar: BottomSheetAppbar(
-            title: state.editMode ? S.of(context).editPenalty : S.of(context).addPenalty,
+            title: matchPenaltyState.editMode ? S.of(context).editPenalty : S.of(context).addPenalty,
           ),
           body: Form(
             key: formKey,
@@ -62,13 +62,13 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                           ),
                         ),
                         icon: const Icon(Icons.arrow_downward),
-                        value: state.penalty.teamId,
+                        value: matchPenaltyState.penalty.teamId,
                         onChanged: (value) {
                           if (value != null) {
-                            context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(teamId: value));
+                            context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(teamId: value));
                           }
                         },
-                        items: state.teams
+                        items: matchPenaltyState.teams
                             .map((e) => DropdownMenuItem(
                                   value: e.id,
                                   child: Row(
@@ -87,7 +87,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                                 ))
                             .toList(),
                       ),
-                      if (state.integrationPenaltyTypes != null) ...[
+                      if (matchPenaltyState.integrationPenaltyTypes != null) ...[
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6),
                           child: Text(
@@ -105,16 +105,20 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                             ),
                           ),
                           icon: const Icon(Icons.arrow_downward),
-                          value: state.penalty.type.isNotEmpty ? state.integrationPenaltyTypes!.indexOf(state.penalty.type) : 0,
+                          value: matchPenaltyState.penalty.type.isNotEmpty
+                              ? matchPenaltyState.integrationPenaltyTypes!.indexOf(matchPenaltyState.penalty.type)
+                              : 0,
                           onChanged: (value) {
                             if (value != null) {
-                              context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(type: state.integrationPenaltyTypes!.elementAt(value)));
+                              context
+                                  .read<MatchPenaltyCubit>()
+                                  .edit(matchPenaltyState.penalty.copyWith(type: matchPenaltyState.integrationPenaltyTypes!.elementAt(value)));
                             }
                           },
                           validator: (value) {
-                            return Validators.stringRequired(state.integrationPenaltyTypes!.elementAt(value!));
+                            return Validators.stringRequired(matchPenaltyState.integrationPenaltyTypes!.elementAt(value!));
                           },
-                          items: state.integrationPenaltyTypes!
+                          items: matchPenaltyState.integrationPenaltyTypes!
                               .asMap()
                               .entries
                               .map((e) => DropdownMenuItem(
@@ -136,7 +140,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                             return Validators.stringRequired(value);
                           },
                           onChanged: (value) {
-                            context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(type: value));
+                            context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(type: value));
                           },
                         ),
                       ],
@@ -144,20 +148,20 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                         leading: const Icon(Icons.sports),
                         title: Text(S.of(context).major),
                         trailing: Switch(
-                            value: state.penalty.major,
+                            value: matchPenaltyState.penalty.major,
                             onChanged: (value) {
-                              context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(major: value));
+                              context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(major: value));
                             }),
                       ),
                       DropDownElement<int?>(
                         label: S.of(context).performer,
-                        value: state.teams
-                            .firstWhere((t) => t.id == state.penalty.teamId)
+                        value: matchPenaltyState.teams
+                            .firstWhere((t) => t.id == matchPenaltyState.penalty.teamId)
                             .performers
-                            .firstWhereOrNull((p) => p.id == state.penalty.performerId)
+                            .firstWhereOrNull((p) => p.id == matchPenaltyState.penalty.performerId)
                             ?.id,
                         onChanged: (value) {
-                          context.read<MatchPenaltyCubit>().edit(state.penalty.copyWith(performerId: value));
+                          context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(performerId: value));
                         },
                         items: [
                           const DropdownMenuItem(
@@ -168,7 +172,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                               ],
                             ),
                           ),
-                          ...state.teams.firstWhere((t) => t.id == state.penalty.teamId).performers.map(
+                          ...matchPenaltyState.teams.firstWhere((t) => t.id == matchPenaltyState.penalty.teamId).performers.map(
                                 (p) => DropdownMenuItem(
                                   value: p.id,
                                   child: Row(
@@ -195,12 +199,12 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
                         final navigator = Navigator.of(context);
-                        await context.read<MatchPenaltyCubit>().onSave(state.penalty);
+                        await context.read<MatchPenaltyCubit>().onSave(matchPenaltyState.penalty);
                         navigator.pop();
                       }
                     },
                     child: Text(
-                      state.editMode ? S.of(context).save : S.of(context).create,
+                      matchPenaltyState.editMode ? S.of(context).save : S.of(context).create,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
