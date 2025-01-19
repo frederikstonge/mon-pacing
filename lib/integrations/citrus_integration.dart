@@ -181,7 +181,7 @@ class CitrusIntegration implements MatchIntegrationBase {
   }
 
   static String _extractCsrfToken(Document document) {
-    return document.querySelector('meta[name=csrf-token]')!.attributes['content'].toString();
+    return document.head!.querySelector('meta[name=csrf-token]')!.attributes['content'].toString();
   }
 
   static MatchTeamModel _extractTeam(Document document, int teamId, String selector, int color, int Function() getPerformerId) {

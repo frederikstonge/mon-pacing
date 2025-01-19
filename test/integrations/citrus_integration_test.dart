@@ -158,10 +158,16 @@ void main() {
         final html = File('./test/integrations/static_data.html').readAsStringSync();
         final staticDocument = parse(html);
 
+        staticDocument.head!.querySelector('meta[name=csrf-token]')!.attributes['content'] = 'csrftoken';
+        staticDocument.body!.querySelector('form input[name=csrfmiddlewaretoken]')!.attributes['value'] = 'csrftoken';
+
         final response = await dio.get<String>(url.toString());
         final document = parse(response.data);
 
-        expect(document.body!.text, staticDocument.body!.text);
+        document.head!.querySelector('meta[name=csrf-token]')!.attributes['content'] = 'csrftoken';
+        document.body!.querySelector('form input[name=csrfmiddlewaretoken]')!.attributes['value'] = 'csrftoken';
+
+        expect(document.body!.innerHtml, staticDocument.body!.innerHtml);
       },
     );
 

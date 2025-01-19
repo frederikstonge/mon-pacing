@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="49TOH4PvSIaofME0XxmL7NLzYTRBejVtaC7x3qXPl2RuFDALmaRwAAXkxQ5DrcO7">
+    <meta name="csrf-token" content="wvBq2oKiKKxcjzn4NgnP8wUZBSMowziRCYP9oKSCd4eiJqjPcTSABj6KaP0qJsbv">
     <title>Formulaire de match</title>
     <link rel="stylesheet" href="/static/stylesheets/components/generalStyles.css">
 </head>
@@ -13,7 +13,7 @@
         <div class="logoBoard">
             <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
             <h2 class="logoX">Vs</h2>
-            <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
+            <img src="/media/logos/Vieux-Montr%C3%A9al_Esquisse.png" alt="" class="logo">
         </div>
         <div class="teamBoard">
             <p>EQUIPE TEST Vs. Esquisse</p>
@@ -330,27 +330,27 @@
         <div class="scoreBoard">
             <div class="logos">
                 <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
-                <img src="/static/icons/CitrusLogo.png" alt="" class="logo">
+                <img src="/media/logos/Vieux-Montr%C3%A9al_Esquisse.png" alt="" class="logo">
             </div>
             <div class="results">
-                <span id="subTotalTeam1">0</span>
-                <span>Points</span>
                 <span id="subTotalTeam2">0</span>
+                <span>Points</span>
+                <span id="subTotalTeam1">0</span>
             </div>
             <div class="results">
-                <span id="team1Puns">0</span>
-                <span>Pénalités</span>
                 <span id="team2Puns">0</span>
+                <span>Pénalités</span>
+                <span id="team1Puns">0</span>
             </div>
             <div class="results">
-                <span class="biggerNum" id="team1Score">0</span>
-                <span class="biggerNum">Score</span>
                 <span class="biggerNum" id="team2Score">0</span>
+                <span class="biggerNum">Score</span>
+                <span class="biggerNum" id="team1Score">0</span>
             </div>
         </div>
         <form method="post">
             <div class="sign">
-                <input type="hidden" name="csrfmiddlewaretoken" value="49TOH4PvSIaofME0XxmL7NLzYTRBejVtaC7x3qXPl2RuFDALmaRwAAXkxQ5DrcO7">
+                <input type="hidden" name="csrfmiddlewaretoken" value="wvBq2oKiKKxcjzn4NgnP8wUZBSMowziRCYP9oKSCd4eiJqjPcTSABj6KaP0qJsbv">
                 <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Signatures</h3>
                 <label for="coach1" class="label onTop">Signature coach Esquisse</label>
                 <button type="button" id="signatureCoachBtn1" class="btnPrimary signBtn" onclick="openModal('signatureCoachModal1')">Signer</button>
@@ -888,9 +888,7 @@
             let punitionsString = "[";
             let punitionDiv = document.getElementById("Pénalités");
             let punitions = punitionDiv.children;
-            
-            
-            
+
             for(let i =0; i< punitions.length; i++){
                 let punition = punitions[i];
                 let punitionInfo = punition.children;
