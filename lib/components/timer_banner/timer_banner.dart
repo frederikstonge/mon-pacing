@@ -26,7 +26,7 @@ class TimerBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return PinnedHeaderSliver(
       child: Container(
         color: Theme.of(context).colorScheme.primary,
         child: SafeArea(

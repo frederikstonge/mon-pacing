@@ -33,10 +33,6 @@ class TimerCubit extends Cubit<TimerState> {
       return;
     }
 
-    if (await timerService.isRunning) {
-      await timerService.stop();
-    }
-
     final timer = TimerModel(
       durationInSeconds: duration.inSeconds,
       matchId: matchId,

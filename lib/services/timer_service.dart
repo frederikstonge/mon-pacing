@@ -17,8 +17,6 @@ void startCallback() {
 }
 
 class TimerService {
-  Future<bool> get isRunning => FlutterForegroundTask.isRunningService;
-
   void initialize({required Function(Object data) taskDataCallback}) {
     FlutterForegroundTask.init(
       androidNotificationOptions: AndroidNotificationOptions(
@@ -83,6 +81,10 @@ class TimerService {
   }
 
   Future<void> start(String initialRoute, {bool enableWakelock = false}) async {
+    if (await FlutterForegroundTask.isRunningService) {
+      await stop();
+    }
+
     await FlutterForegroundTask.startService(
       notificationTitle: Localizer.current.notificationTitle,
       notificationText: '',
@@ -97,7 +99,7 @@ class TimerService {
   }
 
   Future<void> stop() async {
-    if (await isRunning) {
+    if (await FlutterForegroundTask.isRunningService) {
       await FlutterForegroundTask.stopService();
       await WakelockPlus.disable();
     }
@@ -189,7 +191,7 @@ class TimerTaskHandler extends TaskHandler {
     _vibrationMap = null;
   }
 
-  void onTick(Timer timer) {
+  Future<void> onTick(Timer timer) async {
     if (_taskMessage == null) {
       return;
     }
@@ -213,21 +215,23 @@ class TimerTaskHandler extends TaskHandler {
 
     if (_timer!.tick % 10 == 0 || mainMessage.requestedStatus != null) {
       final notificationStatus = mainMessage.requestedStatus ?? _taskMessage!.status;
-      unawaited(
-        FlutterForegroundTask.updateService(
-          notificationTitle: _taskMessage!.notificationTitle,
-          notificationText: remainingDuration.toImprovDuration(),
-          notificationButtons: [
-            if (notificationStatus == TimerStatus.paused) ...[
-              NotificationButton(id: 'resume', text: Localizer.current.start),
+      if (await FlutterForegroundTask.isRunningService) {
+        unawaited(
+          FlutterForegroundTask.updateService(
+            notificationTitle: _taskMessage!.notificationTitle,
+            notificationText: remainingDuration.toImprovDuration(),
+            notificationButtons: [
+              if (notificationStatus == TimerStatus.paused) ...[
+                NotificationButton(id: 'resume', text: Localizer.current.start),
+              ],
+              if (notificationStatus == TimerStatus.started) ...[
+                NotificationButton(id: 'pause', text: Localizer.current.pause),
+              ],
+              NotificationButton(id: 'stop', text: Localizer.current.stop),
             ],
-            if (notificationStatus == TimerStatus.started) ...[
-              NotificationButton(id: 'pause', text: Localizer.current.pause),
-            ],
-            NotificationButton(id: 'stop', text: Localizer.current.stop),
-          ],
-        ),
-      );
+          ),
+        );
+      }
     }
   }
 
