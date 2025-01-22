@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,32 +28,38 @@ class TimerBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PinnedHeaderSliver(
-      child: Container(
-        color: Theme.of(context).colorScheme.primary,
-        child: SafeArea(
-          bottom: false,
-          child: ListTile(
-            leading: Icon(
-              Icons.timer,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-            title: Text(
-              timer.notificationTitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-            ),
-            subtitle: Text(
-              Duration(milliseconds: timer.remainingMilliseconds).toImprovDuration(),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-            ),
-            trailing: LoadingIconButton(
-              onPressed: () => _onAction(context, timer),
-              icon: Icon(
-                Icons.arrow_forward,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarIconBrightness: ThemeData.estimateBrightnessForColor(Theme.of(context).colorScheme.onPrimary),
+          statusBarBrightness: ThemeData.estimateBrightnessForColor(Theme.of(context).colorScheme.primary),
+        ),
+        child: Container(
+          color: Theme.of(context).colorScheme.primary,
+          child: SafeArea(
+            bottom: false,
+            child: ListTile(
+              leading: Icon(
+                Icons.timer,
                 color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              title: Text(
+                timer.notificationTitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+              subtitle: Text(
+                Duration(milliseconds: timer.remainingMilliseconds).toImprovDuration(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+              trailing: LoadingIconButton(
+                onPressed: () => _onAction(context, timer),
+                icon: Icon(
+                  Icons.arrow_forward,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
             ),
           ),

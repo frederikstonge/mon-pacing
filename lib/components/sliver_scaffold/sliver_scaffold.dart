@@ -26,6 +26,7 @@ class SliverScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SafeArea(
         top: false,
+        bottom: false,
         child: Stack(
           alignment: floatingActionButtonAlignment,
           children: [
@@ -45,6 +46,7 @@ class SliverScaffold extends StatelessWidget {
                     padding: EdgeInsets.only(top: 16 * 2, bottom: floatingActionButtonHeight),
                   ),
                 ],
+                SliverPadding(padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom)),
               ],
             ),
             if (floatingActionButton != null) ...[
