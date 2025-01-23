@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="CXEtretm6acUXNMXHR0e4qlL7le5TqmhIqScNABGzuT0nEII6uvZxdxwGis76jfV">
+    <meta name="csrf-token" content="rPHnM26olpDLIFaq9Pk1Dj9s69vGQenLxiV68oeIOJkR8w6bysPM66ldF6JI37gp">
     <title>Formulaire de match</title>
     <link rel="stylesheet" href="/static/stylesheets/components/generalStyles.css">
 </head>
@@ -318,11 +318,13 @@
                 </select>
             </div>
         </div>
-        <button class="btnPrimary btnStretch" style="margin-top: 1rem;"><span>Terminer le match</span></button>
+
     </section>
     
     <section id="Pénalités" class="hidden">
         <h3 class="nopenalty">Aucune pénalité</h3>
+        
+            
         
         <button class="btnPrimary btnStretch addPun" style="margin-top: 1rem;" onclick="openModal('addPunModal')"><span>Ajouter une pénalité</span></button>
     </section>
@@ -350,7 +352,7 @@
         </div>
         <form method="post">
             <div class="sign">
-                <input type="hidden" name="csrfmiddlewaretoken" value="CXEtretm6acUXNMXHR0e4qlL7le5TqmhIqScNABGzuT0nEII6uvZxdxwGis76jfV">
+                <input type="hidden" name="csrfmiddlewaretoken" value="rPHnM26olpDLIFaq9Pk1Dj9s69vGQenLxiV68oeIOJkR8w6bysPM66ldF6JI37gp">
                 <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Signatures</h3>
                 <label for="coach1" class="label onTop">Signature coach Esquisse</label>
                 <button type="button" id="signatureCoachBtn1" class="btnPrimary signBtn" onclick="openModal('signatureCoachModal1')">Signer</button>
@@ -744,7 +746,13 @@
     </style>
 
     <script>
-
+        function desanitizeString(input) {
+            if (typeof input !== "string") return input;
+            return input
+                .replace(/\\\\/g, "\\") // Convert double backslashes to a single backslash
+                .replace(/\\'/g, "'")   // Convert escaped single quotes back to single quotes
+                .replace(/\\"/g, '"');  // Convert escaped double quotes back to double quotes
+        }
         
         
         
@@ -831,102 +839,87 @@
             }
         }
         
-        function getDataString(){
-            // On commence par prendre les alignements modifiés des équipes
-            let alignementEquipe1String = "[";
-            let alignementEquipe2String = "[";
-
-            let alignement1Div = document.getElementById('alignement1');
+        function getDataString() {
+            // Helper function to sanitize inputs
+            function sanitizeString(input) {
+                if (typeof input !== "string") return input;
+                return input
+                    .replace(/\\/g, "\\\\") // Escape backslashes
+                    .replace(/'/g, "\\'")   // Escape single quotes
+                    .replace(/"/g, '\\"');  // Escape double quotes
+            }
+        
+            // Build alignement strings
+            let alignementEquipe1 = [];
+            let alignement1Div = document.getElementById("alignement1");
             let childrenAlignement1 = alignement1Div.children;
-            
-            for(let i=0; i < childrenAlignement1.length; i++){
-                let player = childrenAlignement1[i];
-                if(player.classList.contains('player')){
-                    let playerInfo = player.children;
-                    alignementEquipe1String += "['" + playerInfo[0].innerHTML + "','"+ playerInfo[1].innerHTML + "','"+ playerInfo[2].innerHTML + "','"+ playerInfo[3].innerHTML + "']";
-                    
-                    if(i !== childrenAlignement1.length - 1 ){
-                        alignementEquipe1String += ","
-                    }
-                    
+        
+            for (let player of childrenAlignement1) {
+                if (player.classList.contains("player")) {
+                    let playerInfo = [...player.children].map((child) => sanitizeString(child.innerHTML));
+                    alignementEquipe1.push(playerInfo);
                 }
             }
-            alignementEquipe1String += "]"
-            
-            let alignement2Div = document.getElementById('alignement2');
+        
+            let alignementEquipe2 = [];
+            let alignement2Div = document.getElementById("alignement2");
             let childrenAlignement2 = alignement2Div.children;
-            
-            for(let i=0; i < childrenAlignement2.length; i++){
-                let player = childrenAlignement2[i];
-                if(player.classList.contains('player')){
-                    let playerInfo = player.children;
-                    alignementEquipe2String += "['" + playerInfo[0].innerHTML + "','"+ playerInfo[1].innerHTML + "','"+ playerInfo[2].innerHTML + "','"+ playerInfo[3].innerHTML + "']";
-                    
-                    if(i !== childrenAlignement2.length - 1 ){
-                        alignementEquipe2String += ","
-                    }
-                    
+        
+            for (let player of childrenAlignement2) {
+                if (player.classList.contains("player")) {
+                    let playerInfo = [...player.children].map((child) => sanitizeString(child.innerHTML));
+                    alignementEquipe2.push(playerInfo);
                 }
             }
-            alignementEquipe2String += "]"
-            
-            // On va ensuite chercher les improvisations
-            let improString = "["
-            for(let i= 1; i <= 13; i++){
-                let improText = document.getElementById('impro' + i);
-                let improPts = document.getElementById('improPts' + i);
-                
-                improString += "['" + improText.value + "','" + improPts.value + "']";
-                
-                if(i !== 13 ){
-                    improString += ","
-                }
+        
+            // Build improvisations
+            let impro = [];
+            for (let i = 1; i <= 13; i++) {
+                let improText = document.getElementById("impro" + i);
+                let improPts = document.getElementById("improPts" + i);
+                impro.push([sanitizeString(improText.value), sanitizeString(improPts.value)]);
             }
-            improString += "]";
-            
-            // Ensuite, on va chercher les punitions 
-            let punitionsString = "[";
+        
+            // Build punitions
+            let punitions = [];
             let punitionDiv = document.getElementById("Pénalités");
-            let punitions = punitionDiv.children;
-
-            for(let i =0; i< punitions.length; i++){
-                let punition = punitions[i];
-                let punitionInfo = punition.children;
-                if(punition.classList.contains("pun")){
-                    punitionsString += "['" + punitionInfo[0].innerHTML + "','" + punitionInfo[1].innerHTML + "','" + punitionInfo[2].innerHTML + "']"
-                    if(i !== punitions.length - 1 ){
-                        punitionsString += ","
-                    }
+            let punitionItems = punitionDiv.children;
+        
+            for (let punition of punitionItems) {
+                if (punition.classList.contains("pun")) {
+                    let punitionInfo = [...punition.children].map((child) => sanitizeString(child.innerHTML));
+                    punitions.push(punitionInfo);
                 }
-                
-
             }
-            punitionsString += "]";
-            
-            
-            let subTotalTeam1 = document.getElementById("subTotalTeam1").innerText;
-            let subTotalTeam2 = document.getElementById("subTotalTeam2").innerText;
-            
-            let team1Puns = document.getElementById("team1Puns").innerText;
-            let team2Puns = document.getElementById("team2Puns").innerText;
-            
-            let totalTeam1 = document.getElementById("team1Score").innerText;
-            let totalTeam2 = document.getElementById("team2Score").innerText;
-            
-            
-            
-            let subtotalString = "[" + subTotalTeam1 + "," + subTotalTeam2 + "]";
-            let totalPunString = "[" + team1Puns + "," + team2Puns + "]";
-            let totalString = "[" + totalTeam1 + "," + totalTeam2 + "]";
-            
-            let scoreString = "[" + subtotalString + "," + totalPunString + "," + totalString + "]";
-            
-            // On va chercher les étoiles
-            let etoilesString = "[]";
-            
-            // Finalise
-            let finalString = "[" + alignementEquipe1String + "," + alignementEquipe2String + "," + improString + "," + punitionsString + "," + etoilesString + "," + scoreString + "]";
-            return finalString;
+        
+            // Scores
+            let subTotalTeam1 = sanitizeString(document.getElementById("subTotalTeam1").innerText);
+            let subTotalTeam2 = sanitizeString(document.getElementById("subTotalTeam2").innerText);
+            let team1Puns = sanitizeString(document.getElementById("team1Puns").innerText);
+            let team2Puns = sanitizeString(document.getElementById("team2Puns").innerText);
+            let totalTeam1 = sanitizeString(document.getElementById("team1Score").innerText);
+            let totalTeam2 = sanitizeString(document.getElementById("team2Score").innerText);
+        
+            let scores = [
+                [subTotalTeam1, subTotalTeam2],
+                [team1Puns, team2Puns],
+                [totalTeam1, totalTeam2],
+            ];
+        
+            // Stars (example remains empty, as in your code)
+            let etoiles = [];
+        
+            // Final result using JSON.stringify
+            let finalData = JSON.stringify([
+                alignementEquipe1,
+                alignementEquipe2,
+                impro,
+                punitions,
+                etoiles,
+                scores,
+            ]);
+        
+            return finalData;
         }
         
         function saveToDB() {
