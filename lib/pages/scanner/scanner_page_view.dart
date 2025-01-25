@@ -17,6 +17,7 @@ import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
+import '../../services/analytics_service.dart';
 import '../../services/integration_service.dart';
 import '../../services/toaster_service.dart';
 
@@ -124,6 +125,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     final pacingsCubit = context.read<PacingsCubit>();
     final matchesCubit = context.read<MatchesCubit>();
     final toasterService = context.read<ToasterService>();
+    final analyticsService = context.read<AnalyticsService>();
     final localizer = S.of(context);
 
     final integrations = context.read<IntegrationService>().getIntegrationsByType<IntegrationBase>();
@@ -173,6 +175,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
         if (pacing != null && match == null) {
           final pacingModel = await pacingsCubit.add(pacing);
           if (pacingModel != null) {
+            await analyticsService.logIntegration(integration);
             router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
             return;
           } else {
@@ -186,6 +189,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
         else if (match != null) {
           final matchModel = await matchesCubit.add(match);
           if (matchModel != null) {
+            await analyticsService.logIntegration(integration);
             router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
             return;
           } else {
