@@ -11,10 +11,12 @@ jobs:
 
     env:
       APPLE_KEY_FILE: apple_key.p8
+      IOS_AUTH_KEY_BASE64: ${{ secrets.IOS_AUTH_KEY_BASE64 }}
       APPLE_KEY_ID: ${{ secrets.IOS_KEY_ID }}
       APPLE_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
       APPLE_TEAM_ID: ${{ secrets.IOS_TEAM_ID }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
       GIT_URL: "https://github.com/frederikstonge/mon-pacing-fastlane"
 
     steps:
@@ -27,7 +29,7 @@ jobs:
           working-directory: ios
           shell: bash
           run: |
-            base64 -D <<< "${{ secrets.IOS_AUTH_KEY_BASE64 }}" > ${{ env.APPLE_KEY_FILE }}
+            base64 -D <<< "${{ env.IOS_AUTH_KEY_BASE64 }}" > ${{ env.APPLE_KEY_FILE }}
           post: |
             rm -f ${{ env.APPLE_KEY_FILE }}
 
@@ -49,7 +51,7 @@ jobs:
           bundle exec fastlane generate_cert \
             bundle_id:com.'stongef.monpacing' \
             git_url:'${{ env.GIT_URL }}' \
-            git_basic_authorization:'${{ secrets.GIT_BASIC_AUTHORIZATION }}' \
+            git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
             apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \

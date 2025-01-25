@@ -42,10 +42,12 @@ jobs:
 
     env:
       APPLE_KEY_FILE: apple_key.p8
+      IOS_AUTH_KEY_BASE64: ${{ secrets.IOS_AUTH_KEY_BASE64 }}
       APPLE_KEY_ID: ${{ secrets.IOS_KEY_ID }}
       APPLE_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
       APPLE_TEAM_ID: ${{ secrets.IOS_TEAM_ID }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      GIT_BASIC_AUTHORIZATION: ${{ secrets.GIT_BASIC_AUTHORIZATION }}
       GIT_URL: "https://github.com/frederikstonge/mon-pacing-fastlane"
 
     steps:
@@ -53,7 +55,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Flutter
-        uses: ./.github/actions/install-flutter
+        uses: ./.github/actions/setup-flutter
 
       - name: Create Apple Required Files
         uses: gacts/run-and-post-run@v1.4.1
@@ -61,7 +63,7 @@ jobs:
           working-directory: ios
           shell: bash
           run: |
-            base64 -d <<< ${{ secrets.IOS_AUTH_KEY_BASE64 }} > ${{ env.APPLE_KEY_FILE }}
+            base64 -d <<< ${{ env.IOS_AUTH_KEY_BASE64 }} > ${{ env.APPLE_KEY_FILE }}
           post: |
             rm -f ${{ env.APPLE_KEY_FILE }}
       
@@ -91,7 +93,7 @@ jobs:
             build_number:'${{ needs.set_build_number.outputs.build_number }}' \
             bundle_id:'com.stongef.monpacing' \
             git_url:'${{ env.GIT_URL }}' \
-            git_basic_authorization:'${{ secrets.GIT_BASIC_AUTHORIZATION }}' \
+            git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
             apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
@@ -107,13 +109,16 @@ jobs:
       ANDROID_KEY_FILE: app/android-signing-key.jks
       ANDROID_KEY_PROPERTY_FILE: key.properties
       PLAYSTORE_KEY_FILE: playstore_key.json
+      ANDROID_SIGNING_KEY_BASE64: ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }}
+      ANDROID_KEY_PROPERTIES_BASE64: ${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }}
+      ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64: ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }}
 
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
 
       - name: Install Flutter
-        uses: ./.github/actions/install-flutter
+        uses: ./.github/actions/setup-flutter
 
       - name: Setup Java JDK       
         uses: actions/setup-java@v4.3.0
@@ -127,9 +132,9 @@ jobs:
           working-directory: android
           shell: bash
           run: |
-            base64 -d <<< ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }} > ${{ env.ANDROID_KEY_FILE }}
-            base64 -d <<< ${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }} > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
-            base64 -d <<< ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
+            base64 -d <<< ${{ env.ANDROID_SIGNING_KEY_BASE64 }} > ${{ env.ANDROID_KEY_FILE }}
+            base64 -d <<< ${{ env.ANDROID_KEY_PROPERTIES_BASE64 }} > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
+            base64 -d <<< ${{ env.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
           post: |
             rm -f ${{ env.ANDROID_KEY_FILE }}
             rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}

@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Flutter
-        uses: ./.github/actions/install-flutter
+        uses: ./.github/actions/setup-flutter
         
       - name: Dart Analyze
         shell: bash
