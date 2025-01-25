@@ -7,13 +7,12 @@ import 'pacing_entity.dart';
 
 class ImprovisationEntity extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get name => text()();
   DateTimeColumn get createdDate => dateTime().withDefault(Constant(DateTime.now()))();
   DateTimeColumn get modifiedDate => dateTime().withDefault(Constant(DateTime.now()))();
   IntColumn get type => intEnum<ImprovisationType>()();
   TextColumn get category => text()();
   TextColumn get theme => text()();
-  TextColumn get durationsInSeconds => text().map(const IntListConverter())();
+  TextColumn get durationsInSeconds => text().map(IntListConverter())();
   TextColumn get performers => text()();
   TextColumn get notes => text()();
   IntColumn get timeBufferInSeconds => integer()();

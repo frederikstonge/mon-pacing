@@ -1786,11 +1786,6 @@ class $ImprovisationEntityTable extends ImprovisationEntity
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _createdDateMeta =
       const VerificationMeta('createdDate');
   @override
@@ -1888,7 +1883,6 @@ class $ImprovisationEntityTable extends ImprovisationEntity
   @override
   List<GeneratedColumn> get $columns => [
         id,
-        name,
         createdDate,
         modifiedDate,
         type,
@@ -1917,12 +1911,6 @@ class $ImprovisationEntityTable extends ImprovisationEntity
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
     }
     if (data.containsKey('created_date')) {
       context.handle(
@@ -2013,8 +2001,6 @@ class $ImprovisationEntityTable extends ImprovisationEntity
     return ImprovisationEntityData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       createdDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
       modifiedDate: attachedDatabase.typeMapping.read(
@@ -2063,7 +2049,6 @@ class $ImprovisationEntityTable extends ImprovisationEntity
 class ImprovisationEntityData extends DataClass
     implements Insertable<ImprovisationEntityData> {
   final int id;
-  final String name;
   final DateTime createdDate;
   final DateTime modifiedDate;
   final ImprovisationType type;
@@ -2080,7 +2065,6 @@ class ImprovisationEntityData extends DataClass
   final int? match;
   const ImprovisationEntityData(
       {required this.id,
-      required this.name,
       required this.createdDate,
       required this.modifiedDate,
       required this.type,
@@ -2099,7 +2083,6 @@ class ImprovisationEntityData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
     map['created_date'] = Variable<DateTime>(createdDate);
     map['modified_date'] = Variable<DateTime>(modifiedDate);
     {
@@ -2136,7 +2119,6 @@ class ImprovisationEntityData extends DataClass
   ImprovisationEntityCompanion toCompanion(bool nullToAbsent) {
     return ImprovisationEntityCompanion(
       id: Value(id),
-      name: Value(name),
       createdDate: Value(createdDate),
       modifiedDate: Value(modifiedDate),
       type: Value(type),
@@ -2166,7 +2148,6 @@ class ImprovisationEntityData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ImprovisationEntityData(
       id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
       createdDate: serializer.fromJson<DateTime>(json['createdDate']),
       modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       type: $ImprovisationEntityTable.$convertertype
@@ -2194,7 +2175,6 @@ class ImprovisationEntityData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
       'createdDate': serializer.toJson<DateTime>(createdDate),
       'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'type': serializer
@@ -2218,7 +2198,6 @@ class ImprovisationEntityData extends DataClass
 
   ImprovisationEntityData copyWith(
           {int? id,
-          String? name,
           DateTime? createdDate,
           DateTime? modifiedDate,
           ImprovisationType? type,
@@ -2235,7 +2214,6 @@ class ImprovisationEntityData extends DataClass
           Value<int?> match = const Value.absent()}) =>
       ImprovisationEntityData(
         id: id ?? this.id,
-        name: name ?? this.name,
         createdDate: createdDate ?? this.createdDate,
         modifiedDate: modifiedDate ?? this.modifiedDate,
         type: type ?? this.type,
@@ -2258,7 +2236,6 @@ class ImprovisationEntityData extends DataClass
   ImprovisationEntityData copyWithCompanion(ImprovisationEntityCompanion data) {
     return ImprovisationEntityData(
       id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
       createdDate:
           data.createdDate.present ? data.createdDate.value : this.createdDate,
       modifiedDate: data.modifiedDate.present
@@ -2294,7 +2271,6 @@ class ImprovisationEntityData extends DataClass
   String toString() {
     return (StringBuffer('ImprovisationEntityData(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
           ..write('type: $type, ')
@@ -2316,7 +2292,6 @@ class ImprovisationEntityData extends DataClass
   @override
   int get hashCode => Object.hash(
       id,
-      name,
       createdDate,
       modifiedDate,
       type,
@@ -2336,7 +2311,6 @@ class ImprovisationEntityData extends DataClass
       identical(this, other) ||
       (other is ImprovisationEntityData &&
           other.id == this.id &&
-          other.name == this.name &&
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
           other.type == this.type &&
@@ -2356,7 +2330,6 @@ class ImprovisationEntityData extends DataClass
 class ImprovisationEntityCompanion
     extends UpdateCompanion<ImprovisationEntityData> {
   final Value<int> id;
-  final Value<String> name;
   final Value<DateTime> createdDate;
   final Value<DateTime> modifiedDate;
   final Value<ImprovisationType> type;
@@ -2373,7 +2346,6 @@ class ImprovisationEntityCompanion
   final Value<int?> match;
   const ImprovisationEntityCompanion({
     this.id = const Value.absent(),
-    this.name = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     this.type = const Value.absent(),
@@ -2391,7 +2363,6 @@ class ImprovisationEntityCompanion
   });
   ImprovisationEntityCompanion.insert({
     this.id = const Value.absent(),
-    required String name,
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     required ImprovisationType type,
@@ -2406,8 +2377,7 @@ class ImprovisationEntityCompanion
     this.integrationAdditionalData = const Value.absent(),
     this.pacing = const Value.absent(),
     this.match = const Value.absent(),
-  })  : name = Value(name),
-        type = Value(type),
+  })  : type = Value(type),
         category = Value(category),
         theme = Value(theme),
         durationsInSeconds = Value(durationsInSeconds),
@@ -2417,7 +2387,6 @@ class ImprovisationEntityCompanion
         huddleTimerInSeconds = Value(huddleTimerInSeconds);
   static Insertable<ImprovisationEntityData> custom({
     Expression<int>? id,
-    Expression<String>? name,
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
     Expression<int>? type,
@@ -2435,7 +2404,6 @@ class ImprovisationEntityCompanion
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (name != null) 'name': name,
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
       if (type != null) 'type': type,
@@ -2460,7 +2428,6 @@ class ImprovisationEntityCompanion
 
   ImprovisationEntityCompanion copyWith(
       {Value<int>? id,
-      Value<String>? name,
       Value<DateTime>? createdDate,
       Value<DateTime>? modifiedDate,
       Value<ImprovisationType>? type,
@@ -2477,7 +2444,6 @@ class ImprovisationEntityCompanion
       Value<int?>? match}) {
     return ImprovisationEntityCompanion(
       id: id ?? this.id,
-      name: name ?? this.name,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
       type: type ?? this.type,
@@ -2501,9 +2467,6 @@ class ImprovisationEntityCompanion
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
     }
     if (createdDate.present) {
       map['created_date'] = Variable<DateTime>(createdDate.value);
@@ -2560,7 +2523,6 @@ class ImprovisationEntityCompanion
   String toString() {
     return (StringBuffer('ImprovisationEntityCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
           ..write('type: $type, ')
@@ -3010,11 +2972,6 @@ class $PenaltyEntityTable extends PenaltyEntity
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _createdDateMeta =
       const VerificationMeta('createdDate');
   @override
@@ -3073,7 +3030,6 @@ class $PenaltyEntityTable extends PenaltyEntity
   @override
   List<GeneratedColumn> get $columns => [
         id,
-        name,
         createdDate,
         modifiedDate,
         major,
@@ -3094,12 +3050,6 @@ class $PenaltyEntityTable extends PenaltyEntity
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
     }
     if (data.containsKey('created_date')) {
       context.handle(
@@ -3154,8 +3104,6 @@ class $PenaltyEntityTable extends PenaltyEntity
     return PenaltyEntityData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       createdDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
       modifiedDate: attachedDatabase.typeMapping.read(
@@ -3182,7 +3130,6 @@ class $PenaltyEntityTable extends PenaltyEntity
 class PenaltyEntityData extends DataClass
     implements Insertable<PenaltyEntityData> {
   final int id;
-  final String name;
   final DateTime createdDate;
   final DateTime modifiedDate;
   final bool major;
@@ -3192,7 +3139,6 @@ class PenaltyEntityData extends DataClass
   final int improvisation;
   const PenaltyEntityData(
       {required this.id,
-      required this.name,
       required this.createdDate,
       required this.modifiedDate,
       required this.major,
@@ -3204,7 +3150,6 @@ class PenaltyEntityData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
     map['created_date'] = Variable<DateTime>(createdDate);
     map['modified_date'] = Variable<DateTime>(modifiedDate);
     map['major'] = Variable<bool>(major);
@@ -3220,7 +3165,6 @@ class PenaltyEntityData extends DataClass
   PenaltyEntityCompanion toCompanion(bool nullToAbsent) {
     return PenaltyEntityCompanion(
       id: Value(id),
-      name: Value(name),
       createdDate: Value(createdDate),
       modifiedDate: Value(modifiedDate),
       major: Value(major),
@@ -3238,7 +3182,6 @@ class PenaltyEntityData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return PenaltyEntityData(
       id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
       createdDate: serializer.fromJson<DateTime>(json['createdDate']),
       modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       major: serializer.fromJson<bool>(json['major']),
@@ -3253,7 +3196,6 @@ class PenaltyEntityData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
       'createdDate': serializer.toJson<DateTime>(createdDate),
       'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'major': serializer.toJson<bool>(major),
@@ -3266,7 +3208,6 @@ class PenaltyEntityData extends DataClass
 
   PenaltyEntityData copyWith(
           {int? id,
-          String? name,
           DateTime? createdDate,
           DateTime? modifiedDate,
           bool? major,
@@ -3276,7 +3217,6 @@ class PenaltyEntityData extends DataClass
           int? improvisation}) =>
       PenaltyEntityData(
         id: id ?? this.id,
-        name: name ?? this.name,
         createdDate: createdDate ?? this.createdDate,
         modifiedDate: modifiedDate ?? this.modifiedDate,
         major: major ?? this.major,
@@ -3288,7 +3228,6 @@ class PenaltyEntityData extends DataClass
   PenaltyEntityData copyWithCompanion(PenaltyEntityCompanion data) {
     return PenaltyEntityData(
       id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
       createdDate:
           data.createdDate.present ? data.createdDate.value : this.createdDate,
       modifiedDate: data.modifiedDate.present
@@ -3308,7 +3247,6 @@ class PenaltyEntityData extends DataClass
   String toString() {
     return (StringBuffer('PenaltyEntityData(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
           ..write('major: $major, ')
@@ -3321,14 +3259,13 @@ class PenaltyEntityData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, name, createdDate, modifiedDate, major,
-      type, performer, team, improvisation);
+  int get hashCode => Object.hash(id, createdDate, modifiedDate, major, type,
+      performer, team, improvisation);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is PenaltyEntityData &&
           other.id == this.id &&
-          other.name == this.name &&
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
           other.major == this.major &&
@@ -3340,7 +3277,6 @@ class PenaltyEntityData extends DataClass
 
 class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
   final Value<int> id;
-  final Value<String> name;
   final Value<DateTime> createdDate;
   final Value<DateTime> modifiedDate;
   final Value<bool> major;
@@ -3350,7 +3286,6 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
   final Value<int> improvisation;
   const PenaltyEntityCompanion({
     this.id = const Value.absent(),
-    this.name = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     this.major = const Value.absent(),
@@ -3361,7 +3296,6 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
   });
   PenaltyEntityCompanion.insert({
     this.id = const Value.absent(),
-    required String name,
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     required bool major,
@@ -3369,14 +3303,12 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
     this.performer = const Value.absent(),
     required int team,
     required int improvisation,
-  })  : name = Value(name),
-        major = Value(major),
+  })  : major = Value(major),
         type = Value(type),
         team = Value(team),
         improvisation = Value(improvisation);
   static Insertable<PenaltyEntityData> custom({
     Expression<int>? id,
-    Expression<String>? name,
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
     Expression<bool>? major,
@@ -3387,7 +3319,6 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (name != null) 'name': name,
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
       if (major != null) 'major': major,
@@ -3400,7 +3331,6 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
 
   PenaltyEntityCompanion copyWith(
       {Value<int>? id,
-      Value<String>? name,
       Value<DateTime>? createdDate,
       Value<DateTime>? modifiedDate,
       Value<bool>? major,
@@ -3410,7 +3340,6 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
       Value<int>? improvisation}) {
     return PenaltyEntityCompanion(
       id: id ?? this.id,
-      name: name ?? this.name,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
       major: major ?? this.major,
@@ -3426,9 +3355,6 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
     }
     if (createdDate.present) {
       map['created_date'] = Variable<DateTime>(createdDate.value);
@@ -3458,7 +3384,6 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
   String toString() {
     return (StringBuffer('PenaltyEntityCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
           ..write('major: $major, ')
@@ -5399,7 +5324,7 @@ final class $$PacingEntityTableReferences extends BaseReferences<_$AppDatabase,
   $$ImprovisationEntityTableProcessedTableManager get improvisationEntityRefs {
     final manager =
         $$ImprovisationEntityTableTableManager($_db, $_db.improvisationEntity)
-            .filter((f) => f.pacing.id($_item.id));
+            .filter((f) => f.pacing.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_improvisationEntityRefsTable($_db));
@@ -5416,7 +5341,7 @@ final class $$PacingEntityTableReferences extends BaseReferences<_$AppDatabase,
   $$PacingTagEntityTableProcessedTableManager get pacingTagEntityRefs {
     final manager =
         $$PacingTagEntityTableTableManager($_db, $_db.pacingTagEntity)
-            .filter((f) => f.pacing.id($_item.id));
+            .filter((f) => f.pacing.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_pacingTagEntityRefsTable($_db));
@@ -5800,7 +5725,7 @@ final class $$MatchEntityTableReferences
   $$ImprovisationEntityTableProcessedTableManager get improvisationEntityRefs {
     final manager =
         $$ImprovisationEntityTableTableManager($_db, $_db.improvisationEntity)
-            .filter((f) => f.match.id($_item.id));
+            .filter((f) => f.match.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_improvisationEntityRefsTable($_db));
@@ -5816,7 +5741,7 @@ final class $$MatchEntityTableReferences
 
   $$MatchTagEntityTableProcessedTableManager get matchTagEntityRefs {
     final manager = $$MatchTagEntityTableTableManager($_db, $_db.matchTagEntity)
-        .filter((f) => f.match.id($_item.id));
+        .filter((f) => f.match.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_matchTagEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -6340,7 +6265,7 @@ final class $$TeamEntityTableReferences
   $$PerformerEntityTableProcessedTableManager get performerEntityRefs {
     final manager =
         $$PerformerEntityTableTableManager($_db, $_db.performerEntity)
-            .filter((f) => f.team.id($_item.id));
+            .filter((f) => f.team.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_performerEntityRefsTable($_db));
@@ -6356,7 +6281,7 @@ final class $$TeamEntityTableReferences
 
   $$PenaltyEntityTableProcessedTableManager get penaltyEntityRefs {
     final manager = $$PenaltyEntityTableTableManager($_db, $_db.penaltyEntity)
-        .filter((f) => f.team.id($_item.id));
+        .filter((f) => f.team.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_penaltyEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -6371,7 +6296,7 @@ final class $$TeamEntityTableReferences
 
   $$PointEntityTableProcessedTableManager get pointEntityRefs {
     final manager = $$PointEntityTableTableManager($_db, $_db.pointEntity)
-        .filter((f) => f.team.id($_item.id));
+        .filter((f) => f.team.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_pointEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -6386,7 +6311,7 @@ final class $$TeamEntityTableReferences
 
   $$StarEntityTableProcessedTableManager get starEntityRefs {
     final manager = $$StarEntityTableTableManager($_db, $_db.starEntity)
-        .filter((f) => f.team.id($_item.id));
+        .filter((f) => f.team.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_starEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -6401,7 +6326,7 @@ final class $$TeamEntityTableReferences
 
   $$TeamTagEntityTableProcessedTableManager get teamTagEntityRefs {
     final manager = $$TeamTagEntityTableTableManager($_db, $_db.teamTagEntity)
-        .filter((f) => f.team.id($_item.id));
+        .filter((f) => f.team.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_teamTagEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -6861,7 +6786,6 @@ typedef $$TeamEntityTableProcessedTableManager = ProcessedTableManager<
 typedef $$ImprovisationEntityTableCreateCompanionBuilder
     = ImprovisationEntityCompanion Function({
   Value<int> id,
-  required String name,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   required ImprovisationType type,
@@ -6880,7 +6804,6 @@ typedef $$ImprovisationEntityTableCreateCompanionBuilder
 typedef $$ImprovisationEntityTableUpdateCompanionBuilder
     = ImprovisationEntityCompanion Function({
   Value<int> id,
-  Value<String> name,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   Value<ImprovisationType> type,
@@ -6907,9 +6830,10 @@ final class $$ImprovisationEntityTableReferences extends BaseReferences<
           db.improvisationEntity.pacing, db.pacingEntity.id));
 
   $$PacingEntityTableProcessedTableManager? get pacing {
-    if ($_item.pacing == null) return null;
+    final $_column = $_itemColumn<int>('pacing');
+    if ($_column == null) return null;
     final manager = $$PacingEntityTableTableManager($_db, $_db.pacingEntity)
-        .filter((f) => f.id($_item.pacing!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_pacingTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -6921,9 +6845,10 @@ final class $$ImprovisationEntityTableReferences extends BaseReferences<
           db.improvisationEntity.match, db.matchEntity.id));
 
   $$MatchEntityTableProcessedTableManager? get match {
-    if ($_item.match == null) return null;
+    final $_column = $_itemColumn<int>('match');
+    if ($_column == null) return null;
     final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
-        .filter((f) => f.id($_item.match!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_matchTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -6938,7 +6863,7 @@ final class $$ImprovisationEntityTableReferences extends BaseReferences<
 
   $$PenaltyEntityTableProcessedTableManager get penaltyEntityRefs {
     final manager = $$PenaltyEntityTableTableManager($_db, $_db.penaltyEntity)
-        .filter((f) => f.improvisation.id($_item.id));
+        .filter((f) => f.improvisation.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_penaltyEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -6953,7 +6878,7 @@ final class $$ImprovisationEntityTableReferences extends BaseReferences<
 
   $$PointEntityTableProcessedTableManager get pointEntityRefs {
     final manager = $$PointEntityTableTableManager($_db, $_db.pointEntity)
-        .filter((f) => f.improvisation.id($_item.id));
+        .filter((f) => f.improvisation.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_pointEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -6972,9 +6897,6 @@ class $$ImprovisationEntityTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get createdDate => $composableBuilder(
       column: $table.createdDate, builder: (column) => ColumnFilters(column));
@@ -7115,9 +7037,6 @@ class $$ImprovisationEntityTableOrderingComposer
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<DateTime> get createdDate => $composableBuilder(
       column: $table.createdDate, builder: (column) => ColumnOrderings(column));
 
@@ -7212,9 +7131,6 @@ class $$ImprovisationEntityTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdDate => $composableBuilder(
       column: $table.createdDate, builder: (column) => column);
@@ -7367,7 +7283,6 @@ class $$ImprovisationEntityTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             Value<ImprovisationType> type = const Value.absent(),
@@ -7385,7 +7300,6 @@ class $$ImprovisationEntityTableTableManager extends RootTableManager<
           }) =>
               ImprovisationEntityCompanion(
             id: id,
-            name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             type: type,
@@ -7403,7 +7317,6 @@ class $$ImprovisationEntityTableTableManager extends RootTableManager<
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required String name,
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             required ImprovisationType type,
@@ -7421,7 +7334,6 @@ class $$ImprovisationEntityTableTableManager extends RootTableManager<
           }) =>
               ImprovisationEntityCompanion.insert(
             id: id,
-            name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             type: type,
@@ -7571,8 +7483,10 @@ final class $$PerformerEntityTableReferences extends BaseReferences<
           $_aliasNameGenerator(db.performerEntity.team, db.teamEntity.id));
 
   $$TeamEntityTableProcessedTableManager get team {
+    final $_column = $_itemColumn<int>('team')!;
+
     final manager = $$TeamEntityTableTableManager($_db, $_db.teamEntity)
-        .filter((f) => f.id($_item.team!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_teamTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -7587,7 +7501,7 @@ final class $$PerformerEntityTableReferences extends BaseReferences<
 
   $$PenaltyEntityTableProcessedTableManager get penaltyEntityRefs {
     final manager = $$PenaltyEntityTableTableManager($_db, $_db.penaltyEntity)
-        .filter((f) => f.performer.id($_item.id));
+        .filter((f) => f.performer.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_penaltyEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -7602,7 +7516,7 @@ final class $$PerformerEntityTableReferences extends BaseReferences<
 
   $$StarEntityTableProcessedTableManager get starEntityRefs {
     final manager = $$StarEntityTableTableManager($_db, $_db.starEntity)
-        .filter((f) => f.performer.id($_item.id));
+        .filter((f) => f.performer.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_starEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -7994,7 +7908,6 @@ typedef $$PerformerEntityTableProcessedTableManager = ProcessedTableManager<
 typedef $$PenaltyEntityTableCreateCompanionBuilder = PenaltyEntityCompanion
     Function({
   Value<int> id,
-  required String name,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   required bool major,
@@ -8006,7 +7919,6 @@ typedef $$PenaltyEntityTableCreateCompanionBuilder = PenaltyEntityCompanion
 typedef $$PenaltyEntityTableUpdateCompanionBuilder = PenaltyEntityCompanion
     Function({
   Value<int> id,
-  Value<String> name,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   Value<bool> major,
@@ -8026,10 +7938,11 @@ final class $$PenaltyEntityTableReferences extends BaseReferences<_$AppDatabase,
           db.penaltyEntity.performer, db.performerEntity.id));
 
   $$PerformerEntityTableProcessedTableManager? get performer {
-    if ($_item.performer == null) return null;
+    final $_column = $_itemColumn<int>('performer');
+    if ($_column == null) return null;
     final manager =
         $$PerformerEntityTableTableManager($_db, $_db.performerEntity)
-            .filter((f) => f.id($_item.performer!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_performerTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -8041,8 +7954,10 @@ final class $$PenaltyEntityTableReferences extends BaseReferences<_$AppDatabase,
           $_aliasNameGenerator(db.penaltyEntity.team, db.teamEntity.id));
 
   $$TeamEntityTableProcessedTableManager get team {
+    final $_column = $_itemColumn<int>('team')!;
+
     final manager = $$TeamEntityTableTableManager($_db, $_db.teamEntity)
-        .filter((f) => f.id($_item.team!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_teamTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -8054,9 +7969,11 @@ final class $$PenaltyEntityTableReferences extends BaseReferences<_$AppDatabase,
           db.penaltyEntity.improvisation, db.improvisationEntity.id));
 
   $$ImprovisationEntityTableProcessedTableManager get improvisation {
+    final $_column = $_itemColumn<int>('improvisation')!;
+
     final manager =
         $$ImprovisationEntityTableTableManager($_db, $_db.improvisationEntity)
-            .filter((f) => f.id($_item.improvisation!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_improvisationTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -8075,9 +7992,6 @@ class $$PenaltyEntityTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get createdDate => $composableBuilder(
       column: $table.createdDate, builder: (column) => ColumnFilters(column));
@@ -8163,9 +8077,6 @@ class $$PenaltyEntityTableOrderingComposer
   });
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<DateTime> get createdDate => $composableBuilder(
       column: $table.createdDate, builder: (column) => ColumnOrderings(column));
@@ -8253,9 +8164,6 @@ class $$PenaltyEntityTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdDate => $composableBuilder(
       column: $table.createdDate, builder: (column) => column);
@@ -8355,7 +8263,6 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
               $$PenaltyEntityTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             Value<bool> major = const Value.absent(),
@@ -8366,7 +8273,6 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
           }) =>
               PenaltyEntityCompanion(
             id: id,
-            name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             major: major,
@@ -8377,7 +8283,6 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required String name,
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             required bool major,
@@ -8388,7 +8293,6 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
           }) =>
               PenaltyEntityCompanion.insert(
             id: id,
-            name: name,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             major: major,
@@ -8502,8 +8406,10 @@ final class $$PointEntityTableReferences
       .createAlias($_aliasNameGenerator(db.pointEntity.team, db.teamEntity.id));
 
   $$TeamEntityTableProcessedTableManager get team {
+    final $_column = $_itemColumn<int>('team')!;
+
     final manager = $$TeamEntityTableTableManager($_db, $_db.teamEntity)
-        .filter((f) => f.id($_item.team!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_teamTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -8515,9 +8421,11 @@ final class $$PointEntityTableReferences
           db.pointEntity.improvisation, db.improvisationEntity.id));
 
   $$ImprovisationEntityTableProcessedTableManager get improvisation {
+    final $_column = $_itemColumn<int>('improvisation')!;
+
     final manager =
         $$ImprovisationEntityTableTableManager($_db, $_db.improvisationEntity)
-            .filter((f) => f.id($_item.improvisation!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_improvisationTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -8858,9 +8766,11 @@ final class $$StarEntityTableReferences
           $_aliasNameGenerator(db.starEntity.performer, db.performerEntity.id));
 
   $$PerformerEntityTableProcessedTableManager get performer {
+    final $_column = $_itemColumn<int>('performer')!;
+
     final manager =
         $$PerformerEntityTableTableManager($_db, $_db.performerEntity)
-            .filter((f) => f.id($_item.performer!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_performerTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -8871,8 +8781,10 @@ final class $$StarEntityTableReferences
       .createAlias($_aliasNameGenerator(db.starEntity.team, db.teamEntity.id));
 
   $$TeamEntityTableProcessedTableManager get team {
+    final $_column = $_itemColumn<int>('team')!;
+
     final manager = $$TeamEntityTableTableManager($_db, $_db.teamEntity)
-        .filter((f) => f.id($_item.team!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_teamTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -9199,7 +9111,7 @@ final class $$TagEntityTableReferences
   $$PacingTagEntityTableProcessedTableManager get pacingTagEntityRefs {
     final manager =
         $$PacingTagEntityTableTableManager($_db, $_db.pacingTagEntity)
-            .filter((f) => f.tag.id($_item.id));
+            .filter((f) => f.tag.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_pacingTagEntityRefsTable($_db));
@@ -9215,7 +9127,7 @@ final class $$TagEntityTableReferences
 
   $$MatchTagEntityTableProcessedTableManager get matchTagEntityRefs {
     final manager = $$MatchTagEntityTableTableManager($_db, $_db.matchTagEntity)
-        .filter((f) => f.tag.id($_item.id));
+        .filter((f) => f.tag.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_matchTagEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -9230,7 +9142,7 @@ final class $$TagEntityTableReferences
 
   $$TeamTagEntityTableProcessedTableManager get teamTagEntityRefs {
     final manager = $$TeamTagEntityTableTableManager($_db, $_db.teamTagEntity)
-        .filter((f) => f.tag.id($_item.id));
+        .filter((f) => f.tag.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_teamTagEntityRefsTable($_db));
     return ProcessedTableManager(
@@ -9585,8 +9497,10 @@ final class $$PacingTagEntityTableReferences extends BaseReferences<
           $_aliasNameGenerator(db.pacingTagEntity.tag, db.tagEntity.id));
 
   $$TagEntityTableProcessedTableManager get tag {
+    final $_column = $_itemColumn<int>('tag')!;
+
     final manager = $$TagEntityTableTableManager($_db, $_db.tagEntity)
-        .filter((f) => f.id($_item.tag!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -9598,8 +9512,10 @@ final class $$PacingTagEntityTableReferences extends BaseReferences<
           $_aliasNameGenerator(db.pacingTagEntity.pacing, db.pacingEntity.id));
 
   $$PacingEntityTableProcessedTableManager get pacing {
+    final $_column = $_itemColumn<int>('pacing')!;
+
     final manager = $$PacingEntityTableTableManager($_db, $_db.pacingEntity)
-        .filter((f) => f.id($_item.pacing!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_pacingTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -9929,8 +9845,10 @@ final class $$MatchTagEntityTableReferences extends BaseReferences<
           $_aliasNameGenerator(db.matchTagEntity.tag, db.tagEntity.id));
 
   $$TagEntityTableProcessedTableManager get tag {
+    final $_column = $_itemColumn<int>('tag')!;
+
     final manager = $$TagEntityTableTableManager($_db, $_db.tagEntity)
-        .filter((f) => f.id($_item.tag!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -9942,8 +9860,10 @@ final class $$MatchTagEntityTableReferences extends BaseReferences<
           $_aliasNameGenerator(db.matchTagEntity.match, db.matchEntity.id));
 
   $$MatchEntityTableProcessedTableManager get match {
+    final $_column = $_itemColumn<int>('match')!;
+
     final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
-        .filter((f) => f.id($_item.match!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_matchTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -10272,8 +10192,10 @@ final class $$TeamTagEntityTableReferences extends BaseReferences<_$AppDatabase,
       .createAlias($_aliasNameGenerator(db.teamTagEntity.tag, db.tagEntity.id));
 
   $$TagEntityTableProcessedTableManager get tag {
+    final $_column = $_itemColumn<int>('tag')!;
+
     final manager = $$TagEntityTableTableManager($_db, $_db.tagEntity)
-        .filter((f) => f.id($_item.tag!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -10285,8 +10207,10 @@ final class $$TeamTagEntityTableReferences extends BaseReferences<_$AppDatabase,
           $_aliasNameGenerator(db.teamTagEntity.team, db.teamEntity.id));
 
   $$TeamEntityTableProcessedTableManager get team {
+    final $_column = $_itemColumn<int>('team')!;
+
     final manager = $$TeamEntityTableTableManager($_db, $_db.teamEntity)
-        .filter((f) => f.id($_item.team!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_teamTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
