@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
+import '../repositories/app_database.dart';
 import 'improvisation_type.dart';
 
 part 'improvisation_model.mapper.dart';
@@ -34,4 +35,22 @@ class ImprovisationModel with ImprovisationModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
+
+  factory ImprovisationModel.fromEntity(
+    ImprovisationEntityData improvisation,
+  ) {
+    return ImprovisationModel(
+      id: improvisation.id,
+      type: improvisation.type,
+      category: improvisation.category,
+      theme: improvisation.theme,
+      durationsInSeconds: improvisation.durationsInSeconds,
+      performers: improvisation.performers,
+      notes: improvisation.notes,
+      timeBufferInSeconds: improvisation.timeBufferInSeconds,
+      huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
+      integrationEntityId: improvisation.integrationEntityId,
+      integrationAdditionalData: improvisation.integrationAdditionalData,
+    );
+  }
 }

@@ -2,13 +2,16 @@ import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
 import '../models/pacing_model.dart';
+import 'app_database.dart';
 import 'legacy_database_repository.dart';
 
 class PacingsRepository {
   final LegacyDatabaseRepository databaseRepository;
+  final AppDatabase appDatabase;
 
   const PacingsRepository({
     required this.databaseRepository,
+    required this.appDatabase,
   });
 
   Future<PacingModel> add(PacingModel entity) async {
@@ -32,13 +35,39 @@ class PacingsRepository {
   }
 
   Future<PacingModel?> get(int id) async {
-    final db = await databaseRepository.database;
-    return await db.pacingModels.getAsync(id);
+    final response = await appDatabase.managers.pacingEntity
+        .withReferences((p) => p(improvisationEntityRefs: true))
+        .filter((p) => p.id.equals(id))
+        .getSingleOrNull();
+
+    final pacing = response?.$1;
+    final improvisations = response?.$2.improvisationEntityRefs.prefetchedData;
+
+    final pacingTags = await response?.$2.pacingTagEntityRefs.withReferences((p) => p(tag: true)).get();
+    final tags = pacingTags?.map((t) => t.$2.tag.prefetchedData).selectMany<TagEntityData>((t) => t ?? []);
+
+    if (pacing == null || improvisations == null || tags == null) return null;
+    return PacingModel.fromEntity(pacing, improvisations, tags.toList());
   }
 
   Future<List<PacingModel>> getList(int skip, int take) async {
-    final db = await databaseRepository.database;
-    return await db.pacingModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
+    final List<PacingModel> pacings = [];
+    final response = await appDatabase.managers.pacingEntity
+        .withReferences((p) => p(improvisationEntityRefs: true))
+        .orderBy((p) => p.createdDate.desc())
+        .get(offset: skip, limit: take);
+
+    for (final pacingResponse in response) {
+      final pacing = pacingResponse.$1;
+      final improvisations = pacingResponse.$2.improvisationEntityRefs.prefetchedData ?? [];
+
+      final pacingTags = await pacingResponse.$2.pacingTagEntityRefs.withReferences((p) => p(tag: true)).get();
+      final tags = pacingTags.map((t) => t.$2.tag.prefetchedData).selectMany<TagEntityData>((t) => t ?? []);
+
+      pacings.add(PacingModel.fromEntity(pacing, improvisations, tags.toList()));
+    }
+
+    return pacings;
   }
 
   Future<List<PacingModel>> search(String search, List<String> selectedTags) async {

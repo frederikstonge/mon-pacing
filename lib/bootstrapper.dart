@@ -83,6 +83,7 @@ class Bootstrapper extends StatelessWidget {
           create: (repositoryContext) => _createOrGetOverride(
             () => PacingsRepository(
               databaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
+              appDatabase: repositoryContext.read<AppDatabase>(),
             ),
           ),
         ),
