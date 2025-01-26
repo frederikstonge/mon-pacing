@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
 import '../models/improvisation_type.dart';
@@ -60,23 +59,16 @@ class AppDatabase extends _$AppDatabase {
   @override
   MigrationStrategy get migration => MigrationStrategy(
         beforeOpen: (details) async {
-          if (kDebugMode) {
-            await customStatement('PRAGMA foreign_keys = OFF');
-            for (final table in allTables) {
-              await delete(table).go();
-            }
-          }
-
           // Enable foreign keys
           await customStatement('PRAGMA foreign_keys = ON');
-        },
-        onCreate: (m) async {
-          await m.createAll();
 
           // Run migrations from the legacy database
           await _migratePacings();
           await _migrateMatches();
           await _migrateTeams();
+        },
+        onCreate: (m) async {
+          await m.createAll();
         },
       );
 
@@ -138,6 +130,8 @@ class AppDatabase extends _$AppDatabase {
           ),
         );
       }
+
+      //db.pacingModels.clear();
     }
   }
 
@@ -276,6 +270,8 @@ class AppDatabase extends _$AppDatabase {
         );
       }
     }
+
+    //db.matchModels.clear();
   }
 
   Future<void> _migrateTeams() async {
@@ -323,5 +319,7 @@ class AppDatabase extends _$AppDatabase {
         );
       }
     }
+
+    //db.teamModels.clear();
   }
 }

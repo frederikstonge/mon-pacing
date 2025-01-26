@@ -75,8 +75,9 @@ class Bootstrapper extends StatelessWidget {
             () => AppDatabase(
               legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
               toasterService: repositoryContext.read<ToasterService>(),
-            ),
+            )..managers.pacingEntity.getSingleOrNull(),
           ),
+          lazy: false,
         ),
         RepositoryProvider(
           create: (repositoryContext) => _createOrGetOverride(

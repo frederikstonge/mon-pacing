@@ -6,7 +6,7 @@ class IntListConverter extends TypeConverter<List<int>, String> with JsonTypeCon
 
   @override
   List<int> fromSql(String fromDb) {
-    return fromDb.split(separator).cast<int>();
+    return fromDb.split(separator).map((e) => int.parse(e)).toList();
   }
 
   @override
