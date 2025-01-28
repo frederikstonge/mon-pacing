@@ -39,6 +39,17 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
   static List<String> _$tags(TeamModel v) => v.tags;
   static const Field<TeamModel, List<String>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
+  static String? _$integrationId(TeamModel v) => v.integrationId;
+  static const Field<TeamModel, String> _f$integrationId =
+      Field('integrationId', _$integrationId, opt: true);
+  static String? _$integrationEntityId(TeamModel v) => v.integrationEntityId;
+  static const Field<TeamModel, String> _f$integrationEntityId =
+      Field('integrationEntityId', _$integrationEntityId, opt: true);
+  static String? _$integrationAdditionalData(TeamModel v) =>
+      v.integrationAdditionalData;
+  static const Field<TeamModel, String> _f$integrationAdditionalData = Field(
+      'integrationAdditionalData', _$integrationAdditionalData,
+      opt: true);
 
   @override
   final MappableFields<TeamModel> fields = const {
@@ -49,6 +60,9 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
     #color: _f$color,
     #performers: _f$performers,
     #tags: _f$tags,
+    #integrationId: _f$integrationId,
+    #integrationEntityId: _f$integrationEntityId,
+    #integrationAdditionalData: _f$integrationAdditionalData,
   };
 
   static TeamModel _instantiate(DecodingData data) {
@@ -59,7 +73,10 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
         name: data.dec(_f$name),
         color: data.dec(_f$color),
         performers: data.dec(_f$performers),
-        tags: data.dec(_f$tags));
+        tags: data.dec(_f$tags),
+        integrationId: data.dec(_f$integrationId),
+        integrationEntityId: data.dec(_f$integrationEntityId),
+        integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
 
   @override
@@ -123,7 +140,10 @@ abstract class TeamModelCopyWith<$R, $In extends TeamModel, $Out>
       String? name,
       int? color,
       List<PerformerModel>? performers,
-      List<String>? tags});
+      List<String>? tags,
+      String? integrationId,
+      String? integrationEntityId,
+      String? integrationAdditionalData});
   TeamModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -152,7 +172,10 @@ class _TeamModelCopyWithImpl<$R, $Out>
           String? name,
           int? color,
           List<PerformerModel>? performers,
-          List<String>? tags}) =>
+          List<String>? tags,
+          Object? integrationId = $none,
+          Object? integrationEntityId = $none,
+          Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (createdDate != $none) #createdDate: createdDate,
@@ -160,7 +183,12 @@ class _TeamModelCopyWithImpl<$R, $Out>
         if (name != null) #name: name,
         if (color != null) #color: color,
         if (performers != null) #performers: performers,
-        if (tags != null) #tags: tags
+        if (tags != null) #tags: tags,
+        if (integrationId != $none) #integrationId: integrationId,
+        if (integrationEntityId != $none)
+          #integrationEntityId: integrationEntityId,
+        if (integrationAdditionalData != $none)
+          #integrationAdditionalData: integrationAdditionalData
       }));
   @override
   TeamModel $make(CopyWithData data) => TeamModel(
@@ -170,7 +198,12 @@ class _TeamModelCopyWithImpl<$R, $Out>
       name: data.get(#name, or: $value.name),
       color: data.get(#color, or: $value.color),
       performers: data.get(#performers, or: $value.performers),
-      tags: data.get(#tags, or: $value.tags));
+      tags: data.get(#tags, or: $value.tags),
+      integrationId: data.get(#integrationId, or: $value.integrationId),
+      integrationEntityId:
+          data.get(#integrationEntityId, or: $value.integrationEntityId),
+      integrationAdditionalData: data.get(#integrationAdditionalData,
+          or: $value.integrationAdditionalData));
 
   @override
   TeamModelCopyWith<$R2, TeamModel, $Out2> $chain<$R2, $Out2>(

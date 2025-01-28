@@ -11,6 +11,8 @@ part 'improvisation_model.g.dart';
 @Embedded(ignore: {'copyWith'})
 class ImprovisationModel with ImprovisationModelMappable {
   final int id;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final ImprovisationType type;
   final String category;
   final String theme;
@@ -30,6 +32,8 @@ class ImprovisationModel with ImprovisationModelMappable {
     required this.durationsInSeconds,
     required this.performers,
     required this.notes,
+    this.createdDate,
+    this.modifiedDate,
     this.timeBufferInSeconds = 30,
     this.huddleTimerInSeconds = 30,
     this.integrationEntityId,
@@ -51,6 +55,25 @@ class ImprovisationModel with ImprovisationModelMappable {
       huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
       integrationEntityId: improvisation.integrationEntityId,
       integrationAdditionalData: improvisation.integrationAdditionalData,
+    );
+  }
+
+  ImprovisationEntityData toEntity(int order) {
+    return ImprovisationEntityData(
+      id: id,
+      order: order,
+      createdDate: createdDate ?? DateTime.now(),
+      modifiedDate: modifiedDate ?? DateTime.now(),
+      type: type,
+      category: category,
+      theme: theme,
+      durationsInSeconds: durationsInSeconds,
+      performers: performers,
+      notes: notes,
+      timeBufferInSeconds: timeBufferInSeconds,
+      huddleTimerInSeconds: huddleTimerInSeconds,
+      integrationEntityId: integrationEntityId,
+      integrationAdditionalData: integrationAdditionalData,
     );
   }
 }

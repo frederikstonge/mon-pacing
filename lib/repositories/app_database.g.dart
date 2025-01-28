@@ -1510,9 +1510,44 @@ class $TeamEntityTable extends TeamEntity
   late final GeneratedColumn<int> color = GeneratedColumn<int>(
       'color', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _matchMeta = const VerificationMeta('match');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, createdDate, modifiedDate, color];
+  late final GeneratedColumn<int> match = GeneratedColumn<int>(
+      'match', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES match_entity (id)'));
+  static const VerificationMeta _integrationIdMeta =
+      const VerificationMeta('integrationId');
+  @override
+  late final GeneratedColumn<String> integrationId = GeneratedColumn<String>(
+      'integration_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _integrationEntityIdMeta =
+      const VerificationMeta('integrationEntityId');
+  @override
+  late final GeneratedColumn<String> integrationEntityId =
+      GeneratedColumn<String>('integration_entity_id', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _integrationAdditionalDataMeta =
+      const VerificationMeta('integrationAdditionalData');
+  @override
+  late final GeneratedColumn<String> integrationAdditionalData =
+      GeneratedColumn<String>('integration_additional_data', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        createdDate,
+        modifiedDate,
+        color,
+        match,
+        integrationId,
+        integrationEntityId,
+        integrationAdditionalData
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1550,6 +1585,29 @@ class $TeamEntityTable extends TeamEntity
     } else if (isInserting) {
       context.missing(_colorMeta);
     }
+    if (data.containsKey('match')) {
+      context.handle(
+          _matchMeta, match.isAcceptableOrUnknown(data['match']!, _matchMeta));
+    }
+    if (data.containsKey('integration_id')) {
+      context.handle(
+          _integrationIdMeta,
+          integrationId.isAcceptableOrUnknown(
+              data['integration_id']!, _integrationIdMeta));
+    }
+    if (data.containsKey('integration_entity_id')) {
+      context.handle(
+          _integrationEntityIdMeta,
+          integrationEntityId.isAcceptableOrUnknown(
+              data['integration_entity_id']!, _integrationEntityIdMeta));
+    }
+    if (data.containsKey('integration_additional_data')) {
+      context.handle(
+          _integrationAdditionalDataMeta,
+          integrationAdditionalData.isAcceptableOrUnknown(
+              data['integration_additional_data']!,
+              _integrationAdditionalDataMeta));
+    }
     return context;
   }
 
@@ -1569,6 +1627,15 @@ class $TeamEntityTable extends TeamEntity
           DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
       color: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}color'])!,
+      match: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}match']),
+      integrationId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}integration_id']),
+      integrationEntityId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}integration_entity_id']),
+      integrationAdditionalData: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}integration_additional_data']),
     );
   }
 
@@ -1584,12 +1651,20 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
   final DateTime createdDate;
   final DateTime modifiedDate;
   final int color;
+  final int? match;
+  final String? integrationId;
+  final String? integrationEntityId;
+  final String? integrationAdditionalData;
   const TeamEntityData(
       {required this.id,
       required this.name,
       required this.createdDate,
       required this.modifiedDate,
-      required this.color});
+      required this.color,
+      this.match,
+      this.integrationId,
+      this.integrationEntityId,
+      this.integrationAdditionalData});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1598,6 +1673,19 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
     map['created_date'] = Variable<DateTime>(createdDate);
     map['modified_date'] = Variable<DateTime>(modifiedDate);
     map['color'] = Variable<int>(color);
+    if (!nullToAbsent || match != null) {
+      map['match'] = Variable<int>(match);
+    }
+    if (!nullToAbsent || integrationId != null) {
+      map['integration_id'] = Variable<String>(integrationId);
+    }
+    if (!nullToAbsent || integrationEntityId != null) {
+      map['integration_entity_id'] = Variable<String>(integrationEntityId);
+    }
+    if (!nullToAbsent || integrationAdditionalData != null) {
+      map['integration_additional_data'] =
+          Variable<String>(integrationAdditionalData);
+    }
     return map;
   }
 
@@ -1608,6 +1696,18 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
       createdDate: Value(createdDate),
       modifiedDate: Value(modifiedDate),
       color: Value(color),
+      match:
+          match == null && nullToAbsent ? const Value.absent() : Value(match),
+      integrationId: integrationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(integrationId),
+      integrationEntityId: integrationEntityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(integrationEntityId),
+      integrationAdditionalData:
+          integrationAdditionalData == null && nullToAbsent
+              ? const Value.absent()
+              : Value(integrationAdditionalData),
     );
   }
 
@@ -1620,6 +1720,12 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
       createdDate: serializer.fromJson<DateTime>(json['createdDate']),
       modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       color: serializer.fromJson<int>(json['color']),
+      match: serializer.fromJson<int?>(json['match']),
+      integrationId: serializer.fromJson<String?>(json['integrationId']),
+      integrationEntityId:
+          serializer.fromJson<String?>(json['integrationEntityId']),
+      integrationAdditionalData:
+          serializer.fromJson<String?>(json['integrationAdditionalData']),
     );
   }
   @override
@@ -1631,6 +1737,11 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
       'createdDate': serializer.toJson<DateTime>(createdDate),
       'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'color': serializer.toJson<int>(color),
+      'match': serializer.toJson<int?>(match),
+      'integrationId': serializer.toJson<String?>(integrationId),
+      'integrationEntityId': serializer.toJson<String?>(integrationEntityId),
+      'integrationAdditionalData':
+          serializer.toJson<String?>(integrationAdditionalData),
     };
   }
 
@@ -1639,13 +1750,26 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
           String? name,
           DateTime? createdDate,
           DateTime? modifiedDate,
-          int? color}) =>
+          int? color,
+          Value<int?> match = const Value.absent(),
+          Value<String?> integrationId = const Value.absent(),
+          Value<String?> integrationEntityId = const Value.absent(),
+          Value<String?> integrationAdditionalData = const Value.absent()}) =>
       TeamEntityData(
         id: id ?? this.id,
         name: name ?? this.name,
         createdDate: createdDate ?? this.createdDate,
         modifiedDate: modifiedDate ?? this.modifiedDate,
         color: color ?? this.color,
+        match: match.present ? match.value : this.match,
+        integrationId:
+            integrationId.present ? integrationId.value : this.integrationId,
+        integrationEntityId: integrationEntityId.present
+            ? integrationEntityId.value
+            : this.integrationEntityId,
+        integrationAdditionalData: integrationAdditionalData.present
+            ? integrationAdditionalData.value
+            : this.integrationAdditionalData,
       );
   TeamEntityData copyWithCompanion(TeamEntityCompanion data) {
     return TeamEntityData(
@@ -1657,6 +1781,16 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
           ? data.modifiedDate.value
           : this.modifiedDate,
       color: data.color.present ? data.color.value : this.color,
+      match: data.match.present ? data.match.value : this.match,
+      integrationId: data.integrationId.present
+          ? data.integrationId.value
+          : this.integrationId,
+      integrationEntityId: data.integrationEntityId.present
+          ? data.integrationEntityId.value
+          : this.integrationEntityId,
+      integrationAdditionalData: data.integrationAdditionalData.present
+          ? data.integrationAdditionalData.value
+          : this.integrationAdditionalData,
     );
   }
 
@@ -1667,13 +1801,18 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('color: $color')
+          ..write('color: $color, ')
+          ..write('match: $match, ')
+          ..write('integrationId: $integrationId, ')
+          ..write('integrationEntityId: $integrationEntityId, ')
+          ..write('integrationAdditionalData: $integrationAdditionalData')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, createdDate, modifiedDate, color);
+  int get hashCode => Object.hash(id, name, createdDate, modifiedDate, color,
+      match, integrationId, integrationEntityId, integrationAdditionalData);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1682,7 +1821,11 @@ class TeamEntityData extends DataClass implements Insertable<TeamEntityData> {
           other.name == this.name &&
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
-          other.color == this.color);
+          other.color == this.color &&
+          other.match == this.match &&
+          other.integrationId == this.integrationId &&
+          other.integrationEntityId == this.integrationEntityId &&
+          other.integrationAdditionalData == this.integrationAdditionalData);
 }
 
 class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
@@ -1691,12 +1834,20 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
   final Value<DateTime> createdDate;
   final Value<DateTime> modifiedDate;
   final Value<int> color;
+  final Value<int?> match;
+  final Value<String?> integrationId;
+  final Value<String?> integrationEntityId;
+  final Value<String?> integrationAdditionalData;
   const TeamEntityCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     this.color = const Value.absent(),
+    this.match = const Value.absent(),
+    this.integrationId = const Value.absent(),
+    this.integrationEntityId = const Value.absent(),
+    this.integrationAdditionalData = const Value.absent(),
   });
   TeamEntityCompanion.insert({
     this.id = const Value.absent(),
@@ -1704,6 +1855,10 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     required int color,
+    this.match = const Value.absent(),
+    this.integrationId = const Value.absent(),
+    this.integrationEntityId = const Value.absent(),
+    this.integrationAdditionalData = const Value.absent(),
   })  : name = Value(name),
         color = Value(color);
   static Insertable<TeamEntityData> custom({
@@ -1712,6 +1867,10 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
     Expression<int>? color,
+    Expression<int>? match,
+    Expression<String>? integrationId,
+    Expression<String>? integrationEntityId,
+    Expression<String>? integrationAdditionalData,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1719,6 +1878,12 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
       if (color != null) 'color': color,
+      if (match != null) 'match': match,
+      if (integrationId != null) 'integration_id': integrationId,
+      if (integrationEntityId != null)
+        'integration_entity_id': integrationEntityId,
+      if (integrationAdditionalData != null)
+        'integration_additional_data': integrationAdditionalData,
     });
   }
 
@@ -1727,13 +1892,22 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
       Value<String>? name,
       Value<DateTime>? createdDate,
       Value<DateTime>? modifiedDate,
-      Value<int>? color}) {
+      Value<int>? color,
+      Value<int?>? match,
+      Value<String?>? integrationId,
+      Value<String?>? integrationEntityId,
+      Value<String?>? integrationAdditionalData}) {
     return TeamEntityCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
       color: color ?? this.color,
+      match: match ?? this.match,
+      integrationId: integrationId ?? this.integrationId,
+      integrationEntityId: integrationEntityId ?? this.integrationEntityId,
+      integrationAdditionalData:
+          integrationAdditionalData ?? this.integrationAdditionalData,
     );
   }
 
@@ -1755,6 +1929,20 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
     if (color.present) {
       map['color'] = Variable<int>(color.value);
     }
+    if (match.present) {
+      map['match'] = Variable<int>(match.value);
+    }
+    if (integrationId.present) {
+      map['integration_id'] = Variable<String>(integrationId.value);
+    }
+    if (integrationEntityId.present) {
+      map['integration_entity_id'] =
+          Variable<String>(integrationEntityId.value);
+    }
+    if (integrationAdditionalData.present) {
+      map['integration_additional_data'] =
+          Variable<String>(integrationAdditionalData.value);
+    }
     return map;
   }
 
@@ -1765,778 +1953,11 @@ class TeamEntityCompanion extends UpdateCompanion<TeamEntityData> {
           ..write('name: $name, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
-          ..write('color: $color')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $ImprovisationEntityTable extends ImprovisationEntity
-    with TableInfo<$ImprovisationEntityTable, ImprovisationEntityData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ImprovisationEntityTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _createdDateMeta =
-      const VerificationMeta('createdDate');
-  @override
-  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
-      'created_date', aliasedName, false,
-      type: DriftSqlType.dateTime,
-      requiredDuringInsert: false,
-      defaultValue: Constant(DateTime.now()));
-  static const VerificationMeta _modifiedDateMeta =
-      const VerificationMeta('modifiedDate');
-  @override
-  late final GeneratedColumn<DateTime> modifiedDate = GeneratedColumn<DateTime>(
-      'modified_date', aliasedName, false,
-      type: DriftSqlType.dateTime,
-      requiredDuringInsert: false,
-      defaultValue: Constant(DateTime.now()));
-  static const VerificationMeta _typeMeta = const VerificationMeta('type');
-  @override
-  late final GeneratedColumnWithTypeConverter<ImprovisationType, int> type =
-      GeneratedColumn<int>('type', aliasedName, false,
-              type: DriftSqlType.int, requiredDuringInsert: true)
-          .withConverter<ImprovisationType>(
-              $ImprovisationEntityTable.$convertertype);
-  static const VerificationMeta _categoryMeta =
-      const VerificationMeta('category');
-  @override
-  late final GeneratedColumn<String> category = GeneratedColumn<String>(
-      'category', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _themeMeta = const VerificationMeta('theme');
-  @override
-  late final GeneratedColumn<String> theme = GeneratedColumn<String>(
-      'theme', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _durationsInSecondsMeta =
-      const VerificationMeta('durationsInSeconds');
-  @override
-  late final GeneratedColumnWithTypeConverter<List<int>, String>
-      durationsInSeconds = GeneratedColumn<String>(
-              'durations_in_seconds', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<int>>(
-              $ImprovisationEntityTable.$converterdurationsInSeconds);
-  static const VerificationMeta _performersMeta =
-      const VerificationMeta('performers');
-  @override
-  late final GeneratedColumn<String> performers = GeneratedColumn<String>(
-      'performers', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
-  @override
-  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
-      'notes', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _timeBufferInSecondsMeta =
-      const VerificationMeta('timeBufferInSeconds');
-  @override
-  late final GeneratedColumn<int> timeBufferInSeconds = GeneratedColumn<int>(
-      'time_buffer_in_seconds', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _huddleTimerInSecondsMeta =
-      const VerificationMeta('huddleTimerInSeconds');
-  @override
-  late final GeneratedColumn<int> huddleTimerInSeconds = GeneratedColumn<int>(
-      'huddle_timer_in_seconds', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _integrationEntityIdMeta =
-      const VerificationMeta('integrationEntityId');
-  @override
-  late final GeneratedColumn<String> integrationEntityId =
-      GeneratedColumn<String>('integration_entity_id', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _integrationAdditionalDataMeta =
-      const VerificationMeta('integrationAdditionalData');
-  @override
-  late final GeneratedColumn<String> integrationAdditionalData =
-      GeneratedColumn<String>('integration_additional_data', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _pacingMeta = const VerificationMeta('pacing');
-  @override
-  late final GeneratedColumn<int> pacing = GeneratedColumn<int>(
-      'pacing', aliasedName, true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES pacing_entity (id)'));
-  static const VerificationMeta _matchMeta = const VerificationMeta('match');
-  @override
-  late final GeneratedColumn<int> match = GeneratedColumn<int>(
-      'match', aliasedName, true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES match_entity (id)'));
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        createdDate,
-        modifiedDate,
-        type,
-        category,
-        theme,
-        durationsInSeconds,
-        performers,
-        notes,
-        timeBufferInSeconds,
-        huddleTimerInSeconds,
-        integrationEntityId,
-        integrationAdditionalData,
-        pacing,
-        match
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'improvisation_entity';
-  @override
-  VerificationContext validateIntegrity(
-      Insertable<ImprovisationEntityData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('created_date')) {
-      context.handle(
-          _createdDateMeta,
-          createdDate.isAcceptableOrUnknown(
-              data['created_date']!, _createdDateMeta));
-    }
-    if (data.containsKey('modified_date')) {
-      context.handle(
-          _modifiedDateMeta,
-          modifiedDate.isAcceptableOrUnknown(
-              data['modified_date']!, _modifiedDateMeta));
-    }
-    context.handle(_typeMeta, const VerificationResult.success());
-    if (data.containsKey('category')) {
-      context.handle(_categoryMeta,
-          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
-    } else if (isInserting) {
-      context.missing(_categoryMeta);
-    }
-    if (data.containsKey('theme')) {
-      context.handle(
-          _themeMeta, theme.isAcceptableOrUnknown(data['theme']!, _themeMeta));
-    } else if (isInserting) {
-      context.missing(_themeMeta);
-    }
-    context.handle(_durationsInSecondsMeta, const VerificationResult.success());
-    if (data.containsKey('performers')) {
-      context.handle(
-          _performersMeta,
-          performers.isAcceptableOrUnknown(
-              data['performers']!, _performersMeta));
-    } else if (isInserting) {
-      context.missing(_performersMeta);
-    }
-    if (data.containsKey('notes')) {
-      context.handle(
-          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
-    } else if (isInserting) {
-      context.missing(_notesMeta);
-    }
-    if (data.containsKey('time_buffer_in_seconds')) {
-      context.handle(
-          _timeBufferInSecondsMeta,
-          timeBufferInSeconds.isAcceptableOrUnknown(
-              data['time_buffer_in_seconds']!, _timeBufferInSecondsMeta));
-    } else if (isInserting) {
-      context.missing(_timeBufferInSecondsMeta);
-    }
-    if (data.containsKey('huddle_timer_in_seconds')) {
-      context.handle(
-          _huddleTimerInSecondsMeta,
-          huddleTimerInSeconds.isAcceptableOrUnknown(
-              data['huddle_timer_in_seconds']!, _huddleTimerInSecondsMeta));
-    } else if (isInserting) {
-      context.missing(_huddleTimerInSecondsMeta);
-    }
-    if (data.containsKey('integration_entity_id')) {
-      context.handle(
-          _integrationEntityIdMeta,
-          integrationEntityId.isAcceptableOrUnknown(
-              data['integration_entity_id']!, _integrationEntityIdMeta));
-    }
-    if (data.containsKey('integration_additional_data')) {
-      context.handle(
-          _integrationAdditionalDataMeta,
-          integrationAdditionalData.isAcceptableOrUnknown(
-              data['integration_additional_data']!,
-              _integrationAdditionalDataMeta));
-    }
-    if (data.containsKey('pacing')) {
-      context.handle(_pacingMeta,
-          pacing.isAcceptableOrUnknown(data['pacing']!, _pacingMeta));
-    }
-    if (data.containsKey('match')) {
-      context.handle(
-          _matchMeta, match.isAcceptableOrUnknown(data['match']!, _matchMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ImprovisationEntityData map(Map<String, dynamic> data,
-      {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ImprovisationEntityData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      createdDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
-      modifiedDate: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
-      type: $ImprovisationEntityTable.$convertertype.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}type'])!),
-      category: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
-      theme: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}theme'])!,
-      durationsInSeconds: $ImprovisationEntityTable.$converterdurationsInSeconds
-          .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
-              data['${effectivePrefix}durations_in_seconds'])!),
-      performers: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}performers'])!,
-      notes: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}notes'])!,
-      timeBufferInSeconds: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}time_buffer_in_seconds'])!,
-      huddleTimerInSeconds: attachedDatabase.typeMapping.read(
-          DriftSqlType.int, data['${effectivePrefix}huddle_timer_in_seconds'])!,
-      integrationEntityId: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}integration_entity_id']),
-      integrationAdditionalData: attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}integration_additional_data']),
-      pacing: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}pacing']),
-      match: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}match']),
-    );
-  }
-
-  @override
-  $ImprovisationEntityTable createAlias(String alias) {
-    return $ImprovisationEntityTable(attachedDatabase, alias);
-  }
-
-  static JsonTypeConverter2<ImprovisationType, int, int> $convertertype =
-      const EnumIndexConverter<ImprovisationType>(ImprovisationType.values);
-  static JsonTypeConverter2<List<int>, String, String>
-      $converterdurationsInSeconds = const IntListConverter();
-}
-
-class ImprovisationEntityData extends DataClass
-    implements Insertable<ImprovisationEntityData> {
-  final int id;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
-  final ImprovisationType type;
-  final String category;
-  final String theme;
-  final List<int> durationsInSeconds;
-  final String performers;
-  final String notes;
-  final int timeBufferInSeconds;
-  final int huddleTimerInSeconds;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
-  final int? pacing;
-  final int? match;
-  const ImprovisationEntityData(
-      {required this.id,
-      required this.createdDate,
-      required this.modifiedDate,
-      required this.type,
-      required this.category,
-      required this.theme,
-      required this.durationsInSeconds,
-      required this.performers,
-      required this.notes,
-      required this.timeBufferInSeconds,
-      required this.huddleTimerInSeconds,
-      this.integrationEntityId,
-      this.integrationAdditionalData,
-      this.pacing,
-      this.match});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['created_date'] = Variable<DateTime>(createdDate);
-    map['modified_date'] = Variable<DateTime>(modifiedDate);
-    {
-      map['type'] =
-          Variable<int>($ImprovisationEntityTable.$convertertype.toSql(type));
-    }
-    map['category'] = Variable<String>(category);
-    map['theme'] = Variable<String>(theme);
-    {
-      map['durations_in_seconds'] = Variable<String>($ImprovisationEntityTable
-          .$converterdurationsInSeconds
-          .toSql(durationsInSeconds));
-    }
-    map['performers'] = Variable<String>(performers);
-    map['notes'] = Variable<String>(notes);
-    map['time_buffer_in_seconds'] = Variable<int>(timeBufferInSeconds);
-    map['huddle_timer_in_seconds'] = Variable<int>(huddleTimerInSeconds);
-    if (!nullToAbsent || integrationEntityId != null) {
-      map['integration_entity_id'] = Variable<String>(integrationEntityId);
-    }
-    if (!nullToAbsent || integrationAdditionalData != null) {
-      map['integration_additional_data'] =
-          Variable<String>(integrationAdditionalData);
-    }
-    if (!nullToAbsent || pacing != null) {
-      map['pacing'] = Variable<int>(pacing);
-    }
-    if (!nullToAbsent || match != null) {
-      map['match'] = Variable<int>(match);
-    }
-    return map;
-  }
-
-  ImprovisationEntityCompanion toCompanion(bool nullToAbsent) {
-    return ImprovisationEntityCompanion(
-      id: Value(id),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
-      type: Value(type),
-      category: Value(category),
-      theme: Value(theme),
-      durationsInSeconds: Value(durationsInSeconds),
-      performers: Value(performers),
-      notes: Value(notes),
-      timeBufferInSeconds: Value(timeBufferInSeconds),
-      huddleTimerInSeconds: Value(huddleTimerInSeconds),
-      integrationEntityId: integrationEntityId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(integrationEntityId),
-      integrationAdditionalData:
-          integrationAdditionalData == null && nullToAbsent
-              ? const Value.absent()
-              : Value(integrationAdditionalData),
-      pacing:
-          pacing == null && nullToAbsent ? const Value.absent() : Value(pacing),
-      match:
-          match == null && nullToAbsent ? const Value.absent() : Value(match),
-    );
-  }
-
-  factory ImprovisationEntityData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ImprovisationEntityData(
-      id: serializer.fromJson<int>(json['id']),
-      createdDate: serializer.fromJson<DateTime>(json['createdDate']),
-      modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
-      type: $ImprovisationEntityTable.$convertertype
-          .fromJson(serializer.fromJson<int>(json['type'])),
-      category: serializer.fromJson<String>(json['category']),
-      theme: serializer.fromJson<String>(json['theme']),
-      durationsInSeconds: $ImprovisationEntityTable.$converterdurationsInSeconds
-          .fromJson(serializer.fromJson<String>(json['durationsInSeconds'])),
-      performers: serializer.fromJson<String>(json['performers']),
-      notes: serializer.fromJson<String>(json['notes']),
-      timeBufferInSeconds:
-          serializer.fromJson<int>(json['timeBufferInSeconds']),
-      huddleTimerInSeconds:
-          serializer.fromJson<int>(json['huddleTimerInSeconds']),
-      integrationEntityId:
-          serializer.fromJson<String?>(json['integrationEntityId']),
-      integrationAdditionalData:
-          serializer.fromJson<String?>(json['integrationAdditionalData']),
-      pacing: serializer.fromJson<int?>(json['pacing']),
-      match: serializer.fromJson<int?>(json['match']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'createdDate': serializer.toJson<DateTime>(createdDate),
-      'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
-      'type': serializer
-          .toJson<int>($ImprovisationEntityTable.$convertertype.toJson(type)),
-      'category': serializer.toJson<String>(category),
-      'theme': serializer.toJson<String>(theme),
-      'durationsInSeconds': serializer.toJson<String>($ImprovisationEntityTable
-          .$converterdurationsInSeconds
-          .toJson(durationsInSeconds)),
-      'performers': serializer.toJson<String>(performers),
-      'notes': serializer.toJson<String>(notes),
-      'timeBufferInSeconds': serializer.toJson<int>(timeBufferInSeconds),
-      'huddleTimerInSeconds': serializer.toJson<int>(huddleTimerInSeconds),
-      'integrationEntityId': serializer.toJson<String?>(integrationEntityId),
-      'integrationAdditionalData':
-          serializer.toJson<String?>(integrationAdditionalData),
-      'pacing': serializer.toJson<int?>(pacing),
-      'match': serializer.toJson<int?>(match),
-    };
-  }
-
-  ImprovisationEntityData copyWith(
-          {int? id,
-          DateTime? createdDate,
-          DateTime? modifiedDate,
-          ImprovisationType? type,
-          String? category,
-          String? theme,
-          List<int>? durationsInSeconds,
-          String? performers,
-          String? notes,
-          int? timeBufferInSeconds,
-          int? huddleTimerInSeconds,
-          Value<String?> integrationEntityId = const Value.absent(),
-          Value<String?> integrationAdditionalData = const Value.absent(),
-          Value<int?> pacing = const Value.absent(),
-          Value<int?> match = const Value.absent()}) =>
-      ImprovisationEntityData(
-        id: id ?? this.id,
-        createdDate: createdDate ?? this.createdDate,
-        modifiedDate: modifiedDate ?? this.modifiedDate,
-        type: type ?? this.type,
-        category: category ?? this.category,
-        theme: theme ?? this.theme,
-        durationsInSeconds: durationsInSeconds ?? this.durationsInSeconds,
-        performers: performers ?? this.performers,
-        notes: notes ?? this.notes,
-        timeBufferInSeconds: timeBufferInSeconds ?? this.timeBufferInSeconds,
-        huddleTimerInSeconds: huddleTimerInSeconds ?? this.huddleTimerInSeconds,
-        integrationEntityId: integrationEntityId.present
-            ? integrationEntityId.value
-            : this.integrationEntityId,
-        integrationAdditionalData: integrationAdditionalData.present
-            ? integrationAdditionalData.value
-            : this.integrationAdditionalData,
-        pacing: pacing.present ? pacing.value : this.pacing,
-        match: match.present ? match.value : this.match,
-      );
-  ImprovisationEntityData copyWithCompanion(ImprovisationEntityCompanion data) {
-    return ImprovisationEntityData(
-      id: data.id.present ? data.id.value : this.id,
-      createdDate:
-          data.createdDate.present ? data.createdDate.value : this.createdDate,
-      modifiedDate: data.modifiedDate.present
-          ? data.modifiedDate.value
-          : this.modifiedDate,
-      type: data.type.present ? data.type.value : this.type,
-      category: data.category.present ? data.category.value : this.category,
-      theme: data.theme.present ? data.theme.value : this.theme,
-      durationsInSeconds: data.durationsInSeconds.present
-          ? data.durationsInSeconds.value
-          : this.durationsInSeconds,
-      performers:
-          data.performers.present ? data.performers.value : this.performers,
-      notes: data.notes.present ? data.notes.value : this.notes,
-      timeBufferInSeconds: data.timeBufferInSeconds.present
-          ? data.timeBufferInSeconds.value
-          : this.timeBufferInSeconds,
-      huddleTimerInSeconds: data.huddleTimerInSeconds.present
-          ? data.huddleTimerInSeconds.value
-          : this.huddleTimerInSeconds,
-      integrationEntityId: data.integrationEntityId.present
-          ? data.integrationEntityId.value
-          : this.integrationEntityId,
-      integrationAdditionalData: data.integrationAdditionalData.present
-          ? data.integrationAdditionalData.value
-          : this.integrationAdditionalData,
-      pacing: data.pacing.present ? data.pacing.value : this.pacing,
-      match: data.match.present ? data.match.value : this.match,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ImprovisationEntityData(')
-          ..write('id: $id, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('modifiedDate: $modifiedDate, ')
-          ..write('type: $type, ')
-          ..write('category: $category, ')
-          ..write('theme: $theme, ')
-          ..write('durationsInSeconds: $durationsInSeconds, ')
-          ..write('performers: $performers, ')
-          ..write('notes: $notes, ')
-          ..write('timeBufferInSeconds: $timeBufferInSeconds, ')
-          ..write('huddleTimerInSeconds: $huddleTimerInSeconds, ')
+          ..write('color: $color, ')
+          ..write('match: $match, ')
+          ..write('integrationId: $integrationId, ')
           ..write('integrationEntityId: $integrationEntityId, ')
-          ..write('integrationAdditionalData: $integrationAdditionalData, ')
-          ..write('pacing: $pacing, ')
-          ..write('match: $match')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      id,
-      createdDate,
-      modifiedDate,
-      type,
-      category,
-      theme,
-      durationsInSeconds,
-      performers,
-      notes,
-      timeBufferInSeconds,
-      huddleTimerInSeconds,
-      integrationEntityId,
-      integrationAdditionalData,
-      pacing,
-      match);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ImprovisationEntityData &&
-          other.id == this.id &&
-          other.createdDate == this.createdDate &&
-          other.modifiedDate == this.modifiedDate &&
-          other.type == this.type &&
-          other.category == this.category &&
-          other.theme == this.theme &&
-          other.durationsInSeconds == this.durationsInSeconds &&
-          other.performers == this.performers &&
-          other.notes == this.notes &&
-          other.timeBufferInSeconds == this.timeBufferInSeconds &&
-          other.huddleTimerInSeconds == this.huddleTimerInSeconds &&
-          other.integrationEntityId == this.integrationEntityId &&
-          other.integrationAdditionalData == this.integrationAdditionalData &&
-          other.pacing == this.pacing &&
-          other.match == this.match);
-}
-
-class ImprovisationEntityCompanion
-    extends UpdateCompanion<ImprovisationEntityData> {
-  final Value<int> id;
-  final Value<DateTime> createdDate;
-  final Value<DateTime> modifiedDate;
-  final Value<ImprovisationType> type;
-  final Value<String> category;
-  final Value<String> theme;
-  final Value<List<int>> durationsInSeconds;
-  final Value<String> performers;
-  final Value<String> notes;
-  final Value<int> timeBufferInSeconds;
-  final Value<int> huddleTimerInSeconds;
-  final Value<String?> integrationEntityId;
-  final Value<String?> integrationAdditionalData;
-  final Value<int?> pacing;
-  final Value<int?> match;
-  const ImprovisationEntityCompanion({
-    this.id = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    this.modifiedDate = const Value.absent(),
-    this.type = const Value.absent(),
-    this.category = const Value.absent(),
-    this.theme = const Value.absent(),
-    this.durationsInSeconds = const Value.absent(),
-    this.performers = const Value.absent(),
-    this.notes = const Value.absent(),
-    this.timeBufferInSeconds = const Value.absent(),
-    this.huddleTimerInSeconds = const Value.absent(),
-    this.integrationEntityId = const Value.absent(),
-    this.integrationAdditionalData = const Value.absent(),
-    this.pacing = const Value.absent(),
-    this.match = const Value.absent(),
-  });
-  ImprovisationEntityCompanion.insert({
-    this.id = const Value.absent(),
-    this.createdDate = const Value.absent(),
-    this.modifiedDate = const Value.absent(),
-    required ImprovisationType type,
-    required String category,
-    required String theme,
-    required List<int> durationsInSeconds,
-    required String performers,
-    required String notes,
-    required int timeBufferInSeconds,
-    required int huddleTimerInSeconds,
-    this.integrationEntityId = const Value.absent(),
-    this.integrationAdditionalData = const Value.absent(),
-    this.pacing = const Value.absent(),
-    this.match = const Value.absent(),
-  })  : type = Value(type),
-        category = Value(category),
-        theme = Value(theme),
-        durationsInSeconds = Value(durationsInSeconds),
-        performers = Value(performers),
-        notes = Value(notes),
-        timeBufferInSeconds = Value(timeBufferInSeconds),
-        huddleTimerInSeconds = Value(huddleTimerInSeconds);
-  static Insertable<ImprovisationEntityData> custom({
-    Expression<int>? id,
-    Expression<DateTime>? createdDate,
-    Expression<DateTime>? modifiedDate,
-    Expression<int>? type,
-    Expression<String>? category,
-    Expression<String>? theme,
-    Expression<String>? durationsInSeconds,
-    Expression<String>? performers,
-    Expression<String>? notes,
-    Expression<int>? timeBufferInSeconds,
-    Expression<int>? huddleTimerInSeconds,
-    Expression<String>? integrationEntityId,
-    Expression<String>? integrationAdditionalData,
-    Expression<int>? pacing,
-    Expression<int>? match,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (createdDate != null) 'created_date': createdDate,
-      if (modifiedDate != null) 'modified_date': modifiedDate,
-      if (type != null) 'type': type,
-      if (category != null) 'category': category,
-      if (theme != null) 'theme': theme,
-      if (durationsInSeconds != null)
-        'durations_in_seconds': durationsInSeconds,
-      if (performers != null) 'performers': performers,
-      if (notes != null) 'notes': notes,
-      if (timeBufferInSeconds != null)
-        'time_buffer_in_seconds': timeBufferInSeconds,
-      if (huddleTimerInSeconds != null)
-        'huddle_timer_in_seconds': huddleTimerInSeconds,
-      if (integrationEntityId != null)
-        'integration_entity_id': integrationEntityId,
-      if (integrationAdditionalData != null)
-        'integration_additional_data': integrationAdditionalData,
-      if (pacing != null) 'pacing': pacing,
-      if (match != null) 'match': match,
-    });
-  }
-
-  ImprovisationEntityCompanion copyWith(
-      {Value<int>? id,
-      Value<DateTime>? createdDate,
-      Value<DateTime>? modifiedDate,
-      Value<ImprovisationType>? type,
-      Value<String>? category,
-      Value<String>? theme,
-      Value<List<int>>? durationsInSeconds,
-      Value<String>? performers,
-      Value<String>? notes,
-      Value<int>? timeBufferInSeconds,
-      Value<int>? huddleTimerInSeconds,
-      Value<String?>? integrationEntityId,
-      Value<String?>? integrationAdditionalData,
-      Value<int?>? pacing,
-      Value<int?>? match}) {
-    return ImprovisationEntityCompanion(
-      id: id ?? this.id,
-      createdDate: createdDate ?? this.createdDate,
-      modifiedDate: modifiedDate ?? this.modifiedDate,
-      type: type ?? this.type,
-      category: category ?? this.category,
-      theme: theme ?? this.theme,
-      durationsInSeconds: durationsInSeconds ?? this.durationsInSeconds,
-      performers: performers ?? this.performers,
-      notes: notes ?? this.notes,
-      timeBufferInSeconds: timeBufferInSeconds ?? this.timeBufferInSeconds,
-      huddleTimerInSeconds: huddleTimerInSeconds ?? this.huddleTimerInSeconds,
-      integrationEntityId: integrationEntityId ?? this.integrationEntityId,
-      integrationAdditionalData:
-          integrationAdditionalData ?? this.integrationAdditionalData,
-      pacing: pacing ?? this.pacing,
-      match: match ?? this.match,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (createdDate.present) {
-      map['created_date'] = Variable<DateTime>(createdDate.value);
-    }
-    if (modifiedDate.present) {
-      map['modified_date'] = Variable<DateTime>(modifiedDate.value);
-    }
-    if (type.present) {
-      map['type'] = Variable<int>(
-          $ImprovisationEntityTable.$convertertype.toSql(type.value));
-    }
-    if (category.present) {
-      map['category'] = Variable<String>(category.value);
-    }
-    if (theme.present) {
-      map['theme'] = Variable<String>(theme.value);
-    }
-    if (durationsInSeconds.present) {
-      map['durations_in_seconds'] = Variable<String>($ImprovisationEntityTable
-          .$converterdurationsInSeconds
-          .toSql(durationsInSeconds.value));
-    }
-    if (performers.present) {
-      map['performers'] = Variable<String>(performers.value);
-    }
-    if (notes.present) {
-      map['notes'] = Variable<String>(notes.value);
-    }
-    if (timeBufferInSeconds.present) {
-      map['time_buffer_in_seconds'] = Variable<int>(timeBufferInSeconds.value);
-    }
-    if (huddleTimerInSeconds.present) {
-      map['huddle_timer_in_seconds'] =
-          Variable<int>(huddleTimerInSeconds.value);
-    }
-    if (integrationEntityId.present) {
-      map['integration_entity_id'] =
-          Variable<String>(integrationEntityId.value);
-    }
-    if (integrationAdditionalData.present) {
-      map['integration_additional_data'] =
-          Variable<String>(integrationAdditionalData.value);
-    }
-    if (pacing.present) {
-      map['pacing'] = Variable<int>(pacing.value);
-    }
-    if (match.present) {
-      map['match'] = Variable<int>(match.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ImprovisationEntityCompanion(')
-          ..write('id: $id, ')
-          ..write('createdDate: $createdDate, ')
-          ..write('modifiedDate: $modifiedDate, ')
-          ..write('type: $type, ')
-          ..write('category: $category, ')
-          ..write('theme: $theme, ')
-          ..write('durationsInSeconds: $durationsInSeconds, ')
-          ..write('performers: $performers, ')
-          ..write('notes: $notes, ')
-          ..write('timeBufferInSeconds: $timeBufferInSeconds, ')
-          ..write('huddleTimerInSeconds: $huddleTimerInSeconds, ')
-          ..write('integrationEntityId: $integrationEntityId, ')
-          ..write('integrationAdditionalData: $integrationAdditionalData, ')
-          ..write('pacing: $pacing, ')
-          ..write('match: $match')
+          ..write('integrationAdditionalData: $integrationAdditionalData')
           ..write(')'))
         .toString();
   }
@@ -2957,6 +2378,815 @@ class PerformerEntityCompanion extends UpdateCompanion<PerformerEntityData> {
   }
 }
 
+class $ImprovisationEntityTable extends ImprovisationEntity
+    with TableInfo<$ImprovisationEntityTable, ImprovisationEntityData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ImprovisationEntityTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _orderMeta = const VerificationMeta('order');
+  @override
+  late final GeneratedColumn<int> order = GeneratedColumn<int>(
+      'order', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdDateMeta =
+      const VerificationMeta('createdDate');
+  @override
+  late final GeneratedColumn<DateTime> createdDate = GeneratedColumn<DateTime>(
+      'created_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
+  static const VerificationMeta _modifiedDateMeta =
+      const VerificationMeta('modifiedDate');
+  @override
+  late final GeneratedColumn<DateTime> modifiedDate = GeneratedColumn<DateTime>(
+      'modified_date', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now()));
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumnWithTypeConverter<ImprovisationType, int> type =
+      GeneratedColumn<int>('type', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<ImprovisationType>(
+              $ImprovisationEntityTable.$convertertype);
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+      'category', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _themeMeta = const VerificationMeta('theme');
+  @override
+  late final GeneratedColumn<String> theme = GeneratedColumn<String>(
+      'theme', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _durationsInSecondsMeta =
+      const VerificationMeta('durationsInSeconds');
+  @override
+  late final GeneratedColumnWithTypeConverter<List<int>, String>
+      durationsInSeconds = GeneratedColumn<String>(
+              'durations_in_seconds', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<List<int>>(
+              $ImprovisationEntityTable.$converterdurationsInSeconds);
+  static const VerificationMeta _performersMeta =
+      const VerificationMeta('performers');
+  @override
+  late final GeneratedColumn<String> performers = GeneratedColumn<String>(
+      'performers', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _timeBufferInSecondsMeta =
+      const VerificationMeta('timeBufferInSeconds');
+  @override
+  late final GeneratedColumn<int> timeBufferInSeconds = GeneratedColumn<int>(
+      'time_buffer_in_seconds', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _huddleTimerInSecondsMeta =
+      const VerificationMeta('huddleTimerInSeconds');
+  @override
+  late final GeneratedColumn<int> huddleTimerInSeconds = GeneratedColumn<int>(
+      'huddle_timer_in_seconds', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _integrationEntityIdMeta =
+      const VerificationMeta('integrationEntityId');
+  @override
+  late final GeneratedColumn<String> integrationEntityId =
+      GeneratedColumn<String>('integration_entity_id', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _integrationAdditionalDataMeta =
+      const VerificationMeta('integrationAdditionalData');
+  @override
+  late final GeneratedColumn<String> integrationAdditionalData =
+      GeneratedColumn<String>('integration_additional_data', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _pacingMeta = const VerificationMeta('pacing');
+  @override
+  late final GeneratedColumn<int> pacing = GeneratedColumn<int>(
+      'pacing', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES pacing_entity (id)'));
+  static const VerificationMeta _matchMeta = const VerificationMeta('match');
+  @override
+  late final GeneratedColumn<int> match = GeneratedColumn<int>(
+      'match', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES match_entity (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        order,
+        createdDate,
+        modifiedDate,
+        type,
+        category,
+        theme,
+        durationsInSeconds,
+        performers,
+        notes,
+        timeBufferInSeconds,
+        huddleTimerInSeconds,
+        integrationEntityId,
+        integrationAdditionalData,
+        pacing,
+        match
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'improvisation_entity';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<ImprovisationEntityData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('order')) {
+      context.handle(
+          _orderMeta, order.isAcceptableOrUnknown(data['order']!, _orderMeta));
+    } else if (isInserting) {
+      context.missing(_orderMeta);
+    }
+    if (data.containsKey('created_date')) {
+      context.handle(
+          _createdDateMeta,
+          createdDate.isAcceptableOrUnknown(
+              data['created_date']!, _createdDateMeta));
+    }
+    if (data.containsKey('modified_date')) {
+      context.handle(
+          _modifiedDateMeta,
+          modifiedDate.isAcceptableOrUnknown(
+              data['modified_date']!, _modifiedDateMeta));
+    }
+    context.handle(_typeMeta, const VerificationResult.success());
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('theme')) {
+      context.handle(
+          _themeMeta, theme.isAcceptableOrUnknown(data['theme']!, _themeMeta));
+    } else if (isInserting) {
+      context.missing(_themeMeta);
+    }
+    context.handle(_durationsInSecondsMeta, const VerificationResult.success());
+    if (data.containsKey('performers')) {
+      context.handle(
+          _performersMeta,
+          performers.isAcceptableOrUnknown(
+              data['performers']!, _performersMeta));
+    } else if (isInserting) {
+      context.missing(_performersMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    } else if (isInserting) {
+      context.missing(_notesMeta);
+    }
+    if (data.containsKey('time_buffer_in_seconds')) {
+      context.handle(
+          _timeBufferInSecondsMeta,
+          timeBufferInSeconds.isAcceptableOrUnknown(
+              data['time_buffer_in_seconds']!, _timeBufferInSecondsMeta));
+    } else if (isInserting) {
+      context.missing(_timeBufferInSecondsMeta);
+    }
+    if (data.containsKey('huddle_timer_in_seconds')) {
+      context.handle(
+          _huddleTimerInSecondsMeta,
+          huddleTimerInSeconds.isAcceptableOrUnknown(
+              data['huddle_timer_in_seconds']!, _huddleTimerInSecondsMeta));
+    } else if (isInserting) {
+      context.missing(_huddleTimerInSecondsMeta);
+    }
+    if (data.containsKey('integration_entity_id')) {
+      context.handle(
+          _integrationEntityIdMeta,
+          integrationEntityId.isAcceptableOrUnknown(
+              data['integration_entity_id']!, _integrationEntityIdMeta));
+    }
+    if (data.containsKey('integration_additional_data')) {
+      context.handle(
+          _integrationAdditionalDataMeta,
+          integrationAdditionalData.isAcceptableOrUnknown(
+              data['integration_additional_data']!,
+              _integrationAdditionalDataMeta));
+    }
+    if (data.containsKey('pacing')) {
+      context.handle(_pacingMeta,
+          pacing.isAcceptableOrUnknown(data['pacing']!, _pacingMeta));
+    }
+    if (data.containsKey('match')) {
+      context.handle(
+          _matchMeta, match.isAcceptableOrUnknown(data['match']!, _matchMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ImprovisationEntityData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ImprovisationEntityData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      order: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}order'])!,
+      createdDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
+      modifiedDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
+      type: $ImprovisationEntityTable.$convertertype.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}type'])!),
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
+      theme: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}theme'])!,
+      durationsInSeconds: $ImprovisationEntityTable.$converterdurationsInSeconds
+          .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
+              data['${effectivePrefix}durations_in_seconds'])!),
+      performers: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}performers'])!,
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes'])!,
+      timeBufferInSeconds: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}time_buffer_in_seconds'])!,
+      huddleTimerInSeconds: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}huddle_timer_in_seconds'])!,
+      integrationEntityId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}integration_entity_id']),
+      integrationAdditionalData: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}integration_additional_data']),
+      pacing: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}pacing']),
+      match: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}match']),
+    );
+  }
+
+  @override
+  $ImprovisationEntityTable createAlias(String alias) {
+    return $ImprovisationEntityTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<ImprovisationType, int, int> $convertertype =
+      const EnumIndexConverter<ImprovisationType>(ImprovisationType.values);
+  static JsonTypeConverter2<List<int>, String, String>
+      $converterdurationsInSeconds = IntListConverter();
+}
+
+class ImprovisationEntityData extends DataClass
+    implements Insertable<ImprovisationEntityData> {
+  final int id;
+  final int order;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
+  final ImprovisationType type;
+  final String category;
+  final String theme;
+  final List<int> durationsInSeconds;
+  final String performers;
+  final String notes;
+  final int timeBufferInSeconds;
+  final int huddleTimerInSeconds;
+  final String? integrationEntityId;
+  final String? integrationAdditionalData;
+  final int? pacing;
+  final int? match;
+  const ImprovisationEntityData(
+      {required this.id,
+      required this.order,
+      required this.createdDate,
+      required this.modifiedDate,
+      required this.type,
+      required this.category,
+      required this.theme,
+      required this.durationsInSeconds,
+      required this.performers,
+      required this.notes,
+      required this.timeBufferInSeconds,
+      required this.huddleTimerInSeconds,
+      this.integrationEntityId,
+      this.integrationAdditionalData,
+      this.pacing,
+      this.match});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['order'] = Variable<int>(order);
+    map['created_date'] = Variable<DateTime>(createdDate);
+    map['modified_date'] = Variable<DateTime>(modifiedDate);
+    {
+      map['type'] =
+          Variable<int>($ImprovisationEntityTable.$convertertype.toSql(type));
+    }
+    map['category'] = Variable<String>(category);
+    map['theme'] = Variable<String>(theme);
+    {
+      map['durations_in_seconds'] = Variable<String>($ImprovisationEntityTable
+          .$converterdurationsInSeconds
+          .toSql(durationsInSeconds));
+    }
+    map['performers'] = Variable<String>(performers);
+    map['notes'] = Variable<String>(notes);
+    map['time_buffer_in_seconds'] = Variable<int>(timeBufferInSeconds);
+    map['huddle_timer_in_seconds'] = Variable<int>(huddleTimerInSeconds);
+    if (!nullToAbsent || integrationEntityId != null) {
+      map['integration_entity_id'] = Variable<String>(integrationEntityId);
+    }
+    if (!nullToAbsent || integrationAdditionalData != null) {
+      map['integration_additional_data'] =
+          Variable<String>(integrationAdditionalData);
+    }
+    if (!nullToAbsent || pacing != null) {
+      map['pacing'] = Variable<int>(pacing);
+    }
+    if (!nullToAbsent || match != null) {
+      map['match'] = Variable<int>(match);
+    }
+    return map;
+  }
+
+  ImprovisationEntityCompanion toCompanion(bool nullToAbsent) {
+    return ImprovisationEntityCompanion(
+      id: Value(id),
+      order: Value(order),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
+      type: Value(type),
+      category: Value(category),
+      theme: Value(theme),
+      durationsInSeconds: Value(durationsInSeconds),
+      performers: Value(performers),
+      notes: Value(notes),
+      timeBufferInSeconds: Value(timeBufferInSeconds),
+      huddleTimerInSeconds: Value(huddleTimerInSeconds),
+      integrationEntityId: integrationEntityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(integrationEntityId),
+      integrationAdditionalData:
+          integrationAdditionalData == null && nullToAbsent
+              ? const Value.absent()
+              : Value(integrationAdditionalData),
+      pacing:
+          pacing == null && nullToAbsent ? const Value.absent() : Value(pacing),
+      match:
+          match == null && nullToAbsent ? const Value.absent() : Value(match),
+    );
+  }
+
+  factory ImprovisationEntityData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ImprovisationEntityData(
+      id: serializer.fromJson<int>(json['id']),
+      order: serializer.fromJson<int>(json['order']),
+      createdDate: serializer.fromJson<DateTime>(json['createdDate']),
+      modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
+      type: $ImprovisationEntityTable.$convertertype
+          .fromJson(serializer.fromJson<int>(json['type'])),
+      category: serializer.fromJson<String>(json['category']),
+      theme: serializer.fromJson<String>(json['theme']),
+      durationsInSeconds: $ImprovisationEntityTable.$converterdurationsInSeconds
+          .fromJson(serializer.fromJson<String>(json['durationsInSeconds'])),
+      performers: serializer.fromJson<String>(json['performers']),
+      notes: serializer.fromJson<String>(json['notes']),
+      timeBufferInSeconds:
+          serializer.fromJson<int>(json['timeBufferInSeconds']),
+      huddleTimerInSeconds:
+          serializer.fromJson<int>(json['huddleTimerInSeconds']),
+      integrationEntityId:
+          serializer.fromJson<String?>(json['integrationEntityId']),
+      integrationAdditionalData:
+          serializer.fromJson<String?>(json['integrationAdditionalData']),
+      pacing: serializer.fromJson<int?>(json['pacing']),
+      match: serializer.fromJson<int?>(json['match']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'order': serializer.toJson<int>(order),
+      'createdDate': serializer.toJson<DateTime>(createdDate),
+      'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
+      'type': serializer
+          .toJson<int>($ImprovisationEntityTable.$convertertype.toJson(type)),
+      'category': serializer.toJson<String>(category),
+      'theme': serializer.toJson<String>(theme),
+      'durationsInSeconds': serializer.toJson<String>($ImprovisationEntityTable
+          .$converterdurationsInSeconds
+          .toJson(durationsInSeconds)),
+      'performers': serializer.toJson<String>(performers),
+      'notes': serializer.toJson<String>(notes),
+      'timeBufferInSeconds': serializer.toJson<int>(timeBufferInSeconds),
+      'huddleTimerInSeconds': serializer.toJson<int>(huddleTimerInSeconds),
+      'integrationEntityId': serializer.toJson<String?>(integrationEntityId),
+      'integrationAdditionalData':
+          serializer.toJson<String?>(integrationAdditionalData),
+      'pacing': serializer.toJson<int?>(pacing),
+      'match': serializer.toJson<int?>(match),
+    };
+  }
+
+  ImprovisationEntityData copyWith(
+          {int? id,
+          int? order,
+          DateTime? createdDate,
+          DateTime? modifiedDate,
+          ImprovisationType? type,
+          String? category,
+          String? theme,
+          List<int>? durationsInSeconds,
+          String? performers,
+          String? notes,
+          int? timeBufferInSeconds,
+          int? huddleTimerInSeconds,
+          Value<String?> integrationEntityId = const Value.absent(),
+          Value<String?> integrationAdditionalData = const Value.absent(),
+          Value<int?> pacing = const Value.absent(),
+          Value<int?> match = const Value.absent()}) =>
+      ImprovisationEntityData(
+        id: id ?? this.id,
+        order: order ?? this.order,
+        createdDate: createdDate ?? this.createdDate,
+        modifiedDate: modifiedDate ?? this.modifiedDate,
+        type: type ?? this.type,
+        category: category ?? this.category,
+        theme: theme ?? this.theme,
+        durationsInSeconds: durationsInSeconds ?? this.durationsInSeconds,
+        performers: performers ?? this.performers,
+        notes: notes ?? this.notes,
+        timeBufferInSeconds: timeBufferInSeconds ?? this.timeBufferInSeconds,
+        huddleTimerInSeconds: huddleTimerInSeconds ?? this.huddleTimerInSeconds,
+        integrationEntityId: integrationEntityId.present
+            ? integrationEntityId.value
+            : this.integrationEntityId,
+        integrationAdditionalData: integrationAdditionalData.present
+            ? integrationAdditionalData.value
+            : this.integrationAdditionalData,
+        pacing: pacing.present ? pacing.value : this.pacing,
+        match: match.present ? match.value : this.match,
+      );
+  ImprovisationEntityData copyWithCompanion(ImprovisationEntityCompanion data) {
+    return ImprovisationEntityData(
+      id: data.id.present ? data.id.value : this.id,
+      order: data.order.present ? data.order.value : this.order,
+      createdDate:
+          data.createdDate.present ? data.createdDate.value : this.createdDate,
+      modifiedDate: data.modifiedDate.present
+          ? data.modifiedDate.value
+          : this.modifiedDate,
+      type: data.type.present ? data.type.value : this.type,
+      category: data.category.present ? data.category.value : this.category,
+      theme: data.theme.present ? data.theme.value : this.theme,
+      durationsInSeconds: data.durationsInSeconds.present
+          ? data.durationsInSeconds.value
+          : this.durationsInSeconds,
+      performers:
+          data.performers.present ? data.performers.value : this.performers,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      timeBufferInSeconds: data.timeBufferInSeconds.present
+          ? data.timeBufferInSeconds.value
+          : this.timeBufferInSeconds,
+      huddleTimerInSeconds: data.huddleTimerInSeconds.present
+          ? data.huddleTimerInSeconds.value
+          : this.huddleTimerInSeconds,
+      integrationEntityId: data.integrationEntityId.present
+          ? data.integrationEntityId.value
+          : this.integrationEntityId,
+      integrationAdditionalData: data.integrationAdditionalData.present
+          ? data.integrationAdditionalData.value
+          : this.integrationAdditionalData,
+      pacing: data.pacing.present ? data.pacing.value : this.pacing,
+      match: data.match.present ? data.match.value : this.match,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ImprovisationEntityData(')
+          ..write('id: $id, ')
+          ..write('order: $order, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('modifiedDate: $modifiedDate, ')
+          ..write('type: $type, ')
+          ..write('category: $category, ')
+          ..write('theme: $theme, ')
+          ..write('durationsInSeconds: $durationsInSeconds, ')
+          ..write('performers: $performers, ')
+          ..write('notes: $notes, ')
+          ..write('timeBufferInSeconds: $timeBufferInSeconds, ')
+          ..write('huddleTimerInSeconds: $huddleTimerInSeconds, ')
+          ..write('integrationEntityId: $integrationEntityId, ')
+          ..write('integrationAdditionalData: $integrationAdditionalData, ')
+          ..write('pacing: $pacing, ')
+          ..write('match: $match')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      order,
+      createdDate,
+      modifiedDate,
+      type,
+      category,
+      theme,
+      durationsInSeconds,
+      performers,
+      notes,
+      timeBufferInSeconds,
+      huddleTimerInSeconds,
+      integrationEntityId,
+      integrationAdditionalData,
+      pacing,
+      match);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ImprovisationEntityData &&
+          other.id == this.id &&
+          other.order == this.order &&
+          other.createdDate == this.createdDate &&
+          other.modifiedDate == this.modifiedDate &&
+          other.type == this.type &&
+          other.category == this.category &&
+          other.theme == this.theme &&
+          other.durationsInSeconds == this.durationsInSeconds &&
+          other.performers == this.performers &&
+          other.notes == this.notes &&
+          other.timeBufferInSeconds == this.timeBufferInSeconds &&
+          other.huddleTimerInSeconds == this.huddleTimerInSeconds &&
+          other.integrationEntityId == this.integrationEntityId &&
+          other.integrationAdditionalData == this.integrationAdditionalData &&
+          other.pacing == this.pacing &&
+          other.match == this.match);
+}
+
+class ImprovisationEntityCompanion
+    extends UpdateCompanion<ImprovisationEntityData> {
+  final Value<int> id;
+  final Value<int> order;
+  final Value<DateTime> createdDate;
+  final Value<DateTime> modifiedDate;
+  final Value<ImprovisationType> type;
+  final Value<String> category;
+  final Value<String> theme;
+  final Value<List<int>> durationsInSeconds;
+  final Value<String> performers;
+  final Value<String> notes;
+  final Value<int> timeBufferInSeconds;
+  final Value<int> huddleTimerInSeconds;
+  final Value<String?> integrationEntityId;
+  final Value<String?> integrationAdditionalData;
+  final Value<int?> pacing;
+  final Value<int?> match;
+  const ImprovisationEntityCompanion({
+    this.id = const Value.absent(),
+    this.order = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.modifiedDate = const Value.absent(),
+    this.type = const Value.absent(),
+    this.category = const Value.absent(),
+    this.theme = const Value.absent(),
+    this.durationsInSeconds = const Value.absent(),
+    this.performers = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.timeBufferInSeconds = const Value.absent(),
+    this.huddleTimerInSeconds = const Value.absent(),
+    this.integrationEntityId = const Value.absent(),
+    this.integrationAdditionalData = const Value.absent(),
+    this.pacing = const Value.absent(),
+    this.match = const Value.absent(),
+  });
+  ImprovisationEntityCompanion.insert({
+    this.id = const Value.absent(),
+    required int order,
+    this.createdDate = const Value.absent(),
+    this.modifiedDate = const Value.absent(),
+    required ImprovisationType type,
+    required String category,
+    required String theme,
+    required List<int> durationsInSeconds,
+    required String performers,
+    required String notes,
+    required int timeBufferInSeconds,
+    required int huddleTimerInSeconds,
+    this.integrationEntityId = const Value.absent(),
+    this.integrationAdditionalData = const Value.absent(),
+    this.pacing = const Value.absent(),
+    this.match = const Value.absent(),
+  })  : order = Value(order),
+        type = Value(type),
+        category = Value(category),
+        theme = Value(theme),
+        durationsInSeconds = Value(durationsInSeconds),
+        performers = Value(performers),
+        notes = Value(notes),
+        timeBufferInSeconds = Value(timeBufferInSeconds),
+        huddleTimerInSeconds = Value(huddleTimerInSeconds);
+  static Insertable<ImprovisationEntityData> custom({
+    Expression<int>? id,
+    Expression<int>? order,
+    Expression<DateTime>? createdDate,
+    Expression<DateTime>? modifiedDate,
+    Expression<int>? type,
+    Expression<String>? category,
+    Expression<String>? theme,
+    Expression<String>? durationsInSeconds,
+    Expression<String>? performers,
+    Expression<String>? notes,
+    Expression<int>? timeBufferInSeconds,
+    Expression<int>? huddleTimerInSeconds,
+    Expression<String>? integrationEntityId,
+    Expression<String>? integrationAdditionalData,
+    Expression<int>? pacing,
+    Expression<int>? match,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (order != null) 'order': order,
+      if (createdDate != null) 'created_date': createdDate,
+      if (modifiedDate != null) 'modified_date': modifiedDate,
+      if (type != null) 'type': type,
+      if (category != null) 'category': category,
+      if (theme != null) 'theme': theme,
+      if (durationsInSeconds != null)
+        'durations_in_seconds': durationsInSeconds,
+      if (performers != null) 'performers': performers,
+      if (notes != null) 'notes': notes,
+      if (timeBufferInSeconds != null)
+        'time_buffer_in_seconds': timeBufferInSeconds,
+      if (huddleTimerInSeconds != null)
+        'huddle_timer_in_seconds': huddleTimerInSeconds,
+      if (integrationEntityId != null)
+        'integration_entity_id': integrationEntityId,
+      if (integrationAdditionalData != null)
+        'integration_additional_data': integrationAdditionalData,
+      if (pacing != null) 'pacing': pacing,
+      if (match != null) 'match': match,
+    });
+  }
+
+  ImprovisationEntityCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? order,
+      Value<DateTime>? createdDate,
+      Value<DateTime>? modifiedDate,
+      Value<ImprovisationType>? type,
+      Value<String>? category,
+      Value<String>? theme,
+      Value<List<int>>? durationsInSeconds,
+      Value<String>? performers,
+      Value<String>? notes,
+      Value<int>? timeBufferInSeconds,
+      Value<int>? huddleTimerInSeconds,
+      Value<String?>? integrationEntityId,
+      Value<String?>? integrationAdditionalData,
+      Value<int?>? pacing,
+      Value<int?>? match}) {
+    return ImprovisationEntityCompanion(
+      id: id ?? this.id,
+      order: order ?? this.order,
+      createdDate: createdDate ?? this.createdDate,
+      modifiedDate: modifiedDate ?? this.modifiedDate,
+      type: type ?? this.type,
+      category: category ?? this.category,
+      theme: theme ?? this.theme,
+      durationsInSeconds: durationsInSeconds ?? this.durationsInSeconds,
+      performers: performers ?? this.performers,
+      notes: notes ?? this.notes,
+      timeBufferInSeconds: timeBufferInSeconds ?? this.timeBufferInSeconds,
+      huddleTimerInSeconds: huddleTimerInSeconds ?? this.huddleTimerInSeconds,
+      integrationEntityId: integrationEntityId ?? this.integrationEntityId,
+      integrationAdditionalData:
+          integrationAdditionalData ?? this.integrationAdditionalData,
+      pacing: pacing ?? this.pacing,
+      match: match ?? this.match,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (order.present) {
+      map['order'] = Variable<int>(order.value);
+    }
+    if (createdDate.present) {
+      map['created_date'] = Variable<DateTime>(createdDate.value);
+    }
+    if (modifiedDate.present) {
+      map['modified_date'] = Variable<DateTime>(modifiedDate.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<int>(
+          $ImprovisationEntityTable.$convertertype.toSql(type.value));
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (theme.present) {
+      map['theme'] = Variable<String>(theme.value);
+    }
+    if (durationsInSeconds.present) {
+      map['durations_in_seconds'] = Variable<String>($ImprovisationEntityTable
+          .$converterdurationsInSeconds
+          .toSql(durationsInSeconds.value));
+    }
+    if (performers.present) {
+      map['performers'] = Variable<String>(performers.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (timeBufferInSeconds.present) {
+      map['time_buffer_in_seconds'] = Variable<int>(timeBufferInSeconds.value);
+    }
+    if (huddleTimerInSeconds.present) {
+      map['huddle_timer_in_seconds'] =
+          Variable<int>(huddleTimerInSeconds.value);
+    }
+    if (integrationEntityId.present) {
+      map['integration_entity_id'] =
+          Variable<String>(integrationEntityId.value);
+    }
+    if (integrationAdditionalData.present) {
+      map['integration_additional_data'] =
+          Variable<String>(integrationAdditionalData.value);
+    }
+    if (pacing.present) {
+      map['pacing'] = Variable<int>(pacing.value);
+    }
+    if (match.present) {
+      map['match'] = Variable<int>(match.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ImprovisationEntityCompanion(')
+          ..write('id: $id, ')
+          ..write('order: $order, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('modifiedDate: $modifiedDate, ')
+          ..write('type: $type, ')
+          ..write('category: $category, ')
+          ..write('theme: $theme, ')
+          ..write('durationsInSeconds: $durationsInSeconds, ')
+          ..write('performers: $performers, ')
+          ..write('notes: $notes, ')
+          ..write('timeBufferInSeconds: $timeBufferInSeconds, ')
+          ..write('huddleTimerInSeconds: $huddleTimerInSeconds, ')
+          ..write('integrationEntityId: $integrationEntityId, ')
+          ..write('integrationAdditionalData: $integrationAdditionalData, ')
+          ..write('pacing: $pacing, ')
+          ..write('match: $match')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $PenaltyEntityTable extends PenaltyEntity
     with TableInfo<$PenaltyEntityTable, PenaltyEntityData> {
   @override
@@ -3001,15 +3231,14 @@ class $PenaltyEntityTable extends PenaltyEntity
   late final GeneratedColumn<String> type = GeneratedColumn<String>(
       'type', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _performerMeta =
-      const VerificationMeta('performer');
+  static const VerificationMeta _matchMeta = const VerificationMeta('match');
   @override
-  late final GeneratedColumn<int> performer = GeneratedColumn<int>(
-      'performer', aliasedName, true,
+  late final GeneratedColumn<int> match = GeneratedColumn<int>(
+      'match', aliasedName, false,
       type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES performer_entity (id)'));
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES match_entity (id)'));
   static const VerificationMeta _teamMeta = const VerificationMeta('team');
   @override
   late final GeneratedColumn<int> team = GeneratedColumn<int>(
@@ -3027,6 +3256,15 @@ class $PenaltyEntityTable extends PenaltyEntity
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES improvisation_entity (id)'));
+  static const VerificationMeta _performerMeta =
+      const VerificationMeta('performer');
+  @override
+  late final GeneratedColumn<int> performer = GeneratedColumn<int>(
+      'performer', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES performer_entity (id)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -3034,9 +3272,10 @@ class $PenaltyEntityTable extends PenaltyEntity
         modifiedDate,
         major,
         type,
-        performer,
+        match,
         team,
-        improvisation
+        improvisation,
+        performer
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3075,9 +3314,11 @@ class $PenaltyEntityTable extends PenaltyEntity
     } else if (isInserting) {
       context.missing(_typeMeta);
     }
-    if (data.containsKey('performer')) {
-      context.handle(_performerMeta,
-          performer.isAcceptableOrUnknown(data['performer']!, _performerMeta));
+    if (data.containsKey('match')) {
+      context.handle(
+          _matchMeta, match.isAcceptableOrUnknown(data['match']!, _matchMeta));
+    } else if (isInserting) {
+      context.missing(_matchMeta);
     }
     if (data.containsKey('team')) {
       context.handle(
@@ -3092,6 +3333,10 @@ class $PenaltyEntityTable extends PenaltyEntity
               data['improvisation']!, _improvisationMeta));
     } else if (isInserting) {
       context.missing(_improvisationMeta);
+    }
+    if (data.containsKey('performer')) {
+      context.handle(_performerMeta,
+          performer.isAcceptableOrUnknown(data['performer']!, _performerMeta));
     }
     return context;
   }
@@ -3112,12 +3357,14 @@ class $PenaltyEntityTable extends PenaltyEntity
           .read(DriftSqlType.bool, data['${effectivePrefix}major'])!,
       type: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
-      performer: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}performer']),
+      match: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}match'])!,
       team: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}team'])!,
       improvisation: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}improvisation'])!,
+      performer: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}performer']),
     );
   }
 
@@ -3134,18 +3381,20 @@ class PenaltyEntityData extends DataClass
   final DateTime modifiedDate;
   final bool major;
   final String type;
-  final int? performer;
+  final int match;
   final int team;
   final int improvisation;
+  final int? performer;
   const PenaltyEntityData(
       {required this.id,
       required this.createdDate,
       required this.modifiedDate,
       required this.major,
       required this.type,
-      this.performer,
+      required this.match,
       required this.team,
-      required this.improvisation});
+      required this.improvisation,
+      this.performer});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -3154,11 +3403,12 @@ class PenaltyEntityData extends DataClass
     map['modified_date'] = Variable<DateTime>(modifiedDate);
     map['major'] = Variable<bool>(major);
     map['type'] = Variable<String>(type);
+    map['match'] = Variable<int>(match);
+    map['team'] = Variable<int>(team);
+    map['improvisation'] = Variable<int>(improvisation);
     if (!nullToAbsent || performer != null) {
       map['performer'] = Variable<int>(performer);
     }
-    map['team'] = Variable<int>(team);
-    map['improvisation'] = Variable<int>(improvisation);
     return map;
   }
 
@@ -3169,11 +3419,12 @@ class PenaltyEntityData extends DataClass
       modifiedDate: Value(modifiedDate),
       major: Value(major),
       type: Value(type),
+      match: Value(match),
+      team: Value(team),
+      improvisation: Value(improvisation),
       performer: performer == null && nullToAbsent
           ? const Value.absent()
           : Value(performer),
-      team: Value(team),
-      improvisation: Value(improvisation),
     );
   }
 
@@ -3186,9 +3437,10 @@ class PenaltyEntityData extends DataClass
       modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       major: serializer.fromJson<bool>(json['major']),
       type: serializer.fromJson<String>(json['type']),
-      performer: serializer.fromJson<int?>(json['performer']),
+      match: serializer.fromJson<int>(json['match']),
       team: serializer.fromJson<int>(json['team']),
       improvisation: serializer.fromJson<int>(json['improvisation']),
+      performer: serializer.fromJson<int?>(json['performer']),
     );
   }
   @override
@@ -3200,9 +3452,10 @@ class PenaltyEntityData extends DataClass
       'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'major': serializer.toJson<bool>(major),
       'type': serializer.toJson<String>(type),
-      'performer': serializer.toJson<int?>(performer),
+      'match': serializer.toJson<int>(match),
       'team': serializer.toJson<int>(team),
       'improvisation': serializer.toJson<int>(improvisation),
+      'performer': serializer.toJson<int?>(performer),
     };
   }
 
@@ -3212,18 +3465,20 @@ class PenaltyEntityData extends DataClass
           DateTime? modifiedDate,
           bool? major,
           String? type,
-          Value<int?> performer = const Value.absent(),
+          int? match,
           int? team,
-          int? improvisation}) =>
+          int? improvisation,
+          Value<int?> performer = const Value.absent()}) =>
       PenaltyEntityData(
         id: id ?? this.id,
         createdDate: createdDate ?? this.createdDate,
         modifiedDate: modifiedDate ?? this.modifiedDate,
         major: major ?? this.major,
         type: type ?? this.type,
-        performer: performer.present ? performer.value : this.performer,
+        match: match ?? this.match,
         team: team ?? this.team,
         improvisation: improvisation ?? this.improvisation,
+        performer: performer.present ? performer.value : this.performer,
       );
   PenaltyEntityData copyWithCompanion(PenaltyEntityCompanion data) {
     return PenaltyEntityData(
@@ -3235,11 +3490,12 @@ class PenaltyEntityData extends DataClass
           : this.modifiedDate,
       major: data.major.present ? data.major.value : this.major,
       type: data.type.present ? data.type.value : this.type,
-      performer: data.performer.present ? data.performer.value : this.performer,
+      match: data.match.present ? data.match.value : this.match,
       team: data.team.present ? data.team.value : this.team,
       improvisation: data.improvisation.present
           ? data.improvisation.value
           : this.improvisation,
+      performer: data.performer.present ? data.performer.value : this.performer,
     );
   }
 
@@ -3251,16 +3507,17 @@ class PenaltyEntityData extends DataClass
           ..write('modifiedDate: $modifiedDate, ')
           ..write('major: $major, ')
           ..write('type: $type, ')
-          ..write('performer: $performer, ')
+          ..write('match: $match, ')
           ..write('team: $team, ')
-          ..write('improvisation: $improvisation')
+          ..write('improvisation: $improvisation, ')
+          ..write('performer: $performer')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, createdDate, modifiedDate, major, type,
-      performer, team, improvisation);
+      match, team, improvisation, performer);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -3270,9 +3527,10 @@ class PenaltyEntityData extends DataClass
           other.modifiedDate == this.modifiedDate &&
           other.major == this.major &&
           other.type == this.type &&
-          other.performer == this.performer &&
+          other.match == this.match &&
           other.team == this.team &&
-          other.improvisation == this.improvisation);
+          other.improvisation == this.improvisation &&
+          other.performer == this.performer);
 }
 
 class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
@@ -3281,18 +3539,20 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
   final Value<DateTime> modifiedDate;
   final Value<bool> major;
   final Value<String> type;
-  final Value<int?> performer;
+  final Value<int> match;
   final Value<int> team;
   final Value<int> improvisation;
+  final Value<int?> performer;
   const PenaltyEntityCompanion({
     this.id = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     this.major = const Value.absent(),
     this.type = const Value.absent(),
-    this.performer = const Value.absent(),
+    this.match = const Value.absent(),
     this.team = const Value.absent(),
     this.improvisation = const Value.absent(),
+    this.performer = const Value.absent(),
   });
   PenaltyEntityCompanion.insert({
     this.id = const Value.absent(),
@@ -3300,11 +3560,13 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
     this.modifiedDate = const Value.absent(),
     required bool major,
     required String type,
-    this.performer = const Value.absent(),
+    required int match,
     required int team,
     required int improvisation,
+    this.performer = const Value.absent(),
   })  : major = Value(major),
         type = Value(type),
+        match = Value(match),
         team = Value(team),
         improvisation = Value(improvisation);
   static Insertable<PenaltyEntityData> custom({
@@ -3313,9 +3575,10 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
     Expression<DateTime>? modifiedDate,
     Expression<bool>? major,
     Expression<String>? type,
-    Expression<int>? performer,
+    Expression<int>? match,
     Expression<int>? team,
     Expression<int>? improvisation,
+    Expression<int>? performer,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -3323,9 +3586,10 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
       if (modifiedDate != null) 'modified_date': modifiedDate,
       if (major != null) 'major': major,
       if (type != null) 'type': type,
-      if (performer != null) 'performer': performer,
+      if (match != null) 'match': match,
       if (team != null) 'team': team,
       if (improvisation != null) 'improvisation': improvisation,
+      if (performer != null) 'performer': performer,
     });
   }
 
@@ -3335,18 +3599,20 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
       Value<DateTime>? modifiedDate,
       Value<bool>? major,
       Value<String>? type,
-      Value<int?>? performer,
+      Value<int>? match,
       Value<int>? team,
-      Value<int>? improvisation}) {
+      Value<int>? improvisation,
+      Value<int?>? performer}) {
     return PenaltyEntityCompanion(
       id: id ?? this.id,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
       major: major ?? this.major,
       type: type ?? this.type,
-      performer: performer ?? this.performer,
+      match: match ?? this.match,
       team: team ?? this.team,
       improvisation: improvisation ?? this.improvisation,
+      performer: performer ?? this.performer,
     );
   }
 
@@ -3368,14 +3634,17 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
     if (type.present) {
       map['type'] = Variable<String>(type.value);
     }
-    if (performer.present) {
-      map['performer'] = Variable<int>(performer.value);
+    if (match.present) {
+      map['match'] = Variable<int>(match.value);
     }
     if (team.present) {
       map['team'] = Variable<int>(team.value);
     }
     if (improvisation.present) {
       map['improvisation'] = Variable<int>(improvisation.value);
+    }
+    if (performer.present) {
+      map['performer'] = Variable<int>(performer.value);
     }
     return map;
   }
@@ -3388,9 +3657,10 @@ class PenaltyEntityCompanion extends UpdateCompanion<PenaltyEntityData> {
           ..write('modifiedDate: $modifiedDate, ')
           ..write('major: $major, ')
           ..write('type: $type, ')
-          ..write('performer: $performer, ')
+          ..write('match: $match, ')
           ..write('team: $team, ')
-          ..write('improvisation: $improvisation')
+          ..write('improvisation: $improvisation, ')
+          ..write('performer: $performer')
           ..write(')'))
         .toString();
   }
@@ -3432,6 +3702,14 @@ class $PointEntityTable extends PointEntity
   late final GeneratedColumn<int> value = GeneratedColumn<int>(
       'value', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _matchMeta = const VerificationMeta('match');
+  @override
+  late final GeneratedColumn<int> match = GeneratedColumn<int>(
+      'match', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES match_entity (id)'));
   static const VerificationMeta _teamMeta = const VerificationMeta('team');
   @override
   late final GeneratedColumn<int> team = GeneratedColumn<int>(
@@ -3451,7 +3729,7 @@ class $PointEntityTable extends PointEntity
           'REFERENCES improvisation_entity (id)'));
   @override
   List<GeneratedColumn> get $columns =>
-      [id, createdDate, modifiedDate, value, team, improvisation];
+      [id, createdDate, modifiedDate, value, match, team, improvisation];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -3482,6 +3760,12 @@ class $PointEntityTable extends PointEntity
           _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
     } else if (isInserting) {
       context.missing(_valueMeta);
+    }
+    if (data.containsKey('match')) {
+      context.handle(
+          _matchMeta, match.isAcceptableOrUnknown(data['match']!, _matchMeta));
+    } else if (isInserting) {
+      context.missing(_matchMeta);
     }
     if (data.containsKey('team')) {
       context.handle(
@@ -3514,6 +3798,8 @@ class $PointEntityTable extends PointEntity
           DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
       value: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}value'])!,
+      match: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}match'])!,
       team: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}team'])!,
       improvisation: attachedDatabase.typeMapping
@@ -3532,6 +3818,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
   final DateTime createdDate;
   final DateTime modifiedDate;
   final int value;
+  final int match;
   final int team;
   final int improvisation;
   const PointEntityData(
@@ -3539,6 +3826,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
       required this.createdDate,
       required this.modifiedDate,
       required this.value,
+      required this.match,
       required this.team,
       required this.improvisation});
   @override
@@ -3548,6 +3836,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
     map['created_date'] = Variable<DateTime>(createdDate);
     map['modified_date'] = Variable<DateTime>(modifiedDate);
     map['value'] = Variable<int>(value);
+    map['match'] = Variable<int>(match);
     map['team'] = Variable<int>(team);
     map['improvisation'] = Variable<int>(improvisation);
     return map;
@@ -3559,6 +3848,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
       createdDate: Value(createdDate),
       modifiedDate: Value(modifiedDate),
       value: Value(value),
+      match: Value(match),
       team: Value(team),
       improvisation: Value(improvisation),
     );
@@ -3572,6 +3862,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
       createdDate: serializer.fromJson<DateTime>(json['createdDate']),
       modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
       value: serializer.fromJson<int>(json['value']),
+      match: serializer.fromJson<int>(json['match']),
       team: serializer.fromJson<int>(json['team']),
       improvisation: serializer.fromJson<int>(json['improvisation']),
     );
@@ -3584,6 +3875,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
       'createdDate': serializer.toJson<DateTime>(createdDate),
       'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
       'value': serializer.toJson<int>(value),
+      'match': serializer.toJson<int>(match),
       'team': serializer.toJson<int>(team),
       'improvisation': serializer.toJson<int>(improvisation),
     };
@@ -3594,6 +3886,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
           DateTime? createdDate,
           DateTime? modifiedDate,
           int? value,
+          int? match,
           int? team,
           int? improvisation}) =>
       PointEntityData(
@@ -3601,6 +3894,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
         createdDate: createdDate ?? this.createdDate,
         modifiedDate: modifiedDate ?? this.modifiedDate,
         value: value ?? this.value,
+        match: match ?? this.match,
         team: team ?? this.team,
         improvisation: improvisation ?? this.improvisation,
       );
@@ -3613,6 +3907,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
           ? data.modifiedDate.value
           : this.modifiedDate,
       value: data.value.present ? data.value.value : this.value,
+      match: data.match.present ? data.match.value : this.match,
       team: data.team.present ? data.team.value : this.team,
       improvisation: data.improvisation.present
           ? data.improvisation.value
@@ -3627,6 +3922,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
           ..write('value: $value, ')
+          ..write('match: $match, ')
           ..write('team: $team, ')
           ..write('improvisation: $improvisation')
           ..write(')'))
@@ -3634,8 +3930,8 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, createdDate, modifiedDate, value, team, improvisation);
+  int get hashCode => Object.hash(
+      id, createdDate, modifiedDate, value, match, team, improvisation);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -3644,6 +3940,7 @@ class PointEntityData extends DataClass implements Insertable<PointEntityData> {
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
           other.value == this.value &&
+          other.match == this.match &&
           other.team == this.team &&
           other.improvisation == this.improvisation);
 }
@@ -3653,6 +3950,7 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
   final Value<DateTime> createdDate;
   final Value<DateTime> modifiedDate;
   final Value<int> value;
+  final Value<int> match;
   final Value<int> team;
   final Value<int> improvisation;
   const PointEntityCompanion({
@@ -3660,6 +3958,7 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     this.value = const Value.absent(),
+    this.match = const Value.absent(),
     this.team = const Value.absent(),
     this.improvisation = const Value.absent(),
   });
@@ -3668,9 +3967,11 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
     required int value,
+    required int match,
     required int team,
     required int improvisation,
   })  : value = Value(value),
+        match = Value(match),
         team = Value(team),
         improvisation = Value(improvisation);
   static Insertable<PointEntityData> custom({
@@ -3678,6 +3979,7 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
     Expression<int>? value,
+    Expression<int>? match,
     Expression<int>? team,
     Expression<int>? improvisation,
   }) {
@@ -3686,6 +3988,7 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
       if (value != null) 'value': value,
+      if (match != null) 'match': match,
       if (team != null) 'team': team,
       if (improvisation != null) 'improvisation': improvisation,
     });
@@ -3696,6 +3999,7 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
       Value<DateTime>? createdDate,
       Value<DateTime>? modifiedDate,
       Value<int>? value,
+      Value<int>? match,
       Value<int>? team,
       Value<int>? improvisation}) {
     return PointEntityCompanion(
@@ -3703,6 +4007,7 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
       value: value ?? this.value,
+      match: match ?? this.match,
       team: team ?? this.team,
       improvisation: improvisation ?? this.improvisation,
     );
@@ -3723,6 +4028,9 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
     if (value.present) {
       map['value'] = Variable<int>(value.value);
     }
+    if (match.present) {
+      map['match'] = Variable<int>(match.value);
+    }
     if (team.present) {
       map['team'] = Variable<int>(team.value);
     }
@@ -3739,6 +4047,7 @@ class PointEntityCompanion extends UpdateCompanion<PointEntityData> {
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
           ..write('value: $value, ')
+          ..write('match: $match, ')
           ..write('team: $team, ')
           ..write('improvisation: $improvisation')
           ..write(')'))
@@ -3777,6 +4086,14 @@ class $StarEntityTable extends StarEntity
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       defaultValue: Constant(DateTime.now()));
+  static const VerificationMeta _matchMeta = const VerificationMeta('match');
+  @override
+  late final GeneratedColumn<int> match = GeneratedColumn<int>(
+      'match', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES match_entity (id)'));
   static const VerificationMeta _performerMeta =
       const VerificationMeta('performer');
   @override
@@ -3796,7 +4113,7 @@ class $StarEntityTable extends StarEntity
           GeneratedColumn.constraintIsAlways('REFERENCES team_entity (id)'));
   @override
   List<GeneratedColumn> get $columns =>
-      [id, createdDate, modifiedDate, performer, team];
+      [id, createdDate, modifiedDate, match, performer, team];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -3821,6 +4138,12 @@ class $StarEntityTable extends StarEntity
           _modifiedDateMeta,
           modifiedDate.isAcceptableOrUnknown(
               data['modified_date']!, _modifiedDateMeta));
+    }
+    if (data.containsKey('match')) {
+      context.handle(
+          _matchMeta, match.isAcceptableOrUnknown(data['match']!, _matchMeta));
+    } else if (isInserting) {
+      context.missing(_matchMeta);
     }
     if (data.containsKey('performer')) {
       context.handle(_performerMeta,
@@ -3849,6 +4172,8 @@ class $StarEntityTable extends StarEntity
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_date'])!,
       modifiedDate: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}modified_date'])!,
+      match: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}match'])!,
       performer: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}performer'])!,
       team: attachedDatabase.typeMapping
@@ -3866,12 +4191,14 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
   final int id;
   final DateTime createdDate;
   final DateTime modifiedDate;
+  final int match;
   final int performer;
   final int team;
   const StarEntityData(
       {required this.id,
       required this.createdDate,
       required this.modifiedDate,
+      required this.match,
       required this.performer,
       required this.team});
   @override
@@ -3880,6 +4207,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
     map['id'] = Variable<int>(id);
     map['created_date'] = Variable<DateTime>(createdDate);
     map['modified_date'] = Variable<DateTime>(modifiedDate);
+    map['match'] = Variable<int>(match);
     map['performer'] = Variable<int>(performer);
     map['team'] = Variable<int>(team);
     return map;
@@ -3890,6 +4218,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
       id: Value(id),
       createdDate: Value(createdDate),
       modifiedDate: Value(modifiedDate),
+      match: Value(match),
       performer: Value(performer),
       team: Value(team),
     );
@@ -3902,6 +4231,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
       id: serializer.fromJson<int>(json['id']),
       createdDate: serializer.fromJson<DateTime>(json['createdDate']),
       modifiedDate: serializer.fromJson<DateTime>(json['modifiedDate']),
+      match: serializer.fromJson<int>(json['match']),
       performer: serializer.fromJson<int>(json['performer']),
       team: serializer.fromJson<int>(json['team']),
     );
@@ -3913,6 +4243,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
       'id': serializer.toJson<int>(id),
       'createdDate': serializer.toJson<DateTime>(createdDate),
       'modifiedDate': serializer.toJson<DateTime>(modifiedDate),
+      'match': serializer.toJson<int>(match),
       'performer': serializer.toJson<int>(performer),
       'team': serializer.toJson<int>(team),
     };
@@ -3922,12 +4253,14 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
           {int? id,
           DateTime? createdDate,
           DateTime? modifiedDate,
+          int? match,
           int? performer,
           int? team}) =>
       StarEntityData(
         id: id ?? this.id,
         createdDate: createdDate ?? this.createdDate,
         modifiedDate: modifiedDate ?? this.modifiedDate,
+        match: match ?? this.match,
         performer: performer ?? this.performer,
         team: team ?? this.team,
       );
@@ -3939,6 +4272,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
       modifiedDate: data.modifiedDate.present
           ? data.modifiedDate.value
           : this.modifiedDate,
+      match: data.match.present ? data.match.value : this.match,
       performer: data.performer.present ? data.performer.value : this.performer,
       team: data.team.present ? data.team.value : this.team,
     );
@@ -3950,6 +4284,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
           ..write('id: $id, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
+          ..write('match: $match, ')
           ..write('performer: $performer, ')
           ..write('team: $team')
           ..write(')'))
@@ -3958,7 +4293,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
 
   @override
   int get hashCode =>
-      Object.hash(id, createdDate, modifiedDate, performer, team);
+      Object.hash(id, createdDate, modifiedDate, match, performer, team);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -3966,6 +4301,7 @@ class StarEntityData extends DataClass implements Insertable<StarEntityData> {
           other.id == this.id &&
           other.createdDate == this.createdDate &&
           other.modifiedDate == this.modifiedDate &&
+          other.match == this.match &&
           other.performer == this.performer &&
           other.team == this.team);
 }
@@ -3974,12 +4310,14 @@ class StarEntityCompanion extends UpdateCompanion<StarEntityData> {
   final Value<int> id;
   final Value<DateTime> createdDate;
   final Value<DateTime> modifiedDate;
+  final Value<int> match;
   final Value<int> performer;
   final Value<int> team;
   const StarEntityCompanion({
     this.id = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
+    this.match = const Value.absent(),
     this.performer = const Value.absent(),
     this.team = const Value.absent(),
   });
@@ -3987,14 +4325,17 @@ class StarEntityCompanion extends UpdateCompanion<StarEntityData> {
     this.id = const Value.absent(),
     this.createdDate = const Value.absent(),
     this.modifiedDate = const Value.absent(),
+    required int match,
     required int performer,
     required int team,
-  })  : performer = Value(performer),
+  })  : match = Value(match),
+        performer = Value(performer),
         team = Value(team);
   static Insertable<StarEntityData> custom({
     Expression<int>? id,
     Expression<DateTime>? createdDate,
     Expression<DateTime>? modifiedDate,
+    Expression<int>? match,
     Expression<int>? performer,
     Expression<int>? team,
   }) {
@@ -4002,6 +4343,7 @@ class StarEntityCompanion extends UpdateCompanion<StarEntityData> {
       if (id != null) 'id': id,
       if (createdDate != null) 'created_date': createdDate,
       if (modifiedDate != null) 'modified_date': modifiedDate,
+      if (match != null) 'match': match,
       if (performer != null) 'performer': performer,
       if (team != null) 'team': team,
     });
@@ -4011,12 +4353,14 @@ class StarEntityCompanion extends UpdateCompanion<StarEntityData> {
       {Value<int>? id,
       Value<DateTime>? createdDate,
       Value<DateTime>? modifiedDate,
+      Value<int>? match,
       Value<int>? performer,
       Value<int>? team}) {
     return StarEntityCompanion(
       id: id ?? this.id,
       createdDate: createdDate ?? this.createdDate,
       modifiedDate: modifiedDate ?? this.modifiedDate,
+      match: match ?? this.match,
       performer: performer ?? this.performer,
       team: team ?? this.team,
     );
@@ -4034,6 +4378,9 @@ class StarEntityCompanion extends UpdateCompanion<StarEntityData> {
     if (modifiedDate.present) {
       map['modified_date'] = Variable<DateTime>(modifiedDate.value);
     }
+    if (match.present) {
+      map['match'] = Variable<int>(match.value);
+    }
     if (performer.present) {
       map['performer'] = Variable<int>(performer.value);
     }
@@ -4049,6 +4396,7 @@ class StarEntityCompanion extends UpdateCompanion<StarEntityData> {
           ..write('id: $id, ')
           ..write('createdDate: $createdDate, ')
           ..write('modifiedDate: $modifiedDate, ')
+          ..write('match: $match, ')
           ..write('performer: $performer, ')
           ..write('team: $team')
           ..write(')'))
@@ -5255,10 +5603,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PacingEntityTable pacingEntity = $PacingEntityTable(this);
   late final $MatchEntityTable matchEntity = $MatchEntityTable(this);
   late final $TeamEntityTable teamEntity = $TeamEntityTable(this);
-  late final $ImprovisationEntityTable improvisationEntity =
-      $ImprovisationEntityTable(this);
   late final $PerformerEntityTable performerEntity =
       $PerformerEntityTable(this);
+  late final $ImprovisationEntityTable improvisationEntity =
+      $ImprovisationEntityTable(this);
   late final $PenaltyEntityTable penaltyEntity = $PenaltyEntityTable(this);
   late final $PointEntityTable pointEntity = $PointEntityTable(this);
   late final $StarEntityTable starEntity = $StarEntityTable(this);
@@ -5267,6 +5615,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $PacingTagEntityTable(this);
   late final $MatchTagEntityTable matchTagEntity = $MatchTagEntityTable(this);
   late final $TeamTagEntityTable teamTagEntity = $TeamTagEntityTable(this);
+  late final PacingsRepository pacingsRepository =
+      PacingsRepository(this as AppDatabase);
+  late final MatchesRepository matchesRepository =
+      MatchesRepository(this as AppDatabase);
+  late final TeamsRepository teamsRepository =
+      TeamsRepository(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5275,8 +5629,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         pacingEntity,
         matchEntity,
         teamEntity,
-        improvisationEntity,
         performerEntity,
+        improvisationEntity,
         penaltyEntity,
         pointEntity,
         starEntity,
@@ -5715,6 +6069,21 @@ final class $$MatchEntityTableReferences
     extends BaseReferences<_$AppDatabase, $MatchEntityTable, MatchEntityData> {
   $$MatchEntityTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
+  static MultiTypedResultKey<$TeamEntityTable, List<TeamEntityData>>
+      _teamEntityRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.teamEntity,
+              aliasName:
+                  $_aliasNameGenerator(db.matchEntity.id, db.teamEntity.match));
+
+  $$TeamEntityTableProcessedTableManager get teamEntityRefs {
+    final manager = $$TeamEntityTableTableManager($_db, $_db.teamEntity)
+        .filter((f) => f.match.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_teamEntityRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
   static MultiTypedResultKey<$ImprovisationEntityTable,
       List<ImprovisationEntityData>> _improvisationEntityRefsTable(
           _$AppDatabase db) =>
@@ -5729,6 +6098,51 @@ final class $$MatchEntityTableReferences
 
     final cache =
         $_typedResult.readTableOrNull(_improvisationEntityRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$PenaltyEntityTable, List<PenaltyEntityData>>
+      _penaltyEntityRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.penaltyEntity,
+              aliasName: $_aliasNameGenerator(
+                  db.matchEntity.id, db.penaltyEntity.match));
+
+  $$PenaltyEntityTableProcessedTableManager get penaltyEntityRefs {
+    final manager = $$PenaltyEntityTableTableManager($_db, $_db.penaltyEntity)
+        .filter((f) => f.match.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_penaltyEntityRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$PointEntityTable, List<PointEntityData>>
+      _pointEntityRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+          db.pointEntity,
+          aliasName:
+              $_aliasNameGenerator(db.matchEntity.id, db.pointEntity.match));
+
+  $$PointEntityTableProcessedTableManager get pointEntityRefs {
+    final manager = $$PointEntityTableTableManager($_db, $_db.pointEntity)
+        .filter((f) => f.match.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_pointEntityRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$StarEntityTable, List<StarEntityData>>
+      _starEntityRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.starEntity,
+              aliasName:
+                  $_aliasNameGenerator(db.matchEntity.id, db.starEntity.match));
+
+  $$StarEntityTableProcessedTableManager get starEntityRefs {
+    final manager = $$StarEntityTableTableManager($_db, $_db.starEntity)
+        .filter((f) => f.match.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_starEntityRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -5826,6 +6240,27 @@ class $$MatchEntityTableFilterComposer
           column: $table.integrationPenaltyTypes,
           builder: (column) => ColumnWithTypeConverterFilters(column));
 
+  Expression<bool> teamEntityRefs(
+      Expression<bool> Function($$TeamEntityTableFilterComposer f) f) {
+    final $$TeamEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.teamEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TeamEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.teamEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
   Expression<bool> improvisationEntityRefs(
       Expression<bool> Function($$ImprovisationEntityTableFilterComposer f) f) {
     final $$ImprovisationEntityTableFilterComposer composer = $composerBuilder(
@@ -5839,6 +6274,69 @@ class $$MatchEntityTableFilterComposer
             $$ImprovisationEntityTableFilterComposer(
               $db: $db,
               $table: $db.improvisationEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> penaltyEntityRefs(
+      Expression<bool> Function($$PenaltyEntityTableFilterComposer f) f) {
+    final $$PenaltyEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.penaltyEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PenaltyEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.penaltyEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> pointEntityRefs(
+      Expression<bool> Function($$PointEntityTableFilterComposer f) f) {
+    final $$PointEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pointEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PointEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.pointEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> starEntityRefs(
+      Expression<bool> Function($$StarEntityTableFilterComposer f) f) {
+    final $$StarEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.starEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$StarEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.starEntity,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -6018,6 +6516,27 @@ class $$MatchEntityTableAnnotationComposer
       get integrationPenaltyTypes => $composableBuilder(
           column: $table.integrationPenaltyTypes, builder: (column) => column);
 
+  Expression<T> teamEntityRefs<T extends Object>(
+      Expression<T> Function($$TeamEntityTableAnnotationComposer a) f) {
+    final $$TeamEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.teamEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TeamEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.teamEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
   Expression<T> improvisationEntityRefs<T extends Object>(
       Expression<T> Function($$ImprovisationEntityTableAnnotationComposer a)
           f) {
@@ -6038,6 +6557,69 @@ class $$MatchEntityTableAnnotationComposer
                   $removeJoinBuilderFromRootComposer:
                       $removeJoinBuilderFromRootComposer,
                 ));
+    return f(composer);
+  }
+
+  Expression<T> penaltyEntityRefs<T extends Object>(
+      Expression<T> Function($$PenaltyEntityTableAnnotationComposer a) f) {
+    final $$PenaltyEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.penaltyEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PenaltyEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.penaltyEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> pointEntityRefs<T extends Object>(
+      Expression<T> Function($$PointEntityTableAnnotationComposer a) f) {
+    final $$PointEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pointEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PointEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.pointEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> starEntityRefs<T extends Object>(
+      Expression<T> Function($$StarEntityTableAnnotationComposer a) f) {
+    final $$StarEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.starEntity,
+        getReferencedColumn: (t) => t.match,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$StarEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.starEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 
@@ -6075,7 +6657,12 @@ class $$MatchEntityTableTableManager extends RootTableManager<
     (MatchEntityData, $$MatchEntityTableReferences),
     MatchEntityData,
     PrefetchHooks Function(
-        {bool improvisationEntityRefs, bool matchTagEntityRefs})> {
+        {bool teamEntityRefs,
+        bool improvisationEntityRefs,
+        bool penaltyEntityRefs,
+        bool pointEntityRefs,
+        bool starEntityRefs,
+        bool matchTagEntityRefs})> {
   $$MatchEntityTableTableManager(_$AppDatabase db, $MatchEntityTable table)
       : super(TableManagerState(
           db: db,
@@ -6183,16 +6770,37 @@ class $$MatchEntityTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {improvisationEntityRefs = false, matchTagEntityRefs = false}) {
+              {teamEntityRefs = false,
+              improvisationEntityRefs = false,
+              penaltyEntityRefs = false,
+              pointEntityRefs = false,
+              starEntityRefs = false,
+              matchTagEntityRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
+                if (teamEntityRefs) db.teamEntity,
                 if (improvisationEntityRefs) db.improvisationEntity,
+                if (penaltyEntityRefs) db.penaltyEntity,
+                if (pointEntityRefs) db.pointEntity,
+                if (starEntityRefs) db.starEntity,
                 if (matchTagEntityRefs) db.matchTagEntity
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
+                  if (teamEntityRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$MatchEntityTableReferences
+                            ._teamEntityRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$MatchEntityTableReferences(db, table, p0)
+                                .teamEntityRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.match == item.id),
+                        typedResults: items),
                   if (improvisationEntityRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
@@ -6201,6 +6809,42 @@ class $$MatchEntityTableTableManager extends RootTableManager<
                         managerFromTypedResult: (p0) =>
                             $$MatchEntityTableReferences(db, table, p0)
                                 .improvisationEntityRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.match == item.id),
+                        typedResults: items),
+                  if (penaltyEntityRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$MatchEntityTableReferences
+                            ._penaltyEntityRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$MatchEntityTableReferences(db, table, p0)
+                                .penaltyEntityRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.match == item.id),
+                        typedResults: items),
+                  if (pointEntityRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$MatchEntityTableReferences
+                            ._pointEntityRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$MatchEntityTableReferences(db, table, p0)
+                                .pointEntityRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.match == item.id),
+                        typedResults: items),
+                  if (starEntityRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$MatchEntityTableReferences
+                            ._starEntityRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$MatchEntityTableReferences(db, table, p0)
+                                .starEntityRefs,
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.match == item.id),
@@ -6236,13 +6880,22 @@ typedef $$MatchEntityTableProcessedTableManager = ProcessedTableManager<
     (MatchEntityData, $$MatchEntityTableReferences),
     MatchEntityData,
     PrefetchHooks Function(
-        {bool improvisationEntityRefs, bool matchTagEntityRefs})>;
+        {bool teamEntityRefs,
+        bool improvisationEntityRefs,
+        bool penaltyEntityRefs,
+        bool pointEntityRefs,
+        bool starEntityRefs,
+        bool matchTagEntityRefs})>;
 typedef $$TeamEntityTableCreateCompanionBuilder = TeamEntityCompanion Function({
   Value<int> id,
   required String name,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   required int color,
+  Value<int?> match,
+  Value<String?> integrationId,
+  Value<String?> integrationEntityId,
+  Value<String?> integrationAdditionalData,
 });
 typedef $$TeamEntityTableUpdateCompanionBuilder = TeamEntityCompanion Function({
   Value<int> id,
@@ -6250,11 +6903,30 @@ typedef $$TeamEntityTableUpdateCompanionBuilder = TeamEntityCompanion Function({
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   Value<int> color,
+  Value<int?> match,
+  Value<String?> integrationId,
+  Value<String?> integrationEntityId,
+  Value<String?> integrationAdditionalData,
 });
 
 final class $$TeamEntityTableReferences
     extends BaseReferences<_$AppDatabase, $TeamEntityTable, TeamEntityData> {
   $$TeamEntityTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MatchEntityTable _matchTable(_$AppDatabase db) =>
+      db.matchEntity.createAlias(
+          $_aliasNameGenerator(db.teamEntity.match, db.matchEntity.id));
+
+  $$MatchEntityTableProcessedTableManager? get match {
+    final $_column = $_itemColumn<int>('match');
+    if ($_column == null) return null;
+    final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_matchTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 
   static MultiTypedResultKey<$PerformerEntityTable, List<PerformerEntityData>>
       _performerEntityRefsTable(_$AppDatabase db) =>
@@ -6357,6 +7029,37 @@ class $$TeamEntityTableFilterComposer
 
   ColumnFilters<int> get color => $composableBuilder(
       column: $table.color, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get integrationId => $composableBuilder(
+      column: $table.integrationId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get integrationEntityId => $composableBuilder(
+      column: $table.integrationEntityId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get integrationAdditionalData => $composableBuilder(
+      column: $table.integrationAdditionalData,
+      builder: (column) => ColumnFilters(column));
+
+  $$MatchEntityTableFilterComposer get match {
+    final $$MatchEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   Expression<bool> performerEntityRefs(
       Expression<bool> Function($$PerformerEntityTableFilterComposer f) f) {
@@ -6488,6 +7191,38 @@ class $$TeamEntityTableOrderingComposer
 
   ColumnOrderings<int> get color => $composableBuilder(
       column: $table.color, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get integrationId => $composableBuilder(
+      column: $table.integrationId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get integrationEntityId => $composableBuilder(
+      column: $table.integrationEntityId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get integrationAdditionalData => $composableBuilder(
+      column: $table.integrationAdditionalData,
+      builder: (column) => ColumnOrderings(column));
+
+  $$MatchEntityTableOrderingComposer get match {
+    final $$MatchEntityTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableOrderingComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$TeamEntityTableAnnotationComposer
@@ -6513,6 +7248,35 @@ class $$TeamEntityTableAnnotationComposer
 
   GeneratedColumn<int> get color =>
       $composableBuilder(column: $table.color, builder: (column) => column);
+
+  GeneratedColumn<String> get integrationId => $composableBuilder(
+      column: $table.integrationId, builder: (column) => column);
+
+  GeneratedColumn<String> get integrationEntityId => $composableBuilder(
+      column: $table.integrationEntityId, builder: (column) => column);
+
+  GeneratedColumn<String> get integrationAdditionalData => $composableBuilder(
+      column: $table.integrationAdditionalData, builder: (column) => column);
+
+  $$MatchEntityTableAnnotationComposer get match {
+    final $$MatchEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   Expression<T> performerEntityRefs<T extends Object>(
       Expression<T> Function($$PerformerEntityTableAnnotationComposer a) f) {
@@ -6632,7 +7396,8 @@ class $$TeamEntityTableTableManager extends RootTableManager<
     (TeamEntityData, $$TeamEntityTableReferences),
     TeamEntityData,
     PrefetchHooks Function(
-        {bool performerEntityRefs,
+        {bool match,
+        bool performerEntityRefs,
         bool penaltyEntityRefs,
         bool pointEntityRefs,
         bool starEntityRefs,
@@ -6653,6 +7418,10 @@ class $$TeamEntityTableTableManager extends RootTableManager<
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             Value<int> color = const Value.absent(),
+            Value<int?> match = const Value.absent(),
+            Value<String?> integrationId = const Value.absent(),
+            Value<String?> integrationEntityId = const Value.absent(),
+            Value<String?> integrationAdditionalData = const Value.absent(),
           }) =>
               TeamEntityCompanion(
             id: id,
@@ -6660,6 +7429,10 @@ class $$TeamEntityTableTableManager extends RootTableManager<
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             color: color,
+            match: match,
+            integrationId: integrationId,
+            integrationEntityId: integrationEntityId,
+            integrationAdditionalData: integrationAdditionalData,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -6667,6 +7440,10 @@ class $$TeamEntityTableTableManager extends RootTableManager<
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             required int color,
+            Value<int?> match = const Value.absent(),
+            Value<String?> integrationId = const Value.absent(),
+            Value<String?> integrationEntityId = const Value.absent(),
+            Value<String?> integrationAdditionalData = const Value.absent(),
           }) =>
               TeamEntityCompanion.insert(
             id: id,
@@ -6674,6 +7451,10 @@ class $$TeamEntityTableTableManager extends RootTableManager<
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             color: color,
+            match: match,
+            integrationId: integrationId,
+            integrationEntityId: integrationEntityId,
+            integrationAdditionalData: integrationAdditionalData,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -6682,7 +7463,8 @@ class $$TeamEntityTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {performerEntityRefs = false,
+              {match = false,
+              performerEntityRefs = false,
               penaltyEntityRefs = false,
               pointEntityRefs = false,
               starEntityRefs = false,
@@ -6696,7 +7478,32 @@ class $$TeamEntityTableTableManager extends RootTableManager<
                 if (starEntityRefs) db.starEntity,
                 if (teamTagEntityRefs) db.teamTagEntity
               ],
-              addJoins: null,
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (match) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.match,
+                    referencedTable:
+                        $$TeamEntityTableReferences._matchTable(db),
+                    referencedColumn:
+                        $$TeamEntityTableReferences._matchTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (performerEntityRefs)
@@ -6778,680 +7585,12 @@ typedef $$TeamEntityTableProcessedTableManager = ProcessedTableManager<
     (TeamEntityData, $$TeamEntityTableReferences),
     TeamEntityData,
     PrefetchHooks Function(
-        {bool performerEntityRefs,
+        {bool match,
+        bool performerEntityRefs,
         bool penaltyEntityRefs,
         bool pointEntityRefs,
         bool starEntityRefs,
         bool teamTagEntityRefs})>;
-typedef $$ImprovisationEntityTableCreateCompanionBuilder
-    = ImprovisationEntityCompanion Function({
-  Value<int> id,
-  Value<DateTime> createdDate,
-  Value<DateTime> modifiedDate,
-  required ImprovisationType type,
-  required String category,
-  required String theme,
-  required List<int> durationsInSeconds,
-  required String performers,
-  required String notes,
-  required int timeBufferInSeconds,
-  required int huddleTimerInSeconds,
-  Value<String?> integrationEntityId,
-  Value<String?> integrationAdditionalData,
-  Value<int?> pacing,
-  Value<int?> match,
-});
-typedef $$ImprovisationEntityTableUpdateCompanionBuilder
-    = ImprovisationEntityCompanion Function({
-  Value<int> id,
-  Value<DateTime> createdDate,
-  Value<DateTime> modifiedDate,
-  Value<ImprovisationType> type,
-  Value<String> category,
-  Value<String> theme,
-  Value<List<int>> durationsInSeconds,
-  Value<String> performers,
-  Value<String> notes,
-  Value<int> timeBufferInSeconds,
-  Value<int> huddleTimerInSeconds,
-  Value<String?> integrationEntityId,
-  Value<String?> integrationAdditionalData,
-  Value<int?> pacing,
-  Value<int?> match,
-});
-
-final class $$ImprovisationEntityTableReferences extends BaseReferences<
-    _$AppDatabase, $ImprovisationEntityTable, ImprovisationEntityData> {
-  $$ImprovisationEntityTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static $PacingEntityTable _pacingTable(_$AppDatabase db) =>
-      db.pacingEntity.createAlias($_aliasNameGenerator(
-          db.improvisationEntity.pacing, db.pacingEntity.id));
-
-  $$PacingEntityTableProcessedTableManager? get pacing {
-    final $_column = $_itemColumn<int>('pacing');
-    if ($_column == null) return null;
-    final manager = $$PacingEntityTableTableManager($_db, $_db.pacingEntity)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_pacingTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static $MatchEntityTable _matchTable(_$AppDatabase db) =>
-      db.matchEntity.createAlias($_aliasNameGenerator(
-          db.improvisationEntity.match, db.matchEntity.id));
-
-  $$MatchEntityTableProcessedTableManager? get match {
-    final $_column = $_itemColumn<int>('match');
-    if ($_column == null) return null;
-    final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_matchTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static MultiTypedResultKey<$PenaltyEntityTable, List<PenaltyEntityData>>
-      _penaltyEntityRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.penaltyEntity,
-              aliasName: $_aliasNameGenerator(
-                  db.improvisationEntity.id, db.penaltyEntity.improvisation));
-
-  $$PenaltyEntityTableProcessedTableManager get penaltyEntityRefs {
-    final manager = $$PenaltyEntityTableTableManager($_db, $_db.penaltyEntity)
-        .filter((f) => f.improvisation.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_penaltyEntityRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-
-  static MultiTypedResultKey<$PointEntityTable, List<PointEntityData>>
-      _pointEntityRefsTable(_$AppDatabase db) =>
-          MultiTypedResultKey.fromTable(db.pointEntity,
-              aliasName: $_aliasNameGenerator(
-                  db.improvisationEntity.id, db.pointEntity.improvisation));
-
-  $$PointEntityTableProcessedTableManager get pointEntityRefs {
-    final manager = $$PointEntityTableTableManager($_db, $_db.pointEntity)
-        .filter((f) => f.improvisation.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_pointEntityRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-}
-
-class $$ImprovisationEntityTableFilterComposer
-    extends Composer<_$AppDatabase, $ImprovisationEntityTable> {
-  $$ImprovisationEntityTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get modifiedDate => $composableBuilder(
-      column: $table.modifiedDate, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<ImprovisationType, ImprovisationType, int>
-      get type => $composableBuilder(
-          column: $table.type,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<String> get category => $composableBuilder(
-      column: $table.category, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get theme => $composableBuilder(
-      column: $table.theme, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<List<int>, List<int>, String>
-      get durationsInSeconds => $composableBuilder(
-          column: $table.durationsInSeconds,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<String> get performers => $composableBuilder(
-      column: $table.performers, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get notes => $composableBuilder(
-      column: $table.notes, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get timeBufferInSeconds => $composableBuilder(
-      column: $table.timeBufferInSeconds,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get huddleTimerInSeconds => $composableBuilder(
-      column: $table.huddleTimerInSeconds,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get integrationEntityId => $composableBuilder(
-      column: $table.integrationEntityId,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get integrationAdditionalData => $composableBuilder(
-      column: $table.integrationAdditionalData,
-      builder: (column) => ColumnFilters(column));
-
-  $$PacingEntityTableFilterComposer get pacing {
-    final $$PacingEntityTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.pacing,
-        referencedTable: $db.pacingEntity,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$PacingEntityTableFilterComposer(
-              $db: $db,
-              $table: $db.pacingEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$MatchEntityTableFilterComposer get match {
-    final $$MatchEntityTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.match,
-        referencedTable: $db.matchEntity,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$MatchEntityTableFilterComposer(
-              $db: $db,
-              $table: $db.matchEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  Expression<bool> penaltyEntityRefs(
-      Expression<bool> Function($$PenaltyEntityTableFilterComposer f) f) {
-    final $$PenaltyEntityTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.penaltyEntity,
-        getReferencedColumn: (t) => t.improvisation,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$PenaltyEntityTableFilterComposer(
-              $db: $db,
-              $table: $db.penaltyEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-
-  Expression<bool> pointEntityRefs(
-      Expression<bool> Function($$PointEntityTableFilterComposer f) f) {
-    final $$PointEntityTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.pointEntity,
-        getReferencedColumn: (t) => t.improvisation,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$PointEntityTableFilterComposer(
-              $db: $db,
-              $table: $db.pointEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-}
-
-class $$ImprovisationEntityTableOrderingComposer
-    extends Composer<_$AppDatabase, $ImprovisationEntityTable> {
-  $$ImprovisationEntityTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get modifiedDate => $composableBuilder(
-      column: $table.modifiedDate,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get type => $composableBuilder(
-      column: $table.type, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get category => $composableBuilder(
-      column: $table.category, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get theme => $composableBuilder(
-      column: $table.theme, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get durationsInSeconds => $composableBuilder(
-      column: $table.durationsInSeconds,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get performers => $composableBuilder(
-      column: $table.performers, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get notes => $composableBuilder(
-      column: $table.notes, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get timeBufferInSeconds => $composableBuilder(
-      column: $table.timeBufferInSeconds,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get huddleTimerInSeconds => $composableBuilder(
-      column: $table.huddleTimerInSeconds,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get integrationEntityId => $composableBuilder(
-      column: $table.integrationEntityId,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get integrationAdditionalData => $composableBuilder(
-      column: $table.integrationAdditionalData,
-      builder: (column) => ColumnOrderings(column));
-
-  $$PacingEntityTableOrderingComposer get pacing {
-    final $$PacingEntityTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.pacing,
-        referencedTable: $db.pacingEntity,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$PacingEntityTableOrderingComposer(
-              $db: $db,
-              $table: $db.pacingEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$MatchEntityTableOrderingComposer get match {
-    final $$MatchEntityTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.match,
-        referencedTable: $db.matchEntity,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$MatchEntityTableOrderingComposer(
-              $db: $db,
-              $table: $db.matchEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$ImprovisationEntityTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ImprovisationEntityTable> {
-  $$ImprovisationEntityTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
-      column: $table.createdDate, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get modifiedDate => $composableBuilder(
-      column: $table.modifiedDate, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<ImprovisationType, int> get type =>
-      $composableBuilder(column: $table.type, builder: (column) => column);
-
-  GeneratedColumn<String> get category =>
-      $composableBuilder(column: $table.category, builder: (column) => column);
-
-  GeneratedColumn<String> get theme =>
-      $composableBuilder(column: $table.theme, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<List<int>, String> get durationsInSeconds =>
-      $composableBuilder(
-          column: $table.durationsInSeconds, builder: (column) => column);
-
-  GeneratedColumn<String> get performers => $composableBuilder(
-      column: $table.performers, builder: (column) => column);
-
-  GeneratedColumn<String> get notes =>
-      $composableBuilder(column: $table.notes, builder: (column) => column);
-
-  GeneratedColumn<int> get timeBufferInSeconds => $composableBuilder(
-      column: $table.timeBufferInSeconds, builder: (column) => column);
-
-  GeneratedColumn<int> get huddleTimerInSeconds => $composableBuilder(
-      column: $table.huddleTimerInSeconds, builder: (column) => column);
-
-  GeneratedColumn<String> get integrationEntityId => $composableBuilder(
-      column: $table.integrationEntityId, builder: (column) => column);
-
-  GeneratedColumn<String> get integrationAdditionalData => $composableBuilder(
-      column: $table.integrationAdditionalData, builder: (column) => column);
-
-  $$PacingEntityTableAnnotationComposer get pacing {
-    final $$PacingEntityTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.pacing,
-        referencedTable: $db.pacingEntity,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$PacingEntityTableAnnotationComposer(
-              $db: $db,
-              $table: $db.pacingEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  $$MatchEntityTableAnnotationComposer get match {
-    final $$MatchEntityTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.match,
-        referencedTable: $db.matchEntity,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$MatchEntityTableAnnotationComposer(
-              $db: $db,
-              $table: $db.matchEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  Expression<T> penaltyEntityRefs<T extends Object>(
-      Expression<T> Function($$PenaltyEntityTableAnnotationComposer a) f) {
-    final $$PenaltyEntityTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.penaltyEntity,
-        getReferencedColumn: (t) => t.improvisation,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$PenaltyEntityTableAnnotationComposer(
-              $db: $db,
-              $table: $db.penaltyEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-
-  Expression<T> pointEntityRefs<T extends Object>(
-      Expression<T> Function($$PointEntityTableAnnotationComposer a) f) {
-    final $$PointEntityTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.pointEntity,
-        getReferencedColumn: (t) => t.improvisation,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$PointEntityTableAnnotationComposer(
-              $db: $db,
-              $table: $db.pointEntity,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-}
-
-class $$ImprovisationEntityTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ImprovisationEntityTable,
-    ImprovisationEntityData,
-    $$ImprovisationEntityTableFilterComposer,
-    $$ImprovisationEntityTableOrderingComposer,
-    $$ImprovisationEntityTableAnnotationComposer,
-    $$ImprovisationEntityTableCreateCompanionBuilder,
-    $$ImprovisationEntityTableUpdateCompanionBuilder,
-    (ImprovisationEntityData, $$ImprovisationEntityTableReferences),
-    ImprovisationEntityData,
-    PrefetchHooks Function(
-        {bool pacing,
-        bool match,
-        bool penaltyEntityRefs,
-        bool pointEntityRefs})> {
-  $$ImprovisationEntityTableTableManager(
-      _$AppDatabase db, $ImprovisationEntityTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ImprovisationEntityTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ImprovisationEntityTableOrderingComposer(
-                  $db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ImprovisationEntityTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<DateTime> createdDate = const Value.absent(),
-            Value<DateTime> modifiedDate = const Value.absent(),
-            Value<ImprovisationType> type = const Value.absent(),
-            Value<String> category = const Value.absent(),
-            Value<String> theme = const Value.absent(),
-            Value<List<int>> durationsInSeconds = const Value.absent(),
-            Value<String> performers = const Value.absent(),
-            Value<String> notes = const Value.absent(),
-            Value<int> timeBufferInSeconds = const Value.absent(),
-            Value<int> huddleTimerInSeconds = const Value.absent(),
-            Value<String?> integrationEntityId = const Value.absent(),
-            Value<String?> integrationAdditionalData = const Value.absent(),
-            Value<int?> pacing = const Value.absent(),
-            Value<int?> match = const Value.absent(),
-          }) =>
-              ImprovisationEntityCompanion(
-            id: id,
-            createdDate: createdDate,
-            modifiedDate: modifiedDate,
-            type: type,
-            category: category,
-            theme: theme,
-            durationsInSeconds: durationsInSeconds,
-            performers: performers,
-            notes: notes,
-            timeBufferInSeconds: timeBufferInSeconds,
-            huddleTimerInSeconds: huddleTimerInSeconds,
-            integrationEntityId: integrationEntityId,
-            integrationAdditionalData: integrationAdditionalData,
-            pacing: pacing,
-            match: match,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<DateTime> createdDate = const Value.absent(),
-            Value<DateTime> modifiedDate = const Value.absent(),
-            required ImprovisationType type,
-            required String category,
-            required String theme,
-            required List<int> durationsInSeconds,
-            required String performers,
-            required String notes,
-            required int timeBufferInSeconds,
-            required int huddleTimerInSeconds,
-            Value<String?> integrationEntityId = const Value.absent(),
-            Value<String?> integrationAdditionalData = const Value.absent(),
-            Value<int?> pacing = const Value.absent(),
-            Value<int?> match = const Value.absent(),
-          }) =>
-              ImprovisationEntityCompanion.insert(
-            id: id,
-            createdDate: createdDate,
-            modifiedDate: modifiedDate,
-            type: type,
-            category: category,
-            theme: theme,
-            durationsInSeconds: durationsInSeconds,
-            performers: performers,
-            notes: notes,
-            timeBufferInSeconds: timeBufferInSeconds,
-            huddleTimerInSeconds: huddleTimerInSeconds,
-            integrationEntityId: integrationEntityId,
-            integrationAdditionalData: integrationAdditionalData,
-            pacing: pacing,
-            match: match,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$ImprovisationEntityTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {pacing = false,
-              match = false,
-              penaltyEntityRefs = false,
-              pointEntityRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (penaltyEntityRefs) db.penaltyEntity,
-                if (pointEntityRefs) db.pointEntity
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (pacing) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.pacing,
-                    referencedTable:
-                        $$ImprovisationEntityTableReferences._pacingTable(db),
-                    referencedColumn: $$ImprovisationEntityTableReferences
-                        ._pacingTable(db)
-                        .id,
-                  ) as T;
-                }
-                if (match) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.match,
-                    referencedTable:
-                        $$ImprovisationEntityTableReferences._matchTable(db),
-                    referencedColumn:
-                        $$ImprovisationEntityTableReferences._matchTable(db).id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (penaltyEntityRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$ImprovisationEntityTableReferences
-                            ._penaltyEntityRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$ImprovisationEntityTableReferences(db, table, p0)
-                                .penaltyEntityRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.improvisation == item.id),
-                        typedResults: items),
-                  if (pointEntityRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$ImprovisationEntityTableReferences
-                            ._pointEntityRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$ImprovisationEntityTableReferences(db, table, p0)
-                                .pointEntityRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.improvisation == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$ImprovisationEntityTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $ImprovisationEntityTable,
-    ImprovisationEntityData,
-    $$ImprovisationEntityTableFilterComposer,
-    $$ImprovisationEntityTableOrderingComposer,
-    $$ImprovisationEntityTableAnnotationComposer,
-    $$ImprovisationEntityTableCreateCompanionBuilder,
-    $$ImprovisationEntityTableUpdateCompanionBuilder,
-    (ImprovisationEntityData, $$ImprovisationEntityTableReferences),
-    ImprovisationEntityData,
-    PrefetchHooks Function(
-        {bool pacing,
-        bool match,
-        bool penaltyEntityRefs,
-        bool pointEntityRefs})>;
 typedef $$PerformerEntityTableCreateCompanionBuilder = PerformerEntityCompanion
     Function({
   Value<int> id,
@@ -7905,6 +8044,690 @@ typedef $$PerformerEntityTableProcessedTableManager = ProcessedTableManager<
     PerformerEntityData,
     PrefetchHooks Function(
         {bool team, bool penaltyEntityRefs, bool starEntityRefs})>;
+typedef $$ImprovisationEntityTableCreateCompanionBuilder
+    = ImprovisationEntityCompanion Function({
+  Value<int> id,
+  required int order,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
+  required ImprovisationType type,
+  required String category,
+  required String theme,
+  required List<int> durationsInSeconds,
+  required String performers,
+  required String notes,
+  required int timeBufferInSeconds,
+  required int huddleTimerInSeconds,
+  Value<String?> integrationEntityId,
+  Value<String?> integrationAdditionalData,
+  Value<int?> pacing,
+  Value<int?> match,
+});
+typedef $$ImprovisationEntityTableUpdateCompanionBuilder
+    = ImprovisationEntityCompanion Function({
+  Value<int> id,
+  Value<int> order,
+  Value<DateTime> createdDate,
+  Value<DateTime> modifiedDate,
+  Value<ImprovisationType> type,
+  Value<String> category,
+  Value<String> theme,
+  Value<List<int>> durationsInSeconds,
+  Value<String> performers,
+  Value<String> notes,
+  Value<int> timeBufferInSeconds,
+  Value<int> huddleTimerInSeconds,
+  Value<String?> integrationEntityId,
+  Value<String?> integrationAdditionalData,
+  Value<int?> pacing,
+  Value<int?> match,
+});
+
+final class $$ImprovisationEntityTableReferences extends BaseReferences<
+    _$AppDatabase, $ImprovisationEntityTable, ImprovisationEntityData> {
+  $$ImprovisationEntityTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $PacingEntityTable _pacingTable(_$AppDatabase db) =>
+      db.pacingEntity.createAlias($_aliasNameGenerator(
+          db.improvisationEntity.pacing, db.pacingEntity.id));
+
+  $$PacingEntityTableProcessedTableManager? get pacing {
+    final $_column = $_itemColumn<int>('pacing');
+    if ($_column == null) return null;
+    final manager = $$PacingEntityTableTableManager($_db, $_db.pacingEntity)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_pacingTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $MatchEntityTable _matchTable(_$AppDatabase db) =>
+      db.matchEntity.createAlias($_aliasNameGenerator(
+          db.improvisationEntity.match, db.matchEntity.id));
+
+  $$MatchEntityTableProcessedTableManager? get match {
+    final $_column = $_itemColumn<int>('match');
+    if ($_column == null) return null;
+    final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_matchTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static MultiTypedResultKey<$PenaltyEntityTable, List<PenaltyEntityData>>
+      _penaltyEntityRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.penaltyEntity,
+              aliasName: $_aliasNameGenerator(
+                  db.improvisationEntity.id, db.penaltyEntity.improvisation));
+
+  $$PenaltyEntityTableProcessedTableManager get penaltyEntityRefs {
+    final manager = $$PenaltyEntityTableTableManager($_db, $_db.penaltyEntity)
+        .filter((f) => f.improvisation.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_penaltyEntityRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$PointEntityTable, List<PointEntityData>>
+      _pointEntityRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.pointEntity,
+              aliasName: $_aliasNameGenerator(
+                  db.improvisationEntity.id, db.pointEntity.improvisation));
+
+  $$PointEntityTableProcessedTableManager get pointEntityRefs {
+    final manager = $$PointEntityTableTableManager($_db, $_db.pointEntity)
+        .filter((f) => f.improvisation.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_pointEntityRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$ImprovisationEntityTableFilterComposer
+    extends Composer<_$AppDatabase, $ImprovisationEntityTable> {
+  $$ImprovisationEntityTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get order => $composableBuilder(
+      column: $table.order, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get modifiedDate => $composableBuilder(
+      column: $table.modifiedDate, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<ImprovisationType, ImprovisationType, int>
+      get type => $composableBuilder(
+          column: $table.type,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get theme => $composableBuilder(
+      column: $table.theme, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<List<int>, List<int>, String>
+      get durationsInSeconds => $composableBuilder(
+          column: $table.durationsInSeconds,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<String> get performers => $composableBuilder(
+      column: $table.performers, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get timeBufferInSeconds => $composableBuilder(
+      column: $table.timeBufferInSeconds,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get huddleTimerInSeconds => $composableBuilder(
+      column: $table.huddleTimerInSeconds,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get integrationEntityId => $composableBuilder(
+      column: $table.integrationEntityId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get integrationAdditionalData => $composableBuilder(
+      column: $table.integrationAdditionalData,
+      builder: (column) => ColumnFilters(column));
+
+  $$PacingEntityTableFilterComposer get pacing {
+    final $$PacingEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.pacing,
+        referencedTable: $db.pacingEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PacingEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.pacingEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$MatchEntityTableFilterComposer get match {
+    final $$MatchEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<bool> penaltyEntityRefs(
+      Expression<bool> Function($$PenaltyEntityTableFilterComposer f) f) {
+    final $$PenaltyEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.penaltyEntity,
+        getReferencedColumn: (t) => t.improvisation,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PenaltyEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.penaltyEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> pointEntityRefs(
+      Expression<bool> Function($$PointEntityTableFilterComposer f) f) {
+    final $$PointEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pointEntity,
+        getReferencedColumn: (t) => t.improvisation,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PointEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.pointEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$ImprovisationEntityTableOrderingComposer
+    extends Composer<_$AppDatabase, $ImprovisationEntityTable> {
+  $$ImprovisationEntityTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get order => $composableBuilder(
+      column: $table.order, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get modifiedDate => $composableBuilder(
+      column: $table.modifiedDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get theme => $composableBuilder(
+      column: $table.theme, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get durationsInSeconds => $composableBuilder(
+      column: $table.durationsInSeconds,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get performers => $composableBuilder(
+      column: $table.performers, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get timeBufferInSeconds => $composableBuilder(
+      column: $table.timeBufferInSeconds,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get huddleTimerInSeconds => $composableBuilder(
+      column: $table.huddleTimerInSeconds,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get integrationEntityId => $composableBuilder(
+      column: $table.integrationEntityId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get integrationAdditionalData => $composableBuilder(
+      column: $table.integrationAdditionalData,
+      builder: (column) => ColumnOrderings(column));
+
+  $$PacingEntityTableOrderingComposer get pacing {
+    final $$PacingEntityTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.pacing,
+        referencedTable: $db.pacingEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PacingEntityTableOrderingComposer(
+              $db: $db,
+              $table: $db.pacingEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$MatchEntityTableOrderingComposer get match {
+    final $$MatchEntityTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableOrderingComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$ImprovisationEntityTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ImprovisationEntityTable> {
+  $$ImprovisationEntityTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get order =>
+      $composableBuilder(column: $table.order, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdDate => $composableBuilder(
+      column: $table.createdDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get modifiedDate => $composableBuilder(
+      column: $table.modifiedDate, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<ImprovisationType, int> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get theme =>
+      $composableBuilder(column: $table.theme, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<int>, String> get durationsInSeconds =>
+      $composableBuilder(
+          column: $table.durationsInSeconds, builder: (column) => column);
+
+  GeneratedColumn<String> get performers => $composableBuilder(
+      column: $table.performers, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<int> get timeBufferInSeconds => $composableBuilder(
+      column: $table.timeBufferInSeconds, builder: (column) => column);
+
+  GeneratedColumn<int> get huddleTimerInSeconds => $composableBuilder(
+      column: $table.huddleTimerInSeconds, builder: (column) => column);
+
+  GeneratedColumn<String> get integrationEntityId => $composableBuilder(
+      column: $table.integrationEntityId, builder: (column) => column);
+
+  GeneratedColumn<String> get integrationAdditionalData => $composableBuilder(
+      column: $table.integrationAdditionalData, builder: (column) => column);
+
+  $$PacingEntityTableAnnotationComposer get pacing {
+    final $$PacingEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.pacing,
+        referencedTable: $db.pacingEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PacingEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.pacingEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$MatchEntityTableAnnotationComposer get match {
+    final $$MatchEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<T> penaltyEntityRefs<T extends Object>(
+      Expression<T> Function($$PenaltyEntityTableAnnotationComposer a) f) {
+    final $$PenaltyEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.penaltyEntity,
+        getReferencedColumn: (t) => t.improvisation,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PenaltyEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.penaltyEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> pointEntityRefs<T extends Object>(
+      Expression<T> Function($$PointEntityTableAnnotationComposer a) f) {
+    final $$PointEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pointEntity,
+        getReferencedColumn: (t) => t.improvisation,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PointEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.pointEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$ImprovisationEntityTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ImprovisationEntityTable,
+    ImprovisationEntityData,
+    $$ImprovisationEntityTableFilterComposer,
+    $$ImprovisationEntityTableOrderingComposer,
+    $$ImprovisationEntityTableAnnotationComposer,
+    $$ImprovisationEntityTableCreateCompanionBuilder,
+    $$ImprovisationEntityTableUpdateCompanionBuilder,
+    (ImprovisationEntityData, $$ImprovisationEntityTableReferences),
+    ImprovisationEntityData,
+    PrefetchHooks Function(
+        {bool pacing,
+        bool match,
+        bool penaltyEntityRefs,
+        bool pointEntityRefs})> {
+  $$ImprovisationEntityTableTableManager(
+      _$AppDatabase db, $ImprovisationEntityTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ImprovisationEntityTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ImprovisationEntityTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ImprovisationEntityTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> order = const Value.absent(),
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
+            Value<ImprovisationType> type = const Value.absent(),
+            Value<String> category = const Value.absent(),
+            Value<String> theme = const Value.absent(),
+            Value<List<int>> durationsInSeconds = const Value.absent(),
+            Value<String> performers = const Value.absent(),
+            Value<String> notes = const Value.absent(),
+            Value<int> timeBufferInSeconds = const Value.absent(),
+            Value<int> huddleTimerInSeconds = const Value.absent(),
+            Value<String?> integrationEntityId = const Value.absent(),
+            Value<String?> integrationAdditionalData = const Value.absent(),
+            Value<int?> pacing = const Value.absent(),
+            Value<int?> match = const Value.absent(),
+          }) =>
+              ImprovisationEntityCompanion(
+            id: id,
+            order: order,
+            createdDate: createdDate,
+            modifiedDate: modifiedDate,
+            type: type,
+            category: category,
+            theme: theme,
+            durationsInSeconds: durationsInSeconds,
+            performers: performers,
+            notes: notes,
+            timeBufferInSeconds: timeBufferInSeconds,
+            huddleTimerInSeconds: huddleTimerInSeconds,
+            integrationEntityId: integrationEntityId,
+            integrationAdditionalData: integrationAdditionalData,
+            pacing: pacing,
+            match: match,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int order,
+            Value<DateTime> createdDate = const Value.absent(),
+            Value<DateTime> modifiedDate = const Value.absent(),
+            required ImprovisationType type,
+            required String category,
+            required String theme,
+            required List<int> durationsInSeconds,
+            required String performers,
+            required String notes,
+            required int timeBufferInSeconds,
+            required int huddleTimerInSeconds,
+            Value<String?> integrationEntityId = const Value.absent(),
+            Value<String?> integrationAdditionalData = const Value.absent(),
+            Value<int?> pacing = const Value.absent(),
+            Value<int?> match = const Value.absent(),
+          }) =>
+              ImprovisationEntityCompanion.insert(
+            id: id,
+            order: order,
+            createdDate: createdDate,
+            modifiedDate: modifiedDate,
+            type: type,
+            category: category,
+            theme: theme,
+            durationsInSeconds: durationsInSeconds,
+            performers: performers,
+            notes: notes,
+            timeBufferInSeconds: timeBufferInSeconds,
+            huddleTimerInSeconds: huddleTimerInSeconds,
+            integrationEntityId: integrationEntityId,
+            integrationAdditionalData: integrationAdditionalData,
+            pacing: pacing,
+            match: match,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$ImprovisationEntityTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {pacing = false,
+              match = false,
+              penaltyEntityRefs = false,
+              pointEntityRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (penaltyEntityRefs) db.penaltyEntity,
+                if (pointEntityRefs) db.pointEntity
+              ],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (pacing) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.pacing,
+                    referencedTable:
+                        $$ImprovisationEntityTableReferences._pacingTable(db),
+                    referencedColumn: $$ImprovisationEntityTableReferences
+                        ._pacingTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (match) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.match,
+                    referencedTable:
+                        $$ImprovisationEntityTableReferences._matchTable(db),
+                    referencedColumn:
+                        $$ImprovisationEntityTableReferences._matchTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (penaltyEntityRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$ImprovisationEntityTableReferences
+                            ._penaltyEntityRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$ImprovisationEntityTableReferences(db, table, p0)
+                                .penaltyEntityRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.improvisation == item.id),
+                        typedResults: items),
+                  if (pointEntityRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$ImprovisationEntityTableReferences
+                            ._pointEntityRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$ImprovisationEntityTableReferences(db, table, p0)
+                                .pointEntityRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.improvisation == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$ImprovisationEntityTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ImprovisationEntityTable,
+    ImprovisationEntityData,
+    $$ImprovisationEntityTableFilterComposer,
+    $$ImprovisationEntityTableOrderingComposer,
+    $$ImprovisationEntityTableAnnotationComposer,
+    $$ImprovisationEntityTableCreateCompanionBuilder,
+    $$ImprovisationEntityTableUpdateCompanionBuilder,
+    (ImprovisationEntityData, $$ImprovisationEntityTableReferences),
+    ImprovisationEntityData,
+    PrefetchHooks Function(
+        {bool pacing,
+        bool match,
+        bool penaltyEntityRefs,
+        bool pointEntityRefs})>;
 typedef $$PenaltyEntityTableCreateCompanionBuilder = PenaltyEntityCompanion
     Function({
   Value<int> id,
@@ -7912,9 +8735,10 @@ typedef $$PenaltyEntityTableCreateCompanionBuilder = PenaltyEntityCompanion
   Value<DateTime> modifiedDate,
   required bool major,
   required String type,
-  Value<int?> performer,
+  required int match,
   required int team,
   required int improvisation,
+  Value<int?> performer,
 });
 typedef $$PenaltyEntityTableUpdateCompanionBuilder = PenaltyEntityCompanion
     Function({
@@ -7923,9 +8747,10 @@ typedef $$PenaltyEntityTableUpdateCompanionBuilder = PenaltyEntityCompanion
   Value<DateTime> modifiedDate,
   Value<bool> major,
   Value<String> type,
-  Value<int?> performer,
+  Value<int> match,
   Value<int> team,
   Value<int> improvisation,
+  Value<int?> performer,
 });
 
 final class $$PenaltyEntityTableReferences extends BaseReferences<_$AppDatabase,
@@ -7933,17 +8758,16 @@ final class $$PenaltyEntityTableReferences extends BaseReferences<_$AppDatabase,
   $$PenaltyEntityTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
-  static $PerformerEntityTable _performerTable(_$AppDatabase db) =>
-      db.performerEntity.createAlias($_aliasNameGenerator(
-          db.penaltyEntity.performer, db.performerEntity.id));
+  static $MatchEntityTable _matchTable(_$AppDatabase db) =>
+      db.matchEntity.createAlias(
+          $_aliasNameGenerator(db.penaltyEntity.match, db.matchEntity.id));
 
-  $$PerformerEntityTableProcessedTableManager? get performer {
-    final $_column = $_itemColumn<int>('performer');
-    if ($_column == null) return null;
-    final manager =
-        $$PerformerEntityTableTableManager($_db, $_db.performerEntity)
-            .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_performerTable($_db));
+  $$MatchEntityTableProcessedTableManager get match {
+    final $_column = $_itemColumn<int>('match')!;
+
+    final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_matchTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: [item]));
@@ -7979,6 +8803,22 @@ final class $$PenaltyEntityTableReferences extends BaseReferences<_$AppDatabase,
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: [item]));
   }
+
+  static $PerformerEntityTable _performerTable(_$AppDatabase db) =>
+      db.performerEntity.createAlias($_aliasNameGenerator(
+          db.penaltyEntity.performer, db.performerEntity.id));
+
+  $$PerformerEntityTableProcessedTableManager? get performer {
+    final $_column = $_itemColumn<int>('performer');
+    if ($_column == null) return null;
+    final manager =
+        $$PerformerEntityTableTableManager($_db, $_db.performerEntity)
+            .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_performerTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 }
 
 class $$PenaltyEntityTableFilterComposer
@@ -8005,18 +8845,18 @@ class $$PenaltyEntityTableFilterComposer
   ColumnFilters<String> get type => $composableBuilder(
       column: $table.type, builder: (column) => ColumnFilters(column));
 
-  $$PerformerEntityTableFilterComposer get performer {
-    final $$PerformerEntityTableFilterComposer composer = $composerBuilder(
+  $$MatchEntityTableFilterComposer get match {
+    final $$MatchEntityTableFilterComposer composer = $composerBuilder(
         composer: this,
-        getCurrentColumn: (t) => t.performer,
-        referencedTable: $db.performerEntity,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            $$PerformerEntityTableFilterComposer(
+            $$MatchEntityTableFilterComposer(
               $db: $db,
-              $table: $db.performerEntity,
+              $table: $db.matchEntity,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -8064,6 +8904,26 @@ class $$PenaltyEntityTableFilterComposer
             ));
     return composer;
   }
+
+  $$PerformerEntityTableFilterComposer get performer {
+    final $$PerformerEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.performer,
+        referencedTable: $db.performerEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PerformerEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.performerEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$PenaltyEntityTableOrderingComposer
@@ -8091,18 +8951,18 @@ class $$PenaltyEntityTableOrderingComposer
   ColumnOrderings<String> get type => $composableBuilder(
       column: $table.type, builder: (column) => ColumnOrderings(column));
 
-  $$PerformerEntityTableOrderingComposer get performer {
-    final $$PerformerEntityTableOrderingComposer composer = $composerBuilder(
+  $$MatchEntityTableOrderingComposer get match {
+    final $$MatchEntityTableOrderingComposer composer = $composerBuilder(
         composer: this,
-        getCurrentColumn: (t) => t.performer,
-        referencedTable: $db.performerEntity,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            $$PerformerEntityTableOrderingComposer(
+            $$MatchEntityTableOrderingComposer(
               $db: $db,
-              $table: $db.performerEntity,
+              $table: $db.matchEntity,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -8151,6 +9011,26 @@ class $$PenaltyEntityTableOrderingComposer
                 ));
     return composer;
   }
+
+  $$PerformerEntityTableOrderingComposer get performer {
+    final $$PerformerEntityTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.performer,
+        referencedTable: $db.performerEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PerformerEntityTableOrderingComposer(
+              $db: $db,
+              $table: $db.performerEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$PenaltyEntityTableAnnotationComposer
@@ -8177,18 +9057,18 @@ class $$PenaltyEntityTableAnnotationComposer
   GeneratedColumn<String> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
 
-  $$PerformerEntityTableAnnotationComposer get performer {
-    final $$PerformerEntityTableAnnotationComposer composer = $composerBuilder(
+  $$MatchEntityTableAnnotationComposer get match {
+    final $$MatchEntityTableAnnotationComposer composer = $composerBuilder(
         composer: this,
-        getCurrentColumn: (t) => t.performer,
-        referencedTable: $db.performerEntity,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            $$PerformerEntityTableAnnotationComposer(
+            $$MatchEntityTableAnnotationComposer(
               $db: $db,
-              $table: $db.performerEntity,
+              $table: $db.matchEntity,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -8237,6 +9117,26 @@ class $$PenaltyEntityTableAnnotationComposer
                 ));
     return composer;
   }
+
+  $$PerformerEntityTableAnnotationComposer get performer {
+    final $$PerformerEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.performer,
+        referencedTable: $db.performerEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PerformerEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.performerEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$PenaltyEntityTableTableManager extends RootTableManager<
@@ -8250,7 +9150,8 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
     $$PenaltyEntityTableUpdateCompanionBuilder,
     (PenaltyEntityData, $$PenaltyEntityTableReferences),
     PenaltyEntityData,
-    PrefetchHooks Function({bool performer, bool team, bool improvisation})> {
+    PrefetchHooks Function(
+        {bool match, bool team, bool improvisation, bool performer})> {
   $$PenaltyEntityTableTableManager(_$AppDatabase db, $PenaltyEntityTable table)
       : super(TableManagerState(
           db: db,
@@ -8267,9 +9168,10 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
             Value<DateTime> modifiedDate = const Value.absent(),
             Value<bool> major = const Value.absent(),
             Value<String> type = const Value.absent(),
-            Value<int?> performer = const Value.absent(),
+            Value<int> match = const Value.absent(),
             Value<int> team = const Value.absent(),
             Value<int> improvisation = const Value.absent(),
+            Value<int?> performer = const Value.absent(),
           }) =>
               PenaltyEntityCompanion(
             id: id,
@@ -8277,9 +9179,10 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
             modifiedDate: modifiedDate,
             major: major,
             type: type,
-            performer: performer,
+            match: match,
             team: team,
             improvisation: improvisation,
+            performer: performer,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -8287,9 +9190,10 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
             Value<DateTime> modifiedDate = const Value.absent(),
             required bool major,
             required String type,
-            Value<int?> performer = const Value.absent(),
+            required int match,
             required int team,
             required int improvisation,
+            Value<int?> performer = const Value.absent(),
           }) =>
               PenaltyEntityCompanion.insert(
             id: id,
@@ -8297,9 +9201,10 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
             modifiedDate: modifiedDate,
             major: major,
             type: type,
-            performer: performer,
+            match: match,
             team: team,
             improvisation: improvisation,
+            performer: performer,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -8308,7 +9213,10 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {performer = false, team = false, improvisation = false}) {
+              {match = false,
+              team = false,
+              improvisation = false,
+              performer = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -8325,14 +9233,14 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic>>(state) {
-                if (performer) {
+                if (match) {
                   state = state.withJoin(
                     currentTable: table,
-                    currentColumn: table.performer,
+                    currentColumn: table.match,
                     referencedTable:
-                        $$PenaltyEntityTableReferences._performerTable(db),
+                        $$PenaltyEntityTableReferences._matchTable(db),
                     referencedColumn:
-                        $$PenaltyEntityTableReferences._performerTable(db).id,
+                        $$PenaltyEntityTableReferences._matchTable(db).id,
                   ) as T;
                 }
                 if (team) {
@@ -8354,6 +9262,16 @@ class $$PenaltyEntityTableTableManager extends RootTableManager<
                     referencedColumn: $$PenaltyEntityTableReferences
                         ._improvisationTable(db)
                         .id,
+                  ) as T;
+                }
+                if (performer) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.performer,
+                    referencedTable:
+                        $$PenaltyEntityTableReferences._performerTable(db),
+                    referencedColumn:
+                        $$PenaltyEntityTableReferences._performerTable(db).id,
                   ) as T;
                 }
 
@@ -8378,13 +9296,15 @@ typedef $$PenaltyEntityTableProcessedTableManager = ProcessedTableManager<
     $$PenaltyEntityTableUpdateCompanionBuilder,
     (PenaltyEntityData, $$PenaltyEntityTableReferences),
     PenaltyEntityData,
-    PrefetchHooks Function({bool performer, bool team, bool improvisation})>;
+    PrefetchHooks Function(
+        {bool match, bool team, bool improvisation, bool performer})>;
 typedef $$PointEntityTableCreateCompanionBuilder = PointEntityCompanion
     Function({
   Value<int> id,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   required int value,
+  required int match,
   required int team,
   required int improvisation,
 });
@@ -8394,6 +9314,7 @@ typedef $$PointEntityTableUpdateCompanionBuilder = PointEntityCompanion
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
   Value<int> value,
+  Value<int> match,
   Value<int> team,
   Value<int> improvisation,
 });
@@ -8401,6 +9322,21 @@ typedef $$PointEntityTableUpdateCompanionBuilder = PointEntityCompanion
 final class $$PointEntityTableReferences
     extends BaseReferences<_$AppDatabase, $PointEntityTable, PointEntityData> {
   $$PointEntityTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MatchEntityTable _matchTable(_$AppDatabase db) =>
+      db.matchEntity.createAlias(
+          $_aliasNameGenerator(db.pointEntity.match, db.matchEntity.id));
+
+  $$MatchEntityTableProcessedTableManager get match {
+    final $_column = $_itemColumn<int>('match')!;
+
+    final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_matchTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 
   static $TeamEntityTable _teamTable(_$AppDatabase db) => db.teamEntity
       .createAlias($_aliasNameGenerator(db.pointEntity.team, db.teamEntity.id));
@@ -8453,6 +9389,26 @@ class $$PointEntityTableFilterComposer
 
   ColumnFilters<int> get value => $composableBuilder(
       column: $table.value, builder: (column) => ColumnFilters(column));
+
+  $$MatchEntityTableFilterComposer get match {
+    final $$MatchEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   $$TeamEntityTableFilterComposer get team {
     final $$TeamEntityTableFilterComposer composer = $composerBuilder(
@@ -8517,6 +9473,26 @@ class $$PointEntityTableOrderingComposer
   ColumnOrderings<int> get value => $composableBuilder(
       column: $table.value, builder: (column) => ColumnOrderings(column));
 
+  $$MatchEntityTableOrderingComposer get match {
+    final $$MatchEntityTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableOrderingComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
   $$TeamEntityTableOrderingComposer get team {
     final $$TeamEntityTableOrderingComposer composer = $composerBuilder(
         composer: this,
@@ -8580,6 +9556,26 @@ class $$PointEntityTableAnnotationComposer
   GeneratedColumn<int> get value =>
       $composableBuilder(column: $table.value, builder: (column) => column);
 
+  $$MatchEntityTableAnnotationComposer get match {
+    final $$MatchEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
   $$TeamEntityTableAnnotationComposer get team {
     final $$TeamEntityTableAnnotationComposer composer = $composerBuilder(
         composer: this,
@@ -8633,7 +9629,7 @@ class $$PointEntityTableTableManager extends RootTableManager<
     $$PointEntityTableUpdateCompanionBuilder,
     (PointEntityData, $$PointEntityTableReferences),
     PointEntityData,
-    PrefetchHooks Function({bool team, bool improvisation})> {
+    PrefetchHooks Function({bool match, bool team, bool improvisation})> {
   $$PointEntityTableTableManager(_$AppDatabase db, $PointEntityTable table)
       : super(TableManagerState(
           db: db,
@@ -8649,6 +9645,7 @@ class $$PointEntityTableTableManager extends RootTableManager<
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             Value<int> value = const Value.absent(),
+            Value<int> match = const Value.absent(),
             Value<int> team = const Value.absent(),
             Value<int> improvisation = const Value.absent(),
           }) =>
@@ -8657,6 +9654,7 @@ class $$PointEntityTableTableManager extends RootTableManager<
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             value: value,
+            match: match,
             team: team,
             improvisation: improvisation,
           ),
@@ -8665,6 +9663,7 @@ class $$PointEntityTableTableManager extends RootTableManager<
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
             required int value,
+            required int match,
             required int team,
             required int improvisation,
           }) =>
@@ -8673,6 +9672,7 @@ class $$PointEntityTableTableManager extends RootTableManager<
             createdDate: createdDate,
             modifiedDate: modifiedDate,
             value: value,
+            match: match,
             team: team,
             improvisation: improvisation,
           ),
@@ -8682,7 +9682,8 @@ class $$PointEntityTableTableManager extends RootTableManager<
                     $$PointEntityTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: ({team = false, improvisation = false}) {
+          prefetchHooksCallback: (
+              {match = false, team = false, improvisation = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -8699,6 +9700,16 @@ class $$PointEntityTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic>>(state) {
+                if (match) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.match,
+                    referencedTable:
+                        $$PointEntityTableReferences._matchTable(db),
+                    referencedColumn:
+                        $$PointEntityTableReferences._matchTable(db).id,
+                  ) as T;
+                }
                 if (team) {
                   state = state.withJoin(
                     currentTable: table,
@@ -8741,11 +9752,12 @@ typedef $$PointEntityTableProcessedTableManager = ProcessedTableManager<
     $$PointEntityTableUpdateCompanionBuilder,
     (PointEntityData, $$PointEntityTableReferences),
     PointEntityData,
-    PrefetchHooks Function({bool team, bool improvisation})>;
+    PrefetchHooks Function({bool match, bool team, bool improvisation})>;
 typedef $$StarEntityTableCreateCompanionBuilder = StarEntityCompanion Function({
   Value<int> id,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
+  required int match,
   required int performer,
   required int team,
 });
@@ -8753,6 +9765,7 @@ typedef $$StarEntityTableUpdateCompanionBuilder = StarEntityCompanion Function({
   Value<int> id,
   Value<DateTime> createdDate,
   Value<DateTime> modifiedDate,
+  Value<int> match,
   Value<int> performer,
   Value<int> team,
 });
@@ -8760,6 +9773,21 @@ typedef $$StarEntityTableUpdateCompanionBuilder = StarEntityCompanion Function({
 final class $$StarEntityTableReferences
     extends BaseReferences<_$AppDatabase, $StarEntityTable, StarEntityData> {
   $$StarEntityTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MatchEntityTable _matchTable(_$AppDatabase db) =>
+      db.matchEntity.createAlias(
+          $_aliasNameGenerator(db.starEntity.match, db.matchEntity.id));
+
+  $$MatchEntityTableProcessedTableManager get match {
+    final $_column = $_itemColumn<int>('match')!;
+
+    final manager = $$MatchEntityTableTableManager($_db, $_db.matchEntity)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_matchTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 
   static $PerformerEntityTable _performerTable(_$AppDatabase db) =>
       db.performerEntity.createAlias(
@@ -8809,6 +9837,26 @@ class $$StarEntityTableFilterComposer
 
   ColumnFilters<DateTime> get modifiedDate => $composableBuilder(
       column: $table.modifiedDate, builder: (column) => ColumnFilters(column));
+
+  $$MatchEntityTableFilterComposer get match {
+    final $$MatchEntityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableFilterComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   $$PerformerEntityTableFilterComposer get performer {
     final $$PerformerEntityTableFilterComposer composer = $composerBuilder(
@@ -8870,6 +9918,26 @@ class $$StarEntityTableOrderingComposer
       column: $table.modifiedDate,
       builder: (column) => ColumnOrderings(column));
 
+  $$MatchEntityTableOrderingComposer get match {
+    final $$MatchEntityTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableOrderingComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
   $$PerformerEntityTableOrderingComposer get performer {
     final $$PerformerEntityTableOrderingComposer composer = $composerBuilder(
         composer: this,
@@ -8929,6 +9997,26 @@ class $$StarEntityTableAnnotationComposer
   GeneratedColumn<DateTime> get modifiedDate => $composableBuilder(
       column: $table.modifiedDate, builder: (column) => column);
 
+  $$MatchEntityTableAnnotationComposer get match {
+    final $$MatchEntityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.match,
+        referencedTable: $db.matchEntity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MatchEntityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.matchEntity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
   $$PerformerEntityTableAnnotationComposer get performer {
     final $$PerformerEntityTableAnnotationComposer composer = $composerBuilder(
         composer: this,
@@ -8981,7 +10069,7 @@ class $$StarEntityTableTableManager extends RootTableManager<
     $$StarEntityTableUpdateCompanionBuilder,
     (StarEntityData, $$StarEntityTableReferences),
     StarEntityData,
-    PrefetchHooks Function({bool performer, bool team})> {
+    PrefetchHooks Function({bool match, bool performer, bool team})> {
   $$StarEntityTableTableManager(_$AppDatabase db, $StarEntityTable table)
       : super(TableManagerState(
           db: db,
@@ -8996,6 +10084,7 @@ class $$StarEntityTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
+            Value<int> match = const Value.absent(),
             Value<int> performer = const Value.absent(),
             Value<int> team = const Value.absent(),
           }) =>
@@ -9003,6 +10092,7 @@ class $$StarEntityTableTableManager extends RootTableManager<
             id: id,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
+            match: match,
             performer: performer,
             team: team,
           ),
@@ -9010,6 +10100,7 @@ class $$StarEntityTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             Value<DateTime> createdDate = const Value.absent(),
             Value<DateTime> modifiedDate = const Value.absent(),
+            required int match,
             required int performer,
             required int team,
           }) =>
@@ -9017,6 +10108,7 @@ class $$StarEntityTableTableManager extends RootTableManager<
             id: id,
             createdDate: createdDate,
             modifiedDate: modifiedDate,
+            match: match,
             performer: performer,
             team: team,
           ),
@@ -9026,7 +10118,8 @@ class $$StarEntityTableTableManager extends RootTableManager<
                     $$StarEntityTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: ({performer = false, team = false}) {
+          prefetchHooksCallback: (
+              {match = false, performer = false, team = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -9043,6 +10136,16 @@ class $$StarEntityTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic>>(state) {
+                if (match) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.match,
+                    referencedTable:
+                        $$StarEntityTableReferences._matchTable(db),
+                    referencedColumn:
+                        $$StarEntityTableReferences._matchTable(db).id,
+                  ) as T;
+                }
                 if (performer) {
                   state = state.withJoin(
                     currentTable: table,
@@ -9084,7 +10187,7 @@ typedef $$StarEntityTableProcessedTableManager = ProcessedTableManager<
     $$StarEntityTableUpdateCompanionBuilder,
     (StarEntityData, $$StarEntityTableReferences),
     StarEntityData,
-    PrefetchHooks Function({bool performer, bool team})>;
+    PrefetchHooks Function({bool match, bool performer, bool team})>;
 typedef $$TagEntityTableCreateCompanionBuilder = TagEntityCompanion Function({
   Value<int> id,
   required String name,
@@ -10522,10 +11625,10 @@ class $AppDatabaseManager {
       $$MatchEntityTableTableManager(_db, _db.matchEntity);
   $$TeamEntityTableTableManager get teamEntity =>
       $$TeamEntityTableTableManager(_db, _db.teamEntity);
-  $$ImprovisationEntityTableTableManager get improvisationEntity =>
-      $$ImprovisationEntityTableTableManager(_db, _db.improvisationEntity);
   $$PerformerEntityTableTableManager get performerEntity =>
       $$PerformerEntityTableTableManager(_db, _db.performerEntity);
+  $$ImprovisationEntityTableTableManager get improvisationEntity =>
+      $$ImprovisationEntityTableTableManager(_db, _db.improvisationEntity);
   $$PenaltyEntityTableTableManager get penaltyEntity =>
       $$PenaltyEntityTableTableManager(_db, _db.penaltyEntity);
   $$PointEntityTableTableManager get pointEntity =>

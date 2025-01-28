@@ -23,25 +23,30 @@ import 'entities/tag_entity.dart';
 import 'entities/team_entity.dart';
 import 'entities/team_tag_entity.dart';
 import 'legacy_database_repository.dart';
+import 'matches_repository.dart';
+import 'pacings_repository.dart';
+import 'teams_repository.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(
-  tables: [
-    PacingEntity,
-    MatchEntity,
-    TeamEntity,
-    ImprovisationEntity,
-    PenaltyEntity,
-    PerformerEntity,
-    PointEntity,
-    StarEntity,
-    TagEntity,
-    PacingTagEntity,
-    MatchTagEntity,
-    TeamTagEntity,
-  ],
-)
+@DriftDatabase(tables: [
+  PacingEntity,
+  MatchEntity,
+  TeamEntity,
+  PerformerEntity,
+  ImprovisationEntity,
+  PenaltyEntity,
+  PointEntity,
+  StarEntity,
+  TagEntity,
+  PacingTagEntity,
+  MatchTagEntity,
+  TeamTagEntity,
+], daos: [
+  PacingsRepository,
+  MatchesRepository,
+  TeamsRepository,
+])
 class AppDatabase extends _$AppDatabase {
   final LegacyDatabaseRepository legacyDatabaseRepository;
   final ToasterService toasterService;
@@ -95,6 +100,7 @@ class AppDatabase extends _$AppDatabase {
         await managers.improvisationEntity.create(
           (i) => i(
             pacing: Value(pacingId),
+            order: pacing.improvisations.indexOf(improvisation),
             category: improvisation.category,
             durationsInSeconds: improvisation.durationsInSeconds,
             huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
@@ -167,6 +173,7 @@ class AppDatabase extends _$AppDatabase {
         final improvisationId = await managers.improvisationEntity.create(
           (i) => i(
             match: Value(matchId),
+            order: match.improvisations.indexOf(improvisation),
             category: improvisation.category,
             durationsInSeconds: improvisation.durationsInSeconds,
             huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
@@ -221,6 +228,7 @@ class AppDatabase extends _$AppDatabase {
             value: point.value,
             createdDate: Value(DateTime.now()),
             modifiedDate: Value(DateTime.now()),
+            match: match.id,
           ),
         );
       }
@@ -235,6 +243,7 @@ class AppDatabase extends _$AppDatabase {
             performer: Value(penalty.performerId != null ? performerIds[penalty.performerId!] : null),
             createdDate: Value(DateTime.now()),
             modifiedDate: Value(DateTime.now()),
+            match: match.id,
           ),
         );
       }
@@ -246,6 +255,7 @@ class AppDatabase extends _$AppDatabase {
             performer: performerIds[star.performerId]!,
             createdDate: Value(DateTime.now()),
             modifiedDate: Value(DateTime.now()),
+            match: match.id,
           ),
         );
       }

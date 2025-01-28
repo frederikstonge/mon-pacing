@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
@@ -60,6 +58,19 @@ class PacingModel with PacingModelMappable {
       integrationId: pacing.integrationId,
       integrationEntityId: pacing.integrationEntityId,
       integrationAdditionalData: pacing.integrationAdditionalData,
+    );
+  }
+
+  PacingEntityData toEntity() {
+    return PacingEntityData(
+      id: id,
+      name: name,
+      createdDate: createdDate ?? DateTime.now(),
+      modifiedDate: modifiedDate ?? DateTime.now(),
+      defaultNumberOfTeams: defaultNumberOfTeams,
+      integrationId: integrationId,
+      integrationEntityId: integrationEntityId,
+      integrationAdditionalData: integrationAdditionalData,
     );
   }
 }

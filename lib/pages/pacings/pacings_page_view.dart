@@ -74,9 +74,9 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                         editMode: false,
                         onConfirm: (pacing) async {
                           final router = GoRouter.of(context);
-                          final pacingModel = await context.read<PacingsCubit>().add(pacing);
-                          if (pacingModel != null) {
-                            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                          final pacingId = await context.read<PacingsCubit>().add(pacing);
+                          if (pacingId != null) {
+                            router.goNamed(Routes.pacing, pathParameters: {'id': '$pacingId'});
                             return true;
                           }
 
@@ -177,9 +177,9 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                                 pacing: pacing,
                                 onConfirm: (pacing) async {
                                   final router = GoRouter.of(context);
-                                  final pacingModel = await context.read<PacingsCubit>().add(pacing);
-                                  if (pacingModel != null) {
-                                    router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                                  final pacingId = await context.read<PacingsCubit>().add(pacing);
+                                  if (pacingId != null) {
+                                    router.goNamed(Routes.pacing, pathParameters: {'id': '$pacingId'});
                                     return true;
                                   }
 

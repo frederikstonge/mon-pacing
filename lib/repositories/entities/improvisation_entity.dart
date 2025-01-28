@@ -7,6 +7,7 @@ import 'pacing_entity.dart';
 
 class ImprovisationEntity extends Table {
   IntColumn get id => integer().autoIncrement()();
+  IntColumn get order => integer()();
   DateTimeColumn get createdDate => dateTime().withDefault(Constant(DateTime.now()))();
   DateTimeColumn get modifiedDate => dateTime().withDefault(Constant(DateTime.now()))();
   IntColumn get type => intEnum<ImprovisationType>()();

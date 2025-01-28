@@ -801,15 +801,14 @@ class MockPacingsCubit extends _i1.Mock implements _i18.PacingsCubit {
       ) as bool);
 
   @override
-  _i28.Future<_i32.PacingModel?> add(_i32.PacingModel? model) =>
-      (super.noSuchMethod(
+  _i28.Future<int?> add(_i32.PacingModel? model) => (super.noSuchMethod(
         Invocation.method(
           #add,
           [model],
         ),
-        returnValue: _i28.Future<_i32.PacingModel?>.value(),
-        returnValueForMissingStub: _i28.Future<_i32.PacingModel?>.value(),
-      ) as _i28.Future<_i32.PacingModel?>);
+        returnValue: _i28.Future<int?>.value(),
+        returnValueForMissingStub: _i28.Future<int?>.value(),
+      ) as _i28.Future<int?>);
 
   @override
   _i28.Future<void> edit(_i32.PacingModel? model) => (super.noSuchMethod(
@@ -876,14 +875,14 @@ class MockPacingsCubit extends _i1.Mock implements _i18.PacingsCubit {
       ) as _i28.Future<void>);
 
   @override
-  _i28.Future<_i32.PacingModel?> import() => (super.noSuchMethod(
+  _i28.Future<int?> import() => (super.noSuchMethod(
         Invocation.method(
           #import,
           [],
         ),
-        returnValue: _i28.Future<_i32.PacingModel?>.value(),
-        returnValueForMissingStub: _i28.Future<_i32.PacingModel?>.value(),
-      ) as _i28.Future<_i32.PacingModel?>);
+        returnValue: _i28.Future<int?>.value(),
+        returnValueForMissingStub: _i28.Future<int?>.value(),
+      ) as _i28.Future<int?>);
 
   @override
   _i28.Future<bool> export(_i32.PacingModel? model) => (super.noSuchMethod(

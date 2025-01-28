@@ -1,107 +1,143 @@
-import 'package:isar/isar.dart';
+import 'package:collection/collection.dart';
+import 'package:drift/drift.dart';
 
 import '../extensions/iterable_extensions.dart';
 import '../models/pacing_model.dart';
 import 'app_database.dart';
-import 'legacy_database_repository.dart';
+import 'entities/improvisation_entity.dart';
+import 'entities/pacing_entity.dart';
+import 'entities/pacing_tag_entity.dart';
+import 'entities/tag_entity.dart';
 
-class PacingsRepository {
-  final LegacyDatabaseRepository databaseRepository;
-  final AppDatabase appDatabase;
+part 'pacings_repository.g.dart';
 
-  const PacingsRepository({
-    required this.databaseRepository,
-    required this.appDatabase,
-  });
+@DriftAccessor(
+  tables: [
+    PacingEntity,
+    ImprovisationEntity,
+    PacingTagEntity,
+    TagEntity,
+  ],
+)
+class PacingsRepository extends DatabaseAccessor<AppDatabase> with _$PacingsRepositoryMixin {
+  PacingsRepository(
+    super.attachedDatabase,
+  );
 
-  Future<PacingModel> add(PacingModel entity) async {
-    final db = await databaseRepository.database;
-    final id = db.pacingModels.autoIncrement();
-    final now = DateTime.now();
-    final model = entity.copyWith(id: id, createdDate: now, modifiedDate: now);
-    await db.writeAsync((isar) => isar.pacingModels.put(model));
-    return model;
+  Future<int> add(PacingModel model) async {
+    final entity = model.toEntity();
+    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toEntity(i.key));
+    final pacing = await transaction(() async {
+      final pacing = await pacingEntity.insert().insertReturning(entity);
+      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id));
+      await improvisationEntity.insertAll(improvisations);
+      return pacing;
+    });
+
+    return pacing.id;
   }
 
-  Future<void> delete(int id) async {
-    final db = await databaseRepository.database;
-    await db.writeAsync((isar) => isar.pacingModels.delete(id));
+  Future<void> remove(int id) async {
+    await transaction(() async {
+      await improvisationEntity.deleteWhere((i) => i.pacing.equals(id));
+      await pacingEntity.deleteWhere((p) => p.id.equals(id));
+    });
   }
 
-  Future<void> edit(PacingModel entity) async {
-    final model = entity.copyWith(modifiedDate: DateTime.now());
-    final db = await databaseRepository.database;
-    await db.writeAsync((isar) => isar.pacingModels.put(model));
+  Future<void> edit(PacingModel model) async {
+    final entity = model.toEntity();
+    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toEntity(i.key));
+    await transaction(() async {
+      await pacingEntity.update().replace(entity);
+      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id));
+      await improvisationEntity.insertAll(improvisations);
+    });
   }
 
   Future<PacingModel?> get(int id) async {
-    final response = await appDatabase.managers.pacingEntity
+    final response = await attachedDatabase.managers.pacingEntity
         .withReferences((p) => p(improvisationEntityRefs: true))
         .filter((p) => p.id.equals(id))
         .getSingleOrNull();
 
-    final pacing = response?.$1;
-    final improvisations = response?.$2.improvisationEntityRefs.prefetchedData;
+    if (response == null) {
+      return null;
+    }
 
-    final pacingTags = await response?.$2.pacingTagEntityRefs.withReferences((p) => p(tag: true)).get();
-    final tags = pacingTags?.map((t) => t.$2.tag.prefetchedData).selectMany<TagEntityData>((t) => t ?? []);
-
-    if (pacing == null || improvisations == null || tags == null) return null;
-    return PacingModel.fromEntity(pacing, improvisations, tags.toList());
+    return await _getPacingModel(response);
   }
 
   Future<List<PacingModel>> getList(int skip, int take) async {
     final List<PacingModel> pacings = [];
-    final response = await appDatabase.managers.pacingEntity
+    final response = await attachedDatabase.managers.pacingEntity
         .withReferences((p) => p(improvisationEntityRefs: true))
         .orderBy((p) => p.createdDate.desc())
         .get(offset: skip, limit: take);
 
     for (final pacingResponse in response) {
-      final pacing = pacingResponse.$1;
-      final improvisations = pacingResponse.$2.improvisationEntityRefs.prefetchedData ?? [];
-
-      final pacingTags = await pacingResponse.$2.pacingTagEntityRefs.withReferences((p) => p(tag: true)).get();
-      final tags = pacingTags.map((t) => t.$2.tag.prefetchedData).selectMany<TagEntityData>((t) => t ?? []);
-
-      pacings.add(PacingModel.fromEntity(pacing, improvisations, tags.toList()));
+      pacings.add(await _getPacingModel(pacingResponse));
     }
 
     return pacings;
   }
 
   Future<List<PacingModel>> search(String search, List<String> selectedTags) async {
-    final db = await databaseRepository.database;
+    final List<PacingModel> pacings = [];
+    var pacingsQuery = attachedDatabase.managers.pacingEntity.withReferences((p) => p(improvisationEntityRefs: true));
 
-    return await db.pacingModels
-        .where()
-        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementEqualTo(t)))
-        .and()
-        .optional(
-          search.isNotEmpty,
-          (q) => q.group(
-            (g) => g
-                .nameContains(search, caseSensitive: false)
-                .or()
-                .categoriesElementContains(search, caseSensitive: false)
-                .or()
-                .themesElementContains(search, caseSensitive: false),
-          ),
-        )
-        .sortByCreatedDateDesc()
-        .findAllAsync();
+    if (selectedTags.isNotEmpty) {
+      pacingsQuery = pacingsQuery.filter((p) => p.pacingTagEntityRefs((f) => f.tag.name.isIn(selectedTags)));
+    }
+
+    if (search.isNotEmpty) {
+      pacingsQuery = pacingsQuery.filter(
+        (p) =>
+            p.name.contains(search, caseInsensitive: true) |
+            p.improvisationEntityRefs(
+              (i) => i.category.contains(search, caseInsensitive: true) | i.theme.contains(search, caseInsensitive: true),
+            ),
+      );
+    }
+
+    final response = await pacingsQuery.orderBy((p) => p.createdDate.desc()).get();
+    for (final pacingResponse in response) {
+      pacings.add(await _getPacingModel(pacingResponse));
+    }
+
+    return pacings;
   }
 
   Future<List<String>> getAllTags({String query = ''}) async {
-    final db = await databaseRepository.database;
-    final tags = await db.pacingModels.where().optional(query.isNotEmpty, (q) => q.tagsElementContains(query)).tagsProperty().findAllAsync();
-    return tags.selectMany((t) => t).toSet().toList();
+    var pacingTagsQuery = attachedDatabase.managers.pacingTagEntity.withReferences((p) => p(tag: true));
+    if (query.isNotEmpty) {
+      pacingTagsQuery = pacingTagsQuery.filter((t) => t.tag.name.contains(query, caseInsensitive: true));
+    }
+
+    final tags = await pacingTagsQuery.get();
+    return tags.selectMany((t) => t.$2.tag.prefetchedData!).map((t) => t.name).toSet().toList();
   }
 
   Future<List<String>> getAllCategories({String query = ''}) async {
-    final db = await databaseRepository.database;
-    final categories =
-        await db.pacingModels.where().optional(query.isNotEmpty, (q) => q.categoriesElementContains(query)).categoriesProperty().findAllAsync();
-    return categories.selectMany((t) => t).toSet().toList();
+    var improvisationsQuery = attachedDatabase.managers.improvisationEntity.withReferences();
+    if (query.isNotEmpty) {
+      improvisationsQuery = improvisationsQuery.filter((i) => i.category.contains(query, caseInsensitive: true));
+    }
+
+    final improvisations = await improvisationsQuery.get();
+    return improvisations.map((t) => t.$1.category).toSet().toList();
+  }
+
+  Future<PacingModel> _getPacingModel((PacingEntityData, $$PacingEntityTableReferences) pacingResponse) async {
+    final pacing = pacingResponse.$1;
+    final improvisations = pacingResponse.$2.improvisationEntityRefs.prefetchedData ?? [];
+
+    final pacingTags = await pacingResponse.$2.pacingTagEntityRefs.withReferences((p) => p(tag: true)).get();
+    final tags = pacingTags.selectMany((t) => t.$2.tag.prefetchedData!);
+
+    return PacingModel.fromEntity(
+      pacing,
+      improvisations.sortedBy<num>((i) => i.order),
+      tags.toList(),
+    );
   }
 }

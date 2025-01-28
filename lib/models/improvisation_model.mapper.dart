@@ -42,6 +42,12 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   static String _$notes(ImprovisationModel v) => v.notes;
   static const Field<ImprovisationModel, String> _f$notes =
       Field('notes', _$notes);
+  static DateTime? _$createdDate(ImprovisationModel v) => v.createdDate;
+  static const Field<ImprovisationModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(ImprovisationModel v) => v.modifiedDate;
+  static const Field<ImprovisationModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
   static int _$timeBufferInSeconds(ImprovisationModel v) =>
       v.timeBufferInSeconds;
   static const Field<ImprovisationModel, int> _f$timeBufferInSeconds =
@@ -69,6 +75,8 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
     #durationsInSeconds: _f$durationsInSeconds,
     #performers: _f$performers,
     #notes: _f$notes,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
     #timeBufferInSeconds: _f$timeBufferInSeconds,
     #huddleTimerInSeconds: _f$huddleTimerInSeconds,
     #integrationEntityId: _f$integrationEntityId,
@@ -84,6 +92,8 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
         durationsInSeconds: data.dec(_f$durationsInSeconds),
         performers: data.dec(_f$performers),
         notes: data.dec(_f$notes),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate),
         timeBufferInSeconds: data.dec(_f$timeBufferInSeconds),
         huddleTimerInSeconds: data.dec(_f$huddleTimerInSeconds),
         integrationEntityId: data.dec(_f$integrationEntityId),
@@ -154,6 +164,8 @@ abstract class ImprovisationModelCopyWith<$R, $In extends ImprovisationModel,
       List<int>? durationsInSeconds,
       String? performers,
       String? notes,
+      DateTime? createdDate,
+      DateTime? modifiedDate,
       int? timeBufferInSeconds,
       int? huddleTimerInSeconds,
       String? integrationEntityId,
@@ -185,6 +197,8 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
           List<int>? durationsInSeconds,
           String? performers,
           String? notes,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none,
           int? timeBufferInSeconds,
           int? huddleTimerInSeconds,
           Object? integrationEntityId = $none,
@@ -197,6 +211,8 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
         if (durationsInSeconds != null) #durationsInSeconds: durationsInSeconds,
         if (performers != null) #performers: performers,
         if (notes != null) #notes: notes,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (timeBufferInSeconds != null)
           #timeBufferInSeconds: timeBufferInSeconds,
         if (huddleTimerInSeconds != null)
@@ -216,6 +232,8 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
           data.get(#durationsInSeconds, or: $value.durationsInSeconds),
       performers: data.get(#performers, or: $value.performers),
       notes: data.get(#notes, or: $value.notes),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       timeBufferInSeconds:
           data.get(#timeBufferInSeconds, or: $value.timeBufferInSeconds),
       huddleTimerInSeconds:
