@@ -449,8 +449,8 @@ MatchModel deserializeMatchModel(IsarReader reader) {
               major: false,
               type: '',
               performerId: null,
-              teamId: -9223372036854775808,
               improvisationId: -9223372036854775808,
+              teamId: -9223372036854775808,
             ),
             growable: true);
         for (var i = 0; i < length; i++) {
@@ -462,8 +462,8 @@ MatchModel deserializeMatchModel(IsarReader reader) {
                 major: false,
                 type: '',
                 performerId: null,
-                teamId: -9223372036854775808,
                 improvisationId: -9223372036854775808,
+                teamId: -9223372036854775808,
               );
             } else {
               final embedded = deserializePenaltyModel(objectReader);
@@ -825,8 +825,8 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                   major: false,
                   type: '',
                   performerId: null,
-                  teamId: -9223372036854775808,
                   improvisationId: -9223372036854775808,
+                  teamId: -9223372036854775808,
                 ),
                 growable: true);
             for (var i = 0; i < length; i++) {
@@ -838,8 +838,8 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                     major: false,
                     type: '',
                     performerId: null,
-                    teamId: -9223372036854775808,
                     improvisationId: -9223372036854775808,
+                    teamId: -9223372036854775808,
                   );
                 } else {
                   final embedded = deserializePenaltyModel(objectReader);

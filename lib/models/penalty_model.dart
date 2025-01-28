@@ -1,6 +1,8 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
+import '../repositories/app_database.dart';
+
 part 'penalty_model.mapper.dart';
 part 'penalty_model.g.dart';
 
@@ -13,50 +15,49 @@ class PenaltyModel with PenaltyModelMappable {
   final int? performerId;
   final int teamId;
   final int improvisationId;
+  final int? matchId;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
 
   const PenaltyModel({
     required this.id,
     required this.major,
     required this.type,
     required this.performerId,
-    required this.teamId,
     required this.improvisationId,
+    required this.teamId,
+    required this.matchId,
+    this.createdDate,
+    this.modifiedDate,
   });
 
-  factory ImprovisationModel.fromEntity(
-    ImprovisationEntityData improvisation,
+  factory PenaltyModel.fromEntity(
+    PenaltyEntityData penalty,
   ) {
-    return ImprovisationModel(
-      id: improvisation.id,
-      type: improvisation.type,
-      category: improvisation.category,
-      theme: improvisation.theme,
-      durationsInSeconds: improvisation.durationsInSeconds,
-      performers: improvisation.performers,
-      notes: improvisation.notes,
-      timeBufferInSeconds: improvisation.timeBufferInSeconds,
-      huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
-      integrationEntityId: improvisation.integrationEntityId,
-      integrationAdditionalData: improvisation.integrationAdditionalData,
+    return PenaltyModel(
+      id: penalty.id,
+      type: penalty.type,
+      major: penalty.major,
+      performerId: penalty.performer,
+      teamId: penalty.team,
+      improvisationId: penalty.improvisation,
+      matchId: penalty.match,
+      modifiedDate: penalty.modifiedDate,
+      createdDate: penalty.createdDate,
     );
   }
 
-  ImprovisationEntityData toEntity(int order) {
-    return ImprovisationEntityData(
+  PenaltyEntityData toEntity() {
+    return PenaltyEntityData(
       id: id,
-      order: order,
       createdDate: createdDate ?? DateTime.now(),
       modifiedDate: modifiedDate ?? DateTime.now(),
       type: type,
-      category: category,
-      theme: theme,
-      durationsInSeconds: durationsInSeconds,
-      performers: performers,
-      notes: notes,
-      timeBufferInSeconds: timeBufferInSeconds,
-      huddleTimerInSeconds: huddleTimerInSeconds,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
+      major: major,
+      performer: performerId,
+      team: teamId,
+      improvisation: improvisationId,
+      match: matchId,
     );
   }
 }

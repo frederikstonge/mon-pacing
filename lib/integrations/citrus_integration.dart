@@ -204,6 +204,7 @@ class CitrusIntegration implements MatchIntegrationBase {
       return PerformerModel(
         name: performerName,
         id: getPerformerId(),
+        teamId: teamId,
         integrationAdditionalData: jsonEncode(metadata),
       );
     }).toList();

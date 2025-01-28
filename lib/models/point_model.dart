@@ -1,6 +1,8 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
+import '../repositories/app_database.dart';
+
 part 'point_model.mapper.dart';
 part 'point_model.g.dart';
 
@@ -11,48 +13,43 @@ class PointModel with PointModelMappable {
   final int teamId;
   final int improvisationId;
   final int value;
+  final int? matchId;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
 
   const PointModel({
     required this.id,
     required this.teamId,
     required this.improvisationId,
     required this.value,
+    required this.matchId,
+    this.createdDate,
+    this.modifiedDate,
   });
 
-  factory ImprovisationModel.fromEntity(
-    ImprovisationEntityData improvisation,
+  factory PointModel.fromEntity(
+    PointEntityData point,
   ) {
-    return ImprovisationModel(
-      id: improvisation.id,
-      type: improvisation.type,
-      category: improvisation.category,
-      theme: improvisation.theme,
-      durationsInSeconds: improvisation.durationsInSeconds,
-      performers: improvisation.performers,
-      notes: improvisation.notes,
-      timeBufferInSeconds: improvisation.timeBufferInSeconds,
-      huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
-      integrationEntityId: improvisation.integrationEntityId,
-      integrationAdditionalData: improvisation.integrationAdditionalData,
+    return PointModel(
+      id: point.id,
+      teamId: point.team,
+      improvisationId: point.improvisation,
+      matchId: point.match,
+      value: point.value,
+      createdDate: point.createdDate,
+      modifiedDate: point.modifiedDate,
     );
   }
 
-  ImprovisationEntityData toEntity(int order) {
-    return ImprovisationEntityData(
+  PointEntityData toEntity() {
+    return PointEntityData(
       id: id,
-      order: order,
       createdDate: createdDate ?? DateTime.now(),
       modifiedDate: modifiedDate ?? DateTime.now(),
-      type: type,
-      category: category,
-      theme: theme,
-      durationsInSeconds: durationsInSeconds,
-      performers: performers,
-      notes: notes,
-      timeBufferInSeconds: timeBufferInSeconds,
-      huddleTimerInSeconds: huddleTimerInSeconds,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
+      team: teamId,
+      improvisation: improvisationId,
+      match: matchId,
+      value: value,
     );
   }
 }

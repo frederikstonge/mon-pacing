@@ -1,6 +1,8 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
+import '../repositories/app_database.dart';
+
 part 'performer_model.mapper.dart';
 part 'performer_model.g.dart';
 
@@ -9,48 +11,44 @@ part 'performer_model.g.dart';
 class PerformerModel with PerformerModelMappable {
   final int id;
   final String name;
+  final int? teamId;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
+
   final String? integrationEntityId;
   final String? integrationAdditionalData;
 
   const PerformerModel({
     required this.id,
     required this.name,
+    required this.teamId,
+    this.createdDate,
+    this.modifiedDate,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
 
-  factory ImprovisationModel.fromEntity(
-    ImprovisationEntityData improvisation,
+  factory PerformerModel.fromEntity(
+    PerformerEntityData performer,
   ) {
-    return ImprovisationModel(
-      id: improvisation.id,
-      type: improvisation.type,
-      category: improvisation.category,
-      theme: improvisation.theme,
-      durationsInSeconds: improvisation.durationsInSeconds,
-      performers: improvisation.performers,
-      notes: improvisation.notes,
-      timeBufferInSeconds: improvisation.timeBufferInSeconds,
-      huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
-      integrationEntityId: improvisation.integrationEntityId,
-      integrationAdditionalData: improvisation.integrationAdditionalData,
+    return PerformerModel(
+      id: performer.id,
+      name: performer.name,
+      createdDate: performer.createdDate,
+      modifiedDate: performer.modifiedDate,
+      teamId: performer.team,
+      integrationEntityId: performer.integrationEntityId,
+      integrationAdditionalData: performer.integrationAdditionalData,
     );
   }
 
-  ImprovisationEntityData toEntity(int order) {
-    return ImprovisationEntityData(
+  PerformerEntityData toEntity() {
+    return PerformerEntityData(
       id: id,
-      order: order,
       createdDate: createdDate ?? DateTime.now(),
       modifiedDate: modifiedDate ?? DateTime.now(),
-      type: type,
-      category: category,
-      theme: theme,
-      durationsInSeconds: durationsInSeconds,
-      performers: performers,
-      notes: notes,
-      timeBufferInSeconds: timeBufferInSeconds,
-      huddleTimerInSeconds: huddleTimerInSeconds,
+      name: name,
+      team: teamId,
       integrationEntityId: integrationEntityId,
       integrationAdditionalData: integrationAdditionalData,
     );

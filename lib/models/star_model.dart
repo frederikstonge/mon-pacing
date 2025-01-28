@@ -1,6 +1,8 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
+import '../repositories/app_database.dart';
+
 part 'star_model.mapper.dart';
 part 'star_model.g.dart';
 
@@ -10,47 +12,38 @@ class StarModel with StarModelMappable {
   final int id;
   final int performerId;
   final int teamId;
+  final int? matchId;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
 
   const StarModel({
     required this.id,
     required this.performerId,
     required this.teamId,
+    required this.matchId,
+    this.createdDate,
+    this.modifiedDate,
   });
 
-  factory ImprovisationModel.fromEntity(
-    ImprovisationEntityData improvisation,
+  factory StarModel.fromEntity(
+    StarEntityData star,
   ) {
-    return ImprovisationModel(
-      id: improvisation.id,
-      type: improvisation.type,
-      category: improvisation.category,
-      theme: improvisation.theme,
-      durationsInSeconds: improvisation.durationsInSeconds,
-      performers: improvisation.performers,
-      notes: improvisation.notes,
-      timeBufferInSeconds: improvisation.timeBufferInSeconds,
-      huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
-      integrationEntityId: improvisation.integrationEntityId,
-      integrationAdditionalData: improvisation.integrationAdditionalData,
+    return StarModel(
+      id: star.id,
+      performerId: star.performer,
+      teamId: star.team,
+      matchId: star.match,
     );
   }
 
-  ImprovisationEntityData toEntity(int order) {
-    return ImprovisationEntityData(
+  StarEntityData toEntity() {
+    return StarEntityData(
       id: id,
-      order: order,
       createdDate: createdDate ?? DateTime.now(),
       modifiedDate: modifiedDate ?? DateTime.now(),
-      type: type,
-      category: category,
-      theme: theme,
-      durationsInSeconds: durationsInSeconds,
-      performers: performers,
-      notes: notes,
-      timeBufferInSeconds: timeBufferInSeconds,
-      huddleTimerInSeconds: huddleTimerInSeconds,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
+      performer: performerId,
+      team: teamId,
+      match: matchId,
     );
   }
 }
