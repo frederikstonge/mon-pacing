@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'match_team_model.dart';
+part of 'improvisation_model.dart';
 
 // **************************************************************************
 // _IsarEmbeddedGenerator
@@ -10,9 +10,9 @@ part of 'match_team_model.dart';
 // ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
 // ignore_for_file: type=lint
 
-const MatchTeamModelSchema = IsarGeneratedSchema(
+const ImprovisationModelSchema = IsarGeneratedSchema(
   schema: IsarSchema(
-    name: 'MatchTeamModel',
+    name: 'ImprovisationModel',
     embedded: true,
     properties: [
       IsarPropertySchema(
@@ -20,33 +20,37 @@ const MatchTeamModelSchema = IsarGeneratedSchema(
         type: IsarType.long,
       ),
       IsarPropertySchema(
-        name: 'name',
+        name: 'type',
+        type: IsarType.byte,
+        enumMap: {"mixed": 0, "compared": 1},
+      ),
+      IsarPropertySchema(
+        name: 'category',
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'createdDate',
-        type: IsarType.dateTime,
+        name: 'theme',
+        type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'modifiedDate',
-        type: IsarType.dateTime,
-      ),
-      IsarPropertySchema(
-        name: 'color',
-        type: IsarType.long,
+        name: 'durationsInSeconds',
+        type: IsarType.longList,
       ),
       IsarPropertySchema(
         name: 'performers',
-        type: IsarType.objectList,
-        target: 'PerformerModel',
-      ),
-      IsarPropertySchema(
-        name: 'tags',
-        type: IsarType.stringList,
-      ),
-      IsarPropertySchema(
-        name: 'integrationId',
         type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'notes',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'timeBufferInSeconds',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'huddleTimerInSeconds',
+        type: IsarType.long,
       ),
       IsarPropertySchema(
         name: 'integrationEntityId',
@@ -59,179 +63,135 @@ const MatchTeamModelSchema = IsarGeneratedSchema(
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, MatchTeamModel>(
-    serialize: serializeMatchTeamModel,
-    deserialize: deserializeMatchTeamModel,
+  converter: IsarObjectConverter<void, ImprovisationModel>(
+    serialize: serializeImprovisationModel,
+    deserialize: deserializeImprovisationModel,
   ),
 );
 
 @isarProtected
-int serializeMatchTeamModel(IsarWriter writer, MatchTeamModel object) {
+int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
   IsarCore.writeLong(writer, 1, object.id);
-  IsarCore.writeString(writer, 2, object.name);
-  IsarCore.writeLong(
-      writer,
-      3,
-      object.createdDate?.toUtc().microsecondsSinceEpoch ??
-          -9223372036854775808);
-  IsarCore.writeLong(
-      writer,
-      4,
-      object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
-          -9223372036854775808);
-  IsarCore.writeLong(writer, 5, object.color);
+  IsarCore.writeByte(writer, 2, object.type.index);
+  IsarCore.writeString(writer, 3, object.category);
+  IsarCore.writeString(writer, 4, object.theme);
   {
-    final list = object.performers;
-    final listWriter = IsarCore.beginList(writer, 6, list.length);
+    final list = object.durationsInSeconds;
+    final listWriter = IsarCore.beginList(writer, 5, list.length);
     for (var i = 0; i < list.length; i++) {
-      {
-        final value = list[i];
-        final objectWriter = IsarCore.beginObject(listWriter, i);
-        serializePerformerModel(objectWriter, value);
-        IsarCore.endObject(listWriter, objectWriter);
-      }
+      IsarCore.writeLong(listWriter, i, list[i]);
     }
     IsarCore.endList(writer, listWriter);
   }
-  {
-    final list = object.tags;
-    final listWriter = IsarCore.beginList(writer, 7, list.length);
-    for (var i = 0; i < list.length; i++) {
-      IsarCore.writeString(listWriter, i, list[i]);
-    }
-    IsarCore.endList(writer, listWriter);
-  }
-  {
-    final value = object.integrationId;
-    if (value == null) {
-      IsarCore.writeNull(writer, 8);
-    } else {
-      IsarCore.writeString(writer, 8, value);
-    }
-  }
+  IsarCore.writeString(writer, 6, object.performers);
+  IsarCore.writeString(writer, 7, object.notes);
+  IsarCore.writeLong(writer, 8, object.timeBufferInSeconds);
+  IsarCore.writeLong(writer, 9, object.huddleTimerInSeconds);
   {
     final value = object.integrationEntityId;
-    if (value == null) {
-      IsarCore.writeNull(writer, 9);
-    } else {
-      IsarCore.writeString(writer, 9, value);
-    }
-  }
-  {
-    final value = object.integrationAdditionalData;
     if (value == null) {
       IsarCore.writeNull(writer, 10);
     } else {
       IsarCore.writeString(writer, 10, value);
     }
   }
+  {
+    final value = object.integrationAdditionalData;
+    if (value == null) {
+      IsarCore.writeNull(writer, 11);
+    } else {
+      IsarCore.writeString(writer, 11, value);
+    }
+  }
   return 0;
 }
 
 @isarProtected
-MatchTeamModel deserializeMatchTeamModel(IsarReader reader) {
+ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   final int _id;
   _id = IsarCore.readLong(reader, 1);
-  final String _name;
-  _name = IsarCore.readString(reader, 2) ?? '';
-  final DateTime? _createdDate;
+  final ImprovisationType _type;
   {
-    final value = IsarCore.readLong(reader, 3);
-    if (value == -9223372036854775808) {
-      _createdDate = null;
+    if (IsarCore.readNull(reader, 2)) {
+      _type = ImprovisationType.mixed;
     } else {
-      _createdDate =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
+      _type = _improvisationModelType[IsarCore.readByte(reader, 2)] ??
+          ImprovisationType.mixed;
     }
   }
-  final DateTime? _modifiedDate;
+  final String _category;
+  _category = IsarCore.readString(reader, 3) ?? '';
+  final String _theme;
+  _theme = IsarCore.readString(reader, 4) ?? '';
+  final List<int> _durationsInSeconds;
   {
-    final value = IsarCore.readLong(reader, 4);
-    if (value == -9223372036854775808) {
-      _modifiedDate = null;
-    } else {
-      _modifiedDate =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
-    }
-  }
-  final int _color;
-  _color = IsarCore.readLong(reader, 5);
-  final List<PerformerModel> _performers;
-  {
-    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
-        _performers = const [];
+        _durationsInSeconds = const <int>[];
       } else {
-        final list = List<PerformerModel>.filled(
-            length,
-            PerformerModel(
-              id: -9223372036854775808,
-              name: '',
-            ),
-            growable: true);
+        final list =
+            List<int>.filled(length, -9223372036854775808, growable: true);
         for (var i = 0; i < length; i++) {
-          {
-            final objectReader = IsarCore.readObject(reader, i);
-            if (objectReader.isNull) {
-              list[i] = PerformerModel(
-                id: -9223372036854775808,
-                name: '',
-              );
-            } else {
-              final embedded = deserializePerformerModel(objectReader);
-              IsarCore.freeReader(objectReader);
-              list[i] = embedded;
-            }
-          }
+          list[i] = IsarCore.readLong(reader, i);
         }
         IsarCore.freeReader(reader);
-        _performers = list;
+        _durationsInSeconds = list;
       }
     }
   }
-  final List<String> _tags;
+  final String _performers;
+  _performers = IsarCore.readString(reader, 6) ?? '';
+  final String _notes;
+  _notes = IsarCore.readString(reader, 7) ?? '';
+  final int _timeBufferInSeconds;
   {
-    final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
-    {
-      final reader = IsarCore.readerPtr;
-      if (reader.isNull) {
-        _tags = const [];
-      } else {
-        final list = List<String>.filled(length, '', growable: true);
-        for (var i = 0; i < length; i++) {
-          list[i] = IsarCore.readString(reader, i) ?? '';
-        }
-        IsarCore.freeReader(reader);
-        _tags = list;
-      }
+    final value = IsarCore.readLong(reader, 8);
+    if (value == -9223372036854775808) {
+      _timeBufferInSeconds = 30;
+    } else {
+      _timeBufferInSeconds = value;
     }
   }
-  final String? _integrationId;
-  _integrationId = IsarCore.readString(reader, 8);
+  final int _huddleTimerInSeconds;
+  {
+    final value = IsarCore.readLong(reader, 9);
+    if (value == -9223372036854775808) {
+      _huddleTimerInSeconds = 30;
+    } else {
+      _huddleTimerInSeconds = value;
+    }
+  }
   final String? _integrationEntityId;
-  _integrationEntityId = IsarCore.readString(reader, 9);
+  _integrationEntityId = IsarCore.readString(reader, 10);
   final String? _integrationAdditionalData;
-  _integrationAdditionalData = IsarCore.readString(reader, 10);
-  final object = MatchTeamModel(
+  _integrationAdditionalData = IsarCore.readString(reader, 11);
+  final object = ImprovisationModel(
     id: _id,
-    name: _name,
-    createdDate: _createdDate,
-    modifiedDate: _modifiedDate,
-    color: _color,
+    type: _type,
+    category: _category,
+    theme: _theme,
+    durationsInSeconds: _durationsInSeconds,
     performers: _performers,
-    tags: _tags,
-    integrationId: _integrationId,
+    notes: _notes,
+    timeBufferInSeconds: _timeBufferInSeconds,
+    huddleTimerInSeconds: _huddleTimerInSeconds,
     integrationEntityId: _integrationEntityId,
     integrationAdditionalData: _integrationAdditionalData,
   );
   return object;
 }
 
-extension MatchTeamModelQueryFilter
-    on QueryBuilder<MatchTeamModel, MatchTeamModel, QFilterCondition> {
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition> idEqualTo(
+const _improvisationModelType = {
+  0: ImprovisationType.mixed,
+  1: ImprovisationType.compared,
+};
+
+extension ImprovisationModelQueryFilter
+    on QueryBuilder<ImprovisationModel, ImprovisationModel, QFilterCondition> {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      idEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -244,7 +204,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       idGreaterThan(
     int value,
   ) {
@@ -258,7 +218,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       idGreaterThanOrEqualTo(
     int value,
   ) {
@@ -272,7 +232,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       idLessThan(
     int value,
   ) {
@@ -286,7 +246,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       idLessThanOrEqualTo(
     int value,
   ) {
@@ -300,7 +260,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition> idBetween(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      idBetween(
     int lower,
     int upper,
   ) {
@@ -315,15 +276,101 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      typeEqualTo(
+    ImprovisationType value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 2,
+          value: value.index,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      typeGreaterThan(
+    ImprovisationType value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 2,
+          value: value.index,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      typeGreaterThanOrEqualTo(
+    ImprovisationType value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value.index,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      typeLessThan(
+    ImprovisationType value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value.index,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      typeLessThanOrEqualTo(
+    ImprovisationType value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value.index,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      typeBetween(
+    ImprovisationType lower,
+    ImprovisationType upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 2,
+          lower: lower.index,
+          upper: upper.index,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -331,15 +378,15 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameGreaterThan(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -347,15 +394,15 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameGreaterThanOrEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -363,15 +410,15 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameLessThan(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -379,15 +426,15 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameLessThanOrEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -395,8 +442,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameBetween(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -404,7 +451,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 2,
+          property: 3,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -413,15 +460,15 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameStartsWith(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -429,15 +476,15 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameEndsWith(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -445,12 +492,12 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 2,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -458,12 +505,12 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 2,
+          property: 3,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -471,232 +518,212 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameIsEmpty() {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 2,
+          property: 3,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      nameIsNotEmpty() {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      categoryIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 2,
+          property: 3,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateGreaterThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateGreaterThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateLessThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateLessThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      createdDateBetween(
-    DateTime? lower,
-    DateTime? upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 3,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 4));
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 4));
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateEqualTo(
-    DateTime? value,
-  ) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
           property: 4,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateGreaterThan(
-    DateTime? value,
-  ) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
           property: 4,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateGreaterThanOrEqualTo(
-    DateTime? value,
-  ) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
           property: 4,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateLessThan(
-    DateTime? value,
-  ) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
           property: 4,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateLessThanOrEqualTo(
-    DateTime? value,
-  ) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
           property: 4,
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      modifiedDateBetween(
-    DateTime? lower,
-    DateTime? upper,
-  ) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
           property: 4,
           lower: lower,
           upper: upper,
+          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      colorEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 4,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 4,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 4,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      themeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 4,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsElementEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -709,8 +736,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      colorGreaterThan(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsElementGreaterThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -723,8 +750,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      colorGreaterThanOrEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsElementGreaterThanOrEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -737,8 +764,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      colorLessThan(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsElementLessThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -751,8 +778,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      colorLessThanOrEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsElementLessThanOrEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -765,8 +792,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      colorBetween(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsElementBetween(
     int lower,
     int upper,
   ) {
@@ -781,22 +808,202 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      performersIsEmpty() {
-    return not().performersIsNotEmpty();
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsIsEmpty() {
+    return not().durationsInSecondsIsNotEmpty();
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      performersIsNotEmpty() {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      durationsInSecondsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 6, value: null),
+        const GreaterOrEqualCondition(property: 5, value: null),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 6,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 6,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 6,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      performersIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 6,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -811,8 +1018,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementGreaterThan(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -827,8 +1034,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementGreaterThanOrEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -843,8 +1050,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementLessThan(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -859,8 +1066,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementLessThanOrEqualTo(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -875,8 +1082,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementBetween(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -893,8 +1100,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementStartsWith(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -909,8 +1116,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementEndsWith(
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -925,8 +1132,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -938,8 +1145,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
@@ -951,8 +1158,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementIsEmpty() {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -963,8 +1170,8 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsElementIsNotEmpty() {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      notesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -975,229 +1182,193 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsIsEmpty() {
-    return not().tagsIsNotEmpty();
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      tagsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 7, value: null),
-      );
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 8));
-    });
-  }
-
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
           property: 8,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdGreaterThan(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
           property: 8,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdGreaterThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
           property: 8,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdLessThan(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
           property: 8,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdLessThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
           property: 8,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdBetween(
-    String? lower,
-    String? upper, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      timeBufferInSecondsBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
           property: 8,
           lower: lower,
           upper: upper,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        StartsWithCondition(
-          property: 8,
+        EqualCondition(
+          property: 9,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        EndsWithCondition(
-          property: 8,
+        GreaterCondition(
+          property: 9,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        ContainsCondition(
-          property: 8,
+        GreaterOrEqualCondition(
+          property: 9,
           value: value,
-          caseSensitive: caseSensitive,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        MatchesCondition(
-          property: 8,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
+        LessCondition(
+          property: 9,
+          value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdIsEmpty() {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const EqualCondition(
-          property: 8,
-          value: '',
+        LessOrEqualCondition(
+          property: 9,
+          value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
-      integrationIdIsNotEmpty() {
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+      huddleTimerInSecondsBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterCondition(
-          property: 8,
-          value: '',
+        BetweenCondition(
+          property: 9,
+          lower: lower,
+          upper: upper,
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 9));
+      return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 9));
+      return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1205,7 +1376,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1213,7 +1384,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdGreaterThan(
     String? value, {
     bool caseSensitive = true,
@@ -1221,7 +1392,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1229,7 +1400,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1237,7 +1408,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1245,7 +1416,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdLessThan(
     String? value, {
     bool caseSensitive = true,
@@ -1253,7 +1424,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1261,7 +1432,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1269,7 +1440,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1277,7 +1448,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdBetween(
     String? lower,
     String? upper, {
@@ -1286,7 +1457,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 9,
+          property: 10,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1295,7 +1466,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1303,7 +1474,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1311,7 +1482,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1319,7 +1490,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1327,12 +1498,12 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 9,
+          property: 10,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1340,12 +1511,12 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 9,
+          property: 10,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1353,45 +1524,45 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 9,
+          property: 10,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationEntityIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 9,
+          property: 10,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 10));
+      return query.addFilterCondition(const IsNullCondition(property: 11));
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 10));
+      return query.addFilterCondition(const IsNullCondition(property: 11));
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1399,7 +1570,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1407,7 +1578,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataGreaterThan(
     String? value, {
     bool caseSensitive = true,
@@ -1415,7 +1586,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1423,7 +1594,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1431,7 +1602,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1439,7 +1610,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataLessThan(
     String? value, {
     bool caseSensitive = true,
@@ -1447,7 +1618,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1455,7 +1626,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1463,7 +1634,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1471,7 +1642,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataBetween(
     String? lower,
     String? upper, {
@@ -1480,7 +1651,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 10,
+          property: 11,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1489,7 +1660,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1497,7 +1668,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1505,7 +1676,7 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1513,7 +1684,7 @@ extension MatchTeamModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1521,13 +1692,13 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataContains(String value,
           {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 10,
+          property: 11,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1535,13 +1706,13 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataMatches(String pattern,
           {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 10,
+          property: 11,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1549,24 +1720,24 @@ extension MatchTeamModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 10,
+          property: 11,
           value: '',
         ),
       );
     });
   }
 
-  QueryBuilder<MatchTeamModel, MatchTeamModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
       integrationAdditionalDataIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 10,
+          property: 11,
           value: '',
         ),
       );
@@ -1574,5 +1745,5 @@ extension MatchTeamModelQueryFilter
   }
 }
 
-extension MatchTeamModelQueryObject
-    on QueryBuilder<MatchTeamModel, MatchTeamModel, QFilterCondition> {}
+extension ImprovisationModelQueryObject
+    on QueryBuilder<ImprovisationModel, ImprovisationModel, QFilterCondition> {}

@@ -1,23 +1,31 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:isar/isar.dart';
 
-import '../repositories/app_database.dart';
+import '../../models/improvisation_type.dart';
+import '../../models/penalties_impact_type.dart';
+import '../app_database.dart';
 import 'improvisation_model.dart';
-import 'penalties_impact_type.dart';
+import 'match_team_model.dart';
 import 'penalty_model.dart';
+import 'performer_model.dart';
 import 'point_model.dart';
 import 'star_model.dart';
-import 'team_model.dart';
 
 part 'match_model.mapper.dart';
+part 'match_model.g.dart';
 
 @MappableClass()
+@collection
 class MatchModel with MatchModelMappable {
   final int id;
+  @index
   final String name;
+  @index
   final DateTime? createdDate;
+  @index
   final DateTime? modifiedDate;
   final List<String> tags;
-  final List<TeamModel> teams;
+  final List<MatchTeamModel> teams;
   final List<ImprovisationModel> improvisations;
   final List<PenaltyModel> penalties;
   final List<PointModel> points;
@@ -62,41 +70,7 @@ class MatchModel with MatchModelMappable {
     this.integrationPenaltyTypes,
   });
 
-  factory MatchModel.fromEntity(
-    MatchEntityData match,
-    List<TeamModel> teams,
-    List<ImprovisationModel> improvisations,
-    List<PenaltyModel> penalties,
-    List<PointModel> points,
-    List<StarModel> stars,
-    List<String> tags,
-  ) {
-    return MatchModel(
-      id: match.id,
-      name: match.name,
-      createdDate: match.createdDate,
-      modifiedDate: match.modifiedDate,
-      teams: teams,
-      improvisations: improvisations,
-      penalties: penalties,
-      points: points,
-      stars: stars,
-      enableStatistics: match.enableStatistics,
-      enablePenaltiesImpactPoints: match.enablePenaltiesImpactPoints,
-      penaltiesImpactType: match.penaltiesImpactType,
-      penaltiesRequiredToImpactPoints: match.penaltiesRequiredToImpactPoints,
-      enableMatchExpulsion: match.enableMatchExpulsion,
-      penaltiesRequiredToExpel: match.penaltiesRequiredToExpel,
-      integrationId: match.integrationId,
-      integrationEntityId: match.integrationEntityId,
-      integrationAdditionalData: match.integrationAdditionalData,
-      integrationRestrictMaximumPointPerImprovisation: match.integrationRestrictMaximumPointPerImprovisation,
-      integrationMinNumberOfImprovisations: match.integrationMinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: match.integrationMaxNumberOfImprovisations,
-      integrationPenaltyTypes: match.integrationPenaltyTypes,
-      tags: tags,
-    );
-  }
+  List<String> get teamNames => teams.map((e) => e.name).toList();
 
   MatchEntityData toEntity() {
     return MatchEntityData(

@@ -30,18 +30,9 @@ class MatchTeamModelMapper extends ClassMapperBase<MatchTeamModel> {
   static List<PerformerModel> _$performers(MatchTeamModel v) => v.performers;
   static const Field<MatchTeamModel, List<PerformerModel>> _f$performers =
       Field('performers', _$performers, opt: true, def: const []);
-  static DateTime? _$createdDate(MatchTeamModel v) => v.createdDate;
-  static const Field<MatchTeamModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate, opt: true);
-  static DateTime? _$modifiedDate(MatchTeamModel v) => v.modifiedDate;
-  static const Field<MatchTeamModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate, opt: true);
   static List<String> _$tags(MatchTeamModel v) => v.tags;
   static const Field<MatchTeamModel, List<String>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
-  static String? _$integrationId(MatchTeamModel v) => v.integrationId;
-  static const Field<MatchTeamModel, String> _f$integrationId =
-      Field('integrationId', _$integrationId, opt: true);
   static String? _$integrationEntityId(MatchTeamModel v) =>
       v.integrationEntityId;
   static const Field<MatchTeamModel, String> _f$integrationEntityId =
@@ -58,10 +49,7 @@ class MatchTeamModelMapper extends ClassMapperBase<MatchTeamModel> {
     #name: _f$name,
     #color: _f$color,
     #performers: _f$performers,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
     #tags: _f$tags,
-    #integrationId: _f$integrationId,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
   };
@@ -72,10 +60,7 @@ class MatchTeamModelMapper extends ClassMapperBase<MatchTeamModel> {
         name: data.dec(_f$name),
         color: data.dec(_f$color),
         performers: data.dec(_f$performers),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate),
         tags: data.dec(_f$tags),
-        integrationId: data.dec(_f$integrationId),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
@@ -142,10 +127,7 @@ abstract class MatchTeamModelCopyWith<$R, $In extends MatchTeamModel, $Out>
       String? name,
       int? color,
       List<PerformerModel>? performers,
-      DateTime? createdDate,
-      DateTime? modifiedDate,
       List<String>? tags,
-      String? integrationId,
       String? integrationEntityId,
       String? integrationAdditionalData});
   MatchTeamModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -175,10 +157,7 @@ class _MatchTeamModelCopyWithImpl<$R, $Out>
           String? name,
           int? color,
           List<PerformerModel>? performers,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none,
           List<String>? tags,
-          Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
@@ -186,10 +165,7 @@ class _MatchTeamModelCopyWithImpl<$R, $Out>
         if (name != null) #name: name,
         if (color != null) #color: color,
         if (performers != null) #performers: performers,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (tags != null) #tags: tags,
-        if (integrationId != $none) #integrationId: integrationId,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
         if (integrationAdditionalData != $none)
@@ -201,10 +177,7 @@ class _MatchTeamModelCopyWithImpl<$R, $Out>
       name: data.get(#name, or: $value.name),
       color: data.get(#color, or: $value.color),
       performers: data.get(#performers, or: $value.performers),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       tags: data.get(#tags, or: $value.tags),
-      integrationId: data.get(#integrationId, or: $value.integrationId),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),
       integrationAdditionalData: data.get(#integrationAdditionalData,

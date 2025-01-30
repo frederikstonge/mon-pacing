@@ -28,7 +28,6 @@ import 'package:mon_pacing/l10n/generated/app_localizations.dart';
 import 'package:mon_pacing/models/improvisation_model.dart';
 import 'package:mon_pacing/models/improvisation_type.dart';
 import 'package:mon_pacing/models/match_model.dart';
-import 'package:mon_pacing/models/match_team_model.dart';
 import 'package:mon_pacing/models/pacing_model.dart';
 import 'package:mon_pacing/models/team_model.dart';
 import 'package:mon_pacing/models/theme_type.dart';
@@ -145,15 +144,19 @@ void main() {
       createdDate: DateTime.now(),
       modifiedDate: DateTime.now(),
       teams: [
-        MatchTeamModel(
+        TeamModel(
           id: 0,
           name: 'Canadiens',
           color: Colors.red.getIntvalue,
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
         ),
-        MatchTeamModel(
+        TeamModel(
           id: 1,
           name: 'Maple Leafs',
           color: Colors.blue.getIntvalue,
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
         ),
       ],
       improvisations: List.generate(

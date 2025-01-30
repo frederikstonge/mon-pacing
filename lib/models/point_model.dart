@@ -1,19 +1,16 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
 
 import '../repositories/app_database.dart';
 
 part 'point_model.mapper.dart';
-part 'point_model.g.dart';
 
 @MappableClass()
-@Embedded(ignore: {'copyWith'})
 class PointModel with PointModelMappable {
   final int id;
   final int teamId;
   final int improvisationId;
   final int value;
-  final int? matchId;
+  final int matchId;
   final DateTime? createdDate;
   final DateTime? modifiedDate;
 

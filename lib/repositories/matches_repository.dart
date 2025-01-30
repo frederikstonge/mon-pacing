@@ -2,7 +2,13 @@ import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:isar/isar.dart';
 import '../extensions/iterable_extensions.dart';
+import '../models/improvisation_model.dart';
 import '../models/match_model.dart';
+import '../models/penalty_model.dart';
+import '../models/performer_model.dart';
+import '../models/point_model.dart';
+import '../models/star_model.dart';
+import '../models/team_model.dart';
 import 'app_database.dart';
 import 'entities/improvisation_entity.dart';
 import 'entities/match_entity.dart';
@@ -126,15 +132,22 @@ class MatchesRepository extends DatabaseAccessor<AppDatabase> with _$MatchesRepo
     final matchTags = await matchResponse.$2.matchTagEntityRefs.withReferences((p) => p(tag: true)).get();
     final tags = matchTags.selectMany((t) => t.$2.tag.prefetchedData!);
 
+    final performerModels = performers.map((p) => PerformerModel.fromEntity(p)).toList();
+    final teamsModel = teams.map((t) => TeamModel.fromEntity(t, performerModels, null)).toList();
+    final improvisationModels = improvisations.map((i) => ImprovisationModel.fromEntity(i)).toList();
+    final penaltyModels = penalties.map((p) => PenaltyModel.fromEntity(p)).toList();
+    final pointModels = points.map((p) => PointModel.fromEntity(p)).toList();
+    final starModels = stars.map((s) => StarModel.fromEntity(s)).toList();
+    final tagModels = tags.map((t) => t.name).toList();
+
     return MatchModel.fromEntity(
       match,
-      teams.toList(),
-      improvisations.sortedBy<num>((i) => i.order),
-      performers.toList(),
-      penalties,
-      points,
-      stars,
-      tags.toList(),
+      teamsModel,
+      improvisationModels,
+      penaltyModels,
+      pointModels,
+      starModels,
+      tagModels,
     );
   }
 }

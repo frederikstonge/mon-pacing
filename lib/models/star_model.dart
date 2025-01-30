@@ -1,18 +1,15 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
 
 import '../repositories/app_database.dart';
 
 part 'star_model.mapper.dart';
-part 'star_model.g.dart';
 
 @MappableClass()
-@Embedded(ignore: {'copyWith'})
 class StarModel with StarModelMappable {
   final int id;
   final int performerId;
   final int teamId;
-  final int? matchId;
+  final int matchId;
   final DateTime? createdDate;
   final DateTime? modifiedDate;
 

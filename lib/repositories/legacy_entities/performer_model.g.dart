@@ -24,18 +24,6 @@ const PerformerModelSchema = IsarGeneratedSchema(
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'teamId',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
-        name: 'createdDate',
-        type: IsarType.dateTime,
-      ),
-      IsarPropertySchema(
-        name: 'modifiedDate',
-        type: IsarType.dateTime,
-      ),
-      IsarPropertySchema(
         name: 'integrationEntityId',
         type: IsarType.string,
       ),
@@ -56,31 +44,20 @@ const PerformerModelSchema = IsarGeneratedSchema(
 int serializePerformerModel(IsarWriter writer, PerformerModel object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeString(writer, 2, object.name);
-  IsarCore.writeLong(writer, 3, object.teamId ?? -9223372036854775808);
-  IsarCore.writeLong(
-      writer,
-      4,
-      object.createdDate?.toUtc().microsecondsSinceEpoch ??
-          -9223372036854775808);
-  IsarCore.writeLong(
-      writer,
-      5,
-      object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
-          -9223372036854775808);
   {
     final value = object.integrationEntityId;
     if (value == null) {
-      IsarCore.writeNull(writer, 6);
+      IsarCore.writeNull(writer, 3);
     } else {
-      IsarCore.writeString(writer, 6, value);
+      IsarCore.writeString(writer, 3, value);
     }
   }
   {
     final value = object.integrationAdditionalData;
     if (value == null) {
-      IsarCore.writeNull(writer, 7);
+      IsarCore.writeNull(writer, 4);
     } else {
-      IsarCore.writeString(writer, 7, value);
+      IsarCore.writeString(writer, 4, value);
     }
   }
   return 0;
@@ -92,45 +69,13 @@ PerformerModel deserializePerformerModel(IsarReader reader) {
   _id = IsarCore.readLong(reader, 1);
   final String _name;
   _name = IsarCore.readString(reader, 2) ?? '';
-  final int? _teamId;
-  {
-    final value = IsarCore.readLong(reader, 3);
-    if (value == -9223372036854775808) {
-      _teamId = null;
-    } else {
-      _teamId = value;
-    }
-  }
-  final DateTime? _createdDate;
-  {
-    final value = IsarCore.readLong(reader, 4);
-    if (value == -9223372036854775808) {
-      _createdDate = null;
-    } else {
-      _createdDate =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
-    }
-  }
-  final DateTime? _modifiedDate;
-  {
-    final value = IsarCore.readLong(reader, 5);
-    if (value == -9223372036854775808) {
-      _modifiedDate = null;
-    } else {
-      _modifiedDate =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
-    }
-  }
   final String? _integrationEntityId;
-  _integrationEntityId = IsarCore.readString(reader, 6);
+  _integrationEntityId = IsarCore.readString(reader, 3);
   final String? _integrationAdditionalData;
-  _integrationAdditionalData = IsarCore.readString(reader, 7);
+  _integrationAdditionalData = IsarCore.readString(reader, 4);
   final object = PerformerModel(
     id: _id,
     name: _name,
-    teamId: _teamId,
-    createdDate: _createdDate,
-    modifiedDate: _modifiedDate,
     integrationEntityId: _integrationEntityId,
     integrationAdditionalData: _integrationAdditionalData,
   );
@@ -404,316 +349,16 @@ extension PerformerModelQueryFilter
   }
 
   QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdEqualTo(
-    int? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdGreaterThan(
-    int? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdGreaterThanOrEqualTo(
-    int? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdLessThan(
-    int? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdLessThanOrEqualTo(
-    int? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      teamIdBetween(
-    int? lower,
-    int? upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 3,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 4));
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 4));
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateGreaterThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateGreaterThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateLessThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateLessThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      createdDateBetween(
-    DateTime? lower,
-    DateTime? upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 4,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 5));
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 5));
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 5,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateGreaterThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 5,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateGreaterThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 5,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateLessThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 5,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateLessThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 5,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
-      modifiedDateBetween(
-    DateTime? lower,
-    DateTime? upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 5,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
       integrationEntityIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
+      return query.addFilterCondition(const IsNullCondition(property: 3));
     });
   }
 
   QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
       integrationEntityIdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 6));
+      return query.addFilterCondition(const IsNullCondition(property: 3));
     });
   }
 
@@ -725,7 +370,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -741,7 +386,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -757,7 +402,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -773,7 +418,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -789,7 +434,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -806,7 +451,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 6,
+          property: 3,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -823,7 +468,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -839,7 +484,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -852,7 +497,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 6,
+          property: 3,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -865,7 +510,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 6,
+          property: 3,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -878,7 +523,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 6,
+          property: 3,
           value: '',
         ),
       );
@@ -890,7 +535,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 6,
+          property: 3,
           value: '',
         ),
       );
@@ -900,14 +545,14 @@ extension PerformerModelQueryFilter
   QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
       integrationAdditionalDataIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
+      return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
   QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
       integrationAdditionalDataIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 7));
+      return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
@@ -919,7 +564,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -935,7 +580,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -951,7 +596,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -967,7 +612,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -983,7 +628,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1000,7 +645,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 7,
+          property: 4,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1017,7 +662,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1033,7 +678,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1047,7 +692,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 7,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1061,7 +706,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 7,
+          property: 4,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -1074,7 +719,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 7,
+          property: 4,
           value: '',
         ),
       );
@@ -1086,7 +731,7 @@ extension PerformerModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 7,
+          property: 4,
           value: '',
         ),
       );

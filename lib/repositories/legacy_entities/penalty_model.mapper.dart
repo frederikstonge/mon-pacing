@@ -34,15 +34,6 @@ class PenaltyModelMapper extends ClassMapperBase<PenaltyModel> {
       Field('improvisationId', _$improvisationId);
   static int _$teamId(PenaltyModel v) => v.teamId;
   static const Field<PenaltyModel, int> _f$teamId = Field('teamId', _$teamId);
-  static int _$matchId(PenaltyModel v) => v.matchId;
-  static const Field<PenaltyModel, int> _f$matchId =
-      Field('matchId', _$matchId);
-  static DateTime? _$createdDate(PenaltyModel v) => v.createdDate;
-  static const Field<PenaltyModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate, opt: true);
-  static DateTime? _$modifiedDate(PenaltyModel v) => v.modifiedDate;
-  static const Field<PenaltyModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate, opt: true);
 
   @override
   final MappableFields<PenaltyModel> fields = const {
@@ -52,9 +43,6 @@ class PenaltyModelMapper extends ClassMapperBase<PenaltyModel> {
     #performerId: _f$performerId,
     #improvisationId: _f$improvisationId,
     #teamId: _f$teamId,
-    #matchId: _f$matchId,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
   };
 
   static PenaltyModel _instantiate(DecodingData data) {
@@ -64,10 +52,7 @@ class PenaltyModelMapper extends ClassMapperBase<PenaltyModel> {
         type: data.dec(_f$type),
         performerId: data.dec(_f$performerId),
         improvisationId: data.dec(_f$improvisationId),
-        teamId: data.dec(_f$teamId),
-        matchId: data.dec(_f$matchId),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate));
+        teamId: data.dec(_f$teamId));
   }
 
   @override
@@ -128,10 +113,7 @@ abstract class PenaltyModelCopyWith<$R, $In extends PenaltyModel, $Out>
       String? type,
       int? performerId,
       int? improvisationId,
-      int? teamId,
-      int? matchId,
-      DateTime? createdDate,
-      DateTime? modifiedDate});
+      int? teamId});
   PenaltyModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -150,20 +132,14 @@ class _PenaltyModelCopyWithImpl<$R, $Out>
           String? type,
           Object? performerId = $none,
           int? improvisationId,
-          int? teamId,
-          int? matchId,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none}) =>
+          int? teamId}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (major != null) #major: major,
         if (type != null) #type: type,
         if (performerId != $none) #performerId: performerId,
         if (improvisationId != null) #improvisationId: improvisationId,
-        if (teamId != null) #teamId: teamId,
-        if (matchId != null) #matchId: matchId,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate
+        if (teamId != null) #teamId: teamId
       }));
   @override
   PenaltyModel $make(CopyWithData data) => PenaltyModel(
@@ -172,10 +148,7 @@ class _PenaltyModelCopyWithImpl<$R, $Out>
       type: data.get(#type, or: $value.type),
       performerId: data.get(#performerId, or: $value.performerId),
       improvisationId: data.get(#improvisationId, or: $value.improvisationId),
-      teamId: data.get(#teamId, or: $value.teamId),
-      matchId: data.get(#matchId, or: $value.matchId),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate));
+      teamId: data.get(#teamId, or: $value.teamId));
 
   @override
   PenaltyModelCopyWith<$R2, PenaltyModel, $Out2> $chain<$R2, $Out2>(

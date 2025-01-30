@@ -29,14 +29,6 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
       Field('improvisationId', _$improvisationId);
   static int _$value(PointModel v) => v.value;
   static const Field<PointModel, int> _f$value = Field('value', _$value);
-  static int _$matchId(PointModel v) => v.matchId;
-  static const Field<PointModel, int> _f$matchId = Field('matchId', _$matchId);
-  static DateTime? _$createdDate(PointModel v) => v.createdDate;
-  static const Field<PointModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate, opt: true);
-  static DateTime? _$modifiedDate(PointModel v) => v.modifiedDate;
-  static const Field<PointModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate, opt: true);
 
   @override
   final MappableFields<PointModel> fields = const {
@@ -44,9 +36,6 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
     #teamId: _f$teamId,
     #improvisationId: _f$improvisationId,
     #value: _f$value,
-    #matchId: _f$matchId,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
   };
 
   static PointModel _instantiate(DecodingData data) {
@@ -54,10 +43,7 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
         id: data.dec(_f$id),
         teamId: data.dec(_f$teamId),
         improvisationId: data.dec(_f$improvisationId),
-        value: data.dec(_f$value),
-        matchId: data.dec(_f$matchId),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate));
+        value: data.dec(_f$value));
   }
 
   @override
@@ -111,14 +97,7 @@ extension PointModelValueCopy<$R, $Out>
 
 abstract class PointModelCopyWith<$R, $In extends PointModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call(
-      {int? id,
-      int? teamId,
-      int? improvisationId,
-      int? value,
-      int? matchId,
-      DateTime? createdDate,
-      DateTime? modifiedDate});
+  $R call({int? id, int? teamId, int? improvisationId, int? value});
   PointModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -131,32 +110,19 @@ class _PointModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<PointModel> $mapper =
       PointModelMapper.ensureInitialized();
   @override
-  $R call(
-          {int? id,
-          int? teamId,
-          int? improvisationId,
-          int? value,
-          int? matchId,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none}) =>
+  $R call({int? id, int? teamId, int? improvisationId, int? value}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (teamId != null) #teamId: teamId,
         if (improvisationId != null) #improvisationId: improvisationId,
-        if (value != null) #value: value,
-        if (matchId != null) #matchId: matchId,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate
+        if (value != null) #value: value
       }));
   @override
   PointModel $make(CopyWithData data) => PointModel(
       id: data.get(#id, or: $value.id),
       teamId: data.get(#teamId, or: $value.teamId),
       improvisationId: data.get(#improvisationId, or: $value.improvisationId),
-      value: data.get(#value, or: $value.value),
-      matchId: data.get(#matchId, or: $value.matchId),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate));
+      value: data.get(#value, or: $value.value));
 
   @override
   PointModelCopyWith<$R2, PointModel, $Out2> $chain<$R2, $Out2>(

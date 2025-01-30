@@ -1,15 +1,22 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:isar/isar.dart';
 
-import '../repositories/app_database.dart';
+import '../../models/improvisation_type.dart';
+import '../app_database.dart';
 import 'improvisation_model.dart';
 
 part 'pacing_model.mapper.dart';
+part 'pacing_model.g.dart';
 
 @MappableClass()
+@collection
 class PacingModel with PacingModelMappable {
   final int id;
+  @index
   final String name;
+  @index
   final DateTime? createdDate;
+  @index
   final DateTime? modifiedDate;
   final List<ImprovisationModel> improvisations;
   final int defaultNumberOfTeams;
@@ -31,24 +38,9 @@ class PacingModel with PacingModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory PacingModel.fromEntity(
-    PacingEntityData pacing,
-    List<ImprovisationModel> improvisations,
-    List<String> tags,
-  ) {
-    return PacingModel(
-      id: pacing.id,
-      name: pacing.name,
-      createdDate: pacing.createdDate,
-      modifiedDate: pacing.modifiedDate,
-      improvisations: improvisations,
-      defaultNumberOfTeams: pacing.defaultNumberOfTeams,
-      tags: tags,
-      integrationId: pacing.integrationId,
-      integrationEntityId: pacing.integrationEntityId,
-      integrationAdditionalData: pacing.integrationAdditionalData,
-    );
-  }
+  List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
+
+  List<String> get themes => improvisations.where((e) => e.theme.isNotEmpty).map((e) => e.theme).toList();
 
   PacingEntityData toEntity() {
     return PacingEntityData(

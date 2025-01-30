@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
+import '../models/performer_model.dart';
 import '../models/team_model.dart';
 import 'app_database.dart';
 import 'entities/performer_entity.dart';
@@ -96,6 +97,13 @@ class TeamsRepository extends DatabaseAccessor<AppDatabase> with _$TeamsReposito
     final pacingTags = await teamResponse.$2.teamTagEntityRefs.withReferences((p) => p(tag: true)).get();
     final tags = pacingTags.selectMany((t) => t.$2.tag.prefetchedData!);
 
-    return TeamModel.fromEntity(team, performers, tags.toList());
+    final performerModels = performers.map((p) => PerformerModel.fromEntity(p)).toList();
+    final tagModels = tags.map((t) => t.name).toList();
+
+    return TeamModel.fromEntity(
+      team,
+      performerModels,
+      tagModels,
+    );
   }
 }

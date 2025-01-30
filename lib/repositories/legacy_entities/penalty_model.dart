@@ -1,10 +1,13 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:isar/isar.dart';
 
-import '../repositories/app_database.dart';
+import '../app_database.dart';
 
 part 'penalty_model.mapper.dart';
+part 'penalty_model.g.dart';
 
 @MappableClass()
+@Embedded(ignore: {'copyWith'})
 class PenaltyModel with PenaltyModelMappable {
   final int id;
   final bool major;
@@ -12,9 +15,6 @@ class PenaltyModel with PenaltyModelMappable {
   final int? performerId;
   final int teamId;
   final int improvisationId;
-  final int matchId;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
 
   const PenaltyModel({
     required this.id,
@@ -23,9 +23,6 @@ class PenaltyModel with PenaltyModelMappable {
     required this.performerId,
     required this.improvisationId,
     required this.teamId,
-    required this.matchId,
-    this.createdDate,
-    this.modifiedDate,
   });
 
   factory PenaltyModel.fromEntity(
@@ -38,17 +35,14 @@ class PenaltyModel with PenaltyModelMappable {
       performerId: penalty.performer,
       teamId: penalty.team,
       improvisationId: penalty.improvisation,
-      matchId: penalty.match,
-      modifiedDate: penalty.modifiedDate,
-      createdDate: penalty.createdDate,
     );
   }
 
-  PenaltyEntityData toEntity() {
+  PenaltyEntityData toEntity(int matchId) {
     return PenaltyEntityData(
       id: id,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
+      createdDate: DateTime.now(),
+      modifiedDate: DateTime.now(),
       type: type,
       major: major,
       performer: performerId,

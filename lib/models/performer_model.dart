@@ -1,17 +1,14 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
 
 import '../repositories/app_database.dart';
 
 part 'performer_model.mapper.dart';
-part 'performer_model.g.dart';
 
 @MappableClass()
-@Embedded(ignore: {'copyWith'})
 class PerformerModel with PerformerModelMappable {
   final int id;
   final String name;
-  final int? teamId;
+  final int teamId;
   final DateTime? createdDate;
   final DateTime? modifiedDate;
 

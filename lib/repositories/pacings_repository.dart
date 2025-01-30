@@ -1,7 +1,7 @@
-import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
 import '../extensions/iterable_extensions.dart';
+import '../models/improvisation_model.dart';
 import '../models/pacing_model.dart';
 import 'app_database.dart';
 import 'entities/improvisation_entity.dart';
@@ -134,10 +134,13 @@ class PacingsRepository extends DatabaseAccessor<AppDatabase> with _$PacingsRepo
     final pacingTags = await pacingResponse.$2.pacingTagEntityRefs.withReferences((p) => p(tag: true)).get();
     final tags = pacingTags.selectMany((t) => t.$2.tag.prefetchedData!);
 
+    final improvisationModels = improvisations.map((i) => ImprovisationModel.fromEntity(i)).toList();
+    final tagsModel = tags.map((t) => t.name).toList();
+
     return PacingModel.fromEntity(
       pacing,
-      improvisations.sortedBy<num>((i) => i.order),
-      tags.toList(),
+      improvisationModels,
+      tagsModel,
     );
   }
 }
