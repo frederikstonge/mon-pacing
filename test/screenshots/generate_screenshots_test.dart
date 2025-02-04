@@ -110,6 +110,11 @@ void main() {
         12,
         (index) => ImprovisationModel(
           id: index,
+          order: index,
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
+          pacingId: 0,
+          matchId: null,
           type: ImprovisationType.values.elementAt(index % 2),
           category: '',
           theme: '',
@@ -123,17 +128,21 @@ void main() {
     final teams = [
       TeamModel(
         id: 0,
+        matchId: null,
         createdDate: DateTime.now(),
         modifiedDate: DateTime.now(),
         name: 'Canadiens',
         color: Colors.red.getIntvalue,
+        performers: [],
       ),
       TeamModel(
         id: 1,
+        matchId: null,
         createdDate: DateTime.now(),
         modifiedDate: DateTime.now(),
         name: 'Maple Leafs',
         color: Colors.blue.getIntvalue,
+        performers: [],
       )
     ];
 
@@ -146,23 +155,32 @@ void main() {
       teams: [
         TeamModel(
           id: 0,
+          matchId: 0,
           name: 'Canadiens',
           color: Colors.red.getIntvalue,
           createdDate: DateTime.now(),
           modifiedDate: DateTime.now(),
+          performers: [],
         ),
         TeamModel(
           id: 1,
+          matchId: 0,
           name: 'Maple Leafs',
           color: Colors.blue.getIntvalue,
           createdDate: DateTime.now(),
           modifiedDate: DateTime.now(),
+          performers: [],
         ),
       ],
       improvisations: List.generate(
         12,
         (index) => ImprovisationModel(
           id: index,
+          order: index,
+          createdDate: DateTime.now(),
+          modifiedDate: DateTime.now(),
+          pacingId: null,
+          matchId: 0,
           type: ImprovisationType.values.elementAt(index % 2),
           category: '',
           theme: '',

@@ -21,14 +21,14 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
   @override
   final String id = 'PacingModel';
 
-  static int _$id(PacingModel v) => v.id;
+  static int? _$id(PacingModel v) => v.id;
   static const Field<PacingModel, int> _f$id = Field('id', _$id);
   static String _$name(PacingModel v) => v.name;
   static const Field<PacingModel, String> _f$name = Field('name', _$name);
-  static DateTime? _$createdDate(PacingModel v) => v.createdDate;
+  static DateTime _$createdDate(PacingModel v) => v.createdDate;
   static const Field<PacingModel, DateTime> _f$createdDate =
       Field('createdDate', _$createdDate);
-  static DateTime? _$modifiedDate(PacingModel v) => v.modifiedDate;
+  static DateTime _$modifiedDate(PacingModel v) => v.modifiedDate;
   static const Field<PacingModel, DateTime> _f$modifiedDate =
       Field('modifiedDate', _$modifiedDate);
   static List<ImprovisationModel> _$improvisations(PacingModel v) =>
@@ -175,10 +175,10 @@ class _PacingModelCopyWithImpl<$R, $Out>
           (v) => call(tags: v));
   @override
   $R call(
-          {int? id,
+          {Object? id = $none,
           String? name,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none,
+          DateTime? createdDate,
+          DateTime? modifiedDate,
           List<ImprovisationModel>? improvisations,
           int? defaultNumberOfTeams,
           List<String>? tags,
@@ -186,10 +186,10 @@ class _PacingModelCopyWithImpl<$R, $Out>
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+        if (id != $none) #id: id,
         if (name != null) #name: name,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate,
+        if (createdDate != null) #createdDate: createdDate,
+        if (modifiedDate != null) #modifiedDate: modifiedDate,
         if (improvisations != null) #improvisations: improvisations,
         if (defaultNumberOfTeams != null)
           #defaultNumberOfTeams: defaultNumberOfTeams,

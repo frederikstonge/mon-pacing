@@ -2,7 +2,6 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
 import '../../models/improvisation_type.dart';
-import '../app_database.dart';
 
 part 'improvisation_model.g.dart';
 part 'improvisation_model.mapper.dart';
@@ -35,23 +34,4 @@ class ImprovisationModel with ImprovisationModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
-
-  ImprovisationEntityData toEntity(int order) {
-    return ImprovisationEntityData(
-      id: id,
-      order: order,
-      createdDate: DateTime.now(),
-      modifiedDate: DateTime.now(),
-      type: type,
-      category: category,
-      theme: theme,
-      durationsInSeconds: durationsInSeconds,
-      performers: performers,
-      notes: notes,
-      timeBufferInSeconds: timeBufferInSeconds,
-      huddleTimerInSeconds: huddleTimerInSeconds,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
-    );
-  }
 }

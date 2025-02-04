@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 
 import '../repositories/app_database.dart';
 import 'improvisation_model.dart';
@@ -7,10 +8,10 @@ part 'pacing_model.mapper.dart';
 
 @MappableClass()
 class PacingModel with PacingModelMappable {
-  final int id;
+  final int? id;
   final String name;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
   final List<ImprovisationModel> improvisations;
   final int defaultNumberOfTeams;
   final List<String> tags;
@@ -50,16 +51,16 @@ class PacingModel with PacingModelMappable {
     );
   }
 
-  PacingEntityData toEntity() {
-    return PacingEntityData(
-      id: id,
-      name: name,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      defaultNumberOfTeams: defaultNumberOfTeams,
-      integrationId: integrationId,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
+  PacingEntityCompanion toCompanion() {
+    return PacingEntityCompanion(
+      id: id != null ? Value(id!) : Value.absent(),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
+      name: Value(name),
+      defaultNumberOfTeams: Value(defaultNumberOfTeams),
+      integrationId: Value(integrationId),
+      integrationEntityId: Value(integrationEntityId),
+      integrationAdditionalData: Value(integrationAdditionalData),
     );
   }
 }

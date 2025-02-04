@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 
 import '../repositories/app_database.dart';
 
@@ -6,13 +7,13 @@ part 'point_model.mapper.dart';
 
 @MappableClass()
 class PointModel with PointModelMappable {
-  final int id;
-  final int teamId;
-  final int improvisationId;
-  final int value;
-  final int matchId;
+  final int? id;
   final DateTime? createdDate;
   final DateTime? modifiedDate;
+  final int value;
+  final int? teamId;
+  final int? improvisationId;
+  final int? matchId;
 
   const PointModel({
     required this.id,
@@ -38,15 +39,15 @@ class PointModel with PointModelMappable {
     );
   }
 
-  PointEntityData toEntity() {
-    return PointEntityData(
-      id: id,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      team: teamId,
-      improvisation: improvisationId,
-      match: matchId,
-      value: value,
+  PointEntityCompanion toCompanion({int? teamId, int? improvisationId, int? matchId}) {
+    return PointEntityCompanion(
+      id: id != null ? Value(id!) : Value.absent(),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
+      value: Value(value),
+      team: Value(teamId ?? this.teamId!),
+      improvisation: Value(improvisationId ?? this.improvisationId!),
+      match: Value(matchId ?? this.matchId!),
     );
   }
 }

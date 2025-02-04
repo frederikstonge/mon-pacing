@@ -25,11 +25,10 @@ class PacingsRepository extends DatabaseAccessor<AppDatabase> with _$PacingsRepo
   );
 
   Future<int> add(PacingModel model) async {
-    final entity = model.toEntity();
-    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toEntity(i.key));
+    final entity = model.toCompanion();
+    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toCompanion());
     final pacing = await transaction(() async {
-      final pacing = await pacingEntity.insert().insertReturning(entity);
-      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id));
+      final pacing = await attachedDatabase.managers.pacingEntity.createReturning((p) => entity);
       await improvisationEntity.insertAll(improvisations);
       return pacing;
     });
@@ -45,11 +44,11 @@ class PacingsRepository extends DatabaseAccessor<AppDatabase> with _$PacingsRepo
   }
 
   Future<void> edit(PacingModel model) async {
-    final entity = model.toEntity();
-    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toEntity(i.key));
+    final entity = model.toCompanion();
+    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toCompanion(pacingId: model.id));
     await transaction(() async {
       await pacingEntity.update().replace(entity);
-      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id));
+      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id!));
       await improvisationEntity.insertAll(improvisations);
     });
   }

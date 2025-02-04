@@ -1,7 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-import '../app_database.dart';
 import 'performer_model.dart';
 
 part 'match_team_model.mapper.dart';
@@ -27,16 +26,4 @@ class MatchTeamModel with MatchTeamModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
-
-  TeamEntityData toEntity() {
-    return TeamEntityData(
-      id: id,
-      createdDate: DateTime.now(),
-      modifiedDate: DateTime.now(),
-      name: name,
-      color: color,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
-    );
-  }
 }

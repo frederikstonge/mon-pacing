@@ -1,8 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-import '../app_database.dart';
-
 part 'point_model.mapper.dart';
 part 'point_model.g.dart';
 
@@ -20,16 +18,4 @@ class PointModel with PointModelMappable {
     required this.improvisationId,
     required this.value,
   });
-
-  PointEntityData toEntity(int matchId) {
-    return PointEntityData(
-      id: id,
-      createdDate: DateTime.now(),
-      modifiedDate: DateTime.now(),
-      team: teamId,
-      improvisation: improvisationId,
-      match: matchId,
-      value: value,
-    );
-  }
 }

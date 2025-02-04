@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 
 import '../repositories/app_database.dart';
 
@@ -6,21 +7,21 @@ part 'performer_model.mapper.dart';
 
 @MappableClass()
 class PerformerModel with PerformerModelMappable {
-  final int id;
+  final int? id;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
   final String name;
-  final int teamId;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
+  final int? teamId;
 
   final String? integrationEntityId;
   final String? integrationAdditionalData;
 
   const PerformerModel({
     required this.id,
+    required this.createdDate,
+    required this.modifiedDate,
     required this.name,
     required this.teamId,
-    this.createdDate,
-    this.modifiedDate,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
@@ -39,15 +40,15 @@ class PerformerModel with PerformerModelMappable {
     );
   }
 
-  PerformerEntityData toEntity() {
-    return PerformerEntityData(
-      id: id,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      name: name,
-      team: teamId,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
+  PerformerEntityCompanion toCompanion({int? teamId}) {
+    return PerformerEntityCompanion(
+      id: id != null ? Value(id!) : Value.absent(),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
+      name: Value(name),
+      team: Value(teamId ?? this.teamId!),
+      integrationEntityId: Value(integrationEntityId),
+      integrationAdditionalData: Value(integrationAdditionalData),
     );
   }
 }

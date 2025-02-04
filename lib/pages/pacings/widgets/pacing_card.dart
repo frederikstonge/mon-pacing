@@ -112,7 +112,7 @@ class PacingCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      S.of(context).modifiedDate(date: pacing.modifiedDate!),
+                      S.of(context).modifiedDate(date: pacing.modifiedDate),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

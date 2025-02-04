@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 
 import '../repositories/app_database.dart';
 import 'improvisation_type.dart';
@@ -7,9 +8,10 @@ part 'improvisation_model.mapper.dart';
 
 @MappableClass()
 class ImprovisationModel with ImprovisationModelMappable {
-  final int id;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
+  final int? id;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
+  final int order;
   final ImprovisationType type;
   final String category;
   final String theme;
@@ -20,17 +22,22 @@ class ImprovisationModel with ImprovisationModelMappable {
   final int huddleTimerInSeconds;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
+  final int? pacingId;
+  final int? matchId;
 
   const ImprovisationModel({
     required this.id,
+    required this.order,
     required this.type,
     required this.category,
     required this.theme,
     required this.durationsInSeconds,
     required this.performers,
     required this.notes,
-    this.createdDate,
-    this.modifiedDate,
+    required this.createdDate,
+    required this.modifiedDate,
+    required this.matchId,
+    required this.pacingId,
     this.timeBufferInSeconds = 30,
     this.huddleTimerInSeconds = 30,
     this.integrationEntityId,
@@ -42,6 +49,9 @@ class ImprovisationModel with ImprovisationModelMappable {
   ) {
     return ImprovisationModel(
       id: improvisation.id,
+      createdDate: improvisation.createdDate,
+      modifiedDate: improvisation.modifiedDate,
+      order: improvisation.order,
       type: improvisation.type,
       category: improvisation.category,
       theme: improvisation.theme,
@@ -52,25 +62,30 @@ class ImprovisationModel with ImprovisationModelMappable {
       huddleTimerInSeconds: improvisation.huddleTimerInSeconds,
       integrationEntityId: improvisation.integrationEntityId,
       integrationAdditionalData: improvisation.integrationAdditionalData,
+      matchId: improvisation.match,
+      pacingId: improvisation.pacing,
     );
   }
 
-  ImprovisationEntityData toEntity(int order) {
-    return ImprovisationEntityData(
-      id: id,
-      order: order,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      type: type,
-      category: category,
-      theme: theme,
-      durationsInSeconds: durationsInSeconds,
-      performers: performers,
-      notes: notes,
-      timeBufferInSeconds: timeBufferInSeconds,
-      huddleTimerInSeconds: huddleTimerInSeconds,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
+  ImprovisationEntityCompanion toCompanion({int? pacingId, int? matchId}) {
+    assert(!(pacingId != null && matchId != null), 'Cannot have both pacingId and matchId');
+    return ImprovisationEntityCompanion(
+      id: id != null ? Value(id!) : Value.absent(),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
+      order: Value(order),
+      type: Value(type),
+      category: Value(category),
+      theme: Value(theme),
+      durationsInSeconds: Value(durationsInSeconds),
+      performers: Value(performers),
+      notes: Value(notes),
+      timeBufferInSeconds: Value(timeBufferInSeconds),
+      huddleTimerInSeconds: Value(huddleTimerInSeconds),
+      integrationEntityId: Value(integrationEntityId),
+      integrationAdditionalData: Value(integrationAdditionalData),
+      match: Value(matchId ?? this.matchId),
+      pacing: Value(pacingId ?? this.pacingId),
     );
   }
 }

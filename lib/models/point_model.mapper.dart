@@ -20,16 +20,16 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
   @override
   final String id = 'PointModel';
 
-  static int _$id(PointModel v) => v.id;
+  static int? _$id(PointModel v) => v.id;
   static const Field<PointModel, int> _f$id = Field('id', _$id);
-  static int _$teamId(PointModel v) => v.teamId;
+  static int? _$teamId(PointModel v) => v.teamId;
   static const Field<PointModel, int> _f$teamId = Field('teamId', _$teamId);
-  static int _$improvisationId(PointModel v) => v.improvisationId;
+  static int? _$improvisationId(PointModel v) => v.improvisationId;
   static const Field<PointModel, int> _f$improvisationId =
       Field('improvisationId', _$improvisationId);
   static int _$value(PointModel v) => v.value;
   static const Field<PointModel, int> _f$value = Field('value', _$value);
-  static int _$matchId(PointModel v) => v.matchId;
+  static int? _$matchId(PointModel v) => v.matchId;
   static const Field<PointModel, int> _f$matchId = Field('matchId', _$matchId);
   static DateTime? _$createdDate(PointModel v) => v.createdDate;
   static const Field<PointModel, DateTime> _f$createdDate =
@@ -132,19 +132,19 @@ class _PointModelCopyWithImpl<$R, $Out>
       PointModelMapper.ensureInitialized();
   @override
   $R call(
-          {int? id,
-          int? teamId,
-          int? improvisationId,
+          {Object? id = $none,
+          Object? teamId = $none,
+          Object? improvisationId = $none,
           int? value,
-          int? matchId,
+          Object? matchId = $none,
           Object? createdDate = $none,
           Object? modifiedDate = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
-        if (teamId != null) #teamId: teamId,
-        if (improvisationId != null) #improvisationId: improvisationId,
+        if (id != $none) #id: id,
+        if (teamId != $none) #teamId: teamId,
+        if (improvisationId != $none) #improvisationId: improvisationId,
         if (value != null) #value: value,
-        if (matchId != null) #matchId: matchId,
+        if (matchId != $none) #matchId: matchId,
         if (createdDate != $none) #createdDate: createdDate,
         if (modifiedDate != $none) #modifiedDate: modifiedDate
       }));

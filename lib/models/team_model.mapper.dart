@@ -21,22 +21,24 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
   @override
   final String id = 'TeamModel';
 
-  static int _$id(TeamModel v) => v.id;
+  static int? _$id(TeamModel v) => v.id;
   static const Field<TeamModel, int> _f$id = Field('id', _$id);
-  static DateTime? _$createdDate(TeamModel v) => v.createdDate;
+  static DateTime _$createdDate(TeamModel v) => v.createdDate;
   static const Field<TeamModel, DateTime> _f$createdDate =
       Field('createdDate', _$createdDate);
-  static DateTime? _$modifiedDate(TeamModel v) => v.modifiedDate;
+  static DateTime _$modifiedDate(TeamModel v) => v.modifiedDate;
   static const Field<TeamModel, DateTime> _f$modifiedDate =
       Field('modifiedDate', _$modifiedDate);
   static String _$name(TeamModel v) => v.name;
   static const Field<TeamModel, String> _f$name = Field('name', _$name);
   static int _$color(TeamModel v) => v.color;
   static const Field<TeamModel, int> _f$color = Field('color', _$color);
+  static int? _$matchId(TeamModel v) => v.matchId;
+  static const Field<TeamModel, int> _f$matchId = Field('matchId', _$matchId);
   static List<PerformerModel> _$performers(TeamModel v) => v.performers;
   static const Field<TeamModel, List<PerformerModel>> _f$performers =
-      Field('performers', _$performers, opt: true, def: const []);
-  static List<String> _$tags(TeamModel v) => v.tags;
+      Field('performers', _$performers);
+  static List<String>? _$tags(TeamModel v) => v.tags;
   static const Field<TeamModel, List<String>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
   static String? _$integrationId(TeamModel v) => v.integrationId;
@@ -58,6 +60,7 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
     #modifiedDate: _f$modifiedDate,
     #name: _f$name,
     #color: _f$color,
+    #matchId: _f$matchId,
     #performers: _f$performers,
     #tags: _f$tags,
     #integrationId: _f$integrationId,
@@ -72,6 +75,7 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
         modifiedDate: data.dec(_f$modifiedDate),
         name: data.dec(_f$name),
         color: data.dec(_f$color),
+        matchId: data.dec(_f$matchId),
         performers: data.dec(_f$performers),
         tags: data.dec(_f$tags),
         integrationId: data.dec(_f$integrationId),
@@ -132,13 +136,14 @@ abstract class TeamModelCopyWith<$R, $In extends TeamModel, $Out>
   ListCopyWith<$R, PerformerModel,
           PerformerModelCopyWith<$R, PerformerModel, PerformerModel>>
       get performers;
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get tags;
   $R call(
       {int? id,
       DateTime? createdDate,
       DateTime? modifiedDate,
       String? name,
       int? color,
+      int? matchId,
       List<PerformerModel>? performers,
       List<String>? tags,
       String? integrationId,
@@ -161,29 +166,33 @@ class _TeamModelCopyWithImpl<$R, $Out>
       get performers => ListCopyWith($value.performers,
           (v, t) => v.copyWith.$chain(t), (v) => call(performers: v));
   @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
-      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(tags: v));
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get tags =>
+      $value.tags != null
+          ? ListCopyWith($value.tags!,
+              (v, t) => ObjectCopyWith(v, $identity, t), (v) => call(tags: v))
+          : null;
   @override
   $R call(
-          {int? id,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none,
+          {Object? id = $none,
+          DateTime? createdDate,
+          DateTime? modifiedDate,
           String? name,
           int? color,
+          Object? matchId = $none,
           List<PerformerModel>? performers,
-          List<String>? tags,
+          Object? tags = $none,
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate,
+        if (id != $none) #id: id,
+        if (createdDate != null) #createdDate: createdDate,
+        if (modifiedDate != null) #modifiedDate: modifiedDate,
         if (name != null) #name: name,
         if (color != null) #color: color,
+        if (matchId != $none) #matchId: matchId,
         if (performers != null) #performers: performers,
-        if (tags != null) #tags: tags,
+        if (tags != $none) #tags: tags,
         if (integrationId != $none) #integrationId: integrationId,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
@@ -197,6 +206,7 @@ class _TeamModelCopyWithImpl<$R, $Out>
       modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       name: data.get(#name, or: $value.name),
       color: data.get(#color, or: $value.color),
+      matchId: data.get(#matchId, or: $value.matchId),
       performers: data.get(#performers, or: $value.performers),
       tags: data.get(#tags, or: $value.tags),
       integrationId: data.get(#integrationId, or: $value.integrationId),

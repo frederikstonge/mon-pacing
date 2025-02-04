@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 
 import '../repositories/app_database.dart';
 import 'improvisation_model.dart';
@@ -12,10 +13,10 @@ part 'match_model.mapper.dart';
 
 @MappableClass()
 class MatchModel with MatchModelMappable {
-  final int id;
+  final int? id;
   final String name;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
   final List<String> tags;
   final List<TeamModel> teams;
   final List<ImprovisationModel> improvisations;
@@ -98,25 +99,25 @@ class MatchModel with MatchModelMappable {
     );
   }
 
-  MatchEntityData toEntity() {
-    return MatchEntityData(
-      id: id,
-      name: name,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      enableStatistics: enableStatistics,
-      enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
-      penaltiesImpactType: penaltiesImpactType,
-      penaltiesRequiredToImpactPoints: penaltiesRequiredToImpactPoints,
-      enableMatchExpulsion: enableMatchExpulsion,
-      penaltiesRequiredToExpel: penaltiesRequiredToExpel,
-      integrationId: integrationId,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
-      integrationRestrictMaximumPointPerImprovisation: integrationRestrictMaximumPointPerImprovisation,
-      integrationMinNumberOfImprovisations: integrationMinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: integrationMaxNumberOfImprovisations,
-      integrationPenaltyTypes: integrationPenaltyTypes,
+  MatchEntityCompanion toCompanion() {
+    return MatchEntityCompanion(
+      id: id != null ? Value(id!) : Value.absent(),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
+      name: Value(name),
+      enableStatistics: Value(enableStatistics),
+      enablePenaltiesImpactPoints: Value(enablePenaltiesImpactPoints),
+      penaltiesImpactType: Value(penaltiesImpactType),
+      penaltiesRequiredToImpactPoints: Value(penaltiesRequiredToImpactPoints),
+      enableMatchExpulsion: Value(enableMatchExpulsion),
+      penaltiesRequiredToExpel: Value(penaltiesRequiredToExpel),
+      integrationId: Value(integrationId),
+      integrationEntityId: Value(integrationEntityId),
+      integrationAdditionalData: Value(integrationAdditionalData),
+      integrationRestrictMaximumPointPerImprovisation: Value(integrationRestrictMaximumPointPerImprovisation),
+      integrationMinNumberOfImprovisations: Value(integrationMinNumberOfImprovisations),
+      integrationMaxNumberOfImprovisations: Value(integrationMaxNumberOfImprovisations),
+      integrationPenaltyTypes: Value(integrationPenaltyTypes),
     );
   }
 }

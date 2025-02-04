@@ -3,7 +3,6 @@ import 'package:isar/isar.dart';
 
 import '../../models/improvisation_type.dart';
 import '../../models/penalties_impact_type.dart';
-import '../app_database.dart';
 import 'improvisation_model.dart';
 import 'match_team_model.dart';
 import 'penalty_model.dart';
@@ -71,26 +70,4 @@ class MatchModel with MatchModelMappable {
   });
 
   List<String> get teamNames => teams.map((e) => e.name).toList();
-
-  MatchEntityData toEntity() {
-    return MatchEntityData(
-      id: id,
-      name: name,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      enableStatistics: enableStatistics,
-      enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
-      penaltiesImpactType: penaltiesImpactType,
-      penaltiesRequiredToImpactPoints: penaltiesRequiredToImpactPoints,
-      enableMatchExpulsion: enableMatchExpulsion,
-      penaltiesRequiredToExpel: penaltiesRequiredToExpel,
-      integrationId: integrationId,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
-      integrationRestrictMaximumPointPerImprovisation: integrationRestrictMaximumPointPerImprovisation,
-      integrationMinNumberOfImprovisations: integrationMinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: integrationMaxNumberOfImprovisations,
-      integrationPenaltyTypes: integrationPenaltyTypes,
-    );
-  }
 }

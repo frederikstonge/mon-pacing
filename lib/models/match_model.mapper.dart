@@ -26,14 +26,14 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   @override
   final String id = 'MatchModel';
 
-  static int _$id(MatchModel v) => v.id;
+  static int? _$id(MatchModel v) => v.id;
   static const Field<MatchModel, int> _f$id = Field('id', _$id);
   static String _$name(MatchModel v) => v.name;
   static const Field<MatchModel, String> _f$name = Field('name', _$name);
-  static DateTime? _$createdDate(MatchModel v) => v.createdDate;
+  static DateTime _$createdDate(MatchModel v) => v.createdDate;
   static const Field<MatchModel, DateTime> _f$createdDate =
       Field('createdDate', _$createdDate);
-  static DateTime? _$modifiedDate(MatchModel v) => v.modifiedDate;
+  static DateTime _$modifiedDate(MatchModel v) => v.modifiedDate;
   static const Field<MatchModel, DateTime> _f$modifiedDate =
       Field('modifiedDate', _$modifiedDate);
   static List<TeamModel> _$teams(MatchModel v) => v.teams;
@@ -321,10 +321,10 @@ class _MatchModelCopyWithImpl<$R, $Out>
           : null;
   @override
   $R call(
-          {int? id,
+          {Object? id = $none,
           String? name,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none,
+          DateTime? createdDate,
+          DateTime? modifiedDate,
           List<TeamModel>? teams,
           List<ImprovisationModel>? improvisations,
           List<PenaltyModel>? penalties,
@@ -345,10 +345,10 @@ class _MatchModelCopyWithImpl<$R, $Out>
           Object? integrationMaxNumberOfImprovisations = $none,
           Object? integrationPenaltyTypes = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+        if (id != $none) #id: id,
         if (name != null) #name: name,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate,
+        if (createdDate != null) #createdDate: createdDate,
+        if (modifiedDate != null) #modifiedDate: modifiedDate,
         if (teams != null) #teams: teams,
         if (improvisations != null) #improvisations: improvisations,
         if (penalties != null) #penalties: penalties,

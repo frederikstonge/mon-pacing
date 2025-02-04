@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:drift/drift.dart';
 
 import '../repositories/app_database.dart';
 import 'performer_model.dart';
@@ -7,9 +8,9 @@ part 'team_model.mapper.dart';
 
 @MappableClass()
 class TeamModel with TeamModelMappable {
-  final int id;
-  final DateTime? createdDate;
-  final DateTime? modifiedDate;
+  final int? id;
+  final DateTime createdDate;
+  final DateTime modifiedDate;
   final String name;
   final int color;
   final List<PerformerModel> performers;
@@ -17,6 +18,7 @@ class TeamModel with TeamModelMappable {
   final String? integrationId;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
+  final int? matchId;
 
   const TeamModel({
     required this.id,
@@ -24,7 +26,8 @@ class TeamModel with TeamModelMappable {
     required this.modifiedDate,
     required this.name,
     required this.color,
-    this.performers = const [],
+    required this.matchId,
+    required this.performers,
     this.tags = const [],
     this.integrationId,
     this.integrationEntityId,
@@ -47,19 +50,21 @@ class TeamModel with TeamModelMappable {
       integrationId: team.integrationId,
       integrationEntityId: team.integrationEntityId,
       integrationAdditionalData: team.integrationAdditionalData,
+      matchId: team.match,
     );
   }
 
-  TeamEntityData toEntity() {
-    return TeamEntityData(
-      id: id,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      name: name,
-      color: color,
-      integrationId: integrationId,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
+  TeamEntityCompanion toCompanion({int? matchId}) {
+    return TeamEntityCompanion(
+      id: id != null ? Value(id!) : Value.absent(),
+      createdDate: Value(createdDate),
+      modifiedDate: Value(modifiedDate),
+      name: Value(name),
+      color: Value(color),
+      integrationId: Value(integrationId),
+      integrationEntityId: Value(integrationEntityId),
+      integrationAdditionalData: Value(integrationAdditionalData),
+      match: Value(matchId ?? this.matchId),
     );
   }
 }

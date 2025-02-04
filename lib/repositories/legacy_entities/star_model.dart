@@ -1,8 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-import '../app_database.dart';
-
 part 'star_model.mapper.dart';
 part 'star_model.g.dart';
 
@@ -18,15 +16,4 @@ class StarModel with StarModelMappable {
     required this.performerId,
     required this.teamId,
   });
-
-  StarEntityData toEntity(int matchId) {
-    return StarEntityData(
-      id: id,
-      createdDate: DateTime.now(),
-      modifiedDate: DateTime.now(),
-      performer: performerId,
-      team: teamId,
-      match: matchId,
-    );
-  }
 }

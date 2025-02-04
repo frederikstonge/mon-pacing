@@ -1,8 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
-import '../app_database.dart';
-
 part 'performer_model.mapper.dart';
 part 'performer_model.g.dart';
 
@@ -21,16 +19,4 @@ class PerformerModel with PerformerModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
-
-  PerformerEntityData toEntity(int teamId) {
-    return PerformerEntityData(
-      id: id,
-      createdDate: DateTime.now(),
-      modifiedDate: DateTime.now(),
-      name: name,
-      team: teamId,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
-    );
-  }
 }

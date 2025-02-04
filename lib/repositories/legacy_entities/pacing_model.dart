@@ -2,7 +2,6 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
 import '../../models/improvisation_type.dart';
-import '../app_database.dart';
 import 'improvisation_model.dart';
 
 part 'pacing_model.mapper.dart';
@@ -41,17 +40,4 @@ class PacingModel with PacingModelMappable {
   List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
 
   List<String> get themes => improvisations.where((e) => e.theme.isNotEmpty).map((e) => e.theme).toList();
-
-  PacingEntityData toEntity() {
-    return PacingEntityData(
-      id: id,
-      name: name,
-      createdDate: createdDate ?? DateTime.now(),
-      modifiedDate: modifiedDate ?? DateTime.now(),
-      defaultNumberOfTeams: defaultNumberOfTeams,
-      integrationId: integrationId,
-      integrationEntityId: integrationEntityId,
-      integrationAdditionalData: integrationAdditionalData,
-    );
-  }
 }

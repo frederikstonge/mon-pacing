@@ -49,7 +49,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> delete(PacingModel model) async {
     try {
-      await pacingsRepository.remove(model.id);
+      await pacingsRepository.remove(model.id!);
       toasterService.show(title: Localizer.current.toasterPacingDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
