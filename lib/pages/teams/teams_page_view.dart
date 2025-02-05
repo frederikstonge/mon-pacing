@@ -58,6 +58,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                 scrollController: _scrollController,
                 scrollPhysics: const AlwaysScrollableScrollPhysics(),
                 floatingActionButton: FloatingActionButton(
+                  heroTag: 'teams_fab',
                   onPressed: () {
                     BottomSheetDialog.showDialog(
                       context: context,

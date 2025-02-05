@@ -51,7 +51,7 @@ class SliverScaffold extends StatelessWidget {
             ),
             if (floatingActionButton != null) ...[
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16).add(EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom)),
                 child: floatingActionButton,
               ),
             ],

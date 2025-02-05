@@ -66,6 +66,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                 scrollController: _scrollController,
                 scrollPhysics: const AlwaysScrollableScrollPhysics(),
                 floatingActionButton: FloatingActionButton(
+                  heroTag: 'pacings_fab',
                   onPressed: () {
                     BottomSheetDialog.showDialog(
                       context: context,

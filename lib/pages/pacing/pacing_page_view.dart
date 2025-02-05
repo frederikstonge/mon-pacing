@@ -57,6 +57,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                   builder: (context, timerState) {
                     return SliverScaffold(
                       floatingActionButton: FloatingActionButton(
+                        heroTag: 'pacing_tab',
                         onPressed: () => context.read<PacingCubit>().addImprovisation(),
                         tooltip: S.of(context).addImprovisation,
                         child: const Icon(Icons.add),
