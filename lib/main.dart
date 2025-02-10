@@ -22,7 +22,7 @@ Future<void> main() async {
   };
 
   PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true, printDetails: kDebugMode);
     return true;
   };
 
@@ -64,6 +64,6 @@ Future<void> main() async {
     // APP
     runApp(const Bootstrapper(child: App()));
   }, (error, stackTrace) {
-    FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true, printDetails: kDebugMode);
   });
 }
