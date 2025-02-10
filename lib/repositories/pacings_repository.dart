@@ -28,8 +28,11 @@ class PacingsRepository extends DatabaseAccessor<AppDatabase> with _$PacingsRepo
     final entity = model.toCompanion();
     final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toCompanion());
     final pacing = await transaction(() async {
-      final pacing = await attachedDatabase.managers.pacingEntity.createReturning((p) => entity);
-      await improvisationEntity.insertAll(improvisations);
+      final pacing = await pacingEntity.insertReturning(entity);
+      if (improvisations.isNotEmpty) {
+        await improvisationEntity.insertAll(improvisations);
+      }
+
       return pacing;
     });
 
@@ -48,8 +51,23 @@ class PacingsRepository extends DatabaseAccessor<AppDatabase> with _$PacingsRepo
     final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toCompanion(pacingId: model.id));
     await transaction(() async {
       await pacingEntity.update().replace(entity);
-      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id!));
-      await improvisationEntity.insertAll(improvisations);
+
+      final improvisationIds = improvisations.where((i) => i.id.present).map((i) => i.id.value).toList();
+      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id!) & i.id.isNotIn(improvisationIds));
+
+      final currentImprovisation = await attachedDatabase.managers.improvisationEntity
+          .filter((i) => i.pacing.id.equals(model.id!))
+          .map(
+            (i) => i.id,
+          )
+          .get();
+      for (final improvisation in improvisations) {
+        if (improvisation.id.present && currentImprovisation.contains(improvisation.id.value)) {
+          await improvisationEntity.update().replace(improvisation);
+        } else {
+          await improvisationEntity.insert().insert(improvisation);
+        }
+      }
     });
   }
 

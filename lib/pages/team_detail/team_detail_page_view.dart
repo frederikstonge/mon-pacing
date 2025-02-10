@@ -107,7 +107,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                       TagsFieldElement(
                         label: S.of(context).tags,
                         hintText: S.of(context).tagsHint,
-                        initialTags: teamDetailState.team.tags,
+                        initialTags: teamDetailState.team.tags!,
                         getAllTags: context.read<TeamsCubit>().getAllTags,
                         onChanged: (value) {
                           context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(tags: value));

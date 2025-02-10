@@ -11,15 +11,14 @@ import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../extensions/color_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../../models/match_team_model.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
 import '../../../validators/validators.dart';
 
 class MatchTeamTile extends StatefulWidget {
-  final MatchTeamModel team;
+  final TeamModel team;
   final bool allowSearch;
-  final FutureOr<void> Function(MatchTeamModel team) onChanged;
+  final FutureOr<void> Function(TeamModel team) onChanged;
   final FutureOr<void> Function()? onDelete;
   final Future<List<TeamModel>> Function(String query, List<String> selectedTags) getAllTeams;
   final Future<List<String>> Function() getAllTeamTags;
@@ -138,7 +137,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             onReorderStart: (index) => widget.onDragStart(),
-            onReorder: (oldIndex, newIndex) => widget.onDrag(widget.team.id, oldIndex, newIndex),
+            onReorder: (oldIndex, newIndex) => widget.onDrag(widget.team.id!, oldIndex, newIndex),
             children: widget.team.performers
                 .asMap()
                 .entries
@@ -162,7 +161,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                               key: ValueKey(d.value.id),
                               performer: d.value,
                               valueChanged: (value) async {
-                                await widget.editPerformer(widget.team.id, d.key, value);
+                                await widget.editPerformer(widget.team.id!, d.key, value);
                               },
                             ),
                           ),
@@ -170,7 +169,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                             icon: const Icon(Icons.add),
                             onPressed: widget.addPerformer != null
                                 ? () async {
-                                    await widget.addPerformer!(widget.team.id);
+                                    await widget.addPerformer!(widget.team.id!);
                                   }
                                 : null,
                           ),
@@ -178,7 +177,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                             icon: const Icon(Icons.remove),
                             onPressed: widget.removePerformer != null
                                 ? () async {
-                                    await widget.removePerformer!(widget.team.id, d.key);
+                                    await widget.removePerformer!(widget.team.id!, d.key);
                                   }
                                 : null,
                           ),
