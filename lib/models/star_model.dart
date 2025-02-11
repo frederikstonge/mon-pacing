@@ -40,7 +40,7 @@ class StarModel with StarModelMappable {
     return StarEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
+      modifiedDate: Value(DateTime.now()),
       performer: Value(performerId ?? this.performerId!),
       team: Value(teamId ?? this.teamId!),
       match: Value(matchId ?? this.matchId!),

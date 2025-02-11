@@ -26,47 +26,43 @@ class PacingsRepository extends DatabaseAccessor<AppDatabase> with _$PacingsRepo
 
   Future<int> add(PacingModel model) async {
     final entity = model.toCompanion();
-    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toCompanion());
-    final pacing = await transaction(() async {
-      final pacing = await pacingEntity.insertReturning(entity);
-      if (improvisations.isNotEmpty) {
-        await improvisationEntity.insertAll(improvisations);
-      }
+    final pacing = await pacingEntity.insertReturning(entity);
 
-      return pacing;
-    });
-
+    final improvisations = model.improvisations.map((i) => i.toCompanion(pacingId: pacing.id));
+    await improvisationEntity.insertAll(improvisations);
     return pacing.id;
-  }
-
-  Future<void> remove(int id) async {
-    await transaction(() async {
-      await improvisationEntity.deleteWhere((i) => i.pacing.equals(id));
-      await pacingEntity.deleteWhere((p) => p.id.equals(id));
-    });
   }
 
   Future<void> edit(PacingModel model) async {
     final entity = model.toCompanion();
-    final improvisations = model.improvisations.asMap().entries.map((i) => i.value.toCompanion(pacingId: model.id));
-    await transaction(() async {
-      await pacingEntity.update().replace(entity);
+    await pacingEntity.update().replace(entity);
+  }
 
-      final improvisationIds = improvisations.where((i) => i.id.present).map((i) => i.id.value).toList();
-      await improvisationEntity.deleteWhere((i) => i.pacing.equals(model.id!) & i.id.isNotIn(improvisationIds));
+  Future<void> remove(int id) async {
+    await improvisationEntity.deleteWhere((i) => i.pacing.equals(id));
+    await pacingEntity.deleteWhere((p) => p.id.equals(id));
+  }
 
-      final currentImprovisation = await attachedDatabase.managers.improvisationEntity
-          .filter((i) => i.pacing.id.equals(model.id!))
-          .map(
-            (i) => i.id,
-          )
-          .get();
+  Future<ImprovisationModel> addImprovisation(ImprovisationModel model) async {
+    final entity = model.toCompanion();
+    final improvisation = await improvisationEntity.insert().insertReturning(entity);
+    return ImprovisationModel.fromEntity(improvisation);
+  }
+
+  Future<void> editImprovisation(ImprovisationModel model) async {
+    final entity = model.toCompanion();
+    await improvisationEntity.update().replace(entity);
+  }
+
+  Future<void> removeImprovisation(int id) async {
+    await improvisationEntity.deleteWhere((i) => i.id.equals(id));
+  }
+
+  Future<void> reorderImprovisations(List<ImprovisationModel> improvisations) {
+    return batch((b) {
       for (final improvisation in improvisations) {
-        if (improvisation.id.present && currentImprovisation.contains(improvisation.id.value)) {
-          await improvisationEntity.update().replace(improvisation);
-        } else {
-          await improvisationEntity.insert().insert(improvisation);
-        }
+        final entity = improvisation.toCompanion();
+        b.update(improvisationEntity, entity, where: (i) => i.id.equals(entity.id.value));
       }
     });
   }

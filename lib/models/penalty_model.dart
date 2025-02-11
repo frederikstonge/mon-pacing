@@ -49,7 +49,7 @@ class PenaltyModel with PenaltyModelMappable {
     return PenaltyEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
+      modifiedDate: Value(DateTime.now()),
       type: Value(type),
       major: Value(major),
       performer: Value(performerId ?? this.performerId),

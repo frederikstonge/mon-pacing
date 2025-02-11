@@ -58,7 +58,7 @@ class TeamModel with TeamModelMappable {
     return TeamEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
+      modifiedDate: Value(DateTime.now()),
       name: Value(name),
       color: Value(color),
       integrationId: Value(integrationId),

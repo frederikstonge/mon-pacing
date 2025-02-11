@@ -103,7 +103,7 @@ class MatchModel with MatchModelMappable {
     return MatchEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
+      modifiedDate: Value(DateTime.now()),
       name: Value(name),
       enableStatistics: Value(enableStatistics),
       enablePenaltiesImpactPoints: Value(enablePenaltiesImpactPoints),

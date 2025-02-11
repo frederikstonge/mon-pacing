@@ -44,7 +44,7 @@ class PerformerModel with PerformerModelMappable {
     return PerformerEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
+      modifiedDate: Value(DateTime.now()),
       name: Value(name),
       team: Value(teamId ?? this.teamId!),
       integrationEntityId: Value(integrationEntityId),

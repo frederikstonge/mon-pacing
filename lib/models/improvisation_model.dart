@@ -72,7 +72,7 @@ class ImprovisationModel with ImprovisationModelMappable {
     return ImprovisationEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
+      modifiedDate: Value(DateTime.now()),
       order: Value(order),
       type: Value(type),
       category: Value(category),

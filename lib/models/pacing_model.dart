@@ -55,7 +55,7 @@ class PacingModel with PacingModelMappable {
     return PacingEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate),
-      modifiedDate: Value(modifiedDate),
+      modifiedDate: Value(DateTime.now()),
       name: Value(name),
       defaultNumberOfTeams: Value(defaultNumberOfTeams),
       integrationId: Value(integrationId),
