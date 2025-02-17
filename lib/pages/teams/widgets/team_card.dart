@@ -88,7 +88,7 @@ class TeamCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      S.of(context).modifiedDate(date: team.modifiedDate),
+                      S.of(context).modifiedDate(date: team.modifiedDate!),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

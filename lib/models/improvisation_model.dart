@@ -9,8 +9,8 @@ part 'improvisation_model.mapper.dart';
 @MappableClass()
 class ImprovisationModel with ImprovisationModelMappable {
   final int? id;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final int order;
   final ImprovisationType type;
   final String category;
@@ -34,12 +34,12 @@ class ImprovisationModel with ImprovisationModelMappable {
     required this.durationsInSeconds,
     required this.performers,
     required this.notes,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.matchId,
     required this.pacingId,
     this.timeBufferInSeconds = 30,
     this.huddleTimerInSeconds = 30,
+    this.createdDate,
+    this.modifiedDate,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
@@ -71,8 +71,8 @@ class ImprovisationModel with ImprovisationModelMappable {
     assert(!(pacingId != null && matchId != null), 'Cannot have both pacingId and matchId');
     return ImprovisationEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(DateTime.now()),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       order: Value(order),
       type: Value(type),
       category: Value(category),

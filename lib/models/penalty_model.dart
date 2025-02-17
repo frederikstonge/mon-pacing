@@ -8,8 +8,8 @@ part 'penalty_model.mapper.dart';
 @MappableClass()
 class PenaltyModel with PenaltyModelMappable {
   final int? id;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final bool major;
   final String type;
   final int? performerId;
@@ -19,14 +19,14 @@ class PenaltyModel with PenaltyModelMappable {
 
   const PenaltyModel({
     required this.id,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.major,
     required this.type,
     required this.performerId,
     required this.improvisationId,
     required this.teamId,
     required this.matchId,
+    this.createdDate,
+    this.modifiedDate,
   });
 
   factory PenaltyModel.fromEntity(
@@ -48,8 +48,8 @@ class PenaltyModel with PenaltyModelMappable {
   PenaltyEntityCompanion toCompanion({int? teamId, int? improvisationId, int? matchId, int? performerId}) {
     return PenaltyEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(DateTime.now()),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       type: Value(type),
       major: Value(major),
       performer: Value(performerId ?? this.performerId),

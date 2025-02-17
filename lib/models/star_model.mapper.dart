@@ -22,12 +22,6 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
 
   static int? _$id(StarModel v) => v.id;
   static const Field<StarModel, int> _f$id = Field('id', _$id);
-  static DateTime _$createdDate(StarModel v) => v.createdDate;
-  static const Field<StarModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate);
-  static DateTime _$modifiedDate(StarModel v) => v.modifiedDate;
-  static const Field<StarModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate);
   static int? _$performerId(StarModel v) => v.performerId;
   static const Field<StarModel, int> _f$performerId =
       Field('performerId', _$performerId);
@@ -35,25 +29,31 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
   static const Field<StarModel, int> _f$teamId = Field('teamId', _$teamId);
   static int? _$matchId(StarModel v) => v.matchId;
   static const Field<StarModel, int> _f$matchId = Field('matchId', _$matchId);
+  static DateTime? _$createdDate(StarModel v) => v.createdDate;
+  static const Field<StarModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(StarModel v) => v.modifiedDate;
+  static const Field<StarModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
 
   @override
   final MappableFields<StarModel> fields = const {
     #id: _f$id,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
     #performerId: _f$performerId,
     #teamId: _f$teamId,
     #matchId: _f$matchId,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
   };
 
   static StarModel _instantiate(DecodingData data) {
     return StarModel(
         id: data.dec(_f$id),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate),
         performerId: data.dec(_f$performerId),
         teamId: data.dec(_f$teamId),
-        matchId: data.dec(_f$matchId));
+        matchId: data.dec(_f$matchId),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate));
   }
 
   @override
@@ -108,11 +108,11 @@ abstract class StarModelCopyWith<$R, $In extends StarModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   $R call(
       {int? id,
-      DateTime? createdDate,
-      DateTime? modifiedDate,
       int? performerId,
       int? teamId,
-      int? matchId});
+      int? matchId,
+      DateTime? createdDate,
+      DateTime? modifiedDate});
   StarModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -127,27 +127,27 @@ class _StarModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {Object? id = $none,
-          DateTime? createdDate,
-          DateTime? modifiedDate,
           Object? performerId = $none,
           Object? teamId = $none,
-          Object? matchId = $none}) =>
+          Object? matchId = $none,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none}) =>
       $apply(FieldCopyWithData({
         if (id != $none) #id: id,
-        if (createdDate != null) #createdDate: createdDate,
-        if (modifiedDate != null) #modifiedDate: modifiedDate,
         if (performerId != $none) #performerId: performerId,
         if (teamId != $none) #teamId: teamId,
-        if (matchId != $none) #matchId: matchId
+        if (matchId != $none) #matchId: matchId,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate
       }));
   @override
   StarModel $make(CopyWithData data) => StarModel(
       id: data.get(#id, or: $value.id),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       performerId: data.get(#performerId, or: $value.performerId),
       teamId: data.get(#teamId, or: $value.teamId),
-      matchId: data.get(#matchId, or: $value.matchId));
+      matchId: data.get(#matchId, or: $value.matchId),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate));
 
   @override
   StarModelCopyWith<$R2, StarModel, $Out2> $chain<$R2, $Out2>(

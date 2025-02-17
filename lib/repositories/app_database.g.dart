@@ -5981,7 +5981,8 @@ class $$PacingEntityTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (improvisationEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<PacingEntityData,
+                            $PacingEntityTable, ImprovisationEntityData>(
                         currentTable: table,
                         referencedTable: $$PacingEntityTableReferences
                             ._improvisationEntityRefsTable(db),
@@ -5993,7 +5994,8 @@ class $$PacingEntityTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.pacing == item.id),
                         typedResults: items),
                   if (pacingTagEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<PacingEntityData,
+                            $PacingEntityTable, PacingTagEntityData>(
                         currentTable: table,
                         referencedTable: $$PacingEntityTableReferences
                             ._pacingTagEntityRefsTable(db),
@@ -6790,7 +6792,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (teamEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<MatchEntityData,
+                            $MatchEntityTable, TeamEntityData>(
                         currentTable: table,
                         referencedTable: $$MatchEntityTableReferences
                             ._teamEntityRefsTable(db),
@@ -6802,7 +6805,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.match == item.id),
                         typedResults: items),
                   if (improvisationEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<MatchEntityData,
+                            $MatchEntityTable, ImprovisationEntityData>(
                         currentTable: table,
                         referencedTable: $$MatchEntityTableReferences
                             ._improvisationEntityRefsTable(db),
@@ -6814,7 +6818,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.match == item.id),
                         typedResults: items),
                   if (penaltyEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<MatchEntityData,
+                            $MatchEntityTable, PenaltyEntityData>(
                         currentTable: table,
                         referencedTable: $$MatchEntityTableReferences
                             ._penaltyEntityRefsTable(db),
@@ -6826,7 +6831,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.match == item.id),
                         typedResults: items),
                   if (pointEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<MatchEntityData,
+                            $MatchEntityTable, PointEntityData>(
                         currentTable: table,
                         referencedTable: $$MatchEntityTableReferences
                             ._pointEntityRefsTable(db),
@@ -6838,7 +6844,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.match == item.id),
                         typedResults: items),
                   if (starEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<MatchEntityData,
+                            $MatchEntityTable, StarEntityData>(
                         currentTable: table,
                         referencedTable: $$MatchEntityTableReferences
                             ._starEntityRefsTable(db),
@@ -6850,7 +6857,8 @@ class $$MatchEntityTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.match == item.id),
                         typedResults: items),
                   if (matchTagEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<MatchEntityData,
+                            $MatchEntityTable, MatchTagEntityData>(
                         currentTable: table,
                         referencedTable: $$MatchEntityTableReferences
                             ._matchTagEntityRefsTable(db),
@@ -7507,7 +7515,8 @@ class $$TeamEntityTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (performerEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TeamEntityData, $TeamEntityTable,
+                            PerformerEntityData>(
                         currentTable: table,
                         referencedTable: $$TeamEntityTableReferences
                             ._performerEntityRefsTable(db),
@@ -7519,7 +7528,8 @@ class $$TeamEntityTableTableManager extends RootTableManager<
                                 referencedItems.where((e) => e.team == item.id),
                         typedResults: items),
                   if (penaltyEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TeamEntityData, $TeamEntityTable,
+                            PenaltyEntityData>(
                         currentTable: table,
                         referencedTable: $$TeamEntityTableReferences
                             ._penaltyEntityRefsTable(db),
@@ -7531,7 +7541,8 @@ class $$TeamEntityTableTableManager extends RootTableManager<
                                 referencedItems.where((e) => e.team == item.id),
                         typedResults: items),
                   if (pointEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TeamEntityData, $TeamEntityTable,
+                            PointEntityData>(
                         currentTable: table,
                         referencedTable: $$TeamEntityTableReferences
                             ._pointEntityRefsTable(db),
@@ -7543,7 +7554,8 @@ class $$TeamEntityTableTableManager extends RootTableManager<
                                 referencedItems.where((e) => e.team == item.id),
                         typedResults: items),
                   if (starEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TeamEntityData, $TeamEntityTable,
+                            StarEntityData>(
                         currentTable: table,
                         referencedTable: $$TeamEntityTableReferences
                             ._starEntityRefsTable(db),
@@ -7555,7 +7567,8 @@ class $$TeamEntityTableTableManager extends RootTableManager<
                                 referencedItems.where((e) => e.team == item.id),
                         typedResults: items),
                   if (teamTagEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TeamEntityData, $TeamEntityTable,
+                            TeamTagEntityData>(
                         currentTable: table,
                         referencedTable: $$TeamEntityTableReferences
                             ._teamTagEntityRefsTable(db),
@@ -8001,7 +8014,8 @@ class $$PerformerEntityTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (penaltyEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<PerformerEntityData,
+                            $PerformerEntityTable, PenaltyEntityData>(
                         currentTable: table,
                         referencedTable: $$PerformerEntityTableReferences
                             ._penaltyEntityRefsTable(db),
@@ -8013,7 +8027,8 @@ class $$PerformerEntityTableTableManager extends RootTableManager<
                                 .where((e) => e.performer == item.id),
                         typedResults: items),
                   if (starEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<PerformerEntityData,
+                            $PerformerEntityTable, StarEntityData>(
                         currentTable: table,
                         referencedTable: $$PerformerEntityTableReferences
                             ._starEntityRefsTable(db),
@@ -8682,7 +8697,8 @@ class $$ImprovisationEntityTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (penaltyEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<ImprovisationEntityData,
+                            $ImprovisationEntityTable, PenaltyEntityData>(
                         currentTable: table,
                         referencedTable: $$ImprovisationEntityTableReferences
                             ._penaltyEntityRefsTable(db),
@@ -8694,7 +8710,8 @@ class $$ImprovisationEntityTableTableManager extends RootTableManager<
                                 .where((e) => e.improvisation == item.id),
                         typedResults: items),
                   if (pointEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<ImprovisationEntityData,
+                            $ImprovisationEntityTable, PointEntityData>(
                         currentTable: table,
                         referencedTable: $$ImprovisationEntityTableReferences
                             ._pointEntityRefsTable(db),
@@ -10516,7 +10533,8 @@ class $$TagEntityTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (pacingTagEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TagEntityData, $TagEntityTable,
+                            PacingTagEntityData>(
                         currentTable: table,
                         referencedTable: $$TagEntityTableReferences
                             ._pacingTagEntityRefsTable(db),
@@ -10528,7 +10546,8 @@ class $$TagEntityTableTableManager extends RootTableManager<
                                 referencedItems.where((e) => e.tag == item.id),
                         typedResults: items),
                   if (matchTagEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TagEntityData, $TagEntityTable,
+                            MatchTagEntityData>(
                         currentTable: table,
                         referencedTable: $$TagEntityTableReferences
                             ._matchTagEntityRefsTable(db),
@@ -10540,7 +10559,8 @@ class $$TagEntityTableTableManager extends RootTableManager<
                                 referencedItems.where((e) => e.tag == item.id),
                         typedResults: items),
                   if (teamTagEntityRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TagEntityData, $TagEntityTable,
+                            TeamTagEntityData>(
                         currentTable: table,
                         referencedTable: $$TagEntityTableReferences
                             ._teamTagEntityRefsTable(db),

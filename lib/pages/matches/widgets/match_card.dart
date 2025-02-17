@@ -116,7 +116,7 @@ class MatchCard extends StatelessWidget {
                       ),
                     ],
                     Text(
-                      S.of(context).modifiedDate(date: match.modifiedDate),
+                      S.of(context).modifiedDate(date: match.modifiedDate!),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

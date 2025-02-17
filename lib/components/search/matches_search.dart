@@ -62,7 +62,7 @@ class MatchesSearch extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      S.of(context).modifiedDate(date: item.modifiedDate),
+                      S.of(context).modifiedDate(date: item.modifiedDate!),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

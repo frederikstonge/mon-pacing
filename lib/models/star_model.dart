@@ -8,19 +8,19 @@ part 'star_model.mapper.dart';
 @MappableClass()
 class StarModel with StarModelMappable {
   final int? id;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final int? performerId;
   final int? teamId;
   final int? matchId;
 
   const StarModel({
     required this.id,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.performerId,
     required this.teamId,
     required this.matchId,
+    this.createdDate,
+    this.modifiedDate,
   });
 
   factory StarModel.fromEntity(
@@ -39,8 +39,8 @@ class StarModel with StarModelMappable {
   StarEntityCompanion toCompanion({int? teamId, int? matchId, int? performerId}) {
     return StarEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(DateTime.now()),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       performer: Value(performerId ?? this.performerId!),
       team: Value(teamId ?? this.teamId!),
       match: Value(matchId ?? this.matchId!),

@@ -8,8 +8,8 @@ part 'performer_model.mapper.dart';
 @MappableClass()
 class PerformerModel with PerformerModelMappable {
   final int? id;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final String name;
   final int? teamId;
 
@@ -18,10 +18,10 @@ class PerformerModel with PerformerModelMappable {
 
   const PerformerModel({
     required this.id,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.name,
     required this.teamId,
+    this.createdDate,
+    this.modifiedDate,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
@@ -43,8 +43,8 @@ class PerformerModel with PerformerModelMappable {
   PerformerEntityCompanion toCompanion({int? teamId}) {
     return PerformerEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(DateTime.now()),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       name: Value(name),
       team: Value(teamId ?? this.teamId!),
       integrationEntityId: Value(integrationEntityId),

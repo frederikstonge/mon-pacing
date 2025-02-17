@@ -43,7 +43,7 @@ class PointModel with PointModelMappable {
     return PointEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
       createdDate: Value(createdDate ?? DateTime.now()),
-      modifiedDate: Value(DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       value: Value(value),
       team: Value(teamId ?? this.teamId!),
       improvisation: Value(improvisationId ?? this.improvisationId!),

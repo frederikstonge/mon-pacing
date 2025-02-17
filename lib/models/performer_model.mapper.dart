@@ -22,16 +22,16 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
 
   static int? _$id(PerformerModel v) => v.id;
   static const Field<PerformerModel, int> _f$id = Field('id', _$id);
-  static DateTime _$createdDate(PerformerModel v) => v.createdDate;
-  static const Field<PerformerModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate);
-  static DateTime _$modifiedDate(PerformerModel v) => v.modifiedDate;
-  static const Field<PerformerModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate);
   static String _$name(PerformerModel v) => v.name;
   static const Field<PerformerModel, String> _f$name = Field('name', _$name);
   static int? _$teamId(PerformerModel v) => v.teamId;
   static const Field<PerformerModel, int> _f$teamId = Field('teamId', _$teamId);
+  static DateTime? _$createdDate(PerformerModel v) => v.createdDate;
+  static const Field<PerformerModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(PerformerModel v) => v.modifiedDate;
+  static const Field<PerformerModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
   static String? _$integrationEntityId(PerformerModel v) =>
       v.integrationEntityId;
   static const Field<PerformerModel, String> _f$integrationEntityId =
@@ -45,10 +45,10 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
   @override
   final MappableFields<PerformerModel> fields = const {
     #id: _f$id,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
     #name: _f$name,
     #teamId: _f$teamId,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
   };
@@ -56,10 +56,10 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
   static PerformerModel _instantiate(DecodingData data) {
     return PerformerModel(
         id: data.dec(_f$id),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate),
         name: data.dec(_f$name),
         teamId: data.dec(_f$teamId),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
@@ -119,10 +119,10 @@ abstract class PerformerModelCopyWith<$R, $In extends PerformerModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   $R call(
       {int? id,
-      DateTime? createdDate,
-      DateTime? modifiedDate,
       String? name,
       int? teamId,
+      DateTime? createdDate,
+      DateTime? modifiedDate,
       String? integrationEntityId,
       String? integrationAdditionalData});
   PerformerModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -140,18 +140,18 @@ class _PerformerModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {Object? id = $none,
-          DateTime? createdDate,
-          DateTime? modifiedDate,
           String? name,
           Object? teamId = $none,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != $none) #id: id,
-        if (createdDate != null) #createdDate: createdDate,
-        if (modifiedDate != null) #modifiedDate: modifiedDate,
         if (name != null) #name: name,
         if (teamId != $none) #teamId: teamId,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
         if (integrationAdditionalData != $none)
@@ -160,10 +160,10 @@ class _PerformerModelCopyWithImpl<$R, $Out>
   @override
   PerformerModel $make(CopyWithData data) => PerformerModel(
       id: data.get(#id, or: $value.id),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       name: data.get(#name, or: $value.name),
       teamId: data.get(#teamId, or: $value.teamId),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),
       integrationAdditionalData: data.get(#integrationAdditionalData,

@@ -9,8 +9,8 @@ part 'team_model.mapper.dart';
 @MappableClass()
 class TeamModel with TeamModelMappable {
   final int? id;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final String name;
   final int color;
   final List<PerformerModel> performers;
@@ -22,13 +22,13 @@ class TeamModel with TeamModelMappable {
 
   const TeamModel({
     required this.id,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.name,
     required this.color,
     required this.matchId,
     required this.performers,
     this.tags = const [],
+    this.modifiedDate,
+    this.createdDate,
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
@@ -57,8 +57,8 @@ class TeamModel with TeamModelMappable {
   TeamEntityCompanion toCompanion({int? matchId}) {
     return TeamEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(DateTime.now()),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       name: Value(name),
       color: Value(color),
       integrationId: Value(integrationId),

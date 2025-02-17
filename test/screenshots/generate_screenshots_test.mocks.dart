@@ -1644,15 +1644,15 @@ class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
 
   @override
   _i28.Future<void> moveImprovisation(
-    int? oldIndex,
-    int? newIndex,
+    int? oldOrder,
+    int? newOrder,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #moveImprovisation,
           [
-            oldIndex,
-            newIndex,
+            oldOrder,
+            newOrder,
           ],
         ),
         returnValue: _i28.Future<void>.value(),

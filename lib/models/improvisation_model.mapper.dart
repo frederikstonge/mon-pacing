@@ -45,12 +45,6 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   static String _$notes(ImprovisationModel v) => v.notes;
   static const Field<ImprovisationModel, String> _f$notes =
       Field('notes', _$notes);
-  static DateTime _$createdDate(ImprovisationModel v) => v.createdDate;
-  static const Field<ImprovisationModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate);
-  static DateTime _$modifiedDate(ImprovisationModel v) => v.modifiedDate;
-  static const Field<ImprovisationModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate);
   static int? _$matchId(ImprovisationModel v) => v.matchId;
   static const Field<ImprovisationModel, int> _f$matchId =
       Field('matchId', _$matchId);
@@ -65,6 +59,12 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
       v.huddleTimerInSeconds;
   static const Field<ImprovisationModel, int> _f$huddleTimerInSeconds =
       Field('huddleTimerInSeconds', _$huddleTimerInSeconds, opt: true, def: 30);
+  static DateTime? _$createdDate(ImprovisationModel v) => v.createdDate;
+  static const Field<ImprovisationModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(ImprovisationModel v) => v.modifiedDate;
+  static const Field<ImprovisationModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
   static String? _$integrationEntityId(ImprovisationModel v) =>
       v.integrationEntityId;
   static const Field<ImprovisationModel, String> _f$integrationEntityId =
@@ -85,12 +85,12 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
     #durationsInSeconds: _f$durationsInSeconds,
     #performers: _f$performers,
     #notes: _f$notes,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
     #matchId: _f$matchId,
     #pacingId: _f$pacingId,
     #timeBufferInSeconds: _f$timeBufferInSeconds,
     #huddleTimerInSeconds: _f$huddleTimerInSeconds,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
   };
@@ -105,12 +105,12 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
         durationsInSeconds: data.dec(_f$durationsInSeconds),
         performers: data.dec(_f$performers),
         notes: data.dec(_f$notes),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate),
         matchId: data.dec(_f$matchId),
         pacingId: data.dec(_f$pacingId),
         timeBufferInSeconds: data.dec(_f$timeBufferInSeconds),
         huddleTimerInSeconds: data.dec(_f$huddleTimerInSeconds),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
@@ -180,12 +180,12 @@ abstract class ImprovisationModelCopyWith<$R, $In extends ImprovisationModel,
       List<int>? durationsInSeconds,
       String? performers,
       String? notes,
-      DateTime? createdDate,
-      DateTime? modifiedDate,
       int? matchId,
       int? pacingId,
       int? timeBufferInSeconds,
       int? huddleTimerInSeconds,
+      DateTime? createdDate,
+      DateTime? modifiedDate,
       String? integrationEntityId,
       String? integrationAdditionalData});
   ImprovisationModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -216,12 +216,12 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
           List<int>? durationsInSeconds,
           String? performers,
           String? notes,
-          DateTime? createdDate,
-          DateTime? modifiedDate,
           Object? matchId = $none,
           Object? pacingId = $none,
           int? timeBufferInSeconds,
           int? huddleTimerInSeconds,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
@@ -233,14 +233,14 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
         if (durationsInSeconds != null) #durationsInSeconds: durationsInSeconds,
         if (performers != null) #performers: performers,
         if (notes != null) #notes: notes,
-        if (createdDate != null) #createdDate: createdDate,
-        if (modifiedDate != null) #modifiedDate: modifiedDate,
         if (matchId != $none) #matchId: matchId,
         if (pacingId != $none) #pacingId: pacingId,
         if (timeBufferInSeconds != null)
           #timeBufferInSeconds: timeBufferInSeconds,
         if (huddleTimerInSeconds != null)
           #huddleTimerInSeconds: huddleTimerInSeconds,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
         if (integrationAdditionalData != $none)
@@ -257,14 +257,14 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
           data.get(#durationsInSeconds, or: $value.durationsInSeconds),
       performers: data.get(#performers, or: $value.performers),
       notes: data.get(#notes, or: $value.notes),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       matchId: data.get(#matchId, or: $value.matchId),
       pacingId: data.get(#pacingId, or: $value.pacingId),
       timeBufferInSeconds:
           data.get(#timeBufferInSeconds, or: $value.timeBufferInSeconds),
       huddleTimerInSeconds:
           data.get(#huddleTimerInSeconds, or: $value.huddleTimerInSeconds),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),
       integrationAdditionalData: data.get(#integrationAdditionalData,

@@ -10,8 +10,8 @@ part 'pacing_model.mapper.dart';
 class PacingModel with PacingModelMappable {
   final int? id;
   final String name;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final List<ImprovisationModel> improvisations;
   final int defaultNumberOfTeams;
   final List<String> tags;
@@ -22,11 +22,11 @@ class PacingModel with PacingModelMappable {
   const PacingModel({
     required this.id,
     required this.name,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.improvisations,
     this.defaultNumberOfTeams = 2,
     this.tags = const [],
+    this.createdDate,
+    this.modifiedDate,
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
@@ -54,8 +54,8 @@ class PacingModel with PacingModelMappable {
   PacingEntityCompanion toCompanion() {
     return PacingEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(DateTime.now()),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       name: Value(name),
       defaultNumberOfTeams: Value(defaultNumberOfTeams),
       integrationId: Value(integrationId),

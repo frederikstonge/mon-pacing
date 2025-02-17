@@ -23,12 +23,6 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
 
   static int? _$id(TeamModel v) => v.id;
   static const Field<TeamModel, int> _f$id = Field('id', _$id);
-  static DateTime _$createdDate(TeamModel v) => v.createdDate;
-  static const Field<TeamModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate);
-  static DateTime _$modifiedDate(TeamModel v) => v.modifiedDate;
-  static const Field<TeamModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate);
   static String _$name(TeamModel v) => v.name;
   static const Field<TeamModel, String> _f$name = Field('name', _$name);
   static int _$color(TeamModel v) => v.color;
@@ -41,6 +35,12 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
   static List<String>? _$tags(TeamModel v) => v.tags;
   static const Field<TeamModel, List<String>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
+  static DateTime? _$modifiedDate(TeamModel v) => v.modifiedDate;
+  static const Field<TeamModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
+  static DateTime? _$createdDate(TeamModel v) => v.createdDate;
+  static const Field<TeamModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
   static String? _$integrationId(TeamModel v) => v.integrationId;
   static const Field<TeamModel, String> _f$integrationId =
       Field('integrationId', _$integrationId, opt: true);
@@ -56,13 +56,13 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
   @override
   final MappableFields<TeamModel> fields = const {
     #id: _f$id,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
     #name: _f$name,
     #color: _f$color,
     #matchId: _f$matchId,
     #performers: _f$performers,
     #tags: _f$tags,
+    #modifiedDate: _f$modifiedDate,
+    #createdDate: _f$createdDate,
     #integrationId: _f$integrationId,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
@@ -71,13 +71,13 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
   static TeamModel _instantiate(DecodingData data) {
     return TeamModel(
         id: data.dec(_f$id),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate),
         name: data.dec(_f$name),
         color: data.dec(_f$color),
         matchId: data.dec(_f$matchId),
         performers: data.dec(_f$performers),
         tags: data.dec(_f$tags),
+        modifiedDate: data.dec(_f$modifiedDate),
+        createdDate: data.dec(_f$createdDate),
         integrationId: data.dec(_f$integrationId),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
@@ -139,13 +139,13 @@ abstract class TeamModelCopyWith<$R, $In extends TeamModel, $Out>
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get tags;
   $R call(
       {int? id,
-      DateTime? createdDate,
-      DateTime? modifiedDate,
       String? name,
       int? color,
       int? matchId,
       List<PerformerModel>? performers,
       List<String>? tags,
+      DateTime? modifiedDate,
+      DateTime? createdDate,
       String? integrationId,
       String? integrationEntityId,
       String? integrationAdditionalData});
@@ -174,25 +174,25 @@ class _TeamModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {Object? id = $none,
-          DateTime? createdDate,
-          DateTime? modifiedDate,
           String? name,
           int? color,
           Object? matchId = $none,
           List<PerformerModel>? performers,
           Object? tags = $none,
+          Object? modifiedDate = $none,
+          Object? createdDate = $none,
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != $none) #id: id,
-        if (createdDate != null) #createdDate: createdDate,
-        if (modifiedDate != null) #modifiedDate: modifiedDate,
         if (name != null) #name: name,
         if (color != null) #color: color,
         if (matchId != $none) #matchId: matchId,
         if (performers != null) #performers: performers,
         if (tags != $none) #tags: tags,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
+        if (createdDate != $none) #createdDate: createdDate,
         if (integrationId != $none) #integrationId: integrationId,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
@@ -202,13 +202,13 @@ class _TeamModelCopyWithImpl<$R, $Out>
   @override
   TeamModel $make(CopyWithData data) => TeamModel(
       id: data.get(#id, or: $value.id),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       name: data.get(#name, or: $value.name),
       color: data.get(#color, or: $value.color),
       matchId: data.get(#matchId, or: $value.matchId),
       performers: data.get(#performers, or: $value.performers),
       tags: data.get(#tags, or: $value.tags),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
       integrationId: data.get(#integrationId, or: $value.integrationId),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),

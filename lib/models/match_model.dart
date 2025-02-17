@@ -15,8 +15,8 @@ part 'match_model.mapper.dart';
 class MatchModel with MatchModelMappable {
   final int? id;
   final String name;
-  final DateTime createdDate;
-  final DateTime modifiedDate;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final List<String> tags;
   final List<TeamModel> teams;
   final List<ImprovisationModel> improvisations;
@@ -40,8 +40,6 @@ class MatchModel with MatchModelMappable {
   const MatchModel({
     required this.id,
     required this.name,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.teams,
     required this.improvisations,
     required this.penalties,
@@ -54,6 +52,8 @@ class MatchModel with MatchModelMappable {
     this.penaltiesRequiredToImpactPoints = 3,
     this.enableMatchExpulsion = true,
     this.penaltiesRequiredToExpel = 3,
+    this.createdDate,
+    this.modifiedDate,
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
@@ -102,8 +102,8 @@ class MatchModel with MatchModelMappable {
   MatchEntityCompanion toCompanion() {
     return MatchEntityCompanion(
       id: id != null ? Value(id!) : Value.absent(),
-      createdDate: Value(createdDate),
-      modifiedDate: Value(DateTime.now()),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
       name: Value(name),
       enableStatistics: Value(enableStatistics),
       enablePenaltiesImpactPoints: Value(enablePenaltiesImpactPoints),
