@@ -62,7 +62,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> delete(MatchModel model) async {
     try {
-      await matchesRepository.delete(model.id);
+      await matchesRepository.remove(model.id!);
       toasterService.show(title: Localizer.current.toasterMatchDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);

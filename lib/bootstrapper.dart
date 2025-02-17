@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,8 @@ import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/teams/teams_cubit.dart';
 import 'cubits/timer/timer_cubit.dart';
-import 'repositories/database_repository.dart';
+import 'repositories/app_database.dart';
+import 'repositories/legacy_database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 import 'repositories/teams_repository.dart';
@@ -36,121 +36,82 @@ class Bootstrapper extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => ToasterService(
-              toastification: Toastification(),
-            ),
+          create: (repositoryContext) => ToasterService(
+            toastification: Toastification(),
           ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => ExcelService(),
+          create: (repositoryContext) => ExcelService(),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => IntegrationService(),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => TimerService(),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => AnalyticsService(
+            analytics: FirebaseAnalytics.instance,
           ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => IntegrationService(),
+          create: (repositoryContext) => LegacyDatabaseRepository(),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) => AppDatabase(
+            legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
+            toasterService: repositoryContext.read<ToasterService>(),
           ),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => TimerService(),
-          ),
+          create: (repositoryContext) => repositoryContext.read<AppDatabase>().pacingsRepository,
         ),
         RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => AnalyticsService(
-              analytics: FirebaseAnalytics.instance,
-            ),
-          ),
+          create: (repositoryContext) => repositoryContext.read<AppDatabase>().matchesRepository,
         ),
         RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => DatabaseRepository(),
-          ),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => PacingsRepository(
-              databaseRepository: repositoryContext.read<DatabaseRepository>(),
-            ),
-          ),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => MatchesRepository(
-              databaseRepository: repositoryContext.read<DatabaseRepository>(),
-            ),
-          ),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => _createOrGetOverride(
-            () => TeamsRepository(
-              databaseRepository: repositoryContext.read<DatabaseRepository>(),
-            ),
-          ),
+          create: (repositoryContext) => repositoryContext.read<AppDatabase>().teamsRepository,
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (blocContext) => _createOrGetOverride(
-              () => SettingsCubit(),
-            ),
+            create: (blocContext) => SettingsCubit(),
           ),
           BlocProvider(
-            create: (blocContext) => _createOrGetOverride(
-              () => PacingsCubit(
-                pacingsRepository: blocContext.read<PacingsRepository>(),
-                toasterService: blocContext.read<ToasterService>(),
-              ),
+            create: (blocContext) => PacingsCubit(
+              pacingsRepository: blocContext.read<PacingsRepository>(),
+              toasterService: blocContext.read<ToasterService>(),
             )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => _createOrGetOverride(
-              () => MatchesCubit(
-                matchesRepository: blocContext.read<MatchesRepository>(),
-                toasterService: blocContext.read<ToasterService>(),
-                analyticsService: blocContext.read<AnalyticsService>(),
-              ),
+            create: (blocContext) => MatchesCubit(
+              matchesRepository: blocContext.read<MatchesRepository>(),
+              toasterService: blocContext.read<ToasterService>(),
+              analyticsService: blocContext.read<AnalyticsService>(),
             )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => _createOrGetOverride(
-              () => TeamsCubit(
-                teamsRepository: blocContext.read<TeamsRepository>(),
-                toasterService: blocContext.read<ToasterService>(),
-              ),
+            create: (blocContext) => TeamsCubit(
+              teamsRepository: blocContext.read<TeamsRepository>(),
+              toasterService: blocContext.read<ToasterService>(),
             )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => _createOrGetOverride(
-              () => TimerCubit(
-                toasterService: blocContext.read<ToasterService>(),
-                settingsCubit: blocContext.read<SettingsCubit>(),
-                timerService: blocContext.read<TimerService>(),
-              ),
+            create: (blocContext) => TimerCubit(
+              toasterService: blocContext.read<ToasterService>(),
+              settingsCubit: blocContext.read<SettingsCubit>(),
+              timerService: blocContext.read<TimerService>(),
             )..initialize(),
           ),
           BlocProvider(
-            create: (blocContext) => _createOrGetOverride(
-              () => FeatureFlagsCubit(
-                remoteConfig: FirebaseRemoteConfig.instance,
-              ),
+            create: (blocContext) => FeatureFlagsCubit(
+              remoteConfig: FirebaseRemoteConfig.instance,
             )..initialize(),
           ),
         ],
         child: child,
       ),
     );
-  }
-
-  T _createOrGetOverride<T>(T Function() create) {
-    final override = overrides.firstWhereOrNull((o) => o is T);
-    if (override != null) {
-      return override as T;
-    }
-
-    return create();
   }
 }

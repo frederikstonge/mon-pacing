@@ -28,12 +28,14 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
                 ? editMode
                     ? team.copyWith()
                     : team.copyWith(id: 0)
-                : const TeamModel(
+                : TeamModel(
                     id: 0,
-                    createdDate: null,
-                    modifiedDate: null,
+                    createdDate: DateTime.now(),
+                    modifiedDate: DateTime.now(),
                     name: '',
                     color: 0,
+                    performers: [],
+                    matchId: null,
                   ),
           ),
         );

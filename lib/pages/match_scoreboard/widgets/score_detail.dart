@@ -65,7 +65,7 @@ class ScoreDetail extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '${match.getImprovisationPointsByTeamId(e.value.id, team.id)}',
+                                '${match.getImprovisationPointsByTeamId(e.value.id!, team.id!)}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               )
@@ -88,7 +88,7 @@ class ScoreDetail extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${match.getSubtotalPointsByTeamId(team.id)}',
+                          '${match.getSubtotalPointsByTeamId(team.id!)}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -131,7 +131,7 @@ class ScoreDetail extends StatelessWidget {
                               (e) => Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TeamColorAvatar(color: match.getTeamColor(e.teamId)),
+                                  TeamColorAvatar(color: match.getTeamColor(e.teamId!)),
                                   const SizedBox(width: 6),
                                   Expanded(
                                     child: Text(
@@ -169,7 +169,7 @@ class ScoreDetail extends StatelessWidget {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TeamColorAvatar(color: match.getTeamColor(s.teamId)),
+                    TeamColorAvatar(color: match.getTeamColor(s.teamId!)),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(

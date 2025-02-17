@@ -10,7 +10,7 @@ extension MatchExtensions on MatchModel {
   Color getTeamColor(int teamId) => Color(teams.firstWhere((element) => element.id == teamId).color);
 
   // Penalties
-  Map<int, List<PenaltyModel>> getPenaltiesGroupedByImprovisationId() => List<PenaltyModel>.from(penalties).groupListsBy((a) => a.improvisationId);
+  Map<int, List<PenaltyModel>> getPenaltiesGroupedByImprovisationId() => List<PenaltyModel>.from(penalties).groupListsBy((a) => a.improvisationId!);
 
   int getTotalPenaltyValuesByTeamId(int teamId) => penalties
       .where((penalty) => penalty.teamId == teamId)
@@ -55,7 +55,7 @@ extension MatchExtensions on MatchModel {
         points -= impact;
       } else {
         final impact = teams.where((t) => t.id != teamId).map((t) {
-          final penaltyValues = getTotalPenaltyValuesByTeamId(t.id);
+          final penaltyValues = getTotalPenaltyValuesByTeamId(t.id!);
           return (penaltyValues / penaltiesRequiredToImpactPoints).floor();
         }).fold(0, (previousValue, element) => previousValue + element);
         points += impact;

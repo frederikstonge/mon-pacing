@@ -25,6 +25,11 @@ dart pub run build_runner build --delete-conflicting-outputs
 flutter gen-l10n
 ```
 
+### Database migrations
+```bash
+dart run drift_dev make-migrations
+``` 
+
 ### Generate screenshots
 To generate screenshots, make sure you have [imagemagick](https://imagemagick.org/script/download.php).
 

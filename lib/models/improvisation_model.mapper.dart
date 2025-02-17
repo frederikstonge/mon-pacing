@@ -21,8 +21,11 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   @override
   final String id = 'ImprovisationModel';
 
-  static int _$id(ImprovisationModel v) => v.id;
+  static int? _$id(ImprovisationModel v) => v.id;
   static const Field<ImprovisationModel, int> _f$id = Field('id', _$id);
+  static int _$order(ImprovisationModel v) => v.order;
+  static const Field<ImprovisationModel, int> _f$order =
+      Field('order', _$order);
   static ImprovisationType _$type(ImprovisationModel v) => v.type;
   static const Field<ImprovisationModel, ImprovisationType> _f$type =
       Field('type', _$type);
@@ -42,6 +45,12 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   static String _$notes(ImprovisationModel v) => v.notes;
   static const Field<ImprovisationModel, String> _f$notes =
       Field('notes', _$notes);
+  static int? _$matchId(ImprovisationModel v) => v.matchId;
+  static const Field<ImprovisationModel, int> _f$matchId =
+      Field('matchId', _$matchId);
+  static int? _$pacingId(ImprovisationModel v) => v.pacingId;
+  static const Field<ImprovisationModel, int> _f$pacingId =
+      Field('pacingId', _$pacingId);
   static int _$timeBufferInSeconds(ImprovisationModel v) =>
       v.timeBufferInSeconds;
   static const Field<ImprovisationModel, int> _f$timeBufferInSeconds =
@@ -50,6 +59,12 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
       v.huddleTimerInSeconds;
   static const Field<ImprovisationModel, int> _f$huddleTimerInSeconds =
       Field('huddleTimerInSeconds', _$huddleTimerInSeconds, opt: true, def: 30);
+  static DateTime? _$createdDate(ImprovisationModel v) => v.createdDate;
+  static const Field<ImprovisationModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(ImprovisationModel v) => v.modifiedDate;
+  static const Field<ImprovisationModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
   static String? _$integrationEntityId(ImprovisationModel v) =>
       v.integrationEntityId;
   static const Field<ImprovisationModel, String> _f$integrationEntityId =
@@ -63,14 +78,19 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   @override
   final MappableFields<ImprovisationModel> fields = const {
     #id: _f$id,
+    #order: _f$order,
     #type: _f$type,
     #category: _f$category,
     #theme: _f$theme,
     #durationsInSeconds: _f$durationsInSeconds,
     #performers: _f$performers,
     #notes: _f$notes,
+    #matchId: _f$matchId,
+    #pacingId: _f$pacingId,
     #timeBufferInSeconds: _f$timeBufferInSeconds,
     #huddleTimerInSeconds: _f$huddleTimerInSeconds,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
   };
@@ -78,14 +98,19 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   static ImprovisationModel _instantiate(DecodingData data) {
     return ImprovisationModel(
         id: data.dec(_f$id),
+        order: data.dec(_f$order),
         type: data.dec(_f$type),
         category: data.dec(_f$category),
         theme: data.dec(_f$theme),
         durationsInSeconds: data.dec(_f$durationsInSeconds),
         performers: data.dec(_f$performers),
         notes: data.dec(_f$notes),
+        matchId: data.dec(_f$matchId),
+        pacingId: data.dec(_f$pacingId),
         timeBufferInSeconds: data.dec(_f$timeBufferInSeconds),
         huddleTimerInSeconds: data.dec(_f$huddleTimerInSeconds),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
@@ -148,14 +173,19 @@ abstract class ImprovisationModelCopyWith<$R, $In extends ImprovisationModel,
   ListCopyWith<$R, int, ObjectCopyWith<$R, int, int>> get durationsInSeconds;
   $R call(
       {int? id,
+      int? order,
       ImprovisationType? type,
       String? category,
       String? theme,
       List<int>? durationsInSeconds,
       String? performers,
       String? notes,
+      int? matchId,
+      int? pacingId,
       int? timeBufferInSeconds,
       int? huddleTimerInSeconds,
+      DateTime? createdDate,
+      DateTime? modifiedDate,
       String? integrationEntityId,
       String? integrationAdditionalData});
   ImprovisationModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -178,29 +208,39 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
           (v) => call(durationsInSeconds: v));
   @override
   $R call(
-          {int? id,
+          {Object? id = $none,
+          int? order,
           ImprovisationType? type,
           String? category,
           String? theme,
           List<int>? durationsInSeconds,
           String? performers,
           String? notes,
+          Object? matchId = $none,
+          Object? pacingId = $none,
           int? timeBufferInSeconds,
           int? huddleTimerInSeconds,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+        if (id != $none) #id: id,
+        if (order != null) #order: order,
         if (type != null) #type: type,
         if (category != null) #category: category,
         if (theme != null) #theme: theme,
         if (durationsInSeconds != null) #durationsInSeconds: durationsInSeconds,
         if (performers != null) #performers: performers,
         if (notes != null) #notes: notes,
+        if (matchId != $none) #matchId: matchId,
+        if (pacingId != $none) #pacingId: pacingId,
         if (timeBufferInSeconds != null)
           #timeBufferInSeconds: timeBufferInSeconds,
         if (huddleTimerInSeconds != null)
           #huddleTimerInSeconds: huddleTimerInSeconds,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
         if (integrationAdditionalData != $none)
@@ -209,6 +249,7 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
   @override
   ImprovisationModel $make(CopyWithData data) => ImprovisationModel(
       id: data.get(#id, or: $value.id),
+      order: data.get(#order, or: $value.order),
       type: data.get(#type, or: $value.type),
       category: data.get(#category, or: $value.category),
       theme: data.get(#theme, or: $value.theme),
@@ -216,10 +257,14 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
           data.get(#durationsInSeconds, or: $value.durationsInSeconds),
       performers: data.get(#performers, or: $value.performers),
       notes: data.get(#notes, or: $value.notes),
+      matchId: data.get(#matchId, or: $value.matchId),
+      pacingId: data.get(#pacingId, or: $value.pacingId),
       timeBufferInSeconds:
           data.get(#timeBufferInSeconds, or: $value.timeBufferInSeconds),
       huddleTimerInSeconds:
           data.get(#huddleTimerInSeconds, or: $value.huddleTimerInSeconds),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),
       integrationAdditionalData: data.get(#integrationAdditionalData,

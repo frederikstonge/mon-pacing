@@ -52,7 +52,7 @@ class ImprovisationActions extends StatelessWidget {
                 initialValue: points,
                 onChanged: (value) {
                   if (value != null) {
-                    unawaited(onPointChanged.call(improvisation.id, team.id, value));
+                    unawaited(onPointChanged.call(improvisation.id!, team.id!, value));
                   }
                 },
                 minValue: 0,

@@ -24,10 +24,10 @@ class PacingsCubit extends Cubit<PacingsState> {
     required this.toasterService,
   }) : super(const PacingsState(status: PacingsStatus.initial));
 
-  Future<PacingModel?> add(PacingModel model) async {
+  Future<int?> add(PacingModel model) async {
     try {
-      final pacing = await pacingsRepository.add(model);
-      return pacing;
+      final pacingId = await pacingsRepository.add(model);
+      return pacingId;
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -49,7 +49,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> delete(PacingModel model) async {
     try {
-      await pacingsRepository.delete(model.id);
+      await pacingsRepository.remove(model.id!);
       toasterService.show(title: Localizer.current.toasterPacingDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
@@ -92,7 +92,7 @@ class PacingsCubit extends Cubit<PacingsState> {
     await fetch();
   }
 
-  Future<PacingModel?> import() async {
+  Future<int?> import() async {
     try {
       const params = OpenFileDialogParams(
         dialogType: OpenFileDialogType.document,
@@ -104,10 +104,10 @@ class PacingsCubit extends Cubit<PacingsState> {
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
         final pacing = PacingModelMapper.fromJson(pacingValue);
-        final newPacing = await pacingsRepository.add(pacing.copyWith(id: 0));
+        final newPacingId = await pacingsRepository.add(pacing.copyWith(id: 0));
         toasterService.show(title: Localizer.current.toasterPacingImported);
 
-        return newPacing;
+        return newPacingId;
       }
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
