@@ -33,8 +33,6 @@ migrate_working_dir/
 .pub/
 /build/
 
-**/.cxx/
-
 # Symbolication related
 app.*.symbols
 
