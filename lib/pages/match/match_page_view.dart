@@ -236,7 +236,7 @@ class MatchPageView extends StatelessWidget {
                                           onPressed: () async => await BottomSheetDialog.showDialog(
                                             context: context,
                                             child: MatchPenaltyShell(
-                                              improvisationId: improvisation.id,
+                                              improvisationId: improvisation.id!,
                                               teams: match.teams,
                                               onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
                                               integrationPenaltyTypes: match.integrationPenaltyTypes,
@@ -249,7 +249,7 @@ class MatchPageView extends StatelessWidget {
                                               onTap: () => BottomSheetDialog.showDialog(
                                                 context: context,
                                                 child: MatchPenaltyShell(
-                                                  improvisationId: improvisation.id,
+                                                  improvisationId: improvisation.id!,
                                                   teams: match.teams,
                                                   penalty: e,
                                                   integrationPenaltyTypes: match.integrationPenaltyTypes,
@@ -258,7 +258,7 @@ class MatchPageView extends StatelessWidget {
                                               ),
                                               child: ListTile(
                                                 contentPadding: EdgeInsets.zero,
-                                                leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
+                                                leading: TeamColorAvatar(color: match.getTeamColor(e.teamId!)),
                                                 title: Text(e.getPenaltyString(S.of(context), match, includePerformerName: false)),
                                                 subtitle: e.performerId != null
                                                     ? Text(match.teams
@@ -279,7 +279,7 @@ class MatchPageView extends StatelessWidget {
                                                       S.of(context).cancel,
                                                     );
                                                     if (result ?? false) {
-                                                      await matchCubit.removePenalty(e.id);
+                                                      await matchCubit.removePenalty(e.id!);
                                                     }
                                                   },
                                                 ),

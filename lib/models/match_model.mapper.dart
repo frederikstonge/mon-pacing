@@ -13,7 +13,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static MatchModelMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = MatchModelMapper._());
-      MatchTeamModelMapper.ensureInitialized();
+      TeamModelMapper.ensureInitialized();
       ImprovisationModelMapper.ensureInitialized();
       PenaltyModelMapper.ensureInitialized();
       PointModelMapper.ensureInitialized();
@@ -26,18 +26,12 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   @override
   final String id = 'MatchModel';
 
-  static int _$id(MatchModel v) => v.id;
+  static int? _$id(MatchModel v) => v.id;
   static const Field<MatchModel, int> _f$id = Field('id', _$id);
   static String _$name(MatchModel v) => v.name;
   static const Field<MatchModel, String> _f$name = Field('name', _$name);
-  static DateTime? _$createdDate(MatchModel v) => v.createdDate;
-  static const Field<MatchModel, DateTime> _f$createdDate =
-      Field('createdDate', _$createdDate);
-  static DateTime? _$modifiedDate(MatchModel v) => v.modifiedDate;
-  static const Field<MatchModel, DateTime> _f$modifiedDate =
-      Field('modifiedDate', _$modifiedDate);
-  static List<MatchTeamModel> _$teams(MatchModel v) => v.teams;
-  static const Field<MatchModel, List<MatchTeamModel>> _f$teams =
+  static List<TeamModel> _$teams(MatchModel v) => v.teams;
+  static const Field<MatchModel, List<TeamModel>> _f$teams =
       Field('teams', _$teams);
   static List<ImprovisationModel> _$improvisations(MatchModel v) =>
       v.improvisations;
@@ -83,6 +77,12 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static const Field<MatchModel, int> _f$penaltiesRequiredToExpel = Field(
       'penaltiesRequiredToExpel', _$penaltiesRequiredToExpel,
       opt: true, def: 3);
+  static DateTime? _$createdDate(MatchModel v) => v.createdDate;
+  static const Field<MatchModel, DateTime> _f$createdDate =
+      Field('createdDate', _$createdDate, opt: true);
+  static DateTime? _$modifiedDate(MatchModel v) => v.modifiedDate;
+  static const Field<MatchModel, DateTime> _f$modifiedDate =
+      Field('modifiedDate', _$modifiedDate, opt: true);
   static String? _$integrationId(MatchModel v) => v.integrationId;
   static const Field<MatchModel, String> _f$integrationId =
       Field('integrationId', _$integrationId, opt: true);
@@ -122,8 +122,6 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   final MappableFields<MatchModel> fields = const {
     #id: _f$id,
     #name: _f$name,
-    #createdDate: _f$createdDate,
-    #modifiedDate: _f$modifiedDate,
     #teams: _f$teams,
     #improvisations: _f$improvisations,
     #penalties: _f$penalties,
@@ -136,6 +134,8 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
     #penaltiesRequiredToImpactPoints: _f$penaltiesRequiredToImpactPoints,
     #enableMatchExpulsion: _f$enableMatchExpulsion,
     #penaltiesRequiredToExpel: _f$penaltiesRequiredToExpel,
+    #createdDate: _f$createdDate,
+    #modifiedDate: _f$modifiedDate,
     #integrationId: _f$integrationId,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
@@ -152,8 +152,6 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
     return MatchModel(
         id: data.dec(_f$id),
         name: data.dec(_f$name),
-        createdDate: data.dec(_f$createdDate),
-        modifiedDate: data.dec(_f$modifiedDate),
         teams: data.dec(_f$teams),
         improvisations: data.dec(_f$improvisations),
         penalties: data.dec(_f$penalties),
@@ -167,6 +165,8 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
             data.dec(_f$penaltiesRequiredToImpactPoints),
         enableMatchExpulsion: data.dec(_f$enableMatchExpulsion),
         penaltiesRequiredToExpel: data.dec(_f$penaltiesRequiredToExpel),
+        createdDate: data.dec(_f$createdDate),
+        modifiedDate: data.dec(_f$modifiedDate),
         integrationId: data.dec(_f$integrationId),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData),
@@ -230,8 +230,8 @@ extension MatchModelValueCopy<$R, $Out>
 
 abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, MatchTeamModel,
-      MatchTeamModelCopyWith<$R, MatchTeamModel, MatchTeamModel>> get teams;
+  ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
+      get teams;
   ListCopyWith<
       $R,
       ImprovisationModel,
@@ -249,9 +249,7 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
   $R call(
       {int? id,
       String? name,
-      DateTime? createdDate,
-      DateTime? modifiedDate,
-      List<MatchTeamModel>? teams,
+      List<TeamModel>? teams,
       List<ImprovisationModel>? improvisations,
       List<PenaltyModel>? penalties,
       List<PointModel>? points,
@@ -263,6 +261,8 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       int? penaltiesRequiredToImpactPoints,
       bool? enableMatchExpulsion,
       int? penaltiesRequiredToExpel,
+      DateTime? createdDate,
+      DateTime? modifiedDate,
       String? integrationId,
       String? integrationEntityId,
       String? integrationAdditionalData,
@@ -282,8 +282,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<MatchModel> $mapper =
       MatchModelMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, MatchTeamModel,
-          MatchTeamModelCopyWith<$R, MatchTeamModel, MatchTeamModel>>
+  ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
       get teams => ListCopyWith(
           $value.teams, (v, t) => v.copyWith.$chain(t), (v) => call(teams: v));
   @override
@@ -322,11 +321,9 @@ class _MatchModelCopyWithImpl<$R, $Out>
           : null;
   @override
   $R call(
-          {int? id,
+          {Object? id = $none,
           String? name,
-          Object? createdDate = $none,
-          Object? modifiedDate = $none,
-          List<MatchTeamModel>? teams,
+          List<TeamModel>? teams,
           List<ImprovisationModel>? improvisations,
           List<PenaltyModel>? penalties,
           List<PointModel>? points,
@@ -338,6 +335,8 @@ class _MatchModelCopyWithImpl<$R, $Out>
           int? penaltiesRequiredToImpactPoints,
           bool? enableMatchExpulsion,
           int? penaltiesRequiredToExpel,
+          Object? createdDate = $none,
+          Object? modifiedDate = $none,
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none,
@@ -346,10 +345,8 @@ class _MatchModelCopyWithImpl<$R, $Out>
           Object? integrationMaxNumberOfImprovisations = $none,
           Object? integrationPenaltyTypes = $none}) =>
       $apply(FieldCopyWithData({
-        if (id != null) #id: id,
+        if (id != $none) #id: id,
         if (name != null) #name: name,
-        if (createdDate != $none) #createdDate: createdDate,
-        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (teams != null) #teams: teams,
         if (improvisations != null) #improvisations: improvisations,
         if (penalties != null) #penalties: penalties,
@@ -367,6 +364,8 @@ class _MatchModelCopyWithImpl<$R, $Out>
           #enableMatchExpulsion: enableMatchExpulsion,
         if (penaltiesRequiredToExpel != null)
           #penaltiesRequiredToExpel: penaltiesRequiredToExpel,
+        if (createdDate != $none) #createdDate: createdDate,
+        if (modifiedDate != $none) #modifiedDate: modifiedDate,
         if (integrationId != $none) #integrationId: integrationId,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
@@ -388,8 +387,6 @@ class _MatchModelCopyWithImpl<$R, $Out>
   MatchModel $make(CopyWithData data) => MatchModel(
       id: data.get(#id, or: $value.id),
       name: data.get(#name, or: $value.name),
-      createdDate: data.get(#createdDate, or: $value.createdDate),
-      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       teams: data.get(#teams, or: $value.teams),
       improvisations: data.get(#improvisations, or: $value.improvisations),
       penalties: data.get(#penalties, or: $value.penalties),
@@ -409,6 +406,8 @@ class _MatchModelCopyWithImpl<$R, $Out>
           data.get(#enableMatchExpulsion, or: $value.enableMatchExpulsion),
       penaltiesRequiredToExpel: data.get(#penaltiesRequiredToExpel,
           or: $value.penaltiesRequiredToExpel),
+      createdDate: data.get(#createdDate, or: $value.createdDate),
+      modifiedDate: data.get(#modifiedDate, or: $value.modifiedDate),
       integrationId: data.get(#integrationId, or: $value.integrationId),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),

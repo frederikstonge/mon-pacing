@@ -33,6 +33,10 @@ const MatchModelSchema = IsarGeneratedSchema(
         type: IsarType.dateTime,
       ),
       IsarPropertySchema(
+        name: 'tags',
+        type: IsarType.stringList,
+      ),
+      IsarPropertySchema(
         name: 'teams',
         type: IsarType.objectList,
         target: 'MatchTeamModel',
@@ -51,10 +55,6 @@ const MatchModelSchema = IsarGeneratedSchema(
         name: 'points',
         type: IsarType.objectList,
         target: 'PointModel',
-      ),
-      IsarPropertySchema(
-        name: 'tags',
-        type: IsarType.stringList,
       ),
       IsarPropertySchema(
         name: 'stars',
@@ -175,8 +175,16 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
       object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
           -9223372036854775808);
   {
-    final list = object.teams;
+    final list = object.tags;
     final listWriter = IsarCore.beginList(writer, 4, list.length);
+    for (var i = 0; i < list.length; i++) {
+      IsarCore.writeString(listWriter, i, list[i]);
+    }
+    IsarCore.endList(writer, listWriter);
+  }
+  {
+    final list = object.teams;
+    final listWriter = IsarCore.beginList(writer, 5, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -189,7 +197,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
   }
   {
     final list = object.improvisations;
-    final listWriter = IsarCore.beginList(writer, 5, list.length);
+    final listWriter = IsarCore.beginList(writer, 6, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -202,7 +210,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
   }
   {
     final list = object.penalties;
-    final listWriter = IsarCore.beginList(writer, 6, list.length);
+    final listWriter = IsarCore.beginList(writer, 7, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -215,7 +223,7 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
   }
   {
     final list = object.points;
-    final listWriter = IsarCore.beginList(writer, 7, list.length);
+    final listWriter = IsarCore.beginList(writer, 8, list.length);
     for (var i = 0; i < list.length; i++) {
       {
         final value = list[i];
@@ -223,14 +231,6 @@ int serializeMatchModel(IsarWriter writer, MatchModel object) {
         serializePointModel(objectWriter, value);
         IsarCore.endObject(listWriter, objectWriter);
       }
-    }
-    IsarCore.endList(writer, listWriter);
-  }
-  {
-    final list = object.tags;
-    final listWriter = IsarCore.beginList(writer, 8, list.length);
-    for (var i = 0; i < list.length; i++) {
-      IsarCore.writeString(listWriter, i, list[i]);
     }
     IsarCore.endList(writer, listWriter);
   }
@@ -335,9 +335,26 @@ MatchModel deserializeMatchModel(IsarReader reader) {
           DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
     }
   }
-  final List<MatchTeamModel> _teams;
+  final List<String> _tags;
   {
     final length = IsarCore.readList(reader, 4, IsarCore.readerPtrPtr);
+    {
+      final reader = IsarCore.readerPtr;
+      if (reader.isNull) {
+        _tags = const [];
+      } else {
+        final list = List<String>.filled(length, '', growable: true);
+        for (var i = 0; i < length; i++) {
+          list[i] = IsarCore.readString(reader, i) ?? '';
+        }
+        IsarCore.freeReader(reader);
+        _tags = list;
+      }
+    }
+  }
+  final List<MatchTeamModel> _teams;
+  {
+    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -374,7 +391,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final List<ImprovisationModel> _improvisations;
   {
-    final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -419,7 +436,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final List<PenaltyModel> _penalties;
   {
-    final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -432,8 +449,8 @@ MatchModel deserializeMatchModel(IsarReader reader) {
               major: false,
               type: '',
               performerId: null,
-              teamId: -9223372036854775808,
               improvisationId: -9223372036854775808,
+              teamId: -9223372036854775808,
             ),
             growable: true);
         for (var i = 0; i < length; i++) {
@@ -445,8 +462,8 @@ MatchModel deserializeMatchModel(IsarReader reader) {
                 major: false,
                 type: '',
                 performerId: null,
-                teamId: -9223372036854775808,
                 improvisationId: -9223372036854775808,
+                teamId: -9223372036854775808,
               );
             } else {
               final embedded = deserializePenaltyModel(objectReader);
@@ -462,7 +479,7 @@ MatchModel deserializeMatchModel(IsarReader reader) {
   }
   final List<PointModel> _points;
   {
-    final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
+    final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
     {
       final reader = IsarCore.readerPtr;
       if (reader.isNull) {
@@ -496,23 +513,6 @@ MatchModel deserializeMatchModel(IsarReader reader) {
         }
         IsarCore.freeReader(reader);
         _points = list;
-      }
-    }
-  }
-  final List<String> _tags;
-  {
-    final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
-    {
-      final reader = IsarCore.readerPtr;
-      if (reader.isNull) {
-        _tags = const [];
-      } else {
-        final list = List<String>.filled(length, '', growable: true);
-        for (var i = 0; i < length; i++) {
-          list[i] = IsarCore.readString(reader, i) ?? '';
-        }
-        IsarCore.freeReader(reader);
-        _tags = list;
       }
     }
   }
@@ -660,11 +660,11 @@ MatchModel deserializeMatchModel(IsarReader reader) {
     name: _name,
     createdDate: _createdDate,
     modifiedDate: _modifiedDate,
+    tags: _tags,
     teams: _teams,
     improvisations: _improvisations,
     penalties: _penalties,
     points: _points,
-    tags: _tags,
     stars: _stars,
     enableStatistics: _enableStatistics,
     enablePenaltiesImpactPoints: _enablePenaltiesImpactPoints,
@@ -717,6 +717,23 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
+            return const [];
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
+        }
+      }
+    case 5:
+      {
+        final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
             return const <MatchTeamModel>[];
           } else {
             final list = List<MatchTeamModel>.filled(
@@ -748,9 +765,9 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
           }
         }
       }
-    case 5:
+    case 6:
       {
-        final length = IsarCore.readList(reader, 5, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -793,9 +810,9 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
           }
         }
       }
-    case 6:
+    case 7:
       {
-        final length = IsarCore.readList(reader, 6, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -808,8 +825,8 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                   major: false,
                   type: '',
                   performerId: null,
-                  teamId: -9223372036854775808,
                   improvisationId: -9223372036854775808,
+                  teamId: -9223372036854775808,
                 ),
                 growable: true);
             for (var i = 0; i < length; i++) {
@@ -821,8 +838,8 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                     major: false,
                     type: '',
                     performerId: null,
-                    teamId: -9223372036854775808,
                     improvisationId: -9223372036854775808,
+                    teamId: -9223372036854775808,
                   );
                 } else {
                   final embedded = deserializePenaltyModel(objectReader);
@@ -836,9 +853,9 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
           }
         }
       }
-    case 7:
+    case 8:
       {
-        final length = IsarCore.readList(reader, 7, IsarCore.readerPtrPtr);
+        final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
         {
           final reader = IsarCore.readerPtr;
           if (reader.isNull) {
@@ -869,23 +886,6 @@ dynamic deserializeMatchModelProp(IsarReader reader, int property) {
                   list[i] = embedded;
                 }
               }
-            }
-            IsarCore.freeReader(reader);
-            return list;
-          }
-        }
-      }
-    case 8:
-      {
-        final length = IsarCore.readList(reader, 8, IsarCore.readerPtrPtr);
-        {
-          final reader = IsarCore.readerPtr;
-          if (reader.isNull) {
-            return const [];
-          } else {
-            final list = List<String>.filled(length, '', growable: true);
-            for (var i = 0; i < length; i++) {
-              list[i] = IsarCore.readString(reader, i) ?? '';
             }
             IsarCore.freeReader(reader);
             return list;
@@ -1816,60 +1816,6 @@ extension MatchModelQueryFilter
     });
   }
 
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition> teamsIsEmpty() {
-    return not().teamsIsNotEmpty();
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      teamsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 4, value: null),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      improvisationsIsEmpty() {
-    return not().improvisationsIsNotEmpty();
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      improvisationsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 5, value: null),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesIsEmpty() {
-    return not().penaltiesIsNotEmpty();
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      penaltiesIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 6, value: null),
-      );
-    });
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition> pointsIsEmpty() {
-    return not().pointsIsNotEmpty();
-  }
-
-  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
-      pointsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterOrEqualCondition(property: 7, value: null),
-      );
-    });
-  }
-
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
       tagsElementEqualTo(
     String value, {
@@ -1878,7 +1824,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1894,7 +1840,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1910,7 +1856,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1926,7 +1872,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1942,7 +1888,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1959,7 +1905,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 8,
+          property: 4,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -1976,7 +1922,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -1992,7 +1938,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2005,7 +1951,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 8,
+          property: 4,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -2018,7 +1964,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 8,
+          property: 4,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -2031,7 +1977,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 8,
+          property: 4,
           value: '',
         ),
       );
@@ -2043,7 +1989,7 @@ extension MatchModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
-          property: 8,
+          property: 4,
           value: '',
         ),
       );
@@ -2055,6 +2001,60 @@ extension MatchModelQueryFilter
   }
 
   QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition> tagsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 4, value: null),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition> teamsIsEmpty() {
+    return not().teamsIsNotEmpty();
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      teamsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 5, value: null),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      improvisationsIsEmpty() {
+    return not().improvisationsIsNotEmpty();
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      improvisationsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 6, value: null),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      penaltiesIsEmpty() {
+    return not().penaltiesIsNotEmpty();
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      penaltiesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 7, value: null),
+      );
+    });
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition> pointsIsEmpty() {
+    return not().pointsIsNotEmpty();
+  }
+
+  QueryBuilder<MatchModel, MatchModel, QAfterFilterCondition>
+      pointsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterOrEqualCondition(property: 8, value: null),
@@ -4164,7 +4164,7 @@ extension MatchModelQueryWhereDistinct
 
   QueryBuilder<MatchModel, MatchModel, QAfterDistinct> distinctByTags() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(8);
+      return query.addDistinctBy(4);
     });
   }
 
@@ -4292,34 +4292,34 @@ extension MatchModelQueryProperty1
     });
   }
 
+  QueryBuilder<MatchModel, List<String>, QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(4);
+    });
+  }
+
   QueryBuilder<MatchModel, List<MatchTeamModel>, QAfterProperty>
       teamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<MatchModel, List<ImprovisationModel>, QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<MatchModel, List<PenaltyModel>, QAfterProperty>
       penaltiesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
-    });
-  }
-
-  QueryBuilder<MatchModel, List<PointModel>, QAfterProperty> pointsProperty() {
-    return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
   }
 
-  QueryBuilder<MatchModel, List<String>, QAfterProperty> tagsProperty() {
+  QueryBuilder<MatchModel, List<PointModel>, QAfterProperty> pointsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
@@ -4455,35 +4455,35 @@ extension MatchModelQueryProperty2<R>
     });
   }
 
+  QueryBuilder<MatchModel, (R, List<String>), QAfterProperty> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(4);
+    });
+  }
+
   QueryBuilder<MatchModel, (R, List<MatchTeamModel>), QAfterProperty>
       teamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<MatchModel, (R, List<ImprovisationModel>), QAfterProperty>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<MatchModel, (R, List<PenaltyModel>), QAfterProperty>
       penaltiesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<MatchModel, (R, List<PointModel>), QAfterProperty>
       pointsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
-    });
-  }
-
-  QueryBuilder<MatchModel, (R, List<String>), QAfterProperty> tagsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });
@@ -4623,35 +4623,35 @@ extension MatchModelQueryProperty3<R1, R2>
     });
   }
 
+  QueryBuilder<MatchModel, (R1, R2, List<String>), QOperations> tagsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addProperty(4);
+    });
+  }
+
   QueryBuilder<MatchModel, (R1, R2, List<MatchTeamModel>), QOperations>
       teamsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addProperty(5);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, List<ImprovisationModel>), QOperations>
       improvisationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addProperty(6);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, List<PenaltyModel>), QOperations>
       penaltiesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(6);
+      return query.addProperty(7);
     });
   }
 
   QueryBuilder<MatchModel, (R1, R2, List<PointModel>), QOperations>
       pointsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(7);
-    });
-  }
-
-  QueryBuilder<MatchModel, (R1, R2, List<String>), QOperations> tagsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(8);
     });

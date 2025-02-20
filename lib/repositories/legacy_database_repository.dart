@@ -1,11 +1,11 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../models/match_model.dart';
-import '../models/pacing_model.dart';
-import '../models/team_model.dart';
+import 'legacy_entities/match_model.dart';
+import 'legacy_entities/pacing_model.dart';
+import 'legacy_entities/team_model.dart';
 
-class DatabaseRepository {
+class LegacyDatabaseRepository {
   Isar? _database;
 
   Future<Isar> get database async {

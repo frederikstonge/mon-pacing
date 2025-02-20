@@ -13,7 +13,7 @@ class MatchPenaltyStateMapper extends ClassMapperBase<MatchPenaltyState> {
   static MatchPenaltyStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = MatchPenaltyStateMapper._());
-      MatchTeamModelMapper.ensureInitialized();
+      TeamModelMapper.ensureInitialized();
       PenaltyModelMapper.ensureInitialized();
     }
     return _instance!;
@@ -25,8 +25,8 @@ class MatchPenaltyStateMapper extends ClassMapperBase<MatchPenaltyState> {
   static bool _$editMode(MatchPenaltyState v) => v.editMode;
   static const Field<MatchPenaltyState, bool> _f$editMode =
       Field('editMode', _$editMode);
-  static List<MatchTeamModel> _$teams(MatchPenaltyState v) => v.teams;
-  static const Field<MatchPenaltyState, List<MatchTeamModel>> _f$teams =
+  static List<TeamModel> _$teams(MatchPenaltyState v) => v.teams;
+  static const Field<MatchPenaltyState, List<TeamModel>> _f$teams =
       Field('teams', _$teams);
   static PenaltyModel _$penalty(MatchPenaltyState v) => v.penalty;
   static const Field<MatchPenaltyState, PenaltyModel> _f$penalty =
@@ -108,14 +108,14 @@ extension MatchPenaltyStateValueCopy<$R, $Out>
 
 abstract class MatchPenaltyStateCopyWith<$R, $In extends MatchPenaltyState,
     $Out> implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, MatchTeamModel,
-      MatchTeamModelCopyWith<$R, MatchTeamModel, MatchTeamModel>> get teams;
+  ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
+      get teams;
   PenaltyModelCopyWith<$R, PenaltyModel, PenaltyModel> get penalty;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
       get integrationPenaltyTypes;
   $R call(
       {bool? editMode,
-      List<MatchTeamModel>? teams,
+      List<TeamModel>? teams,
       PenaltyModel? penalty,
       List<String>? integrationPenaltyTypes});
   MatchPenaltyStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -131,8 +131,7 @@ class _MatchPenaltyStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<MatchPenaltyState> $mapper =
       MatchPenaltyStateMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, MatchTeamModel,
-          MatchTeamModelCopyWith<$R, MatchTeamModel, MatchTeamModel>>
+  ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
       get teams => ListCopyWith(
           $value.teams, (v, t) => v.copyWith.$chain(t), (v) => call(teams: v));
   @override
@@ -149,7 +148,7 @@ class _MatchPenaltyStateCopyWithImpl<$R, $Out>
   @override
   $R call(
           {bool? editMode,
-          List<MatchTeamModel>? teams,
+          List<TeamModel>? teams,
           PenaltyModel? penalty,
           Object? integrationPenaltyTypes = $none}) =>
       $apply(FieldCopyWithData({

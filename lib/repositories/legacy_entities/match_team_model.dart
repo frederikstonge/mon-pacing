@@ -13,6 +13,7 @@ class MatchTeamModel with MatchTeamModelMappable {
   final String name;
   final int color;
   final List<PerformerModel> performers;
+  final List<String> tags;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
 
@@ -21,6 +22,7 @@ class MatchTeamModel with MatchTeamModelMappable {
     required this.name,
     required this.color,
     this.performers = const [],
+    this.tags = const [],
     this.integrationEntityId,
     this.integrationAdditionalData,
   });

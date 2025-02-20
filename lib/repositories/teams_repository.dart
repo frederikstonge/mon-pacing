@@ -1,16 +1,29 @@
+import 'package:drift/drift.dart';
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
-import '../models/pacing_model.dart';
+import '../models/performer_model.dart';
 import '../models/team_model.dart';
-import 'database_repository.dart';
+import 'app_database.dart';
+import 'entities/performer_entity.dart';
+import 'entities/tag_entity.dart';
+import 'entities/team_entity.dart';
+import 'entities/team_tag_entity.dart';
 
-class TeamsRepository {
-  final DatabaseRepository databaseRepository;
+part 'teams_repository.g.dart';
 
-  const TeamsRepository({
-    required this.databaseRepository,
-  });
+@DriftAccessor(
+  tables: [
+    TeamEntity,
+    PerformerEntity,
+    TeamTagEntity,
+    TagEntity,
+  ],
+)
+class TeamsRepository extends DatabaseAccessor<AppDatabase> with _$TeamsRepositoryMixin {
+  TeamsRepository(
+    super.attachedDatabase,
+  );
 
   Future<TeamModel> add(TeamModel entity) async {
     final db = await databaseRepository.database;
@@ -21,7 +34,7 @@ class TeamsRepository {
     return model;
   }
 
-  Future<void> delete(int id) async {
+  Future<void> remove(int id) async {
     final db = await databaseRepository.database;
     await db.writeAsync((isar) => isar.teamModels.delete(id));
   }
@@ -43,23 +56,54 @@ class TeamsRepository {
   }
 
   Future<List<TeamModel>> search(String search, List<String> selectedTags) async {
-    final db = await databaseRepository.database;
+    final List<TeamModel> teams = [];
+    var teamsQuery = attachedDatabase.managers.teamEntity.withReferences((p) => p(performerEntityRefs: true));
+    if (selectedTags.isNotEmpty) {
+      teamsQuery = teamsQuery.filter((t) => t.teamTagEntityRefs((f) => f.tag.name.isIn(selectedTags)));
+    }
 
-    return await db.teamModels
-        .where()
-        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementEqualTo(t)))
-        .and()
-        .optional(
-          search.isNotEmpty,
-          (q) => q.group((g) => g.nameContains(search, caseSensitive: false).or().performerNamesElementContains(search, caseSensitive: false)),
-        )
-        .sortByCreatedDateDesc()
-        .findAllAsync();
+    if (search.isNotEmpty) {
+      teamsQuery = teamsQuery.filter(
+        (t) =>
+            t.name.contains(search, caseInsensitive: true) |
+            t.performerEntityRefs(
+              (p) => p.name.contains(search, caseInsensitive: true),
+            ),
+      );
+    }
+
+    final response = await teamsQuery.orderBy((p) => p.createdDate.desc()).get();
+    for (final teamResponse in response) {
+      teams.add(await _getTeamModel(teamResponse));
+    }
+
+    return teams;
   }
 
   Future<List<String>> getAllTags({String query = ''}) async {
-    final db = await databaseRepository.database;
-    final tags = await db.teamModels.where().optional(query.isNotEmpty, (q) => q.tagsElementContains(query)).tagsProperty().findAllAsync();
-    return tags.selectMany((t) => t).toSet().toList();
+    var teamTagsQuery = attachedDatabase.managers.teamTagEntity.withReferences((p) => p(tag: true));
+    if (query.isNotEmpty) {
+      teamTagsQuery = teamTagsQuery.filter((t) => t.tag.name.contains(query, caseInsensitive: true));
+    }
+
+    final tags = await teamTagsQuery.get();
+    return tags.selectMany((t) => t.$2.tag.prefetchedData!).map((t) => t.name).toSet().toList();
+  }
+
+  Future<TeamModel> _getTeamModel((TeamEntityData, $$TeamEntityTableReferences) teamResponse) async {
+    final team = teamResponse.$1;
+    final performers = teamResponse.$2.performerEntityRefs.prefetchedData ?? [];
+
+    final pacingTags = await teamResponse.$2.teamTagEntityRefs.withReferences((p) => p(tag: true)).get();
+    final tags = pacingTags.selectMany((t) => t.$2.tag.prefetchedData!);
+
+    final performerModels = performers.map((p) => PerformerModel.fromEntity(p)).toList();
+    final tagModels = tags.map((t) => t.name).toList();
+
+    return TeamModel.fromEntity(
+      team,
+      performerModels,
+      tagModels,
+    );
   }
 }

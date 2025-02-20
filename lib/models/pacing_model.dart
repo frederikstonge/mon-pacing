@@ -1,23 +1,16 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+import 'package:drift/drift.dart';
 
+import '../repositories/app_database.dart';
 import 'improvisation_model.dart';
-import 'improvisation_type.dart';
 
 part 'pacing_model.mapper.dart';
-part 'pacing_model.g.dart';
 
 @MappableClass()
-@collection
 class PacingModel with PacingModelMappable {
-  final int id;
-  @index
+  final int? id;
   final String name;
-  @index
   final DateTime? createdDate;
-  @index
   final DateTime? modifiedDate;
   final List<ImprovisationModel> improvisations;
   final int defaultNumberOfTeams;
@@ -29,17 +22,45 @@ class PacingModel with PacingModelMappable {
   const PacingModel({
     required this.id,
     required this.name,
-    required this.createdDate,
-    required this.modifiedDate,
     required this.improvisations,
     this.defaultNumberOfTeams = 2,
     this.tags = const [],
+    this.createdDate,
+    this.modifiedDate,
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
 
-  List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
+  factory PacingModel.fromEntity(
+    PacingEntityData pacing,
+    List<ImprovisationModel> improvisations,
+    List<String> tags,
+  ) {
+    return PacingModel(
+      id: pacing.id,
+      name: pacing.name,
+      createdDate: pacing.createdDate,
+      modifiedDate: pacing.modifiedDate,
+      improvisations: improvisations,
+      defaultNumberOfTeams: pacing.defaultNumberOfTeams,
+      tags: tags,
+      integrationId: pacing.integrationId,
+      integrationEntityId: pacing.integrationEntityId,
+      integrationAdditionalData: pacing.integrationAdditionalData,
+    );
+  }
 
-  List<String> get themes => improvisations.where((e) => e.theme.isNotEmpty).map((e) => e.theme).toList();
+  PacingEntityCompanion toCompanion() {
+    return PacingEntityCompanion(
+      id: id != null ? Value(id!) : Value.absent(),
+      createdDate: Value(createdDate ?? DateTime.now()),
+      modifiedDate: Value(modifiedDate ?? DateTime.now()),
+      name: Value(name),
+      defaultNumberOfTeams: Value(defaultNumberOfTeams),
+      integrationId: Value(integrationId),
+      integrationEntityId: Value(integrationEntityId),
+      integrationAdditionalData: Value(integrationAdditionalData),
+    );
+  }
 }
