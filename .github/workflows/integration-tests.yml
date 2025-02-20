@@ -2,8 +2,8 @@ name: "Integration tests"
 
 on:
   schedule:
-    # Run every day at 6:00 AM
-    - cron: "0 6 * * *"
+    # Run every sunday at 6:00 AM
+    - cron: "0 6 * * 0"
 
 jobs:
   tests:
