@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'app.dart';
 import 'bootstrapper.dart';
 import 'firebase_options.dart';
 
@@ -20,7 +19,7 @@ Future<void> main() async {
   };
 
   PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true, printDetails: kDebugMode);
     return true;
   };
 
@@ -53,8 +52,8 @@ Future<void> main() async {
     );
 
     // APP
-    runApp(const Bootstrapper(child: App()));
+    runApp(const Bootstrapper());
   }, (error, stackTrace) {
-    FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true, printDetails: kDebugMode);
   });
 }
