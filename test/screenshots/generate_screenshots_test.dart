@@ -307,10 +307,6 @@ void _screenshotWidget({
           when(settingsCubit.state).thenReturn(SettingsState(language: locale.toLanguageTag(), theme: theme));
           final device = goldenDevice.device;
 
-          // Enable shadows which are normally disabled in golden tests.
-          // Make sure to disable them again at the end of the test.
-          debugDisableShadows = false;
-
           // Build widget tree around our child widget.
           final widget = MultiRepositoryProvider(
             providers: [
@@ -412,10 +408,11 @@ void _screenshotWidget({
             throw UnimplementedError();
           }
 
-          // Take the screenshot and compare it to the golden file.
-          await tester.expectScreenshot(device, fileName, goldenFilePath: filePath);
-
-          debugDisableShadows = true;
+          tester.useFuzzyComparator(allowedDiffPercent: 0.1);
+          await expectLater(
+            find.byType(MaterialApp),
+            matchesGoldenFile(p.join(filePath, fileName)),
+          );
         });
       }
     }

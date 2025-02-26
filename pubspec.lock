@@ -533,12 +533,11 @@ packages:
   golden_screenshot:
     dependency: "direct dev"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "96ad7f9fa1fe1d40673ed80845f63ddd55b1cd65"
-      url: "https://github.com/frederikstonge/golden_screenshot.git"
-    source: git
-    version: "3.1.4"
+      name: golden_screenshot
+      sha256: ab419875372fc12bc9946312c9a7d8736cc894cf779e354700a6a69a2ac7262f
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.3"
   golden_toolkit:
     dependency: transitive
     description:
