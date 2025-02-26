@@ -1,11 +1,5 @@
 {
-    "dart.flutterGenerateLocalizationsOnSave": "manualIfDirty",
-    "dart.lineLength": 150,
     "[dart]": {
-        "editor.rulers": [
-            150
-        ],
-        "editor.defaultFormatter": "Dart-Code.dart-code",
         "editor.formatOnSave": true,
     },
     "files.exclude": {

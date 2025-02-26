@@ -1,5 +1,6 @@
-import java.util.Properties
+import java.io.File
 import java.io.FileInputStream
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -13,9 +14,12 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-val keystorePropertiesFile = rootProject.file("key.properties")
-val keystoreProperties = Properties()
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+val keyPropertiesFile = File("key.properties")
+require(keyPropertiesFile.exists()) { "key.properties file not found." }
+
+val keyProperties = Properties().apply {
+    load(FileInputStream(keyPropertiesFile))
+}
 
 android {
     namespace = "com.stongef.monpacing"
@@ -41,15 +45,15 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-            storePassword = keystoreProperties["storePassword"] as String
+            keyAlias = keyProperties.getProperty("keyAlias")
+            keyPassword = keyProperties.getProperty("keyPassword")
+            storeFile = file(keyProperties.getProperty("storeFile"))
+            storePassword = keyProperties.getProperty("storePassword")
         }
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             signingConfig = signingConfigs.getByName("release")
         }
     }
