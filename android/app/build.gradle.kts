@@ -55,17 +55,11 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
             if (keyPropertiesFile.exists()) {
                 signingConfig = signingConfigs.getByName("release")
             } else {
                 signingConfig = signingConfigs.getByName("debug")
             }
-        }
-        getByName("debug") {
-            isDebuggable = true
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }
