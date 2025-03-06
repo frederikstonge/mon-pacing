@@ -1,13 +1,11 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
 
+import '../repositories/entities/improvisation_entity.dart';
 import 'improvisation_type.dart';
 
 part 'improvisation_model.mapper.dart';
-part 'improvisation_model.g.dart';
 
 @MappableClass()
-@Embedded(ignore: {'copyWith'})
 class ImprovisationModel with ImprovisationModelMappable {
   final int id;
   final ImprovisationType type;
@@ -34,4 +32,32 @@ class ImprovisationModel with ImprovisationModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
+
+  factory ImprovisationModel.fromEntity({required ImprovisationEntity entity}) => ImprovisationModel(
+    id: entity.id,
+    type: entity.type,
+    category: entity.category,
+    theme: entity.theme,
+    durationsInSeconds: entity.durationsInSeconds,
+    performers: entity.performers,
+    notes: entity.notes,
+    timeBufferInSeconds: entity.timeBufferInSeconds,
+    huddleTimerInSeconds: entity.huddleTimerInSeconds,
+    integrationEntityId: entity.integrationEntityId,
+    integrationAdditionalData: entity.integrationAdditionalData,
+  );
+
+  ImprovisationEntity toEntity() => ImprovisationEntity(
+    id: id,
+    type: type,
+    category: category,
+    theme: theme,
+    durationsInSeconds: durationsInSeconds,
+    performers: performers,
+    notes: notes,
+    timeBufferInSeconds: timeBufferInSeconds,
+    huddleTimerInSeconds: huddleTimerInSeconds,
+    integrationEntityId: integrationEntityId,
+    integrationAdditionalData: integrationAdditionalData,
+  );
 }

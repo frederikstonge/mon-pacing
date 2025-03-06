@@ -20,6 +20,7 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
+import '../../models/team_model.dart';
 import '../../repositories/teams_repository.dart';
 import '../../validators/validators.dart';
 import 'cubits/match_detail_cubit.dart';
@@ -27,9 +28,7 @@ import 'cubits/match_detail_state.dart';
 import 'widgets/match_team_tile.dart';
 
 class MatchDetailPageView extends StatefulWidget {
-  const MatchDetailPageView({
-    super.key,
-  });
+  const MatchDetailPageView({super.key});
 
   @override
   State<MatchDetailPageView> createState() => _MatchDetailPageViewState();
@@ -104,19 +103,20 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             Flexible(child: Text(S.of(context).enableStatistics)),
                             Padding(
                               padding: const EdgeInsets.only(left: 4),
-                              child: CustomTooltip(
-                                tooltip: S.of(context).enableStatisticsTooltip,
-                              ),
-                            )
+                              child: CustomTooltip(tooltip: S.of(context).enableStatisticsTooltip),
+                            ),
                           ],
                         ),
                         trailing: Switch(
                           value: matchDetailState.match.enableStatistics,
-                          onChanged: !matchDetailState.editMode
-                              ? (value) {
-                                  context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(enableStatistics: value));
-                                }
-                              : null,
+                          onChanged:
+                              !matchDetailState.editMode
+                                  ? (value) {
+                                    context.read<MatchDetailCubit>().edit(
+                                      matchDetailState.match.copyWith(enableStatistics: value),
+                                    );
+                                  }
+                                  : null,
                         ),
                       ),
                     ],
@@ -125,67 +125,68 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                 if (matchDetailState.match.enableStatistics) ...[
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                    child: TextHeader(
-                      title: S.of(context).teams,
-                    ),
+                    child: TextHeader(title: S.of(context).teams),
                   ),
                   Column(
                     children: [
                       ...matchDetailState.match.teams.asMap().entries.map(
-                            (e) => MatchTeamTile(
-                              key: ValueKey(e.value.id),
-                              team: e.value,
-                              allowSearch: !matchDetailState.editMode,
-                              onChanged: (value) {
-                                context.read<MatchDetailCubit>().editTeam(e.key, value);
-                              },
-                              onDelete: !matchDetailState.editMode && matchDetailState.match.teams.length > Constants.minimumTeams
+                        (e) => MatchTeamTile(
+                          key: ValueKey(e.value.id),
+                          team: e.value,
+                          allowSearch: !matchDetailState.editMode,
+                          onChanged: (value) {
+                            context.read<MatchDetailCubit>().editTeam(e.key, value);
+                          },
+                          onDelete:
+                              !matchDetailState.editMode && matchDetailState.match.teams.length > Constants.minimumTeams
                                   ? () async {
-                                      final cubit = context.read<MatchDetailCubit>();
-                                      final result = await MessageBoxDialog.questionShow(
-                                        context,
-                                        S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: e.value.name),
-                                        S.of(context).delete,
-                                        S.of(context).cancel,
-                                      );
+                                    final cubit = context.read<MatchDetailCubit>();
+                                    final result = await MessageBoxDialog.questionShow(
+                                      context,
+                                      S
+                                          .of(context)
+                                          .areYouSure(action: S.of(context).delete.toLowerCase(), name: e.value.name),
+                                      S.of(context).delete,
+                                      S.of(context).cancel,
+                                    );
 
-                                      if (result == true) {
-                                        cubit.removeTeam(e.key);
-                                      }
+                                    if (result == true) {
+                                      cubit.removeTeam(e.key);
                                     }
+                                  }
                                   : null,
-                              getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
-                              getAllTeams: (query, selectedTags) => context.read<TeamsRepository>().search(query, selectedTags),
-                              onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
-                              addPerformer: !matchDetailState.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
-                              editPerformer: context.read<MatchDetailCubit>().editPerformer,
-                              removePerformer: e.value.performers.length > 1 && !matchDetailState.editMode
+                          getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
+                          getAllTeams: (query, selectedTags) async {
+                            final teamEntities = await context.read<TeamsRepository>().search(query, selectedTags);
+                            return teamEntities.map((e) => TeamModel.fromEntity(entity: e)).toList();
+                          },
+                          onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
+                          addPerformer:
+                              !matchDetailState.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
+                          editPerformer: context.read<MatchDetailCubit>().editPerformer,
+                          removePerformer:
+                              e.value.performers.length > 1 && !matchDetailState.editMode
                                   ? context.read<MatchDetailCubit>().removePerformer
                                   : null,
-                              onDrag: context.read<MatchDetailCubit>().movePerformer,
-                              onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                            ),
-                          ),
+                          onDrag: context.read<MatchDetailCubit>().movePerformer,
+                          onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                        ),
+                      ),
                       LoadingButton.filledIcon(
                         icon: const Icon(Icons.add),
-                        onPressed: !matchDetailState.editMode && matchDetailState.match.teams.length < Constants.maximumTeams
-                            ? () {
-                                context.read<MatchDetailCubit>().addTeam();
-                              }
-                            : null,
-                        child: Text(
-                          S.of(context).addTeam,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
+                        onPressed:
+                            !matchDetailState.editMode && matchDetailState.match.teams.length < Constants.maximumTeams
+                                ? () {
+                                  context.read<MatchDetailCubit>().addTeam();
+                                }
+                                : null,
+                        child: Text(S.of(context).addTeam, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      ),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                    child: TextHeader(
-                      title: S.of(context).penalty,
-                    ),
+                    child: TextHeader(title: S.of(context).penalty),
                   ),
                   CustomCard(
                     child: Column(
@@ -197,35 +198,36 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
                               Padding(
                                 padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).penaltiesImpactPointsTooltip,
-                                ),
-                              )
+                                child: CustomTooltip(tooltip: S.of(context).penaltiesImpactPointsTooltip),
+                              ),
                             ],
                           ),
                           trailing: Switch(
-                              value: matchDetailState.match.enablePenaltiesImpactPoints,
-                              onChanged: (value) {
-                                context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(enablePenaltiesImpactPoints: value));
-                              }),
+                            value: matchDetailState.match.enablePenaltiesImpactPoints,
+                            onChanged: (value) {
+                              context.read<MatchDetailCubit>().edit(
+                                matchDetailState.match.copyWith(enablePenaltiesImpactPoints: value),
+                              );
+                            },
+                          ),
                         ),
                         SettingsTile(
                           leading: const Icon(Icons.sports),
                           title: Text(S.of(context).penaltiesImpactType),
-                          subTitle: Text(
-                            switch (matchDetailState.match.penaltiesImpactType) {
-                              PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
-                              PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
-                            },
-                          ),
+                          subTitle: Text(switch (matchDetailState.match.penaltiesImpactType) {
+                            PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                            PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
+                          }),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () {
                             BottomSheetDialog.showDialog(
                               context: context,
                               child: PenaltiesImpactTypeView(
                                 currentPenaltiesImpactType: matchDetailState.match.penaltiesImpactType,
-                                onChanged: (penaltiesImpactType) =>
-                                    context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(penaltiesImpactType: penaltiesImpactType)),
+                                onChanged:
+                                    (penaltiesImpactType) => context.read<MatchDetailCubit>().edit(
+                                      matchDetailState.match.copyWith(penaltiesImpactType: penaltiesImpactType),
+                                    ),
                               ),
                             );
                           },
@@ -247,7 +249,9 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                 initialValue: matchDetailState.match.penaltiesRequiredToImpactPoints,
                                 onChanged: (value) {
                                   if (value != null) {
-                                    context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(penaltiesRequiredToImpactPoints: value));
+                                    context.read<MatchDetailCubit>().edit(
+                                      matchDetailState.match.copyWith(penaltiesRequiredToImpactPoints: value),
+                                    );
                                   }
                                 },
                                 minValue: 1,
@@ -263,17 +267,18 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               Flexible(child: Text(S.of(context).enableMatchExpulsion)),
                               Padding(
                                 padding: const EdgeInsets.only(left: 4),
-                                child: CustomTooltip(
-                                  tooltip: S.of(context).enableMatchExpulsionTooltip,
-                                ),
-                              )
+                                child: CustomTooltip(tooltip: S.of(context).enableMatchExpulsionTooltip),
+                              ),
                             ],
                           ),
                           trailing: Switch(
-                              value: matchDetailState.match.enableMatchExpulsion,
-                              onChanged: (value) {
-                                context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(enableMatchExpulsion: value));
-                              }),
+                            value: matchDetailState.match.enableMatchExpulsion,
+                            onChanged: (value) {
+                              context.read<MatchDetailCubit>().edit(
+                                matchDetailState.match.copyWith(enableMatchExpulsion: value),
+                              );
+                            },
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -292,7 +297,9 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                 initialValue: matchDetailState.match.penaltiesRequiredToExpel,
                                 onChanged: (value) {
                                   if (value != null) {
-                                    context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(penaltiesRequiredToExpel: value));
+                                    context.read<MatchDetailCubit>().edit(
+                                      matchDetailState.match.copyWith(penaltiesRequiredToExpel: value),
+                                    );
                                   }
                                 },
                                 minValue: 1,

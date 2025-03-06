@@ -19,15 +19,14 @@ class PacingsCubit extends Cubit<PacingsState> {
   final PacingsRepository pacingsRepository;
   final ToasterService toasterService;
 
-  PacingsCubit({
-    required this.pacingsRepository,
-    required this.toasterService,
-  }) : super(const PacingsState(status: PacingsStatus.initial));
+  PacingsCubit({required this.pacingsRepository, required this.toasterService})
+    : super(const PacingsState(status: PacingsStatus.initial));
 
   Future<PacingModel?> add(PacingModel model) async {
     try {
-      final pacing = await pacingsRepository.add(model);
-      return pacing;
+      final pacingEntity = await pacingsRepository.add(model.toEntity());
+      final pacingModel = PacingModel.fromEntity(entity: pacingEntity);
+      return pacingModel;
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -39,7 +38,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> edit(PacingModel model) async {
     try {
-      await pacingsRepository.edit(model);
+      await pacingsRepository.edit(model.toEntity());
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -59,7 +58,7 @@ class PacingsCubit extends Cubit<PacingsState> {
   }
 
   Future<void> fetch() async {
-    if (state.status == PacingsStatus.loading || state.hasMore) {
+    if (state.status == PacingsStatus.loading || !state.hasMore) {
       return;
     }
 
@@ -69,7 +68,7 @@ class PacingsCubit extends Cubit<PacingsState> {
       emit(
         state.copyWith(
           status: PacingsStatus.success,
-          pacings: state.pacings + response,
+          pacings: state.pacings + response.map((e) => PacingModel.fromEntity(entity: e)).toList(),
           hasMore: response.length == _pageSize,
         ),
       );
@@ -104,10 +103,10 @@ class PacingsCubit extends Cubit<PacingsState> {
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
         final pacing = PacingModelMapper.fromJson(pacingValue);
-        final newPacing = await pacingsRepository.add(pacing.copyWith(id: 0));
+        final newPacingEntity = await pacingsRepository.add(pacing.copyWith(id: 0).toEntity());
         toasterService.show(title: Localizer.current.toasterPacingImported);
 
-        return newPacing;
+        return PacingModel.fromEntity(entity: newPacingEntity);
       }
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);

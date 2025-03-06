@@ -15,22 +15,22 @@ PODS:
   - Firebase/RemoteConfig (11.8.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 11.8.0)
-  - firebase_analytics (11.4.3):
+  - firebase_analytics (11.4.4):
     - Firebase/Analytics (= 11.8.0)
     - firebase_core
     - Flutter
-  - firebase_core (3.12.0):
+  - firebase_core (3.12.1):
     - Firebase/CoreOnly (= 11.8.0)
     - Flutter
-  - firebase_crashlytics (4.3.3):
+  - firebase_crashlytics (4.3.4):
     - Firebase/Crashlytics (= 11.8.0)
     - firebase_core
     - Flutter
-  - firebase_performance (0.10.1-3):
+  - firebase_performance (0.10.1-4):
     - Firebase/Performance (= 11.8.0)
     - firebase_core
     - Flutter
-  - firebase_remote_config (5.4.1):
+  - firebase_remote_config (5.4.2):
     - Firebase/RemoteConfig (= 11.8.0)
     - firebase_core
     - Flutter
@@ -109,6 +109,8 @@ PODS:
   - flutter_file_dialog (0.0.1):
     - Flutter
   - flutter_foreground_task (0.0.1):
+    - Flutter
+  - flutter_native_splash (2.4.3):
     - Flutter
   - GoogleAppMeasurement (11.8.0):
     - GoogleAppMeasurement/AdIdSupport (= 11.8.0)
@@ -225,6 +227,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_file_dialog (from `.symlinks/plugins/flutter_file_dialog/ios`)
   - flutter_foreground_task (from `.symlinks/plugins/flutter_foreground_task/ios`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
@@ -280,6 +283,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_file_dialog/ios"
   flutter_foreground_task:
     :path: ".symlinks/plugins/flutter_foreground_task/ios"
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   haptic_feedback:
     :path: ".symlinks/plugins/haptic_feedback/ios"
   isar_flutter_libs:
@@ -299,11 +304,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: d80354ed7f6df5f9aca55e9eb47cc4b634735eaf
-  firebase_analytics: d9a47ad8168f1da7bab57cd1400833d2bc48a043
-  firebase_core: 6cbed78b4f298ed103a9fd034e6dbc846320480f
-  firebase_crashlytics: eb5eb0ef5e6910395adfe177b9ca4a62e8a2f1aa
-  firebase_performance: 340bc5b09f0a38a886b6f53b2406941f3c3f3f94
-  firebase_remote_config: fd021c0d4a6dcf859042b3b74a24cd4d988625c3
+  firebase_analytics: 4e93dbe66872104d28ae9750fec1800e1fd66858
+  firebase_core: 8d552814f6c01ccde5d88939fced4ec26f2f5510
+  firebase_crashlytics: 05519be6b623981a77fe54fb52e6061956cb6047
+  firebase_performance: 1f77894fb3e50cec1a13277dcab50a4fff1160f0
+  firebase_remote_config: ca499f96ddbcc63db863b941bf9f5e6e9a81ceba
   FirebaseABTesting: 7d6eee42b9137541eac2610e5fea3568d956707a
   FirebaseAnalytics: 4fd42def128146e24e480e89f310e3d8534ea42b
   FirebaseCore: 99fe0c4b44a39f37d99e6404e02009d2db5d718d
@@ -319,6 +324,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_file_dialog: ca8d7fbd1772d4f0c2777b4ab20a7787ef4e7dd8
   flutter_foreground_task: a159d2c2173b33699ddb3e6c2a067045d7cebb89
+  flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   GoogleAppMeasurement: fc0817122bd4d4189164f85374e06773b9561896
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMLKit: eff9e23ec1d90ea4157a1ee2e32a4f610c5b3318

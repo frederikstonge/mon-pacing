@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../models/match_team_model.dart';
 import '../../models/penalty_model.dart';
+import '../../models/team_model.dart';
 import 'cubits/match_penalty_cubit.dart';
 import 'match_penalty_view.dart';
 
 class MatchPenaltyShell extends StatelessWidget {
   final int improvisationId;
-  final List<MatchTeamModel> teams;
+  final List<TeamModel> teams;
   final FutureOr<void> Function(PenaltyModel penalty) onSave;
   final PenaltyModel? penalty;
   final List<String>? integrationPenaltyTypes;
@@ -27,13 +27,14 @@ class MatchPenaltyShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MatchPenaltyCubit(
-        improvisationId: improvisationId,
-        teams: teams,
-        onSave: onSave,
-        integrationPenaltyTypes: integrationPenaltyTypes,
-        penalty: penalty,
-      ),
+      create:
+          (context) => MatchPenaltyCubit(
+            improvisationId: improvisationId,
+            teams: teams,
+            onSave: onSave,
+            integrationPenaltyTypes: integrationPenaltyTypes,
+            penalty: penalty,
+          ),
       child: const MatchPenaltyView(),
     );
   }

@@ -1,26 +1,22 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
 
+import '../repositories/entities/match_team_entity.dart';
+import '../repositories/entities/team_entity.dart';
 import 'performer_model.dart';
 
 part 'team_model.mapper.dart';
-part 'team_model.g.dart';
 
 @MappableClass()
-@collection
 class TeamModel with TeamModelMappable {
   final int id;
-  @index
   final DateTime? createdDate;
-  @index
   final DateTime? modifiedDate;
-  @index
   final String name;
   final int color;
   final List<PerformerModel> performers;
   final List<String> tags;
+  final String? integrationEntityId;
+  final String? integrationAdditionalData;
 
   const TeamModel({
     required this.id,
@@ -30,7 +26,47 @@ class TeamModel with TeamModelMappable {
     required this.color,
     this.performers = const [],
     this.tags = const [],
+    this.integrationEntityId,
+    this.integrationAdditionalData,
   });
 
-  List<String> get performerNames => performers.map((p) => p.name).toList();
+  factory TeamModel.fromEntity({required TeamEntity entity}) => TeamModel(
+    id: entity.id,
+    createdDate: entity.createdDate,
+    modifiedDate: entity.modifiedDate,
+    name: entity.name,
+    color: entity.color,
+    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).toList(),
+    tags: entity.tags,
+  );
+
+  factory TeamModel.fromEmbededEntity({required MatchTeamEntity entity}) => TeamModel(
+    id: entity.id,
+    createdDate: null,
+    modifiedDate: null,
+    name: entity.name,
+    color: entity.color,
+    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).toList(),
+    integrationEntityId: entity.integrationEntityId,
+    integrationAdditionalData: entity.integrationAdditionalData,
+  );
+
+  TeamEntity toEntity() => TeamEntity(
+    id: id,
+    createdDate: createdDate,
+    modifiedDate: modifiedDate,
+    name: name,
+    color: color,
+    performers: performers.map((e) => e.toEntity()).toList(),
+    tags: tags,
+  );
+
+  MatchTeamEntity toEmbededEntity() => MatchTeamEntity(
+    id: id,
+    name: name,
+    color: color,
+    performers: performers.map((e) => e.toEntity()).toList(),
+    integrationEntityId: integrationEntityId,
+    integrationAdditionalData: integrationAdditionalData,
+  );
 }

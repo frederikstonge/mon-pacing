@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'point_model.dart';
+part of 'star_entity.dart';
 
 // **************************************************************************
 // _IsarEmbeddedGenerator
@@ -10,9 +10,9 @@ part of 'point_model.dart';
 // ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
 // ignore_for_file: type=lint
 
-const PointModelSchema = IsarGeneratedSchema(
+const StarEntitySchema = IsarGeneratedSchema(
   schema: IsarSchema(
-    name: 'PointModel',
+    name: 'StarModel',
     embedded: true,
     properties: [
       IsarPropertySchema(
@@ -20,57 +20,49 @@ const PointModelSchema = IsarGeneratedSchema(
         type: IsarType.long,
       ),
       IsarPropertySchema(
+        name: 'performerId',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
         name: 'teamId',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
-        name: 'improvisationId',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
-        name: 'value',
         type: IsarType.long,
       ),
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, PointModel>(
-    serialize: serializePointModel,
-    deserialize: deserializePointModel,
+  converter: IsarObjectConverter<void, StarEntity>(
+    serialize: serializeStarEntity,
+    deserialize: deserializeStarEntity,
   ),
 );
 
 @isarProtected
-int serializePointModel(IsarWriter writer, PointModel object) {
+int serializeStarEntity(IsarWriter writer, StarEntity object) {
   IsarCore.writeLong(writer, 1, object.id);
-  IsarCore.writeLong(writer, 2, object.teamId);
-  IsarCore.writeLong(writer, 3, object.improvisationId);
-  IsarCore.writeLong(writer, 4, object.value);
+  IsarCore.writeLong(writer, 2, object.performerId);
+  IsarCore.writeLong(writer, 3, object.teamId);
   return 0;
 }
 
 @isarProtected
-PointModel deserializePointModel(IsarReader reader) {
+StarEntity deserializeStarEntity(IsarReader reader) {
   final int _id;
   _id = IsarCore.readLong(reader, 1);
+  final int _performerId;
+  _performerId = IsarCore.readLong(reader, 2);
   final int _teamId;
-  _teamId = IsarCore.readLong(reader, 2);
-  final int _improvisationId;
-  _improvisationId = IsarCore.readLong(reader, 3);
-  final int _value;
-  _value = IsarCore.readLong(reader, 4);
-  final object = PointModel(
+  _teamId = IsarCore.readLong(reader, 3);
+  final object = StarEntity(
     id: _id,
+    performerId: _performerId,
     teamId: _teamId,
-    improvisationId: _improvisationId,
-    value: _value,
   );
   return object;
 }
 
-extension PointModelQueryFilter
-    on QueryBuilder<PointModel, PointModel, QFilterCondition> {
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> idEqualTo(
+extension StarEntityQueryFilter
+    on QueryBuilder<StarEntity, StarEntity, QFilterCondition> {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -83,7 +75,7 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idGreaterThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -96,7 +88,7 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
       idGreaterThanOrEqualTo(
     int value,
   ) {
@@ -110,7 +102,7 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> idLessThan(
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idLessThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -123,7 +115,7 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
       idLessThanOrEqualTo(
     int value,
   ) {
@@ -137,7 +129,7 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> idBetween(
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idBetween(
     int lower,
     int upper,
   ) {
@@ -152,7 +144,8 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> teamIdEqualTo(
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -165,7 +158,8 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> teamIdGreaterThan(
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdGreaterThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -178,69 +172,124 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdGreaterThanOrEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdLessThan(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdLessThanOrEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdBetween(
+    int lower,
+    int upper,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 2,
+          lower: lower,
+          upper: upper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdEqualTo(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 3,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdGreaterThan(
+    int value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 3,
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
       teamIdGreaterThanOrEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 3,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> teamIdLessThan(
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdLessThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 3,
           value: value,
         ),
       );
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
       teamIdLessThanOrEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> teamIdBetween(
-    int lower,
-    int upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 2,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      improvisationIdEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
           property: 3,
           value: value,
         ),
@@ -248,64 +297,7 @@ extension PointModelQueryFilter
     });
   }
 
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      improvisationIdGreaterThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      improvisationIdGreaterThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      improvisationIdLessThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      improvisationIdLessThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      improvisationIdBetween(
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdBetween(
     int lower,
     int upper,
   ) {
@@ -313,88 +305,6 @@ extension PointModelQueryFilter
       return query.addFilterCondition(
         BetweenCondition(
           property: 3,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> valueEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> valueGreaterThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      valueGreaterThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> valueLessThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition>
-      valueLessThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<PointModel, PointModel, QAfterFilterCondition> valueBetween(
-    int lower,
-    int upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 4,
           lower: lower,
           upper: upper,
         ),
@@ -403,5 +313,5 @@ extension PointModelQueryFilter
   }
 }
 
-extension PointModelQueryObject
-    on QueryBuilder<PointModel, PointModel, QFilterCondition> {}
+extension StarEntityQueryObject
+    on QueryBuilder<StarEntity, StarEntity, QFilterCondition> {}

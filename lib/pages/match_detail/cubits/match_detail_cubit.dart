@@ -10,7 +10,6 @@ import '../../../l10n/localizer.dart';
 import '../../../models/constants.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
-import '../../../models/match_team_model.dart';
 import '../../../models/pacing_model.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
@@ -22,17 +21,14 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   final MatchModel? match;
   final FutureOr<bool> Function(MatchModel value) onConfirm;
 
-  MatchDetailCubit({
-    required this.settingsCubit,
-    required this.onConfirm,
-    this.pacing,
-    this.match,
-  }) : super(
-          MatchDetailState(
-            editMode: match != null,
-            match: match != null
-                ? match.copyWith()
-                : MatchModel(
+  MatchDetailCubit({required this.settingsCubit, required this.onConfirm, this.pacing, this.match})
+    : super(
+        MatchDetailState(
+          editMode: match != null,
+          match:
+              match != null
+                  ? match.copyWith()
+                  : MatchModel(
                     id: 0,
                     name: pacing!.name,
                     createdDate: null,
@@ -48,12 +44,12 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
                     enableMatchExpulsion: settingsCubit.state.enableDefaultMatchExpulsion,
                     penaltiesRequiredToExpel: settingsCubit.state.defaultPenaltiesRequiredToExpel,
                   ),
-          ),
-        );
+        ),
+      );
 
   Future<void> initialize() async {
     if (!state.editMode || state.match.teams.isEmpty) {
-      final teams = List<MatchTeamModel>.from(state.match.teams);
+      final teams = List<TeamModel>.from(state.match.teams);
       for (int i = 0; i < pacing!.defaultNumberOfTeams; i++) {
         teams.add(_createTeam(teams));
       }
@@ -68,21 +64,21 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   void addTeam() {
-    final teams = List<MatchTeamModel>.from(state.match.teams);
+    final teams = List<TeamModel>.from(state.match.teams);
     teams.add(_createTeam(teams));
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
   }
 
-  void editTeam(int index, MatchTeamModel team) {
-    final teams = List<MatchTeamModel>.from(state.match.teams);
+  void editTeam(int index, TeamModel team) {
+    final teams = List<TeamModel>.from(state.match.teams);
     teams[index] = team;
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
   }
 
   void removeTeam(int index) {
-    final teams = List<MatchTeamModel>.from(state.match.teams);
+    final teams = List<TeamModel>.from(state.match.teams);
     teams.removeAt(index);
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
@@ -126,7 +122,9 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   void onTeamSelected(int teamId, TeamModel team) {
     final matchTeam = state.match.teams.firstWhere((t) => t.id == teamId);
-    final allPerformers = List<PerformerModel>.from(state.match.teams.where((t) => t.id != teamId).selectMany((t) => t.performers));
+    final allPerformers = List<PerformerModel>.from(
+      state.match.teams.where((t) => t.id != teamId).selectMany((t) => t.performers),
+    );
     var nextId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(max) + 1 : 0;
 
     final newTeam = matchTeam.copyWith(
@@ -138,17 +136,17 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     editTeam(state.match.teams.indexOf(matchTeam), newTeam);
   }
 
-  MatchTeamModel _createTeam(List<MatchTeamModel> teams) {
+  TeamModel _createTeam(List<TeamModel> teams) {
     final nextId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(max) + 1 : 0;
     final allPerformers = List<PerformerModel>.from(teams.selectMany((t) => t.performers));
     final random = Random();
-    return MatchTeamModel(
+    return TeamModel(
       id: nextId,
+      createdDate: null,
+      modifiedDate: null,
       name: '${Localizer.current.team} ${teams.length + 1}',
       color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-      performers: [
-        _createPerformer(allPerformers),
-      ],
+      performers: [_createPerformer(allPerformers)],
     );
   }
 

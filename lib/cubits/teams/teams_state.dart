@@ -12,10 +12,5 @@ class TeamsState with TeamsStateMappable {
   final List<TeamModel> teams;
   final bool hasMore;
 
-  const TeamsState({
-    required this.status,
-    this.error,
-    this.teams = const [],
-    this.hasMore = false,
-  });
+  const TeamsState({required this.status, this.error, this.teams = const [], this.hasMore = true});
 }

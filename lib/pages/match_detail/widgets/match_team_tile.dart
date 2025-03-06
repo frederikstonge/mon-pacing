@@ -11,15 +11,14 @@ import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../extensions/color_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../../models/match_team_model.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
 import '../../../validators/validators.dart';
 
 class MatchTeamTile extends StatefulWidget {
-  final MatchTeamModel team;
+  final TeamModel team;
   final bool allowSearch;
-  final FutureOr<void> Function(MatchTeamModel team) onChanged;
+  final FutureOr<void> Function(TeamModel team) onChanged;
   final FutureOr<void> Function()? onDelete;
   final Future<List<TeamModel>> Function(String query, List<String> selectedTags) getAllTeams;
   final Future<List<String>> Function() getAllTeamTags;
@@ -89,11 +88,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                   widget.onChanged.call(widget.team.copyWith(color: newColor.getIntvalue));
                 }
               },
-              child: TeamColorAvatar(
-                color: Color(widget.team.color),
-                height: 36,
-                width: 36,
-              ),
+              child: TeamColorAvatar(color: Color(widget.team.color), height: 36, width: 36),
             ),
             title: TextFormField(
               controller: teamNameController,
@@ -101,28 +96,26 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
               onChanged: (value) => widget.onChanged.call(widget.team.copyWith(name: value)),
               validator: (value) => Validators.stringRequired(value),
               decoration: InputDecoration(
-                suffixIcon: widget.allowSearch
-                    ? LoadingIconButton(
-                        icon: const Icon(Icons.search),
-                        onPressed: () async {
-                          final result = await TeamsSearch.showDialog(
-                            context,
-                            widget.getAllTeams,
-                            widget.getAllTeamTags,
-                          );
-                          if (result != null) {
-                            widget.onTeamSelected(result);
-                            teamNameController.text = result.name;
-                          }
-                        },
-                      )
-                    : null,
+                suffixIcon:
+                    widget.allowSearch
+                        ? LoadingIconButton(
+                          icon: const Icon(Icons.search),
+                          onPressed: () async {
+                            final result = await TeamsSearch.showDialog(
+                              context,
+                              widget.getAllTeams,
+                              widget.getAllTeamTags,
+                            );
+                            if (result != null) {
+                              widget.onTeamSelected(result);
+                              teamNameController.text = result.name;
+                            }
+                          },
+                        )
+                        : null,
               ),
             ),
-            trailing: LoadingIconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: widget.onDelete,
-            ),
+            trailing: LoadingIconButton(icon: const Icon(Icons.delete), onPressed: widget.onDelete),
           ),
           const Divider(),
           Padding(
@@ -139,55 +132,55 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
             physics: const NeverScrollableScrollPhysics(),
             onReorderStart: (index) => widget.onDragStart(),
             onReorder: (oldIndex, newIndex) => widget.onDrag(widget.team.id, oldIndex, newIndex),
-            children: widget.team.performers
-                .asMap()
-                .entries
-                .map(
-                  (d) => Container(
-                    key: ValueKey(d.value.id),
-                    color: Theme.of(context).cardTheme.color,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 16.0),
-                            child: ReorderableDragStartListener(
-                              index: d.key,
-                              child: const Icon(Icons.drag_handle),
-                            ),
+            children:
+                widget.team.performers
+                    .asMap()
+                    .entries
+                    .map(
+                      (d) => Container(
+                        key: ValueKey(d.value.id),
+                        color: Theme.of(context).cardTheme.color,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 16.0),
+                                child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
+                              ),
+                              Expanded(
+                                child: TeamPerformerItem(
+                                  key: ValueKey(d.value.id),
+                                  performer: d.value,
+                                  valueChanged: (value) async {
+                                    await widget.editPerformer(widget.team.id, d.key, value);
+                                  },
+                                ),
+                              ),
+                              LoadingIconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed:
+                                    widget.addPerformer != null
+                                        ? () async {
+                                          await widget.addPerformer!(widget.team.id);
+                                        }
+                                        : null,
+                              ),
+                              LoadingIconButton(
+                                icon: const Icon(Icons.remove),
+                                onPressed:
+                                    widget.removePerformer != null
+                                        ? () async {
+                                          await widget.removePerformer!(widget.team.id, d.key);
+                                        }
+                                        : null,
+                              ),
+                            ],
                           ),
-                          Expanded(
-                            child: TeamPerformerItem(
-                              key: ValueKey(d.value.id),
-                              performer: d.value,
-                              valueChanged: (value) async {
-                                await widget.editPerformer(widget.team.id, d.key, value);
-                              },
-                            ),
-                          ),
-                          LoadingIconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: widget.addPerformer != null
-                                ? () async {
-                                    await widget.addPerformer!(widget.team.id);
-                                  }
-                                : null,
-                          ),
-                          LoadingIconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: widget.removePerformer != null
-                                ? () async {
-                                    await widget.removePerformer!(widget.team.id, d.key);
-                                  }
-                                : null,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                )
-                .toList(),
+                    )
+                    .toList(),
           ),
         ],
       ),
@@ -199,11 +192,7 @@ class TeamPerformerItem extends StatefulWidget {
   final PerformerModel performer;
   final ValueChanged<PerformerModel> valueChanged;
 
-  const TeamPerformerItem({
-    super.key,
-    required this.performer,
-    required this.valueChanged,
-  });
+  const TeamPerformerItem({super.key, required this.performer, required this.valueChanged});
 
   @override
   State<TeamPerformerItem> createState() => _TeamPerformerItemState();
@@ -230,11 +219,7 @@ class _TeamPerformerItemState extends State<TeamPerformerItem> {
       controller: _textController,
       textCapitalization: TextCapitalization.sentences,
       onChanged: (value) => widget.valueChanged(widget.performer.copyWith(name: value)),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
       validator: (value) => Validators.stringRequired(value),
     );
   }

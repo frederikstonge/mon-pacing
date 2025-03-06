@@ -20,6 +20,7 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../models/match_model.dart';
 import '../../repositories/matches_repository.dart';
 import '../../router/routes.dart';
 import 'widgets/match_card.dart';
@@ -61,11 +62,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
               return SliverScaffold(
                 scrollController: _scrollController,
                 scrollPhysics: const AlwaysScrollableScrollPhysics(),
-                banner: timerState.timer != null
-                    ? TimerBanner(
-                        timer: timerState.timer!,
-                      )
-                    : null,
+                banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
                 appBar: BlocBuilder<SettingsCubit, SettingsState>(
                   builder: (context, settingsState) {
                     return SliverLogoAppbar(
@@ -90,11 +87,13 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                           tooltip: S.of(context).search(category: S.of(context).matches),
                           onPressed: () async {
                             final router = GoRouter.of(context);
-                            final result = await MatchesSearch.showDialog(
-                              context,
-                              context.read<MatchesRepository>().search,
-                              context.read<MatchesRepository>().getAllTags,
-                            );
+                            final result = await MatchesSearch.showDialog(context, (
+                              String search,
+                              List<String> selectedTags,
+                            ) async {
+                              final response = await context.read<MatchesRepository>().search(search, selectedTags);
+                              return response.map((e) => MatchModel.fromEntity(entity: e)).toList();
+                            }, context.read<MatchesRepository>().getAllTags);
                             if (result != null) {
                               router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
                             }
@@ -107,38 +106,31 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                 slivers: [
                   switch (matchesState.status) {
                     MatchesStatus.initial => const SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    MatchesStatus.error => SliverFillRemaining(
-                        child: Center(
-                          child: Text(matchesState.error ?? ''),
-                        ),
-                      ),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                    MatchesStatus.error => SliverFillRemaining(child: Center(child: Text(matchesState.error ?? ''))),
                     _ => SliverList.builder(
-                        itemCount: matchesState.hasMore ? matchesState.matches.length + 1 : matchesState.matches.length,
-                        itemBuilder: (context, index) {
-                          if (matchesState.hasMore && index == matchesState.matches.length) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          final match = matchesState.matches.elementAt(index);
-                          return MatchCard(
-                            match: match,
-                            onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                            edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
-                            shouldDelete: () => MessageBoxDialog.questionShow(
-                              context,
-                              S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
-                              S.of(context).delete,
-                              S.of(context).cancel,
-                            ),
-                            delete: () => context.read<MatchesCubit>().delete(match),
-                          );
-                        },
-                      ),
+                      itemCount: matchesState.hasMore ? matchesState.matches.length + 1 : matchesState.matches.length,
+                      itemBuilder: (context, index) {
+                        if (matchesState.hasMore && index == matchesState.matches.length) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        final match = matchesState.matches.elementAt(index);
+                        return MatchCard(
+                          match: match,
+                          onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                          edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
+                          shouldDelete:
+                              () => MessageBoxDialog.questionShow(
+                                context,
+                                S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: match.name),
+                                S.of(context).delete,
+                                S.of(context).cancel,
+                              ),
+                          delete: () => context.read<MatchesCubit>().delete(match),
+                        );
+                      },
+                    ),
                   },
                 ],
               );

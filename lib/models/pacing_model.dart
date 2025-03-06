@@ -1,23 +1,15 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
 
+import '../repositories/entities/pacing_entity.dart';
 import 'improvisation_model.dart';
-import 'improvisation_type.dart';
 
 part 'pacing_model.mapper.dart';
-part 'pacing_model.g.dart';
 
 @MappableClass()
-@collection
 class PacingModel with PacingModelMappable {
   final int id;
-  @index
   final String name;
-  @index
   final DateTime? createdDate;
-  @index
   final DateTime? modifiedDate;
   final List<ImprovisationModel> improvisations;
   final int defaultNumberOfTeams;
@@ -39,7 +31,29 @@ class PacingModel with PacingModelMappable {
     this.integrationAdditionalData,
   });
 
-  List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
+  factory PacingModel.fromEntity({required PacingEntity entity}) => PacingModel(
+    id: entity.id,
+    name: entity.name,
+    createdDate: entity.createdDate,
+    modifiedDate: entity.modifiedDate,
+    improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+    defaultNumberOfTeams: entity.defaultNumberOfTeams,
+    tags: entity.tags,
+    integrationId: entity.integrationId,
+    integrationEntityId: entity.integrationEntityId,
+    integrationAdditionalData: entity.integrationAdditionalData,
+  );
 
-  List<String> get themes => improvisations.where((e) => e.theme.isNotEmpty).map((e) => e.theme).toList();
+  PacingEntity toEntity() => PacingEntity(
+    id: id,
+    name: name,
+    createdDate: createdDate,
+    modifiedDate: modifiedDate,
+    improvisations: improvisations.map((e) => e.toEntity()).toList(),
+    defaultNumberOfTeams: defaultNumberOfTeams,
+    tags: tags,
+    integrationId: integrationId,
+    integrationEntityId: integrationEntityId,
+    integrationAdditionalData: integrationAdditionalData,
+  );
 }

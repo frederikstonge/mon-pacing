@@ -1,11 +1,10 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+
+import '../repositories/entities/performer_entity.dart';
 
 part 'performer_model.mapper.dart';
-part 'performer_model.g.dart';
 
 @MappableClass()
-@Embedded(ignore: {'copyWith'})
 class PerformerModel with PerformerModelMappable {
   final int id;
   final String name;
@@ -18,4 +17,18 @@ class PerformerModel with PerformerModelMappable {
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
+
+  factory PerformerModel.fromEntity({required PerformerEntity entity}) => PerformerModel(
+    id: entity.id,
+    name: entity.name,
+    integrationEntityId: entity.integrationEntityId,
+    integrationAdditionalData: entity.integrationAdditionalData,
+  );
+
+  PerformerEntity toEntity() => PerformerEntity(
+    id: id,
+    name: name,
+    integrationEntityId: integrationEntityId,
+    integrationAdditionalData: integrationAdditionalData,
+  );
 }

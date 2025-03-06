@@ -1,16 +1,14 @@
 import 'package:isar/isar.dart';
 import '../extensions/iterable_extensions.dart';
-import '../models/match_model.dart';
 import 'database_repository.dart';
+import 'entities/match_entity.dart';
 
 class MatchesRepository {
   final DatabaseRepository databaseRepository;
 
-  const MatchesRepository({
-    required this.databaseRepository,
-  });
+  const MatchesRepository({required this.databaseRepository});
 
-  Future<MatchModel> add(MatchModel entity) async {
+  Future<MatchEntity> add(MatchEntity entity) async {
     final db = await databaseRepository.database;
     final id = db.matchModels.autoIncrement();
     final now = DateTime.now();
@@ -24,23 +22,23 @@ class MatchesRepository {
     await db.writeAsync((isar) => isar.matchModels.delete(id));
   }
 
-  Future<void> edit(MatchModel entity) async {
+  Future<void> edit(MatchEntity entity) async {
     final model = entity.copyWith(modifiedDate: DateTime.now());
     final db = await databaseRepository.database;
     return db.writeAsync((isar) => isar.matchModels.put(model));
   }
 
-  Future<MatchModel?> get(int id) async {
+  Future<MatchEntity?> get(int id) async {
     final db = await databaseRepository.database;
     return await db.matchModels.getAsync(id);
   }
 
-  Future<List<MatchModel>> getList(int skip, int take) async {
+  Future<List<MatchEntity>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
     return await db.matchModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
   }
 
-  Future<List<MatchModel>> search(String search, List<String> selectedTags) async {
+  Future<List<MatchEntity>> search(String search, List<String> selectedTags) async {
     final db = await databaseRepository.database;
 
     return await db.matchModels
@@ -50,7 +48,10 @@ class MatchesRepository {
         .optional(
           search.isNotEmpty,
           (q) => q.group(
-            (g) => g.nameContains(search, caseSensitive: false).or().teamNamesElementContains(search, caseSensitive: false),
+            (g) => g
+                .nameContains(search, caseSensitive: false)
+                .or()
+                .teamNamesElementContains(search, caseSensitive: false),
           ),
         )
         .sortByCreatedDateDesc()
@@ -59,7 +60,12 @@ class MatchesRepository {
 
   Future<List<String>> getAllTags({String query = ''}) async {
     final db = await databaseRepository.database;
-    final tags = await db.matchModels.where().optional(query.isNotEmpty, (q) => q.tagsElementContains(query)).tagsProperty().findAllAsync();
+    final tags =
+        await db.matchModels
+            .where()
+            .optional(query.isNotEmpty, (q) => q.tagsElementContains(query))
+            .tagsProperty()
+            .findAllAsync();
     return tags.selectMany((t) => t).toSet().toList();
   }
 }

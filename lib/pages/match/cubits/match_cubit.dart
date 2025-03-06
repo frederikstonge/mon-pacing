@@ -39,30 +39,30 @@ class MatchCubit extends Cubit<MatchState> {
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
     emit(state.copyWith(status: MatchStatus.loading));
 
-    final match = await matchesRepository.get(id);
-    if (match == null) {
+    final matchEntity = await matchesRepository.get(id);
+    if (matchEntity == null) {
       emit(state.copyWith(status: MatchStatus.error, error: Localizer.current.toasterGenericError));
       return;
     }
-
-    var selectedImprovisationIndex = improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
+    final match = MatchModel.fromEntity(entity: matchEntity);
+    var selectedImprovisationIndex =
+        improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: match,
-      selectedImprovisationIndex: selectedImprovisationIndex,
-      selectedDurationIndex: durationIndex ?? 0,
-    ));
+    emit(
+      state.copyWith(
+        status: MatchStatus.success,
+        match: match,
+        selectedImprovisationIndex: selectedImprovisationIndex,
+        selectedDurationIndex: durationIndex ?? 0,
+      ),
+    );
 
     _validatePenalties(match);
   }
 
   Future<void> edit(MatchModel match) async {
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: match,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: match));
     await matchesCubit.edit(match);
   }
 
@@ -84,7 +84,9 @@ class MatchCubit extends Cubit<MatchState> {
   }
 
   Future<void> editImprovisation(ImprovisationModel improvisation, int index) async {
-    final improvisations = List<ImprovisationModel>.from(state.match!.improvisations.where((element) => element.id != improvisation.id));
+    final improvisations = List<ImprovisationModel>.from(
+      state.match!.improvisations.where((element) => element.id != improvisation.id),
+    );
 
     improvisations.insert(index, improvisation);
     final newMatch = state.match!.copyWith(improvisations: improvisations);
@@ -101,14 +103,22 @@ class MatchCubit extends Cubit<MatchState> {
   }
 
   Future<void> removeImprovisation(ImprovisationModel improvisation) async {
-    final improvisations = List<ImprovisationModel>.from(state.match!.improvisations.where((element) => element.id != improvisation.id));
+    final improvisations = List<ImprovisationModel>.from(
+      state.match!.improvisations.where((element) => element.id != improvisation.id),
+    );
 
-    final points = List<PointModel>.from(state.match!.points.where((element) => element.improvisationId != improvisation.id));
+    final points = List<PointModel>.from(
+      state.match!.points.where((element) => element.improvisationId != improvisation.id),
+    );
 
-    final penalties = List<PenaltyModel>.from(state.match!.penalties.where((element) => element.improvisationId != improvisation.id));
+    final penalties = List<PenaltyModel>.from(
+      state.match!.penalties.where((element) => element.improvisationId != improvisation.id),
+    );
 
     final newSelectedImprovisationIndex =
-        state.selectedImprovisationIndex >= improvisations.length ? state.selectedImprovisationIndex - 1 : state.selectedImprovisationIndex;
+        state.selectedImprovisationIndex >= improvisations.length
+            ? state.selectedImprovisationIndex - 1
+            : state.selectedImprovisationIndex;
 
     final newMatch = state.match!.copyWith(improvisations: improvisations, points: points, penalties: penalties);
 
@@ -125,28 +135,19 @@ class MatchCubit extends Cubit<MatchState> {
   }
 
   void changePage(int page) {
-    emit(
-      state.copyWith(
-        status: MatchStatus.success,
-        selectedImprovisationIndex: page,
-        selectedDurationIndex: 0,
-      ),
-    );
+    emit(state.copyWith(status: MatchStatus.success, selectedImprovisationIndex: page, selectedDurationIndex: 0));
   }
 
   void changeDuration(int durationIndex) {
-    emit(
-      state.copyWith(
-        status: MatchStatus.success,
-        selectedDurationIndex: durationIndex,
-      ),
-    );
+    emit(state.copyWith(status: MatchStatus.success, selectedDurationIndex: durationIndex));
   }
 
   Future<void> setPoint(int improvisationId, int teamId, int value) async {
     final points = List<PointModel>.from(state.match!.copyWith().points);
     if (points.any((element) => element.teamId == teamId && element.improvisationId == improvisationId)) {
-      final index = points.indexWhere((element) => element.teamId == teamId && element.improvisationId == improvisationId);
+      final index = points.indexWhere(
+        (element) => element.teamId == teamId && element.improvisationId == improvisationId,
+      );
       if (value > 0) {
         points[index] = points[index].copyWith(value: value);
       } else {
@@ -161,10 +162,7 @@ class MatchCubit extends Cubit<MatchState> {
 
     final newMatch = state.match!.copyWith(points: points);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
     await matchesCubit.edit(newMatch);
   }
 
@@ -174,10 +172,7 @@ class MatchCubit extends Cubit<MatchState> {
     penalties.add(penalty.copyWith(id: nextPenaltyId));
     final newMatch = state.match!.copyWith(penalties: penalties);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 
     await matchesCubit.edit(newMatch);
     _validatePenalty(newMatch, penalty);
@@ -189,10 +184,7 @@ class MatchCubit extends Cubit<MatchState> {
     penalties[index] = penalty;
     final newMatch = state.match!.copyWith(penalties: penalties);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 
     await matchesCubit.edit(newMatch);
     _validatePenalty(newMatch, penalty);
@@ -203,10 +195,7 @@ class MatchCubit extends Cubit<MatchState> {
     penalties.removeWhere((element) => element.id == penaltyId);
     final newMatch = state.match!.copyWith(penalties: penalties);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 
     await matchesCubit.edit(newMatch);
   }
@@ -214,13 +203,16 @@ class MatchCubit extends Cubit<MatchState> {
   Future<void> addStar() async {
     final stars = List<StarModel>.from(state.match!.copyWith().stars);
     final nextStarId = stars.isNotEmpty ? stars.map((e) => e.id).reduce(max) + 1 : 0;
-    stars.add(StarModel(id: nextStarId, teamId: state.match!.teams.first.id, performerId: state.match!.teams.first.performers.first.id));
+    stars.add(
+      StarModel(
+        id: nextStarId,
+        teamId: state.match!.teams.first.id,
+        performerId: state.match!.teams.first.performers.first.id,
+      ),
+    );
     final newMatch = state.match!.copyWith(stars: stars);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 
     await matchesCubit.edit(newMatch);
   }
@@ -231,10 +223,7 @@ class MatchCubit extends Cubit<MatchState> {
     stars[index] = star;
     final newMatch = state.match!.copyWith(stars: stars);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 
     await matchesCubit.edit(newMatch);
   }
@@ -244,10 +233,7 @@ class MatchCubit extends Cubit<MatchState> {
     stars.removeWhere((element) => element.id == starId);
     final newMatch = state.match!.copyWith(stars: stars);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 
     await matchesCubit.edit(newMatch);
   }
@@ -264,10 +250,7 @@ class MatchCubit extends Cubit<MatchState> {
 
     final newMatch = state.match!.copyWith(stars: stars);
 
-    emit(state.copyWith(
-      status: MatchStatus.success,
-      match: newMatch,
-    ));
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 
     await matchesCubit.edit(newMatch);
   }
@@ -298,16 +281,19 @@ class MatchCubit extends Cubit<MatchState> {
 
   void _validatePenalty(MatchModel match, PenaltyModel penalty) {
     if (match.enableMatchExpulsion && penalty.performerId != null) {
-      final penaltyPoints = match.getTotalPenaltyValuesByPerformerId(
-        penalty.teamId,
-        penalty.performerId!,
-      );
+      final penaltyPoints = match.getTotalPenaltyValuesByPerformerId(penalty.teamId, penalty.performerId!);
 
       if (penaltyPoints >= match.penaltiesRequiredToExpel) {
-        final performer = match.teams.firstWhere((t) => t.id == penalty.teamId).performers.firstWhere((p) => p.id == penalty.performerId);
+        final performer = match.teams
+            .firstWhere((t) => t.id == penalty.teamId)
+            .performers
+            .firstWhere((p) => p.id == penalty.performerId);
         toasterService.show(
           title: Localizer.current.warningExpelPlayerTitle,
-          description: Localizer.current.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
+          description: Localizer.current.warningExpelPlayerDescription(
+            performer: performer.name,
+            penalty: penaltyPoints,
+          ),
           type: ToastificationType.warning,
           autoClose: false,
         );
@@ -319,15 +305,15 @@ class MatchCubit extends Cubit<MatchState> {
     if (match.enableMatchExpulsion) {
       for (final team in match.teams) {
         for (final performer in team.performers) {
-          final penaltyPoints = match.getTotalPenaltyValuesByPerformerId(
-            team.id,
-            performer.id,
-          );
+          final penaltyPoints = match.getTotalPenaltyValuesByPerformerId(team.id, performer.id);
 
           if (penaltyPoints >= match.penaltiesRequiredToExpel) {
             toasterService.show(
               title: Localizer.current.warningExpelPlayerTitle,
-              description: Localizer.current.warningExpelPlayerDescription(performer: performer.name, penalty: penaltyPoints),
+              description: Localizer.current.warningExpelPlayerDescription(
+                performer: performer.name,
+                penalty: penaltyPoints,
+              ),
               type: ToastificationType.warning,
               autoClose: false,
             );

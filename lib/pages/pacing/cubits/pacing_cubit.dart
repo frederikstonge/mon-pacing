@@ -17,21 +17,19 @@ class PacingCubit extends Cubit<PacingState> {
   final PacingsCubit pacingsCubit;
   final SettingsCubit settingsCubit;
 
-  PacingCubit({
-    required this.pacingsRepository,
-    required this.pacingsCubit,
-    required this.settingsCubit,
-  }) : super(const PacingState(status: PacingStatus.initial));
+  PacingCubit({required this.pacingsRepository, required this.pacingsCubit, required this.settingsCubit})
+    : super(const PacingState(status: PacingStatus.initial));
 
   Future<void> initialize(int id) async {
     emit(const PacingState(status: PacingStatus.loading));
 
-    final pacing = await pacingsRepository.get(id);
-    if (pacing == null) {
+    final pacingEntity = await pacingsRepository.get(id);
+    if (pacingEntity == null) {
       emit(state.copyWith(status: PacingStatus.error, error: Localizer.current.toasterGenericError));
       return;
     }
 
+    final pacing = PacingModel.fromEntity(entity: pacingEntity);
     emit(state.copyWith(status: PacingStatus.success, pacing: pacing));
   }
 

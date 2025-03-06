@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
-import '../../../models/match_team_model.dart';
 import '../../../models/star_model.dart';
+import '../../../models/team_model.dart';
 
 class MatchStars extends StatelessWidget {
   final List<StarModel> stars;
-  final List<MatchTeamModel> teams;
+  final List<TeamModel> teams;
   final FutureOr<void> Function(StarModel star) onChanged;
   final FutureOr<void> Function(int starId) onRemove;
   final FutureOr<void> Function(int oldIndex, int newIndex) onDrag;
@@ -33,25 +33,26 @@ class MatchStars extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       onReorderStart: (index) => onDragStart(),
       onReorder: onDrag,
-      children: stars
-          .asMap()
-          .entries
-          .map(
-            (d) => Container(
-              key: ValueKey(d.value.id),
-              color: Theme.of(context).cardTheme.color,
-              child: MatchStarItem(
-                index: d.key,
-                star: d.value,
-                teams: teams,
-                valueChanged: (value) async {
-                  await onChanged(value);
-                },
-                onRemove: onRemove,
-              ),
-            ),
-          )
-          .toList(),
+      children:
+          stars
+              .asMap()
+              .entries
+              .map(
+                (d) => Container(
+                  key: ValueKey(d.value.id),
+                  color: Theme.of(context).cardTheme.color,
+                  child: MatchStarItem(
+                    index: d.key,
+                    star: d.value,
+                    teams: teams,
+                    valueChanged: (value) async {
+                      await onChanged(value);
+                    },
+                    onRemove: onRemove,
+                  ),
+                ),
+              )
+              .toList(),
     );
   }
 }
@@ -59,7 +60,7 @@ class MatchStars extends StatelessWidget {
 class MatchStarItem extends StatelessWidget {
   final StarModel star;
   final int index;
-  final List<MatchTeamModel> teams;
+  final List<TeamModel> teams;
   final ValueChanged<StarModel> valueChanged;
   final FutureOr<void> Function(int starId) onRemove;
 
@@ -80,59 +81,48 @@ class MatchStarItem extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: ReorderableDragStartListener(
-              index: index,
-              child: const Icon(Icons.drag_handle),
-            ),
+            child: ReorderableDragStartListener(index: index, child: const Icon(Icons.drag_handle)),
           ),
           Expanded(
             child: DropdownButtonFormField<int>(
               isExpanded: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-              ),
+              decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
               icon: const Icon(Icons.arrow_downward),
               value: star.teamId,
               onChanged: (value) {
                 if (value != null) {
                   final team = teams.firstWhere((t) => t.id == value);
                   final performer = team.performers.firstWhereOrNull((p) => p.id == star.performerId);
-                  valueChanged(star.copyWith(teamId: value, performerId: performer != null ? performer.id : team.performers.first.id));
+                  valueChanged(
+                    star.copyWith(
+                      teamId: value,
+                      performerId: performer != null ? performer.id : team.performers.first.id,
+                    ),
+                  );
                 }
               },
-              items: teams
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e.id,
-                      child: Row(
-                        children: [
-                          TeamColorAvatar(color: Color(e.color)),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              e.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+              items:
+                  teams
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e.id,
+                          child: Row(
+                            children: [
+                              TeamColorAvatar(color: Color(e.color)),
+                              const SizedBox(width: 6),
+                              Expanded(child: Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  )
-                  .toList(),
+                        ),
+                      )
+                      .toList(),
             ),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: DropdownButtonFormField<int>(
               isExpanded: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-              ),
+              decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
               icon: const Icon(Icons.arrow_downward),
               value: star.performerId,
               onChanged: (value) {
@@ -140,26 +130,19 @@ class MatchStarItem extends StatelessWidget {
                   valueChanged(star.copyWith(performerId: value));
                 }
               },
-              items: teams
-                  .firstWhere((t) => t.id == star.teamId)
-                  .performers
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e.id,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              e.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+              items:
+                  teams
+                      .firstWhere((t) => t.id == star.teamId)
+                      .performers
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e.id,
+                          child: Row(
+                            children: [Expanded(child: Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis))],
                           ),
-                        ],
-                      ),
-                    ),
-                  )
-                  .toList(),
+                        ),
+                      )
+                      .toList(),
             ),
           ),
           LoadingIconButton(

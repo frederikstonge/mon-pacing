@@ -103,14 +103,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          MobileScanner(
-            controller: controller,
-          ),
-          _buildLoading(),
-        ],
-      ),
+      body: Stack(children: [MobileScanner(controller: controller), _buildLoading()]),
     );
   }
 
@@ -144,11 +137,10 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
               return;
             }
 
-            final result = await PacingsSearch.showDialog(
-              context,
-              pacingsRepository.search,
-              pacingsRepository.getAllTags,
-            );
+            final result = await PacingsSearch.showDialog(context, (String search, List<String> selectedTags) async {
+              final response = await context.read<PacingsRepository>().search(search, selectedTags);
+              return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
+            }, pacingsRepository.getAllTags);
 
             if (result == null) {
               // No pacing selected, restart scanner
@@ -179,10 +171,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
             return;
           } else {
-            toasterService.show(
-              title: localizer.toasterGenericError,
-              type: ToastificationType.error,
-            );
+            toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
           }
         }
         // Create match
@@ -193,10 +182,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
             return;
           } else {
-            toasterService.show(
-              title: localizer.toasterGenericError,
-              type: ToastificationType.error,
-            );
+            toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
           }
         }
 
@@ -221,9 +207,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       builder: (context, value, child) {
         // Not ready.
         if (!value.isInitialized || !value.isRunning || value.error != null || value.size.isEmpty) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         return const SizedBox();

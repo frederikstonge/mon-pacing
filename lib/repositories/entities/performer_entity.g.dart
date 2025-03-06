@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'performer_model.dart';
+part of 'performer_entity.dart';
 
 // **************************************************************************
 // _IsarEmbeddedGenerator
@@ -10,7 +10,7 @@ part of 'performer_model.dart';
 // ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
 // ignore_for_file: type=lint
 
-const PerformerModelSchema = IsarGeneratedSchema(
+const PerformerEntitySchema = IsarGeneratedSchema(
   schema: IsarSchema(
     name: 'PerformerModel',
     embedded: true,
@@ -34,14 +34,14 @@ const PerformerModelSchema = IsarGeneratedSchema(
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, PerformerModel>(
-    serialize: serializePerformerModel,
-    deserialize: deserializePerformerModel,
+  converter: IsarObjectConverter<void, PerformerEntity>(
+    serialize: serializePerformerEntity,
+    deserialize: deserializePerformerEntity,
   ),
 );
 
 @isarProtected
-int serializePerformerModel(IsarWriter writer, PerformerModel object) {
+int serializePerformerEntity(IsarWriter writer, PerformerEntity object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeString(writer, 2, object.name);
   {
@@ -64,7 +64,7 @@ int serializePerformerModel(IsarWriter writer, PerformerModel object) {
 }
 
 @isarProtected
-PerformerModel deserializePerformerModel(IsarReader reader) {
+PerformerEntity deserializePerformerEntity(IsarReader reader) {
   final int _id;
   _id = IsarCore.readLong(reader, 1);
   final String _name;
@@ -73,7 +73,7 @@ PerformerModel deserializePerformerModel(IsarReader reader) {
   _integrationEntityId = IsarCore.readString(reader, 3);
   final String? _integrationAdditionalData;
   _integrationAdditionalData = IsarCore.readString(reader, 4);
-  final object = PerformerModel(
+  final object = PerformerEntity(
     id: _id,
     name: _name,
     integrationEntityId: _integrationEntityId,
@@ -82,9 +82,10 @@ PerformerModel deserializePerformerModel(IsarReader reader) {
   return object;
 }
 
-extension PerformerModelQueryFilter
-    on QueryBuilder<PerformerModel, PerformerModel, QFilterCondition> {
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition> idEqualTo(
+extension PerformerEntityQueryFilter
+    on QueryBuilder<PerformerEntity, PerformerEntity, QFilterCondition> {
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
+      idEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -97,7 +98,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       idGreaterThan(
     int value,
   ) {
@@ -111,7 +112,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       idGreaterThanOrEqualTo(
     int value,
   ) {
@@ -125,7 +126,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       idLessThan(
     int value,
   ) {
@@ -139,7 +140,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       idLessThanOrEqualTo(
     int value,
   ) {
@@ -153,7 +154,8 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition> idBetween(
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
+      idBetween(
     int lower,
     int upper,
   ) {
@@ -168,7 +170,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -184,7 +186,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -200,7 +202,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -216,7 +218,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameLessThan(
     String value, {
     bool caseSensitive = true,
@@ -232,7 +234,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -248,7 +250,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameBetween(
     String lower,
     String upper, {
@@ -266,7 +268,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -282,7 +284,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -298,7 +300,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -311,7 +313,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -324,7 +326,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -336,7 +338,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -348,21 +350,21 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 3));
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 3));
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -378,7 +380,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdGreaterThan(
     String? value, {
     bool caseSensitive = true,
@@ -394,7 +396,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -410,7 +412,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdLessThan(
     String? value, {
     bool caseSensitive = true,
@@ -426,7 +428,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -442,7 +444,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdBetween(
     String? lower,
     String? upper, {
@@ -460,7 +462,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -476,7 +478,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -492,7 +494,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -505,7 +507,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -518,7 +520,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -530,7 +532,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationEntityIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -542,21 +544,21 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -572,7 +574,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataGreaterThan(
     String? value, {
     bool caseSensitive = true,
@@ -588,7 +590,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -604,7 +606,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataLessThan(
     String? value, {
     bool caseSensitive = true,
@@ -620,7 +622,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -636,7 +638,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataBetween(
     String? lower,
     String? upper, {
@@ -654,7 +656,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -670,7 +672,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -686,7 +688,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataContains(String value,
           {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -700,7 +702,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataMatches(String pattern,
           {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -714,7 +716,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -726,7 +728,7 @@ extension PerformerModelQueryFilter
     });
   }
 
-  QueryBuilder<PerformerModel, PerformerModel, QAfterFilterCondition>
+  QueryBuilder<PerformerEntity, PerformerEntity, QAfterFilterCondition>
       integrationAdditionalDataIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -739,5 +741,5 @@ extension PerformerModelQueryFilter
   }
 }
 
-extension PerformerModelQueryObject
-    on QueryBuilder<PerformerModel, PerformerModel, QFilterCondition> {}
+extension PerformerEntityQueryObject
+    on QueryBuilder<PerformerEntity, PerformerEntity, QFilterCondition> {}

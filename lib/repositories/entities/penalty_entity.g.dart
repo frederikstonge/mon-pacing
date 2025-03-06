@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'penalty_model.dart';
+part of 'penalty_entity.dart';
 
 // **************************************************************************
 // _IsarEmbeddedGenerator
@@ -10,7 +10,7 @@ part of 'penalty_model.dart';
 // ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
 // ignore_for_file: type=lint
 
-const PenaltyModelSchema = IsarGeneratedSchema(
+const PenaltyEntitySchema = IsarGeneratedSchema(
   schema: IsarSchema(
     name: 'PenaltyModel',
     embedded: true,
@@ -42,14 +42,14 @@ const PenaltyModelSchema = IsarGeneratedSchema(
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, PenaltyModel>(
-    serialize: serializePenaltyModel,
-    deserialize: deserializePenaltyModel,
+  converter: IsarObjectConverter<void, PenaltyEntity>(
+    serialize: serializePenaltyEntity,
+    deserialize: deserializePenaltyEntity,
   ),
 );
 
 @isarProtected
-int serializePenaltyModel(IsarWriter writer, PenaltyModel object) {
+int serializePenaltyEntity(IsarWriter writer, PenaltyEntity object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeBool(writer, 2, object.major);
   IsarCore.writeString(writer, 3, object.type);
@@ -60,7 +60,7 @@ int serializePenaltyModel(IsarWriter writer, PenaltyModel object) {
 }
 
 @isarProtected
-PenaltyModel deserializePenaltyModel(IsarReader reader) {
+PenaltyEntity deserializePenaltyEntity(IsarReader reader) {
   final int _id;
   _id = IsarCore.readLong(reader, 1);
   final bool _major;
@@ -80,7 +80,7 @@ PenaltyModel deserializePenaltyModel(IsarReader reader) {
   _teamId = IsarCore.readLong(reader, 5);
   final int _improvisationId;
   _improvisationId = IsarCore.readLong(reader, 6);
-  final object = PenaltyModel(
+  final object = PenaltyEntity(
     id: _id,
     major: _major,
     type: _type,
@@ -91,9 +91,9 @@ PenaltyModel deserializePenaltyModel(IsarReader reader) {
   return object;
 }
 
-extension PenaltyModelQueryFilter
-    on QueryBuilder<PenaltyModel, PenaltyModel, QFilterCondition> {
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> idEqualTo(
+extension PenaltyEntityQueryFilter
+    on QueryBuilder<PenaltyEntity, PenaltyEntity, QFilterCondition> {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -106,7 +106,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
+      idGreaterThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -119,7 +120,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       idGreaterThanOrEqualTo(
     int value,
   ) {
@@ -133,7 +134,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> idLessThan(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idLessThan(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -146,7 +147,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       idLessThanOrEqualTo(
     int value,
   ) {
@@ -160,7 +161,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> idBetween(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idBetween(
     int lower,
     int upper,
   ) {
@@ -175,7 +176,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> majorEqualTo(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
+      majorEqualTo(
     bool value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -188,7 +190,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeEqualTo(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -203,7 +205,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       typeGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -219,7 +221,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       typeGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -235,7 +237,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeLessThan(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
+      typeLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -250,7 +253,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       typeLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -266,7 +269,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeBetween(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -283,7 +286,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       typeStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -299,7 +302,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeEndsWith(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
+      typeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -314,9 +318,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
+      typeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -328,7 +331,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> typeMatches(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -342,7 +345,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       typeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -354,7 +357,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       typeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -366,21 +369,21 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdEqualTo(
     int? value,
   ) {
@@ -394,7 +397,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdGreaterThan(
     int? value,
   ) {
@@ -408,7 +411,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdGreaterThanOrEqualTo(
     int? value,
   ) {
@@ -422,7 +425,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdLessThan(
     int? value,
   ) {
@@ -436,7 +439,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdLessThanOrEqualTo(
     int? value,
   ) {
@@ -450,7 +453,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       performerIdBetween(
     int? lower,
     int? upper,
@@ -466,7 +469,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> teamIdEqualTo(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
+      teamIdEqualTo(
     int value,
   ) {
     return QueryBuilder.apply(this, (query) {
@@ -479,7 +483,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       teamIdGreaterThan(
     int value,
   ) {
@@ -493,7 +497,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       teamIdGreaterThanOrEqualTo(
     int value,
   ) {
@@ -507,7 +511,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       teamIdLessThan(
     int value,
   ) {
@@ -521,7 +525,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       teamIdLessThanOrEqualTo(
     int value,
   ) {
@@ -535,7 +539,8 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition> teamIdBetween(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
+      teamIdBetween(
     int lower,
     int upper,
   ) {
@@ -550,7 +555,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       improvisationIdEqualTo(
     int value,
   ) {
@@ -564,7 +569,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       improvisationIdGreaterThan(
     int value,
   ) {
@@ -578,7 +583,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       improvisationIdGreaterThanOrEqualTo(
     int value,
   ) {
@@ -592,7 +597,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       improvisationIdLessThan(
     int value,
   ) {
@@ -606,7 +611,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       improvisationIdLessThanOrEqualTo(
     int value,
   ) {
@@ -620,7 +625,7 @@ extension PenaltyModelQueryFilter
     });
   }
 
-  QueryBuilder<PenaltyModel, PenaltyModel, QAfterFilterCondition>
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
       improvisationIdBetween(
     int lower,
     int upper,
@@ -637,5 +642,5 @@ extension PenaltyModelQueryFilter
   }
 }
 
-extension PenaltyModelQueryObject
-    on QueryBuilder<PenaltyModel, PenaltyModel, QFilterCondition> {}
+extension PenaltyEntityQueryObject
+    on QueryBuilder<PenaltyEntity, PenaltyEntity, QFilterCondition> {}
