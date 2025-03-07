@@ -929,6 +929,12 @@ abstract class S {
   /// **'Unlimited'**
   String get unlimited;
 
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version: {version}'**
+  String version({required String version});
+
   /// No description provided for @versus.
   ///
   /// In en, this message translates to:

@@ -471,6 +471,11 @@ class SEn extends S {
   String get unlimited => 'Unlimited';
 
   @override
+  String version({required String version}) {
+    return 'Version: $version';
+  }
+
+  @override
   String get versus => 'vs';
 
   @override

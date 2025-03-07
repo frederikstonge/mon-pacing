@@ -248,6 +248,14 @@
   "total": "Total",
   "type": "Type",
   "unlimited": "Unlimited",
+  "version": "Version: {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "versus": "vs",
   "warningExpelPlayerDescription": "Performer {performer} has {penalty} penalty points.",
   "@warningExpelPlayerDescription": {

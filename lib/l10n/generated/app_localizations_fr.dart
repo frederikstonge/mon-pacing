@@ -471,6 +471,11 @@ class SFr extends S {
   String get unlimited => 'Illimité';
 
   @override
+  String version({required String version}) {
+    return 'ersion: $version';
+  }
+
+  @override
   String get versus => 'vs';
 
   @override

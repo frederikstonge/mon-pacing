@@ -139,6 +139,7 @@
   "total": "Total",
   "type": "Type",
   "unlimited": "Illimité",
+  "version": "Version: {version}",
   "versus": "vs",
   "warningExpelPlayerDescription": "L'interprète {performer} a {penalty} points de pénalité.",
   "warningExpelPlayerTitle": "Joueur à expulser"
