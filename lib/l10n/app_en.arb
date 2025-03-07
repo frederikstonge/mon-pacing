@@ -1,11 +1,20 @@
 {
   "@@locale": "en",
+  "add": "Add",
   "addImprovisation": "Add improvisation",
   "addPenalty": "Add penalty",
   "addTeam": "Add team",
   "appTitle": "Mon Pacing",
-  "areYouSure": "Are you sure you want to {action} {name}?",
-  "@areYouSure": {
+  "areYouSureAction": "Are you sure you want to {action}?",
+  "@areYouSureAction": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "areYouSureActionName": "Are you sure you want to {action} {name}?",
+  "@areYouSureActionName": {
     "placeholders": {
       "action": {
         "type": "String"
@@ -147,6 +156,7 @@
       }
     }
   },
+  "more": "More",
   "multipleOf": "Must be a multiple of {multiple}",
   "@multipleOf": {
     "placeholders": {
@@ -188,6 +198,8 @@
   "points": "Points",
   "previousImprovisation": "Previous improvisation",
   "required": "Field is required",
+  "remove": "Remove",
+  "resetSettingsToDefault": "Reset settings to default",
   "save": "Save",
   "scanner": "Scanner for integrations",
   "scoreboard": "Scoreboard",

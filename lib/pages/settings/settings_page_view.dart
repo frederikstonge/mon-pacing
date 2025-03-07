@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
+import '../../components/buttons/loading_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/display_language/display_language.dart';
 import '../../components/duration_picker/duration_picker.dart';
+import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
@@ -467,6 +469,26 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LoadingButton.filled(
+                          child: Text(S.of(context).resetSettingsToDefault),
+                          onPressed: () async {
+                            final settingsCubit = context.read<SettingsCubit>();
+                            final response = await MessageBoxDialog.questionShow(
+                              context,
+                              S
+                                  .of(context)
+                                  .areYouSureAction(action: S.of(context).resetSettingsToDefault.toLowerCase()),
+                              S.of(context).confirm,
+                              S.of(context).cancel,
+                            );
+                            if (response == true) {
+                              settingsCubit.reset();
+                            }
+                          },
                         ),
                       ),
                     ],

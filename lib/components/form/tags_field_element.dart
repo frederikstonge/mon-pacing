@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
+import '../../l10n/generated/app_localizations.dart';
 import '../../validators/validators.dart';
 import '../buttons/loading_icon_button.dart';
 import '../search/tags_search.dart';
@@ -83,6 +84,7 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       suffixIcon: LoadingIconButton(
+                        tooltip: S.of(context).search(category: widget.label),
                         icon: const Icon(Icons.search),
                         onPressed:
                             () => TagsSearch.showDialog(context, textFieldValues.onTagSubmitted, widget.getAllTags),

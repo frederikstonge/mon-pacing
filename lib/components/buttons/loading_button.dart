@@ -8,34 +8,24 @@ class LoadingButton extends StatefulWidget {
   final Widget child;
   final FutureOr<void> Function()? onPressed;
 
-  const LoadingButton.filled({
-    Key? key,
-    required Widget child,
-    required FutureOr<void> Function()? onPressed,
-    String? tooltip,
-  }) : this._(key: key, child: child, onPressed: onPressed, variant: _ButtonVariant.filled);
+  const LoadingButton.filled({Key? key, required Widget child, required FutureOr<void> Function()? onPressed})
+    : this._(key: key, child: child, onPressed: onPressed, variant: _ButtonVariant.filled);
 
   const LoadingButton.filledIcon({
     Key? key,
     required Widget child,
     required Widget icon,
     required FutureOr<void> Function()? onPressed,
-    String? tooltip,
   }) : this._(key: key, child: child, onPressed: onPressed, icon: icon, variant: _ButtonVariant.filledIcon);
 
-  const LoadingButton.tonal({
-    Key? key,
-    required Widget child,
-    required FutureOr<void> Function()? onPressed,
-    String? tooltip,
-  }) : this._(key: key, child: child, onPressed: onPressed, variant: _ButtonVariant.tonal);
+  const LoadingButton.tonal({Key? key, required Widget child, required FutureOr<void> Function()? onPressed})
+    : this._(key: key, child: child, onPressed: onPressed, variant: _ButtonVariant.tonal);
 
   const LoadingButton.tonalIcon({
     Key? key,
     required Widget child,
     required Widget icon,
     required FutureOr<void> Function()? onPressed,
-    String? tooltip,
   }) : this._(key: key, child: child, onPressed: onPressed, icon: icon, variant: _ButtonVariant.tonalIcon);
 
   const LoadingButton._({

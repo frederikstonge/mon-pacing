@@ -9,6 +9,9 @@ class SEn extends S {
   SEn([String locale = 'en']) : super(locale);
 
   @override
+  String get add => 'Add';
+
+  @override
   String get addImprovisation => 'Add improvisation';
 
   @override
@@ -21,7 +24,12 @@ class SEn extends S {
   String get appTitle => 'Mon Pacing';
 
   @override
-  String areYouSure({required String action, required String name}) {
+  String areYouSureAction({required String action}) {
+    return 'Are you sure you want to $action?';
+  }
+
+  @override
+  String areYouSureActionName({required String action, required String name}) {
     return 'Are you sure you want to $action $name?';
   }
 
@@ -263,6 +271,9 @@ class SEn extends S {
   }
 
   @override
+  String get more => 'More';
+
+  @override
   String multipleOf({required int multiple}) {
     return 'Must be a multiple of $multiple';
   }
@@ -346,6 +357,12 @@ class SEn extends S {
 
   @override
   String get required => 'Field is required';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get resetSettingsToDefault => 'Reset settings to default';
 
   @override
   String get save => 'Save';

@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import '../../models/theme_type.dart';
-import '../buttons/loading_icon_button.dart';
 
 class SliverLogoAppbar extends StatelessWidget {
   static const toolbarHeight = kToolbarHeight + 8;
@@ -22,12 +19,7 @@ class SliverLogoAppbar extends StatelessWidget {
       primary: primary,
       leading:
           canPop
-              ? LoadingIconButton(
-                icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
-                onPressed: () {
-                  Navigator.of(context).maybePop();
-                },
-              )
+              ? const BackButton()
               : Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Image.asset(

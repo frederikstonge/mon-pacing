@@ -1,10 +1,12 @@
 {
   "@@locale": "fr",
+  "add": "Ajouter",
   "addImprovisation": "Ajouter une improvisation",
   "addPenalty": "Ajouter une pénalité",
   "addTeam": "Ajouter une équipe",
   "appTitle": "Mon Pacing",
-  "areYouSure": "Êtes-vous sûr de vouloir {action} {name}?",
+  "areYouSureAction": "Êtes-vous sûr de vouloir {action}?",
+  "areYouSureActionName": "Êtes-vous sûr de vouloir {action} {name}?",
   "cancel": "Annuler",
   "category": "Catégorie",
   "categories": "Catégories",
@@ -73,14 +75,7 @@
   "missingNotificationPermissionError": "La permission de recevoir des notifications a été déclinée. Veuillez aller dans les paramêtres de votre appareil pour autoriser les notifications.",
   "mixed": "Mixte",
   "modifiedDate": "Date de modification: {date}",
-  "@modifiedDate": {
-    "placeholders": {
-      "date": {
-        "format": "yMd",
-        "type": "DateTime"
-      }
-    }
-  },
+  "more": "Plus",
   "multipleOf": "Doit être un multiple de {multiple}",
   "name": "Nom",
   "nextImprovisation": "Improvisation suivante",
@@ -108,6 +103,8 @@
   "points": "Points",
   "previousImprovisation": "Improvisation précédente",
   "required": "Le champ est requis",
+  "remove": "Enlever",
+  "resetSettingsToDefault": "Réinitialiser les paramètres",
   "save": "Sauvegarder",
   "scanner": "Scan pour les intégrations",
   "scoreboard": "Panneau de résultats",
@@ -144,15 +141,5 @@
   "unlimited": "Illimité",
   "versus": "vs",
   "warningExpelPlayerDescription": "L'interprète {performer} a {penalty} points de pénalité.",
-  "@warningExpelPlayerDescription": {
-    "placeholders": {
-      "penalty": {
-        "type": "int"
-      },
-      "performer": {
-        "type": "String"
-      }
-    }
-  },
   "warningExpelPlayerTitle": "Joueur à expulser"
 }

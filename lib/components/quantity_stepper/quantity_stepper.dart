@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../l10n/generated/app_localizations.dart';
 import '../buttons/loading_icon_button.dart';
 
 class QuantityStepper extends StatefulWidget {
@@ -63,6 +64,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           LoadingIconButton(
+            tooltip: S.of(context).remove,
             onPressed:
                 canRemove()
                     ? () async {
@@ -95,6 +97,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
             ),
           ),
           LoadingIconButton(
+            tooltip: S.of(context).add,
             onPressed:
                 canAdd()
                     ? () async {

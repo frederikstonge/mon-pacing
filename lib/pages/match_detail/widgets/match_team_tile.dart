@@ -99,6 +99,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                 suffixIcon:
                     widget.allowSearch
                         ? LoadingIconButton(
+                          tooltip: S.of(context).search(category: S.of(context).match.toLowerCase()),
                           icon: const Icon(Icons.search),
                           onPressed: () async {
                             final result = await TeamsSearch.showDialog(
@@ -115,7 +116,11 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                         : null,
               ),
             ),
-            trailing: LoadingIconButton(icon: const Icon(Icons.delete), onPressed: widget.onDelete),
+            trailing: LoadingIconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: widget.onDelete,
+              tooltip: S.of(context).delete,
+            ),
           ),
           const Divider(),
           Padding(
@@ -158,6 +163,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                                 ),
                               ),
                               LoadingIconButton(
+                                tooltip: S.of(context).add,
                                 icon: const Icon(Icons.add),
                                 onPressed:
                                     widget.addPerformer != null
@@ -167,6 +173,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                                         : null,
                               ),
                               LoadingIconButton(
+                                tooltip: S.of(context).remove,
                                 icon: const Icon(Icons.remove),
                                 onPressed:
                                     widget.removePerformer != null

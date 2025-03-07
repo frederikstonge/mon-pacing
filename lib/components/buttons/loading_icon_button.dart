@@ -6,14 +6,14 @@ class LoadingIconButton extends StatefulWidget {
   final _IconButtonVariant _variant;
   final IconButtonSize size;
   final Widget icon;
-  final String? tooltip;
+  final String tooltip;
   final FutureOr<void> Function()? onPressed;
 
   const LoadingIconButton({
     Key? key,
     required Widget icon,
     required FutureOr<void> Function()? onPressed,
-    String? tooltip,
+    required String tooltip,
     IconButtonSize size = IconButtonSize.medium,
   }) : this._(
          key: key,
@@ -28,7 +28,7 @@ class LoadingIconButton extends StatefulWidget {
     Key? key,
     required Widget icon,
     required FutureOr<void> Function()? onPressed,
-    String? tooltip,
+    required String tooltip,
     IconButtonSize size = IconButtonSize.medium,
   }) : this._(
          key: key,
@@ -43,7 +43,7 @@ class LoadingIconButton extends StatefulWidget {
     Key? key,
     required Widget icon,
     required FutureOr<void> Function()? onPressed,
-    String? tooltip,
+    required String tooltip,
     IconButtonSize size = IconButtonSize.medium,
   }) : this._(
          key: key,
@@ -58,7 +58,7 @@ class LoadingIconButton extends StatefulWidget {
     super.key,
     required this.icon,
     required this.onPressed,
-    this.tooltip,
+    required this.tooltip,
     required _IconButtonVariant variant,
     required this.size,
   }) : _variant = variant;

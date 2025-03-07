@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../extensions/duration_extensions.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/timer_model.dart';
@@ -46,6 +47,7 @@ class TimerBanner extends StatelessWidget {
                 style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
               trailing: LoadingIconButton(
+                tooltip: S.of(context).open,
                 onPressed: () => _onAction(context, timer),
                 icon: Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onPrimary),
               ),

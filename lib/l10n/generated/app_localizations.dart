@@ -95,6 +95,12 @@ abstract class S {
     Locale('fr')
   ];
 
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
   /// No description provided for @addImprovisation.
   ///
   /// In en, this message translates to:
@@ -119,11 +125,17 @@ abstract class S {
   /// **'Mon Pacing'**
   String get appTitle;
 
-  /// No description provided for @areYouSure.
+  /// No description provided for @areYouSureAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to {action}?'**
+  String areYouSureAction({required String action});
+
+  /// No description provided for @areYouSureActionName.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to {action} {name}?'**
-  String areYouSure({required String action, required String name});
+  String areYouSureActionName({required String action, required String name});
 
   /// No description provided for @cancel.
   ///
@@ -533,6 +545,12 @@ abstract class S {
   /// **'Modified date: {date}'**
   String modifiedDate({required DateTime date});
 
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
   /// No description provided for @multipleOf.
   ///
   /// In en, this message translates to:
@@ -694,6 +712,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Field is required'**
   String get required;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @resetSettingsToDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset settings to default'**
+  String get resetSettingsToDefault;
 
   /// No description provided for @save.
   ///

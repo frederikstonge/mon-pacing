@@ -9,6 +9,9 @@ class SFr extends S {
   SFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get add => 'Ajouter';
+
+  @override
   String get addImprovisation => 'Ajouter une improvisation';
 
   @override
@@ -21,7 +24,12 @@ class SFr extends S {
   String get appTitle => 'Mon Pacing';
 
   @override
-  String areYouSure({required String action, required String name}) {
+  String areYouSureAction({required String action}) {
+    return 'Êtes-vous sûr de vouloir $action?';
+  }
+
+  @override
+  String areYouSureActionName({required String action, required String name}) {
     return 'Êtes-vous sûr de vouloir $action $name?';
   }
 
@@ -263,6 +271,9 @@ class SFr extends S {
   }
 
   @override
+  String get more => 'Plus';
+
+  @override
   String multipleOf({required int multiple}) {
     return 'Doit être un multiple de $multiple';
   }
@@ -346,6 +357,12 @@ class SFr extends S {
 
   @override
   String get required => 'Le champ est requis';
+
+  @override
+  String get remove => 'Enlever';
+
+  @override
+  String get resetSettingsToDefault => 'Réinitialiser les paramètres';
 
   @override
   String get save => 'Sauvegarder';

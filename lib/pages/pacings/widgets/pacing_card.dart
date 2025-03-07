@@ -109,7 +109,11 @@ class PacingCard extends StatelessWidget {
                 tooltip: S.of(context).startMatch,
                 icon: const Icon(Icons.play_arrow),
               ),
-              LoadingIconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert)),
+              LoadingIconButton.filled(
+                onPressed: () => _openMenu(context),
+                icon: const Icon(Icons.more_vert),
+                tooltip: S.of(context).more,
+              ),
             ],
           ),
         ),

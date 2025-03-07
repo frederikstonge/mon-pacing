@@ -83,6 +83,7 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
           hintText: S.of(context).free,
           suffixIcon: LoadingIconButton(
+            tooltip: S.of(context).search(category: S.of(context).category.toLowerCase()),
             icon: const Icon(Icons.search),
             onPressed: () async {
               final result = await CategoriesSearch.showDialog(context, widget.getAllCategories);

@@ -34,6 +34,7 @@ class MatchSummary extends StatelessWidget {
           child: TextHeader(
             title: S.of(context).stars,
             trailing: LoadingIconButton(
+              tooltip: S.of(context).add,
               icon: const Icon(Icons.add),
               onPressed: () {
                 context.read<MatchCubit>().addStar();

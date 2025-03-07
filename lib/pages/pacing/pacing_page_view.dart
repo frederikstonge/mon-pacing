@@ -72,6 +72,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                             primary: timerState.timer == null,
                             actions: [
                               LoadingIconButton(
+                                tooltip: S.of(context).more,
                                 onPressed:
                                     () => BottomSheetDialog.showDialog(
                                       context: context,
@@ -119,7 +120,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                                             context,
                                             S
                                                 .of(context)
-                                                .areYouSure(
+                                                .areYouSureActionName(
                                                   action: S.of(context).delete.toLowerCase(),
                                                   name: pacing.name,
                                                 ),
@@ -185,7 +186,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                                       context,
                                       S
                                           .of(context)
-                                          .areYouSure(
+                                          .areYouSureActionName(
                                             action: S.of(context).delete.toLowerCase(),
                                             name: S.of(context).improvisationNumber(order: index + 1),
                                           ),

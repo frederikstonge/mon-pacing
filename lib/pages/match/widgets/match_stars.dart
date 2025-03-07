@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/star_model.dart';
 import '../../../models/team_model.dart';
 
@@ -146,6 +147,7 @@ class MatchStarItem extends StatelessWidget {
             ),
           ),
           LoadingIconButton(
+            tooltip: S.of(context).remove,
             icon: const Icon(Icons.remove),
             onPressed: () async {
               await onRemove(star.id);

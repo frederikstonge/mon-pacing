@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../components/buttons/loading_icon_button.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/performer_model.dart';
 import '../../../validators/validators.dart';
 
@@ -72,6 +73,7 @@ class TeamPerformers extends StatelessWidget {
                               ),
                             ),
                             LoadingIconButton(
+                              tooltip: S.of(context).add,
                               icon: const Icon(Icons.add),
                               onPressed:
                                   addPerformer != null
@@ -81,6 +83,7 @@ class TeamPerformers extends StatelessWidget {
                                       : null,
                             ),
                             LoadingIconButton(
+                              tooltip: S.of(context).remove,
                               icon: const Icon(Icons.remove),
                               onPressed:
                                   removePerformer != null

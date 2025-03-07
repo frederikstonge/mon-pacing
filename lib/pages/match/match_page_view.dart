@@ -95,6 +95,7 @@ class MatchPageView extends StatelessWidget {
                                 ),
                               ],
                               LoadingIconButton(
+                                tooltip: S.of(context).more,
                                 onPressed:
                                     () => BottomSheetDialog.showDialog(
                                       context: context,
@@ -119,7 +120,7 @@ class MatchPageView extends StatelessWidget {
                                             context,
                                             S
                                                 .of(context)
-                                                .areYouSure(
+                                                .areYouSureActionName(
                                                   action: S.of(context).delete.toLowerCase(),
                                                   name: match.name,
                                                 ),
@@ -207,7 +208,7 @@ class MatchPageView extends StatelessWidget {
                                           context,
                                           S
                                               .of(context)
-                                              .areYouSure(
+                                              .areYouSureActionName(
                                                 action: S.of(context).delete.toLowerCase(),
                                                 name: S
                                                     .of(context)
@@ -313,7 +314,7 @@ class MatchPageView extends StatelessWidget {
                                                     context,
                                                     S
                                                         .of(context)
-                                                        .areYouSure(
+                                                        .areYouSureActionName(
                                                           action: S.of(context).delete.toLowerCase(),
                                                           name: e.type,
                                                         ),
@@ -365,7 +366,7 @@ class MatchPageView extends StatelessWidget {
     final localizer = S.of(context);
     final result = await MessageBoxDialog.questionShow(
       context,
-      localizer.areYouSure(action: localizer.exportMatchSheet.toLowerCase(), name: match.name),
+      localizer.areYouSureActionName(action: localizer.exportMatchSheet.toLowerCase(), name: match.name),
       localizer.exportMatchSheet,
       localizer.cancel,
     );

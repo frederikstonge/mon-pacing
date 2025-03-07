@@ -87,7 +87,11 @@ class TeamCard extends StatelessWidget {
                   ],
                 ),
               ),
-              LoadingIconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert)),
+              LoadingIconButton.filled(
+                onPressed: () => _openMenu(context),
+                icon: const Icon(Icons.more_vert),
+                tooltip: S.of(context).more,
+              ),
             ],
           ),
         ),

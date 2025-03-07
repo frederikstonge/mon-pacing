@@ -72,6 +72,7 @@ class ImprovisationDurations extends StatelessWidget {
                             ),
                           ),
                           LoadingIconButton(
+                            tooltip: S.of(context).add,
                             icon: const Icon(Icons.add),
                             onPressed: () async {
                               final newDurations = List<int>.from(durations);
@@ -80,6 +81,7 @@ class ImprovisationDurations extends StatelessWidget {
                             },
                           ),
                           LoadingIconButton(
+                            tooltip: S.of(context).remove,
                             icon: const Icon(Icons.remove),
                             onPressed:
                                 durations.length > 1

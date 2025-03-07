@@ -145,7 +145,10 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                       context,
                                       S
                                           .of(context)
-                                          .areYouSure(action: S.of(context).delete.toLowerCase(), name: e.value.name),
+                                          .areYouSureActionName(
+                                            action: S.of(context).delete.toLowerCase(),
+                                            name: e.value.name,
+                                          ),
                                       S.of(context).delete,
                                       S.of(context).cancel,
                                     );

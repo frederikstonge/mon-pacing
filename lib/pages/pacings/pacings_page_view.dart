@@ -157,7 +157,12 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                           shouldDelete:
                               () => MessageBoxDialog.questionShow(
                                 context,
-                                S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: pacing.name),
+                                S
+                                    .of(context)
+                                    .areYouSureActionName(
+                                      action: S.of(context).delete.toLowerCase(),
+                                      name: pacing.name,
+                                    ),
                                 S.of(context).delete,
                                 S.of(context).cancel,
                               ),
