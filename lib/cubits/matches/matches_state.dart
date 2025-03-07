@@ -12,10 +12,5 @@ class MatchesState with MatchesStateMappable {
   final List<MatchModel> matches;
   final bool hasMore;
 
-  const MatchesState({
-    required this.status,
-    this.error,
-    this.matches = const [],
-    this.hasMore = false,
-  });
+  const MatchesState({required this.status, this.error, this.matches = const [], this.hasMore = true});
 }

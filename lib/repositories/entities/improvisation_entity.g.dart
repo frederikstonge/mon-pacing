@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'improvisation_model.dart';
+part of 'improvisation_entity.dart';
 
 // **************************************************************************
 // _IsarEmbeddedGenerator
@@ -10,7 +10,7 @@ part of 'improvisation_model.dart';
 // ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
 // ignore_for_file: type=lint
 
-const ImprovisationModelSchema = IsarGeneratedSchema(
+const ImprovisationEntitySchema = IsarGeneratedSchema(
   schema: IsarSchema(
     name: 'ImprovisationModel',
     embedded: true,
@@ -63,14 +63,15 @@ const ImprovisationModelSchema = IsarGeneratedSchema(
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, ImprovisationModel>(
-    serialize: serializeImprovisationModel,
-    deserialize: deserializeImprovisationModel,
+  converter: IsarObjectConverter<void, ImprovisationEntity>(
+    serialize: serializeImprovisationEntity,
+    deserialize: deserializeImprovisationEntity,
   ),
 );
 
 @isarProtected
-int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
+int serializeImprovisationEntity(
+    IsarWriter writer, ImprovisationEntity object) {
   IsarCore.writeLong(writer, 1, object.id);
   IsarCore.writeByte(writer, 2, object.type.index);
   IsarCore.writeString(writer, 3, object.category);
@@ -107,7 +108,7 @@ int serializeImprovisationModel(IsarWriter writer, ImprovisationModel object) {
 }
 
 @isarProtected
-ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
+ImprovisationEntity deserializeImprovisationEntity(IsarReader reader) {
   final int _id;
   _id = IsarCore.readLong(reader, 1);
   final ImprovisationType _type;
@@ -115,7 +116,7 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
     if (IsarCore.readNull(reader, 2)) {
       _type = ImprovisationType.mixed;
     } else {
-      _type = _improvisationModelType[IsarCore.readByte(reader, 2)] ??
+      _type = _improvisationEntityType[IsarCore.readByte(reader, 2)] ??
           ImprovisationType.mixed;
     }
   }
@@ -167,7 +168,7 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   _integrationEntityId = IsarCore.readString(reader, 10);
   final String? _integrationAdditionalData;
   _integrationAdditionalData = IsarCore.readString(reader, 11);
-  final object = ImprovisationModel(
+  final object = ImprovisationEntity(
     id: _id,
     type: _type,
     category: _category,
@@ -183,14 +184,14 @@ ImprovisationModel deserializeImprovisationModel(IsarReader reader) {
   return object;
 }
 
-const _improvisationModelType = {
+const _improvisationEntityType = {
   0: ImprovisationType.mixed,
   1: ImprovisationType.compared,
 };
 
-extension ImprovisationModelQueryFilter
-    on QueryBuilder<ImprovisationModel, ImprovisationModel, QFilterCondition> {
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+extension ImprovisationEntityQueryFilter on QueryBuilder<ImprovisationEntity,
+    ImprovisationEntity, QFilterCondition> {
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       idEqualTo(
     int value,
   ) {
@@ -204,7 +205,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       idGreaterThan(
     int value,
   ) {
@@ -218,7 +219,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       idGreaterThanOrEqualTo(
     int value,
   ) {
@@ -232,7 +233,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       idLessThan(
     int value,
   ) {
@@ -246,7 +247,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       idLessThanOrEqualTo(
     int value,
   ) {
@@ -260,7 +261,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       idBetween(
     int lower,
     int upper,
@@ -276,7 +277,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       typeEqualTo(
     ImprovisationType value,
   ) {
@@ -290,7 +291,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       typeGreaterThan(
     ImprovisationType value,
   ) {
@@ -304,7 +305,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       typeGreaterThanOrEqualTo(
     ImprovisationType value,
   ) {
@@ -318,7 +319,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       typeLessThan(
     ImprovisationType value,
   ) {
@@ -332,7 +333,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       typeLessThanOrEqualTo(
     ImprovisationType value,
   ) {
@@ -346,7 +347,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       typeBetween(
     ImprovisationType lower,
     ImprovisationType upper,
@@ -362,7 +363,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -378,7 +379,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -394,7 +395,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -410,7 +411,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryLessThan(
     String value, {
     bool caseSensitive = true,
@@ -426,7 +427,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -442,7 +443,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryBetween(
     String lower,
     String upper, {
@@ -460,7 +461,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -476,7 +477,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -492,7 +493,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -505,7 +506,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -518,7 +519,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -530,7 +531,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       categoryIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -542,7 +543,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -558,7 +559,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -574,7 +575,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -590,7 +591,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeLessThan(
     String value, {
     bool caseSensitive = true,
@@ -606,7 +607,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -622,7 +623,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeBetween(
     String lower,
     String upper, {
@@ -640,7 +641,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -656,7 +657,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -672,7 +673,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -685,7 +686,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -698,7 +699,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -710,7 +711,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       themeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -722,7 +723,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsElementEqualTo(
     int value,
   ) {
@@ -736,7 +737,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsElementGreaterThan(
     int value,
   ) {
@@ -750,7 +751,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsElementGreaterThanOrEqualTo(
     int value,
   ) {
@@ -764,7 +765,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsElementLessThan(
     int value,
   ) {
@@ -778,7 +779,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsElementLessThanOrEqualTo(
     int value,
   ) {
@@ -792,7 +793,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsElementBetween(
     int lower,
     int upper,
@@ -808,12 +809,12 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsIsEmpty() {
     return not().durationsInSecondsIsNotEmpty();
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       durationsInSecondsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -822,7 +823,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -838,7 +839,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -854,7 +855,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -870,7 +871,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersLessThan(
     String value, {
     bool caseSensitive = true,
@@ -886,7 +887,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -902,7 +903,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersBetween(
     String lower,
     String upper, {
@@ -920,7 +921,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -936,7 +937,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -952,7 +953,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -965,7 +966,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -978,7 +979,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -990,7 +991,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       performersIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1002,7 +1003,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1018,7 +1019,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -1034,7 +1035,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1050,7 +1051,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesLessThan(
     String value, {
     bool caseSensitive = true,
@@ -1066,7 +1067,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1082,7 +1083,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesBetween(
     String lower,
     String upper, {
@@ -1100,7 +1101,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1116,7 +1117,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1132,7 +1133,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1145,7 +1146,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1158,7 +1159,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1170,7 +1171,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       notesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1182,7 +1183,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       timeBufferInSecondsEqualTo(
     int value,
   ) {
@@ -1196,7 +1197,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       timeBufferInSecondsGreaterThan(
     int value,
   ) {
@@ -1210,7 +1211,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       timeBufferInSecondsGreaterThanOrEqualTo(
     int value,
   ) {
@@ -1224,7 +1225,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       timeBufferInSecondsLessThan(
     int value,
   ) {
@@ -1238,7 +1239,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       timeBufferInSecondsLessThanOrEqualTo(
     int value,
   ) {
@@ -1252,7 +1253,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       timeBufferInSecondsBetween(
     int lower,
     int upper,
@@ -1268,7 +1269,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       huddleTimerInSecondsEqualTo(
     int value,
   ) {
@@ -1282,7 +1283,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       huddleTimerInSecondsGreaterThan(
     int value,
   ) {
@@ -1296,7 +1297,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       huddleTimerInSecondsGreaterThanOrEqualTo(
     int value,
   ) {
@@ -1310,7 +1311,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       huddleTimerInSecondsLessThan(
     int value,
   ) {
@@ -1324,7 +1325,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       huddleTimerInSecondsLessThanOrEqualTo(
     int value,
   ) {
@@ -1338,7 +1339,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       huddleTimerInSecondsBetween(
     int lower,
     int upper,
@@ -1354,21 +1355,21 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 10));
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1384,7 +1385,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdGreaterThan(
     String? value, {
     bool caseSensitive = true,
@@ -1400,7 +1401,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1416,7 +1417,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdLessThan(
     String? value, {
     bool caseSensitive = true,
@@ -1432,7 +1433,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1448,7 +1449,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdBetween(
     String? lower,
     String? upper, {
@@ -1466,7 +1467,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1482,7 +1483,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1498,7 +1499,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1511,7 +1512,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1524,7 +1525,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1536,7 +1537,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationEntityIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1548,21 +1549,21 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 11));
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 11));
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1578,7 +1579,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataGreaterThan(
     String? value, {
     bool caseSensitive = true,
@@ -1594,7 +1595,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataGreaterThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1610,7 +1611,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataLessThan(
     String? value, {
     bool caseSensitive = true,
@@ -1626,7 +1627,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataLessThanOrEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1642,7 +1643,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataBetween(
     String? lower,
     String? upper, {
@@ -1660,7 +1661,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1676,7 +1677,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1692,7 +1693,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataContains(String value,
           {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1706,7 +1707,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataMatches(String pattern,
           {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1720,7 +1721,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1732,7 +1733,7 @@ extension ImprovisationModelQueryFilter
     });
   }
 
-  QueryBuilder<ImprovisationModel, ImprovisationModel, QAfterFilterCondition>
+  QueryBuilder<ImprovisationEntity, ImprovisationEntity, QAfterFilterCondition>
       integrationAdditionalDataIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1745,5 +1746,5 @@ extension ImprovisationModelQueryFilter
   }
 }
 
-extension ImprovisationModelQueryObject
-    on QueryBuilder<ImprovisationModel, ImprovisationModel, QFilterCondition> {}
+extension ImprovisationEntityQueryObject on QueryBuilder<ImprovisationEntity,
+    ImprovisationEntity, QFilterCondition> {}

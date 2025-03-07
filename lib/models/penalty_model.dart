@@ -1,11 +1,10 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+
+import '../repositories/entities/penalty_entity.dart';
 
 part 'penalty_model.mapper.dart';
-part 'penalty_model.g.dart';
 
 @MappableClass()
-@Embedded(ignore: {'copyWith'})
 class PenaltyModel with PenaltyModelMappable {
   final int id;
   final bool major;
@@ -22,4 +21,22 @@ class PenaltyModel with PenaltyModelMappable {
     required this.teamId,
     required this.improvisationId,
   });
+
+  factory PenaltyModel.fromEntity({required PenaltyEntity entity}) => PenaltyModel(
+    id: entity.id,
+    major: entity.major,
+    type: entity.type,
+    performerId: entity.performerId,
+    teamId: entity.teamId,
+    improvisationId: entity.improvisationId,
+  );
+
+  PenaltyEntity toEntity() => PenaltyEntity(
+    id: id,
+    major: major,
+    type: type,
+    performerId: performerId,
+    teamId: teamId,
+    improvisationId: improvisationId,
+  );
 }

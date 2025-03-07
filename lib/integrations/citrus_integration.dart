@@ -12,10 +12,10 @@ import '../extensions/match_extensions.dart';
 import '../l10n/localizer.dart';
 import '../models/constants.dart';
 import '../models/match_model.dart';
-import '../models/match_team_model.dart';
 import '../models/pacing_model.dart';
 import '../models/penalties_impact_type.dart';
 import '../models/performer_model.dart';
+import '../models/team_model.dart';
 import 'match_integration_base.dart';
 
 class CitrusIntegration implements MatchIntegrationBase {
@@ -42,11 +42,15 @@ class CitrusIntegration implements MatchIntegrationBase {
   @override
   Future<MatchModel> getMatch(String data, PacingModel pacing) async {
     if (pacing.improvisations.length < MinNumberOfImprovisations) {
-      throw Exception(Localizer.current.integrationPacingMustHaveAtLeastXImprovisations(count: MinNumberOfImprovisations));
+      throw Exception(
+        Localizer.current.integrationPacingMustHaveAtLeastXImprovisations(count: MinNumberOfImprovisations),
+      );
     }
 
     if (pacing.improvisations.length > MaxNumberOfImprovisations) {
-      throw Exception(Localizer.current.integrationPacingMustHaveAtMostXImprovisations(count: MaxNumberOfImprovisations));
+      throw Exception(
+        Localizer.current.integrationPacingMustHaveAtMostXImprovisations(count: MaxNumberOfImprovisations),
+      );
     }
 
     final url = Uri.parse(data);
@@ -77,7 +81,12 @@ class CitrusIntegration implements MatchIntegrationBase {
       team2Color = _getRandomTeamColor(except: team1Color);
     }
 
-    final penaltyTypes = document.querySelectorAll('form#addPunForm select#pun option').map((e) => e.text).where((e) => e.isNotEmpty).toList();
+    final penaltyTypes =
+        document
+            .querySelectorAll('form#addPunForm select#pun option')
+            .map((e) => e.text)
+            .where((e) => e.isNotEmpty)
+            .toList();
 
     var performerId = 0;
     return MatchModel(
@@ -85,9 +94,7 @@ class CitrusIntegration implements MatchIntegrationBase {
       name: matchName,
       createdDate: null,
       modifiedDate: null,
-      tags: [
-        integrationId,
-      ],
+      tags: [integrationId],
       teams: [
         _extractTeam(document, 1, '#alignement1', team1Color!, () => performerId++),
         _extractTeam(document, 2, '#alignement2', team2Color!, () => performerId++),
@@ -107,10 +114,7 @@ class CitrusIntegration implements MatchIntegrationBase {
       integrationMinNumberOfImprovisations: MinNumberOfImprovisations,
       integrationMaxNumberOfImprovisations: MaxNumberOfImprovisations,
       integrationPenaltyTypes: penaltyTypes.isNotEmpty ? penaltyTypes : null,
-      integrationAdditionalData: jsonEncode({
-        'csrfToken': csrfToken,
-        'exportUrl': url.toString(),
-      }),
+      integrationAdditionalData: jsonEncode({'csrfToken': csrfToken, 'exportUrl': url.toString()}),
     );
   }
 
@@ -149,7 +153,12 @@ class CitrusIntegration implements MatchIntegrationBase {
   }
 
   static String _sanitize(String input) {
-    return input.replaceAll('\r\n', ' ').replaceAll('\n', ' ').replaceAll('\r', ' ').replaceAll(RegExp(r'\s+'), ' ').trim();
+    return input
+        .replaceAll('\r\n', ' ')
+        .replaceAll('\n', ' ')
+        .replaceAll('\r', ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
   }
 
   static Future<int?> _getTeamColor(Uri imageUrl) async {
@@ -184,7 +193,13 @@ class CitrusIntegration implements MatchIntegrationBase {
     return document.head!.querySelector('meta[name=csrf-token]')!.attributes['content'].toString();
   }
 
-  static MatchTeamModel _extractTeam(Document document, int teamId, String selector, int color, int Function() getPerformerId) {
+  static TeamModel _extractTeam(
+    Document document,
+    int teamId,
+    String selector,
+    int color,
+    int Function() getPerformerId,
+  ) {
     final teamSelector = document.querySelector(selector);
     if (teamSelector == null) {
       throw Exception();
@@ -192,24 +207,27 @@ class CitrusIntegration implements MatchIntegrationBase {
 
     final teamName = _sanitize(teamSelector.getElementsByTagName('h3').map((e) => e.text).join(' - '));
 
-    final performers = teamSelector.querySelectorAll('.player').map((element) {
-      final data = element.getElementsByTagName('p');
-      final performerName = _sanitize(data.last.text);
-      final metadata = {
-        'role': _sanitize(data[0].text),
-        'number': _sanitize(data[1].text),
-        'pronoun': _sanitize(data[2].text),
-        'name': _sanitize(data[3].text),
-      };
-      return PerformerModel(
-        name: performerName,
-        id: getPerformerId(),
-        integrationAdditionalData: jsonEncode(metadata),
-      );
-    }).toList();
+    final performers =
+        teamSelector.querySelectorAll('.player').map((element) {
+          final data = element.getElementsByTagName('p');
+          final performerName = _sanitize(data.last.text);
+          final metadata = {
+            'role': _sanitize(data[0].text),
+            'number': _sanitize(data[1].text),
+            'pronoun': _sanitize(data[2].text),
+            'name': _sanitize(data[3].text),
+          };
+          return PerformerModel(
+            name: performerName,
+            id: getPerformerId(),
+            integrationAdditionalData: jsonEncode(metadata),
+          );
+        }).toList();
 
-    return MatchTeamModel(
+    return TeamModel(
       id: teamId,
+      createdDate: null,
+      modifiedDate: null,
       name: teamName,
       color: color,
       performers: performers,
@@ -221,7 +239,7 @@ class CitrusIntegration implements MatchIntegrationBase {
     return '''[${match.teams.map(_generateTeamData).join(',')},${_generateImprovisationsData(match)},${_generatePenaltiesData(match)},[],${_generatePointsData(match)}]''';
   }
 
-  static String _generateTeamData(MatchTeamModel team) {
+  static String _generateTeamData(TeamModel team) {
     return '[${team.performers.map(_generatePerformerData).join(',')}]';
   }
 

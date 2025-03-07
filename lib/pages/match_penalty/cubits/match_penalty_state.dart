@@ -1,14 +1,14 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../../../models/match_team_model.dart';
 import '../../../models/penalty_model.dart';
+import '../../../models/team_model.dart';
 
 part 'match_penalty_state.mapper.dart';
 
 @MappableClass()
 class MatchPenaltyState with MatchPenaltyStateMappable {
   final bool editMode;
-  final List<MatchTeamModel> teams;
+  final List<TeamModel> teams;
   final PenaltyModel penalty;
   final List<String>? integrationPenaltyTypes;
 

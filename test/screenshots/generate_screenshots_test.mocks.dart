@@ -425,6 +425,17 @@ class MockAnalyticsService extends _i1.Mock implements _i11.AnalyticsService {
         returnValue: _i28.Future<void>.value(),
         returnValueForMissingStub: _i28.Future<void>.value(),
       ) as _i28.Future<void>);
+
+  @override
+  _i28.Future<void> logIntegration(_i26.IntegrationBase? integration) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #logIntegration,
+          [integration],
+        ),
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }
 
 /// A class which mocks [SettingsCubit].

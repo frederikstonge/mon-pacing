@@ -28,7 +28,6 @@ import 'package:mon_pacing/l10n/generated/app_localizations.dart';
 import 'package:mon_pacing/models/improvisation_model.dart';
 import 'package:mon_pacing/models/improvisation_type.dart';
 import 'package:mon_pacing/models/match_model.dart';
-import 'package:mon_pacing/models/match_team_model.dart';
 import 'package:mon_pacing/models/pacing_model.dart';
 import 'package:mon_pacing/models/team_model.dart';
 import 'package:mon_pacing/models/theme_type.dart';
@@ -135,7 +134,7 @@ void main() {
         modifiedDate: DateTime.now(),
         name: 'Maple Leafs',
         color: Colors.blue.getIntvalue,
-      )
+      ),
     ];
 
     final match = MatchModel(
@@ -145,16 +144,8 @@ void main() {
       createdDate: DateTime.now(),
       modifiedDate: DateTime.now(),
       teams: [
-        MatchTeamModel(
-          id: 0,
-          name: 'Canadiens',
-          color: Colors.red.getIntvalue,
-        ),
-        MatchTeamModel(
-          id: 1,
-          name: 'Maple Leafs',
-          color: Colors.blue.getIntvalue,
-        ),
+        TeamModel(id: 0, createdDate: null, modifiedDate: null, name: 'Canadiens', color: Colors.red.getIntvalue),
+        TeamModel(id: 1, createdDate: null, modifiedDate: null, name: 'Maple Leafs', color: Colors.blue.getIntvalue),
       ],
       improvisations: List.generate(
         12,
@@ -172,7 +163,9 @@ void main() {
       points: [],
     );
 
-    when(featureFlagsCubit.state).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success, enableIntegrations: true));
+    when(
+      featureFlagsCubit.state,
+    ).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success, enableIntegrations: true));
     when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing]));
     when(matchesCubit.state).thenReturn(MatchesState(status: MatchesStatus.success, matches: [match]));
     when(teamsCubit.state).thenReturn(TeamsState(status: TeamsStatus.success, teams: teams));
@@ -190,49 +183,29 @@ void main() {
 
     _screenshotWidget(
       goldenFileName: '1_pacings',
-      child: ShellWrapper(
-        body: PacingsPageView(),
-        selectedIndex: 0,
-      ),
+      child: ShellWrapper(body: PacingsPageView(), selectedIndex: 0),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(
-      goldenFileName: '2_pacing',
-      child: PacingPageView(),
-      goldenDevices: goldenDevices,
-    );
+    _screenshotWidget(goldenFileName: '2_pacing', child: PacingPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '3_matches',
-      child: ShellWrapper(
-        body: MatchesPageView(),
-        selectedIndex: 1,
-      ),
+      child: ShellWrapper(body: MatchesPageView(), selectedIndex: 1),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(
-      goldenFileName: '4_match',
-      child: MatchPageView(),
-      goldenDevices: goldenDevices,
-    );
+    _screenshotWidget(goldenFileName: '4_match', child: MatchPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '5_teams',
-      child: ShellWrapper(
-        body: TeamsPageView(),
-        selectedIndex: 2,
-      ),
+      child: ShellWrapper(body: TeamsPageView(), selectedIndex: 2),
       goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
       goldenFileName: '6_settings',
-      child: ShellWrapper(
-        body: SettingsPageView(),
-        selectedIndex: 3,
-      ),
+      child: ShellWrapper(body: SettingsPageView(), selectedIndex: 3),
       goldenDevices: goldenDevices,
     );
   });
@@ -246,49 +219,29 @@ void main() {
 
     _screenshotWidget(
       goldenFileName: '1_pacings',
-      child: ShellWrapper(
-        body: PacingsPageView(),
-        selectedIndex: 0,
-      ),
+      child: ShellWrapper(body: PacingsPageView(), selectedIndex: 0),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(
-      goldenFileName: '2_pacing',
-      child: PacingPageView(),
-      goldenDevices: goldenDevices,
-    );
+    _screenshotWidget(goldenFileName: '2_pacing', child: PacingPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '3_matches',
-      child: ShellWrapper(
-        body: MatchesPageView(),
-        selectedIndex: 1,
-      ),
+      child: ShellWrapper(body: MatchesPageView(), selectedIndex: 1),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(
-      goldenFileName: '4_match',
-      child: MatchPageView(),
-      goldenDevices: goldenDevices,
-    );
+    _screenshotWidget(goldenFileName: '4_match', child: MatchPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '5_teams',
-      child: ShellWrapper(
-        body: TeamsPageView(),
-        selectedIndex: 2,
-      ),
+      child: ShellWrapper(body: TeamsPageView(), selectedIndex: 2),
       goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
       goldenFileName: '6_settings',
-      child: ShellWrapper(
-        body: SettingsPageView(),
-        selectedIndex: 3,
-      ),
+      child: ShellWrapper(body: SettingsPageView(), selectedIndex: 3),
       goldenDevices: goldenDevices,
     );
   });
@@ -310,45 +263,21 @@ void _screenshotWidget({
           // Build widget tree around our child widget.
           final widget = MultiRepositoryProvider(
             providers: [
-              RepositoryProvider<ToasterService>(
-                create: (context) => toasterService,
-              ),
-              RepositoryProvider<ExcelService>(
-                create: (context) => excelService,
-              ),
-              RepositoryProvider<IntegrationService>(
-                create: (context) => integrationService,
-              ),
-              RepositoryProvider<AnalyticsService>(
-                create: (context) => analyticsService,
-              ),
+              RepositoryProvider<ToasterService>(create: (context) => toasterService),
+              RepositoryProvider<ExcelService>(create: (context) => excelService),
+              RepositoryProvider<IntegrationService>(create: (context) => integrationService),
+              RepositoryProvider<AnalyticsService>(create: (context) => analyticsService),
             ],
             child: MultiBlocProvider(
               providers: [
-                BlocProvider<SettingsCubit>(
-                  create: (context) => settingsCubit,
-                ),
-                BlocProvider<FeatureFlagsCubit>(
-                  create: (context) => featureFlagsCubit,
-                ),
-                BlocProvider<PacingsCubit>(
-                  create: (context) => pacingsCubit,
-                ),
-                BlocProvider<MatchesCubit>(
-                  create: (context) => matchesCubit,
-                ),
-                BlocProvider<TeamsCubit>(
-                  create: (context) => teamsCubit,
-                ),
-                BlocProvider<TimerCubit>(
-                  create: (context) => timerCubit,
-                ),
-                BlocProvider<PacingCubit>(
-                  create: (context) => pacingCubit,
-                ),
-                BlocProvider<MatchCubit>(
-                  create: (context) => matchCubit,
-                ),
+                BlocProvider<SettingsCubit>(create: (context) => settingsCubit),
+                BlocProvider<FeatureFlagsCubit>(create: (context) => featureFlagsCubit),
+                BlocProvider<PacingsCubit>(create: (context) => pacingsCubit),
+                BlocProvider<MatchesCubit>(create: (context) => matchesCubit),
+                BlocProvider<TeamsCubit>(create: (context) => teamsCubit),
+                BlocProvider<TimerCubit>(create: (context) => timerCubit),
+                BlocProvider<PacingCubit>(create: (context) => pacingCubit),
+                BlocProvider<MatchCubit>(create: (context) => matchCubit),
               ],
               child: ScreenshotApp(
                 theme: switch (theme) {
@@ -401,7 +330,12 @@ void _screenshotWidget({
               _ => throw UnimplementedError(),
             };
 
-            filePath = p.join('../../android/fastlane/metadata/android/', storeLocale.toLanguageTag(), 'images', folder);
+            filePath = p.join(
+              '../../android/fastlane/metadata/android/',
+              storeLocale.toLanguageTag(),
+              'images',
+              folder,
+            );
           } else if (goldenDevice.device.platform == TargetPlatform.iOS) {
             filePath = p.join('../../ios/fastlane/screenshots', storeLocale.toLanguageTag());
           } else {
@@ -409,10 +343,7 @@ void _screenshotWidget({
           }
 
           tester.useFuzzyComparator(allowedDiffPercent: 0.1);
-          await expectLater(
-            find.byType(MaterialApp),
-            matchesGoldenFile(p.join(filePath, fileName)),
-          );
+          await expectLater(find.byType(MaterialApp), matchesGoldenFile(p.join(filePath, fileName)));
         });
       }
     }

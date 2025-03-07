@@ -1,9 +1,9 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../models/match_model.dart';
-import '../models/pacing_model.dart';
-import '../models/team_model.dart';
+import 'entities/match_entity.dart';
+import 'entities/pacing_entity.dart';
+import 'entities/team_entity.dart';
 
 class DatabaseRepository {
   Isar? _database;
@@ -20,7 +20,7 @@ class DatabaseRepository {
   Future<Isar> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
     return await Isar.openAsync(
-      schemas: [PacingModelSchema, MatchModelSchema, TeamModelSchema],
+      schemas: [PacingEntitySchema, MatchEntitySchema, TeamEntitySchema],
       directory: dir.path,
     );
   }

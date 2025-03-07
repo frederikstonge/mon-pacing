@@ -13,7 +13,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static MatchModelMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = MatchModelMapper._());
-      MatchTeamModelMapper.ensureInitialized();
+      TeamModelMapper.ensureInitialized();
       ImprovisationModelMapper.ensureInitialized();
       PenaltyModelMapper.ensureInitialized();
       PointModelMapper.ensureInitialized();
@@ -36,8 +36,8 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static DateTime? _$modifiedDate(MatchModel v) => v.modifiedDate;
   static const Field<MatchModel, DateTime> _f$modifiedDate =
       Field('modifiedDate', _$modifiedDate);
-  static List<MatchTeamModel> _$teams(MatchModel v) => v.teams;
-  static const Field<MatchModel, List<MatchTeamModel>> _f$teams =
+  static List<TeamModel> _$teams(MatchModel v) => v.teams;
+  static const Field<MatchModel, List<TeamModel>> _f$teams =
       Field('teams', _$teams);
   static List<ImprovisationModel> _$improvisations(MatchModel v) =>
       v.improvisations;
@@ -230,8 +230,8 @@ extension MatchModelValueCopy<$R, $Out>
 
 abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, MatchTeamModel,
-      MatchTeamModelCopyWith<$R, MatchTeamModel, MatchTeamModel>> get teams;
+  ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
+      get teams;
   ListCopyWith<
       $R,
       ImprovisationModel,
@@ -251,7 +251,7 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       String? name,
       DateTime? createdDate,
       DateTime? modifiedDate,
-      List<MatchTeamModel>? teams,
+      List<TeamModel>? teams,
       List<ImprovisationModel>? improvisations,
       List<PenaltyModel>? penalties,
       List<PointModel>? points,
@@ -282,8 +282,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<MatchModel> $mapper =
       MatchModelMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, MatchTeamModel,
-          MatchTeamModelCopyWith<$R, MatchTeamModel, MatchTeamModel>>
+  ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
       get teams => ListCopyWith(
           $value.teams, (v, t) => v.copyWith.$chain(t), (v) => call(teams: v));
   @override
@@ -326,7 +325,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
           String? name,
           Object? createdDate = $none,
           Object? modifiedDate = $none,
-          List<MatchTeamModel>? teams,
+          List<TeamModel>? teams,
           List<ImprovisationModel>? improvisations,
           List<PenaltyModel>? penalties,
           List<PointModel>? points,

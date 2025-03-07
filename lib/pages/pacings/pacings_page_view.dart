@@ -22,6 +22,7 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
@@ -88,11 +89,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                   tooltip: S.of(context).createNewPacingTooltip,
                   child: const Icon(Icons.add),
                 ),
-                banner: timerState.timer != null
-                    ? TimerBanner(
-                        timer: timerState.timer!,
-                      )
-                    : null,
+                banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
                 appBar: BlocBuilder<SettingsCubit, SettingsState>(
                   builder: (context, settingsState) {
                     return SliverLogoAppbar(
@@ -122,11 +119,13 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                           tooltip: S.of(context).search(category: S.of(context).pacings),
                           onPressed: () async {
                             final router = GoRouter.of(context);
-                            final result = await PacingsSearch.showDialog(
-                              context,
-                              context.read<PacingsRepository>().search,
-                              context.read<PacingsRepository>().getAllTags,
-                            );
+                            final result = await PacingsSearch.showDialog(context, (
+                              String search,
+                              List<String> selectedTags,
+                            ) async {
+                              final response = await context.read<PacingsRepository>().search(search, selectedTags);
+                              return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
+                            }, context.read<PacingsRepository>().getAllTags);
                             if (result != null) {
                               router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
                             }
@@ -139,73 +138,69 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                 slivers: [
                   switch (pacingsState.status) {
                     PacingsStatus.initial => const SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    PacingsStatus.error => SliverFillRemaining(
-                        child: Center(
-                          child: Text(pacingsState.error ?? ''),
-                        ),
-                      ),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                    PacingsStatus.error => SliverFillRemaining(child: Center(child: Text(pacingsState.error ?? ''))),
                     _ => SliverList.builder(
-                        itemCount: pacingsState.hasMore ? pacingsState.pacings.length + 1 : pacingsState.pacings.length,
-                        itemBuilder: (context, index) {
-                          if (pacingsState.hasMore && index == pacingsState.pacings.length) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                      itemCount: pacingsState.hasMore ? pacingsState.pacings.length + 1 : pacingsState.pacings.length,
+                      itemBuilder: (context, index) {
+                        if (pacingsState.hasMore && index == pacingsState.pacings.length) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
 
-                          final pacing = pacingsState.pacings.elementAt(index);
-                          return PacingCard(
-                            pacing: pacing,
-                            onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                            edit: () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
-                            shouldDelete: () => MessageBoxDialog.questionShow(
-                              context,
-                              S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: pacing.name),
-                              S.of(context).delete,
-                              S.of(context).cancel,
-                            ),
-                            delete: () => context.read<PacingsCubit>().delete(pacing),
-                            export: () => context.read<PacingsCubit>().export(pacing),
-                            duplicate: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: PacingDetailPageShell(
-                                editMode: false,
-                                pacing: pacing,
-                                onConfirm: (pacing) async {
-                                  final router = GoRouter.of(context);
-                                  final pacingModel = await context.read<PacingsCubit>().add(pacing);
-                                  if (pacingModel != null) {
-                                    router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
-                                    return true;
-                                  }
-
-                                  return false;
-                                },
+                        final pacing = pacingsState.pacings.elementAt(index);
+                        return PacingCard(
+                          pacing: pacing,
+                          onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                          edit:
+                              () => GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
+                          shouldDelete:
+                              () => MessageBoxDialog.questionShow(
+                                context,
+                                S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: pacing.name),
+                                S.of(context).delete,
+                                S.of(context).cancel,
                               ),
-                            ),
-                            startMatch: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: MatchDetailPageShell(
-                                pacing: pacing,
-                                onConfirm: (match) async {
-                                  final router = GoRouter.of(context);
-                                  final matchModel = await context.read<MatchesCubit>().add(match);
-                                  if (matchModel != null) {
-                                    router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
-                                    return true;
-                                  }
+                          delete: () => context.read<PacingsCubit>().delete(pacing),
+                          export: () => context.read<PacingsCubit>().export(pacing),
+                          duplicate:
+                              () => BottomSheetDialog.showDialog(
+                                context: context,
+                                child: PacingDetailPageShell(
+                                  editMode: false,
+                                  pacing: pacing,
+                                  onConfirm: (pacing) async {
+                                    final router = GoRouter.of(context);
+                                    final pacingModel = await context.read<PacingsCubit>().add(pacing);
+                                    if (pacingModel != null) {
+                                      router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                                      return true;
+                                    }
 
-                                  return false;
-                                },
+                                    return false;
+                                  },
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                          startMatch:
+                              () => BottomSheetDialog.showDialog(
+                                context: context,
+                                child: MatchDetailPageShell(
+                                  pacing: pacing,
+                                  onConfirm: (match) async {
+                                    final router = GoRouter.of(context);
+                                    final matchModel = await context.read<MatchesCubit>().add(match);
+                                    if (matchModel != null) {
+                                      router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+                                      return true;
+                                    }
+
+                                    return false;
+                                  },
+                                ),
+                              ),
+                        );
+                      },
+                    ),
                   },
                 ],
               );

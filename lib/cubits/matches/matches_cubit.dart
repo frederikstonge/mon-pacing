@@ -15,30 +15,37 @@ class MatchesCubit extends Cubit<MatchesState> {
   final ToasterService toasterService;
   final AnalyticsService analyticsService;
 
-  MatchesCubit({
-    required this.matchesRepository,
-    required this.toasterService,
-    required this.analyticsService,
-  }) : super(const MatchesState(status: MatchesStatus.initial));
+  MatchesCubit({required this.matchesRepository, required this.toasterService, required this.analyticsService})
+    : super(const MatchesState(status: MatchesStatus.initial));
 
   Future<MatchModel?> add(MatchModel model) async {
     try {
       if (model.improvisations.isEmpty) {
-        toasterService.show(title: Localizer.current.toasterYouCantStartAMatchWithoutImprovisation, type: ToastificationType.error);
+        toasterService.show(
+          title: Localizer.current.toasterYouCantStartAMatchWithoutImprovisation,
+          type: ToastificationType.error,
+        );
         return null;
       }
 
       if (model.enableStatistics && model.teams.any((t) => t.performers.isEmpty)) {
-        toasterService.show(title: Localizer.current.toasterYouCantStartAMatchWithAnEmptyTeam, type: ToastificationType.error);
+        toasterService.show(
+          title: Localizer.current.toasterYouCantStartAMatchWithAnEmptyTeam,
+          type: ToastificationType.error,
+        );
         return null;
       }
 
       if (model.enableStatistics && model.teams.any((t) => t.performers.any((p) => p.name.isEmpty))) {
-        toasterService.show(title: Localizer.current.toasterYouMustFillAllPerformersName, type: ToastificationType.error);
+        toasterService.show(
+          title: Localizer.current.toasterYouMustFillAllPerformersName,
+          type: ToastificationType.error,
+        );
         return null;
       }
 
-      final matchModel = await matchesRepository.add(model);
+      final matchEntity = await matchesRepository.add(model.toEntity());
+      final matchModel = MatchModel.fromEntity(entity: matchEntity);
       await analyticsService.logStartMatch(matchModel);
       return matchModel;
     } catch (exception) {
@@ -52,7 +59,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> edit(MatchModel model) async {
     try {
-      await matchesRepository.edit(model);
+      await matchesRepository.edit(model.toEntity());
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -72,7 +79,7 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   Future<void> fetch() async {
-    if (state.status == MatchesStatus.loading || state.hasMore) {
+    if (state.status == MatchesStatus.loading || !state.hasMore) {
       return;
     }
 
@@ -82,7 +89,7 @@ class MatchesCubit extends Cubit<MatchesState> {
       emit(
         state.copyWith(
           status: MatchesStatus.success,
-          matches: state.matches + response,
+          matches: state.matches + response.map((e) => MatchModel.fromEntity(entity: e)).toList(),
           hasMore: response.length == _pageSize,
         ),
       );

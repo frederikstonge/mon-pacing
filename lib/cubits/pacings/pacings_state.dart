@@ -12,10 +12,5 @@ class PacingsState with PacingsStateMappable {
   final List<PacingModel> pacings;
   final bool hasMore;
 
-  const PacingsState({
-    required this.status,
-    this.error,
-    this.pacings = const [],
-    this.hasMore = false,
-  });
+  const PacingsState({required this.status, this.error, this.pacings = const [], this.hasMore = true});
 }
