@@ -9,7 +9,7 @@ class BottomSheetDialog {
       useSafeArea: true,
       isScrollControlled: true,
       builder: (context) {
-        final mediaQuery = MediaQueryData.fromView(View.of(context));
+        final mediaQuery = MediaQuery.of(context);
         final bottomPadding =
             mediaQuery.viewInsets.bottom > 0 ? mediaQuery.viewInsets.bottom : mediaQuery.padding.bottom;
         return Padding(
