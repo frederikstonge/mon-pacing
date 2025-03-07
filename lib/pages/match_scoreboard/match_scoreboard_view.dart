@@ -9,25 +9,14 @@ import 'widgets/score_detail.dart';
 class MatchScoreboardView extends StatelessWidget {
   final MatchModel match;
 
-  const MatchScoreboardView({
-    super.key,
-    required this.match,
-  });
+  const MatchScoreboardView({super.key, required this.match});
 
   @override
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
-      appBar: BottomSheetAppbar(
-        title: match.name,
-      ),
+      appBar: BottomSheetAppbar(title: match.name),
       isBodyExpanded: true,
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          Scoreboard(match: match),
-          ScoreDetail(match: match),
-        ],
-      ),
+      body: Column(children: [const SizedBox(height: 16), Scoreboard(match: match), ScoreDetail(match: match)]),
     );
   }
 }

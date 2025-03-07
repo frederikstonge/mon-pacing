@@ -28,23 +28,16 @@ final router = GoRouter(
               name: Routes.pacings,
               path: '/pacings',
               pageBuilder: (context, state) {
-                return NoTransitionPage(
-                  child: PacingsPageShell(
-                    key: state.pageKey,
-                  ),
-                );
+                return NoTransitionPage(child: PacingsPageShell(key: state.pageKey));
               },
               routes: [
                 GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.pacing,
                   path: 'details/:id',
-                  builder: (context, state) => PacingPageShell(
-                    key: state.pageKey,
-                    id: int.parse(
-                      state.pathParameters['id']!,
-                    ),
-                  ),
+                  builder:
+                      (context, state) =>
+                          PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
                 ),
               ],
             ),
@@ -57,11 +50,7 @@ final router = GoRouter(
               name: Routes.matches,
               path: '/matches',
               pageBuilder: (context, state) {
-                return NoTransitionPage(
-                  child: MatchesPageShell(
-                    key: state.pageKey,
-                  ),
-                );
+                return NoTransitionPage(child: MatchesPageShell(key: state.pageKey));
               },
               routes: [
                 GoRoute(
@@ -75,9 +64,7 @@ final router = GoRouter(
                     final durationIndex = durationIndexQuery != null ? int.parse(durationIndexQuery) : null;
                     return MatchPageShell(
                       key: state.pageKey,
-                      id: int.parse(
-                        state.pathParameters['id']!,
-                      ),
+                      id: int.parse(state.pathParameters['id']!),
                       improvisationId: improvisationId,
                       durationIndex: durationIndex,
                     );
@@ -94,11 +81,7 @@ final router = GoRouter(
               name: Routes.teams,
               path: '/teams',
               pageBuilder: (context, state) {
-                return NoTransitionPage(
-                  child: TeamsPageShell(
-                    key: state.pageKey,
-                  ),
-                );
+                return NoTransitionPage(child: TeamsPageShell(key: state.pageKey));
               },
             ),
           ],
@@ -110,20 +93,13 @@ final router = GoRouter(
               name: Routes.settings,
               path: '/settings',
               pageBuilder: (context, state) {
-                return NoTransitionPage(
-                    child: SettingsPageShell(
-                  key: state.pageKey,
-                ));
+                return NoTransitionPage(child: SettingsPageShell(key: state.pageKey));
               },
             ),
           ],
         ),
       ],
     ),
-    GoRoute(
-      name: Routes.scanner,
-      path: '/scanner',
-      builder: (context, state) => const ScannerPageShell(),
-    ),
+    GoRoute(name: Routes.scanner, path: '/scanner', builder: (context, state) => const ScannerPageShell()),
   ],
 );

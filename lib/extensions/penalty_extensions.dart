@@ -10,7 +10,8 @@ extension PenaltyExtensions on PenaltyModel {
     }
 
     if (includePerformerName && performerId != null) {
-      penaltyText += ' (${match.teams.firstWhere((t) => t.id == teamId).performers.firstWhere((p) => p.id == performerId).name})';
+      penaltyText +=
+          ' (${match.teams.firstWhere((t) => t.id == teamId).performers.firstWhere((p) => p.id == performerId).name})';
     }
 
     return penaltyText;

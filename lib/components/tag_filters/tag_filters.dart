@@ -6,12 +6,7 @@ class TagFilters extends StatefulWidget {
   final List<String> selectedTags;
   final Future<void> Function(String tag, bool selected) onTagSelected;
 
-  const TagFilters({
-    super.key,
-    required this.allTags,
-    required this.selectedTags,
-    required this.onTagSelected,
-  });
+  const TagFilters({super.key, required this.allTags, required this.selectedTags, required this.onTagSelected});
 
   @override
   State<TagFilters> createState() => _TagFiltersState();

@@ -9,10 +9,7 @@ import 'widgets/bottom_nav_bar.dart';
 class ShellPageView extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
-  const ShellPageView({
-    super.key,
-    required this.navigationShell,
-  });
+  const ShellPageView({super.key, required this.navigationShell});
 
   @override
   Widget build(BuildContext context) {

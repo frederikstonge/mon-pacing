@@ -16,9 +16,7 @@ import 'cubits/match_improvisation_cubit.dart';
 import 'cubits/match_improvisation_state.dart';
 
 class MatchImprovisationView extends StatefulWidget {
-  const MatchImprovisationView({
-    super.key,
-  });
+  const MatchImprovisationView({super.key});
 
   @override
   State<MatchImprovisationView> createState() => _MatchImprovisationViewState();
@@ -50,9 +48,10 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
               children: [
                 CustomCard(
                   showIndicator: true,
-                  indicatorColor: matchImprovisationState.improvisation.type == ImprovisationType.compared
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.secondary,
+                  indicatorColor:
+                      matchImprovisationState.improvisation.type == ImprovisationType.compared
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
                   contentPadding: 16,
                   child: Column(
                     children: [
@@ -78,7 +77,8 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                               },
                               minValue: 1,
                               maxValue:
-                                  context.read<MatchImprovisationCubit>().match.improvisations.length + (matchImprovisationState.editMode ? 0 : 1),
+                                  context.read<MatchImprovisationCubit>().match.improvisations.length +
+                                  (matchImprovisationState.editMode ? 0 : 1),
                             ),
                           ],
                         ),
@@ -106,7 +106,10 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
                         final navigator = Navigator.of(context);
-                        await context.read<MatchImprovisationCubit>().onConfirm(matchImprovisationState.improvisation, matchImprovisationState.index);
+                        await context.read<MatchImprovisationCubit>().onConfirm(
+                          matchImprovisationState.improvisation,
+                          matchImprovisationState.index,
+                        );
                         navigator.pop();
                       }
                     },

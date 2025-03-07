@@ -30,7 +30,9 @@ class ImprovisationCard extends StatelessWidget {
     return CustomCard(
       showIndicator: true,
       indicatorColor:
-          improvisation.type == ImprovisationType.compared ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,
+          improvisation.type == ImprovisationType.compared
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.secondary,
       contentPadding: 16,
       child: Column(
         children: [
@@ -54,29 +56,24 @@ class ImprovisationCard extends StatelessWidget {
               LoadingIconButton(
                 tooltip: S.of(context).delete,
                 icon: const Icon(Icons.delete),
-                onPressed: onDelete != null
-                    ? () async {
-                        await onDelete!.call(improvisation);
-                      }
-                    : null,
+                onPressed:
+                    onDelete != null
+                        ? () async {
+                          await onDelete!.call(improvisation);
+                        }
+                        : null,
               ),
             ],
           ),
           Table(
-            columnWidths: const <int, TableColumnWidth>{
-              0: IntrinsicColumnWidth(),
-              1: FlexColumnWidth(),
-            },
+            columnWidths: const <int, TableColumnWidth>{0: IntrinsicColumnWidth(), 1: FlexColumnWidth()},
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
               TableRow(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      '${S.of(context).type}: ',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: Text('${S.of(context).type}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
@@ -90,16 +87,11 @@ class ImprovisationCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      '${S.of(context).category}: ',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: Text('${S.of(context).category}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      improvisation.getCategoryString(S.of(context)),
-                    ),
+                    child: Text(improvisation.getCategoryString(S.of(context))),
                   ),
                 ],
               ),
@@ -107,16 +99,11 @@ class ImprovisationCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      '${S.of(context).performers}: ',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: Text('${S.of(context).performers}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      improvisation.getPerformersString(S.of(context)),
-                    ),
+                    child: Text(improvisation.getPerformersString(S.of(context))),
                   ),
                 ],
               ),
@@ -124,10 +111,7 @@ class ImprovisationCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      '${S.of(context).duration}: ',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: Text('${S.of(context).duration}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
@@ -141,16 +125,11 @@ class ImprovisationCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      '${S.of(context).theme}: ',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: Text('${S.of(context).theme}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      improvisation.theme,
-                    ),
+                    child: Text(improvisation.theme),
                   ),
                 ],
               ),
@@ -158,16 +137,11 @@ class ImprovisationCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      '${S.of(context).notes}: ',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: Text('${S.of(context).notes}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      improvisation.notes,
-                    ),
+                    child: Text(improvisation.notes),
                   ),
                 ],
               ),

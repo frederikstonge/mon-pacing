@@ -8,7 +8,5 @@ part 'timer_state.mapper.dart';
 class TimerState with TimerStateMappable {
   final TimerModel? timer;
 
-  const TimerState({
-    this.timer,
-  });
+  const TimerState({this.timer});
 }

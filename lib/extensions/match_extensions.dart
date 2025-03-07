@@ -10,7 +10,8 @@ extension MatchExtensions on MatchModel {
   Color getTeamColor(int teamId) => Color(teams.firstWhere((element) => element.id == teamId).color);
 
   // Penalties
-  Map<int, List<PenaltyModel>> getPenaltiesGroupedByImprovisationId() => List<PenaltyModel>.from(penalties).groupListsBy((a) => a.improvisationId);
+  Map<int, List<PenaltyModel>> getPenaltiesGroupedByImprovisationId() =>
+      List<PenaltyModel>.from(penalties).groupListsBy((a) => a.improvisationId);
 
   int getTotalPenaltyValuesByTeamId(int teamId) => penalties
       .where((penalty) => penalty.teamId == teamId)
@@ -43,8 +44,10 @@ extension MatchExtensions on MatchModel {
       .fold(0, (previousValue, element) => previousValue + element);
 
   // Points
-  int getSubtotalPointsByTeamId(int teamId) =>
-      points.where((point) => point.teamId == teamId).map((point) => point.value).fold(0, (previousValue, element) => previousValue + element);
+  int getSubtotalPointsByTeamId(int teamId) => points
+      .where((point) => point.teamId == teamId)
+      .map((point) => point.value)
+      .fold(0, (previousValue, element) => previousValue + element);
 
   int getTotalPointsByTeamId(int teamId) {
     var points = getSubtotalPointsByTeamId(teamId);
@@ -54,10 +57,13 @@ extension MatchExtensions on MatchModel {
         final impact = (penaltyValues / penaltiesRequiredToImpactPoints).floor();
         points -= impact;
       } else {
-        final impact = teams.where((t) => t.id != teamId).map((t) {
-          final penaltyValues = getTotalPenaltyValuesByTeamId(t.id);
-          return (penaltyValues / penaltiesRequiredToImpactPoints).floor();
-        }).fold(0, (previousValue, element) => previousValue + element);
+        final impact = teams
+            .where((t) => t.id != teamId)
+            .map((t) {
+              final penaltyValues = getTotalPenaltyValuesByTeamId(t.id);
+              return (penaltyValues / penaltiesRequiredToImpactPoints).floor();
+            })
+            .fold(0, (previousValue, element) => previousValue + element);
         points += impact;
       }
     }
@@ -66,5 +72,6 @@ extension MatchExtensions on MatchModel {
   }
 
   int getImprovisationPointsByTeamId(int improvisationId, int teamId) =>
-      points.firstWhereOrNull((point) => point.teamId == teamId && point.improvisationId == improvisationId)?.value ?? 0;
+      points.firstWhereOrNull((point) => point.teamId == teamId && point.improvisationId == improvisationId)?.value ??
+      0;
 }

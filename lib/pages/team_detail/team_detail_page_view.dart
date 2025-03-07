@@ -22,9 +22,7 @@ import 'cubits/team_detail_state.dart';
 import 'widgets/team_performers.dart';
 
 class TeamDetailPageView extends StatefulWidget {
-  const TeamDetailPageView({
-    super.key,
-  });
+  const TeamDetailPageView({super.key});
 
   @override
   State<TeamDetailPageView> createState() => _TeamDetailPageViewState();
@@ -84,22 +82,24 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                             final teamDetailCubit = context.read<TeamDetailCubit>();
                             final newColor = await BottomSheetDialog.showDialog<Color>(
                               context: context,
-                              child: ColorPicker(initialColor: Color(teamDetailState.team.color), title: S.of(context).color),
+                              child: ColorPicker(
+                                initialColor: Color(teamDetailState.team.color),
+                                title: S.of(context).color,
+                              ),
                             );
                             if (newColor != null) {
                               teamDetailCubit.edit(teamDetailState.team.copyWith(color: newColor.getIntvalue));
                             }
                           },
-                          child: TeamColorAvatar(
-                            color: Color(teamDetailState.team.color),
-                            height: 36,
-                            width: 36,
-                          ),
+                          child: TeamColorAvatar(color: Color(teamDetailState.team.color), height: 36, width: 36),
                         ),
                         title: TextFormField(
+                          autofocus: true,
                           initialValue: teamDetailState.team.name,
                           textCapitalization: TextCapitalization.sentences,
-                          onChanged: (value) => context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(name: value)),
+                          onChanged:
+                              (value) =>
+                                  context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(name: value)),
                           validator: (value) => Validators.stringRequired(value),
                         ),
                       ),
@@ -121,9 +121,10 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                         performers: teamDetailState.team.performers,
                         addPerformer: !teamDetailState.editMode ? context.read<TeamDetailCubit>().addPerformer : null,
                         editPerformer: context.read<TeamDetailCubit>().editPerformer,
-                        removePerformer: teamDetailState.team.performers.length > 1 && !teamDetailState.editMode
-                            ? context.read<TeamDetailCubit>().removePerformer
-                            : null,
+                        removePerformer:
+                            teamDetailState.team.performers.length > 1 && !teamDetailState.editMode
+                                ? context.read<TeamDetailCubit>().removePerformer
+                                : null,
                         onDrag: context.read<TeamDetailCubit>().movePerformer,
                         onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       ),

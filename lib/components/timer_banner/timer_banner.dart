@@ -17,13 +17,7 @@ class TimerBanner extends StatelessWidget {
   final ImprovisationModel? improvisation;
   final int? selectedDurationIndex;
 
-  const TimerBanner({
-    super.key,
-    required this.timer,
-    this.match,
-    this.improvisation,
-    this.selectedDurationIndex,
-  });
+  const TimerBanner({super.key, required this.timer, this.match, this.improvisation, this.selectedDurationIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +32,7 @@ class TimerBanner extends StatelessWidget {
           child: SafeArea(
             bottom: false,
             child: ListTile(
-              leading: Icon(
-                Icons.timer,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+              leading: Icon(Icons.timer, color: Theme.of(context).colorScheme.onPrimary),
               title: Text(
                 timer.notificationTitle,
                 maxLines: 1,
@@ -56,10 +47,7 @@ class TimerBanner extends StatelessWidget {
               ),
               trailing: LoadingIconButton(
                 onPressed: () => _onAction(context, timer),
-                icon: Icon(
-                  Icons.arrow_forward,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                icon: Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
           ),

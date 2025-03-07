@@ -10,9 +10,5 @@ class TeamDetailState with TeamDetailStateMappable {
   final TeamModel team;
   final int selectedTeamIndex;
 
-  const TeamDetailState({
-    required this.editMode,
-    required this.team,
-    this.selectedTeamIndex = 0,
-  });
+  const TeamDetailState({required this.editMode, required this.team, this.selectedTeamIndex = 0});
 }

@@ -120,11 +120,6 @@ jobs:
       - name: Install Flutter
         uses: ./.github/actions/setup-flutter
 
-      - name: Setup Java JDK       
-        uses: actions/setup-java@v4.3.0
-        with:
-          distribution: 'temurin'
-          java-version: '21'
 
       - name: Create Android Required Files
         uses: gacts/run-and-post-run@v1.4.1

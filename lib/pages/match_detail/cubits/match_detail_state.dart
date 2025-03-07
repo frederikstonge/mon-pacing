@@ -9,8 +9,5 @@ class MatchDetailState with MatchDetailStateMappable {
   final bool editMode;
   final MatchModel match;
 
-  const MatchDetailState({
-    required this.editMode,
-    required this.match,
-  });
+  const MatchDetailState({required this.editMode, required this.match});
 }

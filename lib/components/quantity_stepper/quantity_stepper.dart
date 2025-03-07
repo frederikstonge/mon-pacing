@@ -63,18 +63,19 @@ class _QuantityStepperState extends State<QuantityStepper> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           LoadingIconButton(
-            onPressed: canRemove()
-                ? () async {
-                    var value = int.tryParse(_controller.text);
-                    if (value != null) {
-                      value = value - widget.multiple;
-                    }
+            onPressed:
+                canRemove()
+                    ? () async {
+                      var value = int.tryParse(_controller.text);
+                      if (value != null) {
+                        value = value - widget.multiple;
+                      }
 
-                    value = _correct(value);
-                    _controller.text = value.toString();
-                    await widget.onChanged(value);
-                  }
-                : null,
+                      value = _correct(value);
+                      _controller.text = value.toString();
+                      await widget.onChanged(value);
+                    }
+                    : null,
             icon: const Icon(Icons.remove),
           ),
           Flexible(
@@ -85,9 +86,7 @@ class _QuantityStepperState extends State<QuantityStepper> {
                 decoration: const InputDecoration(border: InputBorder.none, isDense: true),
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 onChanged: (value) async => await widget.onChanged(int.tryParse(value)),
                 onTapOutside: (event) {
                   FocusScope.of(context).unfocus();
@@ -96,18 +95,19 @@ class _QuantityStepperState extends State<QuantityStepper> {
             ),
           ),
           LoadingIconButton(
-            onPressed: canAdd()
-                ? () async {
-                    var value = int.tryParse(_controller.text);
-                    if (value != null) {
-                      value = value + widget.multiple;
-                    }
+            onPressed:
+                canAdd()
+                    ? () async {
+                      var value = int.tryParse(_controller.text);
+                      if (value != null) {
+                        value = value + widget.multiple;
+                      }
 
-                    value = _correct(value);
-                    _controller.text = value.toString();
-                    await widget.onChanged(value);
-                  }
-                : null,
+                      value = _correct(value);
+                      _controller.text = value.toString();
+                      await widget.onChanged(value);
+                    }
+                    : null,
             icon: const Icon(Icons.add),
           ),
         ],

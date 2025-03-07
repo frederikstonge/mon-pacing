@@ -42,57 +42,59 @@ class ImprovisationDurations extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
           onReorder: _drag,
-          children: durations
-              .asMap()
-              .entries
-              .map(
-                (d) => Padding(
-                  key: ValueKey('${d.key}${d.value}'),
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: ReorderableDragStartListener(
-                          index: d.key,
-                          enabled: durations.length > 1,
-                          child: const Icon(Icons.drag_handle),
-                        ),
-                      ),
-                      Expanded(
-                        child: ImprovisationDurationItem(
-                          key: ValueKey('${d.key}${d.value}'),
-                          duration: Duration(seconds: d.value),
-                          valueChanged: (value) async {
-                            final newDurations = List<int>.from(durations);
-                            newDurations[d.key] = value.inSeconds;
-                            await onChanged(newDurations);
-                          },
-                        ),
-                      ),
-                      LoadingIconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () async {
-                          final newDurations = List<int>.from(durations);
-                          newDurations.insert(d.key + 1, d.value);
-                          await onChanged(newDurations);
-                        },
-                      ),
-                      LoadingIconButton(
-                        icon: const Icon(Icons.remove),
-                        onPressed: durations.length > 1
-                            ? () async {
+          children:
+              durations
+                  .asMap()
+                  .entries
+                  .map(
+                    (d) => Padding(
+                      key: ValueKey('${d.key}${d.value}'),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: ReorderableDragStartListener(
+                              index: d.key,
+                              enabled: durations.length > 1,
+                              child: const Icon(Icons.drag_handle),
+                            ),
+                          ),
+                          Expanded(
+                            child: ImprovisationDurationItem(
+                              key: ValueKey('${d.key}${d.value}'),
+                              duration: Duration(seconds: d.value),
+                              valueChanged: (value) async {
                                 final newDurations = List<int>.from(durations);
-                                newDurations.removeAt(d.key);
+                                newDurations[d.key] = value.inSeconds;
                                 await onChanged(newDurations);
-                              }
-                            : null,
+                              },
+                            ),
+                          ),
+                          LoadingIconButton(
+                            icon: const Icon(Icons.add),
+                            onPressed: () async {
+                              final newDurations = List<int>.from(durations);
+                              newDurations.insert(d.key + 1, d.value);
+                              await onChanged(newDurations);
+                            },
+                          ),
+                          LoadingIconButton(
+                            icon: const Icon(Icons.remove),
+                            onPressed:
+                                durations.length > 1
+                                    ? () async {
+                                      final newDurations = List<int>.from(durations);
+                                      newDurations.removeAt(d.key);
+                                      await onChanged(newDurations);
+                                    }
+                                    : null,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              )
-              .toList(),
+                    ),
+                  )
+                  .toList(),
         ),
       ],
     );
@@ -115,11 +117,7 @@ class ImprovisationDurationItem extends StatefulWidget {
   final Duration duration;
   final ValueChanged<Duration> valueChanged;
 
-  const ImprovisationDurationItem({
-    super.key,
-    required this.duration,
-    required this.valueChanged,
-  });
+  const ImprovisationDurationItem({super.key, required this.duration, required this.valueChanged});
 
   @override
   State<ImprovisationDurationItem> createState() => _ImprovisationDurationItemState();
@@ -148,10 +146,7 @@ class _ImprovisationDurationItemState extends State<ImprovisationDurationItem> {
       onTap: () async {
         final newDuration = await BottomSheetDialog.showDialog<Duration>(
           context: context,
-          child: DurationPicker(
-            title: S.of(context).duration,
-            initialDuration: widget.duration,
-          ),
+          child: DurationPicker(title: S.of(context).duration, initialDuration: widget.duration),
         );
 
         if (newDuration != null) {
@@ -159,11 +154,7 @@ class _ImprovisationDurationItemState extends State<ImprovisationDurationItem> {
           widget.valueChanged(newDuration);
         }
       },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
     );
   }
 }

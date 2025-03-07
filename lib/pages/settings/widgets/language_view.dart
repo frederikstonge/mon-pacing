@@ -12,12 +12,7 @@ class LanguageView extends StatelessWidget {
   final List<Locale> availableLocales;
   final FutureOr<void> Function(Locale locale) onChanged;
 
-  const LanguageView({
-    super.key,
-    required this.currentLocale,
-    required this.availableLocales,
-    required this.onChanged,
-  });
+  const LanguageView({super.key, required this.currentLocale, required this.availableLocales, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -32,25 +27,18 @@ class LanguageView extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
             },
-            child: ListTile(
-              title: DisplayLanguage(
-                locale: currentLocale,
-              ),
-              trailing: const Icon(Icons.check),
-            ),
+            child: ListTile(title: DisplayLanguage(locale: currentLocale), trailing: const Icon(Icons.check)),
           ),
-          ...availableLocales.where((element) => element != currentLocale).map(
+          ...availableLocales
+              .where((element) => element != currentLocale)
+              .map(
                 (e) => InkWell(
                   onTap: () async {
                     final navigator = Navigator.of(context);
                     await onChanged(e);
                     navigator.pop();
                   },
-                  child: ListTile(
-                    title: DisplayLanguage(
-                      locale: e,
-                    ),
-                  ),
+                  child: ListTile(title: DisplayLanguage(locale: e)),
                 ),
               ),
         ],

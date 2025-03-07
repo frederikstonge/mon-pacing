@@ -11,11 +11,7 @@ class ThemeView extends StatelessWidget {
   final ThemeType currentTheme;
   final FutureOr<void> Function(ThemeType theme) onChanged;
 
-  const ThemeView({
-    super.key,
-    required this.currentTheme,
-    required this.onChanged,
-  });
+  const ThemeView({super.key, required this.currentTheme, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +27,13 @@ class ThemeView extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: ListTile(
-              title: Text(
-                _getThemeString(context, currentTheme),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              title: Text(_getThemeString(context, currentTheme), maxLines: 1, overflow: TextOverflow.ellipsis),
               trailing: const Icon(Icons.check),
             ),
           ),
-          ...ThemeType.values.where((element) => element != currentTheme).map(
+          ...ThemeType.values
+              .where((element) => element != currentTheme)
+              .map(
                 (e) => InkWell(
                   onTap: () async {
                     final navigator = Navigator.of(context);
@@ -48,11 +42,7 @@ class ThemeView extends StatelessWidget {
                     navigator.pop();
                   },
                   child: ListTile(
-                    title: Text(
-                      _getThemeString(context, e),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    title: Text(_getThemeString(context, e), maxLines: 1, overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ),

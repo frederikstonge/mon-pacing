@@ -24,44 +24,44 @@ class ImprovisationActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-        child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: match.teams.map((team) {
-        final points = match.points.firstWhereOrNull((point) => point.teamId == team.id && point.improvisationId == improvisation.id)?.value ?? 0;
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: Row(
-            children: [
-              Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children:
+            match.teams.map((team) {
+              final points =
+                  match.points
+                      .firstWhereOrNull((point) => point.teamId == team.id && point.improvisationId == improvisation.id)
+                      ?.value ??
+                  0;
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Row(
                   children: [
-                    TeamColorAvatar(color: Color(team.color)),
-                    const SizedBox(width: 6),
                     Expanded(
-                      child: Text(
-                        team.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      child: Row(
+                        children: [
+                          TeamColorAvatar(color: Color(team.color)),
+                          const SizedBox(width: 6),
+                          Expanded(child: Text(team.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                        ],
                       ),
+                    ),
+                    QuantityStepperFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      initialValue: points,
+                      onChanged: (value) {
+                        if (value != null) {
+                          unawaited(onPointChanged.call(improvisation.id, team.id, value));
+                        }
+                      },
+                      minValue: 0,
+                      maxValue: match.integrationRestrictMaximumPointPerImprovisation,
                     ),
                   ],
                 ),
-              ),
-              QuantityStepperFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                initialValue: points,
-                onChanged: (value) {
-                  if (value != null) {
-                    unawaited(onPointChanged.call(improvisation.id, team.id, value));
-                  }
-                },
-                minValue: 0,
-                maxValue: match.integrationRestrictMaximumPointPerImprovisation,
-              ),
-            ],
-          ),
-        );
-      }).toList(),
-    ));
+              );
+            }).toList(),
+      ),
+    );
   }
 }

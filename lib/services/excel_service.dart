@@ -108,36 +108,21 @@ class ExcelService {
       sheet.updateCell(
         excel.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: pointsRowIndex),
         excel.TextCellValue(team.name),
-        cellStyle: excel.CellStyle(
-          topBorder: border,
-          bottomBorder: border,
-          leftBorder: border,
-          rightBorder: border,
-        ),
+        cellStyle: excel.CellStyle(topBorder: border, bottomBorder: border, leftBorder: border, rightBorder: border),
       );
 
       match.improvisations.forEachIndexed((index, element) {
         sheet.updateCell(
           excel.CellIndex.indexByColumnRow(columnIndex: index + 1, rowIndex: pointsRowIndex),
           excel.IntCellValue(match.getImprovisationPointsByTeamId(element.id, team.id)),
-          cellStyle: excel.CellStyle(
-            topBorder: border,
-            bottomBorder: border,
-            leftBorder: border,
-            rightBorder: border,
-          ),
+          cellStyle: excel.CellStyle(topBorder: border, bottomBorder: border, leftBorder: border, rightBorder: border),
         );
       });
 
       sheet.updateCell(
         excel.CellIndex.indexByColumnRow(columnIndex: match.improvisations.length + 1, rowIndex: pointsRowIndex),
         excel.IntCellValue(match.getSubtotalPointsByTeamId(team.id)),
-        cellStyle: excel.CellStyle(
-          topBorder: border,
-          bottomBorder: border,
-          leftBorder: border,
-          rightBorder: border,
-        ),
+        cellStyle: excel.CellStyle(topBorder: border, bottomBorder: border, leftBorder: border, rightBorder: border),
       );
 
       sheet.updateCell(

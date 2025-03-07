@@ -16,13 +16,13 @@ class LoadingIconButton extends StatefulWidget {
     String? tooltip,
     IconButtonSize size = IconButtonSize.medium,
   }) : this._(
-          key: key,
-          icon: icon,
-          onPressed: onPressed,
-          tooltip: tooltip,
-          variant: _IconButtonVariant.normal,
-          size: size,
-        );
+         key: key,
+         icon: icon,
+         onPressed: onPressed,
+         tooltip: tooltip,
+         variant: _IconButtonVariant.normal,
+         size: size,
+       );
 
   const LoadingIconButton.filled({
     Key? key,
@@ -31,13 +31,13 @@ class LoadingIconButton extends StatefulWidget {
     String? tooltip,
     IconButtonSize size = IconButtonSize.medium,
   }) : this._(
-          key: key,
-          icon: icon,
-          onPressed: onPressed,
-          tooltip: tooltip,
-          variant: _IconButtonVariant.filled,
-          size: size,
-        );
+         key: key,
+         icon: icon,
+         onPressed: onPressed,
+         tooltip: tooltip,
+         variant: _IconButtonVariant.filled,
+         size: size,
+       );
 
   const LoadingIconButton.tonal({
     Key? key,
@@ -46,13 +46,13 @@ class LoadingIconButton extends StatefulWidget {
     String? tooltip,
     IconButtonSize size = IconButtonSize.medium,
   }) : this._(
-          key: key,
-          icon: icon,
-          onPressed: onPressed,
-          tooltip: tooltip,
-          variant: _IconButtonVariant.tonal,
-          size: size,
-        );
+         key: key,
+         icon: icon,
+         onPressed: onPressed,
+         tooltip: tooltip,
+         variant: _IconButtonVariant.tonal,
+         size: size,
+       );
 
   const LoadingIconButton._({
     super.key,
@@ -72,30 +72,25 @@ class _LoadingIconButtonState extends State<LoadingIconButton> {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = isLoading || widget.onPressed == null
-        ? null
-        : () async {
-            setState(() {
-              isLoading = true;
-            });
-            try {
-              await widget.onPressed?.call();
-            } finally {
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
+    final onPressed =
+        isLoading || widget.onPressed == null
+            ? null
+            : () async {
+              setState(() {
+                isLoading = true;
+              });
+              try {
+                await widget.onPressed?.call();
+              } finally {
+                if (mounted) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                }
               }
-            }
-          };
+            };
 
-    final icon = isLoading
-        ? const SizedBox(
-            height: 20,
-            width: 20,
-            child: CircularProgressIndicator(),
-          )
-        : widget.icon;
+    final icon = isLoading ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) : widget.icon;
 
     const padding = EdgeInsets.zero;
     final constraints = BoxConstraints.tight(switch (widget.size) {
@@ -112,41 +107,33 @@ class _LoadingIconButtonState extends State<LoadingIconButton> {
 
     return switch (widget._variant) {
       _IconButtonVariant.normal => IconButton(
-          tooltip: widget.tooltip,
-          onPressed: onPressed,
-          icon: icon,
-          padding: padding,
-          constraints: constraints,
-          iconSize: iconSize,
-        ),
+        tooltip: widget.tooltip,
+        onPressed: onPressed,
+        icon: icon,
+        padding: padding,
+        constraints: constraints,
+        iconSize: iconSize,
+      ),
       _IconButtonVariant.filled => IconButton.filled(
-          tooltip: widget.tooltip,
-          onPressed: onPressed,
-          icon: icon,
-          padding: padding,
-          constraints: constraints,
-          iconSize: iconSize,
-        ),
+        tooltip: widget.tooltip,
+        onPressed: onPressed,
+        icon: icon,
+        padding: padding,
+        constraints: constraints,
+        iconSize: iconSize,
+      ),
       _IconButtonVariant.tonal => IconButton.filledTonal(
-          tooltip: widget.tooltip,
-          onPressed: onPressed,
-          icon: icon,
-          padding: padding,
-          constraints: constraints,
-          iconSize: iconSize,
-        ),
+        tooltip: widget.tooltip,
+        onPressed: onPressed,
+        icon: icon,
+        padding: padding,
+        constraints: constraints,
+        iconSize: iconSize,
+      ),
     };
   }
 }
 
-enum _IconButtonVariant {
-  normal,
-  filled,
-  tonal,
-}
+enum _IconButtonVariant { normal, filled, tonal }
 
-enum IconButtonSize {
-  small,
-  medium,
-  large,
-}
+enum IconButtonSize { small, medium, large }

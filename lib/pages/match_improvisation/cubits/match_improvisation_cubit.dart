@@ -21,23 +21,27 @@ class MatchImprovisationCubit extends Cubit<MatchImprovisationState> {
     required this.match,
     required this.settingsCubit,
   }) : super(
-          MatchImprovisationState(
-            editMode: improvisation != null,
-            improvisation: improvisation ??
-                ImprovisationModel(
-                  id: match.improvisations.isNotEmpty ? match.improvisations.map((e) => e.id).reduce(max) + 1 : 0,
-                  type: ImprovisationType.values[match.improvisations.length % 2],
-                  durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
-                  category: '',
-                  performers: '',
-                  theme: '',
-                  notes: '',
-                  timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
-                  huddleTimerInSeconds: settingsCubit.state.defaultHuddleTimerInSeconds,
-                ),
-            index: improvisation != null ? match.improvisations.indexWhere((element) => element.id == improvisation.id) : match.improvisations.length,
-          ),
-        );
+         MatchImprovisationState(
+           editMode: improvisation != null,
+           improvisation:
+               improvisation ??
+               ImprovisationModel(
+                 id: match.improvisations.isNotEmpty ? match.improvisations.map((e) => e.id).reduce(max) + 1 : 0,
+                 type: ImprovisationType.values[match.improvisations.length % 2],
+                 durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
+                 category: '',
+                 performers: '',
+                 theme: '',
+                 notes: '',
+                 timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
+                 huddleTimerInSeconds: settingsCubit.state.defaultHuddleTimerInSeconds,
+               ),
+           index:
+               improvisation != null
+                   ? match.improvisations.indexWhere((element) => element.id == improvisation.id)
+                   : match.improvisations.length,
+         ),
+       );
 
   void edit(ImprovisationModel improvisation) {
     emit(state.copyWith(improvisation: improvisation));

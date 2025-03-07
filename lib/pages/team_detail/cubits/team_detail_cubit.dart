@@ -16,27 +16,18 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   final bool editMode;
   final FutureOr<void> Function(TeamModel value) onConfirm;
 
-  TeamDetailCubit({
-    required this.settingsCubit,
-    required this.onConfirm,
-    required this.editMode,
-    this.team,
-  }) : super(
-          TeamDetailState(
-            editMode: editMode,
-            team: team != null
-                ? editMode
-                    ? team.copyWith()
-                    : team.copyWith(id: 0)
-                : const TeamModel(
-                    id: 0,
-                    createdDate: null,
-                    modifiedDate: null,
-                    name: '',
-                    color: 0,
-                  ),
-          ),
-        );
+  TeamDetailCubit({required this.settingsCubit, required this.onConfirm, required this.editMode, this.team})
+    : super(
+        TeamDetailState(
+          editMode: editMode,
+          team:
+              team != null
+                  ? editMode
+                      ? team.copyWith()
+                      : team.copyWith(id: 0)
+                  : const TeamModel(id: 0, createdDate: null, modifiedDate: null, name: '', color: 0),
+        ),
+      );
 
   Future<void> initialize() async {
     if (!state.editMode) {

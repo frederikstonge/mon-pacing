@@ -57,9 +57,7 @@ class Themes {
 
   static ShapeBorder getCardShapeBorder(Color borderColor) {
     return RoundedRectangleBorder(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(8),
-      ),
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
       side: BorderSide(color: borderColor),
     );
   }
@@ -75,8 +73,10 @@ class Themes {
   ) {
     final background = brightness == Brightness.light ? Colors.white : Colors.black;
     final onBackground = brightness == Brightness.light ? Colors.black : Colors.white;
-    final onPrimary = ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.light ? Colors.black : Colors.white;
-    final onSecondary = ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light ? Colors.black : Colors.white;
+    final onPrimary =
+        ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.light ? Colors.black : Colors.white;
+    final onSecondary =
+        ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light ? Colors.black : Colors.white;
     final colorScheme = ColorScheme(
       brightness: brightness,
       primary: primaryColor,
@@ -109,11 +109,7 @@ class Themes {
       ),
       dividerTheme: DividerThemeData(color: dividerColor),
       bottomSheetTheme: BottomSheetThemeData(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(25.0),
-          ),
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
         showDragHandle: true,
         shadowColor: shadowColor,
       ),

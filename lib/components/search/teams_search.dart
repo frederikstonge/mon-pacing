@@ -11,46 +11,39 @@ class TeamsSearch extends StatelessWidget {
   final Future<List<TeamModel>> Function(String query, List<String> selectedTags) search;
   final Future<List<String>> Function() getAllTags;
 
-  const TeamsSearch({
-    super.key,
-    required this.getAllTags,
-    required this.search,
-  });
+  const TeamsSearch({super.key, required this.getAllTags, required this.search});
 
   static Future<TeamModel?> showDialog(
     BuildContext context,
     Future<List<TeamModel>> Function(String query, List<String> selectedTags) search,
     Future<List<String>> Function() getAllTags,
   ) async {
-    return await Navigator.of(context).push<TeamModel>(
-      MaterialPageRoute(
-        builder: (context) => TeamsSearch(
-          getAllTags: getAllTags,
-          search: search,
-        ),
-      ),
-    );
+    return await Navigator.of(
+      context,
+    ).push<TeamModel>(MaterialPageRoute(builder: (context) => TeamsSearch(getAllTags: getAllTags, search: search)));
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getAllTags(),
-        builder: (context, snapshot) {
-          return SearchDialog(
-            onChanged: (query, selectedTags) => search(query, selectedTags),
-            hintText: S.of(context).search(category: S.of(context).teams),
-            tags: snapshot.data,
-            itemBuilder: (context, item) => InkWell(
-              onTap: () {
-                Navigator.of(context).pop(item);
-              },
-              child: ListTile(
-                leading: TeamColorAvatar(color: Color(item.color)),
-                title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+      future: getAllTags(),
+      builder: (context, snapshot) {
+        return SearchDialog(
+          onChanged: (query, selectedTags) => search(query, selectedTags),
+          hintText: S.of(context).search(category: S.of(context).teams),
+          tags: snapshot.data,
+          itemBuilder:
+              (context, item) => InkWell(
+                onTap: () {
+                  Navigator.of(context).pop(item);
+                },
+                child: ListTile(
+                  leading: TeamColorAvatar(color: Color(item.color)),
+                  title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
               ),
-            ),
-          );
-        });
+        );
+      },
+    );
   }
 }

@@ -37,13 +37,7 @@ class TeamCard extends StatelessWidget {
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.delete,
-            color: Colors.white,
-          ),
-        ),
+        child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.delete, color: Colors.white)),
       ),
       key: ValueKey(team.id),
       direction: DismissDirection.endToStart,
@@ -67,9 +61,7 @@ class TeamCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        TeamColorAvatar(
-                          color: Color(team.color),
-                        ),
+                        TeamColorAvatar(color: Color(team.color)),
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
@@ -95,7 +87,7 @@ class TeamCard extends StatelessWidget {
                   ],
                 ),
               ),
-              LoadingIconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert))
+              LoadingIconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert)),
             ],
           ),
         ),

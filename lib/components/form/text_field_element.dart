@@ -45,10 +45,7 @@ class TextFieldElement extends StatelessWidget {
         TextFormField(
           textCapitalization: TextCapitalization.sentences,
           focusNode: focusNode,
-          decoration: InputDecoration(
-            hintText: hintText,
-            suffixIcon: suffixIcon,
-          ),
+          decoration: InputDecoration(hintText: hintText, suffixIcon: suffixIcon),
           controller: controller,
           autofocus: autoFocus,
           maxLines: multiline ? null : 1,

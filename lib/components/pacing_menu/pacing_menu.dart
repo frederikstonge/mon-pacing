@@ -44,11 +44,7 @@ class PacingMenu extends StatelessWidget {
               },
               child: ListTile(
                 leading: const Icon(Icons.edit_document),
-                title: Text(
-                  S.of(context).editDetails,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                title: Text(S.of(context).editDetails, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
           ],
@@ -59,11 +55,7 @@ class PacingMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.play_arrow),
-              title: Text(
-                S.of(context).startMatch,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              title: Text(S.of(context).startMatch, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           if (edit != null) ...[
@@ -74,11 +66,7 @@ class PacingMenu extends StatelessWidget {
               },
               child: ListTile(
                 leading: const Icon(Icons.edit),
-                title: Text(
-                  S.of(context).edit,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                title: Text(S.of(context).edit, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
           ],
@@ -89,11 +77,7 @@ class PacingMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.upload),
-              title: Text(
-                S.of(context).exportPacing,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              title: Text(S.of(context).exportPacing, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
@@ -103,11 +87,7 @@ class PacingMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.copy),
-              title: Text(
-                S.of(context).duplicate,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              title: Text(S.of(context).duplicate, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(

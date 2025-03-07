@@ -30,7 +30,8 @@ class TimerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, timerState) {
-        final isActive = timerState.timer != null &&
+        final isActive =
+            timerState.timer != null &&
             timerState.timer!.matchId == match.id &&
             timerState.timer!.improvisationId == improvisation.id &&
             timerState.timer!.durationIndex == durationIndex;
@@ -38,9 +39,7 @@ class TimerWidget extends StatelessWidget {
         final includeHuddleTimer = improvisation.huddleTimerInSeconds > 0;
 
         final durations = [
-          if (includeHuddleTimer) ...[
-            Duration(seconds: improvisation.huddleTimerInSeconds),
-          ],
+          if (includeHuddleTimer) ...[Duration(seconds: improvisation.huddleTimerInSeconds)],
           ...improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
         ];
 
@@ -54,20 +53,21 @@ class TimerWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: SegmentedButton(
                   style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-                  segments: durations
-                      .asMap()
-                      .entries
-                      .map(
-                        (e) => ButtonSegment(
-                          value: e.key,
-                          label: Text(
-                            includeHuddleTimer && e.key == 0 ? S.of(context).huddle : e.value.toImprovDuration(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      )
-                      .toList(),
+                  segments:
+                      durations
+                          .asMap()
+                          .entries
+                          .map(
+                            (e) => ButtonSegment(
+                              value: e.key,
+                              label: Text(
+                                includeHuddleTimer && e.key == 0 ? S.of(context).huddle : e.value.toImprovDuration(),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
+                          .toList(),
                   selected: {durationIndex},
                   onSelectionChanged: (values) async {
                     await onDurationIndexChanged(values.first);
@@ -77,7 +77,9 @@ class TimerWidget extends StatelessWidget {
             ],
             const SizedBox(height: 6),
             Text(
-              isActive ? Duration(milliseconds: timerState.timer!.remainingMilliseconds).toImprovDuration() : currentDuration.toImprovDuration(),
+              isActive
+                  ? Duration(milliseconds: timerState.timer!.remainingMilliseconds).toImprovDuration()
+                  : currentDuration.toImprovDuration(),
               style: Theme.of(context).textTheme.displayLarge,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -86,37 +88,43 @@ class TimerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 LoadingIconButton.tonal(
-                  onPressed: isActive
-                      ? () async => await context.read<TimerCubit>().start(
+                  onPressed:
+                      isActive
+                          ? () async => await context.read<TimerCubit>().start(
                             match.id,
                             match.name,
                             improvisation.id,
                             durationIndex,
                             currentDuration,
                           )
-                      : null,
+                          : null,
                   icon: const Icon(Icons.replay),
                   tooltip: S.of(context).pause,
                 ),
                 LoadingIconButton.filled(
-                  onPressed: isActive
-                      ? timerState.timer!.status == TimerStatus.paused
-                          ? () => context.read<TimerCubit>().resume()
-                          : () => context.read<TimerCubit>().pause()
-                      : () async => await context.read<TimerCubit>().start(
+                  onPressed:
+                      isActive
+                          ? timerState.timer!.status == TimerStatus.paused
+                              ? () => context.read<TimerCubit>().resume()
+                              : () => context.read<TimerCubit>().pause()
+                          : () async => await context.read<TimerCubit>().start(
                             match.id,
                             match.name,
                             improvisation.id,
                             durationIndex,
                             currentDuration,
                           ),
-                  icon: isActive
-                      ? timerState.timer!.status == TimerStatus.paused
-                          ? const Icon(Icons.play_arrow)
-                          : const Icon(Icons.pause)
-                      : const Icon(Icons.play_arrow),
+                  icon:
+                      isActive
+                          ? timerState.timer!.status == TimerStatus.paused
+                              ? const Icon(Icons.play_arrow)
+                              : const Icon(Icons.pause)
+                          : const Icon(Icons.play_arrow),
                   size: IconButtonSize.large,
-                  tooltip: isActive && timerState.timer!.status == TimerStatus.paused ? S.of(context).pause : S.of(context).start,
+                  tooltip:
+                      isActive && timerState.timer!.status == TimerStatus.paused
+                          ? S.of(context).pause
+                          : S.of(context).start,
                 ),
                 LoadingIconButton.tonal(
                   onPressed: isActive ? () async => await context.read<TimerCubit>().stop() : null,

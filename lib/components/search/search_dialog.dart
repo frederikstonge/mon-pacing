@@ -44,9 +44,7 @@ class _SearchDialogState<T> extends State<SearchDialog<T>> {
           autofocus: true,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: const TextStyle(
-              fontSize: 18,
-            ),
+            hintStyle: const TextStyle(fontSize: 18),
             border: InputBorder.none,
           ),
           onChanged: (value) {

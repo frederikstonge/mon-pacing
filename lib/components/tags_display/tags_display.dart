@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class TagsDisplay extends StatefulWidget {
   final List<String> tags;
 
-  const TagsDisplay({
-    super.key,
-    required this.tags,
-  });
+  const TagsDisplay({super.key, required this.tags});
 
   @override
   State<TagsDisplay> createState() => _TagsDisplayState();

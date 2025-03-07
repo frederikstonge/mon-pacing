@@ -23,37 +23,35 @@ Future<void> main() async {
     return true;
   };
 
-  await runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  await runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
-    // FIREBASE
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+      // FIREBASE
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
-    await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
 
-    await FirebaseRemoteConfig.instance.setConfigSettings(
-      RemoteConfigSettings(
-        fetchTimeout: const Duration(minutes: 1),
-        minimumFetchInterval: const Duration(hours: 6),
-      ),
-    );
+      await FirebaseRemoteConfig.instance.setConfigSettings(
+        RemoteConfigSettings(fetchTimeout: const Duration(minutes: 1), minimumFetchInterval: const Duration(hours: 6)),
+      );
 
-    // SYSTEM CHROME
-    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+      // SYSTEM CHROME
+      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-    // BLOC
-    final storageDirectory = await getApplicationDocumentsDirectory();
-    HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: HydratedStorageDirectory(storageDirectory.path),
-    );
+      // BLOC
+      final storageDirectory = await getApplicationDocumentsDirectory();
+      HydratedBloc.storage = await HydratedStorage.build(
+        storageDirectory: HydratedStorageDirectory(storageDirectory.path),
+      );
 
-    // APP
-    runApp(const Bootstrapper());
-  }, (error, stackTrace) {
-    FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true, printDetails: kDebugMode);
-  });
+      // APP
+      runApp(const Bootstrapper());
+    },
+    (error, stackTrace) {
+      FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true, printDetails: kDebugMode);
+    },
+  );
 }

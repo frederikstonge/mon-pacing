@@ -73,11 +73,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                   tooltip: S.of(context).createNewTeamTooltip,
                   child: const Icon(Icons.add),
                 ),
-                banner: timerState.timer != null
-                    ? TimerBanner(
-                        timer: timerState.timer!,
-                      )
-                    : null,
+                banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
                 appBar: BlocBuilder<SettingsCubit, SettingsState>(
                   builder: (context, settingsState) {
                     return SliverLogoAppbar(
@@ -96,60 +92,53 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                 ),
                 slivers: [
                   switch (teamsState.status) {
-                    TeamsStatus.initial => const SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    TeamsStatus.error => SliverFillRemaining(
-                        child: Center(
-                          child: Text(teamsState.error ?? ''),
-                        ),
-                      ),
+                    TeamsStatus.initial => const SliverFillRemaining(child: Center(child: CircularProgressIndicator())),
+                    TeamsStatus.error => SliverFillRemaining(child: Center(child: Text(teamsState.error ?? ''))),
                     _ => SliverList.builder(
-                        itemCount: teamsState.hasMore ? teamsState.teams.length + 1 : teamsState.teams.length,
-                        itemBuilder: (context, index) {
-                          if (teamsState.hasMore && index == teamsState.teams.length) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                      itemCount: teamsState.hasMore ? teamsState.teams.length + 1 : teamsState.teams.length,
+                      itemBuilder: (context, index) {
+                        if (teamsState.hasMore && index == teamsState.teams.length) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
 
-                          final team = teamsState.teams.elementAt(index);
-                          return TeamCard(
-                            team: team,
-                            onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                            edit: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: TeamDetailPageShell(
-                                team: team,
-                                editMode: true,
-                                onConfirm: (team) async {
-                                  await context.read<TeamsCubit>().edit(team);
-                                },
+                        final team = teamsState.teams.elementAt(index);
+                        return TeamCard(
+                          team: team,
+                          onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                          edit:
+                              () => BottomSheetDialog.showDialog(
+                                context: context,
+                                child: TeamDetailPageShell(
+                                  team: team,
+                                  editMode: true,
+                                  onConfirm: (team) async {
+                                    await context.read<TeamsCubit>().edit(team);
+                                  },
+                                ),
                               ),
-                            ),
-                            shouldDelete: () => MessageBoxDialog.questionShow(
-                              context,
-                              S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: team.name),
-                              S.of(context).delete,
-                              S.of(context).cancel,
-                            ),
-                            delete: () => context.read<TeamsCubit>().delete(team),
-                            export: () => context.read<TeamsCubit>().export(team),
-                            duplicate: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: TeamDetailPageShell(
-                                editMode: false,
-                                team: team,
-                                onConfirm: (team) async {
-                                  await context.read<TeamsCubit>().add(team);
-                                },
+                          shouldDelete:
+                              () => MessageBoxDialog.questionShow(
+                                context,
+                                S.of(context).areYouSure(action: S.of(context).delete.toLowerCase(), name: team.name),
+                                S.of(context).delete,
+                                S.of(context).cancel,
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                          delete: () => context.read<TeamsCubit>().delete(team),
+                          export: () => context.read<TeamsCubit>().export(team),
+                          duplicate:
+                              () => BottomSheetDialog.showDialog(
+                                context: context,
+                                child: TeamDetailPageShell(
+                                  editMode: false,
+                                  team: team,
+                                  onConfirm: (team) async {
+                                    await context.read<TeamsCubit>().add(team);
+                                  },
+                                ),
+                              ),
+                        );
+                      },
+                    ),
                   },
                 ],
               );

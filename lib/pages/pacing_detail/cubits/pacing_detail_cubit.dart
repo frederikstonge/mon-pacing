@@ -12,19 +12,16 @@ class PacingDetailCubit extends Cubit<PacingDetailState> {
   final bool editMode;
   final FutureOr<bool> Function(PacingModel value) onConfirm;
 
-  PacingDetailCubit({
-    required this.settingsCubit,
-    required this.onConfirm,
-    required this.editMode,
-    this.pacing,
-  }) : super(
-          PacingDetailState(
-            editMode: editMode,
-            pacing: pacing != null
-                ? editMode
-                    ? pacing.copyWith()
-                    : pacing.copyWith(id: 0)
-                : PacingModel(
+  PacingDetailCubit({required this.settingsCubit, required this.onConfirm, required this.editMode, this.pacing})
+    : super(
+        PacingDetailState(
+          editMode: editMode,
+          pacing:
+              pacing != null
+                  ? editMode
+                      ? pacing.copyWith()
+                      : pacing.copyWith(id: 0)
+                  : PacingModel(
                     id: 0,
                     name: '',
                     createdDate: null,
@@ -32,8 +29,8 @@ class PacingDetailCubit extends Cubit<PacingDetailState> {
                     improvisations: [],
                     defaultNumberOfTeams: settingsCubit.state.defaultNumberOfTeams,
                   ),
-          ),
-        );
+        ),
+      );
 
   void edit(PacingModel pacing) {
     emit(state.copyWith(pacing: pacing));

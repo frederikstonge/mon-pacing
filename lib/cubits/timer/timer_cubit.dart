@@ -16,11 +16,8 @@ class TimerCubit extends Cubit<TimerState> {
   final ToasterService toasterService;
   final TimerService timerService;
 
-  TimerCubit({
-    required this.settingsCubit,
-    required this.toasterService,
-    required this.timerService,
-  }) : super(const TimerState());
+  TimerCubit({required this.settingsCubit, required this.toasterService, required this.timerService})
+    : super(const TimerState());
 
   Future<void> initialize() async {
     await _requestPermissions();
@@ -82,10 +79,12 @@ class TimerCubit extends Cubit<TimerState> {
         return;
       }
 
-      _updateTimer(state.timer!.copyWith(
-        remainingMilliseconds: event.remainingMilliseconds,
-        status: event.requestedStatus ?? state.timer!.status,
-      ));
+      _updateTimer(
+        state.timer!.copyWith(
+          remainingMilliseconds: event.remainingMilliseconds,
+          status: event.requestedStatus ?? state.timer!.status,
+        ),
+      );
     }
   }
 

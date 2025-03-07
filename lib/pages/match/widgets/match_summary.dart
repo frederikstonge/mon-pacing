@@ -22,21 +22,13 @@ class MatchSummary extends StatelessWidget {
   final FutureOr<void> Function() onExport;
   final FutureOr<void> Function()? onExportIntegration;
 
-  const MatchSummary({
-    super.key,
-    required this.match,
-    required this.onExport,
-    this.onExportIntegration,
-  });
+  const MatchSummary({super.key, required this.match, required this.onExport, this.onExportIntegration});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Scoreboard(match: match),
-        ),
+        Padding(padding: const EdgeInsets.symmetric(vertical: 16.0), child: Scoreboard(match: match)),
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
           child: TextHeader(
@@ -50,20 +42,17 @@ class MatchSummary extends StatelessWidget {
           ),
         ),
         CustomCard(
-          child: match.stars.isEmpty
-              ? Row(
-                  children: [
-                    Expanded(child: Text(S.of(context).noStar)),
-                  ],
-                )
-              : MatchStars(
-                  stars: match.stars,
-                  teams: match.teams,
-                  onChanged: context.read<MatchCubit>().editStar,
-                  onRemove: context.read<MatchCubit>().removeStar,
-                  onDrag: context.read<MatchCubit>().moveStar,
-                  onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                ),
+          child:
+              match.stars.isEmpty
+                  ? Row(children: [Expanded(child: Text(S.of(context).noStar))])
+                  : MatchStars(
+                    stars: match.stars,
+                    teams: match.teams,
+                    onChanged: context.read<MatchCubit>().editStar,
+                    onRemove: context.read<MatchCubit>().removeStar,
+                    onDrag: context.read<MatchCubit>().moveStar,
+                    onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                  ),
         ),
         const SizedBox(height: 8),
         Padding(
@@ -71,12 +60,7 @@ class MatchSummary extends StatelessWidget {
           child: LoadingButton.filledIcon(
             icon: const Icon(Icons.scoreboard),
             onPressed: () async {
-              await BottomSheetDialog.showDialog(
-                context: context,
-                child: MatchScoreboardShell(
-                  match: match,
-                ),
-              );
+              await BottomSheetDialog.showDialog(context: context, child: MatchScoreboardShell(match: match));
             },
             child: Text(S.of(context).scoreboard),
           ),
@@ -103,8 +87,8 @@ class MatchSummary extends StatelessWidget {
               },
               child: Text(S.of(context).exportMatchSheetTo(integrationId: match.integrationId!)),
             ),
-          )
-        ]
+          ),
+        ],
       ],
     );
   }

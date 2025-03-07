@@ -11,9 +11,5 @@ class PacingState with PacingStateMappable {
   final String? error;
   final PacingModel? pacing;
 
-  const PacingState({
-    required this.status,
-    this.error,
-    this.pacing,
-  });
+  const PacingState({required this.status, this.error, this.pacing});
 }

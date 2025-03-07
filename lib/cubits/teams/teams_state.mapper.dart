@@ -33,7 +33,7 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
       Field('teams', _$teams, opt: true, def: const []);
   static bool _$hasMore(TeamsState v) => v.hasMore;
   static const Field<TeamsState, bool> _f$hasMore =
-      Field('hasMore', _$hasMore, opt: true, def: false);
+      Field('hasMore', _$hasMore, opt: true, def: true);
 
   @override
   final MappableFields<TeamsState> fields = const {

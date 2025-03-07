@@ -5,12 +5,7 @@ class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final Widget? trailing;
 
-  const BottomSheetAppbar({
-    super.key,
-    required this.title,
-    this.leading,
-    this.trailing,
-  });
+  const BottomSheetAppbar({super.key, required this.title, this.leading, this.trailing});
 
   @override
   Widget build(BuildContext context) {

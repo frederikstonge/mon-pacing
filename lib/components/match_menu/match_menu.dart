@@ -13,13 +13,7 @@ class MatchMenu extends StatelessWidget {
   final FutureOr<void> Function()? editDetails;
   final FutureOr<void> Function() delete;
 
-  const MatchMenu({
-    super.key,
-    required this.match,
-    required this.delete,
-    this.edit,
-    this.editDetails,
-  });
+  const MatchMenu({super.key, required this.match, required this.delete, this.edit, this.editDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +32,7 @@ class MatchMenu extends StatelessWidget {
               },
               child: ListTile(
                 leading: const Icon(Icons.edit_document),
-                title: Text(
-                  S.of(context).editDetails,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                title: Text(S.of(context).editDetails, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
           ],
@@ -54,11 +44,7 @@ class MatchMenu extends StatelessWidget {
               },
               child: ListTile(
                 leading: const Icon(Icons.edit),
-                title: Text(
-                  S.of(context).edit,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                title: Text(S.of(context).edit, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
           ],

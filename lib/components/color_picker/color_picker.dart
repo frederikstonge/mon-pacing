@@ -9,18 +9,12 @@ class ColorPicker extends StatelessWidget {
   final Color initialColor;
   final String title;
 
-  const ColorPicker({
-    super.key,
-    required this.initialColor,
-    required this.title,
-  });
+  const ColorPicker({super.key, required this.initialColor, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
-      appBar: BottomSheetAppbar(
-        title: title,
-      ),
+      appBar: BottomSheetAppbar(title: title),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: MaterialColorPicker(

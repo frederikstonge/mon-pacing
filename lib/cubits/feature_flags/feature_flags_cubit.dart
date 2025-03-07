@@ -10,9 +10,7 @@ import 'feature_flags_status.dart';
 class FeatureFlagsCubit extends Cubit<FeatureFlagsState> {
   final FirebaseRemoteConfig remoteConfig;
   late StreamSubscription _subscription;
-  FeatureFlagsCubit({
-    required this.remoteConfig,
-  }) : super(FeatureFlagsState(status: FeatureFlagsStatus.initial)) {
+  FeatureFlagsCubit({required this.remoteConfig}) : super(FeatureFlagsState(status: FeatureFlagsStatus.initial)) {
     _subscription = remoteConfig.onConfigUpdated.listen((data) async {
       await initialize();
     });
@@ -28,10 +26,12 @@ class FeatureFlagsCubit extends Cubit<FeatureFlagsState> {
     try {
       emit(state.copyWith(status: FeatureFlagsStatus.loading));
       await remoteConfig.fetchAndActivate();
-      emit(state.copyWith(
-        status: FeatureFlagsStatus.success,
-        enableIntegrations: remoteConfig.getBool(FeatureFlagsName.enableIntegrations),
-      ));
+      emit(
+        state.copyWith(
+          status: FeatureFlagsStatus.success,
+          enableIntegrations: remoteConfig.getBool(FeatureFlagsName.enableIntegrations),
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(status: FeatureFlagsStatus.failure));
     }

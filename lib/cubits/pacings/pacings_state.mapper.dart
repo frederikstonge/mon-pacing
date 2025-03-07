@@ -33,7 +33,7 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
       Field('pacings', _$pacings, opt: true, def: const []);
   static bool _$hasMore(PacingsState v) => v.hasMore;
   static const Field<PacingsState, bool> _f$hasMore =
-      Field('hasMore', _$hasMore, opt: true, def: false);
+      Field('hasMore', _$hasMore, opt: true, def: true);
 
   @override
   final MappableFields<PacingsState> fields = const {

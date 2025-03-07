@@ -7,14 +7,7 @@ class SettingsTile extends StatelessWidget {
   final Widget title;
   final Widget? subTitle;
 
-  const SettingsTile({
-    super.key,
-    required this.title,
-    this.subTitle,
-    this.leading,
-    this.trailing,
-    this.onTap,
-  });
+  const SettingsTile({super.key, required this.title, this.subTitle, this.leading, this.trailing, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +22,10 @@ class SettingsTile extends StatelessWidget {
           maxLines: subTitle != null ? 1 : 2,
           overflow: TextOverflow.ellipsis,
         ),
-        subtitle: subTitle == null
-            ? null
-            : DefaultTextStyle.merge(
-                child: subTitle!,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+        subtitle:
+            subTitle == null
+                ? null
+                : DefaultTextStyle.merge(child: subTitle!, maxLines: 2, overflow: TextOverflow.ellipsis),
         trailing: trailing,
       ),
     );

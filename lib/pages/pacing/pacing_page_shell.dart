@@ -10,19 +10,17 @@ import 'pacing_page_view.dart';
 class PacingPageShell extends StatelessWidget {
   final int id;
 
-  const PacingPageShell({
-    super.key,
-    required this.id,
-  });
+  const PacingPageShell({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PacingCubit(
-        pacingsRepository: context.read<PacingsRepository>(),
-        pacingsCubit: context.read<PacingsCubit>(),
-        settingsCubit: context.read<SettingsCubit>(),
-      )..initialize(id),
+      create:
+          (context) => PacingCubit(
+            pacingsRepository: context.read<PacingsRepository>(),
+            pacingsCubit: context.read<PacingsCubit>(),
+            settingsCubit: context.read<SettingsCubit>(),
+          )..initialize(id),
       child: const PacingPageView(),
     );
   }

@@ -7,12 +7,7 @@ class TextHeader extends StatelessWidget {
   final String? tooltip;
   final Widget? trailing;
 
-  const TextHeader({
-    super.key,
-    required this.title,
-    this.tooltip,
-    this.trailing,
-  });
+  const TextHeader({super.key, required this.title, this.tooltip, this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +25,12 @@ class TextHeader extends StatelessWidget {
                 ),
               ),
               if (tooltip != null) ...[
-                Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: CustomTooltip(
-                    tooltip: tooltip!,
-                  ),
-                )
+                Padding(padding: const EdgeInsets.only(left: 4), child: CustomTooltip(tooltip: tooltip!)),
               ],
             ],
           ),
         ),
-        if (trailing != null) ...[
-          trailing!,
-        ]
+        if (trailing != null) ...[trailing!],
       ],
     );
   }

@@ -46,55 +46,55 @@ class TeamPerformers extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
           onReorder: (oldIndex, newIndex) => onDrag(oldIndex, newIndex),
-          children: performers
-              .asMap()
-              .entries
-              .map(
-                (d) => Container(
-                  key: ValueKey(d.value.id),
-                  color: Theme.of(context).cardTheme.color,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: ReorderableDragStartListener(
-                            index: d.key,
-                            child: const Icon(Icons.drag_handle),
-                          ),
+          children:
+              performers
+                  .asMap()
+                  .entries
+                  .map(
+                    (d) => Container(
+                      key: ValueKey(d.value.id),
+                      color: Theme.of(context).cardTheme.color,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
+                            ),
+                            Expanded(
+                              child: TeamPerformerItem(
+                                key: ValueKey(d.value.id),
+                                performer: d.value,
+                                valueChanged: (value) async {
+                                  await editPerformer(d.key, value);
+                                },
+                              ),
+                            ),
+                            LoadingIconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed:
+                                  addPerformer != null
+                                      ? () async {
+                                        await addPerformer!();
+                                      }
+                                      : null,
+                            ),
+                            LoadingIconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed:
+                                  removePerformer != null
+                                      ? () async {
+                                        await removePerformer!(d.key);
+                                      }
+                                      : null,
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: TeamPerformerItem(
-                            key: ValueKey(d.value.id),
-                            performer: d.value,
-                            valueChanged: (value) async {
-                              await editPerformer(d.key, value);
-                            },
-                          ),
-                        ),
-                        LoadingIconButton(
-                          icon: const Icon(Icons.add),
-                          onPressed: addPerformer != null
-                              ? () async {
-                                  await addPerformer!();
-                                }
-                              : null,
-                        ),
-                        LoadingIconButton(
-                          icon: const Icon(Icons.remove),
-                          onPressed: removePerformer != null
-                              ? () async {
-                                  await removePerformer!(d.key);
-                                }
-                              : null,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              )
-              .toList(),
+                  )
+                  .toList(),
         ),
       ],
     );
@@ -105,11 +105,7 @@ class TeamPerformerItem extends StatefulWidget {
   final PerformerModel performer;
   final ValueChanged<PerformerModel> valueChanged;
 
-  const TeamPerformerItem({
-    super.key,
-    required this.performer,
-    required this.valueChanged,
-  });
+  const TeamPerformerItem({super.key, required this.performer, required this.valueChanged});
 
   @override
   State<TeamPerformerItem> createState() => _TeamPerformerItemState();
@@ -136,11 +132,7 @@ class _TeamPerformerItemState extends State<TeamPerformerItem> {
       controller: _textController,
       textCapitalization: TextCapitalization.sentences,
       onChanged: (value) => widget.valueChanged(widget.performer.copyWith(name: value)),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
       validator: (value) => Validators.stringRequired(value),
     );
   }

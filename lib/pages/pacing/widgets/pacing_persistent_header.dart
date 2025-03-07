@@ -9,9 +9,7 @@ class PacingPersistentHeader extends SliverPersistentHeaderDelegate {
   static const double height = 40;
   final PacingModel pacing;
 
-  PacingPersistentHeader({
-    required this.pacing,
-  });
+  PacingPersistentHeader({required this.pacing});
 
   @override
   double get maxExtent => height;

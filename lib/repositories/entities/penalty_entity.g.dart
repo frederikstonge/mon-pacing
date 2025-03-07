@@ -15,30 +15,12 @@ const PenaltyEntitySchema = IsarGeneratedSchema(
     name: 'PenaltyModel',
     embedded: true,
     properties: [
-      IsarPropertySchema(
-        name: 'id',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
-        name: 'major',
-        type: IsarType.bool,
-      ),
-      IsarPropertySchema(
-        name: 'type',
-        type: IsarType.string,
-      ),
-      IsarPropertySchema(
-        name: 'performerId',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
-        name: 'teamId',
-        type: IsarType.long,
-      ),
-      IsarPropertySchema(
-        name: 'improvisationId',
-        type: IsarType.long,
-      ),
+      IsarPropertySchema(name: 'id', type: IsarType.long),
+      IsarPropertySchema(name: 'major', type: IsarType.bool),
+      IsarPropertySchema(name: 'type', type: IsarType.string),
+      IsarPropertySchema(name: 'performerId', type: IsarType.long),
+      IsarPropertySchema(name: 'teamId', type: IsarType.long),
+      IsarPropertySchema(name: 'improvisationId', type: IsarType.long),
     ],
     indexes: [],
   ),
@@ -91,102 +73,46 @@ PenaltyEntity deserializePenaltyEntity(IsarReader reader) {
   return object;
 }
 
-extension PenaltyEntityQueryFilter
-    on QueryBuilder<PenaltyEntity, PenaltyEntity, QFilterCondition> {
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idEqualTo(
-    int value,
-  ) {
+extension PenaltyEntityQueryFilter on QueryBuilder<PenaltyEntity, PenaltyEntity, QFilterCondition> {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 1,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(EqualCondition(property: 1, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      idGreaterThan(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idGreaterThan(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 1,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterCondition(property: 1, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      idGreaterThanOrEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idGreaterThanOrEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 1,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterOrEqualCondition(property: 1, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idLessThan(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idLessThan(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 1,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessCondition(property: 1, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      idLessThanOrEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idLessThanOrEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 1,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessOrEqualCondition(property: 1, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> idBetween(int lower, int upper) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 1,
-          lower: lower,
-          upper: upper,
-        ),
-      );
+      return query.addFilterCondition(BetweenCondition(property: 1, lower: lower, upper: upper));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      majorEqualTo(
-    bool value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> majorEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 2,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(EqualCondition(property: 2, value: value));
     });
   }
 
@@ -195,77 +121,43 @@ extension PenaltyEntityQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(EqualCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeGreaterThan(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(GreaterCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeGreaterThanOrEqualTo(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(GreaterOrEqualCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeLessThan(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(LessCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeLessThanOrEqualTo(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(LessOrEqualCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
@@ -276,371 +168,178 @@ extension PenaltyEntityQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        BetweenCondition(
-          property: 3,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
+        BetweenCondition(property: 3, lower: lower, upper: upper, caseSensitive: caseSensitive),
       );
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeStartsWith(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(StartsWithCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeEndsWith(
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(EndsWithCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeContains(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 3,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(ContainsCondition(property: 3, value: value, caseSensitive: caseSensitive));
     });
   }
 
   QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 3,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(MatchesCondition(property: 3, wildcard: pattern, caseSensitive: caseSensitive));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeIsEmpty() {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 3,
-          value: '',
-        ),
-      );
+      return query.addFilterCondition(const EqualCondition(property: 3, value: ''));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      typeIsNotEmpty() {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> typeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 3,
-          value: '',
-        ),
-      );
+      return query.addFilterCondition(const GreaterCondition(property: 3, value: ''));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdIsNull() {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdIsNotNull() {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 4));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdEqualTo(
-    int? value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(EqualCondition(property: 4, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdGreaterThan(
-    int? value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdGreaterThan(int? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 4,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterCondition(property: 4, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdGreaterThanOrEqualTo(
-    int? value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdGreaterThanOrEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterOrEqualCondition(property: 4, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdLessThan(
-    int? value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdLessThan(int? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 4,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessCondition(property: 4, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdLessThanOrEqualTo(
-    int? value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdLessThanOrEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 4,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessOrEqualCondition(property: 4, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      performerIdBetween(
-    int? lower,
-    int? upper,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> performerIdBetween(int? lower, int? upper) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 4,
-          lower: lower,
-          upper: upper,
-        ),
-      );
+      return query.addFilterCondition(BetweenCondition(property: 4, lower: lower, upper: upper));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      teamIdEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> teamIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 5,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(EqualCondition(property: 5, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      teamIdGreaterThan(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> teamIdGreaterThan(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 5,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterCondition(property: 5, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      teamIdGreaterThanOrEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> teamIdGreaterThanOrEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 5,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterOrEqualCondition(property: 5, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      teamIdLessThan(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> teamIdLessThan(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 5,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessCondition(property: 5, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      teamIdLessThanOrEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> teamIdLessThanOrEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 5,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessOrEqualCondition(property: 5, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      teamIdBetween(
-    int lower,
-    int upper,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> teamIdBetween(int lower, int upper) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 5,
-          lower: lower,
-          upper: upper,
-        ),
-      );
+      return query.addFilterCondition(BetweenCondition(property: 5, lower: lower, upper: upper));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      improvisationIdEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> improvisationIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 6,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(EqualCondition(property: 6, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      improvisationIdGreaterThan(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> improvisationIdGreaterThan(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 6,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterCondition(property: 6, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      improvisationIdGreaterThanOrEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> improvisationIdGreaterThanOrEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 6,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(GreaterOrEqualCondition(property: 6, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      improvisationIdLessThan(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> improvisationIdLessThan(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 6,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessCondition(property: 6, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      improvisationIdLessThanOrEqualTo(
-    int value,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> improvisationIdLessThanOrEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 6,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(LessOrEqualCondition(property: 6, value: value));
     });
   }
 
-  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition>
-      improvisationIdBetween(
-    int lower,
-    int upper,
-  ) {
+  QueryBuilder<PenaltyEntity, PenaltyEntity, QAfterFilterCondition> improvisationIdBetween(int lower, int upper) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 6,
-          lower: lower,
-          upper: upper,
-        ),
-      );
+      return query.addFilterCondition(BetweenCondition(property: 6, lower: lower, upper: upper));
     });
   }
 }
 
-extension PenaltyEntityQueryObject
-    on QueryBuilder<PenaltyEntity, PenaltyEntity, QFilterCondition> {}
+extension PenaltyEntityQueryObject on QueryBuilder<PenaltyEntity, PenaltyEntity, QFilterCondition> {}

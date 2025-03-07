@@ -14,23 +14,19 @@ class MatchPageShell extends StatelessWidget {
   final int? improvisationId;
   final int? durationIndex;
 
-  const MatchPageShell({
-    super.key,
-    required this.id,
-    this.improvisationId,
-    this.durationIndex,
-  });
+  const MatchPageShell({super.key, required this.id, this.improvisationId, this.durationIndex});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MatchCubit(
-        matchesRepository: context.read<MatchesRepository>(),
-        matchesCubit: context.read<MatchesCubit>(),
-        toasterService: context.read<ToasterService>(),
-        excelService: context.read<ExcelService>(),
-        analyticsService: context.read<AnalyticsService>(),
-      )..initialize(id, improvisationId: improvisationId, durationIndex: durationIndex),
+      create:
+          (context) => MatchCubit(
+            matchesRepository: context.read<MatchesRepository>(),
+            matchesCubit: context.read<MatchesCubit>(),
+            toasterService: context.read<ToasterService>(),
+            excelService: context.read<ExcelService>(),
+            analyticsService: context.read<AnalyticsService>(),
+          )..initialize(id, improvisationId: improvisationId, durationIndex: durationIndex),
       child: const MatchPageView(),
     );
   }

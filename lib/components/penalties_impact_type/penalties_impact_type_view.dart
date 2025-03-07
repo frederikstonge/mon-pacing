@@ -11,11 +11,7 @@ class PenaltiesImpactTypeView extends StatelessWidget {
   final PenaltiesImpactType currentPenaltiesImpactType;
   final FutureOr<void> Function(PenaltiesImpactType penaltiesBehavior) onChanged;
 
-  const PenaltiesImpactTypeView({
-    super.key,
-    required this.currentPenaltiesImpactType,
-    required this.onChanged,
-  });
+  const PenaltiesImpactTypeView({super.key, required this.currentPenaltiesImpactType, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +35,9 @@ class PenaltiesImpactTypeView extends StatelessWidget {
               trailing: const Icon(Icons.check),
             ),
           ),
-          ...PenaltiesImpactType.values.where((element) => element != currentPenaltiesImpactType).map(
+          ...PenaltiesImpactType.values
+              .where((element) => element != currentPenaltiesImpactType)
+              .map(
                 (e) => InkWell(
                   onTap: () async {
                     final navigator = Navigator.of(context);
@@ -48,11 +46,7 @@ class PenaltiesImpactTypeView extends StatelessWidget {
                     navigator.pop();
                   },
                   child: ListTile(
-                    title: Text(
-                      _getPenaltiesBehaviorString(context, e),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    title: Text(_getPenaltiesBehaviorString(context, e), maxLines: 2, overflow: TextOverflow.ellipsis),
                   ),
                 ),
               ),

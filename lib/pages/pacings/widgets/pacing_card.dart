@@ -38,24 +38,12 @@ class PacingCard extends StatelessWidget {
       background: Container(
         color: Colors.green,
         alignment: Alignment.centerLeft,
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.play_arrow,
-            color: Colors.white,
-          ),
-        ),
+        child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.play_arrow, color: Colors.white)),
       ),
       secondaryBackground: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.delete,
-            color: Colors.white,
-          ),
-        ),
+        child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.delete, color: Colors.white)),
       ),
       key: ValueKey(pacing.id),
       confirmDismiss: (direction) async {
@@ -98,10 +86,7 @@ class PacingCard extends StatelessWidget {
                           ),
                         ),
                         if (pacing.integrationId != null) ...[
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Icon(Icons.cloud_done, size: 16),
-                          ),
+                          Padding(padding: const EdgeInsets.all(4.0), child: Icon(Icons.cloud_done, size: 16)),
                         ],
                       ],
                     ),
@@ -124,10 +109,7 @@ class PacingCard extends StatelessWidget {
                 tooltip: S.of(context).startMatch,
                 icon: const Icon(Icons.play_arrow),
               ),
-              LoadingIconButton.filled(
-                onPressed: () => _openMenu(context),
-                icon: const Icon(Icons.more_vert),
-              ),
+              LoadingIconButton.filled(onPressed: () => _openMenu(context), icon: const Icon(Icons.more_vert)),
             ],
           ),
         ),

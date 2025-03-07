@@ -15,17 +15,13 @@ class AnalyticsService {
   const AnalyticsService({required this.analytics});
 
   Future<void> logExportToExcel() async {
-    await analytics.logEvent(
-      name: AnalyticsService.exportToExcelEventName,
-    );
+    await analytics.logEvent(name: AnalyticsService.exportToExcelEventName);
   }
 
   Future<void> logStartMatch(MatchModel match) async {
     await analytics.logEvent(
       name: AnalyticsService.startMatchEventName,
-      parameters: {
-        'enableStatistics': match.enableStatistics.toString(),
-      },
+      parameters: {'enableStatistics': match.enableStatistics.toString()},
     );
   }
 

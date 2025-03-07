@@ -9,8 +9,5 @@ class MainMessage with MainMessageMappable {
   final int remainingMilliseconds;
   final TimerStatus? requestedStatus;
 
-  const MainMessage({
-    required this.remainingMilliseconds,
-    this.requestedStatus,
-  });
+  const MainMessage({required this.remainingMilliseconds, this.requestedStatus});
 }

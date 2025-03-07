@@ -26,10 +26,7 @@ class TimerService {
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
       ),
-      iosNotificationOptions: const IOSNotificationOptions(
-        showNotification: false,
-        playSound: false,
-      ),
+      iosNotificationOptions: const IOSNotificationOptions(showNotification: false, playSound: false),
       foregroundTaskOptions: ForegroundTaskOptions(
         eventAction: ForegroundTaskEventAction.once(),
         allowWakeLock: true,
@@ -56,7 +53,8 @@ class TimerService {
       return true;
     }
 
-    final NotificationPermission notificationPermissionStatus = await FlutterForegroundTask.checkNotificationPermission();
+    final NotificationPermission notificationPermissionStatus =
+        await FlutterForegroundTask.checkNotificationPermission();
     if (notificationPermissionStatus != NotificationPermission.granted) {
       final notificationPermission = await FlutterForegroundTask.requestNotificationPermission();
       if (notificationPermission != NotificationPermission.granted) {
@@ -144,30 +142,14 @@ class TimerTaskHandler extends TaskHandler {
     if (_taskMessage == null) {
       _taskMessage = event;
       _vibrationMap = {
-        for (var i = 1; i < (event.durationInSeconds / 60).floor(); i++) ...{
-          60 * i: false,
-        },
-        if (event.durationInSeconds > 30) ...{
-          30: false,
-        },
-        if (event.durationInSeconds > 10) ...{
-          10: false,
-        },
-        if (event.durationInSeconds > 5) ...{
-          5: false,
-        },
-        if (event.durationInSeconds > 4) ...{
-          4: false,
-        },
-        if (event.durationInSeconds > 3) ...{
-          3: false,
-        },
-        if (event.durationInSeconds > 2) ...{
-          2: false,
-        },
-        if (event.durationInSeconds > 1) ...{
-          1: false,
-        },
+        for (var i = 1; i < (event.durationInSeconds / 60).floor(); i++) ...{60 * i: false},
+        if (event.durationInSeconds > 30) ...{30: false},
+        if (event.durationInSeconds > 10) ...{10: false},
+        if (event.durationInSeconds > 5) ...{5: false},
+        if (event.durationInSeconds > 4) ...{4: false},
+        if (event.durationInSeconds > 3) ...{3: false},
+        if (event.durationInSeconds > 2) ...{2: false},
+        if (event.durationInSeconds > 1) ...{1: false},
       };
       _stopwatch = Stopwatch();
       _timer = Timer.periodic(Duration(milliseconds: 100), onTick);

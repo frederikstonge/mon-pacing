@@ -39,11 +39,7 @@ class TeamMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.edit),
-              title: Text(
-                S.of(context).edit,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              title: Text(S.of(context).edit, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
@@ -53,11 +49,7 @@ class TeamMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.upload),
-              title: Text(
-                S.of(context).exportTeam,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              title: Text(S.of(context).exportTeam, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
@@ -67,11 +59,7 @@ class TeamMenu extends StatelessWidget {
             },
             child: ListTile(
               leading: const Icon(Icons.copy),
-              title: Text(
-                S.of(context).duplicate,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              title: Text(S.of(context).duplicate, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(

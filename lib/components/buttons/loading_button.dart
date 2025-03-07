@@ -13,12 +13,7 @@ class LoadingButton extends StatefulWidget {
     required Widget child,
     required FutureOr<void> Function()? onPressed,
     String? tooltip,
-  }) : this._(
-          key: key,
-          child: child,
-          onPressed: onPressed,
-          variant: _ButtonVariant.filled,
-        );
+  }) : this._(key: key, child: child, onPressed: onPressed, variant: _ButtonVariant.filled);
 
   const LoadingButton.filledIcon({
     Key? key,
@@ -26,25 +21,14 @@ class LoadingButton extends StatefulWidget {
     required Widget icon,
     required FutureOr<void> Function()? onPressed,
     String? tooltip,
-  }) : this._(
-          key: key,
-          child: child,
-          onPressed: onPressed,
-          icon: icon,
-          variant: _ButtonVariant.filledIcon,
-        );
+  }) : this._(key: key, child: child, onPressed: onPressed, icon: icon, variant: _ButtonVariant.filledIcon);
 
   const LoadingButton.tonal({
     Key? key,
     required Widget child,
     required FutureOr<void> Function()? onPressed,
     String? tooltip,
-  }) : this._(
-          key: key,
-          child: child,
-          onPressed: onPressed,
-          variant: _ButtonVariant.tonal,
-        );
+  }) : this._(key: key, child: child, onPressed: onPressed, variant: _ButtonVariant.tonal);
 
   const LoadingButton.tonalIcon({
     Key? key,
@@ -52,13 +36,7 @@ class LoadingButton extends StatefulWidget {
     required Widget icon,
     required FutureOr<void> Function()? onPressed,
     String? tooltip,
-  }) : this._(
-          key: key,
-          child: child,
-          onPressed: onPressed,
-          icon: icon,
-          variant: _ButtonVariant.tonalIcon,
-        );
+  }) : this._(key: key, child: child, onPressed: onPressed, icon: icon, variant: _ButtonVariant.tonalIcon);
 
   const LoadingButton._({
     super.key,
@@ -77,57 +55,33 @@ class _LoadingButtonState extends State<LoadingButton> {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = isLoading || widget.onPressed == null
-        ? null
-        : () async {
-            setState(() {
-              isLoading = true;
-            });
-            try {
-              await widget.onPressed?.call();
-            } finally {
-              if (mounted) {
-                setState(() {
-                  isLoading = false;
-                });
+    final onPressed =
+        isLoading || widget.onPressed == null
+            ? null
+            : () async {
+              setState(() {
+                isLoading = true;
+              });
+              try {
+                await widget.onPressed?.call();
+              } finally {
+                if (mounted) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                }
               }
-            }
-          };
+            };
 
-    final child = isLoading
-        ? const SizedBox(
-            height: 20,
-            width: 20,
-            child: CircularProgressIndicator(),
-          )
-        : widget.child;
+    final child = isLoading ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) : widget.child;
 
     return switch (widget._variant) {
-      _ButtonVariant.filled => FilledButton(
-          onPressed: onPressed,
-          child: child,
-        ),
-      _ButtonVariant.filledIcon => FilledButton.icon(
-          onPressed: onPressed,
-          icon: widget.icon!,
-          label: child,
-        ),
-      _ButtonVariant.tonal => FilledButton.tonal(
-          onPressed: onPressed,
-          child: child,
-        ),
-      _ButtonVariant.tonalIcon => FilledButton.tonalIcon(
-          onPressed: onPressed,
-          icon: widget.icon!,
-          label: child,
-        ),
+      _ButtonVariant.filled => FilledButton(onPressed: onPressed, child: child),
+      _ButtonVariant.filledIcon => FilledButton.icon(onPressed: onPressed, icon: widget.icon!, label: child),
+      _ButtonVariant.tonal => FilledButton.tonal(onPressed: onPressed, child: child),
+      _ButtonVariant.tonalIcon => FilledButton.tonalIcon(onPressed: onPressed, icon: widget.icon!, label: child),
     };
   }
 }
 
-enum _ButtonVariant {
-  filled,
-  filledIcon,
-  tonal,
-  tonalIcon,
-}
+enum _ButtonVariant { filled, filledIcon, tonal, tonalIcon }

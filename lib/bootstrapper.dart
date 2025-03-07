@@ -28,79 +28,62 @@ class Bootstrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider(create: (repositoryContext) => ToasterService(toastification: Toastification())),
+        RepositoryProvider(create: (repositoryContext) => ExcelService()),
+        RepositoryProvider(create: (repositoryContext) => IntegrationService()),
+        RepositoryProvider(create: (repositoryContext) => TimerService()),
+        RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
+        RepositoryProvider(create: (repositoryContext) => DatabaseRepository()),
         RepositoryProvider(
-          create: (repositoryContext) => ToasterService(
-            toastification: Toastification(),
-          ),
+          create:
+              (repositoryContext) =>
+                  PacingsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => ExcelService(),
+          create:
+              (repositoryContext) =>
+                  MatchesRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
         RepositoryProvider(
-          create: (repositoryContext) => IntegrationService(),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => TimerService(),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => AnalyticsService(
-            analytics: FirebaseAnalytics.instance,
-          ),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => DatabaseRepository(),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => PacingsRepository(
-            databaseRepository: repositoryContext.read<DatabaseRepository>(),
-          ),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => MatchesRepository(
-            databaseRepository: repositoryContext.read<DatabaseRepository>(),
-          ),
-        ),
-        RepositoryProvider(
-          create: (repositoryContext) => TeamsRepository(
-            databaseRepository: repositoryContext.read<DatabaseRepository>(),
-          ),
+          create:
+              (repositoryContext) => TeamsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (blocContext) => SettingsCubit()),
           BlocProvider(
-            create: (blocContext) => SettingsCubit(),
+            create:
+                (blocContext) => PacingsCubit(
+                  pacingsRepository: blocContext.read<PacingsRepository>(),
+                  toasterService: blocContext.read<ToasterService>(),
+                )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => PacingsCubit(
-              pacingsRepository: blocContext.read<PacingsRepository>(),
-              toasterService: blocContext.read<ToasterService>(),
-            )..fetch(),
+            create:
+                (blocContext) => MatchesCubit(
+                  matchesRepository: blocContext.read<MatchesRepository>(),
+                  toasterService: blocContext.read<ToasterService>(),
+                  analyticsService: blocContext.read<AnalyticsService>(),
+                )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => MatchesCubit(
-              matchesRepository: blocContext.read<MatchesRepository>(),
-              toasterService: blocContext.read<ToasterService>(),
-              analyticsService: blocContext.read<AnalyticsService>(),
-            )..fetch(),
+            create:
+                (blocContext) => TeamsCubit(
+                  teamsRepository: blocContext.read<TeamsRepository>(),
+                  toasterService: blocContext.read<ToasterService>(),
+                )..fetch(),
           ),
           BlocProvider(
-            create: (blocContext) => TeamsCubit(
-              teamsRepository: blocContext.read<TeamsRepository>(),
-              toasterService: blocContext.read<ToasterService>(),
-            )..fetch(),
+            create:
+                (blocContext) => TimerCubit(
+                  toasterService: blocContext.read<ToasterService>(),
+                  settingsCubit: blocContext.read<SettingsCubit>(),
+                  timerService: blocContext.read<TimerService>(),
+                )..initialize(),
           ),
           BlocProvider(
-            create: (blocContext) => TimerCubit(
-              toasterService: blocContext.read<ToasterService>(),
-              settingsCubit: blocContext.read<SettingsCubit>(),
-              timerService: blocContext.read<TimerService>(),
-            )..initialize(),
-          ),
-          BlocProvider(
-            create: (blocContext) => FeatureFlagsCubit(
-              remoteConfig: FirebaseRemoteConfig.instance,
-            )..initialize(),
+            create: (blocContext) => FeatureFlagsCubit(remoteConfig: FirebaseRemoteConfig.instance)..initialize(),
           ),
         ],
         child: const App(),

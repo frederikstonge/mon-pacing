@@ -39,9 +39,7 @@ class NumberFieldElement extends StatelessWidget {
           onChanged: (value) => onChanged?.call(int.tryParse(value)),
           validator: validator,
           keyboardType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-          ],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           onTapOutside: (event) => FocusScope.of(context).unfocus(),
           autovalidateMode: AutovalidateMode.onUserInteraction,
         ),

@@ -5,12 +5,7 @@ class TeamColorAvatar extends StatelessWidget {
   final double height;
   final double width;
 
-  const TeamColorAvatar({
-    super.key,
-    required this.color,
-    this.height = 16,
-    this.width = 16,
-  });
+  const TeamColorAvatar({super.key, required this.color, this.height = 16, this.width = 16});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +15,9 @@ class TeamColorAvatar extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(
-            color: Theme.of(context).colorScheme.onSurface,
-            width: 1,
-          ),
+          border: Border.all(color: Theme.of(context).colorScheme.onSurface, width: 1),
         ),
-        child: CircleAvatar(
-          backgroundColor: color,
-        ),
+        child: CircleAvatar(backgroundColor: color),
       ),
     );
   }

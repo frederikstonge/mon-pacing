@@ -16,9 +16,7 @@ import 'cubits/match_penalty_cubit.dart';
 import 'cubits/match_penalty_state.dart';
 
 class MatchPenaltyView extends StatefulWidget {
-  const MatchPenaltyView({
-    super.key,
-  });
+  const MatchPenaltyView({super.key});
 
   @override
   State<MatchPenaltyView> createState() => _MatchPenaltyViewState();
@@ -57,9 +55,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                       DropdownButtonFormField<int>(
                         isExpanded: true,
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6.0),
-                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
                         ),
                         icon: const Icon(Icons.arrow_downward),
                         value: matchPenaltyState.penalty.teamId,
@@ -68,24 +64,21 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                             context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(teamId: value));
                           }
                         },
-                        items: matchPenaltyState.teams
-                            .map((e) => DropdownMenuItem(
-                                  value: e.id,
-                                  child: Row(
-                                    children: [
-                                      TeamColorAvatar(color: Color(e.color)),
-                                      const SizedBox(width: 6),
-                                      Expanded(
-                                        child: Text(
-                                          e.name,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
+                        items:
+                            matchPenaltyState.teams
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e.id,
+                                    child: Row(
+                                      children: [
+                                        TeamColorAvatar(color: Color(e.color)),
+                                        const SizedBox(width: 6),
+                                        Expanded(child: Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                      ],
+                                    ),
                                   ),
-                                ))
-                            .toList(),
+                                )
+                                .toList(),
                       ),
                       if (matchPenaltyState.integrationPenaltyTypes != null) ...[
                         Padding(
@@ -100,36 +93,38 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                         DropdownButtonFormField<int>(
                           isExpanded: true,
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
                           ),
                           icon: const Icon(Icons.arrow_downward),
-                          value: matchPenaltyState.penalty.type.isNotEmpty
-                              ? matchPenaltyState.integrationPenaltyTypes!.indexOf(matchPenaltyState.penalty.type)
-                              : 0,
+                          value:
+                              matchPenaltyState.penalty.type.isNotEmpty
+                                  ? matchPenaltyState.integrationPenaltyTypes!.indexOf(matchPenaltyState.penalty.type)
+                                  : 0,
                           onChanged: (value) {
                             if (value != null) {
-                              context
-                                  .read<MatchPenaltyCubit>()
-                                  .edit(matchPenaltyState.penalty.copyWith(type: matchPenaltyState.integrationPenaltyTypes!.elementAt(value)));
+                              context.read<MatchPenaltyCubit>().edit(
+                                matchPenaltyState.penalty.copyWith(
+                                  type: matchPenaltyState.integrationPenaltyTypes!.elementAt(value),
+                                ),
+                              );
                             }
                           },
                           validator: (value) {
-                            return Validators.stringRequired(matchPenaltyState.integrationPenaltyTypes!.elementAt(value!));
+                            return Validators.stringRequired(
+                              matchPenaltyState.integrationPenaltyTypes!.elementAt(value!),
+                            );
                           },
-                          items: matchPenaltyState.integrationPenaltyTypes!
-                              .asMap()
-                              .entries
-                              .map((e) => DropdownMenuItem(
-                                    value: e.key,
-                                    child: Text(
-                                      e.value,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                          items:
+                              matchPenaltyState.integrationPenaltyTypes!
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e.key,
+                                      child: Text(e.value, maxLines: 1, overflow: TextOverflow.ellipsis),
                                     ),
-                                  ))
-                              .toList(),
+                                  )
+                                  .toList(),
                         ),
                       ] else ...[
                         TextFieldElement(
@@ -148,38 +143,34 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                         leading: const Icon(Icons.sports),
                         title: Text(S.of(context).major),
                         trailing: Switch(
-                            value: matchPenaltyState.penalty.major,
-                            onChanged: (value) {
-                              context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(major: value));
-                            }),
+                          value: matchPenaltyState.penalty.major,
+                          onChanged: (value) {
+                            context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(major: value));
+                          },
+                        ),
                       ),
                       DropDownElement<int?>(
                         label: S.of(context).performer,
-                        value: matchPenaltyState.teams
-                            .firstWhere((t) => t.id == matchPenaltyState.penalty.teamId)
-                            .performers
-                            .firstWhereOrNull((p) => p.id == matchPenaltyState.penalty.performerId)
-                            ?.id,
+                        value:
+                            matchPenaltyState.teams
+                                .firstWhere((t) => t.id == matchPenaltyState.penalty.teamId)
+                                .performers
+                                .firstWhereOrNull((p) => p.id == matchPenaltyState.penalty.performerId)
+                                ?.id,
                         onChanged: (value) {
-                          context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(performerId: value));
+                          context.read<MatchPenaltyCubit>().edit(
+                            matchPenaltyState.penalty.copyWith(performerId: value),
+                          );
                         },
                         items: [
-                          const DropdownMenuItem(
-                            value: null,
-                            child: Row(
-                              children: [
-                                Expanded(child: Text('-')),
-                              ],
-                            ),
-                          ),
-                          ...matchPenaltyState.teams.firstWhere((t) => t.id == matchPenaltyState.penalty.teamId).performers.map(
+                          const DropdownMenuItem(value: null, child: Row(children: [Expanded(child: Text('-'))])),
+                          ...matchPenaltyState.teams
+                              .firstWhere((t) => t.id == matchPenaltyState.penalty.teamId)
+                              .performers
+                              .map(
                                 (p) => DropdownMenuItem(
                                   value: p.id,
-                                  child: Row(
-                                    children: [
-                                      Expanded(child: Text(p.name)),
-                                    ],
-                                  ),
+                                  child: Row(children: [Expanded(child: Text(p.name))]),
                                 ),
                               ),
                         ],

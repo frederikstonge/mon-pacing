@@ -13,22 +13,18 @@ class TeamDetailPageShell extends StatelessWidget {
   final bool editMode;
   final FutureOr<void> Function(TeamModel value) onConfirm;
 
-  const TeamDetailPageShell({
-    super.key,
-    required this.onConfirm,
-    required this.editMode,
-    this.team,
-  });
+  const TeamDetailPageShell({super.key, required this.onConfirm, required this.editMode, this.team});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TeamDetailCubit(
-        settingsCubit: context.read<SettingsCubit>(),
-        onConfirm: onConfirm,
-        editMode: editMode,
-        team: team,
-      )..initialize(),
+      create:
+          (context) => TeamDetailCubit(
+            settingsCubit: context.read<SettingsCubit>(),
+            onConfirm: onConfirm,
+            editMode: editMode,
+            team: team,
+          )..initialize(),
       child: const TeamDetailPageView(),
     );
   }

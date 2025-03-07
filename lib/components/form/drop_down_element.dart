@@ -8,13 +8,7 @@ class DropDownElement<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>> items;
   final FutureOr<void> Function(T value)? onChanged;
 
-  const DropDownElement({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.items,
-    this.onChanged,
-  });
+  const DropDownElement({super.key, required this.label, required this.value, required this.items, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +26,7 @@ class DropDownElement<T> extends StatelessWidget {
         ),
         DropdownButtonFormField<T>(
           isExpanded: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6.0),
-            ),
-          ),
+          decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
           value: value,
           icon: const Icon(Icons.arrow_downward),
           onChanged: (value) {

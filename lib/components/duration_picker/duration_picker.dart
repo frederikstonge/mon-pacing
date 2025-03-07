@@ -10,11 +10,7 @@ class DurationPicker extends StatefulWidget {
   final Duration initialDuration;
   final String title;
 
-  const DurationPicker({
-    super.key,
-    required this.title,
-    required this.initialDuration,
-  });
+  const DurationPicker({super.key, required this.title, required this.initialDuration});
 
   @override
   State<DurationPicker> createState() => _DurationPickerState();
@@ -41,9 +37,7 @@ class _DurationPickerState extends State<DurationPicker> {
   @override
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
-      appBar: BottomSheetAppbar(
-        title: widget.title,
-      ),
+      appBar: BottomSheetAppbar(title: widget.title),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -52,28 +46,9 @@ class _DurationPickerState extends State<DurationPicker> {
             child: SegmentedButton(
               style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
               segments: const [
-                ButtonSegment(
-                  value: 1,
-                  label: Text(
-                    '1 sec',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                ButtonSegment(
-                    value: 10,
-                    label: Text(
-                      '10 sec',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )),
-                ButtonSegment(
-                    value: 30,
-                    label: Text(
-                      '30 sec',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )),
+                ButtonSegment(value: 1, label: Text('1 sec', maxLines: 1, overflow: TextOverflow.ellipsis)),
+                ButtonSegment(value: 10, label: Text('10 sec', maxLines: 1, overflow: TextOverflow.ellipsis)),
+                ButtonSegment(value: 30, label: Text('30 sec', maxLines: 1, overflow: TextOverflow.ellipsis)),
               ],
               selected: {secondInterval},
               onSelectionChanged: (values) {
@@ -114,11 +89,7 @@ class _DurationPickerState extends State<DurationPicker> {
                 onPressed: () {
                   Navigator.of(context).pop(selectedDuration);
                 },
-                child: Text(
-                  S.of(context).save,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: Text(S.of(context).save, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
           ),

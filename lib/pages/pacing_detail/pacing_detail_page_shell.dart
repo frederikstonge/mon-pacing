@@ -13,22 +13,18 @@ class PacingDetailPageShell extends StatelessWidget {
   final bool editMode;
   final FutureOr<bool> Function(PacingModel value) onConfirm;
 
-  const PacingDetailPageShell({
-    super.key,
-    required this.onConfirm,
-    required this.editMode,
-    this.pacing,
-  });
+  const PacingDetailPageShell({super.key, required this.onConfirm, required this.editMode, this.pacing});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PacingDetailCubit(
-        settingsCubit: context.read<SettingsCubit>(),
-        editMode: editMode,
-        onConfirm: onConfirm,
-        pacing: pacing,
-      ),
+      create:
+          (context) => PacingDetailCubit(
+            settingsCubit: context.read<SettingsCubit>(),
+            editMode: editMode,
+            onConfirm: onConfirm,
+            pacing: pacing,
+          ),
       child: const PacingDetailPageView(),
     );
   }

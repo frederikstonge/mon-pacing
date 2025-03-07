@@ -8,12 +8,7 @@ import 'settings_state.dart';
 
 class SettingsCubit extends HydratedCubit<SettingsState> {
   SettingsCubit()
-      : super(
-          SettingsState(
-            theme: ThemeType.light,
-            language: Platform.localeName.substring(0, 2) == 'fr' ? 'fr' : 'en',
-          ),
-        );
+    : super(SettingsState(theme: ThemeType.light, language: Platform.localeName.substring(0, 2) == 'fr' ? 'fr' : 'en'));
 
   void edit(SettingsState model) {
     emit(model);

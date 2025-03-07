@@ -10,9 +10,5 @@ class MatchImprovisationState with MatchImprovisationStateMappable {
   final bool editMode;
   final int index;
 
-  const MatchImprovisationState({
-    required this.improvisation,
-    required this.editMode,
-    required this.index,
-  });
+  const MatchImprovisationState({required this.improvisation, required this.editMode, required this.index});
 }

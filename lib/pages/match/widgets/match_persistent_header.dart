@@ -46,11 +46,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
         ),
         middle: DropdownButtonFormField<int>(
           isExpanded: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6.0),
-            ),
-          ),
+          decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
           icon: const Icon(Icons.arrow_downward),
           value: selectedImprovisationIndex,
           onChanged: (value) {
@@ -60,23 +56,15 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
           },
           items: [
             ...match.improvisations.asMap().entries.map(
-                  (e) => DropdownMenuItem(
-                    value: e.key,
-                    child: Row(
-                      children: [
-                        Expanded(child: Text(S.of(context).improvisationNumber(order: e.key + 1))),
-                      ],
-                    ),
-                  ),
-                ),
+              (e) => DropdownMenuItem(
+                value: e.key,
+                child: Row(children: [Expanded(child: Text(S.of(context).improvisationNumber(order: e.key + 1)))]),
+              ),
+            ),
             if (match.enableStatistics) ...[
               DropdownMenuItem(
                 value: match.improvisations.length,
-                child: Row(
-                  children: [
-                    Expanded(child: Text(S.of(context).matchSummary)),
-                  ],
-                ),
+                child: Row(children: [Expanded(child: Text(S.of(context).matchSummary))]),
               ),
             ],
           ],
@@ -84,17 +72,14 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            LoadingIconButton(
-              icon: const Icon(Icons.add),
-              tooltip: S.of(context).addImprovisation,
-              onPressed: onAdd,
-            ),
+            LoadingIconButton(icon: const Icon(Icons.add), tooltip: S.of(context).addImprovisation, onPressed: onAdd),
             LoadingIconButton(
               icon: const Icon(Icons.arrow_forward),
               tooltip: S.of(context).nextImprovisation,
-              onPressed: selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
-                  ? () => changePage(selectedImprovisationIndex + 1)
-                  : null,
+              onPressed:
+                  selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
+                      ? () => changePage(selectedImprovisationIndex + 1)
+                      : null,
             ),
           ],
         ),

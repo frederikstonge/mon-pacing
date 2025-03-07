@@ -53,26 +53,22 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
         background: Container(
           color: Colors.red,
           alignment: Alignment.centerRight,
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-          ),
+          child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.delete, color: Colors.white)),
         ),
         confirmDismiss: (direction) async => await widget.onConfirmDelete.call(widget.improvisation),
         onDismissed: (direction) async => await widget.onDelete.call(widget.improvisation),
         child: CustomCard(
           showIndicator: true,
-          indicatorColor: widget.improvisation.type == ImprovisationType.compared
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.secondary,
+          indicatorColor:
+              widget.improvisation.type == ImprovisationType.compared
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,
           contentPadding: 0,
           child: ExpansionTile(
-            onExpansionChanged: (value) => setState(() {
-              isExpanded = value;
-            }),
+            onExpansionChanged:
+                (value) => setState(() {
+                  isExpanded = value;
+                }),
             leading: ReorderableDragStartListener(
               index: widget.index,
               enabled: widget.dragEnabled,

@@ -23,23 +23,15 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
   static int _$id(StarModel v) => v.id;
   static const Field<StarModel, int> _f$id = Field('id', _$id);
   static int _$performerId(StarModel v) => v.performerId;
-  static const Field<StarModel, int> _f$performerId =
-      Field('performerId', _$performerId);
+  static const Field<StarModel, int> _f$performerId = Field('performerId', _$performerId);
   static int _$teamId(StarModel v) => v.teamId;
   static const Field<StarModel, int> _f$teamId = Field('teamId', _$teamId);
 
   @override
-  final MappableFields<StarModel> fields = const {
-    #id: _f$id,
-    #performerId: _f$performerId,
-    #teamId: _f$teamId,
-  };
+  final MappableFields<StarModel> fields = const {#id: _f$id, #performerId: _f$performerId, #teamId: _f$teamId};
 
   static StarModel _instantiate(DecodingData data) {
-    return StarModel(
-        id: data.dec(_f$id),
-        performerId: data.dec(_f$performerId),
-        teamId: data.dec(_f$teamId));
+    return StarModel(id: data.dec(_f$id), performerId: data.dec(_f$performerId), teamId: data.dec(_f$teamId));
   }
 
   @override
@@ -56,27 +48,23 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
 
 mixin StarModelMappable {
   String toJson() {
-    return StarModelMapper.ensureInitialized()
-        .encodeJson<StarModel>(this as StarModel);
+    return StarModelMapper.ensureInitialized().encodeJson<StarModel>(this as StarModel);
   }
 
   Map<String, dynamic> toMap() {
-    return StarModelMapper.ensureInitialized()
-        .encodeMap<StarModel>(this as StarModel);
+    return StarModelMapper.ensureInitialized().encodeMap<StarModel>(this as StarModel);
   }
 
   StarModelCopyWith<StarModel, StarModel, StarModel> get copyWith =>
       _StarModelCopyWithImpl(this as StarModel, $identity, $identity);
   @override
   String toString() {
-    return StarModelMapper.ensureInitialized()
-        .stringifyValue(this as StarModel);
+    return StarModelMapper.ensureInitialized().stringifyValue(this as StarModel);
   }
 
   @override
   bool operator ==(Object other) {
-    return StarModelMapper.ensureInitialized()
-        .equalsValue(this as StarModel, other);
+    return StarModelMapper.ensureInitialized().equalsValue(this as StarModel, other);
   }
 
   @override
@@ -86,39 +74,36 @@ mixin StarModelMappable {
 }
 
 extension StarModelValueCopy<$R, $Out> on ObjectCopyWith<$R, StarModel, $Out> {
-  StarModelCopyWith<$R, StarModel, $Out> get $asStarModel =>
-      $base.as((v, t, t2) => _StarModelCopyWithImpl(v, t, t2));
+  StarModelCopyWith<$R, StarModel, $Out> get $asStarModel => $base.as((v, t, t2) => _StarModelCopyWithImpl(v, t, t2));
 }
 
-abstract class StarModelCopyWith<$R, $In extends StarModel, $Out>
-    implements ClassCopyWith<$R, $In, $Out> {
+abstract class StarModelCopyWith<$R, $In extends StarModel, $Out> implements ClassCopyWith<$R, $In, $Out> {
   $R call({int? id, int? performerId, int? teamId});
   StarModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _StarModelCopyWithImpl<$R, $Out>
-    extends ClassCopyWithBase<$R, StarModel, $Out>
+class _StarModelCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, StarModel, $Out>
     implements StarModelCopyWith<$R, StarModel, $Out> {
   _StarModelCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  late final ClassMapperBase<StarModel> $mapper =
-      StarModelMapper.ensureInitialized();
+  late final ClassMapperBase<StarModel> $mapper = StarModelMapper.ensureInitialized();
   @override
-  $R call({int? id, int? performerId, int? teamId}) =>
-      $apply(FieldCopyWithData({
-        if (id != null) #id: id,
-        if (performerId != null) #performerId: performerId,
-        if (teamId != null) #teamId: teamId
-      }));
+  $R call({int? id, int? performerId, int? teamId}) => $apply(
+    FieldCopyWithData({
+      if (id != null) #id: id,
+      if (performerId != null) #performerId: performerId,
+      if (teamId != null) #teamId: teamId,
+    }),
+  );
   @override
   StarModel $make(CopyWithData data) => StarModel(
-      id: data.get(#id, or: $value.id),
-      performerId: data.get(#performerId, or: $value.performerId),
-      teamId: data.get(#teamId, or: $value.teamId));
+    id: data.get(#id, or: $value.id),
+    performerId: data.get(#performerId, or: $value.performerId),
+    teamId: data.get(#teamId, or: $value.teamId),
+  );
 
   @override
-  StarModelCopyWith<$R2, StarModel, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
+  StarModelCopyWith<$R2, StarModel, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
       _StarModelCopyWithImpl($value, $cast, t);
 }

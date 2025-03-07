@@ -67,19 +67,14 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           label: S.of(context).type,
           value: widget.improvisation.type,
           onChanged: (value) async => await widget.onChanged(widget.improvisation.copyWith(type: value)),
-          items: ImprovisationType.values.map(
-            (e) {
-              final display = e == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared;
-              return DropdownMenuItem<ImprovisationType>(
-                value: e,
-                child: Row(
-                  children: [
-                    Expanded(child: Text(display)),
-                  ],
-                ),
-              );
-            },
-          ).toList(),
+          items:
+              ImprovisationType.values.map((e) {
+                final display = e == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared;
+                return DropdownMenuItem<ImprovisationType>(
+                  value: e,
+                  child: Row(children: [Expanded(child: Text(display))]),
+                );
+              }).toList(),
         ),
         const SizedBox(height: 8),
         TextFieldElement(
@@ -90,10 +85,7 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           suffixIcon: LoadingIconButton(
             icon: const Icon(Icons.search),
             onPressed: () async {
-              final result = await CategoriesSearch.showDialog(
-                context,
-                widget.getAllCategories,
-              );
+              final result = await CategoriesSearch.showDialog(context, widget.getAllCategories);
               if (result != null) {
                 _categoryController.text = result;
                 await widget.onChanged.call(widget.improvisation.copyWith(category: result));
@@ -112,7 +104,8 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
         ImprovisationDurations(
           label: S.of(context).duration,
           durations: widget.improvisation.durationsInSeconds,
-          onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(durationsInSeconds: value)),
+          onChanged:
+              (value) async => await widget.onChanged.call(widget.improvisation.copyWith(durationsInSeconds: value)),
           onDragStart: widget.onDragStart,
         ),
         const SizedBox(height: 8),
@@ -135,10 +128,8 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
               Flexible(child: Text(S.of(context).huddleTimer)),
               Padding(
                 padding: const EdgeInsets.only(left: 4),
-                child: CustomTooltip(
-                  tooltip: S.of(context).huddleTimerTooltip,
-                ),
-              )
+                child: CustomTooltip(tooltip: S.of(context).huddleTimerTooltip),
+              ),
             ],
           ),
           subTitle: Text(Duration(seconds: widget.improvisation.huddleTimerInSeconds).toImprovDuration()),
@@ -164,10 +155,8 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
               Flexible(child: Text(S.of(context).timeBuffer)),
               Padding(
                 padding: const EdgeInsets.only(left: 4),
-                child: CustomTooltip(
-                  tooltip: S.of(context).timeBufferTooltip,
-                ),
-              )
+                child: CustomTooltip(tooltip: S.of(context).timeBufferTooltip),
+              ),
             ],
           ),
           subTitle: Text(Duration(seconds: widget.improvisation.timeBufferInSeconds).toImprovDuration()),
