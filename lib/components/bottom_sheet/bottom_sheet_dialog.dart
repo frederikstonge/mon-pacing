@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BottomSheetDialog {
-  static Future<T?> showDialog<T>({
-    required BuildContext context,
-    required Widget child,
-  }) async {
+  static Future<T?> showDialog<T>({required BuildContext context, required Widget child}) async {
     return await showModalBottomSheet(
       barrierColor: Theme.of(context).colorScheme.onSurface.withAlpha(100),
       context: context,
@@ -12,16 +9,13 @@ class BottomSheetDialog {
       useSafeArea: true,
       isScrollControlled: true,
       builder: (context) {
-        final mediaQuery = MediaQueryData.fromView(View.of(context));
-        final bottomPadding = mediaQuery.viewInsets.bottom > 0 ? mediaQuery.viewInsets.bottom : mediaQuery.padding.bottom;
+        final bottomPadding =
+            MediaQuery.viewInsetsOf(context).bottom > 0
+                ? MediaQuery.viewInsetsOf(context).bottom
+                : MediaQuery.paddingOf(context).bottom;
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(child: child),
-            ],
-          ),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [Flexible(child: child)]),
         );
       },
     );
