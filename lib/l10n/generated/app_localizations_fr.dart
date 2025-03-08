@@ -472,7 +472,7 @@ class SFr extends S {
 
   @override
   String version({required String version}) {
-    return 'ersion: $version';
+    return 'Version: $version';
   }
 
   @override
