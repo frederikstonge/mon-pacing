@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:isar/isar.dart';
 
