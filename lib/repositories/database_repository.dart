@@ -1,14 +1,12 @@
-import 'package:isar/isar.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-import 'entities/match_entity.dart';
-import 'entities/pacing_entity.dart';
-import 'entities/team_entity.dart';
+import 'objectbox.g.dart';
 
 class DatabaseRepository {
-  Isar? _database;
+  Store? _database;
 
-  Future<Isar> get database async {
+  Future<Store> get database async {
     if (_database != null) {
       return _database!;
     }
@@ -17,11 +15,14 @@ class DatabaseRepository {
     return _database!;
   }
 
-  Future<Isar> _getDatabase() async {
+  Future<Store> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
-    return await Isar.openAsync(
-      schemas: [PacingEntitySchema, MatchEntitySchema, TeamEntitySchema],
-      directory: dir.path,
-    );
+    final store = await openStore(directory: p.join(dir.path, 'mon-pacing'));
+    _initialize(store);
+    return store;
+  }
+
+  void _initialize(Store store) {
+    // Add any additional setup code, e.g. build queries.
   }
 }
