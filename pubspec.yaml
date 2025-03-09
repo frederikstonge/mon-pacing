@@ -41,6 +41,7 @@ dependencies:
   objectbox: ^4.1.0
   objectbox_flutter_libs: any
   package_info_plus: ^8.3.0
+  path: ^1.9.1
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5
   textfield_tags: ^3.0.1
@@ -60,7 +61,6 @@ dev_dependencies:
   icons_launcher: ^3.0.1
   mockito: ^5.4.5
   objectbox_generator: any
-  path: ^1.9.0
 
 dependency_overrides:
   isar:
