@@ -1,10 +1,11 @@
 import 'package:isar/isar.dart';
+
 import '../extensions/iterable_extensions.dart';
-import 'database_repository.dart';
 import 'entities/match_entity.dart';
+import 'legacy_database_repository.dart';
 
 class MatchesRepository {
-  final DatabaseRepository databaseRepository;
+  final LegacyDatabaseRepository databaseRepository;
 
   const MatchesRepository({required this.databaseRepository});
 
