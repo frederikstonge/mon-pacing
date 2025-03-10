@@ -35,7 +35,11 @@ class Bootstrapper extends StatelessWidget {
         RepositoryProvider(create: (repositoryContext) => TimerService()),
         RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
         RepositoryProvider(create: (repositoryContext) => LegacyDatabaseRepository()),
-        RepositoryProvider(create: (repositoryContext) => DatabaseRepository()),
+        RepositoryProvider(
+          create:
+              (repositoryContext) =>
+                  DatabaseRepository(legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>()),
+        ),
         RepositoryProvider(
           create:
               (repositoryContext) =>
