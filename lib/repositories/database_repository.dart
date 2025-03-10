@@ -1,10 +1,14 @@
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import 'legacy_database_repository.dart';
 import 'objectbox.g.dart';
 
 class DatabaseRepository {
+  final LegacyDatabaseRepository legacyDatabaseRepository;
   Store? _database;
+
+  DatabaseRepository({required this.legacyDatabaseRepository});
 
   Future<Store> get database async {
     if (_database != null) {
@@ -18,11 +22,11 @@ class DatabaseRepository {
   Future<Store> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
     final store = await openStore(directory: p.join(dir.path, 'mon-pacing'));
-    _initialize(store);
+    await _initialize(store);
     return store;
   }
 
-  void _initialize(Store store) {
+  Future<void> _initialize(Store store) async {
     // Add any additional setup code, e.g. build queries.
   }
 }
