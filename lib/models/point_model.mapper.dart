@@ -25,7 +25,8 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
   static int _$teamId(PointModel v) => v.teamId;
   static const Field<PointModel, int> _f$teamId = Field('teamId', _$teamId);
   static int _$improvisationId(PointModel v) => v.improvisationId;
-  static const Field<PointModel, int> _f$improvisationId = Field('improvisationId', _$improvisationId);
+  static const Field<PointModel, int> _f$improvisationId =
+      Field('improvisationId', _$improvisationId);
   static int _$value(PointModel v) => v.value;
   static const Field<PointModel, int> _f$value = Field('value', _$value);
 
@@ -39,11 +40,10 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
 
   static PointModel _instantiate(DecodingData data) {
     return PointModel(
-      id: data.dec(_f$id),
-      teamId: data.dec(_f$teamId),
-      improvisationId: data.dec(_f$improvisationId),
-      value: data.dec(_f$value),
-    );
+        id: data.dec(_f$id),
+        teamId: data.dec(_f$teamId),
+        improvisationId: data.dec(_f$improvisationId),
+        value: data.dec(_f$value));
   }
 
   @override
@@ -60,23 +60,27 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
 
 mixin PointModelMappable {
   String toJson() {
-    return PointModelMapper.ensureInitialized().encodeJson<PointModel>(this as PointModel);
+    return PointModelMapper.ensureInitialized()
+        .encodeJson<PointModel>(this as PointModel);
   }
 
   Map<String, dynamic> toMap() {
-    return PointModelMapper.ensureInitialized().encodeMap<PointModel>(this as PointModel);
+    return PointModelMapper.ensureInitialized()
+        .encodeMap<PointModel>(this as PointModel);
   }
 
   PointModelCopyWith<PointModel, PointModel, PointModel> get copyWith =>
       _PointModelCopyWithImpl(this as PointModel, $identity, $identity);
   @override
   String toString() {
-    return PointModelMapper.ensureInitialized().stringifyValue(this as PointModel);
+    return PointModelMapper.ensureInitialized()
+        .stringifyValue(this as PointModel);
   }
 
   @override
   bool operator ==(Object other) {
-    return PointModelMapper.ensureInitialized().equalsValue(this as PointModel, other);
+    return PointModelMapper.ensureInitialized()
+        .equalsValue(this as PointModel, other);
   }
 
   @override
@@ -85,40 +89,43 @@ mixin PointModelMappable {
   }
 }
 
-extension PointModelValueCopy<$R, $Out> on ObjectCopyWith<$R, PointModel, $Out> {
+extension PointModelValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, PointModel, $Out> {
   PointModelCopyWith<$R, PointModel, $Out> get $asPointModel =>
       $base.as((v, t, t2) => _PointModelCopyWithImpl(v, t, t2));
 }
 
-abstract class PointModelCopyWith<$R, $In extends PointModel, $Out> implements ClassCopyWith<$R, $In, $Out> {
+abstract class PointModelCopyWith<$R, $In extends PointModel, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
   $R call({int? id, int? teamId, int? improvisationId, int? value});
   PointModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _PointModelCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, PointModel, $Out>
+class _PointModelCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, PointModel, $Out>
     implements PointModelCopyWith<$R, PointModel, $Out> {
   _PointModelCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  late final ClassMapperBase<PointModel> $mapper = PointModelMapper.ensureInitialized();
+  late final ClassMapperBase<PointModel> $mapper =
+      PointModelMapper.ensureInitialized();
   @override
-  $R call({int? id, int? teamId, int? improvisationId, int? value}) => $apply(
-    FieldCopyWithData({
-      if (id != null) #id: id,
-      if (teamId != null) #teamId: teamId,
-      if (improvisationId != null) #improvisationId: improvisationId,
-      if (value != null) #value: value,
-    }),
-  );
+  $R call({int? id, int? teamId, int? improvisationId, int? value}) =>
+      $apply(FieldCopyWithData({
+        if (id != null) #id: id,
+        if (teamId != null) #teamId: teamId,
+        if (improvisationId != null) #improvisationId: improvisationId,
+        if (value != null) #value: value
+      }));
   @override
   PointModel $make(CopyWithData data) => PointModel(
-    id: data.get(#id, or: $value.id),
-    teamId: data.get(#teamId, or: $value.teamId),
-    improvisationId: data.get(#improvisationId, or: $value.improvisationId),
-    value: data.get(#value, or: $value.value),
-  );
+      id: data.get(#id, or: $value.id),
+      teamId: data.get(#teamId, or: $value.teamId),
+      improvisationId: data.get(#improvisationId, or: $value.improvisationId),
+      value: data.get(#value, or: $value.value));
 
   @override
-  PointModelCopyWith<$R2, PointModel, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+  PointModelCopyWith<$R2, PointModel, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
       _PointModelCopyWithImpl($value, $cast, t);
 }

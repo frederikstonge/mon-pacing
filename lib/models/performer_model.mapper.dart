@@ -24,18 +24,15 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
   static const Field<PerformerModel, int> _f$id = Field('id', _$id);
   static String _$name(PerformerModel v) => v.name;
   static const Field<PerformerModel, String> _f$name = Field('name', _$name);
-  static String? _$integrationEntityId(PerformerModel v) => v.integrationEntityId;
-  static const Field<PerformerModel, String> _f$integrationEntityId = Field(
-    'integrationEntityId',
-    _$integrationEntityId,
-    opt: true,
-  );
-  static String? _$integrationAdditionalData(PerformerModel v) => v.integrationAdditionalData;
-  static const Field<PerformerModel, String> _f$integrationAdditionalData = Field(
-    'integrationAdditionalData',
-    _$integrationAdditionalData,
-    opt: true,
-  );
+  static String? _$integrationEntityId(PerformerModel v) =>
+      v.integrationEntityId;
+  static const Field<PerformerModel, String> _f$integrationEntityId =
+      Field('integrationEntityId', _$integrationEntityId, opt: true);
+  static String? _$integrationAdditionalData(PerformerModel v) =>
+      v.integrationAdditionalData;
+  static const Field<PerformerModel, String> _f$integrationAdditionalData =
+      Field('integrationAdditionalData', _$integrationAdditionalData,
+          opt: true);
 
   @override
   final MappableFields<PerformerModel> fields = const {
@@ -47,11 +44,10 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
 
   static PerformerModel _instantiate(DecodingData data) {
     return PerformerModel(
-      id: data.dec(_f$id),
-      name: data.dec(_f$name),
-      integrationEntityId: data.dec(_f$integrationEntityId),
-      integrationAdditionalData: data.dec(_f$integrationAdditionalData),
-    );
+        id: data.dec(_f$id),
+        name: data.dec(_f$name),
+        integrationEntityId: data.dec(_f$integrationEntityId),
+        integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
 
   @override
@@ -68,66 +64,87 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
 
 mixin PerformerModelMappable {
   String toJson() {
-    return PerformerModelMapper.ensureInitialized().encodeJson<PerformerModel>(this as PerformerModel);
+    return PerformerModelMapper.ensureInitialized()
+        .encodeJson<PerformerModel>(this as PerformerModel);
   }
 
   Map<String, dynamic> toMap() {
-    return PerformerModelMapper.ensureInitialized().encodeMap<PerformerModel>(this as PerformerModel);
+    return PerformerModelMapper.ensureInitialized()
+        .encodeMap<PerformerModel>(this as PerformerModel);
   }
 
-  PerformerModelCopyWith<PerformerModel, PerformerModel, PerformerModel> get copyWith =>
-      _PerformerModelCopyWithImpl(this as PerformerModel, $identity, $identity);
+  PerformerModelCopyWith<PerformerModel, PerformerModel, PerformerModel>
+      get copyWith => _PerformerModelCopyWithImpl(
+          this as PerformerModel, $identity, $identity);
   @override
   String toString() {
-    return PerformerModelMapper.ensureInitialized().stringifyValue(this as PerformerModel);
+    return PerformerModelMapper.ensureInitialized()
+        .stringifyValue(this as PerformerModel);
   }
 
   @override
   bool operator ==(Object other) {
-    return PerformerModelMapper.ensureInitialized().equalsValue(this as PerformerModel, other);
+    return PerformerModelMapper.ensureInitialized()
+        .equalsValue(this as PerformerModel, other);
   }
 
   @override
   int get hashCode {
-    return PerformerModelMapper.ensureInitialized().hashValue(this as PerformerModel);
+    return PerformerModelMapper.ensureInitialized()
+        .hashValue(this as PerformerModel);
   }
 }
 
-extension PerformerModelValueCopy<$R, $Out> on ObjectCopyWith<$R, PerformerModel, $Out> {
+extension PerformerModelValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, PerformerModel, $Out> {
   PerformerModelCopyWith<$R, PerformerModel, $Out> get $asPerformerModel =>
       $base.as((v, t, t2) => _PerformerModelCopyWithImpl(v, t, t2));
 }
 
-abstract class PerformerModelCopyWith<$R, $In extends PerformerModel, $Out> implements ClassCopyWith<$R, $In, $Out> {
-  $R call({int? id, String? name, String? integrationEntityId, String? integrationAdditionalData});
-  PerformerModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
+abstract class PerformerModelCopyWith<$R, $In extends PerformerModel, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  $R call(
+      {int? id,
+      String? name,
+      String? integrationEntityId,
+      String? integrationAdditionalData});
+  PerformerModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+      Then<$Out2, $R2> t);
 }
 
-class _PerformerModelCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, PerformerModel, $Out>
+class _PerformerModelCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, PerformerModel, $Out>
     implements PerformerModelCopyWith<$R, PerformerModel, $Out> {
   _PerformerModelCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  late final ClassMapperBase<PerformerModel> $mapper = PerformerModelMapper.ensureInitialized();
+  late final ClassMapperBase<PerformerModel> $mapper =
+      PerformerModelMapper.ensureInitialized();
   @override
-  $R call({int? id, String? name, Object? integrationEntityId = $none, Object? integrationAdditionalData = $none}) =>
-      $apply(
-        FieldCopyWithData({
-          if (id != null) #id: id,
-          if (name != null) #name: name,
-          if (integrationEntityId != $none) #integrationEntityId: integrationEntityId,
-          if (integrationAdditionalData != $none) #integrationAdditionalData: integrationAdditionalData,
-        }),
-      );
+  $R call(
+          {int? id,
+          String? name,
+          Object? integrationEntityId = $none,
+          Object? integrationAdditionalData = $none}) =>
+      $apply(FieldCopyWithData({
+        if (id != null) #id: id,
+        if (name != null) #name: name,
+        if (integrationEntityId != $none)
+          #integrationEntityId: integrationEntityId,
+        if (integrationAdditionalData != $none)
+          #integrationAdditionalData: integrationAdditionalData
+      }));
   @override
   PerformerModel $make(CopyWithData data) => PerformerModel(
-    id: data.get(#id, or: $value.id),
-    name: data.get(#name, or: $value.name),
-    integrationEntityId: data.get(#integrationEntityId, or: $value.integrationEntityId),
-    integrationAdditionalData: data.get(#integrationAdditionalData, or: $value.integrationAdditionalData),
-  );
+      id: data.get(#id, or: $value.id),
+      name: data.get(#name, or: $value.name),
+      integrationEntityId:
+          data.get(#integrationEntityId, or: $value.integrationEntityId),
+      integrationAdditionalData: data.get(#integrationAdditionalData,
+          or: $value.integrationAdditionalData));
 
   @override
-  PerformerModelCopyWith<$R2, PerformerModel, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+  PerformerModelCopyWith<$R2, PerformerModel, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
       _PerformerModelCopyWithImpl($value, $cast, t);
 }
