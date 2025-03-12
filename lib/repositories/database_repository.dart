@@ -21,7 +21,7 @@ class DatabaseRepository {
 
   Future<Store> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
-    final store = await openStore(directory: p.join(dir.path, 'mon-pacing'));
+    final store = await openStore(directory: p.join(dir.path, 'mon-pacing'), queriesCaseSensitiveDefault: false);
     await _initialize(store);
     return store;
   }
