@@ -15,13 +15,25 @@ const StarEntitySchema = IsarGeneratedSchema(
     name: 'StarModel',
     embedded: true,
     properties: [
-      IsarPropertySchema(name: 'id', type: IsarType.long),
-      IsarPropertySchema(name: 'performerId', type: IsarType.long),
-      IsarPropertySchema(name: 'teamId', type: IsarType.long),
+      IsarPropertySchema(
+        name: 'id',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'performerId',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'teamId',
+        type: IsarType.long,
+      ),
     ],
     indexes: [],
   ),
-  converter: IsarObjectConverter<void, StarEntity>(serialize: serializeStarEntity, deserialize: deserializeStarEntity),
+  converter: IsarObjectConverter<void, StarEntity>(
+    serialize: serializeStarEntity,
+    deserialize: deserializeStarEntity,
+  ),
 );
 
 @isarProtected
@@ -40,118 +52,266 @@ StarEntity deserializeStarEntity(IsarReader reader) {
   _performerId = IsarCore.readLong(reader, 2);
   final int _teamId;
   _teamId = IsarCore.readLong(reader, 3);
-  final object = StarEntity(id: _id, performerId: _performerId, teamId: _teamId);
+  final object = StarEntity(
+    id: _id,
+    performerId: _performerId,
+    teamId: _teamId,
+  );
   return object;
 }
 
-extension StarEntityQueryFilter on QueryBuilder<StarEntity, StarEntity, QFilterCondition> {
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idEqualTo(int value) {
+extension StarEntityQueryFilter
+    on QueryBuilder<StarEntity, StarEntity, QFilterCondition> {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idGreaterThan(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idGreaterThanOrEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      idGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idLessThan(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idLessThanOrEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      idLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idBetween(int lower, int upper) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> idBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(BetweenCondition(property: 1, lower: lower, upper: upper));
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 1,
+          lower: lower,
+          upper: upper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> performerIdEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> performerIdGreaterThan(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> performerIdGreaterThanOrEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> performerIdLessThan(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> performerIdLessThanOrEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> performerIdBetween(int lower, int upper) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      performerIdBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(BetweenCondition(property: 2, lower: lower, upper: upper));
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 2,
+          lower: lower,
+          upper: upper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 3, value: value));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 3,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdGreaterThan(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 3, value: value));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 3,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdGreaterThanOrEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      teamIdGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 3, value: value));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 3,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdLessThan(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 3, value: value));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 3,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdLessThanOrEqualTo(int value) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition>
+      teamIdLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 3, value: value));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 3,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdBetween(int lower, int upper) {
+  QueryBuilder<StarEntity, StarEntity, QAfterFilterCondition> teamIdBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(BetweenCondition(property: 3, lower: lower, upper: upper));
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 3,
+          lower: lower,
+          upper: upper,
+        ),
+      );
     });
   }
 }
 
-extension StarEntityQueryObject on QueryBuilder<StarEntity, StarEntity, QFilterCondition> {}
+extension StarEntityQueryObject
+    on QueryBuilder<StarEntity, StarEntity, QFilterCondition> {}

@@ -528,6 +528,15 @@ class MockSettingsCubit extends _i1.Mock implements _i15.SettingsCubit {
       ) as _i28.Future<void>);
 
   @override
+  void reset() => super.noSuchMethod(
+        Invocation.method(
+          #reset,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i4.SettingsState? fromJson(Map<String, dynamic>? json) =>
       (super.noSuchMethod(
         Invocation.method(
