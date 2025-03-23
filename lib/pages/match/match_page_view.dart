@@ -101,18 +101,21 @@ class MatchPageView extends StatelessWidget {
                                       context: context,
                                       child: MatchMenu(
                                         match: match,
-                                        editDetails: () async {
-                                          await BottomSheetDialog.showDialog(
-                                            context: context,
-                                            child: MatchDetailPageShell(
-                                              match: match,
-                                              onConfirm: (match) async {
-                                                await context.read<MatchCubit>().edit(match);
-                                                return true;
-                                              },
-                                            ),
-                                          );
-                                        },
+                                        editDetails:
+                                            match.integrationId == null
+                                                ? () async {
+                                                  await BottomSheetDialog.showDialog(
+                                                    context: context,
+                                                    child: MatchDetailPageShell(
+                                                      match: match,
+                                                      onConfirm: (match) async {
+                                                        await context.read<MatchCubit>().edit(match);
+                                                        return true;
+                                                      },
+                                                    ),
+                                                  );
+                                                }
+                                                : null,
                                         delete: () async {
                                           final matchesCubit = context.read<MatchesCubit>();
                                           final router = GoRouter.of(context);

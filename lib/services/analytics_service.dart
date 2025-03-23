@@ -30,8 +30,8 @@ class AnalyticsService {
       name: AnalyticsService.integrationEventName,
       parameters: {
         'integrationId': integration.integrationId,
-        'pacing': integration is PacingIntegrationBase,
-        'match': integration is MatchIntegrationBase,
+        'pacing': '${integration is PacingIntegrationBase}',
+        'match': '${integration is MatchIntegrationBase}',
       },
     );
   }

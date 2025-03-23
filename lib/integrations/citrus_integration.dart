@@ -8,9 +8,12 @@ import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../extensions/color_extensions.dart';
+import '../extensions/duration_extensions.dart';
+import '../extensions/improvisation_extensions.dart';
 import '../extensions/match_extensions.dart';
 import '../l10n/localizer.dart';
 import '../models/constants.dart';
+import '../models/improvisation_type.dart';
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
 import '../models/penalties_impact_type.dart';
@@ -231,54 +234,99 @@ class CitrusIntegration implements MatchIntegrationBase {
       name: teamName,
       color: color,
       performers: performers,
-      integrationEntityId: 'team$teamId',
+      integrationEntityId: '$teamId',
     );
   }
 
-  static String _generateExportData(MatchModel match) {
-    return '''[${match.teams.map(_generateTeamData).join(',')},${_generateImprovisationsData(match)},${_generatePenaltiesData(match)},[],${_generatePointsData(match)}]''';
+  static Map<String, dynamic> _generateExportData(MatchModel match) {
+    return {
+      for (var element
+          in match.teams
+              .map((t) => MapEntry<String, dynamic>('alignementEquipe${t.integrationEntityId}', _generateTeamData(t)))
+              .toList())
+        element.key: element.value,
+      'etoiles': [],
+      'improvisations': _generateImprovisationsData(match),
+      'punitions': _generatePenaltiesData(match),
+      'score': _generatePointsData(match),
+      'signatures': {
+        for (var element
+            in match.teams.map((t) => MapEntry<String, bool>('coach${t.integrationEntityId}', false)).toList())
+          element.key: element.value,
+      },
+    };
   }
 
-  static String _generateTeamData(TeamModel team) {
-    return '[${team.performers.map(_generatePerformerData).join(',')}]';
+  static List<List<String>> _generateTeamData(TeamModel team) {
+    return team.performers.map(_generatePerformerData).toList();
   }
 
-  static String _generatePerformerData(PerformerModel performer) {
+  static List<String> _generatePerformerData(PerformerModel performer) {
     final jsonData = jsonDecode(performer.integrationAdditionalData!);
-    return '[\'${jsonData['role']}\',\'${jsonData['number']}\',\'${jsonData['pronoun']}\',\'${jsonData['name']}\']';
+    return ["${jsonData['role']}", "${jsonData['number']}", "${jsonData['pronoun']}", "${jsonData['name']}"];
   }
 
-  static String _generateImprovisationsData(MatchModel match) {
-    return '[${match.improvisations.map((e) {
-      final points = match.points.where((point) => point.improvisationId == e.id);
-      var teamWhoWon = '';
-      if (points.isEmpty) {
-        teamWhoWon = '';
-      } else if (points.length == 2 && points.first.value == points.last.value) {
-        teamWhoWon = 'both';
-      } else {
-        final mostPoints = match.points.reduce((current, next) => current.value > next.value ? current : next);
-        teamWhoWon = match.teams.firstWhere((team) => team.id == mostPoints.teamId).integrationEntityId!;
-      }
+  static List<Map<String, dynamic>> _generateImprovisationsData(MatchModel match) {
+    return [
+      ...match.improvisations.map((e) {
+        final points = match.points.where((point) => point.improvisationId == e.id);
+        var teamWhoWon = '';
+        if (points.isEmpty) {
+          teamWhoWon = '';
+        } else if (points.length == 2 && points.first.value == points.last.value) {
+          teamWhoWon = 'both';
+        } else {
+          final mostPoints = match.points.reduce((current, next) => current.value > next.value ? current : next);
+          teamWhoWon = match.teams.firstWhere((team) => team.id == mostPoints.teamId).integrationEntityId!;
+        }
 
-      return '[\'${e.theme}\',\'$teamWhoWon\']';
-    }).join(',')}]';
+        return {
+          'description':
+              '${e.type == ImprovisationType.mixed ? Localizer.current.mixed : Localizer.current.compared} - ${e.getCategoryString(Localizer.current)} - ${e.getPerformersString(Localizer.current)} - ${e.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')} - ${e.theme}',
+          'points': teamWhoWon,
+        };
+      }),
+    ];
   }
 
-  static String _generatePenaltiesData(MatchModel match) {
-    return '[${match.penalties.map((e) {
-      final team = match.teams.firstWhere((team) => team.id == e.teamId);
-      return '[\'${team.name.split(' - ').first}\',\'${e.type}\']';
-    }).join(',')}]';
+  static List<Map<String, dynamic>> _generatePenaltiesData(MatchModel match) {
+    return [
+      ...match.penalties.map((e) {
+        final team = match.teams.firstWhere((team) => team.id == e.teamId);
+        return {'equipe': team.name, 'majeure': e.major ? 'Oui' : '', 'titre': e.type};
+      }),
+    ];
   }
 
-  static String _generatePointsData(MatchModel match) {
-    return '[[${match.teams.map((t) {
-      return match.getSubtotalPointsByTeamId(t.id);
-    }).join(',')}],[${match.teams.map((t) {
-      return match.getTotalPenaltyValuesByTeamId(t.id);
-    }).join(',')}],[${match.teams.map((t) {
-      return match.getTotalPointsByTeamId(t.id);
-    }).join(',')}]]';
+  static Map<String, dynamic> _generatePointsData(MatchModel match) {
+    return {
+      'penalites': {
+        for (var element in match.teams.map((t) {
+          return MapEntry<String, String>(
+            'equipe${t.integrationEntityId}',
+            match.getTotalPenaltyValuesByTeamId(t.id).toString(),
+          );
+        }))
+          element.key: element.value,
+      },
+      'soustotal': {
+        for (var element in match.teams.map((t) {
+          return MapEntry<String, String>(
+            'equipe${t.integrationEntityId}',
+            match.getSubtotalPointsByTeamId(t.id).toString(),
+          );
+        }))
+          element.key: element.value,
+      },
+      'total': {
+        for (var element in match.teams.map((t) {
+          return MapEntry<String, String>(
+            'equipe${t.integrationEntityId}',
+            match.getTotalPointsByTeamId(t.id).toString(),
+          );
+        }))
+          element.key: element.value,
+      },
+    };
   }
 }
