@@ -20,18 +20,61 @@ const TeamEntitySchema = IsarGeneratedSchema(
     idName: 'id',
     embedded: false,
     properties: [
-      IsarPropertySchema(name: 'createdDate', type: IsarType.dateTime),
-      IsarPropertySchema(name: 'modifiedDate', type: IsarType.dateTime),
-      IsarPropertySchema(name: 'name', type: IsarType.string),
-      IsarPropertySchema(name: 'color', type: IsarType.long),
-      IsarPropertySchema(name: 'performers', type: IsarType.objectList, target: 'PerformerModel'),
-      IsarPropertySchema(name: 'tags', type: IsarType.stringList),
-      IsarPropertySchema(name: 'performerNames', type: IsarType.stringList),
+      IsarPropertySchema(
+        name: 'createdDate',
+        type: IsarType.dateTime,
+      ),
+      IsarPropertySchema(
+        name: 'modifiedDate',
+        type: IsarType.dateTime,
+      ),
+      IsarPropertySchema(
+        name: 'name',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'color',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'performers',
+        type: IsarType.objectList,
+        target: 'PerformerModel',
+      ),
+      IsarPropertySchema(
+        name: 'tags',
+        type: IsarType.stringList,
+      ),
+      IsarPropertySchema(
+        name: 'performerNames',
+        type: IsarType.stringList,
+      ),
     ],
     indexes: [
-      IsarIndexSchema(name: 'createdDate', properties: ["createdDate"], unique: false, hash: false),
-      IsarIndexSchema(name: 'modifiedDate', properties: ["modifiedDate"], unique: false, hash: false),
-      IsarIndexSchema(name: 'name', properties: ["name"], unique: false, hash: false),
+      IsarIndexSchema(
+        name: 'createdDate',
+        properties: [
+          "createdDate",
+        ],
+        unique: false,
+        hash: false,
+      ),
+      IsarIndexSchema(
+        name: 'modifiedDate',
+        properties: [
+          "modifiedDate",
+        ],
+        unique: false,
+        hash: false,
+      ),
+      IsarIndexSchema(
+        name: 'name',
+        properties: [
+          "name",
+        ],
+        unique: false,
+        hash: false,
+      ),
     ],
   ),
   converter: IsarObjectConverter<int, TeamEntity>(
@@ -44,8 +87,16 @@ const TeamEntitySchema = IsarGeneratedSchema(
 
 @isarProtected
 int serializeTeamEntity(IsarWriter writer, TeamEntity object) {
-  IsarCore.writeLong(writer, 1, object.createdDate?.toUtc().microsecondsSinceEpoch ?? -9223372036854775808);
-  IsarCore.writeLong(writer, 2, object.modifiedDate?.toUtc().microsecondsSinceEpoch ?? -9223372036854775808);
+  IsarCore.writeLong(
+      writer,
+      1,
+      object.createdDate?.toUtc().microsecondsSinceEpoch ??
+          -9223372036854775808);
+  IsarCore.writeLong(
+      writer,
+      2,
+      object.modifiedDate?.toUtc().microsecondsSinceEpoch ??
+          -9223372036854775808);
   IsarCore.writeString(writer, 3, object.name);
   IsarCore.writeLong(writer, 4, object.color);
   {
@@ -90,7 +141,8 @@ TeamEntity deserializeTeamEntity(IsarReader reader) {
     if (value == -9223372036854775808) {
       _createdDate = null;
     } else {
-      _createdDate = DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
+      _createdDate =
+          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
     }
   }
   final DateTime? _modifiedDate;
@@ -99,7 +151,8 @@ TeamEntity deserializeTeamEntity(IsarReader reader) {
     if (value == -9223372036854775808) {
       _modifiedDate = null;
     } else {
-      _modifiedDate = DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
+      _modifiedDate =
+          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
     }
   }
   final String _name;
@@ -115,15 +168,20 @@ TeamEntity deserializeTeamEntity(IsarReader reader) {
         _performers = const [];
       } else {
         final list = List<PerformerEntity>.filled(
-          length,
-          PerformerEntity(id: -9223372036854775808, name: ''),
-          growable: true,
-        );
+            length,
+            PerformerEntity(
+              id: -9223372036854775808,
+              name: '',
+            ),
+            growable: true);
         for (var i = 0; i < length; i++) {
           {
             final objectReader = IsarCore.readObject(reader, i);
             if (objectReader.isNull) {
-              list[i] = PerformerEntity(id: -9223372036854775808, name: '');
+              list[i] = PerformerEntity(
+                id: -9223372036854775808,
+                name: '',
+              );
             } else {
               final embedded = deserializePerformerEntity(objectReader);
               IsarCore.freeReader(objectReader);
@@ -176,7 +234,8 @@ dynamic deserializeTeamEntityProp(IsarReader reader, int property) {
         if (value == -9223372036854775808) {
           return null;
         } else {
-          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
+          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
+              .toLocal();
         }
       }
     case 2:
@@ -185,7 +244,8 @@ dynamic deserializeTeamEntityProp(IsarReader reader, int property) {
         if (value == -9223372036854775808) {
           return null;
         } else {
-          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
+          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
+              .toLocal();
         }
       }
     case 3:
@@ -201,15 +261,20 @@ dynamic deserializeTeamEntityProp(IsarReader reader, int property) {
             return const [];
           } else {
             final list = List<PerformerEntity>.filled(
-              length,
-              PerformerEntity(id: -9223372036854775808, name: ''),
-              growable: true,
-            );
+                length,
+                PerformerEntity(
+                  id: -9223372036854775808,
+                  name: '',
+                ),
+                growable: true);
             for (var i = 0; i < length; i++) {
               {
                 final objectReader = IsarCore.readObject(reader, i);
                 if (objectReader.isNull) {
-                  list[i] = PerformerEntity(id: -9223372036854775808, name: '');
+                  list[i] = PerformerEntity(
+                    id: -9223372036854775808,
+                    name: '',
+                  );
                 } else {
                   final embedded = deserializePerformerEntity(objectReader);
                   IsarCore.freeReader(objectReader);
@@ -262,7 +327,13 @@ dynamic deserializeTeamEntityProp(IsarReader reader, int property) {
 }
 
 sealed class _TeamEntityUpdate {
-  bool call({required int id, DateTime? createdDate, DateTime? modifiedDate, String? name, int? color});
+  bool call({
+    required int id,
+    DateTime? createdDate,
+    DateTime? modifiedDate,
+    String? name,
+    int? color,
+  });
 }
 
 class _TeamEntityUpdateImpl implements _TeamEntityUpdate {
@@ -278,21 +349,26 @@ class _TeamEntityUpdateImpl implements _TeamEntityUpdate {
     Object? name = ignore,
     Object? color = ignore,
   }) {
-    return collection.updateProperties(
-          [id],
-          {
-            if (createdDate != ignore) 1: createdDate as DateTime?,
-            if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
-            if (name != ignore) 3: name as String?,
-            if (color != ignore) 4: color as int?,
-          },
-        ) >
+    return collection.updateProperties([
+          id
+        ], {
+          if (createdDate != ignore) 1: createdDate as DateTime?,
+          if (modifiedDate != ignore) 2: modifiedDate as DateTime?,
+          if (name != ignore) 3: name as String?,
+          if (color != ignore) 4: color as int?,
+        }) >
         0;
   }
 }
 
 sealed class _TeamEntityUpdateAll {
-  int call({required List<int> id, DateTime? createdDate, DateTime? modifiedDate, String? name, int? color});
+  int call({
+    required List<int> id,
+    DateTime? createdDate,
+    DateTime? modifiedDate,
+    String? name,
+    int? color,
+  });
 }
 
 class _TeamEntityUpdateAllImpl implements _TeamEntityUpdateAll {
@@ -324,7 +400,12 @@ extension TeamEntityUpdate on IsarCollection<int, TeamEntity> {
 }
 
 sealed class _TeamEntityQueryUpdate {
-  int call({DateTime? createdDate, DateTime? modifiedDate, String? name, int? color});
+  int call({
+    DateTime? createdDate,
+    DateTime? modifiedDate,
+    String? name,
+    int? color,
+  });
 }
 
 class _TeamEntityQueryUpdateImpl implements _TeamEntityQueryUpdate {
@@ -350,7 +431,8 @@ class _TeamEntityQueryUpdateImpl implements _TeamEntityQueryUpdate {
 }
 
 extension TeamEntityQueryUpdate on IsarQuery<TeamEntity> {
-  _TeamEntityQueryUpdate get updateFirst => _TeamEntityQueryUpdateImpl(this, limit: 1);
+  _TeamEntityQueryUpdate get updateFirst =>
+      _TeamEntityQueryUpdateImpl(this, limit: 1);
 
   _TeamEntityQueryUpdate get updateAll => _TeamEntityQueryUpdateImpl(this);
 }
@@ -382,148 +464,311 @@ class _TeamEntityQueryBuilderUpdateImpl implements _TeamEntityQueryUpdate {
   }
 }
 
-extension TeamEntityQueryBuilderUpdate on QueryBuilder<TeamEntity, TeamEntity, QOperations> {
-  _TeamEntityQueryUpdate get updateFirst => _TeamEntityQueryBuilderUpdateImpl(this, limit: 1);
+extension TeamEntityQueryBuilderUpdate
+    on QueryBuilder<TeamEntity, TeamEntity, QOperations> {
+  _TeamEntityQueryUpdate get updateFirst =>
+      _TeamEntityQueryBuilderUpdateImpl(this, limit: 1);
 
-  _TeamEntityQueryUpdate get updateAll => _TeamEntityQueryBuilderUpdateImpl(this);
+  _TeamEntityQueryUpdate get updateAll =>
+      _TeamEntityQueryBuilderUpdateImpl(this);
 }
 
-extension TeamEntityQueryFilter on QueryBuilder<TeamEntity, TeamEntity, QFilterCondition> {
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idEqualTo(int value) {
+extension TeamEntityQueryFilter
+    on QueryBuilder<TeamEntity, TeamEntity, QFilterCondition> {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 0, value: value));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 0,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idGreaterThan(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 0, value: value));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 0,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idGreaterThanOrEqualTo(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      idGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 0, value: value));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 0,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idLessThan(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 0, value: value));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 0,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idLessThanOrEqualTo(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      idLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 0, value: value));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 0,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idBetween(int lower, int upper) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> idBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(BetweenCondition(property: 0, lower: lower, upper: upper));
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 0,
+          lower: lower,
+          upper: upper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateIsNull() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 1));
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateIsNotNull() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 1));
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateEqualTo(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateEqualTo(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateGreaterThan(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateGreaterThan(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateGreaterThanOrEqualTo(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateGreaterThanOrEqualTo(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateLessThan(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateLessThan(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateLessThanOrEqualTo(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateLessThanOrEqualTo(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 1, value: value));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 1,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> createdDateBetween(DateTime? lower, DateTime? upper) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      createdDateBetween(
+    DateTime? lower,
+    DateTime? upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(BetweenCondition(property: 1, lower: lower, upper: upper));
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 1,
+          lower: lower,
+          upper: upper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateIsNull() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const IsNullCondition(property: 2));
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateIsNotNull() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateIsNotNull() {
     return QueryBuilder.apply(not(), (query) {
       return query.addFilterCondition(const IsNullCondition(property: 2));
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateEqualTo(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateEqualTo(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateGreaterThan(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateGreaterThan(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateGreaterThanOrEqualTo(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateGreaterThanOrEqualTo(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateLessThan(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateLessThan(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateLessThanOrEqualTo(DateTime? value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateLessThanOrEqualTo(
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 2, value: value));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> modifiedDateBetween(DateTime? lower, DateTime? upper) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      modifiedDateBetween(
+    DateTime? lower,
+    DateTime? upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(BetweenCondition(property: 2, lower: lower, upper: upper));
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 2,
+          lower: lower,
+          upper: upper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameEqualTo(String value, {bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 3, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -532,31 +777,60 @@ extension TeamEntityQueryFilter on QueryBuilder<TeamEntity, TeamEntity, QFilterC
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 3, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameGreaterThanOrEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      nameGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 3, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameLessThan(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 3, value: value, caseSensitive: caseSensitive));
-    });
-  }
-
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameLessThanOrEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 3, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      nameLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -567,7 +841,12 @@ extension TeamEntityQueryFilter on QueryBuilder<TeamEntity, TeamEntity, QFilterC
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        BetweenCondition(property: 3, lower: lower, upper: upper, caseSensitive: caseSensitive),
+        BetweenCondition(
+          property: 3,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
@@ -577,188 +856,354 @@ extension TeamEntityQueryFilter on QueryBuilder<TeamEntity, TeamEntity, QFilterC
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(StartsWithCondition(property: 3, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameEndsWith(String value, {bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EndsWithCondition(property: 3, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameContains(
+      String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(ContainsCondition(property: 3, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 3,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(MatchesCondition(property: 3, wildcard: pattern, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 3,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const EqualCondition(property: 3, value: ''));
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 3,
+          value: '',
+        ),
+      );
     });
   }
 
   QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const GreaterCondition(property: 3, value: ''));
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 3,
+          value: '',
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorEqualTo(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 4, value: value));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 4,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorGreaterThan(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorGreaterThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 4, value: value));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 4,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorGreaterThanOrEqualTo(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      colorGreaterThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 4, value: value));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 4,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorLessThan(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorLessThan(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 4, value: value));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 4,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorLessThanOrEqualTo(int value) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      colorLessThanOrEqualTo(
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 4, value: value));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 4,
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorBetween(int lower, int upper) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> colorBetween(
+    int lower,
+    int upper,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(BetweenCondition(property: 4, lower: lower, upper: upper));
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 4,
+          lower: lower,
+          upper: upper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performersIsEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performersIsEmpty() {
     return not().performersIsNotEmpty();
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performersIsNotEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performersIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const GreaterOrEqualCondition(property: 5, value: null));
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 5, value: null),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementGreaterThan(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementGreaterThanOrEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementLessThan(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementLessThanOrEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementBetween(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        BetweenCondition(property: 6, lower: lower, upper: upper, caseSensitive: caseSensitive),
+        BetweenCondition(
+          property: 6,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementStartsWith(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(StartsWithCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementEndsWith(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EndsWithCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementContains(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(ContainsCondition(property: 6, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 6,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementMatches(
-    String pattern, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(MatchesCondition(property: 6, wildcard: pattern, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 6,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementIsEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const EqualCondition(property: 6, value: ''));
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 6,
+          value: '',
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsElementIsNotEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      tagsElementIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const GreaterCondition(property: 6, value: ''));
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 6,
+          value: '',
+        ),
+      );
     });
   }
 
@@ -768,129 +1213,213 @@ extension TeamEntityQueryFilter on QueryBuilder<TeamEntity, TeamEntity, QFilterC
 
   QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> tagsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const GreaterOrEqualCondition(property: 6, value: null));
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 6, value: null),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EqualCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementGreaterThan(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementGreaterThanOrEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(GreaterOrEqualCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementLessThan(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        LessCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementLessThanOrEqualTo(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(LessOrEqualCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementBetween(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        BetweenCondition(property: 7, lower: lower, upper: upper, caseSensitive: caseSensitive),
+        BetweenCondition(
+          property: 7,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementStartsWith(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(StartsWithCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementEndsWith(
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(EndsWithCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementContains(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(ContainsCondition(property: 7, value: value, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 7,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementMatches(
-    String pattern, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementMatches(String pattern,
+          {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(MatchesCondition(property: 7, wildcard: pattern, caseSensitive: caseSensitive));
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 7,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementIsEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const EqualCondition(property: 7, value: ''));
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 7,
+          value: '',
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesElementIsNotEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesElementIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const GreaterCondition(property: 7, value: ''));
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 7,
+          value: '',
+        ),
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesIsEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesIsEmpty() {
     return not().performerNamesIsNotEmpty();
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition> performerNamesIsNotEmpty() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterFilterCondition>
+      performerNamesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const GreaterOrEqualCondition(property: 7, value: null));
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 7, value: null),
+      );
     });
   }
 }
 
-extension TeamEntityQueryObject on QueryBuilder<TeamEntity, TeamEntity, QFilterCondition> {}
+extension TeamEntityQueryObject
+    on QueryBuilder<TeamEntity, TeamEntity, QFilterCondition> {}
 
-extension TeamEntityQuerySortBy on QueryBuilder<TeamEntity, TeamEntity, QSortBy> {
+extension TeamEntityQuerySortBy
+    on QueryBuilder<TeamEntity, TeamEntity, QSortBy> {
   QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(0);
@@ -927,15 +1456,24 @@ extension TeamEntityQuerySortBy on QueryBuilder<TeamEntity, TeamEntity, QSortBy>
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> sortByName({bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> sortByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, caseSensitive: caseSensitive);
+      return query.addSortBy(
+        3,
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> sortByNameDesc({bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> sortByNameDesc(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc, caseSensitive: caseSensitive);
+      return query.addSortBy(
+        3,
+        sort: Sort.desc,
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
@@ -952,7 +1490,8 @@ extension TeamEntityQuerySortBy on QueryBuilder<TeamEntity, TeamEntity, QSortBy>
   }
 }
 
-extension TeamEntityQuerySortThenBy on QueryBuilder<TeamEntity, TeamEntity, QSortThenBy> {
+extension TeamEntityQuerySortThenBy
+    on QueryBuilder<TeamEntity, TeamEntity, QSortThenBy> {
   QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(0);
@@ -989,13 +1528,15 @@ extension TeamEntityQuerySortThenBy on QueryBuilder<TeamEntity, TeamEntity, QSor
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> thenByName({bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> thenByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(3, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> thenByNameDesc({bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterSortBy> thenByNameDesc(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(3, sort: Sort.desc, caseSensitive: caseSensitive);
     });
@@ -1014,20 +1555,23 @@ extension TeamEntityQuerySortThenBy on QueryBuilder<TeamEntity, TeamEntity, QSor
   }
 }
 
-extension TeamEntityQueryWhereDistinct on QueryBuilder<TeamEntity, TeamEntity, QDistinct> {
+extension TeamEntityQueryWhereDistinct
+    on QueryBuilder<TeamEntity, TeamEntity, QDistinct> {
   QueryBuilder<TeamEntity, TeamEntity, QAfterDistinct> distinctByCreatedDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(1);
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterDistinct> distinctByModifiedDate() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterDistinct>
+      distinctByModifiedDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(2);
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterDistinct> distinctByName({bool caseSensitive = true}) {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterDistinct> distinctByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(3, caseSensitive: caseSensitive);
     });
@@ -1045,14 +1589,16 @@ extension TeamEntityQueryWhereDistinct on QueryBuilder<TeamEntity, TeamEntity, Q
     });
   }
 
-  QueryBuilder<TeamEntity, TeamEntity, QAfterDistinct> distinctByPerformerNames() {
+  QueryBuilder<TeamEntity, TeamEntity, QAfterDistinct>
+      distinctByPerformerNames() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(7);
     });
   }
 }
 
-extension TeamEntityQueryProperty1 on QueryBuilder<TeamEntity, TeamEntity, QProperty> {
+extension TeamEntityQueryProperty1
+    on QueryBuilder<TeamEntity, TeamEntity, QProperty> {
   QueryBuilder<TeamEntity, int, QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
@@ -1083,7 +1629,8 @@ extension TeamEntityQueryProperty1 on QueryBuilder<TeamEntity, TeamEntity, QProp
     });
   }
 
-  QueryBuilder<TeamEntity, List<PerformerEntity>, QAfterProperty> performersProperty() {
+  QueryBuilder<TeamEntity, List<PerformerEntity>, QAfterProperty>
+      performersProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
@@ -1095,27 +1642,31 @@ extension TeamEntityQueryProperty1 on QueryBuilder<TeamEntity, TeamEntity, QProp
     });
   }
 
-  QueryBuilder<TeamEntity, List<String>, QAfterProperty> performerNamesProperty() {
+  QueryBuilder<TeamEntity, List<String>, QAfterProperty>
+      performerNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
   }
 }
 
-extension TeamEntityQueryProperty2<R> on QueryBuilder<TeamEntity, R, QAfterProperty> {
+extension TeamEntityQueryProperty2<R>
+    on QueryBuilder<TeamEntity, R, QAfterProperty> {
   QueryBuilder<TeamEntity, (R, int), QAfterProperty> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
     });
   }
 
-  QueryBuilder<TeamEntity, (R, DateTime?), QAfterProperty> createdDateProperty() {
+  QueryBuilder<TeamEntity, (R, DateTime?), QAfterProperty>
+      createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<TeamEntity, (R, DateTime?), QAfterProperty> modifiedDateProperty() {
+  QueryBuilder<TeamEntity, (R, DateTime?), QAfterProperty>
+      modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -1133,7 +1684,8 @@ extension TeamEntityQueryProperty2<R> on QueryBuilder<TeamEntity, R, QAfterPrope
     });
   }
 
-  QueryBuilder<TeamEntity, (R, List<PerformerEntity>), QAfterProperty> performersProperty() {
+  QueryBuilder<TeamEntity, (R, List<PerformerEntity>), QAfterProperty>
+      performersProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
@@ -1145,27 +1697,31 @@ extension TeamEntityQueryProperty2<R> on QueryBuilder<TeamEntity, R, QAfterPrope
     });
   }
 
-  QueryBuilder<TeamEntity, (R, List<String>), QAfterProperty> performerNamesProperty() {
+  QueryBuilder<TeamEntity, (R, List<String>), QAfterProperty>
+      performerNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });
   }
 }
 
-extension TeamEntityQueryProperty3<R1, R2> on QueryBuilder<TeamEntity, (R1, R2), QAfterProperty> {
+extension TeamEntityQueryProperty3<R1, R2>
+    on QueryBuilder<TeamEntity, (R1, R2), QAfterProperty> {
   QueryBuilder<TeamEntity, (R1, R2, int), QOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(0);
     });
   }
 
-  QueryBuilder<TeamEntity, (R1, R2, DateTime?), QOperations> createdDateProperty() {
+  QueryBuilder<TeamEntity, (R1, R2, DateTime?), QOperations>
+      createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<TeamEntity, (R1, R2, DateTime?), QOperations> modifiedDateProperty() {
+  QueryBuilder<TeamEntity, (R1, R2, DateTime?), QOperations>
+      modifiedDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -1183,7 +1739,8 @@ extension TeamEntityQueryProperty3<R1, R2> on QueryBuilder<TeamEntity, (R1, R2),
     });
   }
 
-  QueryBuilder<TeamEntity, (R1, R2, List<PerformerEntity>), QOperations> performersProperty() {
+  QueryBuilder<TeamEntity, (R1, R2, List<PerformerEntity>), QOperations>
+      performersProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(5);
     });
@@ -1195,7 +1752,8 @@ extension TeamEntityQueryProperty3<R1, R2> on QueryBuilder<TeamEntity, (R1, R2),
     });
   }
 
-  QueryBuilder<TeamEntity, (R1, R2, List<String>), QOperations> performerNamesProperty() {
+  QueryBuilder<TeamEntity, (R1, R2, List<String>), QOperations>
+      performerNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(7);
     });

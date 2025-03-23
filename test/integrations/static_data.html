@@ -30,6 +30,7 @@
         </select>
     </div>
     <section id="Alignement" class="">
+        <h3></h3>
         <div class="team" id="alignement1">
             <h3>EQUIPE TEST</h3>
             <h3>Collège Montmorency</h3>
@@ -318,13 +319,11 @@
                 </select>
             </div>
         </div>
-
+        <button class="btnPrimary btnStretch" style="margin-top: 1rem;"><span>Terminer le match</span></button>
     </section>
     
     <section id="Pénalités" class="hidden">
         <h3 class="nopenalty">Aucune pénalité</h3>
-        
-            
         
         <button class="btnPrimary btnStretch addPun" style="margin-top: 1rem;" onclick="openModal('addPunModal')"><span>Ajouter une pénalité</span></button>
     </section>
@@ -352,7 +351,7 @@
         </div>
         <form method="post">
             <div class="sign">
-                <input type="hidden" name="csrfmiddlewaretoken" value="rPHnM26olpDLIFaq9Pk1Dj9s69vGQenLxiV68oeIOJkR8w6bysPM66ldF6JI37gp">
+                <input type="hidden" name="csrfmiddlewaretoken" value="y3F6RELkqU5EUXte4LTpcaYy9nHT7hvyDqOmhpI2WjJ2WRBmBW9so5boWpbicxkg">
                 <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Signatures</h3>
                 <label for="coach1" class="label onTop">Signature coach Esquisse</label>
                 <button type="button" id="signatureCoachBtn1" class="btnPrimary signBtn" onclick="openModal('signatureCoachModal1')">Signer</button>
@@ -746,6 +745,9 @@
     </style>
 
     <script>
+    
+        disableOnSignature("","");
+        
         function desanitizeString(input) {
             if (typeof input !== "string") return input;
             return input
@@ -768,16 +770,131 @@
                     element.style.pointerEvents = "none";
                     element.style.borderRadius = "15px";
                 });
-
-
+        }
+        
+        function disableOnSignature(boolCoach1, boolCoach2){
+            console.log(boolCoach1, boolCoach2);
+            let signCoach1 = document.getElementById("signatureCoachBtn1");
+            let signCoach2 = document.getElementById("signatureCoachBtn2");
+            
+            if(boolCoach1 === "True"){
+                signCoach1.disabled = true;
+                signCoach1.innerText = "Signature enregistrée";
+                signCoach1.classList.add("disabled-btn");
+            }
+            if(boolCoach2 === "True"){
+                signCoach2.disabled = true;
+                signCoach2.innerText = "Signature enregistrée";
+                signCoach2.classList.add("disabled-btn");
+            }
+            
         }
         
         const formSign1 = document.getElementById("signatureCoachForm1");
 
+        function getDataJSON() {
+            // Helper function to sanitize inputs
+            function sanitizeString(input) {
+                if (typeof input !== "string") return input;
+                return input
+                    .replace(/\\/g, "\\\\") // Escape backslashes
+                    .replace(/'/g, "\\'")   // Escape single quotes
+                    .replace(/"/g, '\\"');  // Escape double quotes
+            }
+
+            // Build alignment strings
+            function getAlignment(teamId) {
+                let alignment = [];
+                let teamDiv = document.getElementById(teamId);
+                let players = teamDiv.children;
+
+                for (let player of players) {
+                    if (player.classList.contains("player")) {
+                        let playerInfo = [...player.children].map((child) => sanitizeString(child.innerHTML));
+                        alignment.push(playerInfo);
+                    }
+                }
+                return alignment;
+            }
+            
+
+            let alignementEquipe1 = getAlignment("alignement1");
+            let alignementEquipe2 = getAlignment("alignement2");
+
+            // Build improvisations
+            let impro = [];
+            for (let i = 1; i <= 13; i++) {
+                let improText = document.getElementById("impro" + i);
+                let improPts = document.getElementById("improPts" + i);
+                impro.push({
+                    description: sanitizeString(improText.value),
+                    points: sanitizeString(improPts.value),
+                });
+            }
+
+            // Build penalties
+            function getPunitions() {
+                let punitions = [];
+                let punitionDiv = document.getElementById("Pénalités");
+                let punitionItems = punitionDiv.children;
+
+                for (let punition of punitionItems) {
+                    if (punition.classList.contains("pun")) {
+                        let punitionInfo = [...punition.children].map((child) => sanitizeString(child.innerHTML));
+                        punitions.push({
+                            equipe : punitionInfo[0],
+                            titre : punitionInfo[1],
+                            majeure : punitionInfo[2]
+                        });
+                    }
+                }
+                return punitions;
+            }
+
+            let punitions = getPunitions();
+
+            // Signatures
+            let flagSignCoach1 = document.getElementById('signatureCoachBtn1').disabled;
+            let flagSignCoach2 = document.getElementById('signatureCoachBtn2').disabled;
+
+            // Scores
+            let scores = {
+                soustotal: {
+                    equipe1: sanitizeString(document.getElementById("subTotalTeam1").innerText),
+                    equipe2: sanitizeString(document.getElementById("subTotalTeam2").innerText),
+                },
+                penalites: {
+                    equipe1: sanitizeString(document.getElementById("team1Puns").innerText),
+                    equipe2: sanitizeString(document.getElementById("team2Puns").innerText),
+                },
+                total: {
+                    equipe1: sanitizeString(document.getElementById("team1Score").innerText),
+                    equipe2: sanitizeString(document.getElementById("team2Score").innerText),
+                }
+            };
+
+            // Stars (empty as in original code)
+            let etoiles = [];
+
+            // Final JSON object
+            return {
+                alignementEquipe1 : alignementEquipe1,
+                alignementEquipe2 : alignementEquipe2,
+                improvisations: impro,
+                punitions: punitions,
+                etoiles: etoiles,
+                scores: scores,
+                signatures: {
+                    coach1: flagSignCoach1,
+                    coach2: flagSignCoach2
+                }
+            };
+        }
+
         formSign1.addEventListener("submit", function(event) {
             event.preventDefault(); // Prevents the page from refreshing
         });
-        
+
         const formSign2 = document.getElementById("signatureCoachForm2");
 
         formSign2.addEventListener("submit", function(event) {
@@ -822,6 +939,7 @@
                         submitBtn.disabled = false;
                         submitBtn.classList.remove("disabled-btn");
                     }
+                    saveToDB();
 
 
                 } else if (response.status === 401) {
@@ -839,113 +957,32 @@
             }
         }
         
-        function getDataString() {
-            // Helper function to sanitize inputs
-            function sanitizeString(input) {
-                if (typeof input !== "string") return input;
-                return input
-                    .replace(/\\/g, "\\\\") // Escape backslashes
-                    .replace(/'/g, "\\'")   // Escape single quotes
-                    .replace(/"/g, '\\"');  // Escape double quotes
-            }
-        
-            // Build alignement strings
-            let alignementEquipe1 = [];
-            let alignement1Div = document.getElementById("alignement1");
-            let childrenAlignement1 = alignement1Div.children;
-        
-            for (let player of childrenAlignement1) {
-                if (player.classList.contains("player")) {
-                    let playerInfo = [...player.children].map((child) => sanitizeString(child.innerHTML));
-                    alignementEquipe1.push(playerInfo);
-                }
-            }
-        
-            let alignementEquipe2 = [];
-            let alignement2Div = document.getElementById("alignement2");
-            let childrenAlignement2 = alignement2Div.children;
-        
-            for (let player of childrenAlignement2) {
-                if (player.classList.contains("player")) {
-                    let playerInfo = [...player.children].map((child) => sanitizeString(child.innerHTML));
-                    alignementEquipe2.push(playerInfo);
-                }
-            }
-        
-            // Build improvisations
-            let impro = [];
-            for (let i = 1; i <= 13; i++) {
-                let improText = document.getElementById("impro" + i);
-                let improPts = document.getElementById("improPts" + i);
-                impro.push([sanitizeString(improText.value), sanitizeString(improPts.value)]);
-            }
-        
-            // Build punitions
-            let punitions = [];
-            let punitionDiv = document.getElementById("Pénalités");
-            let punitionItems = punitionDiv.children;
-        
-            for (let punition of punitionItems) {
-                if (punition.classList.contains("pun")) {
-                    let punitionInfo = [...punition.children].map((child) => sanitizeString(child.innerHTML));
-                    punitions.push(punitionInfo);
-                }
-            }
-        
-            // Scores
-            let subTotalTeam1 = sanitizeString(document.getElementById("subTotalTeam1").innerText);
-            let subTotalTeam2 = sanitizeString(document.getElementById("subTotalTeam2").innerText);
-            let team1Puns = sanitizeString(document.getElementById("team1Puns").innerText);
-            let team2Puns = sanitizeString(document.getElementById("team2Puns").innerText);
-            let totalTeam1 = sanitizeString(document.getElementById("team1Score").innerText);
-            let totalTeam2 = sanitizeString(document.getElementById("team2Score").innerText);
-        
-            let scores = [
-                [subTotalTeam1, subTotalTeam2],
-                [team1Puns, team2Puns],
-                [totalTeam1, totalTeam2],
-            ];
-        
-            // Stars (example remains empty, as in your code)
-            let etoiles = [];
-        
-            // Final result using JSON.stringify
-            let finalData = JSON.stringify([
-                alignementEquipe1,
-                alignementEquipe2,
-                impro,
-                punitions,
-                etoiles,
-                scores,
-            ]);
-        
-            return finalData;
-        }
         
         function saveToDB() {
             console.log("SAVING...")
             updatePoint()
             updatePun()
-            let dataString = getDataString();
+            //let dataString = getDataString();
+            let dataJSON = getDataJSON();
             let userID = saveID;
             let matchID = 9292;
         
             // Retrieve CSRF token from the meta tag
             let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         
-            let data = {
+            let dataMatch = {
                 userID : userID,
-                dataString : dataString,
+                data : dataJSON,
                 matchID : matchID
             };
-        
+            
             fetch('https://citrus.liguedespamplemousses.com/Citrus/SaveToDB/', {
                 method: "POST",
                 headers: {
                     "Content-Type": 'application/json',
                     "X-CSRFToken": csrfToken  // Include the CSRF token here
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(dataMatch)
             })
             .then(response => {
                 if (!response.ok) {
