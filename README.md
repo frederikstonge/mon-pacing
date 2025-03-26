@@ -77,7 +77,7 @@ flutter upgrade
 flutter pub upgrade --major-versions
 ```
 
-- Install globally ``flutter_migrate` :
+- Install globally `flutter_migrate` :
 ```bash
 flutter pub global activate flutter_migrate
 ```
