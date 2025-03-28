@@ -10,8 +10,11 @@ import 'objectbox.g.dart';
 import 'objects/improvisation_entity.dart';
 import 'objects/match_entity.dart';
 import 'objects/pacing_entity.dart';
+import 'objects/performer_entity.dart';
+import 'objects/team_entity.dart';
 
 class DatabaseRepository {
+  static const pageSize = 20;
   final LegacyDatabaseRepository legacyDatabaseRepository;
   Store? _database;
 
@@ -34,13 +37,15 @@ class DatabaseRepository {
   }
 
   Future<void> _initialize(Store store) async {
+    // Temporary to clear the database
+    await store.box<PacingEntity>().removeAllAsync();
+    await store.box<TeamEntity>().removeAllAsync();
+    await store.box<MatchEntity>().removeAllAsync();
+
     // Add any additional setup code, e.g. build queries.
     final legacyDatabase = await legacyDatabaseRepository.database;
 
-    final pageSize = 20;
-
     final pacingCount = legacyDatabase.pacingModels.count();
-
     for (var page = 0; page <= (pacingCount / pageSize).floor(); page++) {
       final pacings = await legacyDatabase.pacingModels.where().findAllAsync(
         offset: page * pacingCount,
@@ -87,65 +92,95 @@ class DatabaseRepository {
       await store.box<PacingEntity>().putManyAsync(newPacings);
     }
 
-    final matchCount = legacyDatabase.matchModels.count();
-
-    for (var page = 0; page <= (matchCount / pageSize).floor(); page++) {
-      final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * matchCount, limit: pageSize);
-
-      for (final match in matches) {
-        var newMatch = MatchEntity(
-          id: 0,
-          name: match.name,
-          createdDate: match.createdDate,
-          modifiedDate: match.modifiedDate,
-          tags: match.tags,
-          enableMatchExpulsion: match.enableMatchExpulsion,
-          enablePenaltiesImpactPoints: match.enablePenaltiesImpactPoints,
-          enableStatistics: match.enableStatistics,
-          penaltiesImpactType: match.penaltiesImpactType.index,
-          penaltiesRequiredToExpel: match.penaltiesRequiredToExpel,
-          penaltiesRequiredToImpactPoints: match.penaltiesRequiredToImpactPoints,
-          integrationId: match.integrationId,
-          integrationEntityId: match.integrationEntityId,
-          integrationAdditionalData: match.integrationAdditionalData,
-          integrationPenaltyTypes: match.integrationPenaltyTypes,
-          integrationRestrictMaximumPointPerImprovisation: match.integrationRestrictMaximumPointPerImprovisation,
-          integrationMinNumberOfImprovisations: match.integrationMinNumberOfImprovisations,
-          integrationMaxNumberOfImprovisations: match.integrationMaxNumberOfImprovisations,
-        );
-
-        newMatch.improvisations.addAll(
-          match.improvisations.map((e) {
-            final newImprovisation = ImprovisationEntity(
+    final teamCount = legacyDatabase.teamModels.count();
+    for (var page = 0; page <= (teamCount / pageSize).floor(); page++) {
+      final teams = await legacyDatabase.teamModels.where().findAllAsync(offset: page * teamCount, limit: pageSize);
+      final newTeams =
+          teams.map((team) {
+            final newTeam = TeamEntity(
               id: 0,
-              type: e.type.index,
-              theme: e.theme,
-              category: e.category,
-              performers: e.performers,
-              durationsInSeconds: e.durationsInSeconds,
-              notes: e.notes,
-              huddleTimerInSeconds: e.huddleTimerInSeconds,
-              timeBufferInSeconds: e.timeBufferInSeconds,
-              integrationEntityId: e.integrationEntityId,
-              integrationAdditionalData: e.integrationAdditionalData,
+              name: team.name,
+              color: team.color,
+              createdDate: team.createdDate,
+              modifiedDate: team.modifiedDate,
+              tags: team.tags,
             );
 
-            return newImprovisation;
-          }),
-        );
+            newTeam.performers.addAll(
+              team.performers.map((e) {
+                final newPerformer = PerformerEntity(
+                  id: 0,
+                  name: e.name,
+                  integrationEntityId: e.integrationEntityId,
+                  integrationAdditionalData: e.integrationAdditionalData,
+                );
 
-        newMatch.teams.addAll();
+                return newPerformer;
+              }),
+            );
 
-        newMatch = await store.box<MatchEntity>().putAndGetAsync(newMatch);
+            return newTeam;
+          }).toList();
 
-        newMatch.stars.addAll();
-
-        newMatch.points.addAll();
-
-        newMatch.penalties.addAll();
-      }
+      await store.box<TeamEntity>().putManyAsync(newTeams);
     }
 
-    final teams = await legacyDatabase.teamModels.where().findAllAsync();
+    // final matchCount = legacyDatabase.matchModels.count();
+    // for (var page = 0; page <= (matchCount / pageSize).floor(); page++) {
+    //   final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * matchCount, limit: pageSize);
+
+    //   for (final match in matches) {
+    //     var newMatch = MatchEntity(
+    //       id: 0,
+    //       name: match.name,
+    //       createdDate: match.createdDate,
+    //       modifiedDate: match.modifiedDate,
+    //       tags: match.tags,
+    //       enableMatchExpulsion: match.enableMatchExpulsion,
+    //       enablePenaltiesImpactPoints: match.enablePenaltiesImpactPoints,
+    //       enableStatistics: match.enableStatistics,
+    //       penaltiesImpactType: match.penaltiesImpactType.index,
+    //       penaltiesRequiredToExpel: match.penaltiesRequiredToExpel,
+    //       penaltiesRequiredToImpactPoints: match.penaltiesRequiredToImpactPoints,
+    //       integrationId: match.integrationId,
+    //       integrationEntityId: match.integrationEntityId,
+    //       integrationAdditionalData: match.integrationAdditionalData,
+    //       integrationPenaltyTypes: match.integrationPenaltyTypes,
+    //       integrationRestrictMaximumPointPerImprovisation: match.integrationRestrictMaximumPointPerImprovisation,
+    //       integrationMinNumberOfImprovisations: match.integrationMinNumberOfImprovisations,
+    //       integrationMaxNumberOfImprovisations: match.integrationMaxNumberOfImprovisations,
+    //     );
+
+    //     newMatch.improvisations.addAll(
+    //       match.improvisations.map((e) {
+    //         final newImprovisation = ImprovisationEntity(
+    //           id: 0,
+    //           type: e.type.index,
+    //           theme: e.theme,
+    //           category: e.category,
+    //           performers: e.performers,
+    //           durationsInSeconds: e.durationsInSeconds,
+    //           notes: e.notes,
+    //           huddleTimerInSeconds: e.huddleTimerInSeconds,
+    //           timeBufferInSeconds: e.timeBufferInSeconds,
+    //           integrationEntityId: e.integrationEntityId,
+    //           integrationAdditionalData: e.integrationAdditionalData,
+    //         );
+
+    //         return newImprovisation;
+    //       }),
+    //     );
+
+    //     newMatch.teams.addAll();
+
+    //     newMatch = await store.box<MatchEntity>().putAndGetAsync(newMatch);
+
+    //     newMatch.stars.addAll();
+
+    //     newMatch.points.addAll();
+
+    //     newMatch.penalties.addAll();
+    //   }
+    // }
   }
 }
