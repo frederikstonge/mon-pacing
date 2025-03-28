@@ -2,18 +2,30 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class ImprovisationEntity {
-  late int id;
-  late int type;
-  late String category;
-  late String theme;
+  int id;
+  int type;
+  String category;
+  String theme;
   @Property(type: PropertyType.intVector)
-  late List<int> durationsInSeconds;
-  late String performers;
-  late String notes;
-  late int timeBufferInSeconds = 30;
-  late int huddleTimerInSeconds = 30;
-  late String? integrationEntityId;
-  late String? integrationAdditionalData;
+  List<int> durationsInSeconds;
+  String performers;
+  String notes;
+  int timeBufferInSeconds = 30;
+  int huddleTimerInSeconds = 30;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-  ImprovisationEntity();
+  ImprovisationEntity({
+    this.id = 0,
+    required this.type,
+    required this.category,
+    required this.theme,
+    required this.durationsInSeconds,
+    required this.performers,
+    required this.notes,
+    this.timeBufferInSeconds = 30,
+    this.huddleTimerInSeconds = 30,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
+  });
 }

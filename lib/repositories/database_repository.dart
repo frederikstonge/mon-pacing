@@ -49,31 +49,34 @@ class DatabaseRepository {
 
       final newPacings =
           pacings.map((pacing) {
-            final newPacing = PacingEntity();
-            newPacing.id = 0;
-            newPacing.name = pacing.name;
-            newPacing.createdDate = pacing.createdDate;
-            newPacing.modifiedDate = pacing.modifiedDate;
-            newPacing.tags = pacing.tags;
-            newPacing.defaultNumberOfTeams = pacing.defaultNumberOfTeams;
-            newPacing.integrationId = pacing.integrationId;
-            newPacing.integrationEntityId = pacing.integrationEntityId;
-            newPacing.integrationAdditionalData = pacing.integrationAdditionalData;
+            final newPacing = PacingEntity(
+              id: 0,
+              name: pacing.name,
+              createdDate: pacing.createdDate,
+              modifiedDate: pacing.modifiedDate,
+              tags: pacing.tags,
+              defaultNumberOfTeams: pacing.defaultNumberOfTeams,
+              integrationId: pacing.integrationId,
+              integrationEntityId: pacing.integrationEntityId,
+              integrationAdditionalData: pacing.integrationAdditionalData,
+            );
 
             newPacing.improvisations.addAll(
               pacing.improvisations.map((e) {
-                final newImprovisation = ImprovisationEntity();
-                newImprovisation.id = 0;
-                newImprovisation.type = e.type.index;
-                newImprovisation.theme = e.theme;
-                newImprovisation.category = e.category;
-                newImprovisation.performers = e.performers;
-                newImprovisation.durationsInSeconds = e.durationsInSeconds;
-                newImprovisation.notes = e.notes;
-                newImprovisation.huddleTimerInSeconds = e.huddleTimerInSeconds;
-                newImprovisation.timeBufferInSeconds = e.timeBufferInSeconds;
-                newImprovisation.integrationEntityId = e.integrationEntityId;
-                newImprovisation.integrationAdditionalData = e.integrationAdditionalData;
+                final newImprovisation = ImprovisationEntity(
+                  id: 0,
+                  type: e.type.index,
+                  theme: e.theme,
+                  category: e.category,
+                  performers: e.performers,
+                  durationsInSeconds: e.durationsInSeconds,
+                  notes: e.notes,
+                  huddleTimerInSeconds: e.huddleTimerInSeconds,
+                  timeBufferInSeconds: e.timeBufferInSeconds,
+                  integrationEntityId: e.integrationEntityId,
+                  integrationAdditionalData: e.integrationAdditionalData,
+                );
+
                 return newImprovisation;
               }),
             );
@@ -90,41 +93,43 @@ class DatabaseRepository {
       final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * matchCount, limit: pageSize);
 
       for (final match in matches) {
-        var newMatch = MatchEntity();
-        newMatch.id = 0;
-        newMatch.name = match.name;
-        newMatch.createdDate = match.createdDate;
-        newMatch.modifiedDate = match.modifiedDate;
-        newMatch.tags = match.tags;
-        newMatch.enableMatchExpulsion = match.enableMatchExpulsion;
-        newMatch.enablePenaltiesImpactPoints = match.enablePenaltiesImpactPoints;
-        newMatch.enableStatistics = match.enableStatistics;
-        newMatch.penaltiesImpactType = match.penaltiesImpactType.index;
-        newMatch.penaltiesRequiredToExpel = match.penaltiesRequiredToExpel;
-        newMatch.penaltiesRequiredToImpactPoints = match.penaltiesRequiredToImpactPoints;
-        newMatch.integrationId = match.integrationId;
-        newMatch.integrationEntityId = match.integrationEntityId;
-        newMatch.integrationAdditionalData = match.integrationAdditionalData;
-        newMatch.integrationPenaltyTypes = match.integrationPenaltyTypes;
-        newMatch.integrationRestrictMaximumPointPerImprovisation =
-            match.integrationRestrictMaximumPointPerImprovisation;
-        newMatch.integrationMinNumberOfImprovisations = match.integrationMinNumberOfImprovisations;
-        newMatch.integrationMaxNumberOfImprovisations = match.integrationMaxNumberOfImprovisations;
+        var newMatch = MatchEntity(
+          id: 0,
+          name: match.name,
+          createdDate: match.createdDate,
+          modifiedDate: match.modifiedDate,
+          tags: match.tags,
+          enableMatchExpulsion: match.enableMatchExpulsion,
+          enablePenaltiesImpactPoints: match.enablePenaltiesImpactPoints,
+          enableStatistics: match.enableStatistics,
+          penaltiesImpactType: match.penaltiesImpactType.index,
+          penaltiesRequiredToExpel: match.penaltiesRequiredToExpel,
+          penaltiesRequiredToImpactPoints: match.penaltiesRequiredToImpactPoints,
+          integrationId: match.integrationId,
+          integrationEntityId: match.integrationEntityId,
+          integrationAdditionalData: match.integrationAdditionalData,
+          integrationPenaltyTypes: match.integrationPenaltyTypes,
+          integrationRestrictMaximumPointPerImprovisation: match.integrationRestrictMaximumPointPerImprovisation,
+          integrationMinNumberOfImprovisations: match.integrationMinNumberOfImprovisations,
+          integrationMaxNumberOfImprovisations: match.integrationMaxNumberOfImprovisations,
+        );
 
         newMatch.improvisations.addAll(
           match.improvisations.map((e) {
-            final newImprovisation = ImprovisationEntity();
-            newImprovisation.id = 0;
-            newImprovisation.type = e.type.index;
-            newImprovisation.theme = e.theme;
-            newImprovisation.category = e.category;
-            newImprovisation.performers = e.performers;
-            newImprovisation.durationsInSeconds = e.durationsInSeconds;
-            newImprovisation.notes = e.notes;
-            newImprovisation.huddleTimerInSeconds = e.huddleTimerInSeconds;
-            newImprovisation.timeBufferInSeconds = e.timeBufferInSeconds;
-            newImprovisation.integrationEntityId = e.integrationEntityId;
-            newImprovisation.integrationAdditionalData = e.integrationAdditionalData;
+            final newImprovisation = ImprovisationEntity(
+              id: 0,
+              type: e.type.index,
+              theme: e.theme,
+              category: e.category,
+              performers: e.performers,
+              durationsInSeconds: e.durationsInSeconds,
+              notes: e.notes,
+              huddleTimerInSeconds: e.huddleTimerInSeconds,
+              timeBufferInSeconds: e.timeBufferInSeconds,
+              integrationEntityId: e.integrationEntityId,
+              integrationAdditionalData: e.integrationAdditionalData,
+            );
+
             return newImprovisation;
           }),
         );

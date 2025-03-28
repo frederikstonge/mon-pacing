@@ -2,12 +2,19 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class PenaltyEntity {
-  late int id;
-  late bool major;
-  late String type;
-  late int? performerId;
-  late int teamId;
-  late int improvisationId;
+  int id;
+  bool major;
+  String type;
+  int? performerId;
+  int teamId;
+  int improvisationId;
 
-  PenaltyEntity();
+  PenaltyEntity({
+    this.id = 0,
+    required this.major,
+    required this.type,
+    required this.teamId,
+    required this.improvisationId,
+    this.performerId,
+  });
 }

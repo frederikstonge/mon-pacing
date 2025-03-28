@@ -573,31 +573,43 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = ImprovisationEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..type = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)
-            ..category = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 8, '')
-            ..theme = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 10, '')
-            ..durationsInSeconds =
-                const fb.ListReader<int>(fb.Int32Reader(), lazy: false)
-                    .vTableGet(buffer, rootOffset, 12, [])
-            ..performers = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 14, '')
-            ..notes = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 16, '')
-            ..timeBufferInSeconds =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)
-            ..huddleTimerInSeconds =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0)
-            ..integrationEntityId =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 22)
-            ..integrationAdditionalData =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 24);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final typeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final themeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final durationsInSecondsParam =
+              const fb.ListReader<int>(fb.Int32Reader(), lazy: false)
+                  .vTableGet(buffer, rootOffset, 12, []);
+          final performersParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final notesParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final timeBufferInSecondsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final huddleTimerInSecondsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final integrationEntityIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 22);
+          final integrationAdditionalDataParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 24);
+          final object = ImprovisationEntity(
+              id: idParam,
+              type: typeParam,
+              category: categoryParam,
+              theme: themeParam,
+              durationsInSeconds: durationsInSecondsParam,
+              performers: performersParam,
+              notes: notesParam,
+              timeBufferInSeconds: timeBufferInSecondsParam,
+              huddleTimerInSeconds: huddleTimerInSecondsParam,
+              integrationEntityId: integrationEntityIdParam,
+              integrationAdditionalData: integrationAdditionalDataParam);
 
           return object;
         }),
@@ -667,50 +679,74 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
           final modifiedDateValue =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
-          final object = MatchEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 6, '')
-            ..createdDate = createdDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(createdDateValue)
-            ..modifiedDate = modifiedDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue)
-            ..tags = const fb.ListReader<String>(
-                    fb.StringReader(asciiOptimization: true),
-                    lazy: false)
-                .vTableGet(buffer, rootOffset, 12, [])
-            ..enableStatistics =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false)
-            ..enablePenaltiesImpactPoints =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false)
-            ..penaltiesImpactType =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)
-            ..penaltiesRequiredToImpactPoints =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0)
-            ..enableMatchExpulsion =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false)
-            ..penaltiesRequiredToExpel =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)
-            ..integrationId = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 26)
-            ..integrationEntityId =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 28)
-            ..integrationAdditionalData =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 30)
-            ..integrationRestrictMaximumPointPerImprovisation =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 32)
-            ..integrationMinNumberOfImprovisations =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 34)
-            ..integrationMaxNumberOfImprovisations =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 36)
-            ..integrationPenaltyTypes = const fb.ListReader<String>(
-                    fb.StringReader(asciiOptimization: true),
-                    lazy: false)
-                .vTableGetNullable(buffer, rootOffset, 38);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final enableMatchExpulsionParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
+          final enablePenaltiesImpactPointsParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false);
+          final enableStatisticsParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final penaltiesImpactTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final penaltiesRequiredToExpelParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          final penaltiesRequiredToImpactPointsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final createdDateParam = createdDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(createdDateValue);
+          final modifiedDateParam = modifiedDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
+          final tagsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 12, []);
+          final integrationIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 26);
+          final integrationEntityIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 28);
+          final integrationAdditionalDataParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 30);
+          final integrationRestrictMaximumPointPerImprovisationParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 32);
+          final integrationMinNumberOfImprovisationsParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 34);
+          final integrationMaxNumberOfImprovisationsParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 36);
+          final integrationPenaltyTypesParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGetNullable(buffer, rootOffset, 38);
+          final object = MatchEntity(
+              id: idParam,
+              name: nameParam,
+              enableMatchExpulsion: enableMatchExpulsionParam,
+              enablePenaltiesImpactPoints: enablePenaltiesImpactPointsParam,
+              enableStatistics: enableStatisticsParam,
+              penaltiesImpactType: penaltiesImpactTypeParam,
+              penaltiesRequiredToExpel: penaltiesRequiredToExpelParam,
+              penaltiesRequiredToImpactPoints:
+                  penaltiesRequiredToImpactPointsParam,
+              createdDate: createdDateParam,
+              modifiedDate: modifiedDateParam,
+              tags: tagsParam,
+              integrationId: integrationIdParam,
+              integrationEntityId: integrationEntityIdParam,
+              integrationAdditionalData: integrationAdditionalDataParam,
+              integrationRestrictMaximumPointPerImprovisation:
+                  integrationRestrictMaximumPointPerImprovisationParam,
+              integrationMinNumberOfImprovisations:
+                  integrationMinNumberOfImprovisationsParam,
+              integrationMaxNumberOfImprovisations:
+                  integrationMaxNumberOfImprovisationsParam,
+              integrationPenaltyTypes: integrationPenaltyTypesParam);
           obx_int.InternalToManyAccess.setRelInfo<MatchEntity>(object.teams,
               store, obx_int.RelInfo<MatchEntity>.toMany(1, object.id));
           obx_int.InternalToManyAccess.setRelInfo<MatchEntity>(
@@ -757,18 +793,24 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = MatchTeamEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 6, '')
-            ..color = const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)
-            ..integrationEntityId =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 10)
-            ..integrationAdditionalData =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 12);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final colorParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final integrationEntityIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10);
+          final integrationAdditionalDataParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12);
+          final object = MatchTeamEntity(
+              id: idParam,
+              name: nameParam,
+              color: colorParam,
+              integrationEntityId: integrationEntityIdParam,
+              integrationAdditionalData: integrationAdditionalDataParam);
           obx_int.InternalToManyAccess.setRelInfo<MatchTeamEntity>(
               object.performers,
               store,
@@ -820,30 +862,41 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
           final modifiedDateValue =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
-          final object = PacingEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 6, '')
-            ..createdDate = createdDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(createdDateValue)
-            ..modifiedDate = modifiedDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue)
-            ..defaultNumberOfTeams =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)
-            ..tags = const fb.ListReader<String>(
-                    fb.StringReader(asciiOptimization: true),
-                    lazy: false)
-                .vTableGet(buffer, rootOffset, 14, [])
-            ..integrationId = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 16)
-            ..integrationEntityId =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 18)
-            ..integrationAdditionalData =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 20);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final defaultNumberOfTeamsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final createdDateParam = createdDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(createdDateValue);
+          final modifiedDateParam = modifiedDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
+          final tagsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 14, []);
+          final integrationIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16);
+          final integrationEntityIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 18);
+          final integrationAdditionalDataParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 20);
+          final object = PacingEntity(
+              id: idParam,
+              name: nameParam,
+              defaultNumberOfTeams: defaultNumberOfTeamsParam,
+              createdDate: createdDateParam,
+              modifiedDate: modifiedDateParam,
+              tags: tagsParam,
+              integrationId: integrationIdParam,
+              integrationEntityId: integrationEntityIdParam,
+              integrationAdditionalData: integrationAdditionalDataParam);
           obx_int.InternalToManyAccess.setRelInfo<PacingEntity>(
               object.improvisations,
               store,
@@ -873,19 +926,25 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = PenaltyEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..major =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false)
-            ..type = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 8, '')
-            ..performerId =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10)
-            ..teamId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)
-            ..improvisationId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final majorParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false);
+          final typeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final teamIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final improvisationIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final performerIdParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+          final object = PenaltyEntity(
+              id: idParam,
+              major: majorParam,
+              type: typeParam,
+              teamId: teamIdParam,
+              improvisationId: improvisationIdParam,
+              performerId: performerIdParam);
 
           return object;
         }),
@@ -917,17 +976,21 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = PerformerEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 6, '')
-            ..integrationEntityId =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 8)
-            ..integrationAdditionalData =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 10);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final integrationEntityIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 8);
+          final integrationAdditionalDataParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10);
+          final object = PerformerEntity(
+              id: idParam,
+              name: nameParam,
+              integrationEntityId: integrationEntityIdParam,
+              integrationAdditionalData: integrationAdditionalDataParam);
 
           return object;
         }),
@@ -951,15 +1014,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = PointEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..teamId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)
-            ..improvisationId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)
-            ..value =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final teamIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final improvisationIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final valueParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final object = PointEntity(
+              id: idParam,
+              teamId: teamIdParam,
+              improvisationId: improvisationIdParam,
+              value: valueParam);
 
           return object;
         }),
@@ -982,13 +1049,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = StarEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..performerId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)
-            ..teamId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final performerIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final teamIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final object = StarEntity(
+              id: idParam, performerId: performerIdParam, teamId: teamIdParam);
 
           return object;
         }),
@@ -1024,22 +1092,29 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
           final modifiedDateValue =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
-          final object = TeamEntity()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..createdDate = createdDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(createdDateValue)
-            ..modifiedDate = modifiedDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue)
-            ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 10, '')
-            ..color =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)
-            ..tags = const fb.ListReader<String>(
-                    fb.StringReader(asciiOptimization: true),
-                    lazy: false)
-                .vTableGet(buffer, rootOffset, 14, []);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final colorParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final createdDateParam = createdDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(createdDateValue);
+          final modifiedDateParam = modifiedDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
+          final tagsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 14, []);
+          final object = TeamEntity(
+              id: idParam,
+              name: nameParam,
+              color: colorParam,
+              createdDate: createdDateParam,
+              modifiedDate: modifiedDateParam,
+              tags: tagsParam);
           obx_int.InternalToManyAccess.setRelInfo<TeamEntity>(object.performers,
               store, obx_int.RelInfo<TeamEntity>.toMany(8, object.id));
           return object;
