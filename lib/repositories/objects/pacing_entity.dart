@@ -4,24 +4,34 @@ import 'improvisation_entity.dart';
 
 @Entity()
 class PacingEntity {
-  late int id;
+  int id;
   @Index()
-  late String name;
-  @Index()
-  @Property(type: PropertyType.date)
-  late DateTime? createdDate;
+  String name;
   @Index()
   @Property(type: PropertyType.date)
-  late DateTime? modifiedDate;
-  late int defaultNumberOfTeams;
-  late List<String> tags;
-  late String? integrationId;
-  late String? integrationEntityId;
-  late String? integrationAdditionalData;
+  DateTime? createdDate;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? modifiedDate;
+  int defaultNumberOfTeams;
+  List<String> tags;
+  String? integrationId;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
   final improvisations = ToMany<ImprovisationEntity>();
 
-  PacingEntity();
+  PacingEntity({
+    this.id = 0,
+    required this.name,
+    required this.defaultNumberOfTeams,
+    this.createdDate,
+    this.modifiedDate,
+    this.tags = const [],
+    this.integrationId,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
+  });
 
   List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
 
