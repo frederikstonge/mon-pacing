@@ -4,21 +4,28 @@ import 'performer_entity.dart';
 
 @Entity()
 class TeamEntity {
-  late int id;
+  int id;
   @Index()
   @Property(type: PropertyType.date)
-  late DateTime? createdDate;
+  DateTime? createdDate;
   @Index()
   @Property(type: PropertyType.date)
-  late DateTime? modifiedDate;
+  DateTime? modifiedDate;
   @Index()
-  late String name;
-  late int color;
-  late List<String> tags;
+  String name;
+  int color;
+  List<String> tags;
 
   final performers = ToMany<PerformerEntity>();
 
-  TeamEntity();
+  TeamEntity({
+    this.id = 0,
+    required this.name,
+    required this.color,
+    this.createdDate,
+    this.modifiedDate,
+    this.tags = const [],
+  });
 
   List<String> get performerNames => performers.map((p) => p.name).toList();
 }

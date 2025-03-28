@@ -2,10 +2,10 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class PointEntity {
-  late int id;
-  late int teamId;
-  late int improvisationId;
-  late int value;
+  int id;
+  int teamId;
+  int improvisationId;
+  int value;
 
-  PointEntity();
+  PointEntity({this.id = 0, required this.teamId, required this.improvisationId, required this.value});
 }

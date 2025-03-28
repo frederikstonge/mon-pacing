@@ -2,10 +2,10 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class PerformerEntity {
-  late int id;
-  late String name;
-  late String? integrationEntityId;
-  late String? integrationAdditionalData;
+  int id;
+  String name;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-  PerformerEntity();
+  PerformerEntity({this.id = 0, required this.name, this.integrationEntityId, this.integrationAdditionalData});
 }

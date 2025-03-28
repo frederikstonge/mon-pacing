@@ -4,13 +4,19 @@ import 'performer_entity.dart';
 
 @Entity()
 class MatchTeamEntity {
-  late int id;
-  late String name;
-  late int color;
-  late String? integrationEntityId;
-  late String? integrationAdditionalData;
+  int id;
+  String name;
+  int color;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
   final performers = ToMany<PerformerEntity>();
 
-  MatchTeamEntity();
+  MatchTeamEntity({
+    this.id = 0,
+    required this.name,
+    required this.color,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
+  });
 }
