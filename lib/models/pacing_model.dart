@@ -36,7 +36,12 @@ class PacingModel with PacingModelMappable {
     name: entity.name,
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
-    improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+    improvisations:
+        entity.improvisations
+            .asMap()
+            .entries
+            .map((e) => ImprovisationModel.fromEntity(entity: e.value, order: e.key))
+            .toList(),
     defaultNumberOfTeams: entity.defaultNumberOfTeams,
     tags: entity.tags,
     integrationId: entity.integrationId,

@@ -211,8 +211,8 @@ class CitrusIntegration implements MatchIntegrationBase {
     final teamName = _sanitize(teamSelector.getElementsByTagName('h3').map((e) => e.text).join(' - '));
 
     final performers =
-        teamSelector.querySelectorAll('.player').map((element) {
-          final data = element.getElementsByTagName('p');
+        teamSelector.querySelectorAll('.player').asMap().entries.map((element) {
+          final data = element.value.getElementsByTagName('p');
           final performerName = _sanitize(data.last.text);
           final metadata = {
             'role': _sanitize(data[0].text),
@@ -222,6 +222,7 @@ class CitrusIntegration implements MatchIntegrationBase {
           };
           return PerformerModel(
             name: performerName,
+            order: element.key,
             id: getPerformerId(),
             integrationAdditionalData: jsonEncode(metadata),
           );

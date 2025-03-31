@@ -22,6 +22,8 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
 
   static int _$id(PerformerModel v) => v.id;
   static const Field<PerformerModel, int> _f$id = Field('id', _$id);
+  static int _$order(PerformerModel v) => v.order;
+  static const Field<PerformerModel, int> _f$order = Field('order', _$order);
   static String _$name(PerformerModel v) => v.name;
   static const Field<PerformerModel, String> _f$name = Field('name', _$name);
   static String? _$integrationEntityId(PerformerModel v) =>
@@ -37,6 +39,7 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
   @override
   final MappableFields<PerformerModel> fields = const {
     #id: _f$id,
+    #order: _f$order,
     #name: _f$name,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
@@ -45,6 +48,7 @@ class PerformerModelMapper extends ClassMapperBase<PerformerModel> {
   static PerformerModel _instantiate(DecodingData data) {
     return PerformerModel(
         id: data.dec(_f$id),
+        order: data.dec(_f$order),
         name: data.dec(_f$name),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData));
@@ -105,6 +109,7 @@ abstract class PerformerModelCopyWith<$R, $In extends PerformerModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   $R call(
       {int? id,
+      int? order,
       String? name,
       String? integrationEntityId,
       String? integrationAdditionalData});
@@ -123,11 +128,13 @@ class _PerformerModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {int? id,
+          int? order,
           String? name,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
+        if (order != null) #order: order,
         if (name != null) #name: name,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
@@ -137,6 +144,7 @@ class _PerformerModelCopyWithImpl<$R, $Out>
   @override
   PerformerModel $make(CopyWithData data) => PerformerModel(
       id: data.get(#id, or: $value.id),
+      order: data.get(#order, or: $value.order),
       name: data.get(#name, or: $value.name),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),

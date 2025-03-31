@@ -208,6 +208,7 @@ class MatchCubit extends Cubit<MatchState> {
         id: nextStarId,
         teamId: state.match!.teams.first.id,
         performerId: state.match!.teams.first.performers.first.id,
+        order: stars.length + 1,
       ),
     );
     final newMatch = state.match!.copyWith(stars: stars);
@@ -248,7 +249,9 @@ class MatchCubit extends Cubit<MatchState> {
 
     stars.insert(newIndex, star);
 
-    final newMatch = state.match!.copyWith(stars: stars);
+    final newMatch = state.match!.copyWith(
+      stars: stars.asMap().entries.map((e) => e.value.copyWith(order: e.key)).toList(),
+    );
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 

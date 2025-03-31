@@ -48,6 +48,7 @@ void main() {
             CitrusIntegration.MinNumberOfImprovisations - 1,
             (index) => ImprovisationModel(
               id: index,
+              order: index + 1,
               type: ImprovisationType.values.elementAt(index % 2),
               category: '',
               theme: '',
@@ -74,6 +75,7 @@ void main() {
             CitrusIntegration.MaxNumberOfImprovisations + 1,
             (index) => ImprovisationModel(
               id: index,
+              order: index + 1,
               type: ImprovisationType.values.elementAt(index % 2),
               category: '',
               theme: '',
@@ -98,6 +100,7 @@ void main() {
           12,
           (index) => ImprovisationModel(
             id: index,
+            order: index + 1,
             type: ImprovisationType.values.elementAt(index % 2),
             category: '',
             theme: '',
@@ -174,6 +177,7 @@ void main() {
           12,
           (index) => ImprovisationModel(
             id: index,
+            order: index + 1,
             type: ImprovisationType.values.elementAt(index % 2),
             category: '',
             theme: '',

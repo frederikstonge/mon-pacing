@@ -68,11 +68,16 @@ class MatchModel with MatchModelMappable {
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
     teams: entity.teams.map((e) => TeamModel.fromEmbededEntity(entity: e)).toList(),
-    improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+    improvisations:
+        entity.improvisations
+            .asMap()
+            .entries
+            .map((e) => ImprovisationModel.fromEntity(entity: e.value, order: e.key))
+            .toList(),
     penalties: entity.penalties.map((e) => PenaltyModel.fromEntity(entity: e)).toList(),
     points: entity.points.map((e) => PointModel.fromEntity(entity: e)).toList(),
     tags: entity.tags,
-    stars: entity.stars.map((e) => StarModel.fromEntity(entity: e)).toList(),
+    stars: entity.stars.asMap().entries.map((e) => StarModel.fromEntity(entity: e.value, order: e.key)).toList(),
     enableStatistics: entity.enableStatistics,
     enablePenaltiesImpactPoints: entity.enablePenaltiesImpactPoints,
     penaltiesImpactType: entity.penaltiesImpactType,
