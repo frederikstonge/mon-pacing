@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/penalty_entity.dart';
+import '../repositories/legacy_entities/penalty_entity.dart';
 
 part 'penalty_model.mapper.dart';
 
