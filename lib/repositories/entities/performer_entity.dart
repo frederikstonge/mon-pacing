@@ -1,21 +1,17 @@
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+import 'package:objectbox/objectbox.dart';
 
-part 'performer_entity.mapper.dart';
-part 'performer_entity.g.dart';
+@Entity()
+class PerformerEntity {
+  int id;
+  String name;
+  int order;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-@MappableClass()
-@Embedded(ignore: {'copyWith'})
-@Name('PerformerModel')
-class PerformerEntity with PerformerEntityMappable {
-  final int id;
-  final String name;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
-
-  const PerformerEntity({
-    required this.id,
+  PerformerEntity({
+    this.id = 0,
     required this.name,
+    required this.order,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });

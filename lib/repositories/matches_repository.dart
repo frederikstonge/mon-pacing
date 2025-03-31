@@ -1,8 +1,8 @@
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
-import 'entities/match_entity.dart';
 import 'legacy_database_repository.dart';
+import 'legacy_entities/match_entity.dart';
 
 class MatchesRepository {
   final LegacyDatabaseRepository databaseRepository;

@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/pacing_entity.dart';
+import '../repositories/legacy_entities/pacing_entity.dart';
 import 'improvisation_model.dart';
 
 part 'pacing_model.mapper.dart';

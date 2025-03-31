@@ -1,66 +1,55 @@
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+import 'package:objectbox/objectbox.dart';
 
-import '../../../models/improvisation_type.dart';
-import '../../../models/penalties_impact_type.dart';
 import 'improvisation_entity.dart';
-import 'match_team_entity.dart';
 import 'penalty_entity.dart';
-import 'performer_entity.dart';
 import 'point_entity.dart';
 import 'star_entity.dart';
+import 'team_entity.dart';
 
-part 'match_entity.mapper.dart';
-part 'match_entity.g.dart';
+@Entity()
+class MatchEntity {
+  int id;
+  @Index()
+  String name;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? createdDate;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? modifiedDate;
+  List<String> tags;
+  bool enableStatistics;
+  bool enablePenaltiesImpactPoints;
+  int penaltiesImpactType;
+  int penaltiesRequiredToImpactPoints;
+  bool enableMatchExpulsion;
+  int penaltiesRequiredToExpel;
+  String? integrationId;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
+  int? integrationRestrictMaximumPointPerImprovisation;
+  int? integrationMinNumberOfImprovisations;
+  int? integrationMaxNumberOfImprovisations;
+  List<String>? integrationPenaltyTypes;
 
-@MappableClass()
-@Collection(accessor: 'matchModels')
-@Name('MatchModel')
-class MatchEntity with MatchEntityMappable {
-  final int id;
-  @index
-  final String name;
-  @index
-  final DateTime? createdDate;
-  @index
-  final DateTime? modifiedDate;
-  final List<MatchTeamEntity> teams;
-  final List<ImprovisationEntity> improvisations;
-  final List<PenaltyEntity> penalties;
-  final List<PointEntity> points;
-  final List<String> tags;
-  final List<StarEntity> stars;
-  final bool enableStatistics;
-  final bool enablePenaltiesImpactPoints;
-  final PenaltiesImpactType penaltiesImpactType;
-  final int penaltiesRequiredToImpactPoints;
-  final bool enableMatchExpulsion;
-  final int penaltiesRequiredToExpel;
-  final String? integrationId;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
-  final int? integrationRestrictMaximumPointPerImprovisation;
-  final int? integrationMinNumberOfImprovisations;
-  final int? integrationMaxNumberOfImprovisations;
-  final List<String>? integrationPenaltyTypes;
+  final teams = ToMany<TeamEntity>();
+  final improvisations = ToMany<ImprovisationEntity>();
+  final penalties = ToMany<PenaltyEntity>();
+  final points = ToMany<PointEntity>();
+  final stars = ToMany<StarEntity>();
 
-  const MatchEntity({
-    required this.id,
+  MatchEntity({
+    this.id = 0,
     required this.name,
-    required this.createdDate,
-    required this.modifiedDate,
-    required this.teams,
-    required this.improvisations,
-    required this.penalties,
-    required this.points,
+    required this.enableMatchExpulsion,
+    required this.enablePenaltiesImpactPoints,
+    required this.enableStatistics,
+    required this.penaltiesImpactType,
+    required this.penaltiesRequiredToExpel,
+    required this.penaltiesRequiredToImpactPoints,
+    this.createdDate,
+    this.modifiedDate,
     this.tags = const [],
-    this.stars = const [],
-    this.enableStatistics = true,
-    this.enablePenaltiesImpactPoints = true,
-    this.penaltiesImpactType = PenaltiesImpactType.addPoints,
-    this.penaltiesRequiredToImpactPoints = 3,
-    this.enableMatchExpulsion = true,
-    this.penaltiesRequiredToExpel = 3,
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
