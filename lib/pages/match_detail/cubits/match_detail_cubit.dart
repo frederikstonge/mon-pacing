@@ -88,7 +88,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     final team = state.match.teams.firstWhere((t) => t.id == teamId);
     final performers = List<PerformerModel>.from(team.performers);
     final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t) => t.performers));
-    performers.add(_createPerformer(allPerformers));
+    performers.add(_createPerformer(allPerformers, performers.length + 1));
     editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
@@ -117,7 +117,10 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     }
 
     performers.insert(newIndex, performer);
-    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
+    editTeam(
+      state.match.teams.indexOf(team),
+      team.copyWith(performers: performers.asMap().entries.map((e) => e.value.copyWith(order: e.key)).toList()),
+    );
   }
 
   void onTeamSelected(int teamId, TeamModel team) {
@@ -146,12 +149,12 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
       modifiedDate: null,
       name: '${Localizer.current.team} ${teams.length + 1}',
       color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-      performers: [_createPerformer(allPerformers)],
+      performers: [_createPerformer(allPerformers, 1)],
     );
   }
 
-  PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
+  PerformerModel _createPerformer(List<PerformerModel> allPerformers, int order) {
     final nextId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(max) + 1 : 0;
-    return PerformerModel(id: nextId, name: '');
+    return PerformerModel(id: nextId, order: order, name: '');
   }
 }
