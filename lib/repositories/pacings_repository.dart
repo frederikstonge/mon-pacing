@@ -1,8 +1,8 @@
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
-import 'entities/pacing_entity.dart';
 import 'legacy_database_repository.dart';
+import 'legacy_entities/pacing_entity.dart';
 
 class PacingsRepository {
   final LegacyDatabaseRepository databaseRepository;

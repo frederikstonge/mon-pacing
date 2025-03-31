@@ -1,9 +1,9 @@
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
-import 'entities/pacing_entity.dart';
-import 'entities/team_entity.dart';
 import 'legacy_database_repository.dart';
+import 'legacy_entities/pacing_entity.dart';
+import 'legacy_entities/team_entity.dart';
 
 class TeamsRepository {
   final LegacyDatabaseRepository databaseRepository;

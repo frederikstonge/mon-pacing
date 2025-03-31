@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/improvisation_entity.dart';
+import '../repositories/legacy_entities/improvisation_entity.dart';
 import 'improvisation_type.dart';
 
 part 'improvisation_model.mapper.dart';

@@ -1,37 +1,32 @@
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+import 'package:objectbox/objectbox.dart';
 
-import '../../../models/improvisation_type.dart';
 import 'improvisation_entity.dart';
 
-part 'pacing_entity.mapper.dart';
-part 'pacing_entity.g.dart';
+@Entity()
+class PacingEntity {
+  int id;
+  @Index()
+  String name;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? createdDate;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? modifiedDate;
+  int defaultNumberOfTeams;
+  List<String> tags;
+  String? integrationId;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-@MappableClass()
-@Collection(accessor: 'pacingModels')
-@Name('PacingModel')
-class PacingEntity with PacingEntityMappable {
-  final int id;
-  @index
-  final String name;
-  @index
-  final DateTime? createdDate;
-  @index
-  final DateTime? modifiedDate;
-  final List<ImprovisationEntity> improvisations;
-  final int defaultNumberOfTeams;
-  final List<String> tags;
-  final String? integrationId;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
+  final improvisations = ToMany<ImprovisationEntity>();
 
-  const PacingEntity({
-    required this.id,
+  PacingEntity({
+    this.id = 0,
     required this.name,
-    required this.createdDate,
-    required this.modifiedDate,
-    required this.improvisations,
-    this.defaultNumberOfTeams = 2,
+    required this.defaultNumberOfTeams,
+    this.createdDate,
+    this.modifiedDate,
     this.tags = const [],
     this.integrationId,
     this.integrationEntityId,

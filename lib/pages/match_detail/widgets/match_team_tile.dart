@@ -14,6 +14,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
 import '../../../validators/validators.dart';
+import '../../team_detail/widgets/team_performers.dart';
 
 class MatchTeamTile extends StatefulWidget {
   final TeamModel team;
@@ -123,71 +124,15 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
             ),
           ),
           const Divider(),
-          Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(
-              S.of(context).performers,
-              style: Theme.of(context).textTheme.labelMedium,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          ReorderableListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            onReorderStart: (index) => widget.onDragStart(),
-            onReorder: (oldIndex, newIndex) => widget.onDrag(widget.team.id, oldIndex, newIndex),
-            children:
-                widget.team.performers
-                    .asMap()
-                    .entries
-                    .map(
-                      (d) => Container(
-                        key: ValueKey(d.value.id),
-                        color: Theme.of(context).cardTheme.color,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 16.0),
-                                child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
-                              ),
-                              Expanded(
-                                child: TeamPerformerItem(
-                                  key: ValueKey(d.value.id),
-                                  performer: d.value,
-                                  valueChanged: (value) async {
-                                    await widget.editPerformer(widget.team.id, d.key, value);
-                                  },
-                                ),
-                              ),
-                              LoadingIconButton(
-                                tooltip: S.of(context).add,
-                                icon: const Icon(Icons.add),
-                                onPressed:
-                                    widget.addPerformer != null
-                                        ? () async {
-                                          await widget.addPerformer!(widget.team.id);
-                                        }
-                                        : null,
-                              ),
-                              LoadingIconButton(
-                                tooltip: S.of(context).remove,
-                                icon: const Icon(Icons.remove),
-                                onPressed:
-                                    widget.removePerformer != null
-                                        ? () async {
-                                          await widget.removePerformer!(widget.team.id, d.key);
-                                        }
-                                        : null,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
+          TeamPerformers(
+            label: S.of(context).performers,
+            performers: widget.team.performers,
+            addPerformer: widget.addPerformer != null ? () => widget.addPerformer!(widget.team.id) : null,
+            editPerformer: (index, performer) => widget.editPerformer(widget.team.id, index, performer),
+            removePerformer:
+                widget.removePerformer != null ? (index) => widget.removePerformer!(widget.team.id, index) : null,
+            onDrag: (oldIndex, newIndex) => widget.onDrag(widget.team.id, oldIndex, newIndex),
+            onDragStart: widget.onDragStart,
           ),
         ],
       ),

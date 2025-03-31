@@ -1,7 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/match_team_entity.dart';
-import '../repositories/entities/team_entity.dart';
+import '../repositories/legacy_entities/match_team_entity.dart';
+import '../repositories/legacy_entities/team_entity.dart';
 import 'performer_model.dart';
 
 part 'team_model.mapper.dart';

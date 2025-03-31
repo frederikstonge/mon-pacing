@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/performer_entity.dart';
+import '../repositories/legacy_entities/performer_entity.dart';
 
 part 'performer_model.mapper.dart';
 

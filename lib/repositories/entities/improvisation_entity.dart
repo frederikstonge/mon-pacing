@@ -1,29 +1,24 @@
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+import 'package:objectbox/objectbox.dart';
 
-import '../../../models/improvisation_type.dart';
+@Entity()
+class ImprovisationEntity {
+  int id;
+  int order;
+  int type;
+  String category;
+  String theme;
+  @Property(type: PropertyType.intVector)
+  List<int> durationsInSeconds;
+  String performers;
+  String notes;
+  int timeBufferInSeconds = 30;
+  int huddleTimerInSeconds = 30;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-part 'improvisation_entity.mapper.dart';
-part 'improvisation_entity.g.dart';
-
-@MappableClass()
-@Embedded(ignore: {'copyWith'})
-@Name('ImprovisationModel')
-class ImprovisationEntity with ImprovisationEntityMappable {
-  final int id;
-  final ImprovisationType type;
-  final String category;
-  final String theme;
-  final List<int> durationsInSeconds;
-  final String performers;
-  final String notes;
-  final int timeBufferInSeconds;
-  final int huddleTimerInSeconds;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
-
-  const ImprovisationEntity({
-    required this.id,
+  ImprovisationEntity({
+    this.id = 0,
+    required this.order,
     required this.type,
     required this.category,
     required this.theme,
