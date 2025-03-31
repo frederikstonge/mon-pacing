@@ -36,7 +36,8 @@ class TeamModel with TeamModelMappable {
     modifiedDate: entity.modifiedDate,
     name: entity.name,
     color: entity.color,
-    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).toList(),
+    performers:
+        entity.performers.asMap().entries.map((e) => PerformerModel.fromEntity(entity: e.value, order: e.key)).toList(),
     tags: entity.tags,
   );
 
@@ -46,7 +47,8 @@ class TeamModel with TeamModelMappable {
     modifiedDate: null,
     name: entity.name,
     color: entity.color,
-    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).toList(),
+    performers:
+        entity.performers.asMap().entries.map((e) => PerformerModel.fromEntity(entity: e.value, order: e.key)).toList(),
     integrationEntityId: entity.integrationEntityId,
     integrationAdditionalData: entity.integrationAdditionalData,
   );

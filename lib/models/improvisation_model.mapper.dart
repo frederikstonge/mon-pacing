@@ -23,6 +23,9 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
 
   static int _$id(ImprovisationModel v) => v.id;
   static const Field<ImprovisationModel, int> _f$id = Field('id', _$id);
+  static int _$order(ImprovisationModel v) => v.order;
+  static const Field<ImprovisationModel, int> _f$order =
+      Field('order', _$order);
   static ImprovisationType _$type(ImprovisationModel v) => v.type;
   static const Field<ImprovisationModel, ImprovisationType> _f$type =
       Field('type', _$type);
@@ -63,6 +66,7 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   @override
   final MappableFields<ImprovisationModel> fields = const {
     #id: _f$id,
+    #order: _f$order,
     #type: _f$type,
     #category: _f$category,
     #theme: _f$theme,
@@ -78,6 +82,7 @@ class ImprovisationModelMapper extends ClassMapperBase<ImprovisationModel> {
   static ImprovisationModel _instantiate(DecodingData data) {
     return ImprovisationModel(
         id: data.dec(_f$id),
+        order: data.dec(_f$order),
         type: data.dec(_f$type),
         category: data.dec(_f$category),
         theme: data.dec(_f$theme),
@@ -148,6 +153,7 @@ abstract class ImprovisationModelCopyWith<$R, $In extends ImprovisationModel,
   ListCopyWith<$R, int, ObjectCopyWith<$R, int, int>> get durationsInSeconds;
   $R call(
       {int? id,
+      int? order,
       ImprovisationType? type,
       String? category,
       String? theme,
@@ -179,6 +185,7 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {int? id,
+          int? order,
           ImprovisationType? type,
           String? category,
           String? theme,
@@ -191,6 +198,7 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
+        if (order != null) #order: order,
         if (type != null) #type: type,
         if (category != null) #category: category,
         if (theme != null) #theme: theme,
@@ -209,6 +217,7 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
   @override
   ImprovisationModel $make(CopyWithData data) => ImprovisationModel(
       id: data.get(#id, or: $value.id),
+      order: data.get(#order, or: $value.order),
       type: data.get(#type, or: $value.type),
       category: data.get(#category, or: $value.category),
       theme: data.get(#theme, or: $value.theme),
