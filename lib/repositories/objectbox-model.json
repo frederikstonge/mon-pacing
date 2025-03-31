@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:322570116326816951",
-      "lastPropertyId": "11:8003889064682703545",
+      "lastPropertyId": "12:6240579054792186524",
       "name": "ImprovisationEntity",
       "properties": [
         {
@@ -63,6 +63,11 @@
           "id": "11:8003889064682703545",
           "name": "integrationAdditionalData",
           "type": 9
+        },
+        {
+          "id": "12:6240579054792186524",
+          "name": "order",
+          "type": 6
         }
       ],
       "relations": []
@@ -174,7 +179,7 @@
         {
           "id": "1:9080573965794852406",
           "name": "teams",
-          "targetId": "3:1320290470514103811"
+          "targetId": "9:1216612997671907182"
         },
         {
           "id": "2:6415516565511235961",
@@ -195,46 +200,6 @@
           "id": "5:1213309736984790490",
           "name": "stars",
           "targetId": "8:5250281909069223402"
-        }
-      ]
-    },
-    {
-      "id": "3:1320290470514103811",
-      "lastPropertyId": "5:6599612206698723775",
-      "name": "MatchTeamEntity",
-      "properties": [
-        {
-          "id": "1:3146358308400614885",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:6958582708582395732",
-          "name": "name",
-          "type": 9
-        },
-        {
-          "id": "3:7387814731336651217",
-          "name": "color",
-          "type": 6
-        },
-        {
-          "id": "4:1247100399648396342",
-          "name": "integrationEntityId",
-          "type": 9
-        },
-        {
-          "id": "5:6599612206698723775",
-          "name": "integrationAdditionalData",
-          "type": 9
-        }
-      ],
-      "relations": [
-        {
-          "id": "6:7436834865469759341",
-          "name": "performers",
-          "targetId": "6:7048654271457101854"
         }
       ]
     },
@@ -345,7 +310,7 @@
     },
     {
       "id": "6:7048654271457101854",
-      "lastPropertyId": "4:6114869884479456570",
+      "lastPropertyId": "5:1878360138895613792",
       "name": "PerformerEntity",
       "properties": [
         {
@@ -368,6 +333,11 @@
           "id": "4:6114869884479456570",
           "name": "integrationAdditionalData",
           "type": 9
+        },
+        {
+          "id": "5:1878360138895613792",
+          "name": "order",
+          "type": 6
         }
       ],
       "relations": []
@@ -403,7 +373,7 @@
     },
     {
       "id": "8:5250281909069223402",
-      "lastPropertyId": "3:4230611530197114102",
+      "lastPropertyId": "4:4410339759004335565",
       "name": "StarEntity",
       "properties": [
         {
@@ -421,13 +391,18 @@
           "id": "3:4230611530197114102",
           "name": "teamId",
           "type": 6
+        },
+        {
+          "id": "4:4410339759004335565",
+          "name": "order",
+          "type": 6
         }
       ],
       "relations": []
     },
     {
       "id": "9:1216612997671907182",
-      "lastPropertyId": "6:4968754909771031518",
+      "lastPropertyId": "8:6778898514959522071",
       "name": "TeamEntity",
       "properties": [
         {
@@ -466,6 +441,16 @@
           "id": "6:4968754909771031518",
           "name": "tags",
           "type": 30
+        },
+        {
+          "id": "7:2925872941265532207",
+          "name": "integrationEntityId",
+          "type": 9
+        },
+        {
+          "id": "8:6778898514959522071",
+          "name": "integrationAdditionalData",
+          "type": 9
         }
       ],
       "relations": [
@@ -483,9 +468,17 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    1320290470514103811
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    3146358308400614885,
+    6958582708582395732,
+    7387814731336651217,
+    1247100399648396342,
+    6599612206698723775
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

@@ -1,16 +1,11 @@
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+import 'package:objectbox/objectbox.dart';
 
-part 'star_entity.mapper.dart';
-part 'star_entity.g.dart';
+@Entity()
+class StarEntity {
+  int id;
+  int order;
+  int performerId;
+  int teamId;
 
-@MappableClass()
-@Embedded(ignore: {'copyWith'})
-@Name('StarModel')
-class StarEntity with StarEntityMappable {
-  final int id;
-  final int performerId;
-  final int teamId;
-
-  const StarEntity({required this.id, required this.performerId, required this.teamId});
+  StarEntity({this.id = 0, required this.order, required this.performerId, required this.teamId});
 }

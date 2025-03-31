@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/point_entity.dart';
+import '../repositories/legacy_entities/point_entity.dart';
 
 part 'point_model.mapper.dart';
 

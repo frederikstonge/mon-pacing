@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/star_entity.dart';
+import '../repositories/legacy_entities/star_entity.dart';
 
 part 'star_model.mapper.dart';
 

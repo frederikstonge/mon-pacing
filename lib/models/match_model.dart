@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/entities/match_entity.dart';
+import '../repositories/legacy_entities/match_entity.dart';
 import 'improvisation_model.dart';
 import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
