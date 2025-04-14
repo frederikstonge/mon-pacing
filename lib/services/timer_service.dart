@@ -164,7 +164,7 @@ class TimerTaskHandler extends TaskHandler {
   }
 
   @override
-  Future<void> onDestroy(DateTime timestamp) async {
+  Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
     _taskMessage = null;
     _stopwatch?.stop();
     _stopwatch = null;
