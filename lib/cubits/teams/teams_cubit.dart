@@ -24,8 +24,8 @@ class TeamsCubit extends Cubit<TeamsState> {
 
   Future<TeamModel?> add(TeamModel model) async {
     try {
-      final teamEntity = await teamsRepository.add(model.toEntity());
-      final teamModel = TeamModel.fromEntity(entity: teamEntity);
+      final teamEntity = await teamsRepository.add(model.toLegacyEntity());
+      final teamModel = TeamModel.fromLegacyEntity(entity: teamEntity);
       return teamModel;
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
@@ -38,7 +38,7 @@ class TeamsCubit extends Cubit<TeamsState> {
 
   Future<void> edit(TeamModel model) async {
     try {
-      await teamsRepository.edit(model.toEntity());
+      await teamsRepository.edit(model.toLegacyEntity());
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -68,7 +68,7 @@ class TeamsCubit extends Cubit<TeamsState> {
       emit(
         state.copyWith(
           status: TeamsStatus.success,
-          teams: state.teams + response.map((e) => TeamModel.fromEntity(entity: e)).toList(),
+          teams: state.teams + response.map((e) => TeamModel.fromLegacyEntity(entity: e)).toList(),
           hasMore: response.length == _pageSize,
         ),
       );
@@ -99,10 +99,10 @@ class TeamsCubit extends Cubit<TeamsState> {
       if (filePath != null) {
         final teamValue = await File(filePath).readAsString();
         final team = TeamModelMapper.fromJson(teamValue);
-        final newTeamEntity = await teamsRepository.add(team.copyWith(id: 0).toEntity());
+        final newTeamEntity = await teamsRepository.add(team.copyWith(id: 0).toLegacyEntity());
         toasterService.show(title: Localizer.current.toasterTeamImported);
 
-        return TeamModel.fromEntity(entity: newTeamEntity);
+        return TeamModel.fromLegacyEntity(entity: newTeamEntity);
       }
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);

@@ -92,7 +92,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                               List<String> selectedTags,
                             ) async {
                               final response = await context.read<MatchesRepository>().search(search, selectedTags);
-                              return response.map((e) => MatchModel.fromEntity(entity: e)).toList();
+                              return response.map((e) => MatchModel.fromLegacyEntity(entity: e)).toList();
                             }, context.read<MatchesRepository>().getAllTags);
                             if (result != null) {
                               router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});

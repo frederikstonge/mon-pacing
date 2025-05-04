@@ -20,7 +20,7 @@ class PerformerModel with PerformerModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory PerformerModel.fromEntity({required PerformerEntity entity, required int order}) => PerformerModel(
+  factory PerformerModel.fromLegacyEntity({required PerformerEntity entity, required int order}) => PerformerModel(
     id: entity.id,
     name: entity.name,
     order: order,
@@ -28,7 +28,7 @@ class PerformerModel with PerformerModelMappable {
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  PerformerEntity toEntity() => PerformerEntity(
+  PerformerEntity toLegacyEntity() => PerformerEntity(
     id: id,
     name: name,
     integrationEntityId: integrationEntityId,

@@ -62,22 +62,22 @@ class MatchModel with MatchModelMappable {
     this.integrationPenaltyTypes,
   });
 
-  factory MatchModel.fromEntity({required MatchEntity entity}) => MatchModel(
+  factory MatchModel.fromLegacyEntity({required MatchEntity entity}) => MatchModel(
     id: entity.id,
     name: entity.name,
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
-    teams: entity.teams.map((e) => TeamModel.fromEmbededEntity(entity: e)).toList(),
+    teams: entity.teams.map((e) => TeamModel.fromLegacyEmbededEntity(entity: e)).toList(),
     improvisations:
         entity.improvisations
             .asMap()
             .entries
-            .map((e) => ImprovisationModel.fromEntity(entity: e.value, order: e.key))
+            .map((e) => ImprovisationModel.fromLegacyEntity(entity: e.value, order: e.key))
             .toList(),
-    penalties: entity.penalties.map((e) => PenaltyModel.fromEntity(entity: e)).toList(),
-    points: entity.points.map((e) => PointModel.fromEntity(entity: e)).toList(),
+    penalties: entity.penalties.map((e) => PenaltyModel.fromLegacyEntity(entity: e)).toList(),
+    points: entity.points.map((e) => PointModel.fromLegacyEntity(entity: e)).toList(),
     tags: entity.tags,
-    stars: entity.stars.asMap().entries.map((e) => StarModel.fromEntity(entity: e.value, order: e.key)).toList(),
+    stars: entity.stars.asMap().entries.map((e) => StarModel.fromLegacyEntity(entity: e.value, order: e.key)).toList(),
     enableStatistics: entity.enableStatistics,
     enablePenaltiesImpactPoints: entity.enablePenaltiesImpactPoints,
     penaltiesImpactType: entity.penaltiesImpactType,
@@ -93,17 +93,17 @@ class MatchModel with MatchModelMappable {
     integrationPenaltyTypes: entity.integrationPenaltyTypes,
   );
 
-  MatchEntity toEntity() => MatchEntity(
+  MatchEntity toLegacyEntity() => MatchEntity(
     id: id,
     name: name,
     createdDate: createdDate,
     modifiedDate: modifiedDate,
-    teams: teams.map((e) => e.toEmbededEntity()).toList(),
-    improvisations: improvisations.map((e) => e.toEntity()).toList(),
-    penalties: penalties.map((e) => e.toEntity()).toList(),
-    points: points.map((e) => e.toEntity()).toList(),
+    teams: teams.map((e) => e.toLegacyEmbededEntity()).toList(),
+    improvisations: improvisations.map((e) => e.toLegacyEntity()).toList(),
+    penalties: penalties.map((e) => e.toLegacyEntity()).toList(),
+    points: points.map((e) => e.toLegacyEntity()).toList(),
     tags: tags,
-    stars: stars.map((e) => e.toEntity()).toList(),
+    stars: stars.map((e) => e.toLegacyEntity()).toList(),
     enableStatistics: enableStatistics,
     enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
     penaltiesImpactType: penaltiesImpactType,

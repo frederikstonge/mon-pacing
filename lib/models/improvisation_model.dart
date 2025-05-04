@@ -35,7 +35,7 @@ class ImprovisationModel with ImprovisationModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory ImprovisationModel.fromEntity({required ImprovisationEntity entity, required int order}) =>
+  factory ImprovisationModel.fromLegacyEntity({required ImprovisationEntity entity, required int order}) =>
       ImprovisationModel(
         id: entity.id,
         order: order,
@@ -51,7 +51,7 @@ class ImprovisationModel with ImprovisationModelMappable {
         integrationAdditionalData: entity.integrationAdditionalData,
       );
 
-  ImprovisationEntity toEntity() => ImprovisationEntity(
+  ImprovisationEntity toLegacyEntity() => ImprovisationEntity(
     id: id,
     type: type,
     category: category,

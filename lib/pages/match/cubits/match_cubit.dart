@@ -44,7 +44,7 @@ class MatchCubit extends Cubit<MatchState> {
       emit(state.copyWith(status: MatchStatus.error, error: Localizer.current.toasterGenericError));
       return;
     }
-    final match = MatchModel.fromEntity(entity: matchEntity);
+    final match = MatchModel.fromLegacyEntity(entity: matchEntity);
     var selectedImprovisationIndex =
         improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;

@@ -29,7 +29,7 @@ class PacingCubit extends Cubit<PacingState> {
       return;
     }
 
-    final pacing = PacingModel.fromEntity(entity: pacingEntity);
+    final pacing = PacingModel.fromLegacyEntity(entity: pacingEntity);
     emit(state.copyWith(status: PacingStatus.success, pacing: pacing));
   }
 

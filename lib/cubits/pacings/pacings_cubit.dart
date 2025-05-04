@@ -24,8 +24,8 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<PacingModel?> add(PacingModel model) async {
     try {
-      final pacingEntity = await pacingsRepository.add(model.toEntity());
-      final pacingModel = PacingModel.fromEntity(entity: pacingEntity);
+      final pacingEntity = await pacingsRepository.add(model.toLegacyEntity());
+      final pacingModel = PacingModel.fromLegacyEntity(entity: pacingEntity);
       return pacingModel;
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
@@ -38,7 +38,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> edit(PacingModel model) async {
     try {
-      await pacingsRepository.edit(model.toEntity());
+      await pacingsRepository.edit(model.toLegacyEntity());
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -68,7 +68,7 @@ class PacingsCubit extends Cubit<PacingsState> {
       emit(
         state.copyWith(
           status: PacingsStatus.success,
-          pacings: state.pacings + response.map((e) => PacingModel.fromEntity(entity: e)).toList(),
+          pacings: state.pacings + response.map((e) => PacingModel.fromLegacyEntity(entity: e)).toList(),
           hasMore: response.length == _pageSize,
         ),
       );
@@ -103,10 +103,10 @@ class PacingsCubit extends Cubit<PacingsState> {
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
         final pacing = PacingModelMapper.fromJson(pacingValue);
-        final newPacingEntity = await pacingsRepository.add(pacing.copyWith(id: 0).toEntity());
+        final newPacingEntity = await pacingsRepository.add(pacing.copyWith(id: 0).toLegacyEntity());
         toasterService.show(title: Localizer.current.toasterPacingImported);
 
-        return PacingModel.fromEntity(entity: newPacingEntity);
+        return PacingModel.fromLegacyEntity(entity: newPacingEntity);
       }
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);

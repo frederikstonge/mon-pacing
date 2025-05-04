@@ -13,8 +13,8 @@ class PointModel with PointModelMappable {
 
   const PointModel({required this.id, required this.teamId, required this.improvisationId, required this.value});
 
-  factory PointModel.fromEntity({required PointEntity entity}) =>
+  factory PointModel.fromLegacyEntity({required PointEntity entity}) =>
       PointModel(id: entity.id, teamId: entity.teamId, improvisationId: entity.improvisationId, value: entity.value);
 
-  PointEntity toEntity() => PointEntity(id: id, teamId: teamId, improvisationId: improvisationId, value: value);
+  PointEntity toLegacyEntity() => PointEntity(id: id, teamId: teamId, improvisationId: improvisationId, value: value);
 }

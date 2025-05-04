@@ -22,7 +22,7 @@ class PenaltyModel with PenaltyModelMappable {
     required this.improvisationId,
   });
 
-  factory PenaltyModel.fromEntity({required PenaltyEntity entity}) => PenaltyModel(
+  factory PenaltyModel.fromLegacyEntity({required PenaltyEntity entity}) => PenaltyModel(
     id: entity.id,
     major: entity.major,
     type: entity.type,
@@ -31,7 +31,7 @@ class PenaltyModel with PenaltyModelMappable {
     improvisationId: entity.improvisationId,
   );
 
-  PenaltyEntity toEntity() => PenaltyEntity(
+  PenaltyEntity toLegacyEntity() => PenaltyEntity(
     id: id,
     major: major,
     type: type,

@@ -31,7 +31,7 @@ class PacingModel with PacingModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory PacingModel.fromEntity({required PacingEntity entity}) => PacingModel(
+  factory PacingModel.fromLegacyEntity({required PacingEntity entity}) => PacingModel(
     id: entity.id,
     name: entity.name,
     createdDate: entity.createdDate,
@@ -40,7 +40,7 @@ class PacingModel with PacingModelMappable {
         entity.improvisations
             .asMap()
             .entries
-            .map((e) => ImprovisationModel.fromEntity(entity: e.value, order: e.key))
+            .map((e) => ImprovisationModel.fromLegacyEntity(entity: e.value, order: e.key))
             .toList(),
     defaultNumberOfTeams: entity.defaultNumberOfTeams,
     tags: entity.tags,
@@ -49,12 +49,12 @@ class PacingModel with PacingModelMappable {
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  PacingEntity toEntity() => PacingEntity(
+  PacingEntity toLegacyEntity() => PacingEntity(
     id: id,
     name: name,
     createdDate: createdDate,
     modifiedDate: modifiedDate,
-    improvisations: improvisations.map((e) => e.toEntity()).toList(),
+    improvisations: improvisations.map((e) => e.toLegacyEntity()).toList(),
     defaultNumberOfTeams: defaultNumberOfTeams,
     tags: tags,
     integrationId: integrationId,

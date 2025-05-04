@@ -13,8 +13,8 @@ class StarModel with StarModelMappable {
 
   const StarModel({required this.id, required this.order, required this.performerId, required this.teamId});
 
-  factory StarModel.fromEntity({required StarEntity entity, required int order}) =>
+  factory StarModel.fromLegacyEntity({required StarEntity entity, required int order}) =>
       StarModel(id: entity.id, order: order, performerId: entity.performerId, teamId: entity.teamId);
 
-  StarEntity toEntity() => StarEntity(id: id, performerId: performerId, teamId: teamId);
+  StarEntity toLegacyEntity() => StarEntity(id: id, performerId: performerId, teamId: teamId);
 }
