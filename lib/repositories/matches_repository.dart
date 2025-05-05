@@ -1,6 +1,8 @@
 import 'package:isar/isar.dart';
 
 import '../extensions/iterable_extensions.dart';
+import '../models/tag_model.dart';
+import 'entities/tag_entity.dart';
 import 'legacy_database_repository.dart';
 import 'legacy_entities/match_entity.dart';
 
@@ -59,14 +61,13 @@ class MatchesRepository {
         .findAllAsync();
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
+  Future<List<TagEntity>> getAllTags({String search = ''}) async {
     final db = await databaseRepository.database;
-    final tags =
-        await db.matchModels
-            .where()
-            .optional(query.isNotEmpty, (q) => q.tagsElementContains(query))
-            .tagsProperty()
-            .findAllAsync();
-    return tags.selectMany((t) => t).toSet().toList();
+    final box = db.box<TagEntity>();
+    final builder = search.isNotEmpty ? box.query(TagEntity_.name.contains(search, caseSensitive: false)) : box.query();
+    final query = builder.build();
+    final returnValue = query.find();
+    query.close();
+    return returnValue;
   }
 }

@@ -17,6 +17,7 @@ import '../../cubits/settings/settings_state.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -179,7 +180,9 @@ class _PacingPageViewState extends State<PacingPageView> {
                                 pacing: pacing,
                                 improvisation: improvisation,
                                 index: index,
-                                getAllCategories: context.read<PacingsCubit>().getAllCategories,
+                                getAllCategories: ({String? query}) async {
+                                  return await context.read<PacingsRepository>().getAllCategories(search: query ?? '');
+                                },
                                 onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
                                 onConfirmDelete:
                                     (value) async => await MessageBoxDialog.questionShow(

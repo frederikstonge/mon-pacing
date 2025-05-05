@@ -17,6 +17,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
       ImprovisationModelMapper.ensureInitialized();
       PenaltyModelMapper.ensureInitialized();
       PointModelMapper.ensureInitialized();
+      TagModelMapper.ensureInitialized();
       StarModelMapper.ensureInitialized();
       PenaltiesImpactTypeMapper.ensureInitialized();
     }
@@ -49,8 +50,8 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static List<PointModel> _$points(MatchModel v) => v.points;
   static const Field<MatchModel, List<PointModel>> _f$points =
       Field('points', _$points);
-  static List<String> _$tags(MatchModel v) => v.tags;
-  static const Field<MatchModel, List<String>> _f$tags =
+  static List<TagModel> _$tags(MatchModel v) => v.tags;
+  static const Field<MatchModel, List<TagModel>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
   static List<StarModel> _$stars(MatchModel v) => v.stars;
   static const Field<MatchModel, List<StarModel>> _f$stars =
@@ -241,7 +242,7 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       PenaltyModelCopyWith<$R, PenaltyModel, PenaltyModel>> get penalties;
   ListCopyWith<$R, PointModel, PointModelCopyWith<$R, PointModel, PointModel>>
       get points;
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   ListCopyWith<$R, StarModel, StarModelCopyWith<$R, StarModel, StarModel>>
       get stars;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
@@ -255,7 +256,7 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       List<ImprovisationModel>? improvisations,
       List<PenaltyModel>? penalties,
       List<PointModel>? points,
-      List<String>? tags,
+      List<TagModel>? tags,
       List<StarModel>? stars,
       bool? enableStatistics,
       bool? enablePenaltiesImpactPoints,
@@ -304,9 +305,9 @@ class _MatchModelCopyWithImpl<$R, $Out>
       get points => ListCopyWith($value.points, (v, t) => v.copyWith.$chain(t),
           (v) => call(points: v));
   @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
-      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(tags: v));
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>>
+      get tags => ListCopyWith(
+          $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
   @override
   ListCopyWith<$R, StarModel, StarModelCopyWith<$R, StarModel, StarModel>>
       get stars => ListCopyWith(
@@ -329,7 +330,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
           List<ImprovisationModel>? improvisations,
           List<PenaltyModel>? penalties,
           List<PointModel>? points,
-          List<String>? tags,
+          List<TagModel>? tags,
           List<StarModel>? stars,
           bool? enableStatistics,
           bool? enablePenaltiesImpactPoints,

@@ -9,9 +9,10 @@ import '../../components/form/tags_field_element.dart';
 import '../../components/form/text_field_element.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/text_header/text_header.dart';
-import '../../cubits/pacings/pacings_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../models/tag_model.dart';
+import '../../repositories/pacings_repository.dart';
 import '../../validators/validators.dart';
 import 'cubits/pacing_detail_cubit.dart';
 import 'cubits/pacing_detail_state.dart';
@@ -77,7 +78,10 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                           label: S.of(context).tags,
                           hintText: S.of(context).tagsHint,
                           initialTags: state.pacing.tags,
-                          getAllTags: context.read<PacingsCubit>().getAllTags,
+                          getAllTags: ({String? query}) async {
+                            final tags = await context.read<PacingsRepository>().getAllTags(search: query ?? '');
+                            return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                          },
                           onChanged: (value) {
                             context.read<PacingDetailCubit>().edit(state.pacing.copyWith(tags: value));
                           },

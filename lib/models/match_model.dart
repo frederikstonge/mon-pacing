@@ -6,6 +6,7 @@ import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
 import 'point_model.dart';
 import 'star_model.dart';
+import 'tag_model.dart';
 import 'team_model.dart';
 
 part 'match_model.mapper.dart';
@@ -20,7 +21,7 @@ class MatchModel with MatchModelMappable {
   final List<ImprovisationModel> improvisations;
   final List<PenaltyModel> penalties;
   final List<PointModel> points;
-  final List<String> tags;
+  final List<TagModel> tags;
   final List<StarModel> stars;
   final bool enableStatistics;
   final bool enablePenaltiesImpactPoints;
@@ -73,7 +74,7 @@ class MatchModel with MatchModelMappable {
       penalties: entity.penalties.map((e) => PenaltyModel.fromEntity(entity: e)).toList(),
       points: entity.points.map((e) => PointModel.fromEntity(entity: e)).toList(),
       stars: entity.stars.map((e) => StarModel.fromEntity(entity: e)).toList(),
-      tags: entity.tags,
+      tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
       enableStatistics: entity.enableStatistics,
       enablePenaltiesImpactPoints: entity.enablePenaltiesImpactPoints,
       penaltiesImpactType: PenaltiesImpactType.values.elementAt(entity.penaltiesImpactType),
@@ -96,7 +97,6 @@ class MatchModel with MatchModelMappable {
       name: name,
       createdDate: createdDate,
       modifiedDate: modifiedDate,
-      tags: tags,
       enableStatistics: enableStatistics,
       enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
       penaltiesImpactType: penaltiesImpactType.index,
@@ -117,6 +117,7 @@ class MatchModel with MatchModelMappable {
     match.penalties.addAll(penalties.map((e) => e.toEntity()).toList());
     match.points.addAll(points.map((e) => e.toEntity()).toList());
     match.stars.addAll(stars.map((e) => e.toEntity()).toList());
+    match.tags.addAll(tags.map((e) => e.toEntity()).toList());
 
     return match;
   }

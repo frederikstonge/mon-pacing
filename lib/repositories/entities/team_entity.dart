@@ -1,6 +1,7 @@
 import 'package:objectbox/objectbox.dart';
 
 import 'performer_entity.dart';
+import 'tag_entity.dart';
 
 @Entity()
 class TeamEntity {
@@ -14,11 +15,11 @@ class TeamEntity {
   @Index()
   String name;
   int color;
-  List<String> tags;
   String? integrationEntityId;
   String? integrationAdditionalData;
 
   final performers = ToMany<PerformerEntity>();
+  final tags = ToMany<TagEntity>();
 
   TeamEntity({
     this.id = 0,
@@ -26,10 +27,7 @@ class TeamEntity {
     required this.color,
     this.createdDate,
     this.modifiedDate,
-    this.tags = const [],
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
-
-  List<String> get performerNames => performers.map((p) => p.name).toList();
 }

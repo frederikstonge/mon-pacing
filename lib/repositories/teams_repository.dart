@@ -1,5 +1,6 @@
 import 'database_repository.dart';
 import 'entities/performer_entity.dart';
+import 'entities/tag_entity.dart';
 import 'entities/team_entity.dart';
 import 'objectbox.g.dart';
 
@@ -20,17 +21,22 @@ class TeamsRepository {
   Future<void> delete(TeamEntity entity) async {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
-
     final performerBox = db.box<PerformerEntity>();
-    await performerBox.removeManyAsync(entity.performers.map((e) => e.id).toList());
+    final tagBox = db.box<TagEntity>();
 
-    await box.removeAsync(entity.id);
+    db.runInTransaction(TxMode.write, () {
+      performerBox.removeMany(entity.performers.map((e) => e.id).toList());
+      tagBox.removeMany(entity.tags.map((e) => e.id).toList());
+
+      box.remove(entity.id);
+    });
   }
 
   Future<void> edit(TeamEntity entity) async {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
     final performerBox = db.box<PerformerEntity>();
+    final tagBox = db.box<TagEntity>();
 
     final previousEntity = await box.getAsync(entity.id);
 
@@ -38,9 +44,15 @@ class TeamsRepository {
         previousEntity!.performers.where((e) => !entity.performers.any((i) => i.id == e.id)).toList();
     final editedImprovisations = entity.performers.where((e) => e.id != 0).toList();
 
+    final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
+    final editedTags = entity.tags.where((e) => e.id != 0).toList();
+
     db.runInTransaction(TxMode.write, () {
       performerBox.putMany(editedImprovisations);
       performerBox.removeMany(removedImprovisations.map((e) => e.id).toList());
+
+      tagBox.putMany(editedTags);
+      tagBox.removeMany(removedTags.map((e) => e.id).toList());
 
       entity.modifiedDate = DateTime.now();
       box.put(entity);
@@ -79,11 +91,12 @@ class TeamsRepository {
     return returnValue;
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
+  Future<List<TagEntity>> getAllTags({String search = ''}) async {
     final db = await databaseRepository.database;
-    final box = db.box<TeamEntity>();
-    final query = box.query().build();
-    final returnValue = query.property(TeamEntity_.tags).find();
+    final box = db.box<TagEntity>();
+    final builder = search.isNotEmpty ? box.query(TagEntity_.name.contains(search, caseSensitive: false)) : box.query();
+    final query = builder.build();
+    final returnValue = query.find();
     query.close();
     return returnValue;
   }

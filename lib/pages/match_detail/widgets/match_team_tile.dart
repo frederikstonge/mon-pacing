@@ -12,6 +12,7 @@ import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../extensions/color_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/performer_model.dart';
+import '../../../models/tag_model.dart';
 import '../../../models/team_model.dart';
 import '../../../validators/validators.dart';
 import '../../team_detail/widgets/team_performers.dart';
@@ -22,7 +23,7 @@ class MatchTeamTile extends StatefulWidget {
   final FutureOr<void> Function(TeamModel team) onChanged;
   final FutureOr<void> Function()? onDelete;
   final Future<List<TeamModel>> Function(String query, List<String> selectedTags) getAllTeams;
-  final Future<List<String>> Function() getAllTeamTags;
+  final Future<List<TagModel>> Function() getAllTeamTags;
   final void Function(TeamModel team) onTeamSelected;
   final FutureOr<void> Function(int teamId)? addPerformer;
   final FutureOr<void> Function(int teamId, int index, PerformerModel performer) editPerformer;

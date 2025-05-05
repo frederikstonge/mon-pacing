@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/team_entity.dart';
 import 'performer_model.dart';
+import 'tag_model.dart';
 
 part 'team_model.mapper.dart';
 
@@ -13,7 +14,7 @@ class TeamModel with TeamModelMappable {
   final String name;
   final int color;
   final List<PerformerModel> performers;
-  final List<String> tags;
+  final List<TagModel> tags;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
 
@@ -36,20 +37,14 @@ class TeamModel with TeamModelMappable {
     name: entity.name,
     color: entity.color,
     performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).toList(),
-    tags: entity.tags,
+    tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
   );
 
   TeamEntity toEntity() {
-    final team = TeamEntity(
-      id: id,
-      createdDate: createdDate,
-      modifiedDate: modifiedDate,
-      name: name,
-      color: color,
-      tags: tags,
-    );
+    final team = TeamEntity(id: id, createdDate: createdDate, modifiedDate: modifiedDate, name: name, color: color);
 
     team.performers.addAll(performers.map((e) => e.toEntity()).toList());
+    team.tags.addAll(tags.map((e) => e.toEntity()).toList());
     return team;
   }
 }

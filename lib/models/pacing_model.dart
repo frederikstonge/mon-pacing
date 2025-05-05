@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/pacing_entity.dart';
 import 'improvisation_model.dart';
+import 'tag_model.dart';
 
 part 'pacing_model.mapper.dart';
 
@@ -13,7 +14,7 @@ class PacingModel with PacingModelMappable {
   final DateTime? modifiedDate;
   final List<ImprovisationModel> improvisations;
   final int defaultNumberOfTeams;
-  final List<String> tags;
+  final List<TagModel> tags;
   final String? integrationId;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
@@ -36,9 +37,9 @@ class PacingModel with PacingModelMappable {
     name: entity.name,
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
-    improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
     defaultNumberOfTeams: entity.defaultNumberOfTeams,
-    tags: entity.tags,
+    improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+    tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
     integrationId: entity.integrationId,
     integrationEntityId: entity.integrationEntityId,
     integrationAdditionalData: entity.integrationAdditionalData,
@@ -51,12 +52,13 @@ class PacingModel with PacingModelMappable {
       createdDate: createdDate,
       modifiedDate: modifiedDate,
       defaultNumberOfTeams: defaultNumberOfTeams,
-      tags: tags,
       integrationId: integrationId,
       integrationEntityId: integrationEntityId,
       integrationAdditionalData: integrationAdditionalData,
     );
+
     pacing.improvisations.addAll(improvisations.map((e) => e.toEntity()).toList());
+    pacing.tags.addAll(tags.map((e) => e.toEntity()).toList());
     return pacing;
   }
 }

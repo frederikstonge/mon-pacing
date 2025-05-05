@@ -1,6 +1,7 @@
 import 'package:objectbox/objectbox.dart';
 
 import 'improvisation_entity.dart';
+import 'tag_entity.dart';
 
 @Entity()
 class PacingEntity {
@@ -14,11 +15,11 @@ class PacingEntity {
   @Property(type: PropertyType.date)
   DateTime? modifiedDate;
   int defaultNumberOfTeams;
-  List<String> tags;
   String? integrationId;
   String? integrationEntityId;
   String? integrationAdditionalData;
 
+  final tags = ToMany<TagEntity>();
   final improvisations = ToMany<ImprovisationEntity>();
 
   PacingEntity({
@@ -27,13 +28,8 @@ class PacingEntity {
     required this.defaultNumberOfTeams,
     this.createdDate,
     this.modifiedDate,
-    this.tags = const [],
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
-
-  List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
-
-  List<String> get themes => improvisations.where((e) => e.theme.isNotEmpty).map((e) => e.theme).toList();
 }

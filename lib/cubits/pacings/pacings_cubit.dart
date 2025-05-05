@@ -78,14 +78,6 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
-    return await pacingsRepository.getAllTags(query: query);
-  }
-
-  Future<List<String>> getAllCategories({String query = ''}) {
-    return pacingsRepository.getAllCategories(search: query);
-  }
-
   Future<void> refresh() async {
     emit(const PacingsState(status: PacingsStatus.initial));
     await fetch();

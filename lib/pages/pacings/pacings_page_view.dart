@@ -23,6 +23,7 @@ import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/pacing_model.dart';
+import '../../models/tag_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
@@ -119,13 +120,17 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                           tooltip: S.of(context).search(category: S.of(context).pacings),
                           onPressed: () async {
                             final router = GoRouter.of(context);
-                            final result = await PacingsSearch.showDialog(context, (
-                              String search,
-                              List<String> selectedTags,
-                            ) async {
-                              final response = await context.read<PacingsRepository>().search(search, selectedTags);
-                              return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
-                            }, context.read<PacingsRepository>().getAllTags);
+                            final result = await PacingsSearch.showDialog(
+                              context,
+                              (String search, List<String> selectedTags) async {
+                                final response = await context.read<PacingsRepository>().search(search, selectedTags);
+                                return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
+                              },
+                              () async {
+                                final tags = await context.read<PacingsRepository>().getAllTags();
+                                return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                              },
+                            );
                             if (result != null) {
                               router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
                             }

@@ -14,6 +14,7 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = PacingModelMapper._());
       ImprovisationModelMapper.ensureInitialized();
+      TagModelMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -38,8 +39,8 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
   static int _$defaultNumberOfTeams(PacingModel v) => v.defaultNumberOfTeams;
   static const Field<PacingModel, int> _f$defaultNumberOfTeams =
       Field('defaultNumberOfTeams', _$defaultNumberOfTeams, opt: true, def: 2);
-  static List<String> _$tags(PacingModel v) => v.tags;
-  static const Field<PacingModel, List<String>> _f$tags =
+  static List<TagModel> _$tags(PacingModel v) => v.tags;
+  static const Field<PacingModel, List<TagModel>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
   static String? _$integrationId(PacingModel v) => v.integrationId;
   static const Field<PacingModel, String> _f$integrationId =
@@ -137,7 +138,7 @@ abstract class PacingModelCopyWith<$R, $In extends PacingModel, $Out>
       ImprovisationModel,
       ImprovisationModelCopyWith<$R, ImprovisationModel,
           ImprovisationModel>> get improvisations;
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   $R call(
       {int? id,
       String? name,
@@ -145,7 +146,7 @@ abstract class PacingModelCopyWith<$R, $In extends PacingModel, $Out>
       DateTime? modifiedDate,
       List<ImprovisationModel>? improvisations,
       int? defaultNumberOfTeams,
-      List<String>? tags,
+      List<TagModel>? tags,
       String? integrationId,
       String? integrationEntityId,
       String? integrationAdditionalData});
@@ -170,9 +171,9 @@ class _PacingModelCopyWithImpl<$R, $Out>
       (v, t) => v.copyWith.$chain(t),
       (v) => call(improvisations: v));
   @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
-      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(tags: v));
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>>
+      get tags => ListCopyWith(
+          $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
   @override
   $R call(
           {int? id,
@@ -181,7 +182,7 @@ class _PacingModelCopyWithImpl<$R, $Out>
           Object? modifiedDate = $none,
           List<ImprovisationModel>? improvisations,
           int? defaultNumberOfTeams,
-          List<String>? tags,
+          List<TagModel>? tags,
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>

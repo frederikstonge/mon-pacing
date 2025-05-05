@@ -4,6 +4,7 @@ import 'improvisation_entity.dart';
 import 'penalty_entity.dart';
 import 'point_entity.dart';
 import 'star_entity.dart';
+import 'tag_entity.dart';
 import 'team_entity.dart';
 
 @Entity()
@@ -17,7 +18,6 @@ class MatchEntity {
   @Index()
   @Property(type: PropertyType.date)
   DateTime? modifiedDate;
-  List<String> tags;
   bool enableStatistics;
   bool enablePenaltiesImpactPoints;
   int penaltiesImpactType;
@@ -37,6 +37,7 @@ class MatchEntity {
   final penalties = ToMany<PenaltyEntity>();
   final points = ToMany<PointEntity>();
   final stars = ToMany<StarEntity>();
+  final tags = ToMany<TagEntity>();
 
   MatchEntity({
     this.id = 0,
@@ -49,7 +50,6 @@ class MatchEntity {
     required this.penaltiesRequiredToImpactPoints,
     this.createdDate,
     this.modifiedDate,
-    this.tags = const [],
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
@@ -58,6 +58,4 @@ class MatchEntity {
     this.integrationMaxNumberOfImprovisations,
     this.integrationPenaltyTypes,
   });
-
-  List<String> get teamNames => teams.map((e) => e.name).toList();
 }

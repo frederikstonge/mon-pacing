@@ -3,6 +3,7 @@ import 'package:toastification/toastification.dart';
 
 import '../../l10n/localizer.dart';
 import '../../models/match_model.dart';
+import '../../models/tag_model.dart';
 import '../../repositories/matches_repository.dart';
 import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
@@ -99,8 +100,9 @@ class MatchesCubit extends Cubit<MatchesState> {
     }
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
-    return await matchesRepository.getAllTags(query: query);
+  Future<List<TagModel>> getAllTags({String query = ''}) async {
+    final tags = await matchesRepository.getAllTags(search: query);
+    return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
   }
 
   Future<void> refresh() async {

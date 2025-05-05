@@ -9,6 +9,7 @@ import 'entities/penalty_entity.dart';
 import 'entities/performer_entity.dart';
 import 'entities/point_entity.dart';
 import 'entities/star_entity.dart';
+import 'entities/tag_entity.dart';
 import 'entities/team_entity.dart';
 import 'legacy_database_repository.dart';
 import 'legacy_entities/match_entity.dart' as legacy_match;
@@ -72,11 +73,17 @@ class DatabaseRepository {
               name: pacing.name,
               createdDate: pacing.createdDate,
               modifiedDate: pacing.modifiedDate,
-              tags: pacing.tags,
               defaultNumberOfTeams: pacing.defaultNumberOfTeams,
               integrationId: pacing.integrationId,
               integrationEntityId: pacing.integrationEntityId,
               integrationAdditionalData: pacing.integrationAdditionalData,
+            );
+
+            newPacing.tags.addAll(
+              pacing.tags.map((e) {
+                final newTag = TagEntity(id: 0, name: e);
+                return newTag;
+              }),
             );
 
             newPacing.improvisations.addAll(
@@ -117,7 +124,13 @@ class DatabaseRepository {
               color: team.color,
               createdDate: team.createdDate,
               modifiedDate: team.modifiedDate,
-              tags: team.tags,
+            );
+
+            newTeam.tags.addAll(
+              team.tags.map((e) {
+                final newTag = TagEntity(id: 0, name: e);
+                return newTag;
+              }),
             );
 
             newTeam.performers.addAll(
@@ -177,7 +190,6 @@ class DatabaseRepository {
                 color: team.color,
                 createdDate: DateTime.now(),
                 modifiedDate: DateTime.now(),
-                tags: [],
               );
 
               newTeam.performers.addAll(
@@ -225,7 +237,6 @@ class DatabaseRepository {
           name: match.name,
           createdDate: match.createdDate,
           modifiedDate: match.modifiedDate,
-          tags: match.tags,
           enableMatchExpulsion: match.enableMatchExpulsion,
           enablePenaltiesImpactPoints: match.enablePenaltiesImpactPoints,
           enableStatistics: match.enableStatistics,
@@ -242,6 +253,13 @@ class DatabaseRepository {
         );
 
         newMatch.teams.addAll(teams);
+
+        newMatch.tags.addAll(
+          match.tags.map((e) {
+            final newTag = TagEntity(id: 0, name: e);
+            return newTag;
+          }),
+        );
 
         newMatch.improvisations.addAll(improvisations);
 

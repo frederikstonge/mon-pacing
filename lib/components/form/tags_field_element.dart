@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../l10n/generated/app_localizations.dart';
+import '../../models/tag_model.dart';
 import '../../validators/validators.dart';
 import '../buttons/loading_icon_button.dart';
 import '../search/tags_search.dart';
@@ -11,12 +12,12 @@ import '../search/tags_search.dart';
 class TagsFieldElement extends StatefulWidget {
   final String label;
   final String? hintText;
-  final List<String> initialTags;
+  final List<TagModel> initialTags;
   final bool autoFocus;
   final bool autoUnfocus;
-  final FutureOr<void> Function(List<String> value)? onChanged;
+  final FutureOr<void> Function(List<TagModel> value)? onChanged;
   final FocusNode? focusNode;
-  final Future<List<String>> Function({String query}) getAllTags;
+  final Future<List<TagModel>> Function({String query}) getAllTags;
 
   const TagsFieldElement({
     super.key,
@@ -53,7 +54,10 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
 
   void _onChange() {
     final tags = _tagController.getTags ?? [];
-    widget.onChanged?.call(tags);
+    final tagModels = widget.initialTags.where((e) => tags.contains(e.name)).toList();
+    final newTags = tags.where((e) => !widget.initialTags.any((t) => t.name == e)).toList();
+    tagModels.addAll(newTags.map((e) => TagModel(id: 0, name: e)));
+    widget.onChanged?.call(tagModels);
   }
 
   @override
@@ -72,9 +76,9 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
         ),
         TextFieldTags<String>(
           textSeparators: const [','],
-          validator: (value) => Validators.duplicateTag(value, widget.initialTags),
+          validator: (value) => Validators.duplicateTag(value, widget.initialTags.map((e) => e.name).toList()),
           textfieldTagsController: _tagController,
-          initialTags: widget.initialTags,
+          initialTags: widget.initialTags.map((e) => e.name).toList(),
           letterCase: LetterCase.normal,
           inputFieldBuilder:
               (context, textFieldValues) => Column(
