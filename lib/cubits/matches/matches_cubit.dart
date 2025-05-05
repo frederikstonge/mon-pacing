@@ -44,8 +44,8 @@ class MatchesCubit extends Cubit<MatchesState> {
         return null;
       }
 
-      final matchEntity = await matchesRepository.add(model.toLegacyEntity());
-      final matchModel = MatchModel.fromLegacyEntity(entity: matchEntity);
+      final matchEntity = await matchesRepository.add(model.toEntity());
+      final matchModel = MatchModel.fromEntity(entity: matchEntity);
       await analyticsService.logStartMatch(matchModel);
       return matchModel;
     } catch (exception) {
@@ -59,7 +59,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> edit(MatchModel model) async {
     try {
-      await matchesRepository.edit(model.toLegacyEntity());
+      await matchesRepository.edit(model.toEntity());
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     } finally {
@@ -89,7 +89,7 @@ class MatchesCubit extends Cubit<MatchesState> {
       emit(
         state.copyWith(
           status: MatchesStatus.success,
-          matches: state.matches + response.map((e) => MatchModel.fromLegacyEntity(entity: e)).toList(),
+          matches: state.matches + response.map((e) => MatchModel.fromEntity(entity: e)).toList(),
           hasMore: response.length == _pageSize,
         ),
       );

@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/legacy_entities/match_entity.dart';
+import '../repositories/entities/match_entity.dart';
 import 'improvisation_model.dart';
 import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
@@ -62,60 +62,62 @@ class MatchModel with MatchModelMappable {
     this.integrationPenaltyTypes,
   });
 
-  factory MatchModel.fromLegacyEntity({required MatchEntity entity}) => MatchModel(
-    id: entity.id,
-    name: entity.name,
-    createdDate: entity.createdDate,
-    modifiedDate: entity.modifiedDate,
-    teams: entity.teams.map((e) => TeamModel.fromLegacyEmbededEntity(entity: e)).toList(),
-    improvisations:
-        entity.improvisations
-            .asMap()
-            .entries
-            .map((e) => ImprovisationModel.fromLegacyEntity(entity: e.value, order: e.key))
-            .toList(),
-    penalties: entity.penalties.map((e) => PenaltyModel.fromLegacyEntity(entity: e)).toList(),
-    points: entity.points.map((e) => PointModel.fromLegacyEntity(entity: e)).toList(),
-    tags: entity.tags,
-    stars: entity.stars.asMap().entries.map((e) => StarModel.fromLegacyEntity(entity: e.value, order: e.key)).toList(),
-    enableStatistics: entity.enableStatistics,
-    enablePenaltiesImpactPoints: entity.enablePenaltiesImpactPoints,
-    penaltiesImpactType: entity.penaltiesImpactType,
-    penaltiesRequiredToImpactPoints: entity.penaltiesRequiredToImpactPoints,
-    enableMatchExpulsion: entity.enableMatchExpulsion,
-    penaltiesRequiredToExpel: entity.penaltiesRequiredToExpel,
-    integrationId: entity.integrationId,
-    integrationEntityId: entity.integrationEntityId,
-    integrationAdditionalData: entity.integrationAdditionalData,
-    integrationRestrictMaximumPointPerImprovisation: entity.integrationRestrictMaximumPointPerImprovisation,
-    integrationMinNumberOfImprovisations: entity.integrationMinNumberOfImprovisations,
-    integrationMaxNumberOfImprovisations: entity.integrationMaxNumberOfImprovisations,
-    integrationPenaltyTypes: entity.integrationPenaltyTypes,
-  );
+  factory MatchModel.fromEntity({required MatchEntity entity}) {
+    return MatchModel(
+      id: entity.id,
+      name: entity.name,
+      createdDate: entity.createdDate,
+      modifiedDate: entity.modifiedDate,
+      teams: entity.teams.map((e) => TeamModel.fromEntity(entity: e)).toList(),
+      improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+      penalties: entity.penalties.map((e) => PenaltyModel.fromEntity(entity: e)).toList(),
+      points: entity.points.map((e) => PointModel.fromEntity(entity: e)).toList(),
+      stars: entity.stars.map((e) => StarModel.fromEntity(entity: e)).toList(),
+      tags: entity.tags,
+      enableStatistics: entity.enableStatistics,
+      enablePenaltiesImpactPoints: entity.enablePenaltiesImpactPoints,
+      penaltiesImpactType: PenaltiesImpactType.values.elementAt(entity.penaltiesImpactType),
+      penaltiesRequiredToImpactPoints: entity.penaltiesRequiredToImpactPoints,
+      enableMatchExpulsion: entity.enableMatchExpulsion,
+      penaltiesRequiredToExpel: entity.penaltiesRequiredToExpel,
+      integrationId: entity.integrationId,
+      integrationEntityId: entity.integrationEntityId,
+      integrationAdditionalData: entity.integrationAdditionalData,
+      integrationRestrictMaximumPointPerImprovisation: entity.integrationRestrictMaximumPointPerImprovisation,
+      integrationMinNumberOfImprovisations: entity.integrationMinNumberOfImprovisations,
+      integrationMaxNumberOfImprovisations: entity.integrationMaxNumberOfImprovisations,
+      integrationPenaltyTypes: entity.integrationPenaltyTypes,
+    );
+  }
 
-  MatchEntity toLegacyEntity() => MatchEntity(
-    id: id,
-    name: name,
-    createdDate: createdDate,
-    modifiedDate: modifiedDate,
-    teams: teams.map((e) => e.toLegacyEmbededEntity()).toList(),
-    improvisations: improvisations.map((e) => e.toLegacyEntity()).toList(),
-    penalties: penalties.map((e) => e.toLegacyEntity()).toList(),
-    points: points.map((e) => e.toLegacyEntity()).toList(),
-    tags: tags,
-    stars: stars.map((e) => e.toLegacyEntity()).toList(),
-    enableStatistics: enableStatistics,
-    enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
-    penaltiesImpactType: penaltiesImpactType,
-    penaltiesRequiredToImpactPoints: penaltiesRequiredToImpactPoints,
-    enableMatchExpulsion: enableMatchExpulsion,
-    penaltiesRequiredToExpel: penaltiesRequiredToExpel,
-    integrationId: integrationId,
-    integrationEntityId: integrationEntityId,
-    integrationAdditionalData: integrationAdditionalData,
-    integrationRestrictMaximumPointPerImprovisation: integrationRestrictMaximumPointPerImprovisation,
-    integrationMinNumberOfImprovisations: integrationMinNumberOfImprovisations,
-    integrationMaxNumberOfImprovisations: integrationMaxNumberOfImprovisations,
-    integrationPenaltyTypes: integrationPenaltyTypes,
-  );
+  MatchEntity toEntity() {
+    final match = MatchEntity(
+      id: id,
+      name: name,
+      createdDate: createdDate,
+      modifiedDate: modifiedDate,
+      tags: tags,
+      enableStatistics: enableStatistics,
+      enablePenaltiesImpactPoints: enablePenaltiesImpactPoints,
+      penaltiesImpactType: penaltiesImpactType.index,
+      penaltiesRequiredToImpactPoints: penaltiesRequiredToImpactPoints,
+      enableMatchExpulsion: enableMatchExpulsion,
+      penaltiesRequiredToExpel: penaltiesRequiredToExpel,
+      integrationId: integrationId,
+      integrationEntityId: integrationEntityId,
+      integrationAdditionalData: integrationAdditionalData,
+      integrationRestrictMaximumPointPerImprovisation: integrationRestrictMaximumPointPerImprovisation,
+      integrationMinNumberOfImprovisations: integrationMinNumberOfImprovisations,
+      integrationMaxNumberOfImprovisations: integrationMaxNumberOfImprovisations,
+      integrationPenaltyTypes: integrationPenaltyTypes,
+    );
+
+    match.improvisations.addAll(improvisations.map((e) => e.toEntity()).toList());
+    match.teams.addAll(teams.map((e) => e.toEntity()).toList());
+    match.penalties.addAll(penalties.map((e) => e.toEntity()).toList());
+    match.points.addAll(points.map((e) => e.toEntity()).toList());
+    match.stars.addAll(stars.map((e) => e.toEntity()).toList());
+
+    return match;
+  }
 }

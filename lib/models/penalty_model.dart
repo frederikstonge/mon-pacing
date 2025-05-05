@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/legacy_entities/penalty_entity.dart';
+import '../repositories/entities/penalty_entity.dart';
 
 part 'penalty_model.mapper.dart';
 
@@ -22,7 +22,7 @@ class PenaltyModel with PenaltyModelMappable {
     required this.improvisationId,
   });
 
-  factory PenaltyModel.fromLegacyEntity({required PenaltyEntity entity}) => PenaltyModel(
+  factory PenaltyModel.fromEntity({required PenaltyEntity entity}) => PenaltyModel(
     id: entity.id,
     major: entity.major,
     type: entity.type,
@@ -31,7 +31,7 @@ class PenaltyModel with PenaltyModelMappable {
     improvisationId: entity.improvisationId,
   );
 
-  PenaltyEntity toLegacyEntity() => PenaltyEntity(
+  PenaltyEntity toEntity() => PenaltyEntity(
     id: id,
     major: major,
     type: type,

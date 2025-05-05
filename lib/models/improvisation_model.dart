@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/legacy_entities/improvisation_entity.dart';
+import '../repositories/entities/improvisation_entity.dart';
 import 'improvisation_type.dart';
 
 part 'improvisation_model.mapper.dart';
@@ -35,25 +35,25 @@ class ImprovisationModel with ImprovisationModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory ImprovisationModel.fromLegacyEntity({required ImprovisationEntity entity, required int order}) =>
-      ImprovisationModel(
-        id: entity.id,
-        order: order,
-        type: entity.type,
-        category: entity.category,
-        theme: entity.theme,
-        durationsInSeconds: entity.durationsInSeconds,
-        performers: entity.performers,
-        notes: entity.notes,
-        timeBufferInSeconds: entity.timeBufferInSeconds,
-        huddleTimerInSeconds: entity.huddleTimerInSeconds,
-        integrationEntityId: entity.integrationEntityId,
-        integrationAdditionalData: entity.integrationAdditionalData,
-      );
+  factory ImprovisationModel.fromEntity({required ImprovisationEntity entity}) => ImprovisationModel(
+    id: entity.id,
+    order: entity.order,
+    type: ImprovisationType.values.elementAt(entity.type),
+    category: entity.category,
+    theme: entity.theme,
+    durationsInSeconds: entity.durationsInSeconds,
+    performers: entity.performers,
+    notes: entity.notes,
+    timeBufferInSeconds: entity.timeBufferInSeconds,
+    huddleTimerInSeconds: entity.huddleTimerInSeconds,
+    integrationEntityId: entity.integrationEntityId,
+    integrationAdditionalData: entity.integrationAdditionalData,
+  );
 
-  ImprovisationEntity toLegacyEntity() => ImprovisationEntity(
+  ImprovisationEntity toEntity() => ImprovisationEntity(
     id: id,
-    type: type,
+    order: order,
+    type: type.index,
     category: category,
     theme: theme,
     durationsInSeconds: durationsInSeconds,

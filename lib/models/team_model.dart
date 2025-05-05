@@ -1,7 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/legacy_entities/match_team_entity.dart';
-import '../repositories/legacy_entities/team_entity.dart';
+import '../repositories/entities/team_entity.dart';
 import 'performer_model.dart';
 
 part 'team_model.mapper.dart';
@@ -30,53 +29,27 @@ class TeamModel with TeamModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory TeamModel.fromLegacyEntity({required TeamEntity entity}) => TeamModel(
+  factory TeamModel.fromEntity({required TeamEntity entity}) => TeamModel(
     id: entity.id,
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
     name: entity.name,
     color: entity.color,
-    performers:
-        entity.performers
-            .asMap()
-            .entries
-            .map((e) => PerformerModel.fromLegacyEntity(entity: e.value, order: e.key))
-            .toList(),
+    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).toList(),
     tags: entity.tags,
   );
 
-  factory TeamModel.fromLegacyEmbededEntity({required MatchTeamEntity entity}) => TeamModel(
-    id: entity.id,
-    createdDate: null,
-    modifiedDate: null,
-    name: entity.name,
-    color: entity.color,
-    performers:
-        entity.performers
-            .asMap()
-            .entries
-            .map((e) => PerformerModel.fromLegacyEntity(entity: e.value, order: e.key))
-            .toList(),
-    integrationEntityId: entity.integrationEntityId,
-    integrationAdditionalData: entity.integrationAdditionalData,
-  );
+  TeamEntity toEntity() {
+    final team = TeamEntity(
+      id: id,
+      createdDate: createdDate,
+      modifiedDate: modifiedDate,
+      name: name,
+      color: color,
+      tags: tags,
+    );
 
-  TeamEntity toLegacyEntity() => TeamEntity(
-    id: id,
-    createdDate: createdDate,
-    modifiedDate: modifiedDate,
-    name: name,
-    color: color,
-    performers: performers.map((e) => e.toLegacyEntity()).toList(),
-    tags: tags,
-  );
-
-  MatchTeamEntity toLegacyEmbededEntity() => MatchTeamEntity(
-    id: id,
-    name: name,
-    color: color,
-    performers: performers.map((e) => e.toLegacyEntity()).toList(),
-    integrationEntityId: integrationEntityId,
-    integrationAdditionalData: integrationAdditionalData,
-  );
+    team.performers.addAll(performers.map((e) => e.toEntity()).toList());
+    return team;
+  }
 }

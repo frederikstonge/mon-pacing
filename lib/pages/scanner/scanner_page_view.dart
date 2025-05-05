@@ -139,7 +139,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
             final result = await PacingsSearch.showDialog(context, (String search, List<String> selectedTags) async {
               final response = await context.read<PacingsRepository>().search(search, selectedTags);
-              return response.map((e) => PacingModel.fromLegacyEntity(entity: e)).toList();
+              return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
             }, pacingsRepository.getAllTags);
 
             if (result == null) {

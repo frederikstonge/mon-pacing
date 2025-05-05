@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/legacy_entities/performer_entity.dart';
+import '../repositories/entities/performer_entity.dart';
 
 part 'performer_model.mapper.dart';
 
@@ -20,17 +20,18 @@ class PerformerModel with PerformerModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory PerformerModel.fromLegacyEntity({required PerformerEntity entity, required int order}) => PerformerModel(
+  factory PerformerModel.fromEntity({required PerformerEntity entity}) => PerformerModel(
     id: entity.id,
     name: entity.name,
-    order: order,
+    order: entity.order,
     integrationEntityId: entity.integrationEntityId,
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  PerformerEntity toLegacyEntity() => PerformerEntity(
+  PerformerEntity toEntity() => PerformerEntity(
     id: id,
     name: name,
+    order: order,
     integrationEntityId: integrationEntityId,
     integrationAdditionalData: integrationAdditionalData,
   );

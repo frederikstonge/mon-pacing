@@ -124,7 +124,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                               List<String> selectedTags,
                             ) async {
                               final response = await context.read<PacingsRepository>().search(search, selectedTags);
-                              return response.map((e) => PacingModel.fromLegacyEntity(entity: e)).toList();
+                              return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
                             }, context.read<PacingsRepository>().getAllTags);
                             if (result != null) {
                               router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});

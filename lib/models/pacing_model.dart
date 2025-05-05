@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/legacy_entities/pacing_entity.dart';
+import '../repositories/entities/pacing_entity.dart';
 import 'improvisation_model.dart';
 
 part 'pacing_model.mapper.dart';
@@ -31,17 +31,12 @@ class PacingModel with PacingModelMappable {
     this.integrationAdditionalData,
   });
 
-  factory PacingModel.fromLegacyEntity({required PacingEntity entity}) => PacingModel(
+  factory PacingModel.fromEntity({required PacingEntity entity}) => PacingModel(
     id: entity.id,
     name: entity.name,
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
-    improvisations:
-        entity.improvisations
-            .asMap()
-            .entries
-            .map((e) => ImprovisationModel.fromLegacyEntity(entity: e.value, order: e.key))
-            .toList(),
+    improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
     defaultNumberOfTeams: entity.defaultNumberOfTeams,
     tags: entity.tags,
     integrationId: entity.integrationId,
@@ -49,16 +44,19 @@ class PacingModel with PacingModelMappable {
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  PacingEntity toLegacyEntity() => PacingEntity(
-    id: id,
-    name: name,
-    createdDate: createdDate,
-    modifiedDate: modifiedDate,
-    improvisations: improvisations.map((e) => e.toLegacyEntity()).toList(),
-    defaultNumberOfTeams: defaultNumberOfTeams,
-    tags: tags,
-    integrationId: integrationId,
-    integrationEntityId: integrationEntityId,
-    integrationAdditionalData: integrationAdditionalData,
-  );
+  PacingEntity toEntity() {
+    final pacing = PacingEntity(
+      id: id,
+      name: name,
+      createdDate: createdDate,
+      modifiedDate: modifiedDate,
+      defaultNumberOfTeams: defaultNumberOfTeams,
+      tags: tags,
+      integrationId: integrationId,
+      integrationEntityId: integrationEntityId,
+      integrationAdditionalData: integrationAdditionalData,
+    );
+    pacing.improvisations.addAll(improvisations.map((e) => e.toEntity()).toList());
+    return pacing;
+  }
 }

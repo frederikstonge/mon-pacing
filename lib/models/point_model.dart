@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../repositories/legacy_entities/point_entity.dart';
+import '../repositories/entities/point_entity.dart';
 
 part 'point_model.mapper.dart';
 
@@ -13,8 +13,8 @@ class PointModel with PointModelMappable {
 
   const PointModel({required this.id, required this.teamId, required this.improvisationId, required this.value});
 
-  factory PointModel.fromLegacyEntity({required PointEntity entity}) =>
+  factory PointModel.fromEntity({required PointEntity entity}) =>
       PointModel(id: entity.id, teamId: entity.teamId, improvisationId: entity.improvisationId, value: entity.value);
 
-  PointEntity toLegacyEntity() => PointEntity(id: id, teamId: teamId, improvisationId: improvisationId, value: value);
+  PointEntity toEntity() => PointEntity(id: id, teamId: teamId, improvisationId: improvisationId, value: value);
 }
