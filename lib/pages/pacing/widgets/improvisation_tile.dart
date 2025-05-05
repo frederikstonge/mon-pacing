@@ -22,7 +22,7 @@ class ImprovisationTile extends StatefulWidget {
   final FutureOr<bool?> Function(ImprovisationModel value) onConfirmDelete;
   final bool dragEnabled;
   final FutureOr<void> Function() onDragStart;
-  final Future<List<String>> Function({String query}) getAllCategories;
+  final Future<List<String>> Function({String search}) getAllCategories;
 
   const ImprovisationTile({
     super.key,

@@ -90,6 +90,10 @@ class PacingsRepository {
       );
     }
 
+    if (selectedTags.isNotEmpty) {
+      builder.linkMany(PacingEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
+    }
+
     final query = builder.order(PacingEntity_.createdDate, flags: Order.descending).build();
     final returnValue = query.findAsync();
     query.close();

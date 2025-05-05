@@ -852,31 +852,6 @@ class MockPacingsCubit extends _i1.Mock implements _i18.PacingsCubit {
       ) as _i28.Future<void>);
 
   @override
-  _i28.Future<List<_i33.TagModel>> getAllTags({String? query = ''}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getAllTags,
-          [],
-          {#query: query},
-        ),
-        returnValue: _i28.Future<List<_i33.TagModel>>.value(<_i33.TagModel>[]),
-        returnValueForMissingStub:
-            _i28.Future<List<_i33.TagModel>>.value(<_i33.TagModel>[]),
-      ) as _i28.Future<List<_i33.TagModel>>);
-
-  @override
-  _i28.Future<List<String>> getAllCategories({String? query = ''}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getAllCategories,
-          [],
-          {#query: query},
-        ),
-        returnValue: _i28.Future<List<String>>.value(<String>[]),
-        returnValueForMissingStub: _i28.Future<List<String>>.value(<String>[]),
-      ) as _i28.Future<List<String>>);
-
-  @override
   _i28.Future<void> refresh() => (super.noSuchMethod(
         Invocation.method(
           #refresh,
@@ -1079,12 +1054,12 @@ class MockMatchesCubit extends _i1.Mock implements _i20.MatchesCubit {
       ) as _i28.Future<void>);
 
   @override
-  _i28.Future<List<_i33.TagModel>> getAllTags({String? query = ''}) =>
+  _i28.Future<List<_i33.TagModel>> getAllTags({String? search = ''}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getAllTags,
           [],
-          {#query: query},
+          {#search: search},
         ),
         returnValue: _i28.Future<List<_i33.TagModel>>.value(<_i33.TagModel>[]),
         returnValueForMissingStub:
@@ -1261,12 +1236,12 @@ class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
       ) as _i28.Future<void>);
 
   @override
-  _i28.Future<List<_i33.TagModel>> getAllTags({String? query = ''}) =>
+  _i28.Future<List<_i33.TagModel>> getAllTags({String? search = ''}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getAllTags,
           [],
-          {#query: query},
+          {#search: search},
         ),
         returnValue: _i28.Future<List<_i33.TagModel>>.value(<_i33.TagModel>[]),
         returnValueForMissingStub:

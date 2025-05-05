@@ -88,8 +88,8 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                         onChanged: (value) {
                           context.read<MatchImprovisationCubit>().edit(value);
                         },
-                        getAllCategories: ({String? query}) async {
-                          return await context.read<PacingsRepository>().getAllCategories(search: query ?? '');
+                        getAllCategories: ({String? search}) async {
+                          return await context.read<PacingsRepository>().getAllCategories(search: search ?? '');
                         },
                         onDragStart: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       ),

@@ -180,8 +180,8 @@ class _PacingPageViewState extends State<PacingPageView> {
                                 pacing: pacing,
                                 improvisation: improvisation,
                                 index: index,
-                                getAllCategories: ({String? query}) async {
-                                  return await context.read<PacingsRepository>().getAllCategories(search: query ?? '');
+                                getAllCategories: ({String? search}) async {
+                                  return await context.read<PacingsRepository>().getAllCategories(search: search ?? '');
                                 },
                                 onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
                                 onConfirmDelete:

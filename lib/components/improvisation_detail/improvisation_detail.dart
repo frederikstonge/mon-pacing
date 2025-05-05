@@ -20,7 +20,7 @@ class ImprovisationDetail extends StatefulWidget {
   final ImprovisationModel improvisation;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
   final FutureOr<void> Function() onDragStart;
-  final Future<List<String>> Function({String query}) getAllCategories;
+  final Future<List<String>> Function({String search}) getAllCategories;
 
   const ImprovisationDetail({
     super.key,

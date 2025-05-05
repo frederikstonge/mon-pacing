@@ -50,7 +50,7 @@ class Bootstrapper extends StatelessWidget {
         RepositoryProvider(
           create:
               (repositoryContext) =>
-                  MatchesRepository(databaseRepository: repositoryContext.read<LegacyDatabaseRepository>()),
+                  MatchesRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
         RepositoryProvider(
           create:

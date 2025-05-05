@@ -70,7 +70,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> delete(MatchModel model) async {
     try {
-      await matchesRepository.delete(model.id);
+      await matchesRepository.delete(model.toEntity());
       toasterService.show(title: Localizer.current.toasterMatchDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
@@ -100,8 +100,8 @@ class MatchesCubit extends Cubit<MatchesState> {
     }
   }
 
-  Future<List<TagModel>> getAllTags({String query = ''}) async {
-    final tags = await matchesRepository.getAllTags(search: query);
+  Future<List<TagModel>> getAllTags({String search = ''}) async {
+    final tags = await matchesRepository.getAllTags(search: search);
     return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
   }
 

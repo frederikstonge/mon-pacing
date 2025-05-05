@@ -17,7 +17,7 @@ class TagsFieldElement extends StatefulWidget {
   final bool autoUnfocus;
   final FutureOr<void> Function(List<TagModel> value)? onChanged;
   final FocusNode? focusNode;
-  final Future<List<TagModel>> Function({String query}) getAllTags;
+  final Future<List<TagModel>> Function({String search}) getAllTags;
 
   const TagsFieldElement({
     super.key,

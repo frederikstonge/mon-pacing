@@ -78,8 +78,8 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                           label: S.of(context).tags,
                           hintText: S.of(context).tagsHint,
                           initialTags: state.pacing.tags,
-                          getAllTags: ({String? query}) async {
-                            final tags = await context.read<PacingsRepository>().getAllTags(search: query ?? '');
+                          getAllTags: ({String? search}) async {
+                            final tags = await context.read<PacingsRepository>().getAllTags(search: search ?? '');
                             return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
                           },
                           onChanged: (value) {

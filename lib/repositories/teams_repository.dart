@@ -85,6 +85,10 @@ class TeamsRepository {
       builder.linkMany(TeamEntity_.performers, PerformerEntity_.name.contains(search, caseSensitive: false));
     }
 
+    if (selectedTags.isNotEmpty) {
+      builder.linkMany(TeamEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
+    }
+
     final query = builder.order(TeamEntity_.createdDate, flags: Order.descending).build();
     final returnValue = query.findAsync();
     query.close();

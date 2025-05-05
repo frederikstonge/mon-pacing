@@ -79,8 +79,8 @@ class TeamsCubit extends Cubit<TeamsState> {
     }
   }
 
-  Future<List<TagModel>> getAllTags({String query = ''}) async {
-    final tags = await teamsRepository.getAllTags(search: query);
+  Future<List<TagModel>> getAllTags({String search = ''}) async {
+    final tags = await teamsRepository.getAllTags(search: search);
     return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
   }
 
