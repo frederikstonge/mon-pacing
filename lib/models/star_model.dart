@@ -17,4 +17,6 @@ class StarModel with StarModelMappable {
       StarModel(id: entity.id, order: entity.order, performerId: entity.performerId, teamId: entity.teamId);
 
   StarEntity toEntity() => StarEntity(id: id, order: order, performerId: performerId, teamId: teamId);
+
+  StarModel createNew() => copyWith(id: 0);
 }

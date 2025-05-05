@@ -64,4 +64,6 @@ class ImprovisationModel with ImprovisationModelMappable {
     integrationEntityId: integrationEntityId,
     integrationAdditionalData: integrationAdditionalData,
   );
+
+  ImprovisationModel createNew() => copyWith(id: 0);
 }

@@ -22,7 +22,6 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
-import '../../models/improvisation_model.dart';
 import '../../models/pacing_model.dart';
 import '../../models/tag_model.dart';
 import '../../repositories/pacings_repository.dart';
@@ -175,18 +174,11 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                           delete: () => context.read<PacingsCubit>().delete(pacing),
                           export: () => context.read<PacingsCubit>().export(pacing),
                           duplicate: () {
-                            final newPacing = pacing.copyWith(
-                              id: 0,
-                              improvisations: List<ImprovisationModel>.from(
-                                pacing.improvisations.map((e) => e.copyWith(id: 0)),
-                              ),
-                              tags: List<TagModel>.from(pacing.tags.map((e) => e.copyWith(id: 0))),
-                            );
                             return BottomSheetDialog.showDialog(
                               context: context,
                               child: PacingDetailPageShell(
                                 editMode: false,
-                                pacing: newPacing,
+                                pacing: pacing.createNew(),
                                 onConfirm: (pacing) async {
                                   final router = GoRouter.of(context);
                                   final pacingModel = await context.read<PacingsCubit>().add(pacing);

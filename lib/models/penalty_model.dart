@@ -39,4 +39,6 @@ class PenaltyModel with PenaltyModelMappable {
     teamId: teamId,
     improvisationId: improvisationId,
   );
+
+  PenaltyModel createNew() => copyWith(id: 0);
 }

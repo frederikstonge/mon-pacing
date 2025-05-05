@@ -20,7 +20,7 @@ class PacingDetailCubit extends Cubit<PacingDetailState> {
               pacing != null
                   ? editMode
                       ? pacing.copyWith()
-                      : pacing.copyWith(id: 0)
+                      : pacing.createNew()
                   : PacingModel(
                     id: 0,
                     name: '',

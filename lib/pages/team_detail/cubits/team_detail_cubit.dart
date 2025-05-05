@@ -24,7 +24,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
               team != null
                   ? editMode
                       ? team.copyWith()
-                      : team.copyWith(id: 0)
+                      : team.createNew()
                   : const TeamModel(id: 0, createdDate: null, modifiedDate: null, name: '', color: 0),
         ),
       );

@@ -35,4 +35,6 @@ class PerformerModel with PerformerModelMappable {
     integrationEntityId: integrationEntityId,
     integrationAdditionalData: integrationAdditionalData,
   );
+
+  PerformerModel createNew() => copyWith(id: 0);
 }

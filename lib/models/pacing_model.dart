@@ -63,4 +63,10 @@ class PacingModel with PacingModelMappable {
     pacing.tags.addAll(tags.map((e) => e.toEntity()).toList());
     return pacing;
   }
+
+  PacingModel createNew() => copyWith(
+    id: 0,
+    improvisations: List<ImprovisationModel>.from(improvisations.map((e) => e.createNew())),
+    tags: List<TagModel>.from(tags.map((e) => e.createNew())),
+  );
 }

@@ -14,4 +14,6 @@ class TagModel with TagModelMappable {
   factory TagModel.fromEntity({required TagEntity entity}) => TagModel(id: entity.id, name: entity.name);
 
   TagEntity toEntity() => TagEntity(id: id, name: name);
+
+  TagModel createNew() => copyWith(id: 0);
 }

@@ -34,8 +34,8 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
                     name: pacing!.name,
                     createdDate: null,
                     modifiedDate: null,
-                    improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.copyWith(id: 0))),
-                    tags: List<TagModel>.from(pacing.tags.map((e) => e.copyWith(id: 0))),
+                    improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.createNew())),
+                    tags: List<TagModel>.from(pacing.tags.map((e) => e.createNew())),
                     teams: [],
                     penalties: [],
                     points: [],
@@ -125,7 +125,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     final newTeam = team.copyWith(
       name: selectedTeam.name,
       color: selectedTeam.color,
-      performers: selectedTeam.performers.map((p) => p.copyWith(id: 0)).toList(),
+      performers: selectedTeam.performers.map((p) => p.createNew()).toList(),
     );
 
     editTeam(state.match.teams.indexOf(team), newTeam);

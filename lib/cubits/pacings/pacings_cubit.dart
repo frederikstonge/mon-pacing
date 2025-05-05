@@ -8,9 +8,7 @@ import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../l10n/localizer.dart';
-import '../../models/improvisation_model.dart';
 import '../../models/pacing_model.dart';
-import '../../models/tag_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../services/toaster_service.dart';
 import 'pacings_state.dart';
@@ -97,16 +95,7 @@ class PacingsCubit extends Cubit<PacingsState> {
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
         final pacing = PacingModelMapper.fromJson(pacingValue);
-        final newPacing =
-            pacing
-                .copyWith(
-                  id: 0,
-                  improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.copyWith(id: 0))),
-                  tags: List<TagModel>.from(pacing.tags.map((e) => e.copyWith(id: 0))),
-                )
-                .toEntity();
-
-        final newPacingEntity = await pacingsRepository.add(newPacing);
+        final newPacingEntity = await pacingsRepository.add(pacing.createNew().toEntity());
         toasterService.show(title: Localizer.current.toasterPacingImported);
 
         return PacingModel.fromEntity(entity: newPacingEntity);

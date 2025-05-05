@@ -17,4 +17,6 @@ class PointModel with PointModelMappable {
       PointModel(id: entity.id, teamId: entity.teamId, improvisationId: entity.improvisationId, value: entity.value);
 
   PointEntity toEntity() => PointEntity(id: id, teamId: teamId, improvisationId: improvisationId, value: value);
+
+  PointModel createNew() => copyWith(id: 0);
 }
