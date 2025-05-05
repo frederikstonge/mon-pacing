@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/pacings/pacings_cubit.dart';
@@ -40,11 +38,10 @@ class PacingCubit extends Cubit<PacingState> {
 
   Future<void> addImprovisation() async {
     final improvisations = List<ImprovisationModel>.from(state.pacing!.copyWith().improvisations);
-    final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
     final nextType = ImprovisationType.values[improvisations.length % 2];
 
     final newImprovisation = ImprovisationModel(
-      id: nextId,
+      id: 0,
       type: nextType,
       durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
       category: '',

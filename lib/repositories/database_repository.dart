@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:mutex/mutex.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -21,21 +22,24 @@ class DatabaseRepository {
   static const pageSize = 20;
   final LegacyDatabaseRepository legacyDatabaseRepository;
   Store? _database;
+  final Mutex _mutex = Mutex();
 
   DatabaseRepository({required this.legacyDatabaseRepository});
 
   Future<Store> get database async {
-    if (_database != null) {
-      return _database!;
-    }
+    return await _mutex.protect(() async {
+      if (_database != null) {
+        return _database!;
+      }
 
-    _database = await _getDatabase();
-    return _database!;
+      _database = await _getDatabase();
+      return _database!;
+    });
   }
 
   // Temporary
   Future<void> init() async {
-    _database = await _getDatabase();
+    _database = await database;
   }
 
   Future<Store> _getDatabase() async {

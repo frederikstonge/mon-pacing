@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/pacing_entity.dart';
@@ -38,7 +39,8 @@ class PacingModel with PacingModelMappable {
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
     defaultNumberOfTeams: entity.defaultNumberOfTeams,
-    improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+    improvisations:
+        entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
     tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
     integrationId: entity.integrationId,
     integrationEntityId: entity.integrationEntityId,

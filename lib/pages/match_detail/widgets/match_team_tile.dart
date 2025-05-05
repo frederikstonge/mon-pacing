@@ -25,10 +25,10 @@ class MatchTeamTile extends StatefulWidget {
   final Future<List<TeamModel>> Function(String query, List<String> selectedTags) getAllTeams;
   final Future<List<TagModel>> Function() getAllTeamTags;
   final void Function(TeamModel team) onTeamSelected;
-  final FutureOr<void> Function(int teamId)? addPerformer;
-  final FutureOr<void> Function(int teamId, int index, PerformerModel performer) editPerformer;
-  final FutureOr<void> Function(int teamId, int index)? removePerformer;
-  final FutureOr<void> Function(int teamId, int oldIndex, int newIndex) onDrag;
+  final FutureOr<void> Function(TeamModel team)? addPerformer;
+  final FutureOr<void> Function(TeamModel team, int index, PerformerModel performer) editPerformer;
+  final FutureOr<void> Function(TeamModel team, int index)? removePerformer;
+  final FutureOr<void> Function(TeamModel team, int oldIndex, int newIndex) onDrag;
   final FutureOr<void> Function() onDragStart;
 
   const MatchTeamTile({
@@ -128,11 +128,11 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
           TeamPerformers(
             label: S.of(context).performers,
             performers: widget.team.performers,
-            addPerformer: widget.addPerformer != null ? () => widget.addPerformer!(widget.team.id) : null,
-            editPerformer: (index, performer) => widget.editPerformer(widget.team.id, index, performer),
+            addPerformer: widget.addPerformer != null ? () => widget.addPerformer!(widget.team) : null,
+            editPerformer: (index, performer) => widget.editPerformer(widget.team, index, performer),
             removePerformer:
-                widget.removePerformer != null ? (index) => widget.removePerformer!(widget.team.id, index) : null,
-            onDrag: (oldIndex, newIndex) => widget.onDrag(widget.team.id, oldIndex, newIndex),
+                widget.removePerformer != null ? (index) => widget.removePerformer!(widget.team, index) : null,
+            onDrag: (oldIndex, newIndex) => widget.onDrag(widget.team, oldIndex, newIndex),
             onDragStart: widget.onDragStart,
           ),
         ],

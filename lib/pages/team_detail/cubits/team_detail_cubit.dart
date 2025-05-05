@@ -80,7 +80,6 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   }
 
   PerformerModel _createPerformer(List<PerformerModel> allPerformers, int order) {
-    final nextId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(max) + 1 : 0;
-    return PerformerModel(id: nextId, order: order, name: '');
+    return PerformerModel(id: 0, order: order, name: '');
   }
 }

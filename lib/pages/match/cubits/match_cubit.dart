@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -155,8 +153,7 @@ class MatchCubit extends Cubit<MatchState> {
       }
     } else {
       if (value > 0) {
-        final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
-        points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));
+        points.add(PointModel(id: 0, teamId: teamId, improvisationId: improvisationId, value: value));
       }
     }
 
@@ -168,8 +165,7 @@ class MatchCubit extends Cubit<MatchState> {
 
   Future<void> addPenalty(PenaltyModel penalty) async {
     final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
-    final nextPenaltyId = penalties.isNotEmpty ? penalties.map((e) => e.id).reduce(max) + 1 : 0;
-    penalties.add(penalty.copyWith(id: nextPenaltyId));
+    penalties.add(penalty.copyWith(id: 0));
     final newMatch = state.match!.copyWith(penalties: penalties);
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
@@ -202,10 +198,9 @@ class MatchCubit extends Cubit<MatchState> {
 
   Future<void> addStar() async {
     final stars = List<StarModel>.from(state.match!.copyWith().stars);
-    final nextStarId = stars.isNotEmpty ? stars.map((e) => e.id).reduce(max) + 1 : 0;
     stars.add(
       StarModel(
-        id: nextStarId,
+        id: 0,
         teamId: state.match!.teams.first.id,
         performerId: state.match!.teams.first.performers.first.id,
         order: stars.length + 1,

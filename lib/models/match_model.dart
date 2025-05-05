@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/match_entity.dart';
@@ -70,10 +71,11 @@ class MatchModel with MatchModelMappable {
       createdDate: entity.createdDate,
       modifiedDate: entity.modifiedDate,
       teams: entity.teams.map((e) => TeamModel.fromEntity(entity: e)).toList(),
-      improvisations: entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+      improvisations:
+          entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
       penalties: entity.penalties.map((e) => PenaltyModel.fromEntity(entity: e)).toList(),
       points: entity.points.map((e) => PointModel.fromEntity(entity: e)).toList(),
-      stars: entity.stars.map((e) => StarModel.fromEntity(entity: e)).toList(),
+      stars: entity.stars.map((e) => StarModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
       tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
       enableStatistics: entity.enableStatistics,
       enablePenaltiesImpactPoints: entity.enablePenaltiesImpactPoints,

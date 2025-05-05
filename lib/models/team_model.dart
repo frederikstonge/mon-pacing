@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/team_entity.dart';
@@ -36,7 +37,7 @@ class TeamModel with TeamModelMappable {
     modifiedDate: entity.modifiedDate,
     name: entity.name,
     color: entity.color,
-    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).toList(),
+    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
     tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
   );
 
