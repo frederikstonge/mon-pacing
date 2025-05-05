@@ -27,7 +27,7 @@ class PacingsRepository {
     await box.removeAsync(entity.id);
   }
 
-  Future<PacingEntity> edit(PacingEntity entity) async {
+  Future<void> edit(PacingEntity entity) async {
     final db = await databaseRepository.database;
     final box = db.box<PacingEntity>();
     final improvisationBox = db.box<ImprovisationEntity>();
@@ -38,12 +38,12 @@ class PacingsRepository {
         previousEntity!.improvisations.where((e) => !entity.improvisations.any((i) => i.id == e.id)).toList();
     final editedImprovisations = entity.improvisations.where((e) => e.id != 0).toList();
 
-    return db.runInTransaction(TxMode.write, () {
+    db.runInTransaction(TxMode.write, () {
       improvisationBox.putMany(editedImprovisations);
       improvisationBox.removeMany(removedImprovisations.map((e) => e.id).toList());
 
       entity.modifiedDate = DateTime.now();
-      return box.putAndGetAsync(entity);
+      return box.put(entity);
     });
   }
 

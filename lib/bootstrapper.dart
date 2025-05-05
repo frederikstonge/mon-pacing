@@ -54,8 +54,7 @@ class Bootstrapper extends StatelessWidget {
         ),
         RepositoryProvider(
           create:
-              (repositoryContext) =>
-                  TeamsRepository(databaseRepository: repositoryContext.read<LegacyDatabaseRepository>()),
+              (repositoryContext) => TeamsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
       ],
       child: MultiBlocProvider(
