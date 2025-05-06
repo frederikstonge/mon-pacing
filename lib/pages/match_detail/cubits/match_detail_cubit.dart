@@ -117,7 +117,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     performers.insert(newIndex, performer);
     editTeam(
       state.match.teams.indexOf(team),
-      team.copyWith(performers: performers.asMap().entries.map((e) => e.value.copyWith(order: e.key)).toList()),
+      team.copyWith(performers: performers.asMap().entries.map((e) => e.value.copyWith(order: e.key + 1)).toList()),
     );
   }
 

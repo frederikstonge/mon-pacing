@@ -76,7 +76,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
     }
 
     performers.insert(newIndex, performer);
-    edit(team.copyWith(performers: performers.asMap().entries.map((e) => e.value.copyWith(order: e.key)).toList()));
+    edit(team.copyWith(performers: performers.asMap().entries.map((e) => e.value.copyWith(order: e.key + 1)).toList()));
   }
 
   PerformerModel _createPerformer(List<PerformerModel> allPerformers, int order) {

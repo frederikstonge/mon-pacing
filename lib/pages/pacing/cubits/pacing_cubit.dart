@@ -72,7 +72,7 @@ class PacingCubit extends Cubit<PacingState> {
     improvisations.insert(newIndex, improvisation);
 
     final newPacing = state.pacing!.copyWith(
-      improvisations: improvisations.asMap().entries.map((e) => e.value.copyWith(order: e.key)).toList(),
+      improvisations: improvisations.asMap().entries.map((e) => e.value.copyWith(order: e.key + 1)).toList(),
     );
 
     emit(state.copyWith(status: PacingStatus.success, pacing: newPacing));
