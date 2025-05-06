@@ -37,7 +37,6 @@ class Bootstrapper extends StatelessWidget {
           RepositoryProvider(create: (repositoryContext) => IntegrationService()),
           RepositoryProvider(create: (repositoryContext) => TimerService()),
           RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
-          // TODO: Remove Isar
           RepositoryProvider(create: (repositoryContext) => LegacyDatabaseRepository()),
           RepositoryProvider(
             create:

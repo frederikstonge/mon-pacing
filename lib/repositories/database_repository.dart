@@ -66,7 +66,6 @@ class DatabaseRepository {
     await store.box<TagEntity>().removeAllAsync();
   }
 
-  /// TODO: Remove Isar
   Future<void> _migrateDatabase(Store store) async {
     final legacyDatabase = await legacyDatabaseRepository.database;
 
