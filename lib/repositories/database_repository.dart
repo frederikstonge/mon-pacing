@@ -3,6 +3,8 @@ import 'package:mutex/mutex.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../cubits/migration/migration_cubit.dart';
+import '../l10n/localizer.dart';
 import 'entities/improvisation_entity.dart';
 import 'entities/match_entity.dart';
 import 'entities/pacing_entity.dart';
@@ -21,10 +23,11 @@ import 'objectbox.g.dart';
 class DatabaseRepository {
   static const pageSize = 20;
   final LegacyDatabaseRepository legacyDatabaseRepository;
+  final MigrationCubit migrationCubit;
   Store? _database;
   final Mutex _mutex = Mutex();
 
-  DatabaseRepository({required this.legacyDatabaseRepository});
+  DatabaseRepository({required this.legacyDatabaseRepository, required this.migrationCubit});
 
   Future<Store> get database async {
     return await _mutex.protect(() async {
@@ -71,7 +74,19 @@ class DatabaseRepository {
     final teamCount = legacyDatabase.teamModels.count();
     final matchCount = legacyDatabase.matchModels.count();
 
+    final total = pacingCount + teamCount + matchCount;
+
+    if (total > 0) {
+      migrationCubit.startMigration(
+        title: Localizer.current.migrationStarted,
+        total: pacingCount + teamCount + matchCount,
+      );
+    }
+
     // Pacings
+    if (pacingCount > 0) {
+      migrationCubit.updateProgress(title: Localizer.current.migrationPacings);
+    }
     for (var page = 0; page <= (pacingCount / pageSize).floor(); page++) {
       final pacings = await legacyDatabase.pacingModels.where().findAllAsync(
         offset: page * pacingCount,
@@ -123,11 +138,14 @@ class DatabaseRepository {
           }).toList();
 
       await store.box<PacingEntity>().putManyAsync(newPacings);
-
       // legacyDatabase.pacingModels.deleteAll(pacings.map((e) => e.id).toList());
+      migrationCubit.updateProgress(count: pacings.length);
     }
 
     // Teams
+    if (teamCount > 0) {
+      migrationCubit.updateProgress(title: Localizer.current.migrationTeams);
+    }
     for (var page = 0; page <= (teamCount / pageSize).floor(); page++) {
       final teams = await legacyDatabase.teamModels.where().findAllAsync(offset: page * teamCount, limit: pageSize);
       final newTeams =
@@ -166,9 +184,13 @@ class DatabaseRepository {
 
       await store.box<TeamEntity>().putManyAsync(newTeams);
       // legacyDatabase.teamModels.deleteAll(teams.map((e) => e.id).toList());
+      migrationCubit.updateProgress(count: pacingCount + teams.length);
     }
 
     // Matches
+    if (matchCount > 0) {
+      migrationCubit.updateProgress(title: Localizer.current.migrationMatches);
+    }
     for (var page = 0; page <= (matchCount / pageSize).floor(); page++) {
       final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * matchCount, limit: pageSize);
 
@@ -318,8 +340,12 @@ class DatabaseRepository {
 
       final newMatches = await Future.wait(newMatchFutures);
       await store.box<MatchEntity>().putManyAsync(newMatches);
-
       //legacyDatabase.matchModels.deleteAll(matches.map((e) => e.id).toList());
+      migrationCubit.updateProgress(count: pacingCount + teamCount + matches.length);
+    }
+
+    if (total > 0) {
+      migrationCubit.completeMigration(title: Localizer.current.migrationCompleted);
     }
   }
 }

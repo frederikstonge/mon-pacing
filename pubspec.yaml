@@ -45,6 +45,7 @@ dependencies:
   path: ^1.9.1
   path_provider: ^2.1.2
   sanitize_filename: ^1.0.5
+  sn_progress_dialog: ^1.2.0
   textfield_tags: ^3.0.1
   toastification: ^3.0.1
   url_launcher: ^6.3.1

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
+import '../../components/migration_dialog/migration_dialog.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import 'widgets/bottom_nav_bar.dart';
 
@@ -13,14 +14,16 @@ class ShellPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: BottomNavBar(
-        onDestinationSelected: (index) {
-          context.read<SettingsCubit>().vibrate(HapticsType.light);
-          navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
-        },
-        selectedIndex: navigationShell.currentIndex,
+    return MigrationDialog(
+      child: Scaffold(
+        body: navigationShell,
+        bottomNavigationBar: BottomNavBar(
+          onDestinationSelected: (index) {
+            context.read<SettingsCubit>().vibrate(HapticsType.light);
+            navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+          },
+          selectedIndex: navigationShell.currentIndex,
+        ),
       ),
     );
   }

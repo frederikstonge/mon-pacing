@@ -521,6 +521,36 @@ abstract class S {
   /// **'Match summary'**
   String get matchSummary;
 
+  /// No description provided for @migrationCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Migration completed'**
+  String get migrationCompleted;
+
+  /// No description provided for @migrationMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Migrating matches...'**
+  String get migrationMatches;
+
+  /// No description provided for @migrationPacings.
+  ///
+  /// In en, this message translates to:
+  /// **'Migrating pacings...'**
+  String get migrationPacings;
+
+  /// No description provided for @migrationStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting database migration...'**
+  String get migrationStarted;
+
+  /// No description provided for @migrationTeams.
+  ///
+  /// In en, this message translates to:
+  /// **'Migrating teams...'**
+  String get migrationTeams;
+
   /// No description provided for @missingIgnoreBatteryOptimizationError.
   ///
   /// In en, this message translates to:
