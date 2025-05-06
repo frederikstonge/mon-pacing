@@ -34,13 +34,12 @@ class Bootstrapper extends StatelessWidget {
         RepositoryProvider(create: (repositoryContext) => IntegrationService()),
         RepositoryProvider(create: (repositoryContext) => TimerService()),
         RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
+        // TODO: Remove Isar
         RepositoryProvider(create: (repositoryContext) => LegacyDatabaseRepository()),
         RepositoryProvider(
           create:
               (repositoryContext) =>
-                  DatabaseRepository(legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>())
-                    ..init(),
-          lazy: false,
+                  DatabaseRepository(legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>()),
         ),
         RepositoryProvider(
           create:
@@ -92,6 +91,7 @@ class Bootstrapper extends StatelessWidget {
           ),
           BlocProvider(
             create: (blocContext) => FeatureFlagsCubit(remoteConfig: FirebaseRemoteConfig.instance)..initialize(),
+            lazy: false,
           ),
         ],
         child: const App(),

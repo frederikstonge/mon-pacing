@@ -37,11 +37,6 @@ class DatabaseRepository {
     });
   }
 
-  // Temporary
-  Future<void> init() async {
-    _database = await database;
-  }
-
   Future<Store> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
     final store = await openStore(directory: p.join(dir.path, 'mon-pacing'), queriesCaseSensitiveDefault: false);
@@ -50,7 +45,13 @@ class DatabaseRepository {
   }
 
   Future<void> _initialize(Store store) async {
-    // Temporary to clear the database
+    // Add any additional setup code, e.g. build queries.
+    await _clearDatabase(store);
+    await _migrateDatabase(store);
+  }
+
+  /// Temporary to clear the database
+  Future<void> _clearDatabase(Store store) async {
     await store.box<PacingEntity>().removeAllAsync();
     await store.box<TeamEntity>().removeAllAsync();
     await store.box<MatchEntity>().removeAllAsync();
@@ -59,11 +60,18 @@ class DatabaseRepository {
     await store.box<StarEntity>().removeAllAsync();
     await store.box<PointEntity>().removeAllAsync();
     await store.box<PenaltyEntity>().removeAllAsync();
+    await store.box<TagEntity>().removeAllAsync();
+  }
 
-    // Add any additional setup code, e.g. build queries.
+  /// TODO: Remove Isar
+  Future<void> _migrateDatabase(Store store) async {
     final legacyDatabase = await legacyDatabaseRepository.database;
 
     final pacingCount = legacyDatabase.pacingModels.count();
+    final teamCount = legacyDatabase.teamModels.count();
+    final matchCount = legacyDatabase.matchModels.count();
+
+    // Pacings
     for (var page = 0; page <= (pacingCount / pageSize).floor(); page++) {
       final pacings = await legacyDatabase.pacingModels.where().findAllAsync(
         offset: page * pacingCount,
@@ -115,9 +123,11 @@ class DatabaseRepository {
           }).toList();
 
       await store.box<PacingEntity>().putManyAsync(newPacings);
+
+      // legacyDatabase.pacingModels.deleteAll(pacings.map((e) => e.id).toList());
     }
 
-    final teamCount = legacyDatabase.teamModels.count();
+    // Teams
     for (var page = 0; page <= (teamCount / pageSize).floor(); page++) {
       final teams = await legacyDatabase.teamModels.where().findAllAsync(offset: page * teamCount, limit: pageSize);
       final newTeams =
@@ -155,9 +165,10 @@ class DatabaseRepository {
           }).toList();
 
       await store.box<TeamEntity>().putManyAsync(newTeams);
+      // legacyDatabase.teamModels.deleteAll(teams.map((e) => e.id).toList());
     }
 
-    final matchCount = legacyDatabase.matchModels.count();
+    // Matches
     for (var page = 0; page <= (matchCount / pageSize).floor(); page++) {
       final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * matchCount, limit: pageSize);
 
@@ -165,7 +176,7 @@ class DatabaseRepository {
       final performerMap = <int, PerformerEntity>{};
       final improvisationMap = <int, ImprovisationEntity>{};
 
-      for (final match in matches) {
+      final newMatchFutures = matches.map((match) async {
         for (final team in match.teams) {
           final newPerformers =
               team.performers.asMap().entries.map((e) {
@@ -236,7 +247,7 @@ class DatabaseRepository {
           improvisationMap[match.improvisations[i].id] = improvisations[i];
         }
 
-        var newMatch = MatchEntity(
+        final newMatch = MatchEntity(
           id: 0,
           name: match.name,
           createdDate: match.createdDate,
@@ -302,8 +313,13 @@ class DatabaseRepository {
           ),
         );
 
-        newMatch = await store.box<MatchEntity>().putAndGetAsync(newMatch);
-      }
+        return newMatch;
+      });
+
+      final newMatches = await Future.wait(newMatchFutures);
+      await store.box<MatchEntity>().putManyAsync(newMatches);
+
+      //legacyDatabase.matchModels.deleteAll(matches.map((e) => e.id).toList());
     }
   }
 }
