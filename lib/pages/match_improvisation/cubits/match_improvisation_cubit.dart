@@ -26,7 +26,6 @@ class MatchImprovisationCubit extends Cubit<MatchImprovisationState> {
                improvisation ??
                ImprovisationModel(
                  id: 0,
-                 order: match.improvisations.length + 1,
                  type: ImprovisationType.values[match.improvisations.length % 2],
                  durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
                  category: '',

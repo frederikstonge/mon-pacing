@@ -40,7 +40,7 @@ class PacingModel with PacingModelMappable {
     modifiedDate: entity.modifiedDate,
     defaultNumberOfTeams: entity.defaultNumberOfTeams,
     improvisations:
-        entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
+        entity.improvisations.sortedBy((e) => e.order).map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
     tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
     integrationId: entity.integrationId,
     integrationEntityId: entity.integrationEntityId,
@@ -59,7 +59,7 @@ class PacingModel with PacingModelMappable {
       integrationAdditionalData: integrationAdditionalData,
     );
 
-    pacing.improvisations.addAll(improvisations.map((e) => e.toEntity()).toList());
+    pacing.improvisations.addAll(improvisations.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
     pacing.tags.addAll(tags.map((e) => e.toEntity()).toList());
     return pacing;
   }

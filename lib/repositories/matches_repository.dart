@@ -145,7 +145,7 @@ class MatchesRepository {
     }
 
     final query = builder.order(MatchEntity_.createdDate, flags: Order.descending).build();
-    final returnValue = query.findAsync();
+    final returnValue = await query.findAsync();
     query.close();
     return returnValue;
   }
@@ -155,7 +155,7 @@ class MatchesRepository {
     final box = db.box<TagEntity>();
     final builder = search.isNotEmpty ? box.query(TagEntity_.name.contains(search, caseSensitive: false)) : box.query();
     final query = builder.build();
-    final returnValue = query.find();
+    final returnValue = await query.findAsync();
     query.close();
     return returnValue;
   }

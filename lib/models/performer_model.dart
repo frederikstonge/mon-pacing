@@ -7,14 +7,12 @@ part 'performer_model.mapper.dart';
 @MappableClass()
 class PerformerModel with PerformerModelMappable {
   final int id;
-  final int order;
   final String name;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
 
   const PerformerModel({
     required this.id,
-    required this.order,
     required this.name,
     this.integrationEntityId,
     this.integrationAdditionalData,
@@ -23,12 +21,11 @@ class PerformerModel with PerformerModelMappable {
   factory PerformerModel.fromEntity({required PerformerEntity entity}) => PerformerModel(
     id: entity.id,
     name: entity.name,
-    order: entity.order,
     integrationEntityId: entity.integrationEntityId,
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  PerformerEntity toEntity() => PerformerEntity(
+  PerformerEntity toEntity(int order) => PerformerEntity(
     id: id,
     name: name,
     order: order,

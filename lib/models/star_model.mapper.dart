@@ -22,8 +22,6 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
 
   static int _$id(StarModel v) => v.id;
   static const Field<StarModel, int> _f$id = Field('id', _$id);
-  static int _$order(StarModel v) => v.order;
-  static const Field<StarModel, int> _f$order = Field('order', _$order);
   static int _$performerId(StarModel v) => v.performerId;
   static const Field<StarModel, int> _f$performerId =
       Field('performerId', _$performerId);
@@ -33,7 +31,6 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
   @override
   final MappableFields<StarModel> fields = const {
     #id: _f$id,
-    #order: _f$order,
     #performerId: _f$performerId,
     #teamId: _f$teamId,
   };
@@ -41,7 +38,6 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
   static StarModel _instantiate(DecodingData data) {
     return StarModel(
         id: data.dec(_f$id),
-        order: data.dec(_f$order),
         performerId: data.dec(_f$performerId),
         teamId: data.dec(_f$teamId));
   }
@@ -96,7 +92,7 @@ extension StarModelValueCopy<$R, $Out> on ObjectCopyWith<$R, StarModel, $Out> {
 
 abstract class StarModelCopyWith<$R, $In extends StarModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({int? id, int? order, int? performerId, int? teamId});
+  $R call({int? id, int? performerId, int? teamId});
   StarModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -109,17 +105,15 @@ class _StarModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<StarModel> $mapper =
       StarModelMapper.ensureInitialized();
   @override
-  $R call({int? id, int? order, int? performerId, int? teamId}) =>
+  $R call({int? id, int? performerId, int? teamId}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
-        if (order != null) #order: order,
         if (performerId != null) #performerId: performerId,
         if (teamId != null) #teamId: teamId
       }));
   @override
   StarModel $make(CopyWithData data) => StarModel(
       id: data.get(#id, or: $value.id),
-      order: data.get(#order, or: $value.order),
       performerId: data.get(#performerId, or: $value.performerId),
       teamId: data.get(#teamId, or: $value.teamId));
 

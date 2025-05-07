@@ -87,9 +87,7 @@ class MatchCubit extends Cubit<MatchState> {
     );
 
     improvisations.insert(index, improvisation);
-    final newMatch = state.match!.copyWith(
-      improvisations: improvisations.asMap().entries.map((e) => e.value.copyWith(order: e.key + 1)).toList(),
-    );
+    final newMatch = state.match!.copyWith(improvisations: improvisations);
 
     emit(
       state.copyWith(
@@ -202,12 +200,7 @@ class MatchCubit extends Cubit<MatchState> {
   Future<void> addStar() async {
     final stars = List<StarModel>.from(state.match!.copyWith().stars);
     stars.add(
-      StarModel(
-        id: 0,
-        teamId: state.match!.teams.first.id,
-        performerId: state.match!.teams.first.performers.first.id,
-        order: stars.length + 1,
-      ),
+      StarModel(id: 0, teamId: state.match!.teams.first.id, performerId: state.match!.teams.first.performers.first.id),
     );
     final newMatch = state.match!.copyWith(stars: stars);
 
@@ -247,9 +240,7 @@ class MatchCubit extends Cubit<MatchState> {
 
     stars.insert(newIndex, star);
 
-    final newMatch = state.match!.copyWith(
-      stars: stars.asMap().entries.map((e) => e.value.copyWith(order: e.key + 1)).toList(),
-    );
+    final newMatch = state.match!.copyWith(stars: stars);
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
 

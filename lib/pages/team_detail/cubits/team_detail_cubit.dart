@@ -34,7 +34,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
       final random = Random();
       final newTeam = state.team.copyWith(
         color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-        performers: [_createPerformer(state.team.performers, 1)],
+        performers: [_createPerformer(state.team.performers)],
       );
       emit(state.copyWith(team: newTeam));
     }
@@ -47,7 +47,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   void addPerformer() {
     final team = state.team;
     final performers = List<PerformerModel>.from(team.performers);
-    performers.add(_createPerformer(performers, performers.length + 1));
+    performers.add(_createPerformer(performers));
     edit(team.copyWith(performers: performers));
   }
 
@@ -76,10 +76,10 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
     }
 
     performers.insert(newIndex, performer);
-    edit(team.copyWith(performers: performers.asMap().entries.map((e) => e.value.copyWith(order: e.key + 1)).toList()));
+    edit(team.copyWith(performers: performers));
   }
 
-  PerformerModel _createPerformer(List<PerformerModel> allPerformers, int order) {
-    return PerformerModel(id: 0, order: order, name: '');
+  PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
+    return PerformerModel(id: 0, name: '');
   }
 }

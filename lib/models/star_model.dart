@@ -7,16 +7,15 @@ part 'star_model.mapper.dart';
 @MappableClass()
 class StarModel with StarModelMappable {
   final int id;
-  final int order;
   final int performerId;
   final int teamId;
 
-  const StarModel({required this.id, required this.order, required this.performerId, required this.teamId});
+  const StarModel({required this.id, required this.performerId, required this.teamId});
 
   factory StarModel.fromEntity({required StarEntity entity}) =>
-      StarModel(id: entity.id, order: entity.order, performerId: entity.performerId, teamId: entity.teamId);
+      StarModel(id: entity.id, performerId: entity.performerId, teamId: entity.teamId);
 
-  StarEntity toEntity() => StarEntity(id: id, order: order, performerId: performerId, teamId: teamId);
+  StarEntity toEntity(int order) => StarEntity(id: id, order: order, performerId: performerId, teamId: teamId);
 
   StarModel createNew() => copyWith(id: 0);
 }

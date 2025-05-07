@@ -50,7 +50,6 @@ class PacingCubit extends Cubit<PacingState> {
       notes: '',
       timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
       huddleTimerInSeconds: settingsCubit.state.defaultHuddleTimerInSeconds,
-      order: improvisations.length + 1,
     );
 
     improvisations.add(newImprovisation);
@@ -71,9 +70,7 @@ class PacingCubit extends Cubit<PacingState> {
 
     improvisations.insert(newIndex, improvisation);
 
-    final newPacing = state.pacing!.copyWith(
-      improvisations: improvisations.asMap().entries.map((e) => e.value.copyWith(order: e.key + 1)).toList(),
-    );
+    final newPacing = state.pacing!.copyWith(improvisations: improvisations);
 
     emit(state.copyWith(status: PacingStatus.success, pacing: newPacing));
     await pacingsCubit.edit(newPacing);

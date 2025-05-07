@@ -8,7 +8,6 @@ part 'improvisation_model.mapper.dart';
 @MappableClass()
 class ImprovisationModel with ImprovisationModelMappable {
   final int id;
-  final int order;
   final ImprovisationType type;
   final String category;
   final String theme;
@@ -22,7 +21,6 @@ class ImprovisationModel with ImprovisationModelMappable {
 
   const ImprovisationModel({
     required this.id,
-    required this.order,
     required this.type,
     required this.category,
     required this.theme,
@@ -37,7 +35,6 @@ class ImprovisationModel with ImprovisationModelMappable {
 
   factory ImprovisationModel.fromEntity({required ImprovisationEntity entity}) => ImprovisationModel(
     id: entity.id,
-    order: entity.order,
     type: ImprovisationType.values.elementAt(entity.type),
     category: entity.category,
     theme: entity.theme,
@@ -50,7 +47,7 @@ class ImprovisationModel with ImprovisationModelMappable {
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  ImprovisationEntity toEntity() => ImprovisationEntity(
+  ImprovisationEntity toEntity(int order) => ImprovisationEntity(
     id: id,
     order: order,
     type: type.index,

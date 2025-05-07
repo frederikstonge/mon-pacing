@@ -72,10 +72,10 @@ class MatchModel with MatchModelMappable {
       modifiedDate: entity.modifiedDate,
       teams: entity.teams.map((e) => TeamModel.fromEntity(entity: e)).toList(),
       improvisations:
-          entity.improvisations.map((e) => ImprovisationModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
+          entity.improvisations.sortedBy((e) => e.order).map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
       penalties: entity.penalties.map((e) => PenaltyModel.fromEntity(entity: e)).toList(),
       points: entity.points.map((e) => PointModel.fromEntity(entity: e)).toList(),
-      stars: entity.stars.map((e) => StarModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
+      stars: entity.stars.sortedBy((e) => e.order).map((e) => StarModel.fromEntity(entity: e)).toList(),
       tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
       enableStatistics: entity.enableStatistics,
       enablePenaltiesImpactPoints: entity.enablePenaltiesImpactPoints,
@@ -114,11 +114,11 @@ class MatchModel with MatchModelMappable {
       integrationPenaltyTypes: integrationPenaltyTypes,
     );
 
-    match.improvisations.addAll(improvisations.map((e) => e.toEntity()).toList());
+    match.improvisations.addAll(improvisations.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
     match.teams.addAll(teams.map((e) => e.toEntity()).toList());
     match.penalties.addAll(penalties.map((e) => e.toEntity()).toList());
     match.points.addAll(points.map((e) => e.toEntity()).toList());
-    match.stars.addAll(stars.map((e) => e.toEntity()).toList());
+    match.stars.addAll(stars.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
     match.tags.addAll(tags.map((e) => e.toEntity()).toList());
 
     return match;

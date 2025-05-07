@@ -37,14 +37,14 @@ class TeamModel with TeamModelMappable {
     modifiedDate: entity.modifiedDate,
     name: entity.name,
     color: entity.color,
-    performers: entity.performers.map((e) => PerformerModel.fromEntity(entity: e)).sortedBy((e) => e.order).toList(),
+    performers: entity.performers.sortedBy((e) => e.order).map((e) => PerformerModel.fromEntity(entity: e)).toList(),
     tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
   );
 
   TeamEntity toEntity() {
     final team = TeamEntity(id: id, createdDate: createdDate, modifiedDate: modifiedDate, name: name, color: color);
 
-    team.performers.addAll(performers.map((e) => e.toEntity()).toList());
+    team.performers.addAll(performers.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
     team.tags.addAll(tags.map((e) => e.toEntity()).toList());
     return team;
   }
