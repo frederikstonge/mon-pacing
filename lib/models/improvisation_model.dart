@@ -48,7 +48,8 @@ class ImprovisationModel with ImprovisationModelMappable {
   );
 
   ImprovisationEntity toEntity(int order) => ImprovisationEntity(
-    id: id,
+    // Temporary id to support ReorderableListView
+    id: id < 0 ? 0 : id,
     order: order,
     type: type.index,
     category: category,
@@ -61,6 +62,4 @@ class ImprovisationModel with ImprovisationModelMappable {
     integrationEntityId: integrationEntityId,
     integrationAdditionalData: integrationAdditionalData,
   );
-
-  ImprovisationModel createNew() => copyWith(id: 0);
 }

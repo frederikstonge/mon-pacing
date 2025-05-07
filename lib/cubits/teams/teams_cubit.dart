@@ -101,7 +101,15 @@ class TeamsCubit extends Cubit<TeamsState> {
       if (filePath != null) {
         final teamValue = await File(filePath).readAsString();
         final team = TeamModelMapper.fromJson(teamValue);
-        final newTeamEntity = await teamsRepository.add(team.createNew().toEntity());
+        final newTeamEntity = await teamsRepository.add(
+          team
+              .copyWith(
+                id: 0,
+                performers: team.performers.map((e) => e.copyWith(id: 0)).toList(),
+                tags: team.tags.map((e) => e.copyWith(id: 0)).toList(),
+              )
+              .toEntity(),
+        );
         toasterService.show(title: Localizer.current.toasterTeamImported);
 
         return TeamModel.fromEntity(entity: newTeamEntity);

@@ -95,7 +95,16 @@ class PacingsCubit extends Cubit<PacingsState> {
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
         final pacing = PacingModelMapper.fromJson(pacingValue);
-        final newPacingEntity = await pacingsRepository.add(pacing.createNew().toEntity());
+
+        final newPacingEntity = await pacingsRepository.add(
+          pacing
+              .copyWith(
+                id: 0,
+                improvisations: pacing.improvisations.map((e) => e.copyWith(id: 0)).toList(),
+                tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
+              )
+              .toEntity(),
+        );
         toasterService.show(title: Localizer.current.toasterPacingImported);
 
         return PacingModel.fromEntity(entity: newPacingEntity);

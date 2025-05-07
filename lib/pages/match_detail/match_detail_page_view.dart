@@ -132,7 +132,6 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                     children: [
                       ...matchDetailState.match.teams.asMap().entries.map(
                         (e) => MatchTeamTile(
-                          key: ValueKey(e.value.id),
                           team: e.value,
                           allowSearch: !matchDetailState.editMode,
                           onChanged: (value) {

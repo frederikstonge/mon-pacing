@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../extensions/color_extensions.dart';
+import '../../../extensions/iterable_extensions.dart';
 import '../../../l10n/localizer.dart';
 import '../../../models/constants.dart';
 import '../../../models/improvisation_model.dart';
@@ -33,8 +34,11 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
                     name: pacing!.name,
                     createdDate: null,
                     modifiedDate: null,
-                    improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.createNew())),
-                    tags: List<TagModel>.from(pacing.tags.map((e) => e.createNew())),
+                    // Temporary id to support ReorderableListView
+                    improvisations: List<ImprovisationModel>.from(
+                      pacing.improvisations.map((e) => e.copyWith(id: -e.id)),
+                    ),
+                    tags: List<TagModel>.from(pacing.tags.map((e) => e.copyWith(id: 0))),
                     teams: [],
                     penalties: [],
                     points: [],
@@ -87,7 +91,8 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   void addPerformer(TeamModel team) {
     final performers = List<PerformerModel>.from(team.performers);
-    performers.add(_createPerformer());
+    final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t) => t.performers));
+    performers.add(_createPerformer(allPerformers));
     editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
@@ -117,10 +122,11 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   void onTeamSelected(TeamModel team, TeamModel selectedTeam) {
+    int tempId = -1;
     final newTeam = team.copyWith(
       name: selectedTeam.name,
       color: selectedTeam.color,
-      performers: selectedTeam.performers.map((p) => p.createNew()).toList(),
+      performers: selectedTeam.performers.map((p) => p.copyWith(id: tempId--)).toList(),
     );
 
     editTeam(state.match.teams.indexOf(team), newTeam);
@@ -128,17 +134,22 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   TeamModel _createTeam(List<TeamModel> teams) {
     final random = Random();
+    final allPerformers = List<PerformerModel>.from(teams.selectMany((t) => t.performers));
     return TeamModel(
       id: 0,
       createdDate: null,
       modifiedDate: null,
       name: '${Localizer.current.team} ${teams.length + 1}',
       color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-      performers: [_createPerformer()],
+      performers: [_createPerformer(allPerformers)],
     );
   }
 
-  PerformerModel _createPerformer() {
-    return PerformerModel(id: 0, name: '');
+  PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
+    return PerformerModel(
+      // Temporary id to support ReorderableListView
+      id: allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0,
+      name: '',
+    );
   }
 }

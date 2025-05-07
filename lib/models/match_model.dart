@@ -123,14 +123,4 @@ class MatchModel with MatchModelMappable {
 
     return match;
   }
-
-  MatchModel createNew() => copyWith(
-    id: 0,
-    improvisations: List<ImprovisationModel>.from(improvisations.map((e) => e.createNew())),
-    teams: List<TeamModel>.from(teams.map((e) => e.createNew())),
-    penalties: List<PenaltyModel>.from(penalties.map((e) => e.createNew())),
-    points: List<PointModel>.from(points.map((e) => e.createNew())),
-    stars: List<StarModel>.from(stars.map((e) => e.createNew())),
-    tags: List<TagModel>.from(tags.map((e) => e.createNew())),
-  );
 }

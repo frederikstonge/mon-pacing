@@ -178,7 +178,12 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                               context: context,
                               child: PacingDetailPageShell(
                                 editMode: false,
-                                pacing: pacing.createNew(),
+                                pacing: pacing.copyWith(
+                                  id: 0,
+                                  // Temporary id to support ReorderableListView
+                                  improvisations: pacing.improvisations.map((e) => e.copyWith(id: -e.id)).toList(),
+                                  tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
+                                ),
                                 onConfirm: (pacing) async {
                                   final router = GoRouter.of(context);
                                   final pacingModel = await context.read<PacingsCubit>().add(pacing);

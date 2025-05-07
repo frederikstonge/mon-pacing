@@ -166,7 +166,7 @@ class MatchCubit extends Cubit<MatchState> {
 
   Future<void> addPenalty(PenaltyModel penalty) async {
     final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
-    penalties.add(penalty.createNew());
+    penalties.add(penalty);
     final newMatch = state.match!.copyWith(penalties: penalties);
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));

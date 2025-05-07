@@ -20,7 +20,12 @@ class PacingDetailCubit extends Cubit<PacingDetailState> {
               pacing != null
                   ? editMode
                       ? pacing.copyWith()
-                      : pacing.createNew()
+                      : pacing.copyWith(
+                        id: 0,
+                        // Temporary id to support ReorderableListView
+                        improvisations: pacing.improvisations.map((e) => e.copyWith(id: -e.id)).toList(),
+                        tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
+                      )
                   : PacingModel(
                     id: 0,
                     name: '',

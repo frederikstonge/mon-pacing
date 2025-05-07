@@ -26,12 +26,11 @@ class PerformerModel with PerformerModelMappable {
   );
 
   PerformerEntity toEntity(int order) => PerformerEntity(
-    id: id,
+    // Temporary id to support ReorderableListView
+    id: id < 0 ? 0 : id,
     name: name,
     order: order,
     integrationEntityId: integrationEntityId,
     integrationAdditionalData: integrationAdditionalData,
   );
-
-  PerformerModel createNew() => copyWith(id: 0);
 }

@@ -15,7 +15,11 @@ class StarModel with StarModelMappable {
   factory StarModel.fromEntity({required StarEntity entity}) =>
       StarModel(id: entity.id, performerId: entity.performerId, teamId: entity.teamId);
 
-  StarEntity toEntity(int order) => StarEntity(id: id, order: order, performerId: performerId, teamId: teamId);
-
-  StarModel createNew() => copyWith(id: 0);
+  StarEntity toEntity(int order) => StarEntity(
+    // Temporary id to support ReorderableListView
+    id: id < 0 ? 0 : id,
+    order: order,
+    performerId: performerId,
+    teamId: teamId,
+  );
 }

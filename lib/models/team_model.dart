@@ -48,10 +48,4 @@ class TeamModel with TeamModelMappable {
     team.tags.addAll(tags.map((e) => e.toEntity()).toList());
     return team;
   }
-
-  TeamModel createNew() => copyWith(
-    id: 0,
-    performers: List<PerformerModel>.from(performers.map((e) => e.createNew())),
-    tags: List<TagModel>.from(tags.map((e) => e.createNew())),
-  );
 }

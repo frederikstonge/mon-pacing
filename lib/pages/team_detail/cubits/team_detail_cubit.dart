@@ -24,7 +24,8 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
               team != null
                   ? editMode
                       ? team.copyWith()
-                      : team.createNew()
+                      // Temporary id to support ReorderableListView
+                      : team.copyWith(id: 0, performers: team.performers.map((e) => e.copyWith(id: -e.id)).toList())
                   : const TeamModel(id: 0, createdDate: null, modifiedDate: null, name: '', color: 0),
         ),
       );
@@ -32,9 +33,10 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   void initialize() {
     if (!state.editMode) {
       final random = Random();
+      final performers = List<PerformerModel>.from(state.team.performers);
       final newTeam = state.team.copyWith(
         color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-        performers: [_createPerformer()],
+        performers: [_createPerformer(performers)],
       );
       emit(state.copyWith(team: newTeam));
     }
@@ -47,7 +49,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   void addPerformer() {
     final team = state.team;
     final performers = List<PerformerModel>.from(team.performers);
-    performers.add(_createPerformer());
+    performers.add(_createPerformer(performers));
     edit(team.copyWith(performers: performers));
   }
 
@@ -79,7 +81,11 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
     edit(team.copyWith(performers: performers));
   }
 
-  PerformerModel _createPerformer() {
-    return PerformerModel(id: 0, name: '');
+  PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
+    return PerformerModel(
+      // Temporary id to support ReorderableListView
+      id: allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0,
+      name: '',
+    );
   }
 }
