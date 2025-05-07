@@ -29,12 +29,12 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
         ),
       );
 
-  Future<void> initialize() async {
+  void initialize() {
     if (!state.editMode) {
       final random = Random();
       final newTeam = state.team.copyWith(
         color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-        performers: [_createPerformer(state.team.performers)],
+        performers: [_createPerformer()],
       );
       emit(state.copyWith(team: newTeam));
     }
@@ -47,7 +47,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   void addPerformer() {
     final team = state.team;
     final performers = List<PerformerModel>.from(team.performers);
-    performers.add(_createPerformer(performers));
+    performers.add(_createPerformer());
     edit(team.copyWith(performers: performers));
   }
 
@@ -79,7 +79,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
     edit(team.copyWith(performers: performers));
   }
 
-  PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
+  PerformerModel _createPerformer() {
     return PerformerModel(id: 0, name: '');
   }
 }

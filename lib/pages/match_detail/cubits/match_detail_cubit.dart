@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../extensions/color_extensions.dart';
-import '../../../extensions/iterable_extensions.dart';
 import '../../../l10n/localizer.dart';
 import '../../../models/constants.dart';
 import '../../../models/improvisation_model.dart';
@@ -49,7 +48,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
         ),
       );
 
-  Future<void> initialize() async {
+  void initialize() {
     if (!state.editMode || state.match.teams.isEmpty) {
       final teams = List<TeamModel>.from(state.match.teams);
       for (int i = 0; i < pacing!.defaultNumberOfTeams; i++) {
@@ -88,8 +87,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   void addPerformer(TeamModel team) {
     final performers = List<PerformerModel>.from(team.performers);
-    final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t) => t.performers));
-    performers.add(_createPerformer(allPerformers));
+    performers.add(_createPerformer());
     editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
   }
 
@@ -129,7 +127,6 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   TeamModel _createTeam(List<TeamModel> teams) {
-    final allPerformers = List<PerformerModel>.from(teams.selectMany((t) => t.performers));
     final random = Random();
     return TeamModel(
       id: 0,
@@ -137,11 +134,11 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
       modifiedDate: null,
       name: '${Localizer.current.team} ${teams.length + 1}',
       color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-      performers: [_createPerformer(allPerformers)],
+      performers: [_createPerformer()],
     );
   }
 
-  PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
+  PerformerModel _createPerformer() {
     return PerformerModel(id: 0, name: '');
   }
 }
