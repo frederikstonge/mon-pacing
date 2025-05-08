@@ -15,3 +15,17 @@ class TagModel with TagModelMappable {
 
   TagEntity toEntity() => TagEntity(id: id, name: name);
 }
+
+class TagMapper extends SimpleMapper<TagModel> {
+  const TagMapper();
+
+  @override
+  TagModel decode(dynamic value) {
+    return TagModel(id: 0, name: value.toString());
+  }
+
+  @override
+  dynamic encode(TagModel self) {
+    return self.name;
+  }
+}
