@@ -68,7 +68,8 @@ class TeamsRepository {
   Future<List<TeamEntity>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
-    final query = box.query().order(TeamEntity_.createdDate, flags: Order.descending).build();
+    final query =
+        box.query(TeamEntity_.hasMatch.equals(false)).order(TeamEntity_.createdDate, flags: Order.descending).build();
     query.limit = take;
     query.offset = skip;
     final returnValue = await query.findAsync();
@@ -80,7 +81,9 @@ class TeamsRepository {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
     final builder =
-        search.isNotEmpty ? box.query(TeamEntity_.name.contains(search, caseSensitive: false)) : box.query();
+        search.isNotEmpty
+            ? box.query(TeamEntity_.hasMatch.equals(false).and(TeamEntity_.name.contains(search, caseSensitive: false)))
+            : box.query(TeamEntity_.hasMatch.equals(false));
     if (search.isNotEmpty) {
       builder.linkMany(TeamEntity_.performers, PerformerEntity_.name.contains(search, caseSensitive: false));
     }

@@ -155,6 +155,7 @@ class DatabaseRepository {
               color: team.color,
               createdDate: team.createdDate,
               modifiedDate: team.modifiedDate,
+              hasMatch: false,
             );
 
             newTeam.tags.addAll(
@@ -226,6 +227,7 @@ class DatabaseRepository {
                 color: team.color,
                 createdDate: DateTime.now(),
                 modifiedDate: DateTime.now(),
+                hasMatch: true,
               );
 
               newTeam.performers.addAll(

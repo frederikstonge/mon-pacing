@@ -39,10 +39,21 @@ class TeamModel with TeamModelMappable {
     color: entity.color,
     performers: entity.performers.sortedBy((e) => e.order).map((e) => PerformerModel.fromEntity(entity: e)).toList(),
     tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
+    integrationEntityId: entity.integrationEntityId,
+    integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  TeamEntity toEntity() {
-    final team = TeamEntity(id: id, createdDate: createdDate, modifiedDate: modifiedDate, name: name, color: color);
+  TeamEntity toEntity({bool hasMatch = false}) {
+    final team = TeamEntity(
+      id: id,
+      createdDate: createdDate,
+      modifiedDate: modifiedDate,
+      name: name,
+      color: color,
+      hasMatch: hasMatch,
+      integrationEntityId: integrationEntityId,
+      integrationAdditionalData: integrationAdditionalData,
+    );
 
     team.performers.addAll(performers.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
     team.tags.addAll(tags.map((e) => e.toEntity()).toList());

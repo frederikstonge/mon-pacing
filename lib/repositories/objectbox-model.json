@@ -402,7 +402,7 @@
     },
     {
       "id": "9:1216612997671907182",
-      "lastPropertyId": "8:6778898514959522071",
+      "lastPropertyId": "9:2515836592902002615",
       "name": "TeamEntity",
       "properties": [
         {
@@ -446,6 +446,11 @@
           "id": "8:6778898514959522071",
           "name": "integrationAdditionalData",
           "type": 9
+        },
+        {
+          "id": "9:2515836592902002615",
+          "name": "hasMatch",
+          "type": 1
         }
       ],
       "relations": [

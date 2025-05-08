@@ -413,7 +413,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(9, 1216612997671907182),
       name: 'TeamEntity',
-      lastPropertyId: const obx_int.IdUid(8, 6778898514959522071),
+      lastPropertyId: const obx_int.IdUid(9, 2515836592902002615),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -453,6 +453,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(8, 6778898514959522071),
             name: 'integrationAdditionalData',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 2515836592902002615),
+            name: 'hasMatch',
+            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[
@@ -1040,7 +1045,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.integrationAdditionalData == null
                   ? null
                   : fbb.writeString(object.integrationAdditionalData!);
-          fbb.startTable(9);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.createdDate?.millisecondsSinceEpoch);
           fbb.addInt64(2, object.modifiedDate?.millisecondsSinceEpoch);
@@ -1048,6 +1053,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(4, object.color);
           fbb.addOffset(6, integrationEntityIdOffset);
           fbb.addOffset(7, integrationAdditionalDataOffset);
+          fbb.addBool(8, object.hasMatch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1064,6 +1070,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 10, '');
           final colorParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final hasMatchParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
           final createdDateParam = createdDateValue == null
               ? null
               : DateTime.fromMillisecondsSinceEpoch(createdDateValue);
@@ -1080,6 +1088,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam,
               name: nameParam,
               color: colorParam,
+              hasMatch: hasMatchParam,
               createdDate: createdDateParam,
               modifiedDate: modifiedDateParam,
               integrationEntityId: integrationEntityIdParam,
@@ -1431,6 +1440,10 @@ class TeamEntity_ {
   /// See [TeamEntity.integrationAdditionalData].
   static final integrationAdditionalData =
       obx.QueryStringProperty<TeamEntity>(_entities[7].properties[6]);
+
+  /// See [TeamEntity.hasMatch].
+  static final hasMatch =
+      obx.QueryBooleanProperty<TeamEntity>(_entities[7].properties[7]);
 
   /// see [TeamEntity.performers]
   static final performers =

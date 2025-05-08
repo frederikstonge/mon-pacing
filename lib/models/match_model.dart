@@ -115,7 +115,7 @@ class MatchModel with MatchModelMappable {
     );
 
     match.improvisations.addAll(improvisations.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
-    match.teams.addAll(teams.map((e) => e.toEntity()).toList());
+    match.teams.addAll(teams.map((e) => e.toEntity(hasMatch: true)).toList());
     match.penalties.addAll(penalties.map((e) => e.toEntity()).toList());
     match.points.addAll(points.map((e) => e.toEntity()).toList());
     match.stars.addAll(stars.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
