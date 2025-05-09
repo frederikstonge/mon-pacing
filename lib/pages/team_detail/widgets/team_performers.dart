@@ -11,8 +11,8 @@ class TeamPerformers extends StatelessWidget {
   final String label;
   final List<PerformerModel> performers;
   final FutureOr<void> Function()? addPerformer;
-  final FutureOr<void> Function(int index, PerformerModel performer) editPerformer;
-  final FutureOr<void> Function(int index)? removePerformer;
+  final FutureOr<void> Function(PerformerModel performer) editPerformer;
+  final FutureOr<void> Function(PerformerModel performer)? removePerformer;
   final FutureOr<void> Function(int oldIndex, int newIndex) onDrag;
   final FutureOr<void> Function() onDragStart;
 
@@ -68,7 +68,7 @@ class TeamPerformers extends StatelessWidget {
                                 key: ValueKey(d.value.id),
                                 performer: d.value,
                                 valueChanged: (value) async {
-                                  await editPerformer(d.key, value);
+                                  await editPerformer(value);
                                 },
                               ),
                             ),
@@ -88,7 +88,7 @@ class TeamPerformers extends StatelessWidget {
                               onPressed:
                                   removePerformer != null
                                       ? () async {
-                                        await removePerformer!(d.key);
+                                        await removePerformer!(d.value);
                                       }
                                       : null,
                             ),

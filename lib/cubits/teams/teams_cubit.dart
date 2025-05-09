@@ -37,11 +37,13 @@ class TeamsCubit extends Cubit<TeamsState> {
     return null;
   }
 
-  Future<void> edit(TeamModel model) async {
+  Future<TeamModel> edit(TeamModel model) async {
     try {
-      await teamsRepository.edit(model.toEntity());
+      final entity = await teamsRepository.edit(model.toEntity());
+      return TeamModel.fromEntity(entity: entity);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+      return model;
     } finally {
       await refresh();
     }
@@ -85,8 +87,10 @@ class TeamsCubit extends Cubit<TeamsState> {
   }
 
   Future<void> refresh() async {
-    emit(const TeamsState(status: TeamsStatus.initial));
-    await fetch();
+    if (state.status != TeamsStatus.initial) {
+      emit(const TeamsState(status: TeamsStatus.initial));
+      await fetch();
+    }
   }
 
   Future<TeamModel?> import() async {

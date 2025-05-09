@@ -32,7 +32,7 @@ class PacingsRepository {
     });
   }
 
-  Future<void> edit(PacingEntity entity) async {
+  Future<PacingEntity> edit(PacingEntity entity) async {
     final db = await databaseRepository.database;
     final box = db.box<PacingEntity>();
     final improvisationBox = db.box<ImprovisationEntity>();
@@ -53,10 +53,10 @@ class PacingsRepository {
 
       tagBox.putMany(editedTags);
       tagBox.removeMany(removedTags.map((e) => e.id).toList());
-
-      entity.modifiedDate = DateTime.now();
-      return box.put(entity);
     });
+
+    entity.modifiedDate = DateTime.now();
+    return box.putAndGetAsync(entity);
   }
 
   Future<PacingEntity?> get(int id) async {

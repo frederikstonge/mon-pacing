@@ -26,7 +26,6 @@ class PerformerModel with PerformerModelMappable {
   );
 
   PerformerEntity toEntity(int order) => PerformerEntity(
-    // Temporary id to support ReorderableListView
     id: id < 0 ? 0 : id,
     name: name,
     order: order,

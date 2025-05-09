@@ -130,12 +130,12 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                   ),
                   Column(
                     children: [
-                      ...matchDetailState.match.teams.asMap().entries.map(
+                      ...matchDetailState.match.teams.map(
                         (e) => MatchTeamTile(
-                          team: e.value,
+                          team: e,
                           allowSearch: !matchDetailState.editMode,
                           onChanged: (value) {
-                            context.read<MatchDetailCubit>().editTeam(e.key, value);
+                            context.read<MatchDetailCubit>().editTeam(value);
                           },
                           onDelete:
                               !matchDetailState.editMode && matchDetailState.match.teams.length > Constants.minimumTeams
@@ -147,14 +147,14 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                           .of(context)
                                           .areYouSureActionName(
                                             action: S.of(context).delete.toLowerCase(),
-                                            name: e.value.name,
+                                            name: e.name,
                                           ),
                                       S.of(context).delete,
                                       S.of(context).cancel,
                                     );
 
                                     if (result == true) {
-                                      cubit.removeTeam(e.key);
+                                      cubit.removeTeam(e);
                                     }
                                   }
                                   : null,
@@ -166,12 +166,12 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             final teamEntities = await context.read<TeamsRepository>().search(query, selectedTags);
                             return teamEntities.map((e) => TeamModel.fromEntity(entity: e)).toList();
                           },
-                          onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value, team),
+                          onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e, team),
                           addPerformer:
                               !matchDetailState.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
                           editPerformer: context.read<MatchDetailCubit>().editPerformer,
                           removePerformer:
-                              e.value.performers.length > 1 && !matchDetailState.editMode
+                              e.performers.length > 1 && !matchDetailState.editMode
                                   ? context.read<MatchDetailCubit>().removePerformer
                                   : null,
                           onDrag: context.read<MatchDetailCubit>().movePerformer,

@@ -36,11 +36,13 @@ class PacingsCubit extends Cubit<PacingsState> {
     return null;
   }
 
-  Future<void> edit(PacingModel model) async {
+  Future<PacingModel> edit(PacingModel model) async {
     try {
-      await pacingsRepository.edit(model.toEntity());
+      final entity = await pacingsRepository.edit(model.toEntity());
+      return PacingModel.fromEntity(entity: entity);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+      return model;
     } finally {
       await refresh();
     }
@@ -79,8 +81,10 @@ class PacingsCubit extends Cubit<PacingsState> {
   }
 
   Future<void> refresh() async {
-    emit(const PacingsState(status: PacingsStatus.initial));
-    await fetch();
+    if (state.status != PacingsStatus.initial) {
+      emit(const PacingsState(status: PacingsStatus.initial));
+      await fetch();
+    }
   }
 
   Future<PacingModel?> import() async {

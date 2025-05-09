@@ -49,7 +49,7 @@ class PacingModel with PacingModelMappable {
 
   PacingEntity toEntity() {
     final pacing = PacingEntity(
-      id: id,
+      id: id < 0 ? 0 : id,
       name: name,
       createdDate: createdDate,
       modifiedDate: modifiedDate,

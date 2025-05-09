@@ -13,7 +13,7 @@ class TagModel with TagModelMappable {
 
   factory TagModel.fromEntity({required TagEntity entity}) => TagModel(id: entity.id, name: entity.name);
 
-  TagEntity toEntity() => TagEntity(id: id, name: name);
+  TagEntity toEntity() => TagEntity(id: id < 0 ? 0 : id, name: name);
 }
 
 class TagMapper extends SimpleMapper<TagModel> {

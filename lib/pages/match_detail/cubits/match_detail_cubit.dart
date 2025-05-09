@@ -75,16 +75,16 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     emit(state.copyWith(match: match));
   }
 
-  void editTeam(int index, TeamModel team) {
+  void editTeam(TeamModel team) {
     final teams = List<TeamModel>.from(state.match.teams);
-    teams[index] = team;
+    teams[teams.indexWhere((t) => t.id == team.id)] = team;
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
   }
 
-  void removeTeam(int index) {
+  void removeTeam(TeamModel team) {
     final teams = List<TeamModel>.from(state.match.teams);
-    teams.removeAt(index);
+    teams.removeAt(teams.indexWhere((t) => t.id == team.id));
     final match = state.match.copyWith(teams: teams);
     emit(state.copyWith(match: match));
   }
@@ -93,19 +93,19 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     final performers = List<PerformerModel>.from(team.performers);
     final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t) => t.performers));
     performers.add(_createPerformer(allPerformers));
-    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
+    editTeam(team.copyWith(performers: performers));
   }
 
-  void editPerformer(TeamModel team, int index, PerformerModel performer) {
+  void editPerformer(TeamModel team, PerformerModel performer) {
     final performers = List<PerformerModel>.from(team.performers);
-    performers[index] = performer;
-    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
+    performers[performers.indexWhere((p) => p.id == performer.id)] = performer;
+    editTeam(team.copyWith(performers: performers));
   }
 
-  void removePerformer(TeamModel team, int index) {
+  void removePerformer(TeamModel team, PerformerModel performer) {
     final performers = List<PerformerModel>.from(team.performers);
-    performers.removeAt(index);
-    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
+    performers.removeAt(performers.indexWhere((p) => p.id == performer.id));
+    editTeam(team.copyWith(performers: performers));
   }
 
   void movePerformer(TeamModel team, int oldIndex, int newIndex) {
@@ -118,7 +118,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
     }
 
     performers.insert(newIndex, performer);
-    editTeam(state.match.teams.indexOf(team), team.copyWith(performers: performers));
+    editTeam(team.copyWith(performers: performers));
   }
 
   void onTeamSelected(TeamModel team, TeamModel selectedTeam) {
@@ -129,14 +129,14 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
       performers: selectedTeam.performers.map((p) => p.copyWith(id: tempId--)).toList(),
     );
 
-    editTeam(state.match.teams.indexOf(team), newTeam);
+    editTeam(newTeam);
   }
 
   TeamModel _createTeam(List<TeamModel> teams) {
     final random = Random();
     final allPerformers = List<PerformerModel>.from(teams.selectMany((t) => t.performers));
     return TeamModel(
-      id: 0,
+      id: teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(min) - 1 : 0,
       createdDate: null,
       modifiedDate: null,
       name: '${Localizer.current.team} ${teams.length + 1}',

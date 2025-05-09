@@ -26,8 +26,8 @@ class MatchTeamTile extends StatefulWidget {
   final Future<List<TagModel>> Function() getAllTeamTags;
   final void Function(TeamModel team) onTeamSelected;
   final FutureOr<void> Function(TeamModel team)? addPerformer;
-  final FutureOr<void> Function(TeamModel team, int index, PerformerModel performer) editPerformer;
-  final FutureOr<void> Function(TeamModel team, int index)? removePerformer;
+  final FutureOr<void> Function(TeamModel team, PerformerModel performer) editPerformer;
+  final FutureOr<void> Function(TeamModel team, PerformerModel performer)? removePerformer;
   final FutureOr<void> Function(TeamModel team, int oldIndex, int newIndex) onDrag;
   final FutureOr<void> Function() onDragStart;
 
@@ -129,7 +129,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
             label: S.of(context).performers,
             performers: widget.team.performers,
             addPerformer: widget.addPerformer != null ? () => widget.addPerformer!(widget.team) : null,
-            editPerformer: (index, performer) => widget.editPerformer(widget.team, index, performer),
+            editPerformer: (performer) => widget.editPerformer(widget.team, performer),
             removePerformer:
                 widget.removePerformer != null ? (index) => widget.removePerformer!(widget.team, index) : null,
             onDrag: (oldIndex, newIndex) => widget.onDrag(widget.team, oldIndex, newIndex),

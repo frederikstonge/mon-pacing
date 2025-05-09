@@ -13,7 +13,7 @@ class MatchStars extends StatelessWidget {
   final List<StarModel> stars;
   final List<TeamModel> teams;
   final FutureOr<void> Function(StarModel star) onChanged;
-  final FutureOr<void> Function(int starId) onRemove;
+  final FutureOr<void> Function(StarModel star) onRemove;
   final FutureOr<void> Function(int oldIndex, int newIndex) onDrag;
   final FutureOr<void> Function() onDragStart;
 
@@ -63,7 +63,7 @@ class MatchStarItem extends StatelessWidget {
   final int index;
   final List<TeamModel> teams;
   final ValueChanged<StarModel> valueChanged;
-  final FutureOr<void> Function(int starId) onRemove;
+  final FutureOr<void> Function(StarModel star) onRemove;
 
   const MatchStarItem({
     super.key,
@@ -150,7 +150,7 @@ class MatchStarItem extends StatelessWidget {
             tooltip: S.of(context).remove,
             icon: const Icon(Icons.remove),
             onPressed: () async {
-              await onRemove(star.id);
+              await onRemove(star);
             },
           ),
         ],

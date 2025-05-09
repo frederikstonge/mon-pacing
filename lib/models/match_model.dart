@@ -95,7 +95,7 @@ class MatchModel with MatchModelMappable {
 
   MatchEntity toEntity() {
     final match = MatchEntity(
-      id: id,
+      id: id < 0 ? 0 : id,
       name: name,
       createdDate: createdDate,
       modifiedDate: modifiedDate,

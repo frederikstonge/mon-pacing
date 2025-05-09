@@ -48,7 +48,7 @@ class MatchesRepository {
     });
   }
 
-  Future<void> edit(MatchEntity entity) async {
+  Future<MatchEntity> edit(MatchEntity entity) async {
     final db = await databaseRepository.database;
     final box = db.box<MatchEntity>();
     final improvisationBox = db.box<ImprovisationEntity>();
@@ -108,10 +108,10 @@ class MatchesRepository {
 
       tagBox.putMany(editedTags);
       tagBox.removeMany(removedTags.map((e) => e.id).toList());
-
-      entity.modifiedDate = DateTime.now();
-      return box.put(entity);
     });
+
+    entity.modifiedDate = DateTime.now();
+    return box.putAndGetAsync(entity);
   }
 
   Future<MatchEntity?> get(int id) async {

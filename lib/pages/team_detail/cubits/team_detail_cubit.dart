@@ -53,17 +53,17 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
     edit(team.copyWith(performers: performers));
   }
 
-  void editPerformer(int index, PerformerModel performer) {
+  void editPerformer(PerformerModel performer) {
     final team = state.team;
     final performers = List<PerformerModel>.from(team.performers);
-    performers[index] = performer;
+    performers[performers.indexWhere((p) => p.id == performer.id)] = performer;
     edit(team.copyWith(performers: performers));
   }
 
-  void removePerformer(int index) {
+  void removePerformer(PerformerModel performer) {
     final team = state.team;
     final performers = List<PerformerModel>.from(team.performers);
-    performers.removeAt(index);
+    performers.removeAt(performers.indexWhere((p) => p.id == performer.id));
     edit(team.copyWith(performers: performers));
   }
 

@@ -32,7 +32,7 @@ class TeamsRepository {
     });
   }
 
-  Future<void> edit(TeamEntity entity) async {
+  Future<TeamEntity> edit(TeamEntity entity) async {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
     final performerBox = db.box<PerformerEntity>();
@@ -53,10 +53,10 @@ class TeamsRepository {
 
       tagBox.putMany(editedTags);
       tagBox.removeMany(removedTags.map((e) => e.id).toList());
-
-      entity.modifiedDate = DateTime.now();
-      box.put(entity);
     });
+
+    entity.modifiedDate = DateTime.now();
+    return box.putAndGetAsync(entity);
   }
 
   Future<TeamEntity?> get(int id) async {

@@ -45,7 +45,7 @@ class TeamModel with TeamModelMappable {
 
   TeamEntity toEntity({bool hasMatch = false}) {
     final team = TeamEntity(
-      id: id,
+      id: id < 0 ? 0 : id,
       createdDate: createdDate,
       modifiedDate: modifiedDate,
       name: name,

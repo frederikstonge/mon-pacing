@@ -48,7 +48,6 @@ class ImprovisationModel with ImprovisationModelMappable {
   );
 
   ImprovisationEntity toEntity(int order) => ImprovisationEntity(
-    // Temporary id to support ReorderableListView
     id: id < 0 ? 0 : id,
     order: order,
     type: type.index,

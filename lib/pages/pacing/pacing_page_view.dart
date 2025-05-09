@@ -183,7 +183,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                                 getAllCategories: ({String? search}) async {
                                   return await context.read<PacingsRepository>().getAllCategories(search: search ?? '');
                                 },
-                                onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
+                                onChanged: (value) => context.read<PacingCubit>().editImprovisation(value),
                                 onConfirmDelete:
                                     (value) async => await MessageBoxDialog.questionShow(
                                       context,
@@ -196,7 +196,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                                       S.of(context).delete,
                                       S.of(context).cancel,
                                     ),
-                                onDelete: (value) => context.read<PacingCubit>().removeImprovisation(index),
+                                onDelete: (value) => context.read<PacingCubit>().removeImprovisation(value),
                                 dragEnabled: pacing.improvisations.length > 1,
                                 onDragStart: _onDragStart,
                               );

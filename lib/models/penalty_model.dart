@@ -32,7 +32,7 @@ class PenaltyModel with PenaltyModelMappable {
   );
 
   PenaltyEntity toEntity() => PenaltyEntity(
-    id: id,
+    id: id < 0 ? 0 : id,
     major: major,
     type: type,
     performerId: performerId,

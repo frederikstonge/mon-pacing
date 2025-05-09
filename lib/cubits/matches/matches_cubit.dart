@@ -58,11 +58,13 @@ class MatchesCubit extends Cubit<MatchesState> {
     return null;
   }
 
-  Future<void> edit(MatchModel model) async {
+  Future<MatchModel> edit(MatchModel model) async {
     try {
-      await matchesRepository.edit(model.toEntity());
+      final entity = await matchesRepository.edit(model.toEntity());
+      return MatchModel.fromEntity(entity: entity);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+      return model;
     } finally {
       await refresh();
     }
@@ -106,7 +108,9 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   Future<void> refresh() async {
-    emit(const MatchesState(status: MatchesStatus.initial));
-    await fetch();
+    if (state.status != MatchesStatus.initial) {
+      emit(const MatchesState(status: MatchesStatus.initial));
+      await fetch();
+    }
   }
 }
