@@ -48,13 +48,10 @@ class DatabaseRepository {
   }
 
   Future<void> _initialize(Store store) async {
-    // Add any additional setup code, e.g. build queries.
-    await _clearDatabase(store);
-    await _migrateDatabase(store);
-  }
-
-  /// Temporary to clear the database
-  Future<void> _clearDatabase(Store store) async {
+    /////////////////////////////////////////////////////////
+    /// TEMPORARY CODE
+    /// REMOVE THIS CODE WHEN THE LEGACY DATABASE IS REMOVED
+    /////////////////////////////////////////////////////////
     await store.box<PacingEntity>().removeAllAsync();
     await store.box<TeamEntity>().removeAllAsync();
     await store.box<MatchEntity>().removeAllAsync();
@@ -64,6 +61,19 @@ class DatabaseRepository {
     await store.box<PointEntity>().removeAllAsync();
     await store.box<PenaltyEntity>().removeAllAsync();
     await store.box<TagEntity>().removeAllAsync();
+    /////////////////////////////////////////////////////////
+    /// END TEMPORARY CODE
+    /// REMOVE THIS CODE WHEN THE LEGACY DATABASE IS REMOVED
+    /////////////////////////////////////////////////////////
+
+    // Add any additional setup code, e.g. build queries.
+    await _migrateDatabase(store);
+    await _clearLegacyDatabase();
+  }
+
+  Future<void> _clearLegacyDatabase() async {
+    // final legacyDatabase = await legacyDatabaseRepository.database;
+    // legacyDatabase.clear();
   }
 
   Future<void> _migrateDatabase(Store store) async {
@@ -137,7 +147,6 @@ class DatabaseRepository {
           }).toList();
 
       await store.box<PacingEntity>().putManyAsync(newPacings);
-      // legacyDatabase.pacingModels.deleteAll(pacings.map((e) => e.id).toList());
       migrationCubit.updateProgress(count: pacings.length);
     }
 
@@ -183,7 +192,6 @@ class DatabaseRepository {
           }).toList();
 
       await store.box<TeamEntity>().putManyAsync(newTeams);
-      // legacyDatabase.teamModels.deleteAll(teams.map((e) => e.id).toList());
       migrationCubit.updateProgress(count: pacingCount + teams.length);
     }
 
@@ -341,7 +349,6 @@ class DatabaseRepository {
 
       final newMatches = await Future.wait(newMatchFutures);
       await store.box<MatchEntity>().putManyAsync(newMatches);
-      //legacyDatabase.matchModels.deleteAll(matches.map((e) => e.id).toList());
       migrationCubit.updateProgress(count: pacingCount + teamCount + matches.length);
     }
 

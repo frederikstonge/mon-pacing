@@ -79,16 +79,7 @@ class PacingsRepository {
   Future<List<PacingEntity>> search(String search, List<String> selectedTags) async {
     final db = await databaseRepository.database;
     final box = db.box<PacingEntity>();
-    final builder =
-        search.isNotEmpty ? box.query(PacingEntity_.name.contains(search, caseSensitive: false)) : box.query();
-    if (search.isNotEmpty) {
-      builder.linkMany(
-        PacingEntity_.improvisations,
-        ImprovisationEntity_.category
-            .contains(search, caseSensitive: false)
-            .or(ImprovisationEntity_.theme.contains(search, caseSensitive: false)),
-      );
-    }
+    final builder = box.query(PacingEntity_.name.contains(search, caseSensitive: false));
 
     if (selectedTags.isNotEmpty) {
       builder.linkMany(PacingEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
@@ -103,7 +94,7 @@ class PacingsRepository {
   Future<List<TagEntity>> getAllTags({String search = ''}) async {
     final db = await databaseRepository.database;
     final box = db.box<TagEntity>();
-    final builder = search.isNotEmpty ? box.query(TagEntity_.name.contains(search, caseSensitive: false)) : box.query();
+    final builder = box.query(TagEntity_.name.contains(search, caseSensitive: false));
     final query = builder.build();
     final returnValue = await query.findAsync();
     query.close();
@@ -113,13 +104,10 @@ class PacingsRepository {
   Future<List<String>> getAllCategories({String search = ''}) async {
     final db = await databaseRepository.database;
     final box = db.box<ImprovisationEntity>();
-    final builder =
-        search.isNotEmpty
-            ? box.query(ImprovisationEntity_.category.contains(search, caseSensitive: false))
-            : box.query();
+    final builder = box.query(ImprovisationEntity_.category.contains(search, caseSensitive: false));
     final query = builder.build();
-    final returnValue = query.property(ImprovisationEntity_.category).find();
+    final returnValue = await query.findAsync();
     query.close();
-    return returnValue;
+    return returnValue.map((e) => e.category).toList();
   }
 }

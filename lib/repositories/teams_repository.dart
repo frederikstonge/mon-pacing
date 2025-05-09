@@ -80,13 +80,9 @@ class TeamsRepository {
   Future<List<TeamEntity>> search(String search, List<String> selectedTags) async {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
-    final builder =
-        search.isNotEmpty
-            ? box.query(TeamEntity_.hasMatch.equals(false).and(TeamEntity_.name.contains(search, caseSensitive: false)))
-            : box.query(TeamEntity_.hasMatch.equals(false));
-    if (search.isNotEmpty) {
-      builder.linkMany(TeamEntity_.performers, PerformerEntity_.name.contains(search, caseSensitive: false));
-    }
+    final builder = box.query(
+      TeamEntity_.hasMatch.equals(false).and(TeamEntity_.name.contains(search, caseSensitive: false)),
+    );
 
     if (selectedTags.isNotEmpty) {
       builder.linkMany(TeamEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
@@ -101,7 +97,7 @@ class TeamsRepository {
   Future<List<TagEntity>> getAllTags({String search = ''}) async {
     final db = await databaseRepository.database;
     final box = db.box<TagEntity>();
-    final builder = search.isNotEmpty ? box.query(TagEntity_.name.contains(search, caseSensitive: false)) : box.query();
+    final builder = box.query(TagEntity_.name.contains(search, caseSensitive: false));
     final query = builder.build();
     final returnValue = await query.findAsync();
     query.close();
