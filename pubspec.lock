@@ -283,8 +283,8 @@ packages:
     description:
       path: "."
       ref: "features/fred/update-packages"
-      resolved-ref: a244b46c671467926c6f4373956187499d9002f0
-      url: "https://github.com/frederikstonge/excel"
+      resolved-ref: e54a90a49e307ed0bfc46a29ff0e3a839890b0a3
+      url: "https://github.com/frederikstonge/excel.git"
     source: git
     version: "5.0.0"
   fake_async:
