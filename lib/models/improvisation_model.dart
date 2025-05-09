@@ -35,7 +35,7 @@ class ImprovisationModel with ImprovisationModelMappable {
 
   factory ImprovisationModel.fromEntity({required ImprovisationEntity entity}) => ImprovisationModel(
     id: entity.id,
-    type: entity.type,
+    type: ImprovisationType.values.elementAt(entity.type),
     category: entity.category,
     theme: entity.theme,
     durationsInSeconds: entity.durationsInSeconds,
@@ -47,9 +47,10 @@ class ImprovisationModel with ImprovisationModelMappable {
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  ImprovisationEntity toEntity() => ImprovisationEntity(
-    id: id,
-    type: type,
+  ImprovisationEntity toEntity(int order) => ImprovisationEntity(
+    id: id < 0 ? 0 : id,
+    order: order,
+    type: type.index,
     category: category,
     theme: theme,
     durationsInSeconds: durationsInSeconds,

@@ -254,6 +254,21 @@ class SEn extends S {
   String get matchSummary => 'Match summary';
 
   @override
+  String get migrationCompleted => 'Migration completed';
+
+  @override
+  String get migrationMatches => 'Migrating matches...';
+
+  @override
+  String get migrationPacings => 'Migrating pacings...';
+
+  @override
+  String get migrationStarted => 'Starting database migration...';
+
+  @override
+  String get migrationTeams => 'Migrating teams...';
+
+  @override
   String get missingIgnoreBatteryOptimizationError => 'Battery Optimization is still enabled. Please go to your device\'\'s settings to ignore battery optimization.';
 
   @override

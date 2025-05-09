@@ -15,6 +15,7 @@ import '../../integrations/pacing_integration_base.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
+import '../../models/tag_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../../services/analytics_service.dart';
@@ -114,7 +115,6 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     }
     unawaited(controller.stop());
     final router = GoRouter.of(context);
-    final pacingsRepository = context.read<PacingsRepository>();
     final pacingsCubit = context.read<PacingsCubit>();
     final matchesCubit = context.read<MatchesCubit>();
     final toasterService = context.read<ToasterService>();
@@ -137,10 +137,17 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
               return;
             }
 
-            final result = await PacingsSearch.showDialog(context, (String search, List<String> selectedTags) async {
-              final response = await context.read<PacingsRepository>().search(search, selectedTags);
-              return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
-            }, pacingsRepository.getAllTags);
+            final result = await PacingsSearch.showDialog(
+              context,
+              (String search, List<String> selectedTags) async {
+                final response = await context.read<PacingsRepository>().search(search, selectedTags);
+                return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
+              },
+              () async {
+                final tags = await context.read<PacingsRepository>().getAllTags();
+                return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+              },
+            );
 
             if (result == null) {
               // No pacing selected, restart scanner

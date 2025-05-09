@@ -23,6 +23,7 @@ import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/pacing_model.dart';
+import '../../models/tag_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
@@ -119,13 +120,17 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                           tooltip: S.of(context).search(category: S.of(context).pacings),
                           onPressed: () async {
                             final router = GoRouter.of(context);
-                            final result = await PacingsSearch.showDialog(context, (
-                              String search,
-                              List<String> selectedTags,
-                            ) async {
-                              final response = await context.read<PacingsRepository>().search(search, selectedTags);
-                              return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
-                            }, context.read<PacingsRepository>().getAllTags);
+                            final result = await PacingsSearch.showDialog(
+                              context,
+                              (String search, List<String> selectedTags) async {
+                                final response = await context.read<PacingsRepository>().search(search, selectedTags);
+                                return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
+                              },
+                              () async {
+                                final tags = await context.read<PacingsRepository>().getAllTags();
+                                return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                              },
+                            );
                             if (result != null) {
                               router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
                             }
@@ -168,24 +173,30 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                               ),
                           delete: () => context.read<PacingsCubit>().delete(pacing),
                           export: () => context.read<PacingsCubit>().export(pacing),
-                          duplicate:
-                              () => BottomSheetDialog.showDialog(
-                                context: context,
-                                child: PacingDetailPageShell(
-                                  editMode: false,
-                                  pacing: pacing,
-                                  onConfirm: (pacing) async {
-                                    final router = GoRouter.of(context);
-                                    final pacingModel = await context.read<PacingsCubit>().add(pacing);
-                                    if (pacingModel != null) {
-                                      router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
-                                      return true;
-                                    }
-
-                                    return false;
-                                  },
+                          duplicate: () {
+                            return BottomSheetDialog.showDialog(
+                              context: context,
+                              child: PacingDetailPageShell(
+                                editMode: false,
+                                pacing: pacing.copyWith(
+                                  id: 0,
+                                  // Temporary id to support ReorderableListView
+                                  improvisations: pacing.improvisations.map((e) => e.copyWith(id: -e.id)).toList(),
+                                  tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
                                 ),
+                                onConfirm: (pacing) async {
+                                  final router = GoRouter.of(context);
+                                  final pacingModel = await context.read<PacingsCubit>().add(pacing);
+                                  if (pacingModel != null) {
+                                    router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+                                    return true;
+                                  }
+
+                                  return false;
+                                },
                               ),
+                            );
+                          },
                           startMatch:
                               () => BottomSheetDialog.showDialog(
                                 context: context,

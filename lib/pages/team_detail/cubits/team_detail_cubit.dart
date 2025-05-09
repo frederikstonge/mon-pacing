@@ -24,17 +24,19 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
               team != null
                   ? editMode
                       ? team.copyWith()
-                      : team.copyWith(id: 0)
+                      // Temporary id to support ReorderableListView
+                      : team.copyWith(id: 0, performers: team.performers.map((e) => e.copyWith(id: -e.id)).toList())
                   : const TeamModel(id: 0, createdDate: null, modifiedDate: null, name: '', color: 0),
         ),
       );
 
-  Future<void> initialize() async {
+  void initialize() {
     if (!state.editMode) {
       final random = Random();
+      final performers = List<PerformerModel>.from(state.team.performers);
       final newTeam = state.team.copyWith(
         color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
-        performers: [_createPerformer(state.team.performers)],
+        performers: [_createPerformer(performers)],
       );
       emit(state.copyWith(team: newTeam));
     }
@@ -51,17 +53,17 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
     edit(team.copyWith(performers: performers));
   }
 
-  void editPerformer(int index, PerformerModel performer) {
+  void editPerformer(PerformerModel performer) {
     final team = state.team;
     final performers = List<PerformerModel>.from(team.performers);
-    performers[index] = performer;
+    performers[performers.indexWhere((p) => p.id == performer.id)] = performer;
     edit(team.copyWith(performers: performers));
   }
 
-  void removePerformer(int index) {
+  void removePerformer(PerformerModel performer) {
     final team = state.team;
     final performers = List<PerformerModel>.from(team.performers);
-    performers.removeAt(index);
+    performers.removeAt(performers.indexWhere((p) => p.id == performer.id));
     edit(team.copyWith(performers: performers));
   }
 
@@ -80,7 +82,10 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   }
 
   PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
-    final nextId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(max) + 1 : 0;
-    return PerformerModel(id: nextId, name: '');
+    return PerformerModel(
+      // Temporary id to support ReorderableListView
+      id: allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0,
+      name: '',
+    );
   }
 }

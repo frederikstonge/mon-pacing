@@ -1,46 +1,35 @@
-// ignore_for_file: invalid_annotation_target
+import 'package:objectbox/objectbox.dart';
 
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
-
-import '../../../models/improvisation_type.dart';
 import 'improvisation_entity.dart';
+import 'tag_entity.dart';
 
-part 'pacing_entity.mapper.dart';
-part 'pacing_entity.g.dart';
+@Entity()
+class PacingEntity {
+  int id;
+  @Index()
+  String name;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? createdDate;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? modifiedDate;
+  int defaultNumberOfTeams;
+  String? integrationId;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-@MappableClass()
-@Collection(accessor: 'pacingModels')
-@Name('PacingModel')
-class PacingEntity with PacingEntityMappable {
-  final int id;
-  @index
-  final String name;
-  @index
-  final DateTime? createdDate;
-  @index
-  final DateTime? modifiedDate;
-  final List<ImprovisationEntity> improvisations;
-  final int defaultNumberOfTeams;
-  final List<String> tags;
-  final String? integrationId;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
+  final tags = ToMany<TagEntity>();
+  final improvisations = ToMany<ImprovisationEntity>();
 
-  const PacingEntity({
-    required this.id,
+  PacingEntity({
+    this.id = 0,
     required this.name,
-    required this.createdDate,
-    required this.modifiedDate,
-    required this.improvisations,
-    this.defaultNumberOfTeams = 2,
-    this.tags = const [],
+    required this.defaultNumberOfTeams,
+    this.createdDate,
+    this.modifiedDate,
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
   });
-
-  List<String> get categories => improvisations.where((e) => e.category.isNotEmpty).map((e) => e.category).toList();
-
-  List<String> get themes => improvisations.where((e) => e.theme.isNotEmpty).map((e) => e.theme).toList();
 }

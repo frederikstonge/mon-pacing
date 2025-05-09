@@ -254,6 +254,21 @@ class SFr extends S {
   String get matchSummary => 'Sommaire du match';
 
   @override
+  String get migrationCompleted => 'Migration complétée';
+
+  @override
+  String get migrationMatches => 'Migration des matchs...';
+
+  @override
+  String get migrationPacings => 'Migration des pacings...';
+
+  @override
+  String get migrationStarted => 'Migration de la base de données...';
+
+  @override
+  String get migrationTeams => 'Migration des équipes...';
+
+  @override
   String get missingIgnoreBatteryOptimizationError => 'L\'optimisation de la batterie est toujours activé. Veuillez aller dans les paramêtres de votre appareil pour ignorer l\'optimisation de la batterie.';
 
   @override

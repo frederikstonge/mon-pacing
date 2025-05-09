@@ -40,11 +40,11 @@ class PacingCubit extends Cubit<PacingState> {
 
   Future<void> addImprovisation() async {
     final improvisations = List<ImprovisationModel>.from(state.pacing!.copyWith().improvisations);
-    final nextId = improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(max) + 1 : 0;
     final nextType = ImprovisationType.values[improvisations.length % 2];
 
     final newImprovisation = ImprovisationModel(
-      id: nextId,
+      // Temporary id to support ReorderableListView
+      id: improvisations.isNotEmpty ? improvisations.map((e) => e.id).reduce(min) - 1 : 0,
       type: nextType,
       durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
       category: '',
@@ -57,10 +57,9 @@ class PacingCubit extends Cubit<PacingState> {
 
     improvisations.add(newImprovisation);
 
-    final newPacing = state.pacing!.copyWith(improvisations: improvisations);
+    final newPacing = await pacingsCubit.edit(state.pacing!.copyWith(improvisations: improvisations));
 
     emit(state.copyWith(status: PacingStatus.success, pacing: newPacing));
-    await pacingsCubit.edit(newPacing);
   }
 
   Future<void> moveImprovisation(int oldIndex, int newIndex) async {
@@ -73,29 +72,26 @@ class PacingCubit extends Cubit<PacingState> {
 
     improvisations.insert(newIndex, improvisation);
 
-    final newPacing = state.pacing!.copyWith(improvisations: improvisations);
+    final newPacing = await pacingsCubit.edit(state.pacing!.copyWith(improvisations: improvisations));
 
     emit(state.copyWith(status: PacingStatus.success, pacing: newPacing));
-    await pacingsCubit.edit(newPacing);
   }
 
-  Future<void> removeImprovisation(int index) async {
+  Future<void> removeImprovisation(ImprovisationModel improvisation) async {
     final improvisations = List<ImprovisationModel>.from(state.pacing!.copyWith().improvisations);
-    improvisations.removeAt(index);
+    improvisations.removeAt(improvisations.indexWhere((i) => i.id == improvisation.id));
 
-    final newPacing = state.pacing!.copyWith(improvisations: improvisations);
+    final newPacing = await pacingsCubit.edit(state.pacing!.copyWith(improvisations: improvisations));
 
     emit(state.copyWith(status: PacingStatus.success, pacing: newPacing));
-    await pacingsCubit.edit(newPacing);
   }
 
-  Future<void> editImprovisation(int index, ImprovisationModel model) async {
+  Future<void> editImprovisation(ImprovisationModel model) async {
     final improvisations = List<ImprovisationModel>.from(state.pacing!.copyWith().improvisations);
-    improvisations[index] = model;
+    improvisations[improvisations.indexWhere((i) => i.id == model.id)] = model;
 
-    final newPacing = state.pacing!.copyWith(improvisations: improvisations);
+    final newPacing = await pacingsCubit.edit(state.pacing!.copyWith(improvisations: improvisations));
 
     emit(state.copyWith(status: PacingStatus.success, pacing: newPacing));
-    await pacingsCubit.edit(newPacing);
   }
 }

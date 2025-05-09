@@ -8,6 +8,7 @@ import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../l10n/localizer.dart';
+import '../../models/tag_model.dart';
 import '../../models/team_model.dart';
 import '../../repositories/teams_repository.dart';
 import '../../services/toaster_service.dart';
@@ -36,11 +37,13 @@ class TeamsCubit extends Cubit<TeamsState> {
     return null;
   }
 
-  Future<void> edit(TeamModel model) async {
+  Future<TeamModel> edit(TeamModel model) async {
     try {
-      await teamsRepository.edit(model.toEntity());
+      final entity = await teamsRepository.edit(model.toEntity());
+      return TeamModel.fromEntity(entity: entity);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+      return model;
     } finally {
       await refresh();
     }
@@ -48,7 +51,7 @@ class TeamsCubit extends Cubit<TeamsState> {
 
   Future<void> delete(TeamModel model) async {
     try {
-      await teamsRepository.delete(model.id);
+      await teamsRepository.delete(model.toEntity());
       toasterService.show(title: Localizer.current.toasterTeamDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
@@ -78,13 +81,16 @@ class TeamsCubit extends Cubit<TeamsState> {
     }
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
-    return await teamsRepository.getAllTags(query: query);
+  Future<List<TagModel>> getAllTags({String search = ''}) async {
+    final tags = await teamsRepository.getAllTags(search: search);
+    return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
   }
 
   Future<void> refresh() async {
-    emit(const TeamsState(status: TeamsStatus.initial));
-    await fetch();
+    if (state.status != TeamsStatus.initial) {
+      emit(const TeamsState(status: TeamsStatus.initial));
+      await fetch();
+    }
   }
 
   Future<TeamModel?> import() async {
@@ -99,7 +105,15 @@ class TeamsCubit extends Cubit<TeamsState> {
       if (filePath != null) {
         final teamValue = await File(filePath).readAsString();
         final team = TeamModelMapper.fromJson(teamValue);
-        final newTeamEntity = await teamsRepository.add(team.copyWith(id: 0).toEntity());
+        final newTeamEntity = await teamsRepository.add(
+          team
+              .copyWith(
+                id: 0,
+                performers: team.performers.map((e) => e.copyWith(id: 0)).toList(),
+                tags: team.tags.map((e) => e.copyWith(id: 0)).toList(),
+              )
+              .toEntity(),
+        );
         toasterService.show(title: Localizer.current.toasterTeamImported);
 
         return TeamModel.fromEntity(entity: newTeamEntity);

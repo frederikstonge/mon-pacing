@@ -25,9 +25,10 @@ class PerformerModel with PerformerModelMappable {
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  PerformerEntity toEntity() => PerformerEntity(
-    id: id,
+  PerformerEntity toEntity(int order) => PerformerEntity(
+    id: id < 0 ? 0 : id,
     name: name,
+    order: order,
     integrationEntityId: integrationEntityId,
     integrationAdditionalData: integrationAdditionalData,
   );

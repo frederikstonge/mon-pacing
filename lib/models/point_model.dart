@@ -16,5 +16,6 @@ class PointModel with PointModelMappable {
   factory PointModel.fromEntity({required PointEntity entity}) =>
       PointModel(id: entity.id, teamId: entity.teamId, improvisationId: entity.improvisationId, value: entity.value);
 
-  PointEntity toEntity() => PointEntity(id: id, teamId: teamId, improvisationId: improvisationId, value: value);
+  PointEntity toEntity() =>
+      PointEntity(id: id < 0 ? 0 : id, teamId: teamId, improvisationId: improvisationId, value: value);
 }

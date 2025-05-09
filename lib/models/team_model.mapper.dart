@@ -14,6 +14,7 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = TeamModelMapper._());
       PerformerModelMapper.ensureInitialized();
+      TagModelMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -36,8 +37,8 @@ class TeamModelMapper extends ClassMapperBase<TeamModel> {
   static List<PerformerModel> _$performers(TeamModel v) => v.performers;
   static const Field<TeamModel, List<PerformerModel>> _f$performers =
       Field('performers', _$performers, opt: true, def: const []);
-  static List<String> _$tags(TeamModel v) => v.tags;
-  static const Field<TeamModel, List<String>> _f$tags =
+  static List<TagModel> _$tags(TeamModel v) => v.tags;
+  static const Field<TeamModel, List<TagModel>> _f$tags =
       Field('tags', _$tags, opt: true, def: const []);
   static String? _$integrationEntityId(TeamModel v) => v.integrationEntityId;
   static const Field<TeamModel, String> _f$integrationEntityId =
@@ -127,7 +128,7 @@ abstract class TeamModelCopyWith<$R, $In extends TeamModel, $Out>
   ListCopyWith<$R, PerformerModel,
           PerformerModelCopyWith<$R, PerformerModel, PerformerModel>>
       get performers;
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   $R call(
       {int? id,
       DateTime? createdDate,
@@ -135,7 +136,7 @@ abstract class TeamModelCopyWith<$R, $In extends TeamModel, $Out>
       String? name,
       int? color,
       List<PerformerModel>? performers,
-      List<String>? tags,
+      List<TagModel>? tags,
       String? integrationEntityId,
       String? integrationAdditionalData});
   TeamModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
@@ -155,9 +156,9 @@ class _TeamModelCopyWithImpl<$R, $Out>
       get performers => ListCopyWith($value.performers,
           (v, t) => v.copyWith.$chain(t), (v) => call(performers: v));
   @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
-      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(tags: v));
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>>
+      get tags => ListCopyWith(
+          $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
   @override
   $R call(
           {int? id,
@@ -166,7 +167,7 @@ class _TeamModelCopyWithImpl<$R, $Out>
           String? name,
           int? color,
           List<PerformerModel>? performers,
-          List<String>? tags,
+          List<TagModel>? tags,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({

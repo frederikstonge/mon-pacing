@@ -1,37 +1,35 @@
-// ignore_for_file: invalid_annotation_target
-
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:isar/isar.dart';
+import 'package:objectbox/objectbox.dart';
 
 import 'performer_entity.dart';
+import 'tag_entity.dart';
 
-part 'team_entity.mapper.dart';
-part 'team_entity.g.dart';
+@Entity()
+class TeamEntity {
+  int id;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? createdDate;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? modifiedDate;
+  @Index()
+  String name;
+  int color;
+  bool hasMatch;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-@MappableClass()
-@Collection(accessor: 'teamModels')
-@Name('TeamModel')
-class TeamEntity with TeamEntityMappable {
-  final int id;
-  @index
-  final DateTime? createdDate;
-  @index
-  final DateTime? modifiedDate;
-  @index
-  final String name;
-  final int color;
-  final List<PerformerEntity> performers;
-  final List<String> tags;
+  final performers = ToMany<PerformerEntity>();
+  final tags = ToMany<TagEntity>();
 
-  const TeamEntity({
-    required this.id,
-    required this.createdDate,
-    required this.modifiedDate,
+  TeamEntity({
+    this.id = 0,
     required this.name,
     required this.color,
-    this.performers = const [],
-    this.tags = const [],
+    required this.hasMatch,
+    this.createdDate,
+    this.modifiedDate,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
   });
-
-  List<String> get performerNames => performers.map((p) => p.name).toList();
 }

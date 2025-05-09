@@ -36,11 +36,13 @@ class PacingsCubit extends Cubit<PacingsState> {
     return null;
   }
 
-  Future<void> edit(PacingModel model) async {
+  Future<PacingModel> edit(PacingModel model) async {
     try {
-      await pacingsRepository.edit(model.toEntity());
+      final entity = await pacingsRepository.edit(model.toEntity());
+      return PacingModel.fromEntity(entity: entity);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+      return model;
     } finally {
       await refresh();
     }
@@ -48,7 +50,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> delete(PacingModel model) async {
     try {
-      await pacingsRepository.delete(model.id);
+      await pacingsRepository.delete(model.toEntity());
       toasterService.show(title: Localizer.current.toasterPacingDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
@@ -78,17 +80,11 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
-    return await pacingsRepository.getAllTags(query: query);
-  }
-
-  Future<List<String>> getAllCategories({String query = ''}) {
-    return pacingsRepository.getAllCategories(query: query);
-  }
-
   Future<void> refresh() async {
-    emit(const PacingsState(status: PacingsStatus.initial));
-    await fetch();
+    if (state.status != PacingsStatus.initial) {
+      emit(const PacingsState(status: PacingsStatus.initial));
+      await fetch();
+    }
   }
 
   Future<PacingModel?> import() async {
@@ -103,7 +99,16 @@ class PacingsCubit extends Cubit<PacingsState> {
       if (filePath != null) {
         final pacingValue = await File(filePath).readAsString();
         final pacing = PacingModelMapper.fromJson(pacingValue);
-        final newPacingEntity = await pacingsRepository.add(pacing.copyWith(id: 0).toEntity());
+
+        final newPacingEntity = await pacingsRepository.add(
+          pacing
+              .copyWith(
+                id: 0,
+                improvisations: pacing.improvisations.map((e) => e.copyWith(id: 0)).toList(),
+                tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
+              )
+              .toEntity(),
+        );
         toasterService.show(title: Localizer.current.toasterPacingImported);
 
         return PacingModel.fromEntity(entity: newPacingEntity);

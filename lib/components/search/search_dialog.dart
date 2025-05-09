@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../models/tag_model.dart';
 import '../tag_filters/tag_filters.dart';
 
 class SearchDialog<T> extends StatefulWidget {
   final FutureOr<List<T>> Function(String query, List<String> selectedTags) onChanged;
   final Widget Function(BuildContext context, T item) itemBuilder;
-  final List<String>? tags;
+  final List<TagModel>? tags;
   final String hintText;
 
   const SearchDialog({
