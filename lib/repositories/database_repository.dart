@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../cubits/migration/migration_cubit.dart';
+import '../cubits/migration/migration_state.dart';
 import '../l10n/localizer.dart';
 import 'entities/improvisation_entity.dart';
 import 'entities/match_entity.dart';
@@ -49,8 +50,10 @@ class DatabaseRepository {
 
   Future<void> _initialize(Store store) async {
     // Add any additional setup code, e.g. build queries.
-    await _migrateDatabase(store);
-    await _clearLegacyDatabase();
+    if (migrationCubit.state.status != MigrationStatus.success) {
+      await _migrateDatabase(store);
+      await _clearLegacyDatabase();
+    }
   }
 
   Future<void> _clearLegacyDatabase() async {
