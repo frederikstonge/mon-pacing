@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:isar/isar.dart';
 import 'package:mutex/mutex.dart';
 import 'package:path/path.dart' as p;
@@ -51,8 +52,12 @@ class DatabaseRepository {
   Future<void> _initialize(Store store) async {
     // Add any additional setup code, e.g. build queries.
     if (migrationCubit.state.status != MigrationStatus.success) {
-      await _migrateDatabase(store);
-      await _clearLegacyDatabase();
+      try {
+        await _migrateDatabase(store);
+        await _clearLegacyDatabase();
+      } catch (e) {
+        await FirebaseCrashlytics.instance.recordError(e, null);
+      }
     }
   }
 
