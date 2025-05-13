@@ -24,4 +24,11 @@ class LegacyDatabaseRepository {
       directory: dir.path,
     );
   }
+
+  Future<void> close() async {
+    if (_database != null) {
+      _database!.close(deleteFromDisk: true);
+      _database = null;
+    }
+  }
 }

@@ -48,32 +48,20 @@ class DatabaseRepository {
   }
 
   Future<void> _initialize(Store store) async {
-    /////////////////////////////////////////////////////////
-    /// TEMPORARY CODE
-    /// REMOVE THIS CODE WHEN THE LEGACY DATABASE IS REMOVED
-    /////////////////////////////////////////////////////////
-    await store.box<PacingEntity>().removeAllAsync();
-    await store.box<TeamEntity>().removeAllAsync();
-    await store.box<MatchEntity>().removeAllAsync();
-    await store.box<ImprovisationEntity>().removeAllAsync();
-    await store.box<PerformerEntity>().removeAllAsync();
-    await store.box<StarEntity>().removeAllAsync();
-    await store.box<PointEntity>().removeAllAsync();
-    await store.box<PenaltyEntity>().removeAllAsync();
-    await store.box<TagEntity>().removeAllAsync();
-    /////////////////////////////////////////////////////////
-    /// END TEMPORARY CODE
-    /// REMOVE THIS CODE WHEN THE LEGACY DATABASE IS REMOVED
-    /////////////////////////////////////////////////////////
-
     // Add any additional setup code, e.g. build queries.
     await _migrateDatabase(store);
     await _clearLegacyDatabase();
   }
 
   Future<void> _clearLegacyDatabase() async {
-    // final legacyDatabase = await legacyDatabaseRepository.database;
-    // legacyDatabase.clear();
+    final legacyDatabase = await legacyDatabaseRepository.database;
+    legacyDatabase.write((db) {
+      db.pacingModels.clear();
+      db.teamModels.clear();
+      db.matchModels.clear();
+    });
+
+    legacyDatabase.close(deleteFromDisk: true);
   }
 
   Future<void> _migrateDatabase(Store store) async {
