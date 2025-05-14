@@ -94,7 +94,11 @@ class PacingsRepository {
   Future<List<String>> getAllCategories({String search = ''}) async {
     final db = await databaseRepository.database;
     final box = db.box<ImprovisationEntity>();
-    final builder = box.query(ImprovisationEntity_.category.contains(search, caseSensitive: false));
+    final builder = box.query(
+      ImprovisationEntity_.category
+          .notEquals('')
+          .and(ImprovisationEntity_.category.contains(search, caseSensitive: false)),
+    );
     final query = builder.build();
     final returnValue = await query.findAsync();
     query.close();
