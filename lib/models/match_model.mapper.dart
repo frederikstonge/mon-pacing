@@ -17,9 +17,9 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
       ImprovisationModelMapper.ensureInitialized();
       PenaltyModelMapper.ensureInitialized();
       PointModelMapper.ensureInitialized();
-      TagModelMapper.ensureInitialized();
       StarModelMapper.ensureInitialized();
       PenaltiesImpactTypeMapper.ensureInitialized();
+      TagModelMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -50,9 +50,6 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static List<PointModel> _$points(MatchModel v) => v.points;
   static const Field<MatchModel, List<PointModel>> _f$points =
       Field('points', _$points);
-  static List<TagModel> _$tags(MatchModel v) => v.tags;
-  static const Field<MatchModel, List<TagModel>> _f$tags =
-      Field('tags', _$tags, opt: true, def: const []);
   static List<StarModel> _$stars(MatchModel v) => v.stars;
   static const Field<MatchModel, List<StarModel>> _f$stars =
       Field('stars', _$stars, opt: true, def: const []);
@@ -118,6 +115,9 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
       v.integrationPenaltyTypes;
   static const Field<MatchModel, List<String>> _f$integrationPenaltyTypes =
       Field('integrationPenaltyTypes', _$integrationPenaltyTypes, opt: true);
+  static List<TagModel> _$tags(MatchModel v) => v.tags;
+  static const Field<MatchModel, List<TagModel>> _f$tags =
+      Field('tags', _$tags, opt: true, def: const []);
 
   @override
   final MappableFields<MatchModel> fields = const {
@@ -129,7 +129,6 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
     #improvisations: _f$improvisations,
     #penalties: _f$penalties,
     #points: _f$points,
-    #tags: _f$tags,
     #stars: _f$stars,
     #enableStatistics: _f$enableStatistics,
     #enablePenaltiesImpactPoints: _f$enablePenaltiesImpactPoints,
@@ -147,6 +146,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
     #integrationMaxNumberOfImprovisations:
         _f$integrationMaxNumberOfImprovisations,
     #integrationPenaltyTypes: _f$integrationPenaltyTypes,
+    #tags: _f$tags,
   };
 
   static MatchModel _instantiate(DecodingData data) {
@@ -159,7 +159,6 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
         improvisations: data.dec(_f$improvisations),
         penalties: data.dec(_f$penalties),
         points: data.dec(_f$points),
-        tags: data.dec(_f$tags),
         stars: data.dec(_f$stars),
         enableStatistics: data.dec(_f$enableStatistics),
         enablePenaltiesImpactPoints: data.dec(_f$enablePenaltiesImpactPoints),
@@ -177,7 +176,8 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
             data.dec(_f$integrationMinNumberOfImprovisations),
         integrationMaxNumberOfImprovisations:
             data.dec(_f$integrationMaxNumberOfImprovisations),
-        integrationPenaltyTypes: data.dec(_f$integrationPenaltyTypes));
+        integrationPenaltyTypes: data.dec(_f$integrationPenaltyTypes),
+        tags: data.dec(_f$tags));
   }
 
   @override
@@ -242,11 +242,11 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       PenaltyModelCopyWith<$R, PenaltyModel, PenaltyModel>> get penalties;
   ListCopyWith<$R, PointModel, PointModelCopyWith<$R, PointModel, PointModel>>
       get points;
-  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   ListCopyWith<$R, StarModel, StarModelCopyWith<$R, StarModel, StarModel>>
       get stars;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
       get integrationPenaltyTypes;
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   $R call(
       {int? id,
       String? name,
@@ -256,7 +256,6 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       List<ImprovisationModel>? improvisations,
       List<PenaltyModel>? penalties,
       List<PointModel>? points,
-      List<TagModel>? tags,
       List<StarModel>? stars,
       bool? enableStatistics,
       bool? enablePenaltiesImpactPoints,
@@ -270,7 +269,8 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       int? integrationRestrictMaximumPointPerImprovisation,
       int? integrationMinNumberOfImprovisations,
       int? integrationMaxNumberOfImprovisations,
-      List<String>? integrationPenaltyTypes});
+      List<String>? integrationPenaltyTypes,
+      List<TagModel>? tags});
   MatchModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -305,10 +305,6 @@ class _MatchModelCopyWithImpl<$R, $Out>
       get points => ListCopyWith($value.points, (v, t) => v.copyWith.$chain(t),
           (v) => call(points: v));
   @override
-  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>>
-      get tags => ListCopyWith(
-          $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
-  @override
   ListCopyWith<$R, StarModel, StarModelCopyWith<$R, StarModel, StarModel>>
       get stars => ListCopyWith(
           $value.stars, (v, t) => v.copyWith.$chain(t), (v) => call(stars: v));
@@ -321,6 +317,10 @@ class _MatchModelCopyWithImpl<$R, $Out>
               (v) => call(integrationPenaltyTypes: v))
           : null;
   @override
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>>
+      get tags => ListCopyWith(
+          $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
+  @override
   $R call(
           {int? id,
           String? name,
@@ -330,7 +330,6 @@ class _MatchModelCopyWithImpl<$R, $Out>
           List<ImprovisationModel>? improvisations,
           List<PenaltyModel>? penalties,
           List<PointModel>? points,
-          List<TagModel>? tags,
           List<StarModel>? stars,
           bool? enableStatistics,
           bool? enablePenaltiesImpactPoints,
@@ -344,7 +343,8 @@ class _MatchModelCopyWithImpl<$R, $Out>
           Object? integrationRestrictMaximumPointPerImprovisation = $none,
           Object? integrationMinNumberOfImprovisations = $none,
           Object? integrationMaxNumberOfImprovisations = $none,
-          Object? integrationPenaltyTypes = $none}) =>
+          Object? integrationPenaltyTypes = $none,
+          List<TagModel>? tags}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
@@ -354,7 +354,6 @@ class _MatchModelCopyWithImpl<$R, $Out>
         if (improvisations != null) #improvisations: improvisations,
         if (penalties != null) #penalties: penalties,
         if (points != null) #points: points,
-        if (tags != null) #tags: tags,
         if (stars != null) #stars: stars,
         if (enableStatistics != null) #enableStatistics: enableStatistics,
         if (enablePenaltiesImpactPoints != null)
@@ -382,7 +381,8 @@ class _MatchModelCopyWithImpl<$R, $Out>
           #integrationMaxNumberOfImprovisations:
               integrationMaxNumberOfImprovisations,
         if (integrationPenaltyTypes != $none)
-          #integrationPenaltyTypes: integrationPenaltyTypes
+          #integrationPenaltyTypes: integrationPenaltyTypes,
+        if (tags != null) #tags: tags
       }));
   @override
   MatchModel $make(CopyWithData data) => MatchModel(
@@ -394,7 +394,6 @@ class _MatchModelCopyWithImpl<$R, $Out>
       improvisations: data.get(#improvisations, or: $value.improvisations),
       penalties: data.get(#penalties, or: $value.penalties),
       points: data.get(#points, or: $value.points),
-      tags: data.get(#tags, or: $value.tags),
       stars: data.get(#stars, or: $value.stars),
       enableStatistics:
           data.get(#enableStatistics, or: $value.enableStatistics),
@@ -424,7 +423,8 @@ class _MatchModelCopyWithImpl<$R, $Out>
           #integrationMaxNumberOfImprovisations,
           or: $value.integrationMaxNumberOfImprovisations),
       integrationPenaltyTypes: data.get(#integrationPenaltyTypes,
-          or: $value.integrationPenaltyTypes));
+          or: $value.integrationPenaltyTypes),
+      tags: data.get(#tags, or: $value.tags));
 
   @override
   MatchModelCopyWith<$R2, MatchModel, $Out2> $chain<$R2, $Out2>(

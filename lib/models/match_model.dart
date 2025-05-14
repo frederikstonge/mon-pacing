@@ -7,13 +7,14 @@ import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
 import 'point_model.dart';
 import 'star_model.dart';
+import 'tag_base_model.dart';
 import 'tag_model.dart';
 import 'team_model.dart';
 
 part 'match_model.mapper.dart';
 
 @MappableClass()
-class MatchModel with MatchModelMappable {
+class MatchModel extends TagBaseModel with MatchModelMappable {
   final int id;
   final String name;
   final DateTime? createdDate;
@@ -22,7 +23,6 @@ class MatchModel with MatchModelMappable {
   final List<ImprovisationModel> improvisations;
   final List<PenaltyModel> penalties;
   final List<PointModel> points;
-  final List<TagModel> tags;
   final List<StarModel> stars;
   final bool enableStatistics;
   final bool enablePenaltiesImpactPoints;
@@ -47,7 +47,6 @@ class MatchModel with MatchModelMappable {
     required this.improvisations,
     required this.penalties,
     required this.points,
-    this.tags = const [],
     this.stars = const [],
     this.enableStatistics = true,
     this.enablePenaltiesImpactPoints = true,
@@ -62,6 +61,7 @@ class MatchModel with MatchModelMappable {
     this.integrationMinNumberOfImprovisations,
     this.integrationMaxNumberOfImprovisations,
     this.integrationPenaltyTypes,
+    super.tags = const [],
   });
 
   factory MatchModel.fromEntity({required MatchEntity entity}) {

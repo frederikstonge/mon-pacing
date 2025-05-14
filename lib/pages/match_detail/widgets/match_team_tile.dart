@@ -6,24 +6,21 @@ import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/color_picker/color_picker.dart';
 import '../../../components/custom_card/custom_card.dart';
-import '../../../components/search/teams_search.dart';
 import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../extensions/color_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/performer_model.dart';
-import '../../../models/tag_model.dart';
 import '../../../models/team_model.dart';
 import '../../../validators/validators.dart';
 import '../../team_detail/widgets/team_performers.dart';
+import '../../teams_search/teams_search_page_view.dart';
 
 class MatchTeamTile extends StatefulWidget {
   final TeamModel team;
   final bool allowSearch;
   final FutureOr<void> Function(TeamModel team) onChanged;
   final FutureOr<void> Function()? onDelete;
-  final Future<List<TeamModel>> Function(String query, List<String> selectedTags) getAllTeams;
-  final Future<List<TagModel>> Function() getAllTeamTags;
   final void Function(TeamModel team) onTeamSelected;
   final FutureOr<void> Function(TeamModel team)? addPerformer;
   final FutureOr<void> Function(TeamModel team, PerformerModel performer) editPerformer;
@@ -37,8 +34,6 @@ class MatchTeamTile extends StatefulWidget {
     required this.allowSearch,
     required this.onChanged,
     required this.onDelete,
-    required this.getAllTeams,
-    required this.getAllTeamTags,
     required this.onTeamSelected,
     required this.addPerformer,
     required this.editPerformer,
@@ -104,11 +99,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                           tooltip: S.of(context).search(category: S.of(context).match.toLowerCase()),
                           icon: const Icon(Icons.search),
                           onPressed: () async {
-                            final result = await TeamsSearch.showDialog(
-                              context,
-                              widget.getAllTeams,
-                              widget.getAllTeamTags,
-                            );
+                            final result = await TeamsSearchPageView.showDialog(context);
                             if (result != null) {
                               widget.onTeamSelected(result);
                               teamNameController.text = result.name;

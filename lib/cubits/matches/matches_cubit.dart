@@ -3,7 +3,6 @@ import 'package:toastification/toastification.dart';
 
 import '../../l10n/localizer.dart';
 import '../../models/match_model.dart';
-import '../../models/tag_model.dart';
 import '../../repositories/matches_repository.dart';
 import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
@@ -100,11 +99,6 @@ class MatchesCubit extends Cubit<MatchesState> {
       emit(MatchesState(status: MatchesStatus.error, error: exception.toString()));
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     }
-  }
-
-  Future<List<TagModel>> getAllTags({String search = ''}) async {
-    final tags = await matchesRepository.getAllTags(search: search);
-    return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
   }
 
   Future<void> refresh() async {

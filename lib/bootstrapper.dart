@@ -16,6 +16,7 @@ import 'repositories/database_repository.dart';
 import 'repositories/legacy_database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
+import 'repositories/tags_repository.dart';
 import 'repositories/teams_repository.dart';
 import 'services/analytics_service.dart';
 import 'services/excel_service.dart';
@@ -59,6 +60,10 @@ class Bootstrapper extends StatelessWidget {
             create:
                 (repositoryContext) =>
                     TeamsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
+          ),
+          RepositoryProvider(
+            create:
+                (repositoryContext) => TagsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
           ),
         ],
         child: MultiBlocProvider(

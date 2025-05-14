@@ -15,14 +15,12 @@ import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/text_header/text_header.dart';
-import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../models/tag_model.dart';
-import '../../models/team_model.dart';
-import '../../repositories/teams_repository.dart';
+import '../../repositories/tags_repository.dart';
 import '../../validators/validators.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
@@ -91,7 +89,10 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                         label: S.of(context).tags,
                         hintText: S.of(context).tagsHint,
                         initialTags: matchDetailState.match.tags,
-                        getAllTags: context.read<MatchesCubit>().getAllTags,
+                        getAllTags: (search) async {
+                          final tags = await context.read<TagsRepository>().getAllTags(search: search);
+                          return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                        },
                         onChanged: (value) {
                           context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(tags: value));
                         },
@@ -158,14 +159,6 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                     }
                                   }
                                   : null,
-                          getAllTeamTags: () async {
-                            final tags = await context.read<TeamsRepository>().getAllTags();
-                            return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
-                          },
-                          getAllTeams: (query, selectedTags) async {
-                            final teamEntities = await context.read<TeamsRepository>().search(query, selectedTags);
-                            return teamEntities.map((e) => TeamModel.fromEntity(entity: e)).toList();
-                          },
                           onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e, team),
                           addPerformer:
                               !matchDetailState.editMode ? context.read<MatchDetailCubit>().addPerformer : null,

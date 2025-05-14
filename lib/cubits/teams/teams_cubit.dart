@@ -8,7 +8,6 @@ import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../l10n/localizer.dart';
-import '../../models/tag_model.dart';
 import '../../models/team_model.dart';
 import '../../repositories/teams_repository.dart';
 import '../../services/toaster_service.dart';
@@ -79,11 +78,6 @@ class TeamsCubit extends Cubit<TeamsState> {
       emit(TeamsState(status: TeamsStatus.error, error: exception.toString()));
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
     }
-  }
-
-  Future<List<TagModel>> getAllTags({String search = ''}) async {
-    final tags = await teamsRepository.getAllTags(search: search);
-    return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
   }
 
   Future<void> refresh() async {

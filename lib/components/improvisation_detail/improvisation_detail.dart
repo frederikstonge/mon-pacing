@@ -6,13 +6,13 @@ import '../../extensions/duration_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
+import '../../pages/categories_search/categories_search_page_view.dart';
 import '../bottom_sheet/bottom_sheet_dialog.dart';
 import '../buttons/loading_icon_button.dart';
 import '../custom_tooltip/custom_tooltip.dart';
 import '../duration_picker/duration_picker.dart';
 import '../form/drop_down_element.dart';
 import '../form/text_field_element.dart';
-import '../search/categories_search.dart';
 import '../settings_tile/settings_tile.dart';
 import 'improvisation_durations.dart';
 
@@ -86,7 +86,7 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
             tooltip: S.of(context).search(category: S.of(context).category.toLowerCase()),
             icon: const Icon(Icons.search),
             onPressed: () async {
-              final result = await CategoriesSearch.showDialog(context, widget.getAllCategories);
+              final result = await CategoriesSearchPageView.showDialog(context);
               if (result != null) {
                 _categoryController.text = result;
                 await widget.onChanged.call(widget.improvisation.copyWith(category: result));

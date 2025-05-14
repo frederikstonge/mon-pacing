@@ -1,28 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../components/search/search_dialog.dart';
 import '../../l10n/generated/app_localizations.dart';
-import 'search_dialog.dart';
+import '../../repositories/pacings_repository.dart';
+import '../../router/routes.dart';
 
-class CategoriesSearch extends StatelessWidget {
-  final FutureOr<List<String>> Function({String search}) search;
+class CategoriesSearchPageView extends StatelessWidget {
+  const CategoriesSearchPageView({super.key});
 
-  const CategoriesSearch({super.key, required this.search});
-
-  static Future<String?> showDialog(
-    BuildContext context,
-    FutureOr<List<String>> Function({String search}) search,
-  ) async {
-    return await Navigator.of(
-      context,
-    ).push<String>(MaterialPageRoute(builder: (context) => CategoriesSearch(search: search)));
+  static Future<String?> showDialog(BuildContext context) async {
+    return await GoRouter.of(context).pushNamed<String>(Routes.categoriesSearch);
   }
 
   @override
   Widget build(BuildContext context) {
     return SearchDialog(
-      onChanged: (query, _) => search(search: query),
+      onChanged: (query, _) => context.read<PacingsRepository>().getAllCategories(search: query),
       hintText: S.of(context).search(category: S.of(context).categories),
       itemBuilder:
           (context, item) => InkWell(

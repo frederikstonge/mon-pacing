@@ -39,9 +39,6 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
   static int _$defaultNumberOfTeams(PacingModel v) => v.defaultNumberOfTeams;
   static const Field<PacingModel, int> _f$defaultNumberOfTeams =
       Field('defaultNumberOfTeams', _$defaultNumberOfTeams, opt: true, def: 2);
-  static List<TagModel> _$tags(PacingModel v) => v.tags;
-  static const Field<PacingModel, List<TagModel>> _f$tags =
-      Field('tags', _$tags, opt: true, def: const []);
   static String? _$integrationId(PacingModel v) => v.integrationId;
   static const Field<PacingModel, String> _f$integrationId =
       Field('integrationId', _$integrationId, opt: true);
@@ -53,6 +50,9 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
   static const Field<PacingModel, String> _f$integrationAdditionalData = Field(
       'integrationAdditionalData', _$integrationAdditionalData,
       opt: true);
+  static List<TagModel> _$tags(PacingModel v) => v.tags;
+  static const Field<PacingModel, List<TagModel>> _f$tags =
+      Field('tags', _$tags, opt: true, def: const []);
 
   @override
   final MappableFields<PacingModel> fields = const {
@@ -62,10 +62,10 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
     #modifiedDate: _f$modifiedDate,
     #improvisations: _f$improvisations,
     #defaultNumberOfTeams: _f$defaultNumberOfTeams,
-    #tags: _f$tags,
     #integrationId: _f$integrationId,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
+    #tags: _f$tags,
   };
 
   static PacingModel _instantiate(DecodingData data) {
@@ -76,10 +76,10 @@ class PacingModelMapper extends ClassMapperBase<PacingModel> {
         modifiedDate: data.dec(_f$modifiedDate),
         improvisations: data.dec(_f$improvisations),
         defaultNumberOfTeams: data.dec(_f$defaultNumberOfTeams),
-        tags: data.dec(_f$tags),
         integrationId: data.dec(_f$integrationId),
         integrationEntityId: data.dec(_f$integrationEntityId),
-        integrationAdditionalData: data.dec(_f$integrationAdditionalData));
+        integrationAdditionalData: data.dec(_f$integrationAdditionalData),
+        tags: data.dec(_f$tags));
   }
 
   @override
@@ -146,10 +146,10 @@ abstract class PacingModelCopyWith<$R, $In extends PacingModel, $Out>
       DateTime? modifiedDate,
       List<ImprovisationModel>? improvisations,
       int? defaultNumberOfTeams,
-      List<TagModel>? tags,
       String? integrationId,
       String? integrationEntityId,
-      String? integrationAdditionalData});
+      String? integrationAdditionalData,
+      List<TagModel>? tags});
   PacingModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -182,10 +182,10 @@ class _PacingModelCopyWithImpl<$R, $Out>
           Object? modifiedDate = $none,
           List<ImprovisationModel>? improvisations,
           int? defaultNumberOfTeams,
-          List<TagModel>? tags,
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
-          Object? integrationAdditionalData = $none}) =>
+          Object? integrationAdditionalData = $none,
+          List<TagModel>? tags}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
@@ -194,12 +194,12 @@ class _PacingModelCopyWithImpl<$R, $Out>
         if (improvisations != null) #improvisations: improvisations,
         if (defaultNumberOfTeams != null)
           #defaultNumberOfTeams: defaultNumberOfTeams,
-        if (tags != null) #tags: tags,
         if (integrationId != $none) #integrationId: integrationId,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
         if (integrationAdditionalData != $none)
-          #integrationAdditionalData: integrationAdditionalData
+          #integrationAdditionalData: integrationAdditionalData,
+        if (tags != null) #tags: tags
       }));
   @override
   PacingModel $make(CopyWithData data) => PacingModel(
@@ -210,12 +210,12 @@ class _PacingModelCopyWithImpl<$R, $Out>
       improvisations: data.get(#improvisations, or: $value.improvisations),
       defaultNumberOfTeams:
           data.get(#defaultNumberOfTeams, or: $value.defaultNumberOfTeams),
-      tags: data.get(#tags, or: $value.tags),
       integrationId: data.get(#integrationId, or: $value.integrationId),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),
       integrationAdditionalData: data.get(#integrationAdditionalData,
-          or: $value.integrationAdditionalData));
+          or: $value.integrationAdditionalData),
+      tags: data.get(#tags, or: $value.tags));
 
   @override
   PacingModelCopyWith<$R2, PacingModel, $Out2> $chain<$R2, $Out2>(

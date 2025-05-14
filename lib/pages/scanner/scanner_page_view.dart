@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../components/search/pacings_search.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../integrations/integration_base.dart';
@@ -15,12 +14,11 @@ import '../../integrations/pacing_integration_base.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
-import '../../models/tag_model.dart';
-import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../../services/analytics_service.dart';
 import '../../services/integration_service.dart';
 import '../../services/toaster_service.dart';
+import '../pacings_search/pacings_search_page_view.dart';
 
 class ScannerPageView extends StatefulWidget {
   const ScannerPageView({super.key});
@@ -137,17 +135,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
               return;
             }
 
-            final result = await PacingsSearch.showDialog(
-              context,
-              (String search, List<String> selectedTags) async {
-                final response = await context.read<PacingsRepository>().search(search, selectedTags);
-                return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
-              },
-              () async {
-                final tags = await context.read<PacingsRepository>().getAllTags();
-                return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
-              },
-            );
+            final result = await PacingsSearchPageView.showDialog(context);
 
             if (result == null) {
               // No pacing selected, restart scanner

@@ -1,10 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/tag_model.dart';
-
 class TagFilters extends StatefulWidget {
-  final List<TagModel> allTags;
+  final List<String> allTags;
   final List<String> selectedTags;
   final Future<void> Function(String tag, bool selected) onTagSelected;
 
@@ -36,8 +34,8 @@ class _TagFiltersState extends State<TagFilters> {
     }
 
     final allTags = widget.allTags.sorted((a, b) {
-      final aIsSelected = widget.selectedTags.contains(a.name);
-      final bIsSelected = widget.selectedTags.contains(b.name);
+      final aIsSelected = widget.selectedTags.contains(a);
+      final bIsSelected = widget.selectedTags.contains(b);
       final compare = aIsSelected == bIsSelected ? 0 : (aIsSelected ? -1 : 1);
       return compare;
     });
@@ -54,14 +52,14 @@ class _TagFiltersState extends State<TagFilters> {
           itemCount: allTags.length,
           itemBuilder: (context, index) {
             final tag = allTags.elementAt(index);
-            final isSelected = widget.selectedTags.contains(tag.name);
+            final isSelected = widget.selectedTags.contains(tag);
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: FilterChip(
-                label: Text(tag.name),
+                label: Text(tag),
                 selected: isSelected,
                 onSelected: (value) async {
-                  await widget.onTagSelected(tag.name, value);
+                  await widget.onTagSelected(tag, value);
                   _scrollController.jumpTo(0);
                 },
               ),

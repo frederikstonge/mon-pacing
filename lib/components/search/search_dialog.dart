@@ -1,23 +1,18 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/tag_model.dart';
+import '../../extensions/iterable_extensions.dart';
+import '../../models/tag_base_model.dart';
 import '../tag_filters/tag_filters.dart';
 
 class SearchDialog<T> extends StatefulWidget {
   final FutureOr<List<T>> Function(String query, List<String> selectedTags) onChanged;
   final Widget Function(BuildContext context, T item) itemBuilder;
-  final List<TagModel>? tags;
   final String hintText;
 
-  const SearchDialog({
-    super.key,
-    required this.onChanged,
-    required this.itemBuilder,
-    required this.hintText,
-    this.tags,
-  });
+  const SearchDialog({super.key, required this.onChanged, required this.itemBuilder, required this.hintText});
 
   @override
   State<SearchDialog<T>> createState() => _SearchDialogState<T>();
@@ -26,6 +21,7 @@ class SearchDialog<T> extends StatefulWidget {
 class _SearchDialogState<T> extends State<SearchDialog<T>> {
   String query = '';
   List<T> items = [];
+  List<String> tags = [];
   List<String> selectedTags = [];
   Timer? _debounce;
 
@@ -60,11 +56,11 @@ class _SearchDialogState<T> extends State<SearchDialog<T>> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              if (widget.tags != null) ...[
+              if (tags.isNotEmpty) ...[
                 Padding(
                   padding: const EdgeInsets.all(4),
                   child: TagFilters(
-                    allTags: widget.tags!,
+                    allTags: tags,
                     selectedTags: selectedTags,
                     onTagSelected: (tag, selected) async {
                       final tags = List<String>.from(selectedTags);
@@ -111,6 +107,16 @@ class _SearchDialogState<T> extends State<SearchDialog<T>> {
       if (mounted) {
         setState(() {
           items = newItems;
+          this.tags =
+              newItems
+                  .whereType<TagBaseModel>()
+                  .selectMany((e) => e.tags)
+                  .map((e) => e.name)
+                  .groupListsBy((e) => e)
+                  .values
+                  .sorted((a, b) => b.length - a.length)
+                  .map((e) => e.first)
+                  .toList();
         });
       }
     });
