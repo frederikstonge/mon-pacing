@@ -2,22 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../models/tag_model.dart';
-import '../tag_filters/tag_filters.dart';
-
 class SearchDialog<T> extends StatefulWidget {
   final FutureOr<List<T>> Function(String query, List<String> selectedTags) onChanged;
   final Widget Function(BuildContext context, T item) itemBuilder;
-  final List<TagModel>? tags;
   final String hintText;
 
-  const SearchDialog({
-    super.key,
-    required this.onChanged,
-    required this.itemBuilder,
-    required this.hintText,
-    this.tags,
-  });
+  const SearchDialog({super.key, required this.onChanged, required this.itemBuilder, required this.hintText});
 
   @override
   State<SearchDialog<T>> createState() => _SearchDialogState<T>();
@@ -60,25 +50,25 @@ class _SearchDialogState<T> extends State<SearchDialog<T>> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              if (widget.tags != null) ...[
-                Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: TagFilters(
-                    allTags: widget.tags!,
-                    selectedTags: selectedTags,
-                    onTagSelected: (tag, selected) async {
-                      final tags = List<String>.from(selectedTags);
-                      if (selected) {
-                        tags.add(tag);
-                      } else {
-                        tags.remove(tag);
-                      }
+              // if (widget.tags != null) ...[
+              //   Padding(
+              //     padding: const EdgeInsets.all(4),
+              //     child: TagFilters(
+              //       allTags: widget.tags!,
+              //       selectedTags: selectedTags,
+              //       onTagSelected: (tag, selected) async {
+              //         final tags = List<String>.from(selectedTags);
+              //         if (selected) {
+              //           tags.add(tag);
+              //         } else {
+              //           tags.remove(tag);
+              //         }
 
-                      _onChanged(query, tags);
-                    },
-                  ),
-                ),
-              ],
+              //         _onChanged(query, tags);
+              //       },
+              //     ),
+              //   ),
+              // ],
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: items.length,

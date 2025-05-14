@@ -21,22 +21,21 @@ import 'package:mon_pacing/cubits/pacings/pacings_cubit.dart' as _i21;
 import 'package:mon_pacing/cubits/pacings/pacings_state.dart' as _i9;
 import 'package:mon_pacing/cubits/settings/settings_cubit.dart' as _i18;
 import 'package:mon_pacing/cubits/settings/settings_state.dart' as _i4;
-import 'package:mon_pacing/cubits/teams/teams_cubit.dart' as _i35;
+import 'package:mon_pacing/cubits/teams/teams_cubit.dart' as _i34;
 import 'package:mon_pacing/cubits/teams/teams_state.dart' as _i16;
-import 'package:mon_pacing/cubits/timer/timer_cubit.dart' as _i36;
+import 'package:mon_pacing/cubits/timer/timer_cubit.dart' as _i35;
 import 'package:mon_pacing/cubits/timer/timer_state.dart' as _i20;
 import 'package:mon_pacing/integrations/integration_base.dart' as _i28;
 import 'package:mon_pacing/l10n/generated/app_localizations.dart' as _i26;
-import 'package:mon_pacing/models/improvisation_model.dart' as _i38;
+import 'package:mon_pacing/models/improvisation_model.dart' as _i37;
 import 'package:mon_pacing/models/match_model.dart' as _i14;
 import 'package:mon_pacing/models/pacing_model.dart' as _i10;
-import 'package:mon_pacing/models/penalty_model.dart' as _i40;
-import 'package:mon_pacing/models/star_model.dart' as _i41;
-import 'package:mon_pacing/models/tag_model.dart' as _i34;
+import 'package:mon_pacing/models/penalty_model.dart' as _i39;
+import 'package:mon_pacing/models/star_model.dart' as _i40;
 import 'package:mon_pacing/models/team_model.dart' as _i17;
-import 'package:mon_pacing/pages/match/cubits/match_cubit.dart' as _i39;
+import 'package:mon_pacing/pages/match/cubits/match_cubit.dart' as _i38;
 import 'package:mon_pacing/pages/match/cubits/match_state.dart' as _i25;
-import 'package:mon_pacing/pages/pacing/cubits/pacing_cubit.dart' as _i37;
+import 'package:mon_pacing/pages/pacing/cubits/pacing_cubit.dart' as _i36;
 import 'package:mon_pacing/pages/pacing/cubits/pacing_state.dart' as _i22;
 import 'package:mon_pacing/repositories/matches_repository.dart' as _i11;
 import 'package:mon_pacing/repositories/pacings_repository.dart' as _i7;
@@ -1112,19 +1111,6 @@ class MockMatchesCubit extends _i1.Mock implements _i23.MatchesCubit {
       ) as _i30.Future<void>);
 
   @override
-  _i30.Future<List<_i34.TagModel>> getAllTags({String? search = ''}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getAllTags,
-          [],
-          {#search: search},
-        ),
-        returnValue: _i30.Future<List<_i34.TagModel>>.value(<_i34.TagModel>[]),
-        returnValueForMissingStub:
-            _i30.Future<List<_i34.TagModel>>.value(<_i34.TagModel>[]),
-      ) as _i30.Future<List<_i34.TagModel>>);
-
-  @override
   _i30.Future<void> refresh() => (super.noSuchMethod(
         Invocation.method(
           #refresh,
@@ -1198,7 +1184,7 @@ class MockMatchesCubit extends _i1.Mock implements _i23.MatchesCubit {
 /// A class which mocks [TeamsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTeamsCubit extends _i1.Mock implements _i35.TeamsCubit {
+class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
   @override
   _i15.TeamsRepository get teamsRepository => (super.noSuchMethod(
         Invocation.getter(#teamsRepository),
@@ -1308,19 +1294,6 @@ class MockTeamsCubit extends _i1.Mock implements _i35.TeamsCubit {
       ) as _i30.Future<void>);
 
   @override
-  _i30.Future<List<_i34.TagModel>> getAllTags({String? search = ''}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getAllTags,
-          [],
-          {#search: search},
-        ),
-        returnValue: _i30.Future<List<_i34.TagModel>>.value(<_i34.TagModel>[]),
-        returnValueForMissingStub:
-            _i30.Future<List<_i34.TagModel>>.value(<_i34.TagModel>[]),
-      ) as _i30.Future<List<_i34.TagModel>>);
-
-  @override
   _i30.Future<void> refresh() => (super.noSuchMethod(
         Invocation.method(
           #refresh,
@@ -1414,7 +1387,7 @@ class MockTeamsCubit extends _i1.Mock implements _i35.TeamsCubit {
 /// A class which mocks [TimerCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTimerCubit extends _i1.Mock implements _i36.TimerCubit {
+class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
   @override
   _i18.SettingsCubit get settingsCubit => (super.noSuchMethod(
         Invocation.getter(#settingsCubit),
@@ -1606,7 +1579,7 @@ class MockTimerCubit extends _i1.Mock implements _i36.TimerCubit {
 /// A class which mocks [PacingCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPacingCubit extends _i1.Mock implements _i37.PacingCubit {
+class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
   @override
   _i7.PacingsRepository get pacingsRepository => (super.noSuchMethod(
         Invocation.getter(#pacingsRepository),
@@ -1722,7 +1695,7 @@ class MockPacingCubit extends _i1.Mock implements _i37.PacingCubit {
 
   @override
   _i30.Future<void> removeImprovisation(
-          _i38.ImprovisationModel? improvisation) =>
+          _i37.ImprovisationModel? improvisation) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeImprovisation,
@@ -1733,7 +1706,7 @@ class MockPacingCubit extends _i1.Mock implements _i37.PacingCubit {
       ) as _i30.Future<void>);
 
   @override
-  _i30.Future<void> editImprovisation(_i38.ImprovisationModel? model) =>
+  _i30.Future<void> editImprovisation(_i37.ImprovisationModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #editImprovisation,
@@ -1807,7 +1780,7 @@ class MockPacingCubit extends _i1.Mock implements _i37.PacingCubit {
 /// A class which mocks [MatchCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
+class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
   @override
   _i11.MatchesRepository get matchesRepository => (super.noSuchMethod(
         Invocation.getter(#matchesRepository),
@@ -1931,7 +1904,7 @@ class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
 
   @override
   _i30.Future<void> addImprovisation(
-    _i38.ImprovisationModel? improvisation,
+    _i37.ImprovisationModel? improvisation,
     int? index,
   ) =>
       (super.noSuchMethod(
@@ -1948,7 +1921,7 @@ class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
 
   @override
   _i30.Future<void> editImprovisation(
-    _i38.ImprovisationModel? improvisation,
+    _i37.ImprovisationModel? improvisation,
     int? index,
   ) =>
       (super.noSuchMethod(
@@ -1965,7 +1938,7 @@ class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
 
   @override
   _i30.Future<void> removeImprovisation(
-          _i38.ImprovisationModel? improvisation) =>
+          _i37.ImprovisationModel? improvisation) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeImprovisation,
@@ -2013,7 +1986,7 @@ class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
       ) as _i30.Future<void>);
 
   @override
-  _i30.Future<void> addPenalty(_i40.PenaltyModel? penalty) =>
+  _i30.Future<void> addPenalty(_i39.PenaltyModel? penalty) =>
       (super.noSuchMethod(
         Invocation.method(
           #addPenalty,
@@ -2024,7 +1997,7 @@ class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
       ) as _i30.Future<void>);
 
   @override
-  _i30.Future<void> editPenalty(_i40.PenaltyModel? penalty) =>
+  _i30.Future<void> editPenalty(_i39.PenaltyModel? penalty) =>
       (super.noSuchMethod(
         Invocation.method(
           #editPenalty,
@@ -2055,7 +2028,7 @@ class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
       ) as _i30.Future<void>);
 
   @override
-  _i30.Future<void> editStar(_i41.StarModel? star) => (super.noSuchMethod(
+  _i30.Future<void> editStar(_i40.StarModel? star) => (super.noSuchMethod(
         Invocation.method(
           #editStar,
           [star],
@@ -2065,7 +2038,7 @@ class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
       ) as _i30.Future<void>);
 
   @override
-  _i30.Future<void> removeStar(_i41.StarModel? star) => (super.noSuchMethod(
+  _i30.Future<void> removeStar(_i40.StarModel? star) => (super.noSuchMethod(
         Invocation.method(
           #removeStar,
           [star],

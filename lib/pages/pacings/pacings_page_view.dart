@@ -6,7 +6,6 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/search/pacings_search.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -22,12 +21,10 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
-import '../../models/pacing_model.dart';
-import '../../models/tag_model.dart';
-import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
+import '../pacings_search/pacings_search_page_view.dart';
 import 'widgets/pacing_card.dart';
 
 class PacingsPageView extends StatefulWidget {
@@ -120,17 +117,7 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                           tooltip: S.of(context).search(category: S.of(context).pacings),
                           onPressed: () async {
                             final router = GoRouter.of(context);
-                            final result = await PacingsSearch.showDialog(
-                              context,
-                              (String search, List<String> selectedTags) async {
-                                final response = await context.read<PacingsRepository>().search(search, selectedTags);
-                                return response.map((e) => PacingModel.fromEntity(entity: e)).toList();
-                              },
-                              () async {
-                                final tags = await context.read<PacingsRepository>().getAllTags();
-                                return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
-                              },
-                            );
+                            final result = await PacingsSearchPageView.showDialog(context);
                             if (result != null) {
                               router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
                             }

@@ -5,9 +5,9 @@ import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/tag_model.dart';
+import '../../pages/tags_search/tags_search_page_view.dart';
 import '../../validators/validators.dart';
 import '../buttons/loading_icon_button.dart';
-import '../search/tags_search.dart';
 
 class TagsFieldElement extends StatefulWidget {
   final String label;
@@ -17,7 +17,7 @@ class TagsFieldElement extends StatefulWidget {
   final bool autoUnfocus;
   final FutureOr<void> Function(List<TagModel> value)? onChanged;
   final FocusNode? focusNode;
-  final Future<List<TagModel>> Function({String search}) getAllTags;
+  final Future<List<TagModel>> Function(String search) getAllTags;
 
   const TagsFieldElement({
     super.key,
@@ -90,8 +90,7 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
                       suffixIcon: LoadingIconButton(
                         tooltip: S.of(context).search(category: widget.label),
                         icon: const Icon(Icons.search),
-                        onPressed:
-                            () => TagsSearch.showDialog(context, textFieldValues.onTagSubmitted, widget.getAllTags),
+                        onPressed: () => TagsSearchPageView.showDialog(context),
                       ),
                       hintText: widget.hintText,
                       errorText: textFieldValues.error,
