@@ -3,16 +3,16 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i30;
+import 'dart:async' as _i28;
 
 import 'package:firebase_analytics/firebase_analytics.dart' as _i3;
 import 'package:firebase_remote_config/firebase_remote_config.dart' as _i5;
-import 'package:haptic_feedback/haptic_feedback.dart' as _i31;
-import 'package:hydrated_bloc/hydrated_bloc.dart' as _i32;
+import 'package:haptic_feedback/haptic_feedback.dart' as _i32;
+import 'package:hydrated_bloc/hydrated_bloc.dart' as _i33;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i29;
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_cubit.dart'
-    as _i33;
+    as _i34;
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_state.dart'
     as _i6;
 import 'package:mon_pacing/cubits/matches/matches_cubit.dart' as _i23;
@@ -21,28 +21,29 @@ import 'package:mon_pacing/cubits/pacings/pacings_cubit.dart' as _i21;
 import 'package:mon_pacing/cubits/pacings/pacings_state.dart' as _i9;
 import 'package:mon_pacing/cubits/settings/settings_cubit.dart' as _i18;
 import 'package:mon_pacing/cubits/settings/settings_state.dart' as _i4;
-import 'package:mon_pacing/cubits/teams/teams_cubit.dart' as _i34;
+import 'package:mon_pacing/cubits/teams/teams_cubit.dart' as _i35;
 import 'package:mon_pacing/cubits/teams/teams_state.dart' as _i16;
-import 'package:mon_pacing/cubits/timer/timer_cubit.dart' as _i35;
+import 'package:mon_pacing/cubits/timer/timer_cubit.dart' as _i36;
 import 'package:mon_pacing/cubits/timer/timer_state.dart' as _i20;
-import 'package:mon_pacing/integrations/integration_base.dart' as _i28;
+import 'package:mon_pacing/integrations/integration_base.dart' as _i31;
 import 'package:mon_pacing/l10n/generated/app_localizations.dart' as _i26;
-import 'package:mon_pacing/models/improvisation_model.dart' as _i37;
+import 'package:mon_pacing/models/improvisation_model.dart' as _i38;
 import 'package:mon_pacing/models/match_model.dart' as _i14;
 import 'package:mon_pacing/models/pacing_model.dart' as _i10;
-import 'package:mon_pacing/models/penalty_model.dart' as _i39;
-import 'package:mon_pacing/models/star_model.dart' as _i40;
+import 'package:mon_pacing/models/penalty_model.dart' as _i40;
+import 'package:mon_pacing/models/star_model.dart' as _i41;
 import 'package:mon_pacing/models/team_model.dart' as _i17;
-import 'package:mon_pacing/pages/match/cubits/match_cubit.dart' as _i38;
+import 'package:mon_pacing/pages/match/cubits/match_cubit.dart' as _i39;
 import 'package:mon_pacing/pages/match/cubits/match_state.dart' as _i25;
-import 'package:mon_pacing/pages/pacing/cubits/pacing_cubit.dart' as _i36;
+import 'package:mon_pacing/pages/pacing/cubits/pacing_cubit.dart' as _i37;
 import 'package:mon_pacing/pages/pacing/cubits/pacing_state.dart' as _i22;
 import 'package:mon_pacing/repositories/matches_repository.dart' as _i11;
 import 'package:mon_pacing/repositories/pacings_repository.dart' as _i7;
 import 'package:mon_pacing/repositories/teams_repository.dart' as _i15;
 import 'package:mon_pacing/services/analytics_service.dart' as _i12;
 import 'package:mon_pacing/services/excel_service.dart' as _i24;
-import 'package:mon_pacing/services/integration_service.dart' as _i27;
+import 'package:mon_pacing/services/integration_service.dart' as _i30;
+import 'package:mon_pacing/services/package_info_service.dart' as _i27;
 import 'package:mon_pacing/services/timer_service.dart' as _i19;
 import 'package:mon_pacing/services/toaster_service.dart' as _i8;
 import 'package:toastification/toastification.dart' as _i2;
@@ -371,20 +372,49 @@ class MockExcelService extends _i1.Mock implements _i24.ExcelService {
       ) as List<int>?);
 }
 
+/// A class which mocks [PackageInfoService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPackageInfoService extends _i1.Mock
+    implements _i27.PackageInfoService {
+  @override
+  _i28.Future<String> getAppVersion() => (super.noSuchMethod(
+        Invocation.method(
+          #getAppVersion,
+          [],
+        ),
+        returnValue: _i28.Future<String>.value(_i29.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getAppVersion,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i28.Future<String>.value(_i29.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getAppVersion,
+            [],
+          ),
+        )),
+      ) as _i28.Future<String>);
+}
+
 /// A class which mocks [IntegrationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIntegrationService extends _i1.Mock
-    implements _i27.IntegrationService {
+    implements _i30.IntegrationService {
   @override
-  List<_i28.IntegrationBase> get integrations => (super.noSuchMethod(
+  List<_i31.IntegrationBase> get integrations => (super.noSuchMethod(
         Invocation.getter(#integrations),
-        returnValue: <_i28.IntegrationBase>[],
-        returnValueForMissingStub: <_i28.IntegrationBase>[],
-      ) as List<_i28.IntegrationBase>);
+        returnValue: <_i31.IntegrationBase>[],
+        returnValueForMissingStub: <_i31.IntegrationBase>[],
+      ) as List<_i31.IntegrationBase>);
 
   @override
-  T getIntegration<T extends _i28.IntegrationBase>(String? integrationId) =>
+  T getIntegration<T extends _i31.IntegrationBase>(String? integrationId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getIntegration,
@@ -407,7 +437,7 @@ class MockIntegrationService extends _i1.Mock
       ) as T);
 
   @override
-  List<T> getIntegrationsByType<T extends _i28.IntegrationBase>() =>
+  List<T> getIntegrationsByType<T extends _i31.IntegrationBase>() =>
       (super.noSuchMethod(
         Invocation.method(
           #getIntegrationsByType,
@@ -436,36 +466,36 @@ class MockAnalyticsService extends _i1.Mock implements _i12.AnalyticsService {
       ) as _i3.FirebaseAnalytics);
 
   @override
-  _i30.Future<void> logExportToExcel() => (super.noSuchMethod(
+  _i28.Future<void> logExportToExcel() => (super.noSuchMethod(
         Invocation.method(
           #logExportToExcel,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> logStartMatch(_i14.MatchModel? match) =>
+  _i28.Future<void> logStartMatch(_i14.MatchModel? match) =>
       (super.noSuchMethod(
         Invocation.method(
           #logStartMatch,
           [match],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> logIntegration(_i28.IntegrationBase? integration) =>
+  _i28.Future<void> logIntegration(_i31.IntegrationBase? integration) =>
       (super.noSuchMethod(
         Invocation.method(
           #logIntegration,
           [integration],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }
 
 /// A class which mocks [SettingsCubit].
@@ -486,11 +516,11 @@ class MockSettingsCubit extends _i1.Mock implements _i18.SettingsCubit {
       ) as _i4.SettingsState);
 
   @override
-  _i30.Stream<_i4.SettingsState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i4.SettingsState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i4.SettingsState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i4.SettingsState>.empty(),
-      ) as _i30.Stream<_i4.SettingsState>);
+        returnValue: _i28.Stream<_i4.SettingsState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i4.SettingsState>.empty(),
+      ) as _i28.Stream<_i4.SettingsState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -548,14 +578,14 @@ class MockSettingsCubit extends _i1.Mock implements _i18.SettingsCubit {
       );
 
   @override
-  _i30.Future<void> vibrate(_i31.HapticsType? type) => (super.noSuchMethod(
+  _i28.Future<void> vibrate(_i32.HapticsType? type) => (super.noSuchMethod(
         Invocation.method(
           #vibrate,
           [type],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
   void reset() => super.noSuchMethod(
@@ -595,7 +625,7 @@ class MockSettingsCubit extends _i1.Mock implements _i18.SettingsCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i4.SettingsState>? change) => super.noSuchMethod(
+  void onChange(_i33.Change<_i4.SettingsState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -636,17 +666,17 @@ class MockSettingsCubit extends _i1.Mock implements _i18.SettingsCubit {
       );
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  void hydrate({_i32.Storage? storage}) => super.noSuchMethod(
+  void hydrate({_i33.Storage? storage}) => super.noSuchMethod(
         Invocation.method(
           #hydrate,
           [],
@@ -656,20 +686,20 @@ class MockSettingsCubit extends _i1.Mock implements _i18.SettingsCubit {
       );
 
   @override
-  _i30.Future<void> clear() => (super.noSuchMethod(
+  _i28.Future<void> clear() => (super.noSuchMethod(
         Invocation.method(
           #clear,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }
 
 /// A class which mocks [FeatureFlagsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFeatureFlagsCubit extends _i1.Mock implements _i33.FeatureFlagsCubit {
+class MockFeatureFlagsCubit extends _i1.Mock implements _i34.FeatureFlagsCubit {
   @override
   _i5.FirebaseRemoteConfig get remoteConfig => (super.noSuchMethod(
         Invocation.getter(#remoteConfig),
@@ -697,11 +727,11 @@ class MockFeatureFlagsCubit extends _i1.Mock implements _i33.FeatureFlagsCubit {
       ) as _i6.FeatureFlagsState);
 
   @override
-  _i30.Stream<_i6.FeatureFlagsState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i6.FeatureFlagsState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i6.FeatureFlagsState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i6.FeatureFlagsState>.empty(),
-      ) as _i30.Stream<_i6.FeatureFlagsState>);
+        returnValue: _i28.Stream<_i6.FeatureFlagsState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i6.FeatureFlagsState>.empty(),
+      ) as _i28.Stream<_i6.FeatureFlagsState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -711,24 +741,24 @@ class MockFeatureFlagsCubit extends _i1.Mock implements _i33.FeatureFlagsCubit {
       ) as bool);
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> initialize() => (super.noSuchMethod(
+  _i28.Future<void> initialize() => (super.noSuchMethod(
         Invocation.method(
           #initialize,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
   void emit(_i6.FeatureFlagsState? state) => super.noSuchMethod(
@@ -740,7 +770,7 @@ class MockFeatureFlagsCubit extends _i1.Mock implements _i33.FeatureFlagsCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i6.FeatureFlagsState>? change) =>
+  void onChange(_i33.Change<_i6.FeatureFlagsState>? change) =>
       super.noSuchMethod(
         Invocation.method(
           #onChange,
@@ -826,11 +856,11 @@ class MockPacingsCubit extends _i1.Mock implements _i21.PacingsCubit {
       ) as _i9.PacingsState);
 
   @override
-  _i30.Stream<_i9.PacingsState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i9.PacingsState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i9.PacingsState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i9.PacingsState>.empty(),
-      ) as _i30.Stream<_i9.PacingsState>);
+        returnValue: _i28.Stream<_i9.PacingsState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i9.PacingsState>.empty(),
+      ) as _i28.Stream<_i9.PacingsState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -840,24 +870,24 @@ class MockPacingsCubit extends _i1.Mock implements _i21.PacingsCubit {
       ) as bool);
 
   @override
-  _i30.Future<_i10.PacingModel?> add(_i10.PacingModel? model) =>
+  _i28.Future<_i10.PacingModel?> add(_i10.PacingModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #add,
           [model],
         ),
-        returnValue: _i30.Future<_i10.PacingModel?>.value(),
-        returnValueForMissingStub: _i30.Future<_i10.PacingModel?>.value(),
-      ) as _i30.Future<_i10.PacingModel?>);
+        returnValue: _i28.Future<_i10.PacingModel?>.value(),
+        returnValueForMissingStub: _i28.Future<_i10.PacingModel?>.value(),
+      ) as _i28.Future<_i10.PacingModel?>);
 
   @override
-  _i30.Future<_i10.PacingModel> edit(_i10.PacingModel? model) =>
+  _i28.Future<_i10.PacingModel> edit(_i10.PacingModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #edit,
           [model],
         ),
-        returnValue: _i30.Future<_i10.PacingModel>.value(_FakePacingModel_8(
+        returnValue: _i28.Future<_i10.PacingModel>.value(_FakePacingModel_8(
           this,
           Invocation.method(
             #edit,
@@ -865,64 +895,64 @@ class MockPacingsCubit extends _i1.Mock implements _i21.PacingsCubit {
           ),
         )),
         returnValueForMissingStub:
-            _i30.Future<_i10.PacingModel>.value(_FakePacingModel_8(
+            _i28.Future<_i10.PacingModel>.value(_FakePacingModel_8(
           this,
           Invocation.method(
             #edit,
             [model],
           ),
         )),
-      ) as _i30.Future<_i10.PacingModel>);
+      ) as _i28.Future<_i10.PacingModel>);
 
   @override
-  _i30.Future<void> delete(_i10.PacingModel? model) => (super.noSuchMethod(
+  _i28.Future<void> delete(_i10.PacingModel? model) => (super.noSuchMethod(
         Invocation.method(
           #delete,
           [model],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> fetch() => (super.noSuchMethod(
+  _i28.Future<void> fetch() => (super.noSuchMethod(
         Invocation.method(
           #fetch,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> refresh() => (super.noSuchMethod(
+  _i28.Future<void> refresh() => (super.noSuchMethod(
         Invocation.method(
           #refresh,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<_i10.PacingModel?> import() => (super.noSuchMethod(
+  _i28.Future<_i10.PacingModel?> import() => (super.noSuchMethod(
         Invocation.method(
           #import,
           [],
         ),
-        returnValue: _i30.Future<_i10.PacingModel?>.value(),
-        returnValueForMissingStub: _i30.Future<_i10.PacingModel?>.value(),
-      ) as _i30.Future<_i10.PacingModel?>);
+        returnValue: _i28.Future<_i10.PacingModel?>.value(),
+        returnValueForMissingStub: _i28.Future<_i10.PacingModel?>.value(),
+      ) as _i28.Future<_i10.PacingModel?>);
 
   @override
-  _i30.Future<bool> export(_i10.PacingModel? model) => (super.noSuchMethod(
+  _i28.Future<bool> export(_i10.PacingModel? model) => (super.noSuchMethod(
         Invocation.method(
           #export,
           [model],
         ),
-        returnValue: _i30.Future<bool>.value(false),
-        returnValueForMissingStub: _i30.Future<bool>.value(false),
-      ) as _i30.Future<bool>);
+        returnValue: _i28.Future<bool>.value(false),
+        returnValueForMissingStub: _i28.Future<bool>.value(false),
+      ) as _i28.Future<bool>);
 
   @override
   void emit(_i9.PacingsState? state) => super.noSuchMethod(
@@ -934,7 +964,7 @@ class MockPacingsCubit extends _i1.Mock implements _i21.PacingsCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i9.PacingsState>? change) => super.noSuchMethod(
+  void onChange(_i33.Change<_i9.PacingsState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -975,14 +1005,14 @@ class MockPacingsCubit extends _i1.Mock implements _i21.PacingsCubit {
       );
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }
 
 /// A class which mocks [MatchesCubit].
@@ -1042,11 +1072,11 @@ class MockMatchesCubit extends _i1.Mock implements _i23.MatchesCubit {
       ) as _i13.MatchesState);
 
   @override
-  _i30.Stream<_i13.MatchesState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i13.MatchesState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i13.MatchesState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i13.MatchesState>.empty(),
-      ) as _i30.Stream<_i13.MatchesState>);
+        returnValue: _i28.Stream<_i13.MatchesState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i13.MatchesState>.empty(),
+      ) as _i28.Stream<_i13.MatchesState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -1056,24 +1086,24 @@ class MockMatchesCubit extends _i1.Mock implements _i23.MatchesCubit {
       ) as bool);
 
   @override
-  _i30.Future<_i14.MatchModel?> add(_i14.MatchModel? model) =>
+  _i28.Future<_i14.MatchModel?> add(_i14.MatchModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #add,
           [model],
         ),
-        returnValue: _i30.Future<_i14.MatchModel?>.value(),
-        returnValueForMissingStub: _i30.Future<_i14.MatchModel?>.value(),
-      ) as _i30.Future<_i14.MatchModel?>);
+        returnValue: _i28.Future<_i14.MatchModel?>.value(),
+        returnValueForMissingStub: _i28.Future<_i14.MatchModel?>.value(),
+      ) as _i28.Future<_i14.MatchModel?>);
 
   @override
-  _i30.Future<_i14.MatchModel> edit(_i14.MatchModel? model) =>
+  _i28.Future<_i14.MatchModel> edit(_i14.MatchModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #edit,
           [model],
         ),
-        returnValue: _i30.Future<_i14.MatchModel>.value(_FakeMatchModel_12(
+        returnValue: _i28.Future<_i14.MatchModel>.value(_FakeMatchModel_12(
           this,
           Invocation.method(
             #edit,
@@ -1081,44 +1111,44 @@ class MockMatchesCubit extends _i1.Mock implements _i23.MatchesCubit {
           ),
         )),
         returnValueForMissingStub:
-            _i30.Future<_i14.MatchModel>.value(_FakeMatchModel_12(
+            _i28.Future<_i14.MatchModel>.value(_FakeMatchModel_12(
           this,
           Invocation.method(
             #edit,
             [model],
           ),
         )),
-      ) as _i30.Future<_i14.MatchModel>);
+      ) as _i28.Future<_i14.MatchModel>);
 
   @override
-  _i30.Future<void> delete(_i14.MatchModel? model) => (super.noSuchMethod(
+  _i28.Future<void> delete(_i14.MatchModel? model) => (super.noSuchMethod(
         Invocation.method(
           #delete,
           [model],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> fetch() => (super.noSuchMethod(
+  _i28.Future<void> fetch() => (super.noSuchMethod(
         Invocation.method(
           #fetch,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> refresh() => (super.noSuchMethod(
+  _i28.Future<void> refresh() => (super.noSuchMethod(
         Invocation.method(
           #refresh,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
   void emit(_i13.MatchesState? state) => super.noSuchMethod(
@@ -1130,7 +1160,7 @@ class MockMatchesCubit extends _i1.Mock implements _i23.MatchesCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i13.MatchesState>? change) => super.noSuchMethod(
+  void onChange(_i33.Change<_i13.MatchesState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -1171,20 +1201,20 @@ class MockMatchesCubit extends _i1.Mock implements _i23.MatchesCubit {
       );
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }
 
 /// A class which mocks [TeamsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
+class MockTeamsCubit extends _i1.Mock implements _i35.TeamsCubit {
   @override
   _i15.TeamsRepository get teamsRepository => (super.noSuchMethod(
         Invocation.getter(#teamsRepository),
@@ -1225,11 +1255,11 @@ class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
       ) as _i16.TeamsState);
 
   @override
-  _i30.Stream<_i16.TeamsState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i16.TeamsState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i16.TeamsState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i16.TeamsState>.empty(),
-      ) as _i30.Stream<_i16.TeamsState>);
+        returnValue: _i28.Stream<_i16.TeamsState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i16.TeamsState>.empty(),
+      ) as _i28.Stream<_i16.TeamsState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -1239,24 +1269,24 @@ class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
       ) as bool);
 
   @override
-  _i30.Future<_i17.TeamModel?> add(_i17.TeamModel? model) =>
+  _i28.Future<_i17.TeamModel?> add(_i17.TeamModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #add,
           [model],
         ),
-        returnValue: _i30.Future<_i17.TeamModel?>.value(),
-        returnValueForMissingStub: _i30.Future<_i17.TeamModel?>.value(),
-      ) as _i30.Future<_i17.TeamModel?>);
+        returnValue: _i28.Future<_i17.TeamModel?>.value(),
+        returnValueForMissingStub: _i28.Future<_i17.TeamModel?>.value(),
+      ) as _i28.Future<_i17.TeamModel?>);
 
   @override
-  _i30.Future<_i17.TeamModel> edit(_i17.TeamModel? model) =>
+  _i28.Future<_i17.TeamModel> edit(_i17.TeamModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #edit,
           [model],
         ),
-        returnValue: _i30.Future<_i17.TeamModel>.value(_FakeTeamModel_15(
+        returnValue: _i28.Future<_i17.TeamModel>.value(_FakeTeamModel_15(
           this,
           Invocation.method(
             #edit,
@@ -1264,64 +1294,64 @@ class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
           ),
         )),
         returnValueForMissingStub:
-            _i30.Future<_i17.TeamModel>.value(_FakeTeamModel_15(
+            _i28.Future<_i17.TeamModel>.value(_FakeTeamModel_15(
           this,
           Invocation.method(
             #edit,
             [model],
           ),
         )),
-      ) as _i30.Future<_i17.TeamModel>);
+      ) as _i28.Future<_i17.TeamModel>);
 
   @override
-  _i30.Future<void> delete(_i17.TeamModel? model) => (super.noSuchMethod(
+  _i28.Future<void> delete(_i17.TeamModel? model) => (super.noSuchMethod(
         Invocation.method(
           #delete,
           [model],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> fetch() => (super.noSuchMethod(
+  _i28.Future<void> fetch() => (super.noSuchMethod(
         Invocation.method(
           #fetch,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> refresh() => (super.noSuchMethod(
+  _i28.Future<void> refresh() => (super.noSuchMethod(
         Invocation.method(
           #refresh,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<_i17.TeamModel?> import() => (super.noSuchMethod(
+  _i28.Future<_i17.TeamModel?> import() => (super.noSuchMethod(
         Invocation.method(
           #import,
           [],
         ),
-        returnValue: _i30.Future<_i17.TeamModel?>.value(),
-        returnValueForMissingStub: _i30.Future<_i17.TeamModel?>.value(),
-      ) as _i30.Future<_i17.TeamModel?>);
+        returnValue: _i28.Future<_i17.TeamModel?>.value(),
+        returnValueForMissingStub: _i28.Future<_i17.TeamModel?>.value(),
+      ) as _i28.Future<_i17.TeamModel?>);
 
   @override
-  _i30.Future<bool> export(_i17.TeamModel? model) => (super.noSuchMethod(
+  _i28.Future<bool> export(_i17.TeamModel? model) => (super.noSuchMethod(
         Invocation.method(
           #export,
           [model],
         ),
-        returnValue: _i30.Future<bool>.value(false),
-        returnValueForMissingStub: _i30.Future<bool>.value(false),
-      ) as _i30.Future<bool>);
+        returnValue: _i28.Future<bool>.value(false),
+        returnValueForMissingStub: _i28.Future<bool>.value(false),
+      ) as _i28.Future<bool>);
 
   @override
   void emit(_i16.TeamsState? state) => super.noSuchMethod(
@@ -1333,7 +1363,7 @@ class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i16.TeamsState>? change) => super.noSuchMethod(
+  void onChange(_i33.Change<_i16.TeamsState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -1374,20 +1404,20 @@ class MockTeamsCubit extends _i1.Mock implements _i34.TeamsCubit {
       );
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }
 
 /// A class which mocks [TimerCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
+class MockTimerCubit extends _i1.Mock implements _i36.TimerCubit {
   @override
   _i18.SettingsCubit get settingsCubit => (super.noSuchMethod(
         Invocation.getter(#settingsCubit),
@@ -1441,11 +1471,11 @@ class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
       ) as _i20.TimerState);
 
   @override
-  _i30.Stream<_i20.TimerState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i20.TimerState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i20.TimerState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i20.TimerState>.empty(),
-      ) as _i30.Stream<_i20.TimerState>);
+        returnValue: _i28.Stream<_i20.TimerState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i20.TimerState>.empty(),
+      ) as _i28.Stream<_i20.TimerState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -1455,17 +1485,17 @@ class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
       ) as bool);
 
   @override
-  _i30.Future<void> initialize() => (super.noSuchMethod(
+  _i28.Future<void> initialize() => (super.noSuchMethod(
         Invocation.method(
           #initialize,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> start(
+  _i28.Future<void> start(
     int? matchId,
     String? matchName,
     int? improvisationId,
@@ -1483,9 +1513,9 @@ class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
             duration,
           ],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
   void resume() => super.noSuchMethod(
@@ -1506,24 +1536,24 @@ class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
       );
 
   @override
-  _i30.Future<void> stop() => (super.noSuchMethod(
+  _i28.Future<void> stop() => (super.noSuchMethod(
         Invocation.method(
           #stop,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
   void emit(_i20.TimerState? state) => super.noSuchMethod(
@@ -1535,7 +1565,7 @@ class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i20.TimerState>? change) => super.noSuchMethod(
+  void onChange(_i33.Change<_i20.TimerState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -1579,7 +1609,7 @@ class MockTimerCubit extends _i1.Mock implements _i35.TimerCubit {
 /// A class which mocks [PacingCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
+class MockPacingCubit extends _i1.Mock implements _i37.PacingCubit {
   @override
   _i7.PacingsRepository get pacingsRepository => (super.noSuchMethod(
         Invocation.getter(#pacingsRepository),
@@ -1633,11 +1663,11 @@ class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
       ) as _i22.PacingState);
 
   @override
-  _i30.Stream<_i22.PacingState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i22.PacingState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i22.PacingState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i22.PacingState>.empty(),
-      ) as _i30.Stream<_i22.PacingState>);
+        returnValue: _i28.Stream<_i22.PacingState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i22.PacingState>.empty(),
+      ) as _i28.Stream<_i22.PacingState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -1647,37 +1677,37 @@ class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
       ) as bool);
 
   @override
-  _i30.Future<void> initialize(int? id) => (super.noSuchMethod(
+  _i28.Future<void> initialize(int? id) => (super.noSuchMethod(
         Invocation.method(
           #initialize,
           [id],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> edit(_i10.PacingModel? model) => (super.noSuchMethod(
+  _i28.Future<void> edit(_i10.PacingModel? model) => (super.noSuchMethod(
         Invocation.method(
           #edit,
           [model],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> addImprovisation() => (super.noSuchMethod(
+  _i28.Future<void> addImprovisation() => (super.noSuchMethod(
         Invocation.method(
           #addImprovisation,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> moveImprovisation(
+  _i28.Future<void> moveImprovisation(
     int? oldIndex,
     int? newIndex,
   ) =>
@@ -1689,32 +1719,32 @@ class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
             newIndex,
           ],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> removeImprovisation(
-          _i37.ImprovisationModel? improvisation) =>
+  _i28.Future<void> removeImprovisation(
+          _i38.ImprovisationModel? improvisation) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeImprovisation,
           [improvisation],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> editImprovisation(_i37.ImprovisationModel? model) =>
+  _i28.Future<void> editImprovisation(_i38.ImprovisationModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #editImprovisation,
           [model],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
   void emit(_i22.PacingState? state) => super.noSuchMethod(
@@ -1726,7 +1756,7 @@ class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i22.PacingState>? change) => super.noSuchMethod(
+  void onChange(_i33.Change<_i22.PacingState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -1767,20 +1797,20 @@ class MockPacingCubit extends _i1.Mock implements _i36.PacingCubit {
       );
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }
 
 /// A class which mocks [MatchCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
+class MockMatchCubit extends _i1.Mock implements _i39.MatchCubit {
   @override
   _i11.MatchesRepository get matchesRepository => (super.noSuchMethod(
         Invocation.getter(#matchesRepository),
@@ -1860,11 +1890,11 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
       ) as _i25.MatchState);
 
   @override
-  _i30.Stream<_i25.MatchState> get stream => (super.noSuchMethod(
+  _i28.Stream<_i25.MatchState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i30.Stream<_i25.MatchState>.empty(),
-        returnValueForMissingStub: _i30.Stream<_i25.MatchState>.empty(),
-      ) as _i30.Stream<_i25.MatchState>);
+        returnValue: _i28.Stream<_i25.MatchState>.empty(),
+        returnValueForMissingStub: _i28.Stream<_i25.MatchState>.empty(),
+      ) as _i28.Stream<_i25.MatchState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
@@ -1874,7 +1904,7 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
       ) as bool);
 
   @override
-  _i30.Future<void> initialize(
+  _i28.Future<void> initialize(
     int? id, {
     int? improvisationId,
     int? durationIndex,
@@ -1888,23 +1918,23 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
             #durationIndex: durationIndex,
           },
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> edit(_i14.MatchModel? match) => (super.noSuchMethod(
+  _i28.Future<void> edit(_i14.MatchModel? match) => (super.noSuchMethod(
         Invocation.method(
           #edit,
           [match],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> addImprovisation(
-    _i37.ImprovisationModel? improvisation,
+  _i28.Future<void> addImprovisation(
+    _i38.ImprovisationModel? improvisation,
     int? index,
   ) =>
       (super.noSuchMethod(
@@ -1915,13 +1945,13 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
             index,
           ],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> editImprovisation(
-    _i37.ImprovisationModel? improvisation,
+  _i28.Future<void> editImprovisation(
+    _i38.ImprovisationModel? improvisation,
     int? index,
   ) =>
       (super.noSuchMethod(
@@ -1932,21 +1962,21 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
             index,
           ],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> removeImprovisation(
-          _i37.ImprovisationModel? improvisation) =>
+  _i28.Future<void> removeImprovisation(
+          _i38.ImprovisationModel? improvisation) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeImprovisation,
           [improvisation],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
   void changePage(int? page) => super.noSuchMethod(
@@ -1967,7 +1997,7 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
       );
 
   @override
-  _i30.Future<void> setPoint(
+  _i28.Future<void> setPoint(
     int? improvisationId,
     int? teamId,
     int? value,
@@ -1981,74 +2011,74 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
             value,
           ],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> addPenalty(_i39.PenaltyModel? penalty) =>
+  _i28.Future<void> addPenalty(_i40.PenaltyModel? penalty) =>
       (super.noSuchMethod(
         Invocation.method(
           #addPenalty,
           [penalty],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> editPenalty(_i39.PenaltyModel? penalty) =>
+  _i28.Future<void> editPenalty(_i40.PenaltyModel? penalty) =>
       (super.noSuchMethod(
         Invocation.method(
           #editPenalty,
           [penalty],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> removePenalty(int? penaltyId) => (super.noSuchMethod(
+  _i28.Future<void> removePenalty(int? penaltyId) => (super.noSuchMethod(
         Invocation.method(
           #removePenalty,
           [penaltyId],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> addStar() => (super.noSuchMethod(
+  _i28.Future<void> addStar() => (super.noSuchMethod(
         Invocation.method(
           #addStar,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> editStar(_i40.StarModel? star) => (super.noSuchMethod(
+  _i28.Future<void> editStar(_i41.StarModel? star) => (super.noSuchMethod(
         Invocation.method(
           #editStar,
           [star],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> removeStar(_i40.StarModel? star) => (super.noSuchMethod(
+  _i28.Future<void> removeStar(_i41.StarModel? star) => (super.noSuchMethod(
         Invocation.method(
           #removeStar,
           [star],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<void> moveStar(
+  _i28.Future<void> moveStar(
     int? oldIndex,
     int? newIndex,
   ) =>
@@ -2060,19 +2090,19 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
             newIndex,
           ],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 
   @override
-  _i30.Future<bool> exportExcel() => (super.noSuchMethod(
+  _i28.Future<bool> exportExcel() => (super.noSuchMethod(
         Invocation.method(
           #exportExcel,
           [],
         ),
-        returnValue: _i30.Future<bool>.value(false),
-        returnValueForMissingStub: _i30.Future<bool>.value(false),
-      ) as _i30.Future<bool>);
+        returnValue: _i28.Future<bool>.value(false),
+        returnValueForMissingStub: _i28.Future<bool>.value(false),
+      ) as _i28.Future<bool>);
 
   @override
   void emit(_i25.MatchState? state) => super.noSuchMethod(
@@ -2084,7 +2114,7 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
       );
 
   @override
-  void onChange(_i32.Change<_i25.MatchState>? change) => super.noSuchMethod(
+  void onChange(_i33.Change<_i25.MatchState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -2125,12 +2155,12 @@ class MockMatchCubit extends _i1.Mock implements _i38.MatchCubit {
       );
 
   @override
-  _i30.Future<void> close() => (super.noSuchMethod(
+  _i28.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i30.Future<void>.value(),
-        returnValueForMissingStub: _i30.Future<void>.value(),
-      ) as _i30.Future<void>);
+        returnValue: _i28.Future<void>.value(),
+        returnValueForMissingStub: _i28.Future<void>.value(),
+      ) as _i28.Future<void>);
 }

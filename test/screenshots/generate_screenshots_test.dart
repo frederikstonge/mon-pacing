@@ -47,6 +47,7 @@ import 'package:mon_pacing/pages/teams/teams_page_view.dart';
 import 'package:mon_pacing/services/analytics_service.dart';
 import 'package:mon_pacing/services/excel_service.dart';
 import 'package:mon_pacing/services/integration_service.dart';
+import 'package:mon_pacing/services/package_info_service.dart';
 import 'package:mon_pacing/services/toaster_service.dart';
 import 'package:mon_pacing/themes/themes.dart';
 import 'package:path/path.dart' as p;
@@ -58,6 +59,7 @@ import 'shell_wrapper.dart';
 @GenerateNiceMocks([
   MockSpec<ToasterService>(),
   MockSpec<ExcelService>(),
+  MockSpec<PackageInfoService>(),
   MockSpec<IntegrationService>(),
   MockSpec<AnalyticsService>(),
   MockSpec<SettingsCubit>(),
@@ -71,6 +73,7 @@ import 'shell_wrapper.dart';
 ])
 late final MockToasterService toasterService;
 late final MockExcelService excelService;
+late final MockPackageInfoService packageInfoService;
 late final MockIntegrationService integrationService;
 late final MockAnalyticsService analyticsService;
 
@@ -89,6 +92,7 @@ void main() {
   setUpAll(() {
     toasterService = MockToasterService();
     excelService = MockExcelService();
+    packageInfoService = MockPackageInfoService();
     integrationService = MockIntegrationService();
     analyticsService = MockAnalyticsService();
 
@@ -164,12 +168,13 @@ void main() {
       points: [],
     );
 
+    when(packageInfoService.getAppVersion()).thenAnswer((_) async => '1.0.0');
     when(
       featureFlagsCubit.state,
     ).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success, enableIntegrations: true));
-    when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing]));
-    when(matchesCubit.state).thenReturn(MatchesState(status: MatchesStatus.success, matches: [match]));
-    when(teamsCubit.state).thenReturn(TeamsState(status: TeamsStatus.success, teams: teams));
+    when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing], hasMore: false));
+    when(matchesCubit.state).thenReturn(MatchesState(status: MatchesStatus.success, matches: [match], hasMore: false));
+    when(teamsCubit.state).thenReturn(TeamsState(status: TeamsStatus.success, teams: teams, hasMore: false));
     when(timerCubit.state).thenReturn(const TimerState(timer: null));
     when(pacingCubit.state).thenReturn(PacingState(status: PacingStatus.success, pacing: pacing));
     when(matchCubit.state).thenReturn(MatchState(status: MatchStatus.success, match: match));
@@ -265,6 +270,7 @@ void _screenshotWidget({
           final widget = MultiRepositoryProvider(
             providers: [
               RepositoryProvider<ToasterService>(create: (context) => toasterService),
+              RepositoryProvider<PackageInfoService>(create: (context) => packageInfoService),
               RepositoryProvider<ExcelService>(create: (context) => excelService),
               RepositoryProvider<IntegrationService>(create: (context) => integrationService),
               RepositoryProvider<AnalyticsService>(create: (context) => analyticsService),
@@ -319,7 +325,7 @@ void _screenshotWidget({
             CustomGoldenScreenshotDevices.olderIPad => 'IPAD_PRO_3GEN_129',
           };
 
-          final fileName = '${goldenFileName}_${screenshotName}_${theme.name}_${storeLocale.toLanguageTag()}';
+          final fileName = '${goldenFileName}_${screenshotName}_${theme.name}_${storeLocale.toLanguageTag()}.png';
 
           // Set the file path for the golden file.
           String filePath;

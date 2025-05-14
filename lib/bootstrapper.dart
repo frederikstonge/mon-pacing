@@ -21,6 +21,7 @@ import 'repositories/teams_repository.dart';
 import 'services/analytics_service.dart';
 import 'services/excel_service.dart';
 import 'services/integration_service.dart';
+import 'services/package_info_service.dart';
 import 'services/timer_service.dart';
 import 'services/toaster_service.dart';
 
@@ -36,6 +37,7 @@ class Bootstrapper extends StatelessWidget {
           RepositoryProvider(create: (repositoryContext) => ExcelService()),
           RepositoryProvider(create: (repositoryContext) => IntegrationService()),
           RepositoryProvider(create: (repositoryContext) => TimerService()),
+          RepositoryProvider(create: (repositoryContext) => PackageInfoService()),
           RepositoryProvider(create: (repositoryContext) => ToasterService(toastification: Toastification())),
           RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
           RepositoryProvider(create: (repositoryContext) => LegacyDatabaseRepository()),

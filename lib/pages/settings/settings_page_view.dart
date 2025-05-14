@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_button.dart';
@@ -25,6 +24,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';
+import '../../services/package_info_service.dart';
 import 'widgets/language_view.dart';
 import 'widgets/theme_view.dart';
 
@@ -492,15 +492,16 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           },
                         ),
                       ),
+
                       FutureBuilder(
-                        future: PackageInfo.fromPlatform(),
+                        future: context.read<PackageInfoService>().getAppVersion(),
                         builder:
                             (context, snapshot) =>
                                 snapshot.hasData
                                     ? Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        S.of(context).version(version: snapshot.data!.version),
+                                        S.of(context).version(version: snapshot.data!),
                                         textAlign: TextAlign.center,
                                       ),
                                     )

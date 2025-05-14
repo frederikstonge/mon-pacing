@@ -5,27 +5,27 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000181">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000204">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: rm -f ./*/images/*/*.png" time="0.01012">
+      <testcase classname="fastlane.lanes" name="1: rm -f ./*/images/*/*.png" time="0.018918">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: flutter test test/screenshots/generate_screenshots_test.dart --name=Android --update-goldens" time="11.61193">
+      <testcase classname="fastlane.lanes" name="2: flutter test test/screenshots/generate_screenshots_test.dart --name=Android --update-goldens" time="18.490526">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: frameit" time="277.972335">
+      <testcase classname="fastlane.lanes" name="3: frameit" time="274.152795">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: find . -type f \( -path &apos;*/images/*/*.png&apos; -a ! \( -path &apos;*/images/*/*_framed.png&apos; \) \) -delete" time="0.013567">
+      <testcase classname="fastlane.lanes" name="4: find . -type f \( -path &apos;*/images/*/*.png&apos; -a ! \( -path &apos;*/images/*/*_framed.png&apos; \) \) -delete" time="0.021066">
         
       </testcase>
     
