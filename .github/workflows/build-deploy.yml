@@ -3,6 +3,21 @@ name: "Build & Deploy"
 on:
   workflow_dispatch:
     inputs:
+      skip-test:
+        type: boolean
+        description: 'Skip Tests'
+        required: false
+        default: false
+      deploy-ios:
+        type: boolean
+        description: 'Deploy iOS'
+        required: false
+        default: true
+      deploy-android:
+        type: boolean
+        description: 'Deploy Android'
+        required: false
+        default: true
       release_notes_fr_CA:
         type: string
         description: 'Release Notes (fr-CA):'
@@ -31,13 +46,16 @@ jobs:
     name: "Run Tests"
     needs: set_build_number
     permissions: write-all
+    if: ${{ !cancelled() && !inputs.skip-test }}
     uses: ./.github/workflows/tests.yml
     secrets: inherit
 
   build_deploy_ios:
     name: "Build & Deploy iOS"
-    runs-on: macos-latest
+    # Use macos-15 until macos-latest is updated to 15 - https://github.com/actions/runner-images/blob/main/README.md
+    runs-on: macos-15 #macos-latest
     needs: [set_build_number, tests]
+    if: ${{ !cancelled() && inputs.deploy-ios && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
     environment: deploy-ios
 
     env:
@@ -103,6 +121,7 @@ jobs:
     name: "Build & Deploy Android"
     runs-on: ubuntu-latest
     needs: [set_build_number, tests]
+    if: ${{ !cancelled() && inputs.deploy-android && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
     environment: deploy-android
 
     env:
