@@ -3,19 +3,19 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/team_entity.dart';
 import 'performer_model.dart';
+import 'tag_base_model.dart';
 import 'tag_model.dart';
 
 part 'team_model.mapper.dart';
 
 @MappableClass()
-class TeamModel with TeamModelMappable {
+class TeamModel extends TagBaseModel with TeamModelMappable {
   final int id;
   final DateTime? createdDate;
   final DateTime? modifiedDate;
   final String name;
   final int color;
   final List<PerformerModel> performers;
-  final List<TagModel> tags;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
 
@@ -26,9 +26,9 @@ class TeamModel with TeamModelMappable {
     required this.name,
     required this.color,
     this.performers = const [],
-    this.tags = const [],
     this.integrationEntityId,
     this.integrationAdditionalData,
+    super.tags = const [],
   });
 
   factory TeamModel.fromEntity({required TeamEntity entity}) => TeamModel(

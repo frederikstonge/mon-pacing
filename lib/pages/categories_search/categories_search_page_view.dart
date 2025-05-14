@@ -2,21 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../components/search/search_dialog.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../repositories/pacings_repository.dart';
+import '../../router/routes.dart';
 
 class CategoriesSearchPageView extends StatelessWidget {
   const CategoriesSearchPageView({super.key});
 
-  static Future<String?> showDialog(
-    BuildContext context,
-    FutureOr<List<String>> Function({String search}) search,
-  ) async {
-    return await Navigator.of(
-      context,
-    ).push<String>(MaterialPageRoute(builder: (context) => CategoriesSearchPageView(search: search)));
+  static Future<String?> showDialog(BuildContext context) async {
+    return await GoRouter.of(context).pushNamed<String>(Routes.categoriesSearch);
   }
 
   @override

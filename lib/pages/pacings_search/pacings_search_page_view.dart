@@ -20,7 +20,10 @@ class PacingsSearchPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SearchDialog(
-      onChanged: (query, selectedTags) => context.read<PacingsRepository>().search(query, selectedTags),
+      onChanged: (query, selectedTags) async {
+        final pacings = await context.read<PacingsRepository>().search(query, selectedTags);
+        return pacings.map((e) => PacingModel.fromEntity(entity: e)).toList();
+      },
       hintText: S.of(context).search(category: S.of(context).pacings),
       itemBuilder:
           (context, item) => InkWell(

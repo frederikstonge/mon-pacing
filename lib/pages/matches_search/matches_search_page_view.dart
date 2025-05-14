@@ -20,7 +20,10 @@ class MatchesSearchPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SearchDialog(
-      onChanged: (query, selectedTags) => context.read<MatchesRepository>().search(query, selectedTags),
+      onChanged: (query, selectedTags) async {
+        final matches = await context.read<MatchesRepository>().search(query, selectedTags);
+        return matches.map((e) => MatchModel.fromEntity(entity: e)).toList();
+      },
       hintText: S.of(context).search(category: S.of(context).matches),
       itemBuilder:
           (context, item) => InkWell(

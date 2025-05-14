@@ -21,7 +21,10 @@ class TeamsSearchPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SearchDialog(
-      onChanged: (query, selectedTags) => context.read<TeamsRepository>().search(query, selectedTags),
+      onChanged: (query, selectedTags) async {
+        final teams = await context.read<TeamsRepository>().search(query, selectedTags);
+        return teams.map((e) => TeamModel.fromEntity(entity: e)).toList();
+      },
       hintText: S.of(context).search(category: S.of(context).teams),
       itemBuilder:
           (context, item) => InkWell(

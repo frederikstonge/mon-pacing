@@ -3,19 +3,19 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/pacing_entity.dart';
 import 'improvisation_model.dart';
+import 'tag_base_model.dart';
 import 'tag_model.dart';
 
 part 'pacing_model.mapper.dart';
 
 @MappableClass()
-class PacingModel with PacingModelMappable {
+class PacingModel extends TagBaseModel with PacingModelMappable {
   final int id;
   final String name;
   final DateTime? createdDate;
   final DateTime? modifiedDate;
   final List<ImprovisationModel> improvisations;
   final int defaultNumberOfTeams;
-  final List<TagModel> tags;
   final String? integrationId;
   final String? integrationEntityId;
   final String? integrationAdditionalData;
@@ -27,10 +27,10 @@ class PacingModel with PacingModelMappable {
     required this.modifiedDate,
     required this.improvisations,
     this.defaultNumberOfTeams = 2,
-    this.tags = const [],
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
+    super.tags = const [],
   });
 
   factory PacingModel.fromEntity({required PacingEntity entity}) => PacingModel(
