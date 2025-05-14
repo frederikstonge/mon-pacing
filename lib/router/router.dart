@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/categories_search/categories_search_page_view.dart';
+import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
-import '../pages/matches_search/matches_search_page_view.dart';
+import '../pages/matches_search/matches_search_page_shell.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
-import '../pages/pacings_search/pacings_search_page_view.dart';
+import '../pages/pacings_search/pacings_search_page_shell.dart';
 import '../pages/scanner/scanner_page_shell.dart';
 import '../pages/settings/settings_page_shell.dart';
 import '../pages/shell/shell_page_shell.dart';
-import '../pages/tags_search/tags_search_page_view.dart';
+import '../pages/tags_search/tags_search_page_shell.dart';
 import '../pages/teams/teams_page_shell.dart';
-import '../pages/teams_search/teams_search_page_view.dart';
+import '../pages/teams_search/teams_search_page_shell.dart';
 import 'routes.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -48,7 +48,7 @@ final router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.pacingsSearch,
                   path: 'search',
-                  builder: (context, state) => PacingsSearchPageView(key: state.pageKey),
+                  builder: (context, state) => PacingsSearchPageShell(key: state.pageKey),
                 ),
               ],
             ),
@@ -85,7 +85,7 @@ final router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.matchesSearch,
                   path: 'search',
-                  builder: (context, state) => MatchesSearchPageView(key: state.pageKey),
+                  builder: (context, state) => MatchesSearchPageShell(key: state.pageKey),
                 ),
               ],
             ),
@@ -105,7 +105,7 @@ final router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.teamsSearch,
                   path: 'search',
-                  builder: (context, state) => TeamsSearchPageView(key: state.pageKey),
+                  builder: (context, state) => TeamsSearchPageShell(key: state.pageKey),
                 ),
               ],
             ),
@@ -129,12 +129,12 @@ final router = GoRouter(
     GoRoute(
       name: Routes.categoriesSearch,
       path: '/categories/search',
-      builder: (context, state) => CategoriesSearchPageView(key: state.pageKey),
+      builder: (context, state) => CategoriesSearchPageShell(key: state.pageKey),
     ),
     GoRoute(
       name: Routes.tagsSearch,
       path: '/tags/search',
-      builder: (context, state) => TagsSearchPageView(key: state.pageKey),
+      builder: (context, state) => TagsSearchPageShell(key: state.pageKey),
     ),
   ],
 );

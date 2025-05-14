@@ -33,10 +33,10 @@ class Bootstrapper extends StatelessWidget {
       create: (context) => MigrationCubit(),
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(create: (repositoryContext) => ToasterService(toastification: Toastification())),
           RepositoryProvider(create: (repositoryContext) => ExcelService()),
           RepositoryProvider(create: (repositoryContext) => IntegrationService()),
           RepositoryProvider(create: (repositoryContext) => TimerService()),
+          RepositoryProvider(create: (repositoryContext) => ToasterService(toastification: Toastification())),
           RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
           RepositoryProvider(create: (repositoryContext) => LegacyDatabaseRepository()),
           RepositoryProvider(
