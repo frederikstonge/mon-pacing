@@ -20,6 +20,7 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
+import '../../models/tag_model.dart';
 import '../../models/team_model.dart';
 import '../../repositories/teams_repository.dart';
 import '../../validators/validators.dart';
@@ -129,13 +130,12 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                   ),
                   Column(
                     children: [
-                      ...matchDetailState.match.teams.asMap().entries.map(
+                      ...matchDetailState.match.teams.map(
                         (e) => MatchTeamTile(
-                          key: ValueKey(e.value.id),
-                          team: e.value,
+                          team: e,
                           allowSearch: !matchDetailState.editMode,
                           onChanged: (value) {
-                            context.read<MatchDetailCubit>().editTeam(e.key, value);
+                            context.read<MatchDetailCubit>().editTeam(value);
                           },
                           onDelete:
                               !matchDetailState.editMode && matchDetailState.match.teams.length > Constants.minimumTeams
@@ -147,28 +147,31 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                                           .of(context)
                                           .areYouSureActionName(
                                             action: S.of(context).delete.toLowerCase(),
-                                            name: e.value.name,
+                                            name: e.name,
                                           ),
                                       S.of(context).delete,
                                       S.of(context).cancel,
                                     );
 
                                     if (result == true) {
-                                      cubit.removeTeam(e.key);
+                                      cubit.removeTeam(e);
                                     }
                                   }
                                   : null,
-                          getAllTeamTags: () => context.read<TeamsRepository>().getAllTags(),
+                          getAllTeamTags: () async {
+                            final tags = await context.read<TeamsRepository>().getAllTags();
+                            return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                          },
                           getAllTeams: (query, selectedTags) async {
                             final teamEntities = await context.read<TeamsRepository>().search(query, selectedTags);
                             return teamEntities.map((e) => TeamModel.fromEntity(entity: e)).toList();
                           },
-                          onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e.value.id, team),
+                          onTeamSelected: (team) => context.read<MatchDetailCubit>().onTeamSelected(e, team),
                           addPerformer:
                               !matchDetailState.editMode ? context.read<MatchDetailCubit>().addPerformer : null,
                           editPerformer: context.read<MatchDetailCubit>().editPerformer,
                           removePerformer:
-                              e.value.performers.length > 1 && !matchDetailState.editMode
+                              e.performers.length > 1 && !matchDetailState.editMode
                                   ? context.read<MatchDetailCubit>().removePerformer
                                   : null,
                           onDrag: context.read<MatchDetailCubit>().movePerformer,

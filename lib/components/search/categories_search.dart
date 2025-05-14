@@ -6,13 +6,13 @@ import '../../l10n/generated/app_localizations.dart';
 import 'search_dialog.dart';
 
 class CategoriesSearch extends StatelessWidget {
-  final FutureOr<List<String>> Function({String query}) search;
+  final FutureOr<List<String>> Function({String search}) search;
 
   const CategoriesSearch({super.key, required this.search});
 
   static Future<String?> showDialog(
     BuildContext context,
-    FutureOr<List<String>> Function({String query}) search,
+    FutureOr<List<String>> Function({String search}) search,
   ) async {
     return await Navigator.of(
       context,
@@ -22,7 +22,7 @@ class CategoriesSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SearchDialog(
-      onChanged: (query, _) => search(query: query),
+      onChanged: (query, _) => search(search: query),
       hintText: S.of(context).search(category: S.of(context).categories),
       itemBuilder:
           (context, item) => InkWell(

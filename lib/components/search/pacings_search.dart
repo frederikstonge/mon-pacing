@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/pacing_model.dart';
+import '../../models/tag_model.dart';
 import 'search_dialog.dart';
 
 class PacingsSearch extends StatelessWidget {
   final FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) search;
-  final Future<List<String>> Function() getAllTags;
+  final Future<List<TagModel>> Function() getAllTags;
 
   const PacingsSearch({super.key, required this.getAllTags, required this.search});
 
   static Future<PacingModel?> showDialog(
     BuildContext context,
     FutureOr<List<PacingModel>> Function(String query, List<String> selectedTags) search,
-    Future<List<String>> Function() getAllTags,
+    Future<List<TagModel>> Function() getAllTags,
   ) async {
     return await Navigator.of(
       context,

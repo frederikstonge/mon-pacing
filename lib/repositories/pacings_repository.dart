@@ -1,8 +1,8 @@
-import 'package:isar/isar.dart';
-
-import '../extensions/iterable_extensions.dart';
 import 'database_repository.dart';
+import 'entities/improvisation_entity.dart';
 import 'entities/pacing_entity.dart';
+import 'entities/tag_entity.dart';
+import 'objectbox.g.dart';
 
 class PacingsRepository {
   final DatabaseRepository databaseRepository;
@@ -11,75 +11,103 @@ class PacingsRepository {
 
   Future<PacingEntity> add(PacingEntity entity) async {
     final db = await databaseRepository.database;
-    final id = db.pacingModels.autoIncrement();
+    final box = db.box<PacingEntity>();
     final now = DateTime.now();
-    final model = entity.copyWith(id: id, createdDate: now, modifiedDate: now);
-    await db.writeAsync((isar) => isar.pacingModels.put(model));
-    return model;
+    entity.createdDate = now;
+    entity.modifiedDate = now;
+    return await box.putAndGetAsync(entity);
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(PacingEntity entity) async {
     final db = await databaseRepository.database;
-    await db.writeAsync((isar) => isar.pacingModels.delete(id));
+    final box = db.box<PacingEntity>();
+    final improvisationBox = db.box<ImprovisationEntity>();
+    final tagBox = db.box<TagEntity>();
+
+    db.runInTransaction(TxMode.write, () {
+      improvisationBox.removeMany(entity.improvisations.map((e) => e.id).toList());
+      tagBox.removeMany(entity.tags.map((e) => e.id).toList());
+
+      box.remove(entity.id);
+    });
   }
 
-  Future<void> edit(PacingEntity entity) async {
-    final model = entity.copyWith(modifiedDate: DateTime.now());
+  Future<PacingEntity> edit(PacingEntity entity) async {
     final db = await databaseRepository.database;
-    await db.writeAsync((isar) => isar.pacingModels.put(model));
+    final box = db.box<PacingEntity>();
+    final improvisationBox = db.box<ImprovisationEntity>();
+    final tagBox = db.box<TagEntity>();
+
+    final previousEntity = await box.getAsync(entity.id);
+
+    final removedImprovisations =
+        previousEntity!.improvisations.where((e) => !entity.improvisations.any((i) => i.id == e.id)).toList();
+    final editedImprovisations = entity.improvisations.where((e) => e.id != 0).toList();
+
+    final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
+    final editedTags = entity.tags.where((e) => e.id != 0).toList();
+
+    db.runInTransaction(TxMode.write, () {
+      improvisationBox.putMany(editedImprovisations);
+      improvisationBox.removeMany(removedImprovisations.map((e) => e.id).toList());
+
+      tagBox.putMany(editedTags);
+      tagBox.removeMany(removedTags.map((e) => e.id).toList());
+    });
+
+    entity.modifiedDate = DateTime.now();
+    return box.putAndGetAsync(entity);
   }
 
   Future<PacingEntity?> get(int id) async {
     final db = await databaseRepository.database;
-    return await db.pacingModels.getAsync(id);
+    final box = db.box<PacingEntity>();
+    return await box.getAsync(id);
   }
 
   Future<List<PacingEntity>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
-    return await db.pacingModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
+    final box = db.box<PacingEntity>();
+    final query = box.query().order(PacingEntity_.createdDate, flags: Order.descending).build();
+    query.limit = take;
+    query.offset = skip;
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue;
   }
 
   Future<List<PacingEntity>> search(String search, List<String> selectedTags) async {
     final db = await databaseRepository.database;
+    final box = db.box<PacingEntity>();
+    final builder = box.query(PacingEntity_.name.contains(search, caseSensitive: false));
 
-    return await db.pacingModels
-        .where()
-        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementEqualTo(t)))
-        .and()
-        .optional(
-          search.isNotEmpty,
-          (q) => q.group(
-            (g) => g
-                .nameContains(search, caseSensitive: false)
-                .or()
-                .categoriesElementContains(search, caseSensitive: false)
-                .or()
-                .themesElementContains(search, caseSensitive: false),
-          ),
-        )
-        .sortByCreatedDateDesc()
-        .findAllAsync();
+    if (selectedTags.isNotEmpty) {
+      builder.linkMany(PacingEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
+    }
+
+    final query = builder.order(PacingEntity_.createdDate, flags: Order.descending).build();
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue;
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
+  Future<List<TagEntity>> getAllTags({String search = ''}) async {
     final db = await databaseRepository.database;
-    final tags =
-        await db.pacingModels
-            .where()
-            .optional(query.isNotEmpty, (q) => q.tagsElementContains(query))
-            .tagsProperty()
-            .findAllAsync();
-    return tags.selectMany((t) => t).toSet().toList();
+    final box = db.box<TagEntity>();
+    final builder = box.query(TagEntity_.name.contains(search, caseSensitive: false));
+    final query = builder.build();
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue;
   }
 
-  Future<List<String>> getAllCategories({String query = ''}) async {
+  Future<List<String>> getAllCategories({String search = ''}) async {
     final db = await databaseRepository.database;
-    final categories =
-        await db.pacingModels
-            .where()
-            .optional(query.isNotEmpty, (q) => q.categoriesElementContains(query))
-            .categoriesProperty()
-            .findAllAsync();
-    return categories.selectMany((t) => t).toSet().toList();
+    final box = db.box<ImprovisationEntity>();
+    final builder = box.query(ImprovisationEntity_.category.contains(search, caseSensitive: false));
+    final query = builder.build();
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue.map((e) => e.category).toList();
   }
 }

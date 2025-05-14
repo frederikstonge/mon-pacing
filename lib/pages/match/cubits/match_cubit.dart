@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -70,7 +68,7 @@ class MatchCubit extends Cubit<MatchState> {
     final improvisations = List<ImprovisationModel>.from(state.match!.improvisations);
 
     improvisations.insert(index, improvisation);
-    final newMatch = state.match!.copyWith(improvisations: improvisations);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(improvisations: improvisations));
     emit(
       state.copyWith(
         status: MatchStatus.success,
@@ -79,8 +77,6 @@ class MatchCubit extends Cubit<MatchState> {
         selectedDurationIndex: 0,
       ),
     );
-
-    await matchesCubit.edit(newMatch);
   }
 
   Future<void> editImprovisation(ImprovisationModel improvisation, int index) async {
@@ -89,7 +85,8 @@ class MatchCubit extends Cubit<MatchState> {
     );
 
     improvisations.insert(index, improvisation);
-    final newMatch = state.match!.copyWith(improvisations: improvisations);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(improvisations: improvisations));
+
     emit(
       state.copyWith(
         status: MatchStatus.success,
@@ -98,8 +95,6 @@ class MatchCubit extends Cubit<MatchState> {
         selectedDurationIndex: 0,
       ),
     );
-
-    await matchesCubit.edit(newMatch);
   }
 
   Future<void> removeImprovisation(ImprovisationModel improvisation) async {
@@ -120,8 +115,9 @@ class MatchCubit extends Cubit<MatchState> {
             ? state.selectedImprovisationIndex - 1
             : state.selectedImprovisationIndex;
 
-    final newMatch = state.match!.copyWith(improvisations: improvisations, points: points, penalties: penalties);
-
+    final newMatch = await matchesCubit.edit(
+      state.match!.copyWith(improvisations: improvisations, points: points, penalties: penalties),
+    );
     emit(
       state.copyWith(
         status: MatchStatus.success,
@@ -130,8 +126,6 @@ class MatchCubit extends Cubit<MatchState> {
         selectedDurationIndex: 0,
       ),
     );
-
-    await matchesCubit.edit(newMatch);
   }
 
   void changePage(int page) {
@@ -155,26 +149,21 @@ class MatchCubit extends Cubit<MatchState> {
       }
     } else {
       if (value > 0) {
-        final nextPointId = points.isNotEmpty ? points.map((e) => e.id).reduce(max) + 1 : 0;
-        points.add(PointModel(id: nextPointId, teamId: teamId, improvisationId: improvisationId, value: value));
+        points.add(PointModel(id: 0, teamId: teamId, improvisationId: improvisationId, value: value));
       }
     }
 
-    final newMatch = state.match!.copyWith(points: points);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(points: points));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-    await matchesCubit.edit(newMatch);
   }
 
   Future<void> addPenalty(PenaltyModel penalty) async {
     final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
-    final nextPenaltyId = penalties.isNotEmpty ? penalties.map((e) => e.id).reduce(max) + 1 : 0;
-    penalties.add(penalty.copyWith(id: nextPenaltyId));
-    final newMatch = state.match!.copyWith(penalties: penalties);
+    penalties.add(penalty);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(penalties: penalties));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-
-    await matchesCubit.edit(newMatch);
     _validatePenalty(newMatch, penalty);
   }
 
@@ -182,60 +171,45 @@ class MatchCubit extends Cubit<MatchState> {
     final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
     final index = penalties.indexWhere((element) => element.id == penalty.id);
     penalties[index] = penalty;
-    final newMatch = state.match!.copyWith(penalties: penalties);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(penalties: penalties));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-
-    await matchesCubit.edit(newMatch);
     _validatePenalty(newMatch, penalty);
   }
 
   Future<void> removePenalty(int penaltyId) async {
     final penalties = List<PenaltyModel>.from(state.match!.copyWith().penalties);
     penalties.removeWhere((element) => element.id == penaltyId);
-    final newMatch = state.match!.copyWith(penalties: penalties);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(penalties: penalties));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-
-    await matchesCubit.edit(newMatch);
   }
 
   Future<void> addStar() async {
     final stars = List<StarModel>.from(state.match!.copyWith().stars);
-    final nextStarId = stars.isNotEmpty ? stars.map((e) => e.id).reduce(max) + 1 : 0;
     stars.add(
-      StarModel(
-        id: nextStarId,
-        teamId: state.match!.teams.first.id,
-        performerId: state.match!.teams.first.performers.first.id,
-      ),
+      StarModel(id: 0, teamId: state.match!.teams.first.id, performerId: state.match!.teams.first.performers.first.id),
     );
-    final newMatch = state.match!.copyWith(stars: stars);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(stars: stars));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-
-    await matchesCubit.edit(newMatch);
   }
 
   Future<void> editStar(StarModel star) async {
     final stars = List<StarModel>.from(state.match!.copyWith().stars);
     final index = stars.indexWhere((element) => element.id == star.id);
     stars[index] = star;
-    final newMatch = state.match!.copyWith(stars: stars);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(stars: stars));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-
-    await matchesCubit.edit(newMatch);
   }
 
-  Future<void> removeStar(int starId) async {
+  Future<void> removeStar(StarModel star) async {
     final stars = List<StarModel>.from(state.match!.copyWith().stars);
-    stars.removeWhere((element) => element.id == starId);
-    final newMatch = state.match!.copyWith(stars: stars);
+    stars.removeWhere((element) => element.id == star.id);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(stars: stars));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-
-    await matchesCubit.edit(newMatch);
   }
 
   Future<void> moveStar(int oldIndex, int newIndex) async {
@@ -248,11 +222,9 @@ class MatchCubit extends Cubit<MatchState> {
 
     stars.insert(newIndex, star);
 
-    final newMatch = state.match!.copyWith(stars: stars);
+    final newMatch = await matchesCubit.edit(state.match!.copyWith(stars: stars));
 
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
-
-    await matchesCubit.edit(newMatch);
   }
 
   Future<bool> exportExcel() async {

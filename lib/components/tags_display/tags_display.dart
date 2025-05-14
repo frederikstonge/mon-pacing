@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../models/tag_model.dart';
+
 class TagsDisplay extends StatefulWidget {
-  final List<String> tags;
+  final List<TagModel> tags;
 
   const TagsDisplay({super.key, required this.tags});
 
@@ -47,7 +49,7 @@ class _TagsDisplayState extends State<TagsDisplay> {
               child: Chip(
                 labelPadding: EdgeInsets.zero,
                 visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-                label: Text(tag),
+                label: Text(tag.name),
               ),
             );
           },

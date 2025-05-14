@@ -3,20 +3,21 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../l10n/generated/app_localizations.dart';
+import '../../models/tag_model.dart';
 import '../../models/team_model.dart';
 import '../team_color_avatar/team_color_avatar.dart';
 import 'search_dialog.dart';
 
 class TeamsSearch extends StatelessWidget {
   final Future<List<TeamModel>> Function(String query, List<String> selectedTags) search;
-  final Future<List<String>> Function() getAllTags;
+  final Future<List<TagModel>> Function() getAllTags;
 
   const TeamsSearch({super.key, required this.getAllTags, required this.search});
 
   static Future<TeamModel?> showDialog(
     BuildContext context,
     Future<List<TeamModel>> Function(String query, List<String> selectedTags) search,
-    Future<List<String>> Function() getAllTags,
+    Future<List<TagModel>> Function() getAllTags,
   ) async {
     return await Navigator.of(
       context,

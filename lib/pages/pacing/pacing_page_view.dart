@@ -17,6 +17,7 @@ import '../../cubits/settings/settings_state.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -179,8 +180,10 @@ class _PacingPageViewState extends State<PacingPageView> {
                                 pacing: pacing,
                                 improvisation: improvisation,
                                 index: index,
-                                getAllCategories: context.read<PacingsCubit>().getAllCategories,
-                                onChanged: (value) => context.read<PacingCubit>().editImprovisation(index, value),
+                                getAllCategories: ({String? search}) async {
+                                  return await context.read<PacingsRepository>().getAllCategories(search: search ?? '');
+                                },
+                                onChanged: (value) => context.read<PacingCubit>().editImprovisation(value),
                                 onConfirmDelete:
                                     (value) async => await MessageBoxDialog.questionShow(
                                       context,
@@ -193,7 +196,7 @@ class _PacingPageViewState extends State<PacingPageView> {
                                       S.of(context).delete,
                                       S.of(context).cancel,
                                     ),
-                                onDelete: (value) => context.read<PacingCubit>().removeImprovisation(index),
+                                onDelete: (value) => context.read<PacingCubit>().removeImprovisation(value),
                                 dragEnabled: pacing.improvisations.length > 1,
                                 onDragStart: _onDragStart,
                               );

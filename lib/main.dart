@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -12,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'bootstrapper.dart';
 import 'firebase_options.dart';
+import 'models/tag_model.dart';
 
 Future<void> main() async {
   FlutterError.onError = (errorDetails) {
@@ -46,6 +48,9 @@ Future<void> main() async {
       HydratedBloc.storage = await HydratedStorage.build(
         storageDirectory: HydratedStorageDirectory(storageDirectory.path),
       );
+
+      // DART_MAPPABLE
+      MapperContainer.globals.use(TagMapper());
 
       // APP
       runApp(const Bootstrapper());

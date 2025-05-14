@@ -1,7 +1,14 @@
-import 'package:isar/isar.dart';
 import '../extensions/iterable_extensions.dart';
 import 'database_repository.dart';
+import 'entities/improvisation_entity.dart';
 import 'entities/match_entity.dart';
+import 'entities/penalty_entity.dart';
+import 'entities/performer_entity.dart';
+import 'entities/point_entity.dart';
+import 'entities/star_entity.dart';
+import 'entities/tag_entity.dart';
+import 'entities/team_entity.dart';
+import 'objectbox.g.dart';
 
 class MatchesRepository {
   final DatabaseRepository databaseRepository;
@@ -10,62 +17,142 @@ class MatchesRepository {
 
   Future<MatchEntity> add(MatchEntity entity) async {
     final db = await databaseRepository.database;
-    final id = db.matchModels.autoIncrement();
+    final box = db.box<MatchEntity>();
     final now = DateTime.now();
-    final model = entity.copyWith(id: id, createdDate: now, modifiedDate: now);
-    await db.writeAsync((isar) => isar.matchModels.put(model));
-    return model;
+    entity.createdDate = now;
+    entity.modifiedDate = now;
+    return await box.putAndGetAsync(entity);
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(MatchEntity entity) async {
     final db = await databaseRepository.database;
-    await db.writeAsync((isar) => isar.matchModels.delete(id));
+    final box = db.box<MatchEntity>();
+    final improvisationBox = db.box<ImprovisationEntity>();
+    final performerBox = db.box<PerformerEntity>();
+    final teamBox = db.box<TeamEntity>();
+    final pointBox = db.box<PointEntity>();
+    final penaltyBox = db.box<PenaltyEntity>();
+    final starBox = db.box<StarEntity>();
+    final tagBox = db.box<TagEntity>();
+
+    db.runInTransaction(TxMode.write, () {
+      improvisationBox.removeMany(entity.improvisations.map((e) => e.id).toList());
+      performerBox.removeMany(entity.teams.selectMany((t) => t.performers).map((e) => e.id).toList());
+      teamBox.removeMany(entity.teams.map((e) => e.id).toList());
+      pointBox.removeMany(entity.points.map((e) => e.id).toList());
+      penaltyBox.removeMany(entity.penalties.map((e) => e.id).toList());
+      starBox.removeMany(entity.stars.map((e) => e.id).toList());
+      tagBox.removeMany(entity.tags.map((e) => e.id).toList());
+
+      box.remove(entity.id);
+    });
   }
 
-  Future<void> edit(MatchEntity entity) async {
-    final model = entity.copyWith(modifiedDate: DateTime.now());
+  Future<MatchEntity> edit(MatchEntity entity) async {
     final db = await databaseRepository.database;
-    return db.writeAsync((isar) => isar.matchModels.put(model));
+    final box = db.box<MatchEntity>();
+    final improvisationBox = db.box<ImprovisationEntity>();
+    final performerBox = db.box<PerformerEntity>();
+    final teamBox = db.box<TeamEntity>();
+    final pointBox = db.box<PointEntity>();
+    final penaltyBox = db.box<PenaltyEntity>();
+    final starBox = db.box<StarEntity>();
+    final tagBox = db.box<TagEntity>();
+
+    final previousEntity = await box.getAsync(entity.id);
+
+    final removedImprovisations =
+        previousEntity!.improvisations.where((e) => !entity.improvisations.any((i) => i.id == e.id)).toList();
+    final editedImprovisations = entity.improvisations.where((e) => e.id != 0).toList();
+
+    final removedPerformers =
+        previousEntity.teams
+            .selectMany((t) => t.performers)
+            .where((e) => !entity.teams.any((i) => i.id == e.id))
+            .toList();
+    final editedPerformers = entity.teams.selectMany((t) => t.performers).where((e) => e.id != 0).toList();
+
+    final removedTeams = previousEntity.teams.where((e) => !entity.teams.any((i) => i.id == e.id)).toList();
+    final editedTeams = entity.teams.where((e) => e.id != 0).toList();
+
+    final removedPoints = previousEntity.points.where((e) => !entity.points.any((i) => i.id == e.id)).toList();
+    final editedPoints = entity.points.where((e) => e.id != 0).toList();
+
+    final removedPenalties = previousEntity.penalties.where((e) => !entity.penalties.any((i) => i.id == e.id)).toList();
+    final editedPenalties = entity.penalties.where((e) => e.id != 0).toList();
+
+    final removedStars = previousEntity.stars.where((e) => !entity.stars.any((i) => i.id == e.id)).toList();
+    final editedStars = entity.stars.where((e) => e.id != 0).toList();
+
+    final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
+    final editedTags = entity.tags.where((e) => e.id != 0).toList();
+
+    db.runInTransaction(TxMode.write, () {
+      improvisationBox.putMany(editedImprovisations);
+      improvisationBox.removeMany(removedImprovisations.map((e) => e.id).toList());
+
+      performerBox.putMany(editedPerformers);
+      performerBox.removeMany(removedPerformers.map((e) => e.id).toList());
+
+      teamBox.putMany(editedTeams);
+      teamBox.removeMany(removedTeams.map((e) => e.id).toList());
+
+      pointBox.putMany(editedPoints);
+      pointBox.removeMany(removedPoints.map((e) => e.id).toList());
+
+      penaltyBox.putMany(editedPenalties);
+      penaltyBox.removeMany(removedPenalties.map((e) => e.id).toList());
+
+      starBox.putMany(editedStars);
+      starBox.removeMany(removedStars.map((e) => e.id).toList());
+
+      tagBox.putMany(editedTags);
+      tagBox.removeMany(removedTags.map((e) => e.id).toList());
+    });
+
+    entity.modifiedDate = DateTime.now();
+    return box.putAndGetAsync(entity);
   }
 
   Future<MatchEntity?> get(int id) async {
     final db = await databaseRepository.database;
-    return await db.matchModels.getAsync(id);
+    final box = db.box<MatchEntity>();
+    return await box.getAsync(id);
   }
 
   Future<List<MatchEntity>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
-    return await db.matchModels.where().sortByCreatedDateDesc().findAllAsync(offset: skip, limit: take);
+    final box = db.box<MatchEntity>();
+    final query = box.query().order(MatchEntity_.createdDate, flags: Order.descending).build();
+    query.limit = take;
+    query.offset = skip;
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue;
   }
 
   Future<List<MatchEntity>> search(String search, List<String> selectedTags) async {
     final db = await databaseRepository.database;
+    final box = db.box<MatchEntity>();
+    final builder = box.query(MatchEntity_.name.contains(search, caseSensitive: false));
 
-    return await db.matchModels
-        .where()
-        .optional(selectedTags.isNotEmpty, (q) => q.anyOf(selectedTags, (sq, t) => sq.tagsElementEqualTo(t)))
-        .and()
-        .optional(
-          search.isNotEmpty,
-          (q) => q.group(
-            (g) => g
-                .nameContains(search, caseSensitive: false)
-                .or()
-                .teamNamesElementContains(search, caseSensitive: false),
-          ),
-        )
-        .sortByCreatedDateDesc()
-        .findAllAsync();
+    if (selectedTags.isNotEmpty) {
+      builder.linkMany(MatchEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
+    }
+
+    final query = builder.order(MatchEntity_.createdDate, flags: Order.descending).build();
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue;
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
+  Future<List<TagEntity>> getAllTags({String search = ''}) async {
     final db = await databaseRepository.database;
-    final tags =
-        await db.matchModels
-            .where()
-            .optional(query.isNotEmpty, (q) => q.tagsElementContains(query))
-            .tagsProperty()
-            .findAllAsync();
-    return tags.selectMany((t) => t).toSet().toList();
+    final box = db.box<TagEntity>();
+    final builder = box.query(TagEntity_.name.contains(search, caseSensitive: false));
+    final query = builder.build();
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue;
   }
 }

@@ -21,6 +21,7 @@ import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/match_model.dart';
+import '../../models/tag_model.dart';
 import '../../repositories/matches_repository.dart';
 import '../../router/routes.dart';
 import 'widgets/match_card.dart';
@@ -87,13 +88,17 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                           tooltip: S.of(context).search(category: S.of(context).matches),
                           onPressed: () async {
                             final router = GoRouter.of(context);
-                            final result = await MatchesSearch.showDialog(context, (
-                              String search,
-                              List<String> selectedTags,
-                            ) async {
-                              final response = await context.read<MatchesRepository>().search(search, selectedTags);
-                              return response.map((e) => MatchModel.fromEntity(entity: e)).toList();
-                            }, context.read<MatchesRepository>().getAllTags);
+                            final result = await MatchesSearch.showDialog(
+                              context,
+                              (String search, List<String> selectedTags) async {
+                                final response = await context.read<MatchesRepository>().search(search, selectedTags);
+                                return response.map((e) => MatchModel.fromEntity(entity: e)).toList();
+                              },
+                              () async {
+                                final tags = await context.read<MatchesRepository>().getAllTags();
+                                return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                              },
+                            );
                             if (result != null) {
                               router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
                             }

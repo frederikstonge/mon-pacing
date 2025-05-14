@@ -3,6 +3,7 @@ import 'package:toastification/toastification.dart';
 
 import '../../l10n/localizer.dart';
 import '../../models/match_model.dart';
+import '../../models/tag_model.dart';
 import '../../repositories/matches_repository.dart';
 import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
@@ -57,11 +58,13 @@ class MatchesCubit extends Cubit<MatchesState> {
     return null;
   }
 
-  Future<void> edit(MatchModel model) async {
+  Future<MatchModel> edit(MatchModel model) async {
     try {
-      await matchesRepository.edit(model.toEntity());
+      final entity = await matchesRepository.edit(model.toEntity());
+      return MatchModel.fromEntity(entity: entity);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+      return model;
     } finally {
       await refresh();
     }
@@ -69,7 +72,7 @@ class MatchesCubit extends Cubit<MatchesState> {
 
   Future<void> delete(MatchModel model) async {
     try {
-      await matchesRepository.delete(model.id);
+      await matchesRepository.delete(model.toEntity());
       toasterService.show(title: Localizer.current.toasterMatchDeleted);
     } catch (exception) {
       toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
@@ -99,12 +102,15 @@ class MatchesCubit extends Cubit<MatchesState> {
     }
   }
 
-  Future<List<String>> getAllTags({String query = ''}) async {
-    return await matchesRepository.getAllTags(query: query);
+  Future<List<TagModel>> getAllTags({String search = ''}) async {
+    final tags = await matchesRepository.getAllTags(search: search);
+    return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
   }
 
   Future<void> refresh() async {
-    emit(const MatchesState(status: MatchesStatus.initial));
-    await fetch();
+    if (state.status != MatchesStatus.initial) {
+      emit(const MatchesState(status: MatchesStatus.initial));
+      await fetch();
+    }
   }
 }

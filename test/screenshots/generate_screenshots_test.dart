@@ -29,6 +29,7 @@ import 'package:mon_pacing/models/improvisation_model.dart';
 import 'package:mon_pacing/models/improvisation_type.dart';
 import 'package:mon_pacing/models/match_model.dart';
 import 'package:mon_pacing/models/pacing_model.dart';
+import 'package:mon_pacing/models/tag_model.dart';
 import 'package:mon_pacing/models/team_model.dart';
 import 'package:mon_pacing/models/theme_type.dart';
 import 'package:mon_pacing/pages/match/cubits/match_cubit.dart';
@@ -103,7 +104,7 @@ void main() {
     final pacing = PacingModel(
       id: 0,
       name: 'Canadiens vs Maple Leafs',
-      tags: ['NHL', 'Hockey'],
+      tags: [TagModel(id: 0, name: 'NHL'), TagModel(id: 1, name: 'Hockey')],
       createdDate: DateTime.now(),
       modifiedDate: DateTime.now(),
       improvisations: List.generate(
@@ -140,7 +141,7 @@ void main() {
     final match = MatchModel(
       id: 0,
       name: 'Canadiens vs Maple Leafs',
-      tags: ['NHL', 'Hockey'],
+      tags: [TagModel(id: 0, name: 'NHL'), TagModel(id: 1, name: 'Hockey')],
       createdDate: DateTime.now(),
       modifiedDate: DateTime.now(),
       teams: [
