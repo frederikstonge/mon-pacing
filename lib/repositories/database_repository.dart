@@ -32,6 +32,10 @@ class DatabaseRepository {
   DatabaseRepository({required this.legacyDatabaseRepository, required this.migrationCubit});
 
   Future<Store> get database async {
+    if (_database != null) {
+      return _database!;
+    }
+
     return await _mutex.protect(() async {
       if (_database != null) {
         return _database!;
@@ -44,7 +48,13 @@ class DatabaseRepository {
 
   Future<Store> _getDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
-    final store = await openStore(directory: p.join(dir.path, 'mon-pacing'), queriesCaseSensitiveDefault: false);
+    final path = p.join(dir.path, 'mon-pacing');
+
+    if (Store.isOpen(path)) {
+      return _database!;
+    }
+
+    final store = await openStore(directory: path, queriesCaseSensitiveDefault: false);
     await _initialize(store);
     return store;
   }
@@ -79,24 +89,23 @@ class DatabaseRepository {
     final teamCount = legacyDatabase.teamModels.count();
     final matchCount = legacyDatabase.matchModels.count();
 
+    final maximumPacingPages = (pacingCount / pageSize).floor();
+    final maximumTeamPages = (teamCount / pageSize).floor();
+    final maximumMatchPages = (matchCount / pageSize).floor();
+
     final total = pacingCount + teamCount + matchCount;
 
     if (total > 0) {
-      migrationCubit.startMigration(
-        title: Localizer.current.migrationStarted,
-        total: pacingCount + teamCount + matchCount,
-      );
+      migrationCubit.startMigration(title: Localizer.current.migrationStarted, total: total);
     }
 
     // Pacings
     if (pacingCount > 0) {
       migrationCubit.updateProgress(title: Localizer.current.migrationPacings);
     }
-    for (var page = 0; page <= (pacingCount / pageSize).floor(); page++) {
-      final pacings = await legacyDatabase.pacingModels.where().findAllAsync(
-        offset: page * pacingCount,
-        limit: pageSize,
-      );
+
+    for (var page = 0; page <= maximumPacingPages; page++) {
+      final pacings = await legacyDatabase.pacingModels.where().findAllAsync(offset: page * pageSize, limit: pageSize);
 
       final newPacings =
           pacings.map((pacing) {
@@ -150,8 +159,9 @@ class DatabaseRepository {
     if (teamCount > 0) {
       migrationCubit.updateProgress(title: Localizer.current.migrationTeams);
     }
-    for (var page = 0; page <= (teamCount / pageSize).floor(); page++) {
-      final teams = await legacyDatabase.teamModels.where().findAllAsync(offset: page * teamCount, limit: pageSize);
+
+    for (var page = 0; page <= maximumTeamPages; page++) {
+      final teams = await legacyDatabase.teamModels.where().findAllAsync(offset: page * pageSize, limit: pageSize);
       final newTeams =
           teams.map((team) {
             final newTeam = TeamEntity(
@@ -195,14 +205,15 @@ class DatabaseRepository {
     if (matchCount > 0) {
       migrationCubit.updateProgress(title: Localizer.current.migrationMatches);
     }
-    for (var page = 0; page <= (matchCount / pageSize).floor(); page++) {
-      final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * matchCount, limit: pageSize);
 
-      final teamMap = <int, TeamEntity>{};
-      final performerMap = <int, PerformerEntity>{};
-      final improvisationMap = <int, ImprovisationEntity>{};
+    for (var page = 0; page <= maximumMatchPages; page++) {
+      final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * pageSize, limit: pageSize);
 
       final newMatchFutures = matches.map((match) async {
+        final teamMap = <int, TeamEntity>{};
+        final performerMap = <int, PerformerEntity>{};
+        final improvisationMap = <int, ImprovisationEntity>{};
+
         for (final team in match.teams) {
           final newPerformers =
               team.performers.asMap().entries.map((e) {
@@ -350,6 +361,13 @@ class DatabaseRepository {
 
     if (total > 0) {
       migrationCubit.completeMigration(title: Localizer.current.migrationCompleted);
+    }
+  }
+
+  Future<void> close() async {
+    if (_database != null) {
+      _database!.close();
+      _database = null;
     }
   }
 }
