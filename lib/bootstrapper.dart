@@ -40,13 +40,17 @@ class Bootstrapper extends StatelessWidget {
           RepositoryProvider(create: (repositoryContext) => PackageInfoService()),
           RepositoryProvider(create: (repositoryContext) => ToasterService(toastification: Toastification())),
           RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
-          RepositoryProvider(create: (repositoryContext) => LegacyDatabaseRepository()),
+          RepositoryProvider(
+            create: (repositoryContext) => LegacyDatabaseRepository(),
+            dispose: (value) async => await value.close(),
+          ),
           RepositoryProvider(
             create:
                 (repositoryContext) => DatabaseRepository(
                   legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
                   migrationCubit: repositoryContext.read<MigrationCubit>(),
                 ),
+            dispose: (value) async => await value.close(),
           ),
           RepositoryProvider(
             create:
