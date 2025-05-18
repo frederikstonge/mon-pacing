@@ -116,7 +116,7 @@ class DatabaseRepository {
           id: 0,
           name: pacing.name,
           createdDate: pacing.createdDate,
-          modifiedDate: pacing.modifiedDate,
+          modifiedDate: DateTime.now(),
           defaultNumberOfTeams: pacing.defaultNumberOfTeams,
           integrationId: pacing.integrationId,
           integrationEntityId: pacing.integrationEntityId,
@@ -169,7 +169,7 @@ class DatabaseRepository {
           name: team.name,
           color: team.color,
           createdDate: team.createdDate,
-          modifiedDate: team.modifiedDate,
+          modifiedDate: DateTime.now(),
           hasMatch: false,
         );
 
@@ -287,7 +287,7 @@ class DatabaseRepository {
           id: 0,
           name: match.name,
           createdDate: match.createdDate,
-          modifiedDate: match.modifiedDate,
+          modifiedDate: DateTime.now(),
           enableMatchExpulsion: match.enableMatchExpulsion,
           enablePenaltiesImpactPoints: match.enablePenaltiesImpactPoints,
           enableStatistics: match.enableStatistics,
