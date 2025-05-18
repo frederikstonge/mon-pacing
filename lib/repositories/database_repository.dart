@@ -51,6 +51,10 @@ class DatabaseRepository {
     final path = p.join(dir.path, 'mon-pacing');
 
     if (Store.isOpen(path)) {
+      if (_database == null) {
+        throw Exception('Store is already open');
+      }
+
       return _database!;
     }
 
