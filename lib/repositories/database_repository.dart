@@ -94,6 +94,7 @@ class DatabaseRepository {
     final maximumMatchPages = (matchCount / pageSize).floor();
 
     final total = pacingCount + teamCount + matchCount;
+    var progress = 0;
 
     if (total > 0) {
       migrationCubit.startMigration(title: Localizer.current.migrationStarted, total: total);
@@ -106,53 +107,49 @@ class DatabaseRepository {
 
     for (var page = 0; page <= maximumPacingPages; page++) {
       final pacings = await legacyDatabase.pacingModels.where().findAllAsync(offset: page * pageSize, limit: pageSize);
+      for (var pacing in pacings) {
+        final newPacing = PacingEntity(
+          id: 0,
+          name: pacing.name,
+          createdDate: pacing.createdDate,
+          modifiedDate: pacing.modifiedDate,
+          defaultNumberOfTeams: pacing.defaultNumberOfTeams,
+          integrationId: pacing.integrationId,
+          integrationEntityId: pacing.integrationEntityId,
+          integrationAdditionalData: pacing.integrationAdditionalData,
+        );
 
-      final newPacings =
-          pacings.map((pacing) {
-            final newPacing = PacingEntity(
+        newPacing.tags.addAll(
+          pacing.tags.map((e) {
+            final newTag = TagEntity(id: 0, name: e);
+            return newTag;
+          }),
+        );
+
+        newPacing.improvisations.addAll(
+          pacing.improvisations.asMap().entries.map((e) {
+            final newImprovisation = ImprovisationEntity(
               id: 0,
-              name: pacing.name,
-              createdDate: pacing.createdDate,
-              modifiedDate: pacing.modifiedDate,
-              defaultNumberOfTeams: pacing.defaultNumberOfTeams,
-              integrationId: pacing.integrationId,
-              integrationEntityId: pacing.integrationEntityId,
-              integrationAdditionalData: pacing.integrationAdditionalData,
+              order: e.key,
+              type: e.value.type.index,
+              theme: e.value.theme,
+              category: e.value.category,
+              performers: e.value.performers,
+              durationsInSeconds: e.value.durationsInSeconds,
+              notes: e.value.notes,
+              huddleTimerInSeconds: e.value.huddleTimerInSeconds,
+              timeBufferInSeconds: e.value.timeBufferInSeconds,
+              integrationEntityId: e.value.integrationEntityId,
+              integrationAdditionalData: e.value.integrationAdditionalData,
             );
 
-            newPacing.tags.addAll(
-              pacing.tags.map((e) {
-                final newTag = TagEntity(id: 0, name: e);
-                return newTag;
-              }),
-            );
+            return newImprovisation;
+          }),
+        );
 
-            newPacing.improvisations.addAll(
-              pacing.improvisations.asMap().entries.map((e) {
-                final newImprovisation = ImprovisationEntity(
-                  id: 0,
-                  order: e.key,
-                  type: e.value.type.index,
-                  theme: e.value.theme,
-                  category: e.value.category,
-                  performers: e.value.performers,
-                  durationsInSeconds: e.value.durationsInSeconds,
-                  notes: e.value.notes,
-                  huddleTimerInSeconds: e.value.huddleTimerInSeconds,
-                  timeBufferInSeconds: e.value.timeBufferInSeconds,
-                  integrationEntityId: e.value.integrationEntityId,
-                  integrationAdditionalData: e.value.integrationAdditionalData,
-                );
-
-                return newImprovisation;
-              }),
-            );
-
-            return newPacing;
-          }).toList();
-
-      await store.box<PacingEntity>().putManyAsync(newPacings);
-      migrationCubit.updateProgress(count: pacings.length);
+        await store.box<PacingEntity>().putAsync(newPacing);
+        migrationCubit.updateProgress(count: progress++);
+      }
     }
 
     // Teams
@@ -162,43 +159,40 @@ class DatabaseRepository {
 
     for (var page = 0; page <= maximumTeamPages; page++) {
       final teams = await legacyDatabase.teamModels.where().findAllAsync(offset: page * pageSize, limit: pageSize);
-      final newTeams =
-          teams.map((team) {
-            final newTeam = TeamEntity(
+      for (var team in teams) {
+        final newTeam = TeamEntity(
+          id: 0,
+          name: team.name,
+          color: team.color,
+          createdDate: team.createdDate,
+          modifiedDate: team.modifiedDate,
+          hasMatch: false,
+        );
+
+        newTeam.tags.addAll(
+          team.tags.map((e) {
+            final newTag = TagEntity(id: 0, name: e);
+            return newTag;
+          }),
+        );
+
+        newTeam.performers.addAll(
+          team.performers.asMap().entries.map((e) {
+            final newPerformer = PerformerEntity(
               id: 0,
-              name: team.name,
-              color: team.color,
-              createdDate: team.createdDate,
-              modifiedDate: team.modifiedDate,
-              hasMatch: false,
+              order: e.key,
+              name: e.value.name,
+              integrationEntityId: e.value.integrationEntityId,
+              integrationAdditionalData: e.value.integrationAdditionalData,
             );
 
-            newTeam.tags.addAll(
-              team.tags.map((e) {
-                final newTag = TagEntity(id: 0, name: e);
-                return newTag;
-              }),
-            );
+            return newPerformer;
+          }),
+        );
 
-            newTeam.performers.addAll(
-              team.performers.asMap().entries.map((e) {
-                final newPerformer = PerformerEntity(
-                  id: 0,
-                  order: e.key,
-                  name: e.value.name,
-                  integrationEntityId: e.value.integrationEntityId,
-                  integrationAdditionalData: e.value.integrationAdditionalData,
-                );
-
-                return newPerformer;
-              }),
-            );
-
-            return newTeam;
-          }).toList();
-
-      await store.box<TeamEntity>().putManyAsync(newTeams);
-      migrationCubit.updateProgress(count: pacingCount + teams.length);
+        await store.box<TeamEntity>().putAsync(newTeam);
+        migrationCubit.updateProgress(count: progress++);
+      }
     }
 
     // Matches
@@ -209,7 +203,7 @@ class DatabaseRepository {
     for (var page = 0; page <= maximumMatchPages; page++) {
       final matches = await legacyDatabase.matchModels.where().findAllAsync(offset: page * pageSize, limit: pageSize);
 
-      final newMatchFutures = matches.map((match) async {
+      for (var match in matches) {
         final teamMap = <int, TeamEntity>{};
         final performerMap = <int, PerformerEntity>{};
         final improvisationMap = <int, ImprovisationEntity>{};
@@ -351,12 +345,9 @@ class DatabaseRepository {
           ),
         );
 
-        return newMatch;
-      });
-
-      final newMatches = await Future.wait(newMatchFutures);
-      await store.box<MatchEntity>().putManyAsync(newMatches);
-      migrationCubit.updateProgress(count: pacingCount + teamCount + matches.length);
+        await store.box<MatchEntity>().putAsync(newMatch);
+        migrationCubit.updateProgress(count: progress++);
+      }
     }
 
     if (total > 0) {
