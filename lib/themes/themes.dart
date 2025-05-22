@@ -100,7 +100,7 @@ class Themes {
     final themeData = ThemeData.from(colorScheme: colorScheme);
     return themeData.copyWith(
       textTheme: themeData.textTheme.apply(fontFamily: 'Poppins'),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         clipBehavior: Clip.antiAlias,
         color: cardBackgroundColor,
         margin: const EdgeInsets.all(8),

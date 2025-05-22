@@ -70,16 +70,20 @@ class SEn extends S {
   String get dark => 'Dark';
 
   @override
-  String get defaultImprovisationSettingsTooltip => 'These settings will be used as default when creating new improvisations, but can be changed individually.';
+  String get defaultImprovisationSettingsTooltip =>
+      'These settings will be used as default when creating new improvisations, but can be changed individually.';
 
   @override
-  String get defaultMatchSettingsTooltip => 'These settings will be used as default when creating new matches, but can be changed individually.';
+  String get defaultMatchSettingsTooltip =>
+      'These settings will be used as default when creating new matches, but can be changed individually.';
 
   @override
-  String get defaultPacingSettingsTooltip => 'These settings will be used as default when creating new pacings, but can be changed individually.';
+  String get defaultPacingSettingsTooltip =>
+      'These settings will be used as default when creating new pacings, but can be changed individually.';
 
   @override
-  String get defaultPenaltySettingsTooltip => 'These settings will be used as default when creating new penalties, but can be changed individually.';
+  String get defaultPenaltySettingsTooltip =>
+      'These settings will be used as default when creating new penalties, but can be changed individually.';
 
   @override
   String get delete => 'Delete';
@@ -175,7 +179,8 @@ class SEn extends S {
   String get huddleTimer => 'Huddle timer';
 
   @override
-  String get huddleTimerTooltip => 'Time allowed for the huddle before the improvisation starts. A timer will be added during the match.';
+  String get huddleTimerTooltip =>
+      'Time allowed for the huddle before the improvisation starts. A timer will be added during the match.';
 
   @override
   String get importPacingTooltip => 'Import pacing';
@@ -269,10 +274,12 @@ class SEn extends S {
   String get migrationTeams => 'Migrating teams...';
 
   @override
-  String get missingIgnoreBatteryOptimizationError => 'Battery Optimization is still enabled. Please go to your device\'\'s settings to ignore battery optimization.';
+  String get missingIgnoreBatteryOptimizationError =>
+      'Battery Optimization is still enabled. Please go to your device\'\'s settings to ignore battery optimization.';
 
   @override
-  String get missingNotificationPermissionError => 'Notification permission has been denied. Please go to your device\'\'s settings to allow notifications.';
+  String get missingNotificationPermissionError =>
+      'Notification permission has been denied. Please go to your device\'\'s settings to allow notifications.';
 
   @override
   String get mixed => 'Mixed';
@@ -430,7 +437,8 @@ class SEn extends S {
   String get timeBuffer => 'Timer buffer';
 
   @override
-  String get timeBufferTooltip => 'Extra time that will be added on top of each improvisation\'\'s duration to compensate for the voting and more. This is only used to evaluate the total time of a pacing.';
+  String get timeBufferTooltip =>
+      'Extra time that will be added on top of each improvisation\'\'s duration to compensate for the voting and more. This is only used to evaluate the total time of a pacing.';
 
   @override
   String get timerHapticFeedbackTooltip => 'Timer will vibrate every minute, 30 seconds, 10 seconds, 5, 4, 3, 2, 1.';

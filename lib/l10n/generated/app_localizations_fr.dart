@@ -70,16 +70,20 @@ class SFr extends S {
   String get dark => 'Sombre';
 
   @override
-  String get defaultImprovisationSettingsTooltip => 'Ces paramètres seront utilisés par défaut lors de la création de nouvelles improvisations, mais pourront être changés individuellement.';
+  String get defaultImprovisationSettingsTooltip =>
+      'Ces paramètres seront utilisés par défaut lors de la création de nouvelles improvisations, mais pourront être changés individuellement.';
 
   @override
-  String get defaultMatchSettingsTooltip => 'Ces paramètres seront utilisés par défaut lors de la création de nouveaux matchs, mais pourront être changés individuellement.';
+  String get defaultMatchSettingsTooltip =>
+      'Ces paramètres seront utilisés par défaut lors de la création de nouveaux matchs, mais pourront être changés individuellement.';
 
   @override
-  String get defaultPacingSettingsTooltip => 'Ces paramètres seront utilisés par défaut lors de la création de nouveaux pacings, mais pourront être changés individuellement.';
+  String get defaultPacingSettingsTooltip =>
+      'Ces paramètres seront utilisés par défaut lors de la création de nouveaux pacings, mais pourront être changés individuellement.';
 
   @override
-  String get defaultPenaltySettingsTooltip => 'Ces paramètres seront utilisés par défaut lors de la création de nouvelles pénalités, mais pourront être changés individuellement.';
+  String get defaultPenaltySettingsTooltip =>
+      'Ces paramètres seront utilisés par défaut lors de la création de nouvelles pénalités, mais pourront être changés individuellement.';
 
   @override
   String get delete => 'Supprimer';
@@ -175,7 +179,8 @@ class SFr extends S {
   String get huddleTimer => 'Chronomètre de caucus';
 
   @override
-  String get huddleTimerTooltip => 'Temps alloué pour le caucus avant que l\'improvisation commence. Un chronomètre sera ajouté durant le match.';
+  String get huddleTimerTooltip =>
+      'Temps alloué pour le caucus avant que l\'improvisation commence. Un chronomètre sera ajouté durant le match.';
 
   @override
   String get importPacingTooltip => 'Importer un pacing';
@@ -269,10 +274,12 @@ class SFr extends S {
   String get migrationTeams => 'Migration des équipes...';
 
   @override
-  String get missingIgnoreBatteryOptimizationError => 'L\'optimisation de la batterie est toujours activé. Veuillez aller dans les paramêtres de votre appareil pour ignorer l\'optimisation de la batterie.';
+  String get missingIgnoreBatteryOptimizationError =>
+      'L\'optimisation de la batterie est toujours activé. Veuillez aller dans les paramêtres de votre appareil pour ignorer l\'optimisation de la batterie.';
 
   @override
-  String get missingNotificationPermissionError => 'La permission de recevoir des notifications a été déclinée. Veuillez aller dans les paramêtres de votre appareil pour autoriser les notifications.';
+  String get missingNotificationPermissionError =>
+      'La permission de recevoir des notifications a été déclinée. Veuillez aller dans les paramêtres de votre appareil pour autoriser les notifications.';
 
   @override
   String get mixed => 'Mixte';
@@ -430,10 +437,12 @@ class SFr extends S {
   String get timeBuffer => 'Temps tampon';
 
   @override
-  String get timeBufferTooltip => 'Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser pour le vote etc. Cette valeur ne sera utilisée que pour évaluer la durée totale d\'un pacing.';
+  String get timeBufferTooltip =>
+      'Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser pour le vote etc. Cette valeur ne sera utilisée que pour évaluer la durée totale d\'un pacing.';
 
   @override
-  String get timerHapticFeedbackTooltip => 'Le chronomètre vibrera à chaque minute, 30 secondes, 10 secondes, 5, 4, 3, 2, 1.';
+  String get timerHapticFeedbackTooltip =>
+      'Le chronomètre vibrera à chaque minute, 30 secondes, 10 secondes, 5, 4, 3, 2, 1.';
 
   @override
   String timerIsActiveError({required String action}) {
@@ -471,7 +480,8 @@ class SFr extends S {
   String get toasterYouCantStartAMatchWithAnEmptyTeam => 'Vous ne pouvez pas démarrer un match avec une équipe vide.';
 
   @override
-  String get toasterYouCantStartAMatchWithoutImprovisation => 'Vous ne pouvez pas démarrer un match sans improvisation.';
+  String get toasterYouCantStartAMatchWithoutImprovisation =>
+      'Vous ne pouvez pas démarrer un match sans improvisation.';
 
   @override
   String get toasterYouMustFillAllPerformersName => 'Vous devez remplir tous les noms d\'interprète.';
