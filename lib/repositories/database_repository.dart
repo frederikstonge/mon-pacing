@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:isar/isar.dart';
-import 'package:mutex/mutex.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../cubits/migration/migration_cubit.dart';
 import '../cubits/migration/migration_state.dart';
 import '../l10n/localizer.dart';
+import '../mutex/mutex.dart';
 import 'entities/improvisation_entity.dart';
 import 'entities/match_entity.dart';
 import 'entities/pacing_entity.dart';
@@ -27,7 +29,6 @@ class DatabaseRepository {
   final LegacyDatabaseRepository legacyDatabaseRepository;
   final MigrationCubit migrationCubit;
   Store? _database;
-  final Mutex _mutex = Mutex();
 
   DatabaseRepository({required this.legacyDatabaseRepository, required this.migrationCubit});
 
@@ -36,7 +37,7 @@ class DatabaseRepository {
       return _database!;
     }
 
-    return await _mutex.protect(() async {
+    return await Mutex.protect(() async {
       if (_database != null) {
         return _database!;
       }
@@ -213,18 +214,17 @@ class DatabaseRepository {
         final improvisationMap = <int, ImprovisationEntity>{};
 
         for (final team in match.teams) {
-          final newPerformers =
-              team.performers.asMap().entries.map((e) {
-                final newPerformer = PerformerEntity(
-                  id: 0,
-                  order: e.key,
-                  name: e.value.name,
-                  integrationEntityId: e.value.integrationEntityId,
-                  integrationAdditionalData: e.value.integrationAdditionalData,
-                );
+          final newPerformers = team.performers.asMap().entries.map((e) {
+            final newPerformer = PerformerEntity(
+              id: 0,
+              order: e.key,
+              name: e.value.name,
+              integrationEntityId: e.value.integrationEntityId,
+              integrationAdditionalData: e.value.integrationAdditionalData,
+            );
 
-                return newPerformer;
-              }).toList();
+            return newPerformer;
+          }).toList();
 
           final performers = await store.box<PerformerEntity>().putAndGetManyAsync(newPerformers);
           for (var i = 0; i < team.performers.length; i++) {
@@ -232,51 +232,46 @@ class DatabaseRepository {
           }
         }
 
-        final newTeams =
-            match.teams.map((team) {
-              final newTeam = TeamEntity(
-                id: 0,
-                name: team.name,
-                color: team.color,
-                createdDate: DateTime.now(),
-                modifiedDate: DateTime.now(),
-                hasMatch: true,
-              );
+        final newTeams = match.teams.map((team) {
+          final newTeam = TeamEntity(
+            id: 0,
+            name: team.name,
+            color: team.color,
+            createdDate: DateTime.now(),
+            modifiedDate: DateTime.now(),
+            hasMatch: true,
+          );
 
-              newTeam.performers.addAll(
-                performerMap.entries
-                    .where((e) => team.performers.any((p) => p.id == e.key))
-                    .map((e) => e.value)
-                    .toList(),
-              );
+          newTeam.performers.addAll(
+            performerMap.entries.where((e) => team.performers.any((p) => p.id == e.key)).map((e) => e.value).toList(),
+          );
 
-              return newTeam;
-            }).toList();
+          return newTeam;
+        }).toList();
 
         final teams = await store.box<TeamEntity>().putAndGetManyAsync(newTeams);
         for (var i = 0; i < match.teams.length; i++) {
           teamMap[match.teams[i].id] = teams[i];
         }
 
-        final newImprovisations =
-            match.improvisations.asMap().entries.map((e) {
-              final newImprovisation = ImprovisationEntity(
-                id: 0,
-                order: e.key,
-                type: e.value.type.index,
-                theme: e.value.theme,
-                category: e.value.category,
-                performers: e.value.performers,
-                durationsInSeconds: e.value.durationsInSeconds,
-                notes: e.value.notes,
-                huddleTimerInSeconds: e.value.huddleTimerInSeconds,
-                timeBufferInSeconds: e.value.timeBufferInSeconds,
-                integrationEntityId: e.value.integrationEntityId,
-                integrationAdditionalData: e.value.integrationAdditionalData,
-              );
+        final newImprovisations = match.improvisations.asMap().entries.map((e) {
+          final newImprovisation = ImprovisationEntity(
+            id: 0,
+            order: e.key,
+            type: e.value.type.index,
+            theme: e.value.theme,
+            category: e.value.category,
+            performers: e.value.performers,
+            durationsInSeconds: e.value.durationsInSeconds,
+            notes: e.value.notes,
+            huddleTimerInSeconds: e.value.huddleTimerInSeconds,
+            timeBufferInSeconds: e.value.timeBufferInSeconds,
+            integrationEntityId: e.value.integrationEntityId,
+            integrationAdditionalData: e.value.integrationAdditionalData,
+          );
 
-              return newImprovisation;
-            }).toList();
+          return newImprovisation;
+        }).toList();
 
         final improvisations = await store.box<ImprovisationEntity>().putAndGetManyAsync(newImprovisations);
         for (var i = 0; i < match.improvisations.length; i++) {
