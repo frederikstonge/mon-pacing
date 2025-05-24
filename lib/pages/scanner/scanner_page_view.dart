@@ -39,11 +39,10 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     controller = MobileScannerController(
       torchEnabled: torchEnabled,
       facing: isBackCamera ? CameraFacing.back : CameraFacing.front,
-      autoStart: false,
+      autoStart: true,
     );
     WidgetsBinding.instance.addObserver(this);
     _subscription = controller.barcodes.listen(_handleBarcode);
-    unawaited(controller.start());
   }
 
   @override

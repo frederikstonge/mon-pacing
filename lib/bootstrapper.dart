@@ -42,6 +42,8 @@ class Bootstrapper extends StatelessWidget {
           RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
           RepositoryProvider(
             create: (repositoryContext) => LegacyDatabaseRepository(),
+            // Make sure database is created before injecting it into other repositories
+            lazy: false,
             dispose: (value) async => await value.close(),
           ),
           RepositoryProvider(
@@ -50,6 +52,8 @@ class Bootstrapper extends StatelessWidget {
                   legacyDatabaseRepository: repositoryContext.read<LegacyDatabaseRepository>(),
                   migrationCubit: repositoryContext.read<MigrationCubit>(),
                 ),
+            // Make sure database is created before injecting it into other repositories
+            lazy: false,
             dispose: (value) async => await value.close(),
           ),
           RepositoryProvider(
