@@ -198,7 +198,7 @@ jobs:
         working-directory: android
         shell: bash
         run: |
-          sudo apt-get install ghostscript
+          sudo apt install ghostscript
           sudo apt install imagemagick
 
       - name: Generate Screenshots
