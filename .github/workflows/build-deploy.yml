@@ -8,6 +8,11 @@ on:
         description: 'Skip Tests'
         required: false
         default: false
+      generate-screenshots:
+        type: boolean
+        description: 'Generate Screenshots'
+        required: false
+        default: false
       deploy-ios:
         type: boolean
         description: 'Deploy iOS'
@@ -103,19 +108,29 @@ jobs:
         run: |
           bundle install
 
-      - name: Run Fastlane
+      - name: Generate screenshots
         working-directory: ios
+        if: ${{ inputs.generate-screenshots }}
         shell: bash
         run: |
-          bundle exec fastlane build_deploy \
-            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
-            bundle_id:'com.stongef.monpacing' \
-            git_url:'${{ env.GIT_URL }}' \
-            git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
-            apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
-            apple_key_id:'${{ env.APPLE_KEY_ID }}' \
-            apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
-            apple_key_filepath:'${{ env.APPLE_KEY_FILE }}'
+          brew install ghostscript
+          brew install imagemagick
+          bundle exec fastlane generate_screenshots
+
+      # - name: Run Fastlane
+      #   working-directory: ios
+      #   shell: bash
+      #   run: |
+      #     bundle exec fastlane build_deploy \
+      #       build_number:'${{ needs.set_build_number.outputs.build_number }}' \
+      #       bundle_id:'com.stongef.monpacing' \
+      #       git_url:'${{ env.GIT_URL }}' \
+      #       git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
+      #       generate_screenshots:${{ inputs.generate-screenshots }} \
+      #       apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
+      #       apple_key_id:'${{ env.APPLE_KEY_ID }}' \
+      #       apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
+      #       apple_key_filepath:'${{ env.APPLE_KEY_FILE }}'
 
   build_deploy_android:
     name: "Build & Deploy Android"
@@ -172,11 +187,21 @@ jobs:
         run: |
           bundle install
 
-      - name: Run Fastlane
+      - name: Generate screenshots
         working-directory: android
+        if: ${{ inputs.generate-screenshots }}
         shell: bash
         run: |
-          bundle exec fastlane build_deploy \
-            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
-            package_name:'com.stongef.monpacing' \
-            playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'
+          brew install ghostscript
+          brew install imagemagick
+          bundle exec fastlane generate_screenshots
+
+      # - name: Run Fastlane
+      #   working-directory: android
+      #   shell: bash
+      #   run: |
+      #     bundle exec fastlane build_deploy \
+      #       build_number:'${{ needs.set_build_number.outputs.build_number }}' \
+      #       package_name:'com.stongef.monpacing' \
+      #       generate_screenshots:${{ inputs.generate-screenshots }} \
+      #       playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'
