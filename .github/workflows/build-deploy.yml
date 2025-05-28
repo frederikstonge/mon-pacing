@@ -108,13 +108,19 @@ jobs:
         run: |
           bundle install
 
-      - name: Generate screenshots
-        working-directory: ios
+      - name: Install ImageMagick
         if: ${{ inputs.generate-screenshots }}
+        working-directory: android
         shell: bash
         run: |
           brew install ghostscript
           brew install imagemagick
+
+      - name: Generate Screenshots
+        working-directory: ios
+        if: ${{ inputs.generate-screenshots }}
+        shell: bash
+        run: |
           bundle exec fastlane generate_screenshots
 
       # - name: Run Fastlane
@@ -187,13 +193,19 @@ jobs:
         run: |
           bundle install
 
-      - name: Generate screenshots
+      - name: Install ImageMagick
+        if: ${{ inputs.generate-screenshots }}
+        working-directory: android
+        shell: bash
+        run: |
+          sudo apt-get install ghostscript
+          sudo apt install imagemagick
+
+      - name: Generate Screenshots
         working-directory: android
         if: ${{ inputs.generate-screenshots }}
         shell: bash
         run: |
-          brew install ghostscript
-          brew install imagemagick
           bundle exec fastlane generate_screenshots
 
       # - name: Run Fastlane
