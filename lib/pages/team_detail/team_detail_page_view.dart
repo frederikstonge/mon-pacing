@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
@@ -16,6 +18,7 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../extensions/color_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/tag_model.dart';
+import '../../models/team_model.dart';
 import '../../repositories/tags_repository.dart';
 import '../../validators/validators.dart';
 import 'cubits/team_detail_cubit.dart';
@@ -23,7 +26,9 @@ import 'cubits/team_detail_state.dart';
 import 'widgets/team_performers.dart';
 
 class TeamDetailPageView extends StatefulWidget {
-  const TeamDetailPageView({super.key});
+  final FutureOr<void> Function(TeamModel value, BuildContext context) onConfirm;
+
+  const TeamDetailPageView({super.key, required this.onConfirm});
 
   @override
   State<TeamDetailPageView> createState() => _TeamDetailPageViewState();
@@ -98,9 +103,8 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                           autofocus: true,
                           initialValue: teamDetailState.team.name,
                           textCapitalization: TextCapitalization.sentences,
-                          onChanged:
-                              (value) =>
-                                  context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(name: value)),
+                          onChanged: (value) =>
+                              context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(name: value)),
                           validator: (value) => Validators.stringRequired(value),
                         ),
                       ),
@@ -125,10 +129,9 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                         performers: teamDetailState.team.performers,
                         addPerformer: !teamDetailState.editMode ? context.read<TeamDetailCubit>().addPerformer : null,
                         editPerformer: context.read<TeamDetailCubit>().editPerformer,
-                        removePerformer:
-                            teamDetailState.team.performers.length > 1 && !teamDetailState.editMode
-                                ? context.read<TeamDetailCubit>().removePerformer
-                                : null,
+                        removePerformer: teamDetailState.team.performers.length > 1 && !teamDetailState.editMode
+                            ? context.read<TeamDetailCubit>().removePerformer
+                            : null,
                         onDrag: context.read<TeamDetailCubit>().movePerformer,
                         onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       ),
@@ -146,9 +149,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                   child: LoadingButton.filled(
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
-                        final navigator = Navigator.of(context);
-                        await context.read<TeamDetailCubit>().onConfirm(teamDetailState.team);
-                        navigator.pop();
+                        await widget.onConfirm(teamDetailState.team, context);
                       }
                     },
                     child: Text(

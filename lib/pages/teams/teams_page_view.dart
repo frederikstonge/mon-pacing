@@ -64,8 +64,10 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                       context: context,
                       child: TeamDetailPageShell(
                         editMode: false,
-                        onConfirm: (team) async {
+                        onConfirm: (team, dialogContext) async {
+                          final navigator = Navigator.of(dialogContext);
                           await context.read<TeamsCubit>().add(team);
+                          navigator.pop();
                         },
                       ),
                     );
@@ -105,39 +107,40 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                         return TeamCard(
                           team: team,
                           onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                          edit:
-                              () => BottomSheetDialog.showDialog(
-                                context: context,
-                                child: TeamDetailPageShell(
-                                  team: team,
-                                  editMode: true,
-                                  onConfirm: (team) async {
-                                    await context.read<TeamsCubit>().edit(team);
-                                  },
-                                ),
-                              ),
-                          shouldDelete:
-                              () => MessageBoxDialog.questionShow(
-                                context,
-                                S
-                                    .of(context)
-                                    .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: team.name),
-                                S.of(context).delete,
-                                S.of(context).cancel,
-                              ),
+                          edit: () => BottomSheetDialog.showDialog(
+                            context: context,
+                            child: TeamDetailPageShell(
+                              team: team,
+                              editMode: true,
+                              onConfirm: (team, dialogContext) async {
+                                final navigator = Navigator.of(dialogContext);
+                                await context.read<TeamsCubit>().edit(team);
+                                navigator.pop();
+                              },
+                            ),
+                          ),
+                          shouldDelete: () => MessageBoxDialog.questionShow(
+                            context,
+                            S
+                                .of(context)
+                                .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: team.name),
+                            S.of(context).delete,
+                            S.of(context).cancel,
+                          ),
                           delete: () => context.read<TeamsCubit>().delete(team),
                           export: () => context.read<TeamsCubit>().export(team),
-                          duplicate:
-                              () => BottomSheetDialog.showDialog(
-                                context: context,
-                                child: TeamDetailPageShell(
-                                  editMode: false,
-                                  team: team,
-                                  onConfirm: (team) async {
-                                    await context.read<TeamsCubit>().add(team);
-                                  },
-                                ),
-                              ),
+                          duplicate: () => BottomSheetDialog.showDialog(
+                            context: context,
+                            child: TeamDetailPageShell(
+                              editMode: false,
+                              team: team,
+                              onConfirm: (team, dialogContext) async {
+                                final navigator = Navigator.of(dialogContext);
+                                await context.read<TeamsCubit>().add(team);
+                                navigator.pop();
+                              },
+                            ),
+                          ),
                         );
                       },
                     ),

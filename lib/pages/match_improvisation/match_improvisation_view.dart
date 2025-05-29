@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
@@ -10,13 +12,16 @@ import '../../components/improvisation_detail/improvisation_detail.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../../repositories/pacings_repository.dart';
 import 'cubits/match_improvisation_cubit.dart';
 import 'cubits/match_improvisation_state.dart';
 
 class MatchImprovisationView extends StatefulWidget {
-  const MatchImprovisationView({super.key});
+  final FutureOr<void> Function(ImprovisationModel improvisation, int index, BuildContext context) onConfirm;
+
+  const MatchImprovisationView({super.key, required this.onConfirm});
 
   @override
   State<MatchImprovisationView> createState() => _MatchImprovisationViewState();
@@ -48,10 +53,9 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
               children: [
                 CustomCard(
                   showIndicator: true,
-                  indicatorColor:
-                      matchImprovisationState.improvisation.type == ImprovisationType.compared
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.secondary,
+                  indicatorColor: matchImprovisationState.improvisation.type == ImprovisationType.compared
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.secondary,
                   contentPadding: 16,
                   child: Column(
                     children: [
@@ -107,12 +111,11 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                   child: LoadingButton.filled(
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
-                        final navigator = Navigator.of(context);
-                        await context.read<MatchImprovisationCubit>().onConfirm(
+                        await widget.onConfirm(
                           matchImprovisationState.improvisation,
                           matchImprovisationState.index,
+                          context,
                         );
-                        navigator.pop();
                       }
                     },
                     child: Text(

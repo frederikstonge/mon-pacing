@@ -6,14 +6,15 @@ import 'package:go_router/go_router.dart';
 
 import '../../components/search/search_dialog.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../models/tag_model.dart';
 import '../../repositories/tags_repository.dart';
 import '../../router/routes.dart';
 
 class TagsSearchPageView extends StatelessWidget {
   const TagsSearchPageView({super.key});
 
-  static Future<String?> showDialog(BuildContext context) async {
-    return await GoRouter.of(context).pushNamed<String>(Routes.tagsSearch);
+  static Future<TagModel?> showDialog(BuildContext context) async {
+    return await GoRouter.of(context).pushNamed<TagModel>(Routes.tagsSearch);
   }
 
   @override
@@ -21,16 +22,15 @@ class TagsSearchPageView extends StatelessWidget {
     return SearchDialog(
       onChanged: (query, _) => context.read<TagsRepository>().getAllTags(search: query),
       hintText: S.of(context).search(category: S.of(context).tags),
-      itemBuilder:
-          (context, item) => InkWell(
-            onTap: () {
-              Navigator.of(context).pop(item);
-            },
-            child: ListTile(
-              leading: const Icon(Icons.search),
-              title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-            ),
-          ),
+      itemBuilder: (context, item) => InkWell(
+        onTap: () {
+          Navigator.of(context).pop(TagModel.fromEntity(entity: item));
+        },
+        child: ListTile(
+          leading: const Icon(Icons.search),
+          title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+        ),
+      ),
     );
   }
 }

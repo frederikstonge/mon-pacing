@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,19 +13,17 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   final SettingsCubit settingsCubit;
   final TeamModel? team;
   final bool editMode;
-  final FutureOr<void> Function(TeamModel value) onConfirm;
 
-  TeamDetailCubit({required this.settingsCubit, required this.onConfirm, required this.editMode, this.team})
+  TeamDetailCubit({required this.settingsCubit, required this.editMode, this.team})
     : super(
         TeamDetailState(
           editMode: editMode,
-          team:
-              team != null
-                  ? editMode
-                      ? team.copyWith()
-                      // Temporary id to support ReorderableListView
-                      : team.copyWith(id: 0, performers: team.performers.map((e) => e.copyWith(id: -e.id)).toList())
-                  : const TeamModel(id: 0, createdDate: null, modifiedDate: null, name: '', color: 0),
+          team: team != null
+              ? editMode
+                    ? team.copyWith()
+                    // Temporary id to support ReorderableListView
+                    : team.copyWith(id: 0, performers: team.performers.map((e) => e.copyWith(id: -e.id)).toList())
+              : const TeamModel(id: 0, createdDate: null, modifiedDate: null, name: '', color: 0),
         ),
       );
 

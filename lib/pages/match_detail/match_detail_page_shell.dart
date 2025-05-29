@@ -12,21 +12,16 @@ import 'match_detail_page_view.dart';
 class MatchDetailPageShell extends StatelessWidget {
   final MatchModel? match;
   final PacingModel? pacing;
-  final FutureOr<bool> Function(MatchModel value) onConfirm;
+  final FutureOr<void> Function(MatchModel value, BuildContext context) onConfirm;
 
   const MatchDetailPageShell({super.key, required this.onConfirm, this.match, this.pacing});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) => MatchDetailCubit(
-            settingsCubit: context.read<SettingsCubit>(),
-            onConfirm: onConfirm,
-            pacing: pacing,
-            match: match,
-          )..initialize(),
-      child: const MatchDetailPageView(),
+      create: (context) =>
+          MatchDetailCubit(settingsCubit: context.read<SettingsCubit>(), pacing: pacing, match: match)..initialize(),
+      child: MatchDetailPageView(onConfirm: onConfirm),
     );
   }
 }

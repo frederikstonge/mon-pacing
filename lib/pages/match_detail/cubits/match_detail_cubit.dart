@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,35 +19,33 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   final SettingsCubit settingsCubit;
   final PacingModel? pacing;
   final MatchModel? match;
-  final FutureOr<bool> Function(MatchModel value) onConfirm;
 
-  MatchDetailCubit({required this.settingsCubit, required this.onConfirm, this.pacing, this.match})
+  MatchDetailCubit({required this.settingsCubit, this.pacing, this.match})
     : super(
         MatchDetailState(
           editMode: match != null,
-          match:
-              match != null
-                  ? match.copyWith()
-                  : MatchModel(
-                    id: 0,
-                    name: pacing!.name,
-                    createdDate: null,
-                    modifiedDate: null,
-                    // Temporary id to support ReorderableListView
-                    improvisations: List<ImprovisationModel>.from(
-                      pacing.improvisations.map((e) => e.copyWith(id: -e.id)),
-                    ),
-                    tags: List<TagModel>.from(pacing.tags.map((e) => e.copyWith(id: 0))),
-                    teams: [],
-                    penalties: [],
-                    points: [],
-                    enableStatistics: settingsCubit.state.defaultEnableStatistics,
-                    enablePenaltiesImpactPoints: settingsCubit.state.enableDefaultPenaltiesImpactPoints,
-                    penaltiesImpactType: settingsCubit.state.defaultPenaltiesImpactType,
-                    penaltiesRequiredToImpactPoints: settingsCubit.state.defaultPenaltiesRequiredToImpactPoints,
-                    enableMatchExpulsion: settingsCubit.state.enableDefaultMatchExpulsion,
-                    penaltiesRequiredToExpel: settingsCubit.state.defaultPenaltiesRequiredToExpel,
+          match: match != null
+              ? match.copyWith()
+              : MatchModel(
+                  id: 0,
+                  name: pacing!.name,
+                  createdDate: null,
+                  modifiedDate: null,
+                  // Temporary id to support ReorderableListView
+                  improvisations: List<ImprovisationModel>.from(
+                    pacing.improvisations.map((e) => e.copyWith(id: -e.id)),
                   ),
+                  tags: List<TagModel>.from(pacing.tags.map((e) => e.copyWith(id: 0))),
+                  teams: [],
+                  penalties: [],
+                  points: [],
+                  enableStatistics: settingsCubit.state.defaultEnableStatistics,
+                  enablePenaltiesImpactPoints: settingsCubit.state.enableDefaultPenaltiesImpactPoints,
+                  penaltiesImpactType: settingsCubit.state.defaultPenaltiesImpactType,
+                  penaltiesRequiredToImpactPoints: settingsCubit.state.defaultPenaltiesRequiredToImpactPoints,
+                  enableMatchExpulsion: settingsCubit.state.enableDefaultMatchExpulsion,
+                  penaltiesRequiredToExpel: settingsCubit.state.defaultPenaltiesRequiredToExpel,
+                ),
         ),
       );
 

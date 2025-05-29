@@ -80,55 +80,58 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
           textfieldTagsController: _tagController,
           initialTags: widget.initialTags.map((e) => e.name).toList(),
           letterCase: LetterCase.normal,
-          inputFieldBuilder:
-              (context, textFieldValues) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      suffixIcon: LoadingIconButton(
-                        tooltip: S.of(context).search(category: widget.label),
-                        icon: const Icon(Icons.search),
-                        onPressed: () => TagsSearchPageView.showDialog(context),
-                      ),
-                      hintText: widget.hintText,
-                      errorText: textFieldValues.error,
-                    ),
-                    autofocus: widget.autoFocus,
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    onTapOutside: (event) {
-                      if (widget.autoUnfocus) {
-                        if (textFieldValues.textEditingController.text.isNotEmpty) {
-                          textFieldValues.onTagSubmitted(textFieldValues.textEditingController.text);
-                        }
-
-                        FocusScope.of(context).unfocus();
+          inputFieldBuilder: (context, textFieldValues) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                textCapitalization: TextCapitalization.sentences,
+                decoration: InputDecoration(
+                  suffixIcon: LoadingIconButton(
+                    tooltip: S.of(context).search(category: widget.label),
+                    icon: const Icon(Icons.search),
+                    onPressed: () async {
+                      final result = await TagsSearchPageView.showDialog(context);
+                      if (result != null) {
+                        textFieldValues.onTagSubmitted(result.name);
                       }
                     },
-                    controller: textFieldValues.textEditingController,
-                    focusNode: textFieldValues.focusNode,
-                    onChanged: textFieldValues.onTagChanged,
-                    onSubmitted: textFieldValues.onTagSubmitted,
                   ),
-                  if (textFieldValues.tags.isNotEmpty) ...[
-                    Wrap(
-                      spacing: 8.0,
-                      children:
-                          textFieldValues.tags.map((String tag) {
-                            return Chip(
-                              label: Text(tag),
-                              deleteIcon: const Icon(Icons.cancel, size: 20),
-                              onDeleted: () {
-                                textFieldValues.onTagRemoved(tag);
-                              },
-                            );
-                          }).toList(),
-                    ),
-                  ],
-                ],
+                  hintText: widget.hintText,
+                  errorText: textFieldValues.error,
+                ),
+                autofocus: widget.autoFocus,
+                maxLines: 1,
+                keyboardType: TextInputType.text,
+                onTapOutside: (event) {
+                  if (widget.autoUnfocus) {
+                    if (textFieldValues.textEditingController.text.isNotEmpty) {
+                      textFieldValues.onTagSubmitted(textFieldValues.textEditingController.text);
+                    }
+
+                    FocusScope.of(context).unfocus();
+                  }
+                },
+                controller: textFieldValues.textEditingController,
+                focusNode: textFieldValues.focusNode,
+                onChanged: textFieldValues.onTagChanged,
+                onSubmitted: textFieldValues.onTagSubmitted,
               ),
+              if (textFieldValues.tags.isNotEmpty) ...[
+                Wrap(
+                  spacing: 8.0,
+                  children: textFieldValues.tags.map((String tag) {
+                    return Chip(
+                      label: Text(tag),
+                      deleteIcon: const Icon(Icons.cancel, size: 20),
+                      onDeleted: () {
+                        textFieldValues.onTagRemoved(tag);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ],
+            ],
+          ),
         ),
       ],
     );

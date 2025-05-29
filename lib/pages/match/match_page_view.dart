@@ -66,15 +66,14 @@ class MatchPageView extends StatelessWidget {
                 return BlocBuilder<TimerCubit, TimerState>(
                   builder: (context, timerState) {
                     return SliverScaffold(
-                      banner:
-                          timerState.timer != null
-                              ? TimerBanner(
-                                timer: timerState.timer!,
-                                match: match,
-                                improvisation: improvisation,
-                                selectedDurationIndex: selectedDurationIndex,
-                              )
-                              : null,
+                      banner: timerState.timer != null
+                          ? TimerBanner(
+                              timer: timerState.timer!,
+                              match: match,
+                              improvisation: improvisation,
+                              selectedDurationIndex: selectedDurationIndex,
+                            )
+                          : null,
                       appBar: BlocBuilder<SettingsCubit, SettingsState>(
                         builder: (context, settingsState) {
                           return SliverLogoAppbar(
@@ -96,47 +95,46 @@ class MatchPageView extends StatelessWidget {
                               ],
                               LoadingIconButton(
                                 tooltip: S.of(context).more,
-                                onPressed:
-                                    () => BottomSheetDialog.showDialog(
-                                      context: context,
-                                      child: MatchMenu(
-                                        match: match,
-                                        editDetails:
-                                            match.integrationId == null
-                                                ? () async {
-                                                  await BottomSheetDialog.showDialog(
-                                                    context: context,
-                                                    child: MatchDetailPageShell(
-                                                      match: match,
-                                                      onConfirm: (match) async {
-                                                        await context.read<MatchCubit>().edit(match);
-                                                        return true;
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                : null,
-                                        delete: () async {
-                                          final matchesCubit = context.read<MatchesCubit>();
-                                          final router = GoRouter.of(context);
-                                          final result = await MessageBoxDialog.questionShow(
-                                            context,
-                                            S
-                                                .of(context)
-                                                .areYouSureActionName(
-                                                  action: S.of(context).delete.toLowerCase(),
-                                                  name: match.name,
-                                                ),
-                                            S.of(context).delete,
-                                            S.of(context).cancel,
-                                          );
-                                          if (result == true) {
-                                            await matchesCubit.delete(match);
-                                            router.pop();
+                                onPressed: () => BottomSheetDialog.showDialog(
+                                  context: context,
+                                  child: MatchMenu(
+                                    match: match,
+                                    editDetails: match.integrationId == null
+                                        ? () async {
+                                            await BottomSheetDialog.showDialog(
+                                              context: context,
+                                              child: MatchDetailPageShell(
+                                                match: match,
+                                                onConfirm: (match, dialogContext) async {
+                                                  final navigator = Navigator.of(dialogContext);
+                                                  await context.read<MatchCubit>().edit(match);
+                                                  navigator.pop();
+                                                },
+                                              ),
+                                            );
                                           }
-                                        },
-                                      ),
-                                    ),
+                                        : null,
+                                    delete: () async {
+                                      final matchesCubit = context.read<MatchesCubit>();
+                                      final router = GoRouter.of(context);
+                                      final result = await MessageBoxDialog.questionShow(
+                                        context,
+                                        S
+                                            .of(context)
+                                            .areYouSureActionName(
+                                              action: S.of(context).delete.toLowerCase(),
+                                              name: match.name,
+                                            ),
+                                        S.of(context).delete,
+                                        S.of(context).cancel,
+                                      );
+                                      if (result == true) {
+                                        await matchesCubit.delete(match);
+                                        router.pop();
+                                      }
+                                    },
+                                  ),
+                                ),
                                 icon: const Icon(Icons.more_vert),
                               ),
                             ],
@@ -149,21 +147,21 @@ class MatchPageView extends StatelessWidget {
                             match: match,
                             selectedImprovisationIndex: selectedImprovisationIndex,
                             changePage: context.read<MatchCubit>().changePage,
-                            onAdd:
-                                canAddImprovisation
-                                    ? () {
-                                      BottomSheetDialog.showDialog(
-                                        context: context,
-                                        child: MatchImprovisationShell(
-                                          match: match,
-                                          onConfirm:
-                                              (improvisation, index) async => await context
-                                                  .read<MatchCubit>()
-                                                  .addImprovisation(improvisation, index),
-                                        ),
-                                      );
-                                    }
-                                    : null,
+                            onAdd: canAddImprovisation
+                                ? () {
+                                    BottomSheetDialog.showDialog(
+                                      context: context,
+                                      child: MatchImprovisationShell(
+                                        match: match,
+                                        onConfirm: (improvisation, index, dialogContext) async {
+                                          final navigator = Navigator.of(dialogContext);
+                                          await context.read<MatchCubit>().addImprovisation(improvisation, index);
+                                          navigator.pop();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                : null,
                           ),
                           pinned: true,
                         ),
@@ -186,46 +184,46 @@ class MatchPageView extends StatelessWidget {
                                   child: MatchImprovisationShell(
                                     improvisation: improvisation,
                                     match: match,
-                                    onConfirm:
-                                        (improvisation, index) async =>
-                                            await context.read<MatchCubit>().editImprovisation(improvisation, index),
+                                    onConfirm: (improvisation, index, dialogContext) async {
+                                      final navigator = Navigator.of(dialogContext);
+                                      await context.read<MatchCubit>().editImprovisation(improvisation, index);
+                                      navigator.pop();
+                                    },
                                   ),
                                 );
                               },
-                              onDelete:
-                                  canRemoveImprovisation
-                                      ? (improvisation) async {
-                                        if (improvisation.id ==
-                                            context.read<TimerCubit>().state.timer?.improvisationId) {
-                                          context.read<ToasterService>().show(
-                                            title: S
-                                                .of(context)
-                                                .timerIsActiveError(action: S.of(context).delete.toLowerCase()),
-                                            type: ToastificationType.error,
-                                          );
-                                          return;
-                                        }
-
-                                        final matchCubit = context.read<MatchCubit>();
-                                        final shouldDelete = await MessageBoxDialog.questionShow(
-                                          context,
-                                          S
+                              onDelete: canRemoveImprovisation
+                                  ? (improvisation) async {
+                                      if (improvisation.id == context.read<TimerCubit>().state.timer?.improvisationId) {
+                                        context.read<ToasterService>().show(
+                                          title: S
                                               .of(context)
-                                              .areYouSureActionName(
-                                                action: S.of(context).delete.toLowerCase(),
-                                                name: S
-                                                    .of(context)
-                                                    .improvisationNumber(order: selectedImprovisationIndex + 1),
-                                              ),
-                                          S.of(context).delete,
-                                          S.of(context).cancel,
+                                              .timerIsActiveError(action: S.of(context).delete.toLowerCase()),
+                                          type: ToastificationType.error,
                                         );
-
-                                        if (shouldDelete == true) {
-                                          await matchCubit.removeImprovisation(improvisation);
-                                        }
+                                        return;
                                       }
-                                      : null,
+
+                                      final matchCubit = context.read<MatchCubit>();
+                                      final shouldDelete = await MessageBoxDialog.questionShow(
+                                        context,
+                                        S
+                                            .of(context)
+                                            .areYouSureActionName(
+                                              action: S.of(context).delete.toLowerCase(),
+                                              name: S
+                                                  .of(context)
+                                                  .improvisationNumber(order: selectedImprovisationIndex + 1),
+                                            ),
+                                        S.of(context).delete,
+                                        S.of(context).cancel,
+                                      );
+
+                                      if (shouldDelete == true) {
+                                        await matchCubit.removeImprovisation(improvisation);
+                                      }
+                                    }
+                                  : null,
                             ),
                           ),
                           SliverToBoxAdapter(
@@ -234,8 +232,8 @@ class MatchPageView extends StatelessWidget {
                                 match: match,
                                 improvisation: improvisation,
                                 durationIndex: selectedDurationIndex,
-                                onDurationIndexChanged:
-                                    (durationIndex) => context.read<MatchCubit>().changeDuration(durationIndex),
+                                onDurationIndexChanged: (durationIndex) =>
+                                    context.read<MatchCubit>().changeDuration(durationIndex),
                               ),
                             ),
                           ),
@@ -261,53 +259,48 @@ class MatchPageView extends StatelessWidget {
                                       trailing: LoadingIconButton(
                                         icon: const Icon(Icons.add),
                                         tooltip: S.of(context).addPenalty,
-                                        onPressed:
-                                            () async => await BottomSheetDialog.showDialog(
-                                              context: context,
-                                              child: MatchPenaltyShell(
-                                                improvisationId: improvisation.id,
-                                                teams: match.teams,
-                                                onSave:
-                                                    (penalty) async =>
-                                                        await context.read<MatchCubit>().addPenalty(penalty),
-                                                integrationPenaltyTypes: match.integrationPenaltyTypes,
-                                              ),
-                                            ),
+                                        onPressed: () async => await BottomSheetDialog.showDialog(
+                                          context: context,
+                                          child: MatchPenaltyShell(
+                                            improvisationId: improvisation.id,
+                                            teams: match.teams,
+                                            onSave: (penalty) async =>
+                                                await context.read<MatchCubit>().addPenalty(penalty),
+                                            integrationPenaltyTypes: match.integrationPenaltyTypes,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     ...match.penalties
                                         .where((p) => p.improvisationId == improvisation.id)
                                         .map(
                                           (e) => InkWell(
-                                            onTap:
-                                                () => BottomSheetDialog.showDialog(
-                                                  context: context,
-                                                  child: MatchPenaltyShell(
-                                                    improvisationId: improvisation.id,
-                                                    teams: match.teams,
-                                                    penalty: e,
-                                                    integrationPenaltyTypes: match.integrationPenaltyTypes,
-                                                    onSave:
-                                                        (penalty) async =>
-                                                            await context.read<MatchCubit>().editPenalty(penalty),
-                                                  ),
-                                                ),
+                                            onTap: () => BottomSheetDialog.showDialog(
+                                              context: context,
+                                              child: MatchPenaltyShell(
+                                                improvisationId: improvisation.id,
+                                                teams: match.teams,
+                                                penalty: e,
+                                                integrationPenaltyTypes: match.integrationPenaltyTypes,
+                                                onSave: (penalty) async =>
+                                                    await context.read<MatchCubit>().editPenalty(penalty),
+                                              ),
+                                            ),
                                             child: ListTile(
                                               contentPadding: EdgeInsets.zero,
                                               leading: TeamColorAvatar(color: match.getTeamColor(e.teamId)),
                                               title: Text(
                                                 e.getPenaltyString(S.of(context), match, includePerformerName: false),
                                               ),
-                                              subtitle:
-                                                  e.performerId != null
-                                                      ? Text(
-                                                        match.teams
-                                                            .firstWhere((t) => t.id == e.teamId)
-                                                            .performers
-                                                            .firstWhere((p) => p.id == e.performerId)
-                                                            .name,
-                                                      )
-                                                      : null,
+                                              subtitle: e.performerId != null
+                                                  ? Text(
+                                                      match.teams
+                                                          .firstWhere((t) => t.id == e.teamId)
+                                                          .performers
+                                                          .firstWhere((p) => p.id == e.performerId)
+                                                          .name,
+                                                    )
+                                                  : null,
                                               trailing: LoadingIconButton(
                                                 icon: const Icon(Icons.remove),
                                                 tooltip: S.of(context).delete,
@@ -342,12 +335,11 @@ class MatchPageView extends StatelessWidget {
                             child: MatchSummary(
                               match: match,
                               onExport: () => context.read<MatchCubit>().exportExcel(),
-                              onExportIntegration:
-                                  match.integrationId != null
-                                      ? () async {
-                                        await _onExportIntegration(context, match);
-                                      }
-                                      : null,
+                              onExportIntegration: match.integrationId != null
+                                  ? () async {
+                                      await _onExportIntegration(context, match);
+                                    }
+                                  : null,
                             ),
                           ),
                         ],
