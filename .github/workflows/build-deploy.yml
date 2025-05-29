@@ -121,13 +121,13 @@ jobs:
         if: ${{ inputs.generate-screenshots }}
         shell: bash
         run: |
-          bundle exec fastlane generate_screenshots
+          fastlane generate_screenshots
 
       # - name: Run Fastlane
       #   working-directory: ios
       #   shell: bash
       #   run: |
-      #     bundle exec fastlane build_deploy \
+      #     fastlane build_deploy \
       #       build_number:'${{ needs.set_build_number.outputs.build_number }}' \
       #       bundle_id:'com.stongef.monpacing' \
       #       git_url:'${{ env.GIT_URL }}' \
@@ -206,13 +206,13 @@ jobs:
         if: ${{ inputs.generate-screenshots }}
         shell: bash
         run: |
-          bundle exec fastlane generate_screenshots
+         fastlane generate_screenshots
 
       # - name: Run Fastlane
       #   working-directory: android
       #   shell: bash
       #   run: |
-      #     bundle exec fastlane build_deploy \
+      #     fastlane build_deploy \
       #       build_number:'${{ needs.set_build_number.outputs.build_number }}' \
       #       package_name:'com.stongef.monpacing' \
       #       generate_screenshots:${{ inputs.generate-screenshots }} \
