@@ -18,7 +18,7 @@ platform :android do
     # Frame screenshots
     frameit(
       path: "./fastlane/metadata/android",
-      use_platform: "ANDROID",
+      use_platform: "ANY",
     )
 
     # Remove unframed screenshots
@@ -32,6 +32,7 @@ platform :android do
   # options:
   #  - build_number
   #  - package_name
+  #  - generate_screenshots
   #  - playstore_json_key (path)
   #     ** Requires a key.jks file in android/app directory and a key.properties file in android directory
   desc "Deploy a new build to the Google Play"
@@ -54,7 +55,7 @@ platform :android do
       skip_upload_metadata: false,
       skip_upload_changelogs: false,
       skip_upload_images: false,
-      skip_upload_screenshots: false,
+      skip_upload_screenshots: !options[:generate_screenshots],
     )
   end
 

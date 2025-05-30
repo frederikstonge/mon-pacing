@@ -38,6 +38,7 @@ platform :ios do
   #  - bundle_id
   #  - git_url
   #  - git_basic_authorization
+  #  - generate_screenshots
   #  - apple_team_id
   #  - apple_key_id
   #  - apple_issuer_id
@@ -107,7 +108,7 @@ platform :ios do
       automatic_release: true,
       force: true, # Skip HTML report verification
       precheck_include_in_app_purchases: false,
-      skip_screenshots: false,
+      skip_screenshots: !options[:generate_screenshots],
       overwrite_screenshots: true,
       skip_metadata: false,
       reject_if_possible: true,
