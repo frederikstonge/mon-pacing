@@ -15,16 +15,14 @@
     "show_complete_frame": false,
     "stack_title" : false,
     "title_below_image": false,
-    "use_platform": "ANDROID"
+    "use_platform": "ANY"
   },
   "data": [
     {
-      "use_platform": "IOS",
       "filter": "ANDROID_10_TABLET",
       "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
     },
     {
-      "use_platform": "IOS",
       "filter": "ANDROID_7_TABLET",
       "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
     },
