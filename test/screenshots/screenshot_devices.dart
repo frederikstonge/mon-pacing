@@ -6,7 +6,7 @@ enum CustomGoldenScreenshotDevices {
   android10InchTablet(
     ScreenshotDevice(
       platform: TargetPlatform.android,
-      resolution: Size(1600, 2560),
+      resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'android/tenInchScreenshots/',
       frameBuilder: ScreenshotFrame.noFrame,
@@ -16,7 +16,7 @@ enum CustomGoldenScreenshotDevices {
   android7InchTablet(
     ScreenshotDevice(
       platform: TargetPlatform.android,
-      resolution: Size(1600, 2560),
+      resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'android/sevenInchScreenshots/',
       frameBuilder: ScreenshotFrame.noFrame,
@@ -27,8 +27,8 @@ enum CustomGoldenScreenshotDevices {
   androidPhone(
     ScreenshotDevice(
       platform: TargetPlatform.android,
-      resolution: Size(1440, 3120),
-      pixelRatio: 10 / 3,
+      resolution: Size(1080, 2340),
+      pixelRatio: 2.5,
       goldenSubFolder: 'android/phoneScreenshots/',
       frameBuilder: ScreenshotFrame.android,
     ),
