@@ -1,34 +1,36 @@
 {
-    "device_frame_version": "latest",
-    "default": {
-      "keyword": {
-        "font": "../../../../fonts/Poppins-Bold.ttf",
-        "color": "#8BC34A"
-      },
-      "title": {
-        "font": "../../../../fonts/Poppins-Regular.ttf",
-        "font_size": 128,
-        "color": "#545454"
-      },
-      "background": "../../../../assets/ic_logo.png",
-      "padding": 50,
-      "show_complete_frame": false,
-      "stack_title" : false,
-      "title_below_image": false,
-      "use_platform": "ANDROID"
+  "device_frame_version": "latest",
+  "default": {
+    "keyword": {
+      "font": "../../../../fonts/Poppins-Bold.ttf",
+      "color": "#8BC34A"
     },
-    "data": [
-      {
-        "filter": "ANDROID_10_TABLET",
-        "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
-      },
-      {
-        "filter": "ANDROID_7_TABLET",
-        "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
-      },
-      {
-        "filter": "ANDROID_PHONE",
-        "force_device_type": "Google Pixel 5"
-      }
-    ]
-  }
+    "title": {
+      "font": "../../../../fonts/Poppins-Regular.ttf",
+      "font_size": 128,
+      "color": "#545454"
+    },
+    "background": "../../../../assets/ic_logo.png",
+    "padding": 50,
+    "show_complete_frame": false,
+    "stack_title" : false,
+    "title_below_image": false,
+    "use_platform": "ANDROID"
+  },
+  "data": [
+    {
+      "use_platform": "IOS",
+      "filter": "ANDROID_10_TABLET",
+      "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
+    },
+    {
+      "use_platform": "IOS",
+      "filter": "ANDROID_7_TABLET",
+      "force_device_type": "iPad Pro (12.9-inch) (4th generation)"
+    },
+    {
+      "filter": "ANDROID_PHONE",
+      "force_device_type": "Google Pixel 5"
+    }
+  ]
+}
