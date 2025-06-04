@@ -51,6 +51,7 @@ dependencies:
   textfield_tags: ^3.0.1
   toastification: ^3.0.1
   url_launcher: ^6.3.1
+  uuid: ^4.5.1
   wakelock_plus: ^1.2.8
 
 dev_dependencies:

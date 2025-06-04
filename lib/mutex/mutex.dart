@@ -1,18 +1,23 @@
 import 'dart:async';
+import 'dart:collection';
+
+import 'package:uuid/uuid.dart';
 
 class Mutex {
-  static bool _locked = false;
+  static Uuid uuid = Uuid();
+  static ListQueue<String> queue = ListQueue<String>();
 
   static Future<T> protect<T>(FutureOr<T> Function() action) async {
-    while (_locked) {
+    final lockId = uuid.v4();
+    queue.addLast(lockId);
+    while (queue.first != lockId) {
       await Future.delayed(const Duration(milliseconds: 100));
     }
 
-    _locked = true;
     try {
       return await action();
     } finally {
-      _locked = false;
+      queue.removeFirst();
     }
   }
 }
