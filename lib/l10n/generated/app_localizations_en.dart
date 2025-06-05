@@ -262,6 +262,9 @@ class SEn extends S {
   String get migrationCompleted => 'Migration completed';
 
   @override
+  String get migrationError => 'An error occurred during migration. Please try again later.';
+
+  @override
   String get migrationMatches => 'Migrating matches...';
 
   @override

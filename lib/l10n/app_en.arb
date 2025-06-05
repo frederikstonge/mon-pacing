@@ -145,6 +145,7 @@
   "matches": "Matches",
   "matchSummary": "Match summary",
   "migrationCompleted": "Migration completed",
+  "migrationError"  : "An error occurred during migration. Please try again later.",
   "migrationMatches": "Migrating matches...",
   "migrationPacings": "Migrating pacings...",
   "migrationStarted": "Starting database migration...",

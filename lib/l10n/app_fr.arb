@@ -72,6 +72,7 @@
   "matches": "Matchs",
   "matchSummary": "Sommaire du match",
   "migrationCompleted": "Migration complétée",
+  "migrationError": "Une erreur est survenue lors de la migration. Veuillez réessayer plus tard.",
   "migrationMatches": "Migration des matchs...",
   "migrationPacings": "Migration des pacings...",
   "migrationStarted": "Migration de la base de données...",

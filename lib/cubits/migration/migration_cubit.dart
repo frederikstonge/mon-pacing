@@ -9,6 +9,10 @@ class MigrationCubit extends HydratedCubit<MigrationState> {
     emit(state.copyWith(status: MigrationStatus.running, count: 0, total: total, title: title));
   }
 
+  void migrationError({required String errorMessage}) {
+    emit(state.copyWith(status: MigrationStatus.error, count: null, total: null, errorMessage: errorMessage));
+  }
+
   void updateProgress({int? count, String? title}) {
     emit(state.copyWith(count: count, title: title));
   }

@@ -524,6 +524,12 @@ abstract class S {
   /// **'Migration completed'**
   String get migrationCompleted;
 
+  /// No description provided for @migrationError.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred during migration. Please try again later.'**
+  String get migrationError;
+
   /// No description provided for @migrationMatches.
   ///
   /// In en, this message translates to:

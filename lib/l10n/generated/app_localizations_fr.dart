@@ -262,6 +262,9 @@ class SFr extends S {
   String get migrationCompleted => 'Migration complétée';
 
   @override
+  String get migrationError => 'Une erreur est survenue lors de la migration. Veuillez réessayer plus tard.';
+
+  @override
   String get migrationMatches => 'Migration des matchs...';
 
   @override
