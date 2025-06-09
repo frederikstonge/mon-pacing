@@ -366,10 +366,10 @@ class DatabaseRepository {
           migrationCubit.updateProgress(count: progress++);
         }
       }
-    } finally {
-      if (total > 0) {
-        migrationCubit.migrationError(errorMessage: Localizer.current.migrationError);
-      }
+
+      migrationCubit.completeMigration(title: Localizer.current.migrationCompleted);
+    } catch (_) {
+      migrationCubit.migrationError(errorMessage: Localizer.current.migrationError);
     }
   }
 
