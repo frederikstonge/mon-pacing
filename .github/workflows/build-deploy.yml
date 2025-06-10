@@ -13,6 +13,16 @@ on:
         description: 'Generate Screenshots'
         required: false
         default: false
+      upload-images:
+        type: boolean
+        description: 'Upload images (Android only)'
+        required: false
+        default: false
+      upload-metadata:
+        type: boolean
+        description: 'Upload metadata'
+        required: false
+        default: false
       deploy-ios:
         type: boolean
         description: 'Deploy iOS'
@@ -27,10 +37,14 @@ on:
         type: string
         description: 'Release Notes (fr-CA):'
         required: true
+        default: |
+          - Correction de bugs
       release_notes_en_CA:
         type: string
         description: 'Release Notes (en-CA):'
         required: true
+        default: |
+          - Bug fixes
 
 jobs:
   set_build_number:
@@ -94,8 +108,13 @@ jobs:
         working-directory: ios
         shell: bash
         run: |
-          echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/en-CA/release_notes.txt
-          echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/fr-CA/release_notes.txt
+          if [ "${{ github.event.inputs.release_notes_en_CA }}" ];then
+            echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/en-CA/release_notes.txt
+          fi
+
+          if [ "${{ github.event.inputs.release_notes_fr_CA }}" ];then
+            echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/fr-CA/release_notes.txt
+          fi
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
@@ -132,7 +151,8 @@ jobs:
             bundle_id:'com.stongef.monpacing' \
             git_url:'${{ env.GIT_URL }}' \
             git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
-            generate_screenshots:${{ inputs.generate-screenshots }} \
+            upload_screenshots:${{ inputs.generate-screenshots }} \
+            upload_metadata:${{ inputs.upload-metadata }} \
             apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
@@ -215,5 +235,7 @@ jobs:
           bundle exec fastlane build_deploy \
             build_number:'${{ needs.set_build_number.outputs.build_number }}' \
             package_name:'com.stongef.monpacing' \
-            generate_screenshots:${{ inputs.generate-screenshots }} \
+            upload_screenshots:${{ inputs.generate-screenshots }} \
+            upload_images:${{ inputs.upload-images }} \
+            upload_metadata:${{ inputs.upload-metadata }} \
             playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'

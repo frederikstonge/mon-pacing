@@ -32,7 +32,9 @@ platform :android do
   # options:
   #  - build_number
   #  - package_name
-  #  - generate_screenshots
+  #  - upload_screenshots
+  #  - upload_images
+  #  - upload_metadata
   #  - playstore_json_key (path)
   #     ** Requires a key.jks file in android/app directory and a key.properties file in android directory
   desc "Deploy a new build to the Google Play"
@@ -52,10 +54,10 @@ platform :android do
       track: "production",
       release_status: "completed",
       changes_not_sent_for_review: false,
-      skip_upload_metadata: false,
+      skip_upload_metadata: !options[:upload_metadata],
       skip_upload_changelogs: false,
-      skip_upload_images: false,
-      skip_upload_screenshots: !options[:generate_screenshots],
+      skip_upload_images: !options[:upload_images],
+      skip_upload_screenshots: !options[:upload_screenshots],
     )
   end
 
