@@ -58,21 +58,21 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
         return;
       case AppLifecycleState.resumed:
         _subscription = controller.barcodes.listen(_handleBarcode);
-        unawaited(controller.start());
+        controller.start();
       case AppLifecycleState.inactive:
-        unawaited(_subscription?.cancel());
+        _subscription?.cancel();
         _subscription = null;
-        unawaited(controller.stop());
+        controller.stop();
     }
   }
 
   @override
-  Future<void> dispose() async {
+  void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    unawaited(_subscription?.cancel());
+    _subscription?.cancel();
     _subscription = null;
+    controller.dispose();
     super.dispose();
-    await controller.dispose();
   }
 
   @override
@@ -101,7 +101,12 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           ),
         ],
       ),
-      body: Stack(children: [MobileScanner(controller: controller), _buildLoading()]),
+      body: Stack(
+        children: [
+          MobileScanner(controller: controller),
+          _buildLoading(),
+        ],
+      ),
     );
   }
 
