@@ -13,7 +13,7 @@
     "background": "../../../../assets/ic_logo.png",
     "padding": 50,
     "show_complete_frame": false,
-    "stack_title" : false,
+    "stack_title": false,
     "title_below_image": false,
     "use_platform": "ANY"
   },

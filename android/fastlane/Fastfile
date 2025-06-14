@@ -16,10 +16,7 @@ platform :android do
     end
 
     # Frame screenshots
-    frameit(
-      path: "./fastlane/metadata/android",
-      use_platform: "ANY",
-    )
+    frameit(path: "./fastlane/metadata/android")
 
     # Remove unframed screenshots
     Dir.chdir("./metadata/android") do

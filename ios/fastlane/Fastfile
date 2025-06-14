@@ -21,10 +21,7 @@ platform :ios do
     end
 
     # Frame screenshots
-    frameit(
-      path: "./fastlane/screenshots",
-      use_platform: "IOS",
-    )
+    frameit(path: "./fastlane/screenshots")
 
     # Remove unframed screenshots
     Dir.chdir("./screenshots") do
