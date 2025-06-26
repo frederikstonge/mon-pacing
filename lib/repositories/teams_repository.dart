@@ -40,17 +40,17 @@ class TeamsRepository {
 
     final previousEntity = await box.getAsync(entity.id);
 
-    final removedImprovisations = previousEntity!.performers
+    final removedPerformers = previousEntity!.performers
         .where((e) => !entity.performers.any((i) => i.id == e.id))
         .toList();
-    final editedImprovisations = entity.performers.where((e) => e.id != 0).toList();
+    final editedPerformers = entity.performers.where((e) => e.id != 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
     final editedTags = entity.tags.where((e) => e.id != 0).toList();
 
     db.runInTransaction(TxMode.write, () {
-      performerBox.putMany(editedImprovisations);
-      performerBox.removeMany(removedImprovisations.map((e) => e.id).toList());
+      performerBox.putMany(editedPerformers);
+      performerBox.removeMany(removedPerformers.map((e) => e.id).toList());
 
       tagBox.putMany(editedTags);
       tagBox.removeMany(removedTags.map((e) => e.id).toList());
