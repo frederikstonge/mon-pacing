@@ -61,15 +61,15 @@ class MatchesRepository {
 
     final previousEntity = await box.getAsync(entity.id);
 
-    final removedImprovisations =
-        previousEntity!.improvisations.where((e) => !entity.improvisations.any((i) => i.id == e.id)).toList();
+    final removedImprovisations = previousEntity!.improvisations
+        .where((e) => !entity.improvisations.any((i) => i.id == e.id))
+        .toList();
     final editedImprovisations = entity.improvisations.where((e) => e.id != 0).toList();
 
-    final removedPerformers =
-        previousEntity.teams
-            .selectMany((t) => t.performers)
-            .where((e) => !entity.teams.any((i) => i.id == e.id))
-            .toList();
+    final removedPerformers = previousEntity.teams
+        .selectMany((t) => t.performers)
+        .where((e) => !entity.teams.selectMany((nt) => nt.performers).any((i) => i.id == e.id))
+        .toList();
     final editedPerformers = entity.teams.selectMany((t) => t.performers).where((e) => e.id != 0).toList();
 
     final removedTeams = previousEntity.teams.where((e) => !entity.teams.any((i) => i.id == e.id)).toList();
@@ -117,7 +117,8 @@ class MatchesRepository {
   Future<MatchEntity?> get(int id) async {
     final db = await databaseRepository.database;
     final box = db.box<MatchEntity>();
-    return await box.getAsync(id);
+    final entity = await box.getAsync(id);
+    return entity;
   }
 
   Future<List<MatchEntity>> getList(int skip, int take) async {
