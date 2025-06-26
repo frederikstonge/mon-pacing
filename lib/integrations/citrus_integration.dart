@@ -85,12 +85,11 @@ class CitrusIntegration implements MatchIntegrationBase {
       team2Color = _getRandomTeamColor(except: team1Color);
     }
 
-    final penaltyTypes =
-        document
-            .querySelectorAll('form#addPunForm select#pun option')
-            .map((e) => e.text)
-            .where((e) => e.isNotEmpty)
-            .toList();
+    final penaltyTypes = document
+        .querySelectorAll('form#addPunForm select#pun option')
+        .map((e) => e.text)
+        .where((e) => e.isNotEmpty)
+        .toList();
 
     var performerId = 0;
     return MatchModel(
@@ -211,22 +210,17 @@ class CitrusIntegration implements MatchIntegrationBase {
 
     final teamName = _sanitize(teamSelector.getElementsByTagName('h3').map((e) => e.text).join(' - '));
 
-    final performers =
-        teamSelector.querySelectorAll('.player').map((element) {
-          final data = element.getElementsByTagName('p');
-          final performerName = _sanitize(data.last.text);
-          final metadata = {
-            'role': _sanitize(data[0].text),
-            'number': _sanitize(data[1].text),
-            'pronoun': _sanitize(data[2].text),
-            'name': _sanitize(data[3].text),
-          };
-          return PerformerModel(
-            name: performerName,
-            id: getPerformerId(),
-            integrationAdditionalData: jsonEncode(metadata),
-          );
-        }).toList();
+    final performers = teamSelector.querySelectorAll('.player').map((element) {
+      final data = element.getElementsByTagName('p');
+      final performerName = _sanitize(data.last.text);
+      final metadata = {
+        'role': _sanitize(data[0].text),
+        'number': _sanitize(data[1].text),
+        'pronoun': _sanitize(data[2].text),
+        'name': _sanitize(data[3].text),
+      };
+      return PerformerModel(name: performerName, id: getPerformerId(), integrationAdditionalData: jsonEncode(metadata));
+    }).toList();
 
     return TeamModel(
       id: teamId,

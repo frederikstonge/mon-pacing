@@ -22,10 +22,11 @@ class CustomCard extends StatelessWidget {
       shape: showIndicator && indicatorColor != null ? Themes.getCardShapeBorder(indicatorColor!) : null,
       child: Container(
         padding: EdgeInsets.all(contentPadding),
-        decoration:
-            showIndicator && indicatorColor != null
-                ? BoxDecoration(border: Border(left: BorderSide(color: indicatorColor!, width: 6)))
-                : null,
+        decoration: showIndicator && indicatorColor != null
+            ? BoxDecoration(
+                border: Border(left: BorderSide(color: indicatorColor!, width: 6)),
+              )
+            : null,
         child: child,
       ),
     );

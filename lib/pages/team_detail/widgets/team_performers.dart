@@ -47,57 +47,54 @@ class TeamPerformers extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
           onReorder: (oldIndex, newIndex) => onDrag(oldIndex, newIndex),
-          children:
-              performers
-                  .asMap()
-                  .entries
-                  .map(
-                    (d) => Container(
-                      key: ValueKey(d.value.id),
-                      color: Theme.of(context).cardTheme.color,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 16.0),
-                              child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
-                            ),
-                            Expanded(
-                              child: TeamPerformerItem(
-                                key: ValueKey(d.value.id),
-                                performer: d.value,
-                                valueChanged: (value) async {
-                                  await editPerformer(value);
-                                },
-                              ),
-                            ),
-                            LoadingIconButton(
-                              tooltip: S.of(context).add,
-                              icon: const Icon(Icons.add),
-                              onPressed:
-                                  addPerformer != null
-                                      ? () async {
-                                        await addPerformer!();
-                                      }
-                                      : null,
-                            ),
-                            LoadingIconButton(
-                              tooltip: S.of(context).remove,
-                              icon: const Icon(Icons.remove),
-                              onPressed:
-                                  removePerformer != null
-                                      ? () async {
-                                        await removePerformer!(d.value);
-                                      }
-                                      : null,
-                            ),
-                          ],
+          children: performers
+              .asMap()
+              .entries
+              .map(
+                (d) => Container(
+                  key: ValueKey(d.value.id),
+                  color: Theme.of(context).cardTheme.color,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
                         ),
-                      ),
+                        Expanded(
+                          child: TeamPerformerItem(
+                            key: ValueKey(d.value.id),
+                            performer: d.value,
+                            valueChanged: (value) async {
+                              await editPerformer(value);
+                            },
+                          ),
+                        ),
+                        LoadingIconButton(
+                          tooltip: S.of(context).add,
+                          icon: const Icon(Icons.add),
+                          onPressed: addPerformer != null
+                              ? () async {
+                                  await addPerformer!();
+                                }
+                              : null,
+                        ),
+                        LoadingIconButton(
+                          tooltip: S.of(context).remove,
+                          icon: const Icon(Icons.remove),
+                          onPressed: removePerformer != null
+                              ? () async {
+                                  await removePerformer!(d.value);
+                                }
+                              : null,
+                        ),
+                      ],
                     ),
-                  )
-                  .toList(),
+                  ),
+                ),
+              )
+              .toList(),
         ),
       ],
     );

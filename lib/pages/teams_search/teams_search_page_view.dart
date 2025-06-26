@@ -26,16 +26,15 @@ class TeamsSearchPageView extends StatelessWidget {
         return teams.map((e) => TeamModel.fromEntity(entity: e)).toList();
       },
       hintText: S.of(context).search(category: S.of(context).teams),
-      itemBuilder:
-          (context, item) => InkWell(
-            onTap: () {
-              Navigator.of(context).pop(item);
-            },
-            child: ListTile(
-              leading: TeamColorAvatar(color: Color(item.color)),
-              title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-            ),
-          ),
+      itemBuilder: (context, item) => InkWell(
+        onTap: () {
+          Navigator.of(context).pop(item);
+        },
+        child: ListTile(
+          leading: TeamColorAvatar(color: Color(item.color)),
+          title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+        ),
+      ),
     );
   }
 }

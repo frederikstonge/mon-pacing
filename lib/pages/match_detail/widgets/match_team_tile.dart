@@ -93,20 +93,19 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
               onChanged: (value) => widget.onChanged.call(widget.team.copyWith(name: value)),
               validator: (value) => Validators.stringRequired(value),
               decoration: InputDecoration(
-                suffixIcon:
-                    widget.allowSearch
-                        ? LoadingIconButton(
-                          tooltip: S.of(context).search(category: S.of(context).match.toLowerCase()),
-                          icon: const Icon(Icons.search),
-                          onPressed: () async {
-                            final result = await TeamsSearchPageView.showDialog(context);
-                            if (result != null) {
-                              widget.onTeamSelected(result);
-                              teamNameController.text = result.name;
-                            }
-                          },
-                        )
-                        : null,
+                suffixIcon: widget.allowSearch
+                    ? LoadingIconButton(
+                        tooltip: S.of(context).search(category: S.of(context).match.toLowerCase()),
+                        icon: const Icon(Icons.search),
+                        onPressed: () async {
+                          final result = await TeamsSearchPageView.showDialog(context);
+                          if (result != null) {
+                            widget.onTeamSelected(result);
+                            teamNameController.text = result.name;
+                          }
+                        },
+                      )
+                    : null,
               ),
             ),
             trailing: LoadingIconButton(
@@ -121,8 +120,9 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
             performers: widget.team.performers,
             addPerformer: widget.addPerformer != null ? () => widget.addPerformer!(widget.team) : null,
             editPerformer: (performer) => widget.editPerformer(widget.team, performer),
-            removePerformer:
-                widget.removePerformer != null ? (index) => widget.removePerformer!(widget.team, index) : null,
+            removePerformer: widget.removePerformer != null
+                ? (index) => widget.removePerformer!(widget.team, index)
+                : null,
             onDrag: (oldIndex, newIndex) => widget.onDrag(widget.team, oldIndex, newIndex),
             onDragStart: widget.onDragStart,
           ),

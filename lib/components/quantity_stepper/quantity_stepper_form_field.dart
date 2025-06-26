@@ -28,44 +28,42 @@ class QuantityStepperFormField extends FormField<int> {
     super.onSaved,
     super.restorationId,
   }) : super(
-         validator:
-             (value) =>
-                 Validators.intRequired(value) ??
-                 Validators.greaterThan(value!, minValue) ??
-                 Validators.lesserThan(value!, maxValue) ??
-                 Validators.intMultipleOf(value!, multiple),
-         builder:
-             (FormFieldState<int> state) => Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               mainAxisSize: MainAxisSize.min,
-               children: [
-                 QuantityStepper(
-                   initialValue: state.value ?? initialValue ?? minValue ?? multiple,
-                   onChanged: (value) async {
-                     state.didChange(value);
-                     await onChanged.call(value);
-                   },
-                   inputHeight: inputHeight,
-                   inputWidth: inputWidth,
-                   minValue: minValue,
-                   maxValue: maxValue,
-                   multiple: multiple,
-                   hasError: state.hasError,
-                 ),
-                 if (state.hasError && state.errorText != null) ...[
-                   Padding(
-                     padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                     child: Text(
-                       state.errorText!,
-                       maxLines: 1,
-                       overflow: TextOverflow.ellipsis,
-                       style: Theme.of(
-                         state.context,
-                       ).textTheme.labelSmall!.copyWith(color: Theme.of(state.context).colorScheme.error),
-                     ),
-                   ),
-                 ],
-               ],
+         validator: (value) =>
+             Validators.intRequired(value) ??
+             Validators.greaterThan(value!, minValue) ??
+             Validators.lesserThan(value!, maxValue) ??
+             Validators.intMultipleOf(value!, multiple),
+         builder: (FormFieldState<int> state) => Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           mainAxisSize: MainAxisSize.min,
+           children: [
+             QuantityStepper(
+               initialValue: state.value ?? initialValue ?? minValue ?? multiple,
+               onChanged: (value) async {
+                 state.didChange(value);
+                 await onChanged.call(value);
+               },
+               inputHeight: inputHeight,
+               inputWidth: inputWidth,
+               minValue: minValue,
+               maxValue: maxValue,
+               multiple: multiple,
+               hasError: state.hasError,
              ),
+             if (state.hasError && state.errorText != null) ...[
+               Padding(
+                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                 child: Text(
+                   state.errorText!,
+                   maxLines: 1,
+                   overflow: TextOverflow.ellipsis,
+                   style: Theme.of(
+                     state.context,
+                   ).textTheme.labelSmall!.copyWith(color: Theme.of(state.context).colorScheme.error),
+                 ),
+               ),
+             ],
+           ],
+         ),
        );
 }

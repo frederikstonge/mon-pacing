@@ -25,7 +25,10 @@ class TextHeader extends StatelessWidget {
                 ),
               ),
               if (tooltip != null) ...[
-                Padding(padding: const EdgeInsets.only(left: 4), child: CustomTooltip(tooltip: tooltip!)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: CustomTooltip(tooltip: tooltip!),
+                ),
               ],
             ],
           ),

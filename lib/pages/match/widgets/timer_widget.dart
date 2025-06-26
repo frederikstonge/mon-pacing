@@ -53,21 +53,20 @@ class TimerWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: SegmentedButton(
                   style: const ButtonStyle(visualDensity: VisualDensity(vertical: -4)),
-                  segments:
-                      durations
-                          .asMap()
-                          .entries
-                          .map(
-                            (e) => ButtonSegment(
-                              value: e.key,
-                              label: Text(
-                                includeHuddleTimer && e.key == 0 ? S.of(context).huddle : e.value.toImprovDuration(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          )
-                          .toList(),
+                  segments: durations
+                      .asMap()
+                      .entries
+                      .map(
+                        (e) => ButtonSegment(
+                          value: e.key,
+                          label: Text(
+                            includeHuddleTimer && e.key == 0 ? S.of(context).huddle : e.value.toImprovDuration(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      )
+                      .toList(),
                   selected: {durationIndex},
                   onSelectionChanged: (values) async {
                     await onDurationIndexChanged(values.first);
@@ -88,43 +87,39 @@ class TimerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 LoadingIconButton.tonal(
-                  onPressed:
-                      isActive
-                          ? () async => await context.read<TimerCubit>().start(
-                            match.id,
-                            match.name,
-                            improvisation.id,
-                            durationIndex,
-                            currentDuration,
-                          )
-                          : null,
+                  onPressed: isActive
+                      ? () async => await context.read<TimerCubit>().start(
+                          match.id,
+                          match.name,
+                          improvisation.id,
+                          durationIndex,
+                          currentDuration,
+                        )
+                      : null,
                   icon: const Icon(Icons.replay),
                   tooltip: S.of(context).pause,
                 ),
                 LoadingIconButton.filled(
-                  onPressed:
-                      isActive
-                          ? timerState.timer!.status == TimerStatus.paused
-                              ? () => context.read<TimerCubit>().resume()
-                              : () => context.read<TimerCubit>().pause()
-                          : () async => await context.read<TimerCubit>().start(
-                            match.id,
-                            match.name,
-                            improvisation.id,
-                            durationIndex,
-                            currentDuration,
-                          ),
-                  icon:
-                      isActive
-                          ? timerState.timer!.status == TimerStatus.paused
-                              ? const Icon(Icons.play_arrow)
-                              : const Icon(Icons.pause)
-                          : const Icon(Icons.play_arrow),
+                  onPressed: isActive
+                      ? timerState.timer!.status == TimerStatus.paused
+                            ? () => context.read<TimerCubit>().resume()
+                            : () => context.read<TimerCubit>().pause()
+                      : () async => await context.read<TimerCubit>().start(
+                          match.id,
+                          match.name,
+                          improvisation.id,
+                          durationIndex,
+                          currentDuration,
+                        ),
+                  icon: isActive
+                      ? timerState.timer!.status == TimerStatus.paused
+                            ? const Icon(Icons.play_arrow)
+                            : const Icon(Icons.pause)
+                      : const Icon(Icons.play_arrow),
                   size: IconButtonSize.large,
-                  tooltip:
-                      isActive && timerState.timer!.status == TimerStatus.paused
-                          ? S.of(context).pause
-                          : S.of(context).start,
+                  tooltip: isActive && timerState.timer!.status == TimerStatus.paused
+                      ? S.of(context).pause
+                      : S.of(context).start,
                 ),
                 LoadingIconButton.tonal(
                   onPressed: isActive ? () async => await context.read<TimerCubit>().stop() : null,

@@ -37,7 +37,10 @@ class TeamCard extends StatelessWidget {
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
-        child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.delete, color: Colors.white)),
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(Icons.delete, color: Colors.white),
+        ),
       ),
       key: ValueKey(team.id),
       direction: DismissDirection.endToStart,
