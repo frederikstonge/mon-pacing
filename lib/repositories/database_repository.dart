@@ -28,7 +28,7 @@ class DatabaseRepository {
   static const pageSize = 20;
   final LegacyDatabaseRepository legacyDatabaseRepository;
   final MigrationCubit migrationCubit;
-  Store? _database;
+  static Store? _database;
 
   DatabaseRepository({required this.legacyDatabaseRepository, required this.migrationCubit});
 
