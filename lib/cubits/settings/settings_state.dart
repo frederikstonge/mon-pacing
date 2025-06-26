@@ -33,7 +33,7 @@ class SettingsState with SettingsStateMappable {
     this.defaultImprovisationDurationInSeconds = 150,
     this.defaultTimeBufferInSeconds = 30,
     this.defaultHuddleTimerInSeconds = 30,
-    this.defaultEnableStatistics = true,
+    this.defaultEnableStatistics = false,
     this.enableDefaultPenaltiesImpactPoints = true,
     this.defaultPenaltiesImpactType = PenaltiesImpactType.addPoints,
     this.defaultPenaltiesRequiredToImpactPoints = 3,

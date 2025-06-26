@@ -65,7 +65,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
       v.defaultEnableStatistics;
   static const Field<SettingsState, bool> _f$defaultEnableStatistics = Field(
       'defaultEnableStatistics', _$defaultEnableStatistics,
-      opt: true, def: true);
+      opt: true, def: false);
   static bool _$enableDefaultPenaltiesImpactPoints(SettingsState v) =>
       v.enableDefaultPenaltiesImpactPoints;
   static const Field<SettingsState, bool>
