@@ -36,7 +36,6 @@ platform :ios do
   #  - git_url
   #  - git_basic_authorization
   #  - upload_screenshots
-  #  - upload_metadata
   #  - apple_team_id
   #  - apple_key_id
   #  - apple_issuer_id
@@ -108,7 +107,7 @@ platform :ios do
       precheck_include_in_app_purchases: false,
       skip_screenshots: !options[:upload_screenshots],
       overwrite_screenshots: true,
-      skip_metadata: !options[:upload_metadata],
+      skip_metadata: false,
       reject_if_possible: true,
     )
   end

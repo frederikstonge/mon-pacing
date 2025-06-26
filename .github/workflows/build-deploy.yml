@@ -18,11 +18,6 @@ on:
         description: 'Upload images (Android only)'
         required: false
         default: false
-      upload-metadata:
-        type: boolean
-        description: 'Upload metadata'
-        required: false
-        default: false
       deploy-ios:
         type: boolean
         description: 'Deploy iOS'
@@ -147,7 +142,6 @@ jobs:
             git_url:'${{ env.GIT_URL }}' \
             git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
             upload_screenshots:${{ inputs.generate-screenshots }} \
-            upload_metadata:${{ inputs.upload-metadata }} \
             apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
@@ -232,5 +226,4 @@ jobs:
             package_name:'com.stongef.monpacing' \
             upload_screenshots:${{ inputs.generate-screenshots }} \
             upload_images:${{ inputs.upload-images }} \
-            upload_metadata:${{ inputs.upload-metadata }} \
             playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'
