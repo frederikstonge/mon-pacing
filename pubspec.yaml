@@ -12,10 +12,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   dart_mappable: ^4.3.0
   dio: ^5.7.0
-  excel: #^4.0.3
+  excel: #^5.0.0
     git:
-      url: https://github.com/frederikstonge/excel.git
-      ref: features/fred/update-packages
+      url: https://github.com/justkawal/excel.git
+      ref: main
   firebase_analytics: ^11.3.3
   firebase_core: ^3.6.0
   firebase_crashlytics: ^4.1.3
