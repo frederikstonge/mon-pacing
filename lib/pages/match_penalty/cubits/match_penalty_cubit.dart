@@ -24,17 +24,16 @@ class MatchPenaltyCubit extends Cubit<MatchPenaltyState> {
            editMode: penalty != null,
            teams: teams,
            integrationPenaltyTypes: integrationPenaltyTypes,
-           penalty:
-               penalty != null
-                   ? penalty.copyWith()
-                   : PenaltyModel(
-                     id: 0,
-                     major: false,
-                     type: '',
-                     performerId: null,
-                     teamId: teams.first.id,
-                     improvisationId: improvisationId,
-                   ),
+           penalty: penalty != null
+               ? penalty.copyWith()
+               : PenaltyModel(
+                   id: 0,
+                   major: false,
+                   type: '',
+                   performerId: null,
+                   teamId: teams.first.id,
+                   improvisationId: improvisationId,
+                 ),
          ),
        );
 

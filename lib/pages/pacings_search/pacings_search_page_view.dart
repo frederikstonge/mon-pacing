@@ -25,37 +25,32 @@ class PacingsSearchPageView extends StatelessWidget {
         return pacings.map((e) => PacingModel.fromEntity(entity: e)).toList();
       },
       hintText: S.of(context).search(category: S.of(context).pacings),
-      itemBuilder:
-          (context, item) => InkWell(
-            onTap: () {
-              Navigator.of(context).pop(item);
-            },
-            child: ListTile(
-              leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
-              isThreeLine: true,
-              title: Text(
-                item.name,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+      itemBuilder: (context, item) => InkWell(
+        onTap: () {
+          Navigator.of(context).pop(item);
+        },
+        child: ListTile(
+          leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
+          isThreeLine: true,
+          title: Text(
+            item.name,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                S.of(context).improvisationCount(count: item.improvisations.length),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    S.of(context).improvisationCount(count: item.improvisations.length),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    S.of(context).modifiedDate(date: item.modifiedDate!),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
+              Text(S.of(context).modifiedDate(date: item.modifiedDate!), maxLines: 1, overflow: TextOverflow.ellipsis),
+            ],
           ),
+        ),
+      ),
     );
   }
 }

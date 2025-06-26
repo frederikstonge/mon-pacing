@@ -29,10 +29,9 @@ class ImprovisationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCard(
       showIndicator: true,
-      indicatorColor:
-          improvisation.type == ImprovisationType.compared
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.secondary,
+      indicatorColor: improvisation.type == ImprovisationType.compared
+          ? Theme.of(context).colorScheme.primary
+          : Theme.of(context).colorScheme.secondary,
       contentPadding: 16,
       child: Column(
         children: [
@@ -56,12 +55,11 @@ class ImprovisationCard extends StatelessWidget {
               LoadingIconButton(
                 tooltip: S.of(context).delete,
                 icon: const Icon(Icons.delete),
-                onPressed:
-                    onDelete != null
-                        ? () async {
-                          await onDelete!.call(improvisation);
-                        }
-                        : null,
+                onPressed: onDelete != null
+                    ? () async {
+                        await onDelete!.call(improvisation);
+                      }
+                    : null,
               ),
             ],
           ),

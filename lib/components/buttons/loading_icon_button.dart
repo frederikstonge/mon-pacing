@@ -72,23 +72,22 @@ class _LoadingIconButtonState extends State<LoadingIconButton> {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed =
-        isLoading || widget.onPressed == null
-            ? null
-            : () async {
-              setState(() {
-                isLoading = true;
-              });
-              try {
-                await widget.onPressed?.call();
-              } finally {
-                if (mounted) {
-                  setState(() {
-                    isLoading = false;
-                  });
-                }
+    final onPressed = isLoading || widget.onPressed == null
+        ? null
+        : () async {
+            setState(() {
+              isLoading = true;
+            });
+            try {
+              await widget.onPressed?.call();
+            } finally {
+              if (mounted) {
+                setState(() {
+                  isLoading = false;
+                });
               }
-            };
+            }
+          };
 
     final icon = isLoading ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) : widget.icon;
 

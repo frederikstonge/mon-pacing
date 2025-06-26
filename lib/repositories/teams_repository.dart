@@ -40,8 +40,9 @@ class TeamsRepository {
 
     final previousEntity = await box.getAsync(entity.id);
 
-    final removedImprovisations =
-        previousEntity!.performers.where((e) => !entity.performers.any((i) => i.id == e.id)).toList();
+    final removedImprovisations = previousEntity!.performers
+        .where((e) => !entity.performers.any((i) => i.id == e.id))
+        .toList();
     final editedImprovisations = entity.performers.where((e) => e.id != 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
@@ -68,8 +69,10 @@ class TeamsRepository {
   Future<List<TeamEntity>> getList(int skip, int take) async {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
-    final query =
-        box.query(TeamEntity_.hasMatch.equals(false)).order(TeamEntity_.createdDate, flags: Order.descending).build();
+    final query = box
+        .query(TeamEntity_.hasMatch.equals(false))
+        .order(TeamEntity_.createdDate, flags: Order.descending)
+        .build();
     query.limit = take;
     query.offset = skip;
     final returnValue = await query.findAsync();
