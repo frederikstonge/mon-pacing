@@ -55,6 +55,24 @@ class Themes {
     );
   }
 
+  static ThemeData ligma() {
+    const primaryColor = Color(0xFFa32a5e);
+    const secondaryColor = Color(0xFF6ea943);
+    final cardBackgroundColor = Colors.grey.shade100;
+    const cardBorderColor = primaryColor;
+    const dividerColor = secondaryColor;
+    final shadowColor = Colors.grey.shade300;
+    return _generateTheme(
+      Brightness.light,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
+    );
+  }
+
   static ShapeBorder getCardShapeBorder(Color borderColor) {
     return RoundedRectangleBorder(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -73,10 +91,12 @@ class Themes {
   ) {
     final background = brightness == Brightness.light ? Colors.white : Colors.black;
     final onBackground = brightness == Brightness.light ? Colors.black : Colors.white;
-    final onPrimary =
-        ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.light ? Colors.black : Colors.white;
-    final onSecondary =
-        ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light ? Colors.black : Colors.white;
+    final onPrimary = ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.light
+        ? Colors.black
+        : Colors.white;
+    final onSecondary = ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light
+        ? Colors.black
+        : Colors.white;
     final colorScheme = ColorScheme(
       brightness: brightness,
       primary: primaryColor,

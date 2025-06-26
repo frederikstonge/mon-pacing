@@ -52,6 +52,7 @@ class App extends StatelessWidget {
                   ThemeType.light => Themes.light(),
                   ThemeType.dark => Themes.dark(),
                   ThemeType.lni => Themes.lni(),
+                  ThemeType.ligma => Themes.ligma(),
                 },
                 // Locale
                 localizationsDelegates: S.localizationsDelegates,

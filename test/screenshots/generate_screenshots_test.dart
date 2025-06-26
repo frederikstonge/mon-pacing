@@ -108,7 +108,10 @@ void main() {
     final pacing = PacingModel(
       id: 0,
       name: 'Canadiens vs Maple Leafs',
-      tags: [TagModel(id: 0, name: 'NHL'), TagModel(id: 1, name: 'Hockey')],
+      tags: [
+        TagModel(id: 0, name: 'NHL'),
+        TagModel(id: 1, name: 'Hockey'),
+      ],
       createdDate: DateTime.now(),
       modifiedDate: DateTime.now(),
       improvisations: List.generate(
@@ -145,7 +148,10 @@ void main() {
     final match = MatchModel(
       id: 0,
       name: 'Canadiens vs Maple Leafs',
-      tags: [TagModel(id: 0, name: 'NHL'), TagModel(id: 1, name: 'Hockey')],
+      tags: [
+        TagModel(id: 0, name: 'NHL'),
+        TagModel(id: 1, name: 'Hockey'),
+      ],
       createdDate: DateTime.now(),
       modifiedDate: DateTime.now(),
       teams: [
@@ -291,6 +297,7 @@ void _screenshotWidget({
                   ThemeType.light => Themes.light(),
                   ThemeType.dark => Themes.dark(),
                   ThemeType.lni => Themes.lni(),
+                  ThemeType.ligma => Themes.ligma(),
                 },
                 localizationsDelegates: S.localizationsDelegates,
                 supportedLocales: S.supportedLocales,

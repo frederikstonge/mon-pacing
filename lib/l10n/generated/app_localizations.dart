@@ -152,6 +152,12 @@ abstract class S {
   /// **'Categories'**
   String get categories;
 
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
   /// No description provided for @color.
   ///
   /// In en, this message translates to:

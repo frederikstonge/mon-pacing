@@ -80,10 +80,9 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                   child: LanguageView(
                                     currentLocale: Locale(settingsState.language),
                                     availableLocales: S.supportedLocales,
-                                    onChanged:
-                                        (locale) => context.read<SettingsCubit>().edit(
-                                          settingsState.copyWith(language: locale.toLanguageTag()),
-                                        ),
+                                    onChanged: (locale) => context.read<SettingsCubit>().edit(
+                                      settingsState.copyWith(language: locale.toLanguageTag()),
+                                    ),
                                   ),
                                 );
                               },
@@ -95,6 +94,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 ThemeType.light => S.of(context).light,
                                 ThemeType.dark => S.of(context).dark,
                                 ThemeType.lni => S.of(context).lni,
+                                ThemeType.ligma => 'Ligma',
                               }),
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () {
@@ -102,9 +102,8 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                   context: context,
                                   child: ThemeView(
                                     currentTheme: settingsState.theme,
-                                    onChanged:
-                                        (theme) =>
-                                            context.read<SettingsCubit>().edit(settingsState.copyWith(theme: theme)),
+                                    onChanged: (theme) =>
+                                        context.read<SettingsCubit>().edit(settingsState.copyWith(theme: theme)),
                                   ),
                                 );
                               },
@@ -386,10 +385,9 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                   context: context,
                                   child: PenaltiesImpactTypeView(
                                     currentPenaltiesImpactType: settingsState.defaultPenaltiesImpactType,
-                                    onChanged:
-                                        (penaltiesImpactType) => context.read<SettingsCubit>().edit(
-                                          settingsState.copyWith(defaultPenaltiesImpactType: penaltiesImpactType),
-                                        ),
+                                    onChanged: (penaltiesImpactType) => context.read<SettingsCubit>().edit(
+                                      settingsState.copyWith(defaultPenaltiesImpactType: penaltiesImpactType),
+                                    ),
                                   ),
                                 );
                               },
@@ -495,17 +493,15 @@ class _SettingsPageViewState extends State<SettingsPageView> {
 
                       FutureBuilder(
                         future: context.read<PackageInfoService>().getAppVersion(),
-                        builder:
-                            (context, snapshot) =>
-                                snapshot.hasData
-                                    ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        S.of(context).version(version: snapshot.data!),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    )
-                                    : const SizedBox.shrink(),
+                        builder: (context, snapshot) => snapshot.hasData
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  S.of(context).version(version: snapshot.data!),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            : const SizedBox.shrink(),
                       ),
                     ],
                   ),

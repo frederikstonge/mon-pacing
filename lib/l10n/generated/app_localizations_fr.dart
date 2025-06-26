@@ -43,6 +43,9 @@ class SFr extends S {
   String get categories => 'Catégories';
 
   @override
+  String get close => 'Fermer';
+
+  @override
   String get color => 'Couleur';
 
   @override
@@ -93,7 +96,7 @@ class SFr extends S {
 
   @override
   String duplicateTag({required String tag}) {
-    return 'Étiquette $tag dupliquée ';
+    return 'Étiquette $tag dupliquée';
   }
 
   @override

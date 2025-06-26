@@ -56,6 +56,7 @@ class ThemeView extends StatelessWidget {
       ThemeType.light => S.of(context).light,
       ThemeType.dark => S.of(context).dark,
       ThemeType.lni => S.of(context).lni,
+      ThemeType.ligma => 'Ligma',
     };
   }
 }

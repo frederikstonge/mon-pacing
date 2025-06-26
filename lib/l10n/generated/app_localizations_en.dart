@@ -43,6 +43,9 @@ class SEn extends S {
   String get categories => 'Categories';
 
   @override
+  String get close => 'Close';
+
+  @override
   String get color => 'Color';
 
   @override

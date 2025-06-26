@@ -31,6 +31,8 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
         return ThemeType.dark;
       case 'lni':
         return ThemeType.lni;
+      case 'ligma':
+        return ThemeType.ligma;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -45,6 +47,8 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
         return 'dark';
       case ThemeType.lni:
         return 'lni';
+      case ThemeType.ligma:
+        return 'ligma';
     }
   }
 }
