@@ -5,6 +5,7 @@ GEM
       base64
       nkf
       rexml
+    abbrev (0.1.2)
     activesupport (7.2.2.1)
       base64
       benchmark (>= 0.3)
@@ -250,6 +251,7 @@ GEM
     nkf (0.2.0)
     optparse (0.6.0)
     os (1.1.4)
+    ostruct (0.6.2)
     plist (3.7.2)
     public_suffix (4.0.7)
     rake (13.3.0)
@@ -315,8 +317,10 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  abbrev
   cocoapods
   fastlane
+  ostruct
 
 BUNDLED WITH
    2.5.23

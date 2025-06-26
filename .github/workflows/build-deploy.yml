@@ -207,6 +207,7 @@ jobs:
         working-directory: android
         shell: bash
         run: |
+          sudo apt update
           sudo apt install ghostscript
           sudo apt install imagemagick
 
