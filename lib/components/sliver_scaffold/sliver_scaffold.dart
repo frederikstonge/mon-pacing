@@ -38,7 +38,9 @@ class SliverScaffold extends StatelessWidget {
             if (appBar != null) ...[appBar!],
             ...slivers,
             if (floatingActionButton != null) ...[
-              SliverPadding(padding: EdgeInsets.only(top: 16 * 2, bottom: floatingActionButtonHeight)),
+              SliverPadding(
+                padding: EdgeInsets.only(top: 16 * 2, bottom: floatingActionButtonHeight),
+              ),
             ],
             SliverPadding(padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom)),
           ],

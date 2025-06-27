@@ -25,37 +25,32 @@ class MatchesSearchPageView extends StatelessWidget {
         return matches.map((e) => MatchModel.fromEntity(entity: e)).toList();
       },
       hintText: S.of(context).search(category: S.of(context).matches),
-      itemBuilder:
-          (context, item) => InkWell(
-            onTap: () {
-              Navigator.of(context).pop(item);
-            },
-            child: ListTile(
-              leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
-              isThreeLine: true,
-              title: Text(
-                item.name,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+      itemBuilder: (context, item) => InkWell(
+        onTap: () {
+          Navigator.of(context).pop(item);
+        },
+        child: ListTile(
+          leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
+          isThreeLine: true,
+          title: Text(
+            item.name,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                item.teams.map((e) => e.name).join(' ${S.of(context).versus} '),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.teams.map((e) => e.name).join(' ${S.of(context).versus} '),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    S.of(context).modifiedDate(date: item.modifiedDate!),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
+              Text(S.of(context).modifiedDate(date: item.modifiedDate!), maxLines: 1, overflow: TextOverflow.ellipsis),
+            ],
           ),
+        ),
+      ),
     );
   }
 }

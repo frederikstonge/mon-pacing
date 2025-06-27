@@ -112,15 +112,14 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                           match: match,
                           onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                           edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
-                          shouldDelete:
-                              () => MessageBoxDialog.questionShow(
-                                context,
-                                S
-                                    .of(context)
-                                    .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
-                                S.of(context).delete,
-                                S.of(context).cancel,
-                              ),
+                          shouldDelete: () => MessageBoxDialog.questionShow(
+                            context,
+                            S
+                                .of(context)
+                                .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
+                            S.of(context).delete,
+                            S.of(context).cancel,
+                          ),
                           delete: () => context.read<MatchesCubit>().delete(match),
                         );
                       },

@@ -39,8 +39,10 @@ class PacingModel extends TagBaseModel with PacingModelMappable {
     createdDate: entity.createdDate,
     modifiedDate: entity.modifiedDate,
     defaultNumberOfTeams: entity.defaultNumberOfTeams,
-    improvisations:
-        entity.improvisations.sortedBy((e) => e.order).map((e) => ImprovisationModel.fromEntity(entity: e)).toList(),
+    improvisations: entity.improvisations
+        .sortedBy((e) => e.order)
+        .map((e) => ImprovisationModel.fromEntity(entity: e))
+        .toList(),
     tags: entity.tags.map((e) => TagModel.fromEntity(entity: e)).toList(),
     integrationId: entity.integrationId,
     integrationEntityId: entity.integrationEntityId,

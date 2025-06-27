@@ -40,9 +40,8 @@ final router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.pacing,
                   path: 'details/:id',
-                  builder:
-                      (context, state) =>
-                          PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
+                  builder: (context, state) =>
+                      PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
                 ),
                 GoRoute(
                   parentNavigatorKey: rootNavigatorKey,

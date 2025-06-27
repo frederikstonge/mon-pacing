@@ -27,14 +27,13 @@ class MatchPenaltyShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) => MatchPenaltyCubit(
-            improvisationId: improvisationId,
-            teams: teams,
-            onSave: onSave,
-            integrationPenaltyTypes: integrationPenaltyTypes,
-            penalty: penalty,
-          ),
+      create: (context) => MatchPenaltyCubit(
+        improvisationId: improvisationId,
+        teams: teams,
+        onSave: onSave,
+        integrationPenaltyTypes: integrationPenaltyTypes,
+        penalty: penalty,
+      ),
       child: const MatchPenaltyView(),
     );
   }

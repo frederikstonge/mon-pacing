@@ -16,7 +16,13 @@ class MatchScoreboardView extends StatelessWidget {
     return BottomSheetScaffold(
       appBar: BottomSheetAppbar(title: match.name),
       isBodyExpanded: true,
-      body: Column(children: [const SizedBox(height: 16), Scoreboard(match: match), ScoreDetail(match: match)]),
+      body: Column(
+        children: [
+          const SizedBox(height: 16),
+          Scoreboard(match: match),
+          ScoreDetail(match: match),
+        ],
+      ),
     );
   }
 }

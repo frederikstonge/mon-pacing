@@ -42,61 +42,59 @@ class ImprovisationDurations extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
           onReorder: _drag,
-          children:
-              durations
-                  .asMap()
-                  .entries
-                  .map(
-                    (d) => Padding(
-                      key: ValueKey('${d.key}${d.value}'),
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 16.0),
-                            child: ReorderableDragStartListener(
-                              index: d.key,
-                              enabled: durations.length > 1,
-                              child: const Icon(Icons.drag_handle),
-                            ),
-                          ),
-                          Expanded(
-                            child: ImprovisationDurationItem(
-                              key: ValueKey('${d.key}${d.value}'),
-                              duration: Duration(seconds: d.value),
-                              valueChanged: (value) async {
-                                final newDurations = List<int>.from(durations);
-                                newDurations[d.key] = value.inSeconds;
-                                await onChanged(newDurations);
-                              },
-                            ),
-                          ),
-                          LoadingIconButton(
-                            tooltip: S.of(context).add,
-                            icon: const Icon(Icons.add),
-                            onPressed: () async {
-                              final newDurations = List<int>.from(durations);
-                              newDurations.insert(d.key + 1, d.value);
-                              await onChanged(newDurations);
-                            },
-                          ),
-                          LoadingIconButton(
-                            tooltip: S.of(context).remove,
-                            icon: const Icon(Icons.remove),
-                            onPressed:
-                                durations.length > 1
-                                    ? () async {
-                                      final newDurations = List<int>.from(durations);
-                                      newDurations.removeAt(d.key);
-                                      await onChanged(newDurations);
-                                    }
-                                    : null,
-                          ),
-                        ],
+          children: durations
+              .asMap()
+              .entries
+              .map(
+                (d) => Padding(
+                  key: ValueKey('${d.key}${d.value}'),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: ReorderableDragStartListener(
+                          index: d.key,
+                          enabled: durations.length > 1,
+                          child: const Icon(Icons.drag_handle),
+                        ),
                       ),
-                    ),
-                  )
-                  .toList(),
+                      Expanded(
+                        child: ImprovisationDurationItem(
+                          key: ValueKey('${d.key}${d.value}'),
+                          duration: Duration(seconds: d.value),
+                          valueChanged: (value) async {
+                            final newDurations = List<int>.from(durations);
+                            newDurations[d.key] = value.inSeconds;
+                            await onChanged(newDurations);
+                          },
+                        ),
+                      ),
+                      LoadingIconButton(
+                        tooltip: S.of(context).add,
+                        icon: const Icon(Icons.add),
+                        onPressed: () async {
+                          final newDurations = List<int>.from(durations);
+                          newDurations.insert(d.key + 1, d.value);
+                          await onChanged(newDurations);
+                        },
+                      ),
+                      LoadingIconButton(
+                        tooltip: S.of(context).remove,
+                        icon: const Icon(Icons.remove),
+                        onPressed: durations.length > 1
+                            ? () async {
+                                final newDurations = List<int>.from(durations);
+                                newDurations.removeAt(d.key);
+                                await onChanged(newDurations);
+                              }
+                            : null,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
         ),
       ],
     );

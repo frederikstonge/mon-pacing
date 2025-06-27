@@ -107,16 +107,15 @@ class _SearchDialogState<T> extends State<SearchDialog<T>> {
       if (mounted) {
         setState(() {
           items = newItems;
-          this.tags =
-              newItems
-                  .whereType<TagBaseModel>()
-                  .selectMany((e) => e.tags)
-                  .map((e) => e.name)
-                  .groupListsBy((e) => e)
-                  .values
-                  .sorted((a, b) => b.length - a.length)
-                  .map((e) => e.first)
-                  .toList();
+          this.tags = newItems
+              .whereType<TagBaseModel>()
+              .selectMany((e) => e.tags)
+              .map((e) => e.name)
+              .groupListsBy((e) => e)
+              .values
+              .sorted((a, b) => b.length - a.length)
+              .map((e) => e.first)
+              .toList();
         });
       }
     });

@@ -19,14 +19,13 @@ class MatchPageShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) => MatchCubit(
-            matchesRepository: context.read<MatchesRepository>(),
-            matchesCubit: context.read<MatchesCubit>(),
-            toasterService: context.read<ToasterService>(),
-            excelService: context.read<ExcelService>(),
-            analyticsService: context.read<AnalyticsService>(),
-          )..initialize(id, improvisationId: improvisationId, durationIndex: durationIndex),
+      create: (context) => MatchCubit(
+        matchesRepository: context.read<MatchesRepository>(),
+        matchesCubit: context.read<MatchesCubit>(),
+        toasterService: context.read<ToasterService>(),
+        excelService: context.read<ExcelService>(),
+        analyticsService: context.read<AnalyticsService>(),
+      )..initialize(id, improvisationId: improvisationId, durationIndex: durationIndex),
       child: const MatchPageView(),
     );
   }
