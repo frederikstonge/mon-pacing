@@ -36,6 +36,7 @@ dependencies:
   hydrated_bloc: ^10.0.0
   intl: any
   # TODO: TO REMOVE
+  introduction_screen: ^3.1.17
   isar: ^4.0.0-dev.14
   # TODO: TO REMOVE
   isar_flutter_libs: ^4.0.0-dev.14
@@ -50,6 +51,7 @@ dependencies:
   sn_progress_dialog: ^1.2.0
   textfield_tags: ^3.0.1
   toastification: ^3.0.1
+  tutorial_overlay: ^1.1.0
   url_launcher: ^6.3.1
   uuid: ^4.5.1
   wakelock_plus: ^1.2.8

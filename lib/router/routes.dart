@@ -1,4 +1,5 @@
 class Routes {
+  static const String onboarding = 'Onboarding';
   static const String pacings = 'Pacings';
   static const String pacing = 'Pacing';
   static const String pacingsSearch = 'PacingSearch';

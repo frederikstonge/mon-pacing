@@ -5,6 +5,7 @@ import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
 import '../pages/matches_search/matches_search_page_shell.dart';
+import '../pages/onboarding/onboarding_page_view.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
 import '../pages/pacings_search/pacings_search_page_shell.dart';
@@ -19,7 +20,7 @@ import 'routes.dart';
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/pacings',
+  initialLocation: '/onboarding',
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -40,9 +41,8 @@ final router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.pacing,
                   path: 'details/:id',
-                  builder:
-                      (context, state) =>
-                          PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
+                  builder: (context, state) =>
+                      PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
                 ),
                 GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
@@ -125,6 +125,7 @@ final router = GoRouter(
         ),
       ],
     ),
+    GoRoute(name: Routes.onboarding, path: '/onboarding', builder: (context, state) => const OnboardingPageView()),
     GoRoute(name: Routes.scanner, path: '/scanner', builder: (context, state) => const ScannerPageShell()),
     GoRoute(
       name: Routes.categoriesSearch,
