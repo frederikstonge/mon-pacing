@@ -10,11 +10,15 @@ class BottomSheetDialog {
       isScrollControlled: true,
       builder: (context) {
         final mediaQuery = MediaQuery.of(context);
-        final bottomPadding =
-            mediaQuery.viewInsets.bottom > 0 ? mediaQuery.viewInsets.bottom : mediaQuery.padding.bottom;
+        final bottomPadding = mediaQuery.viewInsets.bottom > 0
+            ? mediaQuery.viewInsets.bottom
+            : mediaQuery.padding.bottom;
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [Flexible(child: child)]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [Flexible(child: child)],
+          ),
         );
       },
     );

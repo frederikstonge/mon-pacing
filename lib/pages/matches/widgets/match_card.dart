@@ -33,7 +33,10 @@ class MatchCard extends StatelessWidget {
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
-        child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.delete, color: Colors.white)),
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(Icons.delete, color: Colors.white),
+        ),
       ),
       key: ValueKey(match.id),
       direction: DismissDirection.endToStart,
@@ -73,32 +76,25 @@ class MatchCard extends StatelessWidget {
                     TagsDisplay(tags: match.tags),
                     if (match.enableStatistics) ...[
                       Row(
-                        children:
-                            match.teams
-                                .asMap()
-                                .entries
-                                .map(
-                                  (e) => Flexible(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        if (e.key != 0) ...[
-                                          Text(
-                                            ' ${S.of(context).versus} ',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                        TeamColorAvatar(color: Color(e.value.color)),
-                                        const SizedBox(width: 6),
-                                        Flexible(
-                                          child: Text(e.value.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                                .toList(),
+                        children: match.teams
+                            .asMap()
+                            .entries
+                            .map(
+                              (e) => Flexible(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (e.key != 0) ...[
+                                      Text(' ${S.of(context).versus} ', maxLines: 1, overflow: TextOverflow.ellipsis),
+                                    ],
+                                    TeamColorAvatar(color: Color(e.value.color)),
+                                    const SizedBox(width: 6),
+                                    Flexible(child: Text(e.value.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ),
                     ],
                     Text(

@@ -34,26 +34,25 @@ class MatchStars extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       onReorderStart: (index) => onDragStart(),
       onReorder: onDrag,
-      children:
-          stars
-              .asMap()
-              .entries
-              .map(
-                (d) => Container(
-                  key: ValueKey(d.value.id),
-                  color: Theme.of(context).cardTheme.color,
-                  child: MatchStarItem(
-                    index: d.key,
-                    star: d.value,
-                    teams: teams,
-                    valueChanged: (value) async {
-                      await onChanged(value);
-                    },
-                    onRemove: onRemove,
-                  ),
-                ),
-              )
-              .toList(),
+      children: stars
+          .asMap()
+          .entries
+          .map(
+            (d) => Container(
+              key: ValueKey(d.value.id),
+              color: Theme.of(context).cardTheme.color,
+              child: MatchStarItem(
+                index: d.key,
+                star: d.value,
+                teams: teams,
+                valueChanged: (value) async {
+                  await onChanged(value);
+                },
+                onRemove: onRemove,
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
@@ -102,21 +101,20 @@ class MatchStarItem extends StatelessWidget {
                   );
                 }
               },
-              items:
-                  teams
-                      .map(
-                        (e) => DropdownMenuItem(
-                          value: e.id,
-                          child: Row(
-                            children: [
-                              TeamColorAvatar(color: Color(e.color)),
-                              const SizedBox(width: 6),
-                              Expanded(child: Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
+              items: teams
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e.id,
+                      child: Row(
+                        children: [
+                          TeamColorAvatar(color: Color(e.color)),
+                          const SizedBox(width: 6),
+                          Expanded(child: Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           const SizedBox(width: 8),
@@ -131,19 +129,18 @@ class MatchStarItem extends StatelessWidget {
                   valueChanged(star.copyWith(performerId: value));
                 }
               },
-              items:
-                  teams
-                      .firstWhere((t) => t.id == star.teamId)
-                      .performers
-                      .map(
-                        (e) => DropdownMenuItem(
-                          value: e.id,
-                          child: Row(
-                            children: [Expanded(child: Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis))],
-                          ),
-                        ),
-                      )
-                      .toList(),
+              items: teams
+                  .firstWhere((t) => t.id == star.teamId)
+                  .performers
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e.id,
+                      child: Row(
+                        children: [Expanded(child: Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis))],
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           LoadingIconButton(

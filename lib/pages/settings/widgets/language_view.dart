@@ -27,7 +27,10 @@ class LanguageView extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
             },
-            child: ListTile(title: DisplayLanguage(locale: currentLocale), trailing: const Icon(Icons.check)),
+            child: ListTile(
+              title: DisplayLanguage(locale: currentLocale),
+              trailing: const Icon(Icons.check),
+            ),
           ),
           ...availableLocales
               .where((element) => element != currentLocale)

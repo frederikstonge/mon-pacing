@@ -65,19 +65,18 @@ class _QuantityStepperState extends State<QuantityStepper> {
         children: [
           LoadingIconButton(
             tooltip: S.of(context).remove,
-            onPressed:
-                canRemove()
-                    ? () async {
-                      var value = int.tryParse(_controller.text);
-                      if (value != null) {
-                        value = value - widget.multiple;
-                      }
-
-                      value = _correct(value);
-                      _controller.text = value.toString();
-                      await widget.onChanged(value);
+            onPressed: canRemove()
+                ? () async {
+                    var value = int.tryParse(_controller.text);
+                    if (value != null) {
+                      value = value - widget.multiple;
                     }
-                    : null,
+
+                    value = _correct(value);
+                    _controller.text = value.toString();
+                    await widget.onChanged(value);
+                  }
+                : null,
             icon: const Icon(Icons.remove),
           ),
           Flexible(
@@ -98,19 +97,18 @@ class _QuantityStepperState extends State<QuantityStepper> {
           ),
           LoadingIconButton(
             tooltip: S.of(context).add,
-            onPressed:
-                canAdd()
-                    ? () async {
-                      var value = int.tryParse(_controller.text);
-                      if (value != null) {
-                        value = value + widget.multiple;
-                      }
-
-                      value = _correct(value);
-                      _controller.text = value.toString();
-                      await widget.onChanged(value);
+            onPressed: canAdd()
+                ? () async {
+                    var value = int.tryParse(_controller.text);
+                    if (value != null) {
+                      value = value + widget.multiple;
                     }
-                    : null,
+
+                    value = _correct(value);
+                    _controller.text = value.toString();
+                    await widget.onChanged(value);
+                  }
+                : null,
             icon: const Icon(Icons.add),
           ),
         ],

@@ -38,12 +38,18 @@ class PacingCard extends StatelessWidget {
       background: Container(
         color: Colors.green,
         alignment: Alignment.centerLeft,
-        child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.play_arrow, color: Colors.white)),
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(Icons.play_arrow, color: Colors.white),
+        ),
       ),
       secondaryBackground: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
-        child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.delete, color: Colors.white)),
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(Icons.delete, color: Colors.white),
+        ),
       ),
       key: ValueKey(pacing.id),
       confirmDismiss: (direction) async {

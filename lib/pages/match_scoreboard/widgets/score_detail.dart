@@ -109,25 +109,24 @@ class ScoreDetail extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children:
-                          e.value
-                              .map(
-                                (e) => Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TeamColorAvatar(color: match.getTeamColor(e.teamId)),
-                                    const SizedBox(width: 6),
-                                    Expanded(
-                                      child: Text(
-                                        e.getPenaltyString(S.of(context), match),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
+                      children: e.value
+                          .map(
+                            (e) => Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TeamColorAvatar(color: match.getTeamColor(e.teamId)),
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    e.getPenaltyString(S.of(context), match),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              )
-                              .toList(),
+                              ],
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 ],
@@ -136,7 +135,10 @@ class ScoreDetail extends StatelessWidget {
           ],
           const SizedBox(height: 8),
           const Divider(),
-          Padding(padding: const EdgeInsets.symmetric(vertical: 8.0), child: TextHeader(title: S.of(context).stars)),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextHeader(title: S.of(context).stars),
+          ),
           if (match.stars.isEmpty) ...[
             Text(S.of(context).noStar, maxLines: 1, overflow: TextOverflow.ellipsis),
           ] else ...[

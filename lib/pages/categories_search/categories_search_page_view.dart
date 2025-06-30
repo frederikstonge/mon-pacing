@@ -21,16 +21,15 @@ class CategoriesSearchPageView extends StatelessWidget {
     return SearchDialog(
       onChanged: (query, _) => context.read<PacingsRepository>().getAllCategories(search: query),
       hintText: S.of(context).search(category: S.of(context).categories),
-      itemBuilder:
-          (context, item) => InkWell(
-            onTap: () {
-              Navigator.of(context).pop(item);
-            },
-            child: ListTile(
-              leading: const Icon(Icons.search),
-              title: Text(item, maxLines: 1, overflow: TextOverflow.ellipsis),
-            ),
-          ),
+      itemBuilder: (context, item) => InkWell(
+        onTap: () {
+          Navigator.of(context).pop(item);
+        },
+        child: ListTile(
+          leading: const Icon(Icons.search),
+          title: Text(item, maxLines: 1, overflow: TextOverflow.ellipsis),
+        ),
+      ),
     );
   }
 }

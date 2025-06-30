@@ -43,8 +43,9 @@ class MatchCubit extends Cubit<MatchState> {
       return;
     }
     final match = MatchModel.fromEntity(entity: matchEntity);
-    var selectedImprovisationIndex =
-        improvisationId != null ? match.improvisations.indexWhere((i) => i.id == improvisationId) : 0;
+    var selectedImprovisationIndex = improvisationId != null
+        ? match.improvisations.indexWhere((i) => i.id == improvisationId)
+        : 0;
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
 
     emit(
@@ -110,10 +111,9 @@ class MatchCubit extends Cubit<MatchState> {
       state.match!.penalties.where((element) => element.improvisationId != improvisation.id),
     );
 
-    final newSelectedImprovisationIndex =
-        state.selectedImprovisationIndex >= improvisations.length
-            ? state.selectedImprovisationIndex - 1
-            : state.selectedImprovisationIndex;
+    final newSelectedImprovisationIndex = state.selectedImprovisationIndex >= improvisations.length
+        ? state.selectedImprovisationIndex - 1
+        : state.selectedImprovisationIndex;
 
     final newMatch = await matchesCubit.edit(
       state.match!.copyWith(improvisations: improvisations, points: points, penalties: penalties),

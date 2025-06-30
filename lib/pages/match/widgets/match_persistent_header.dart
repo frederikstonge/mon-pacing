@@ -58,7 +58,9 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
             ...match.improvisations.asMap().entries.map(
               (e) => DropdownMenuItem(
                 value: e.key,
-                child: Row(children: [Expanded(child: Text(S.of(context).improvisationNumber(order: e.key + 1)))]),
+                child: Row(
+                  children: [Expanded(child: Text(S.of(context).improvisationNumber(order: e.key + 1)))],
+                ),
               ),
             ),
             if (match.enableStatistics) ...[
@@ -76,10 +78,9 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
             LoadingIconButton(
               icon: const Icon(Icons.arrow_forward),
               tooltip: S.of(context).nextImprovisation,
-              onPressed:
-                  selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
-                      ? () => changePage(selectedImprovisationIndex + 1)
-                      : null,
+              onPressed: selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
+                  ? () => changePage(selectedImprovisationIndex + 1)
+                  : null,
             ),
           ],
         ),
