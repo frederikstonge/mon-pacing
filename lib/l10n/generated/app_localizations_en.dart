@@ -247,6 +247,12 @@ class SEn extends S {
   String get light => 'Light';
 
   @override
+  String get ligma => 'LIGMA';
+
+  @override
+  String get ligmaEasterEgg => 'BALLZ';
+
+  @override
   String get lni => 'LNI Vintage';
 
   @override
@@ -329,6 +335,49 @@ class SEn extends S {
 
   @override
   String get numberOfTeamsByDefault => 'Number of teams by default';
+
+  @override
+  String get onboardingByDefault => 'These settings will be used as default, but can be changed individually.';
+
+  @override
+  String get onboardingLanguageTitle => 'Welcome to Mon Pacing';
+
+  @override
+  String get onboardingLanguageDescription => 'Select your preferred language.';
+
+  @override
+  String get onboardingPacingsTitle => 'Create your pacings';
+
+  @override
+  String get onboardingPacingsDescription => 'Create pacings for your matches with our tool.';
+
+  @override
+  String get onboardingImprovisationsTitle => 'Customize your improvisations';
+
+  @override
+  String get onboardingImprovisationsDescription =>
+      'Customize your improvisations with durations, types, tags and more.';
+
+  @override
+  String get onboardingMatchesTitle => 'Enrich your matches';
+
+  @override
+  String get onboardingMatchesDescription => 'Add statistics and more to your matches.';
+
+  @override
+  String get onboardingPenaltiesTitle => 'Track penalties';
+
+  @override
+  String get onboardingPenaltiesDescription => 'Add penalties to performers and expel them if necessary.';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingPrevious => 'Back';
+
+  @override
+  String get onboardingDone => 'Get started';
 
   @override
   String get open => 'Open';

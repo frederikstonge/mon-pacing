@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../cubits/settings/settings_cubit.dart';
 import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
@@ -20,7 +22,15 @@ import 'routes.dart';
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/onboarding',
+  redirect: (context, state) {
+    // Redirect to onboarding if the user has not completed it
+    final isOnboardingDone = context.read<SettingsCubit>().state.onboardingDone;
+    if (!isOnboardingDone && state.path != '/onboarding') {
+      return '/onboarding';
+    }
+    return null; // No redirection needed
+  },
+  initialLocation: '/pacings',
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

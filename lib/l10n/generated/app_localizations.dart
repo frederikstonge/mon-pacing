@@ -494,6 +494,18 @@ abstract class S {
   /// **'Light'**
   String get light;
 
+  /// No description provided for @ligma.
+  ///
+  /// In en, this message translates to:
+  /// **'LIGMA'**
+  String get ligma;
+
+  /// No description provided for @ligmaEasterEgg.
+  ///
+  /// In en, this message translates to:
+  /// **'BALLZ'**
+  String get ligmaEasterEgg;
+
   /// No description provided for @lni.
   ///
   /// In en, this message translates to:
@@ -643,6 +655,90 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Number of teams by default'**
   String get numberOfTeamsByDefault;
+
+  /// No description provided for @onboardingByDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'These settings will be used as default, but can be changed individually.'**
+  String get onboardingByDefault;
+
+  /// No description provided for @onboardingLanguageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Mon Pacing'**
+  String get onboardingLanguageTitle;
+
+  /// No description provided for @onboardingLanguageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your preferred language.'**
+  String get onboardingLanguageDescription;
+
+  /// No description provided for @onboardingPacingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your pacings'**
+  String get onboardingPacingsTitle;
+
+  /// No description provided for @onboardingPacingsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create pacings for your matches with our tool.'**
+  String get onboardingPacingsDescription;
+
+  /// No description provided for @onboardingImprovisationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize your improvisations'**
+  String get onboardingImprovisationsTitle;
+
+  /// No description provided for @onboardingImprovisationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize your improvisations with durations, types, tags and more.'**
+  String get onboardingImprovisationsDescription;
+
+  /// No description provided for @onboardingMatchesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrich your matches'**
+  String get onboardingMatchesTitle;
+
+  /// No description provided for @onboardingMatchesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add statistics and more to your matches.'**
+  String get onboardingMatchesDescription;
+
+  /// No description provided for @onboardingPenaltiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track penalties'**
+  String get onboardingPenaltiesTitle;
+
+  /// No description provided for @onboardingPenaltiesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add penalties to performers and expel them if necessary.'**
+  String get onboardingPenaltiesDescription;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingPrevious;
+
+  /// No description provided for @onboardingDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onboardingDone;
 
   /// No description provided for @open.
   ///
