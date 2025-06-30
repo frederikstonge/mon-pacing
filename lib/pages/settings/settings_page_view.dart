@@ -94,7 +94,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 ThemeType.light => S.of(context).light,
                                 ThemeType.dark => S.of(context).dark,
                                 ThemeType.lni => S.of(context).lni,
-                                ThemeType.ligma => 'Ligma',
+                                ThemeType.ligma => S.of(context).ligma,
                               }),
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () {
@@ -187,7 +187,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                     autovalidateMode: AutovalidateMode.onUserInteraction,
                                     initialValue: settingsState.defaultNumberOfTeams,
                                     onChanged: (value) {
-                                      if (value != null) {
+                                      if (value != null && formKey.currentState!.validate()) {
                                         context.read<SettingsCubit>().edit(
                                           settingsState.copyWith(defaultNumberOfTeams: value),
                                         );

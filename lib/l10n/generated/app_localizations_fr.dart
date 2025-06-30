@@ -247,6 +247,12 @@ class SFr extends S {
   String get light => 'Clair';
 
   @override
+  String get ligma => 'LIGMA';
+
+  @override
+  String get ligmaEasterEgg => 'BALLZ';
+
+  @override
   String get lni => 'LNI Vintage';
 
   @override
@@ -329,6 +335,50 @@ class SFr extends S {
 
   @override
   String get numberOfTeamsByDefault => 'Nombre d\'équipes par défaut';
+
+  @override
+  String get onboardingByDefault =>
+      'Ces paramètres seront utilisés par défaut, mais pourront être changés individuellement.';
+
+  @override
+  String get onboardingLanguageTitle => 'Bienvenue sur Mon Pacing';
+
+  @override
+  String get onboardingLanguageDescription => 'Selectionnez votre langue.';
+
+  @override
+  String get onboardingPacingsTitle => 'Créez vos pacings';
+
+  @override
+  String get onboardingPacingsDescription => 'Créez des pacings pour vos matchs avec notre outil.';
+
+  @override
+  String get onboardingImprovisationsTitle => 'Personalisez vos improvisations';
+
+  @override
+  String get onboardingImprovisationsDescription =>
+      'Personnalisez vos improvisations avec des durées, des types, des étiquettes et plus.';
+
+  @override
+  String get onboardingMatchesTitle => 'Enrichissez vos matchs';
+
+  @override
+  String get onboardingMatchesDescription => 'Ajoutez des statistiques et plus à vos matchs.';
+
+  @override
+  String get onboardingPenaltiesTitle => 'Gardez une trace des pénalités';
+
+  @override
+  String get onboardingPenaltiesDescription => 'Ajoutez des pénalités aux interprètes et expulsez-les si nécessaire.';
+
+  @override
+  String get onboardingNext => 'Suivant';
+
+  @override
+  String get onboardingPrevious => 'Précédent';
+
+  @override
+  String get onboardingDone => 'Débutez';
 
   @override
   String get open => 'Ouvrir';

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../cubits/settings/settings_cubit.dart';
 import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
 import '../pages/matches_search/matches_search_page_shell.dart';
+import '../pages/onboarding/onboarding_page_view.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
 import '../pages/pacings_search/pacings_search_page_shell.dart';
@@ -19,6 +22,14 @@ import 'routes.dart';
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: rootNavigatorKey,
+  redirect: (context, state) {
+    // Redirect to onboarding if the user has not completed it
+    final isOnboardingDone = context.read<SettingsCubit>().state.onboardingDone;
+    if (!isOnboardingDone && state.path != '/onboarding') {
+      return '/onboarding';
+    }
+    return null; // No redirection needed
+  },
   initialLocation: '/pacings',
   routes: [
     StatefulShellRoute.indexedStack(
@@ -40,9 +51,8 @@ final router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   name: Routes.pacing,
                   path: 'details/:id',
-                  builder:
-                      (context, state) =>
-                          PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
+                  builder: (context, state) =>
+                      PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
                 ),
                 GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
@@ -125,6 +135,7 @@ final router = GoRouter(
         ),
       ],
     ),
+    GoRoute(name: Routes.onboarding, path: '/onboarding', builder: (context, state) => const OnboardingPageView()),
     GoRoute(name: Routes.scanner, path: '/scanner', builder: (context, state) => const ScannerPageShell()),
     GoRoute(
       name: Routes.categoriesSearch,
