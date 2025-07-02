@@ -66,7 +66,8 @@ mixin StarModelMappable {
   }
 
   StarModelCopyWith<StarModel, StarModel, StarModel> get copyWith =>
-      _StarModelCopyWithImpl(this as StarModel, $identity, $identity);
+      _StarModelCopyWithImpl<StarModel, StarModel>(
+          this as StarModel, $identity, $identity);
   @override
   String toString() {
     return StarModelMapper.ensureInitialized()
@@ -87,7 +88,7 @@ mixin StarModelMappable {
 
 extension StarModelValueCopy<$R, $Out> on ObjectCopyWith<$R, StarModel, $Out> {
   StarModelCopyWith<$R, StarModel, $Out> get $asStarModel =>
-      $base.as((v, t, t2) => _StarModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _StarModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class StarModelCopyWith<$R, $In extends StarModel, $Out>
@@ -120,5 +121,5 @@ class _StarModelCopyWithImpl<$R, $Out>
   @override
   StarModelCopyWith<$R2, StarModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _StarModelCopyWithImpl($value, $cast, t);
+      _StarModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

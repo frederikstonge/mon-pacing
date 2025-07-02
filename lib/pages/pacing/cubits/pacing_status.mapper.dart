@@ -25,13 +25,13 @@ class PacingStatusMapper extends EnumMapper<PacingStatus> {
   @override
   PacingStatus decode(dynamic value) {
     switch (value) {
-      case 'initial':
+      case r'initial':
         return PacingStatus.initial;
-      case 'loading':
+      case r'loading':
         return PacingStatus.loading;
-      case 'error':
+      case r'error':
         return PacingStatus.error;
-      case 'success':
+      case r'success':
         return PacingStatus.success;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -42,13 +42,13 @@ class PacingStatusMapper extends EnumMapper<PacingStatus> {
   dynamic encode(PacingStatus self) {
     switch (self) {
       case PacingStatus.initial:
-        return 'initial';
+        return r'initial';
       case PacingStatus.loading:
-        return 'loading';
+        return r'loading';
       case PacingStatus.error:
-        return 'error';
+        return r'error';
       case PacingStatus.success:
-        return 'success';
+        return r'success';
     }
   }
 }

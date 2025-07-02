@@ -25,13 +25,13 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
   @override
   ThemeType decode(dynamic value) {
     switch (value) {
-      case 'light':
+      case r'light':
         return ThemeType.light;
-      case 'dark':
+      case r'dark':
         return ThemeType.dark;
-      case 'lni':
+      case r'lni':
         return ThemeType.lni;
-      case 'ligma':
+      case r'ligma':
         return ThemeType.ligma;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -42,13 +42,13 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
   dynamic encode(ThemeType self) {
     switch (self) {
       case ThemeType.light:
-        return 'light';
+        return r'light';
       case ThemeType.dark:
-        return 'dark';
+        return r'dark';
       case ThemeType.lni:
-        return 'lni';
+        return r'lni';
       case ThemeType.ligma:
-        return 'ligma';
+        return r'ligma';
     }
   }
 }

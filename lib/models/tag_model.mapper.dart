@@ -59,7 +59,8 @@ mixin TagModelMappable {
   }
 
   TagModelCopyWith<TagModel, TagModel, TagModel> get copyWith =>
-      _TagModelCopyWithImpl(this as TagModel, $identity, $identity);
+      _TagModelCopyWithImpl<TagModel, TagModel>(
+          this as TagModel, $identity, $identity);
   @override
   String toString() {
     return TagModelMapper.ensureInitialized().stringifyValue(this as TagModel);
@@ -79,7 +80,7 @@ mixin TagModelMappable {
 
 extension TagModelValueCopy<$R, $Out> on ObjectCopyWith<$R, TagModel, $Out> {
   TagModelCopyWith<$R, TagModel, $Out> get $asTagModel =>
-      $base.as((v, t, t2) => _TagModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _TagModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class TagModelCopyWith<$R, $In extends TagModel, $Out>
@@ -106,5 +107,5 @@ class _TagModelCopyWithImpl<$R, $Out>
   @override
   TagModelCopyWith<$R2, TagModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _TagModelCopyWithImpl($value, $cast, t);
+      _TagModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

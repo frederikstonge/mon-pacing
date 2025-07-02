@@ -25,11 +25,11 @@ class TimerStatusMapper extends EnumMapper<TimerStatus> {
   @override
   TimerStatus decode(dynamic value) {
     switch (value) {
-      case 'started':
+      case r'started':
         return TimerStatus.started;
-      case 'paused':
+      case r'paused':
         return TimerStatus.paused;
-      case 'stopped':
+      case r'stopped':
         return TimerStatus.stopped;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -40,11 +40,11 @@ class TimerStatusMapper extends EnumMapper<TimerStatus> {
   dynamic encode(TimerStatus self) {
     switch (self) {
       case TimerStatus.started:
-        return 'started';
+        return r'started';
       case TimerStatus.paused:
-        return 'paused';
+        return r'paused';
       case TimerStatus.stopped:
-        return 'stopped';
+        return r'stopped';
     }
   }
 }

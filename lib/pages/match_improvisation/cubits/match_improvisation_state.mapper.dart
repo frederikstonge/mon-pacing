@@ -73,7 +73,8 @@ mixin MatchImprovisationStateMappable {
 
   MatchImprovisationStateCopyWith<MatchImprovisationState,
           MatchImprovisationState, MatchImprovisationState>
-      get copyWith => _MatchImprovisationStateCopyWithImpl(
+      get copyWith => _MatchImprovisationStateCopyWithImpl<
+              MatchImprovisationState, MatchImprovisationState>(
           this as MatchImprovisationState, $identity, $identity);
   @override
   String toString() {
@@ -97,8 +98,8 @@ mixin MatchImprovisationStateMappable {
 extension MatchImprovisationStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MatchImprovisationState, $Out> {
   MatchImprovisationStateCopyWith<$R, MatchImprovisationState, $Out>
-      get $asMatchImprovisationState => $base
-          .as((v, t, t2) => _MatchImprovisationStateCopyWithImpl(v, t, t2));
+      get $asMatchImprovisationState => $base.as((v, t, t2) =>
+          _MatchImprovisationStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class MatchImprovisationStateCopyWith<
@@ -141,5 +142,5 @@ class _MatchImprovisationStateCopyWithImpl<$R, $Out>
   @override
   MatchImprovisationStateCopyWith<$R2, MatchImprovisationState, $Out2>
       $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
-          _MatchImprovisationStateCopyWithImpl($value, $cast, t);
+          _MatchImprovisationStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

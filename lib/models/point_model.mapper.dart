@@ -70,7 +70,8 @@ mixin PointModelMappable {
   }
 
   PointModelCopyWith<PointModel, PointModel, PointModel> get copyWith =>
-      _PointModelCopyWithImpl(this as PointModel, $identity, $identity);
+      _PointModelCopyWithImpl<PointModel, PointModel>(
+          this as PointModel, $identity, $identity);
   @override
   String toString() {
     return PointModelMapper.ensureInitialized()
@@ -92,7 +93,7 @@ mixin PointModelMappable {
 extension PointModelValueCopy<$R, $Out>
     on ObjectCopyWith<$R, PointModel, $Out> {
   PointModelCopyWith<$R, PointModel, $Out> get $asPointModel =>
-      $base.as((v, t, t2) => _PointModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _PointModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class PointModelCopyWith<$R, $In extends PointModel, $Out>
@@ -127,5 +128,5 @@ class _PointModelCopyWithImpl<$R, $Out>
   @override
   PointModelCopyWith<$R2, PointModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _PointModelCopyWithImpl($value, $cast, t);
+      _PointModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

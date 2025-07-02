@@ -64,8 +64,9 @@ mixin PacingDetailStateMappable {
 
   PacingDetailStateCopyWith<PacingDetailState, PacingDetailState,
           PacingDetailState>
-      get copyWith => _PacingDetailStateCopyWithImpl(
-          this as PacingDetailState, $identity, $identity);
+      get copyWith =>
+          _PacingDetailStateCopyWithImpl<PacingDetailState, PacingDetailState>(
+              this as PacingDetailState, $identity, $identity);
   @override
   String toString() {
     return PacingDetailStateMapper.ensureInitialized()
@@ -88,8 +89,8 @@ mixin PacingDetailStateMappable {
 extension PacingDetailStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, PacingDetailState, $Out> {
   PacingDetailStateCopyWith<$R, PacingDetailState, $Out>
-      get $asPacingDetailState =>
-          $base.as((v, t, t2) => _PacingDetailStateCopyWithImpl(v, t, t2));
+      get $asPacingDetailState => $base
+          .as((v, t, t2) => _PacingDetailStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class PacingDetailStateCopyWith<$R, $In extends PacingDetailState,
@@ -124,5 +125,5 @@ class _PacingDetailStateCopyWithImpl<$R, $Out>
   @override
   PacingDetailStateCopyWith<$R2, PacingDetailState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _PacingDetailStateCopyWithImpl($value, $cast, t);
+      _PacingDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

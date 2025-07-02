@@ -25,13 +25,13 @@ class MatchStatusMapper extends EnumMapper<MatchStatus> {
   @override
   MatchStatus decode(dynamic value) {
     switch (value) {
-      case 'initial':
+      case r'initial':
         return MatchStatus.initial;
-      case 'loading':
+      case r'loading':
         return MatchStatus.loading;
-      case 'error':
+      case r'error':
         return MatchStatus.error;
-      case 'success':
+      case r'success':
         return MatchStatus.success;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -42,13 +42,13 @@ class MatchStatusMapper extends EnumMapper<MatchStatus> {
   dynamic encode(MatchStatus self) {
     switch (self) {
       case MatchStatus.initial:
-        return 'initial';
+        return r'initial';
       case MatchStatus.loading:
-        return 'loading';
+        return r'loading';
       case MatchStatus.error:
-        return 'error';
+        return r'error';
       case MatchStatus.success:
-        return 'success';
+        return r'success';
     }
   }
 }

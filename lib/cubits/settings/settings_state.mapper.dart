@@ -28,9 +28,6 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
   static ThemeType _$theme(SettingsState v) => v.theme;
   static const Field<SettingsState, ThemeType> _f$theme =
       Field('theme', _$theme);
-  static bool _$onboardingDone(SettingsState v) => v.onboardingDone;
-  static const Field<SettingsState, bool> _f$onboardingDone =
-      Field('onboardingDone', _$onboardingDone, opt: true, def: false);
   static bool _$enableWakelock(SettingsState v) => v.enableWakelock;
   static const Field<SettingsState, bool> _f$enableWakelock =
       Field('enableWakelock', _$enableWakelock, opt: true, def: true);
@@ -107,7 +104,6 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
   final MappableFields<SettingsState> fields = const {
     #language: _f$language,
     #theme: _f$theme,
-    #onboardingDone: _f$onboardingDone,
     #enableWakelock: _f$enableWakelock,
     #enableHapticFeedback: _f$enableHapticFeedback,
     #enableTimerHapticFeedback: _f$enableTimerHapticFeedback,
@@ -129,7 +125,6 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     return SettingsState(
         language: data.dec(_f$language),
         theme: data.dec(_f$theme),
-        onboardingDone: data.dec(_f$onboardingDone),
         enableWakelock: data.dec(_f$enableWakelock),
         enableHapticFeedback: data.dec(_f$enableHapticFeedback),
         enableTimerHapticFeedback: data.dec(_f$enableTimerHapticFeedback),
@@ -173,7 +168,7 @@ mixin SettingsStateMappable {
   }
 
   SettingsStateCopyWith<SettingsState, SettingsState, SettingsState>
-      get copyWith => _SettingsStateCopyWithImpl(
+      get copyWith => _SettingsStateCopyWithImpl<SettingsState, SettingsState>(
           this as SettingsState, $identity, $identity);
   @override
   String toString() {
@@ -197,7 +192,7 @@ mixin SettingsStateMappable {
 extension SettingsStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, SettingsState, $Out> {
   SettingsStateCopyWith<$R, SettingsState, $Out> get $asSettingsState =>
-      $base.as((v, t, t2) => _SettingsStateCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _SettingsStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class SettingsStateCopyWith<$R, $In extends SettingsState, $Out>
@@ -205,7 +200,6 @@ abstract class SettingsStateCopyWith<$R, $In extends SettingsState, $Out>
   $R call(
       {String? language,
       ThemeType? theme,
-      bool? onboardingDone,
       bool? enableWakelock,
       bool? enableHapticFeedback,
       bool? enableTimerHapticFeedback,
@@ -234,7 +228,6 @@ class _SettingsStateCopyWithImpl<$R, $Out>
   $R call(
           {String? language,
           ThemeType? theme,
-          bool? onboardingDone,
           bool? enableWakelock,
           bool? enableHapticFeedback,
           bool? enableTimerHapticFeedback,
@@ -251,7 +244,6 @@ class _SettingsStateCopyWithImpl<$R, $Out>
       $apply(FieldCopyWithData({
         if (language != null) #language: language,
         if (theme != null) #theme: theme,
-        if (onboardingDone != null) #onboardingDone: onboardingDone,
         if (enableWakelock != null) #enableWakelock: enableWakelock,
         if (enableHapticFeedback != null)
           #enableHapticFeedback: enableHapticFeedback,
@@ -285,7 +277,6 @@ class _SettingsStateCopyWithImpl<$R, $Out>
   SettingsState $make(CopyWithData data) => SettingsState(
       language: data.get(#language, or: $value.language),
       theme: data.get(#theme, or: $value.theme),
-      onboardingDone: data.get(#onboardingDone, or: $value.onboardingDone),
       enableWakelock: data.get(#enableWakelock, or: $value.enableWakelock),
       enableHapticFeedback:
           data.get(#enableHapticFeedback, or: $value.enableHapticFeedback),
@@ -319,5 +310,5 @@ class _SettingsStateCopyWithImpl<$R, $Out>
   @override
   SettingsStateCopyWith<$R2, SettingsState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _SettingsStateCopyWithImpl($value, $cast, t);
+      _SettingsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

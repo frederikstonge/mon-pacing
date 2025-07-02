@@ -115,8 +115,8 @@ mixin ImprovisationModelMappable {
 
   ImprovisationModelCopyWith<ImprovisationModel, ImprovisationModel,
           ImprovisationModel>
-      get copyWith => _ImprovisationModelCopyWithImpl(
-          this as ImprovisationModel, $identity, $identity);
+      get copyWith => _ImprovisationModelCopyWithImpl<ImprovisationModel,
+          ImprovisationModel>(this as ImprovisationModel, $identity, $identity);
   @override
   String toString() {
     return ImprovisationModelMapper.ensureInitialized()
@@ -139,8 +139,8 @@ mixin ImprovisationModelMappable {
 extension ImprovisationModelValueCopy<$R, $Out>
     on ObjectCopyWith<$R, ImprovisationModel, $Out> {
   ImprovisationModelCopyWith<$R, ImprovisationModel, $Out>
-      get $asImprovisationModel =>
-          $base.as((v, t, t2) => _ImprovisationModelCopyWithImpl(v, t, t2));
+      get $asImprovisationModel => $base.as(
+          (v, t, t2) => _ImprovisationModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class ImprovisationModelCopyWith<$R, $In extends ImprovisationModel,
@@ -228,5 +228,5 @@ class _ImprovisationModelCopyWithImpl<$R, $Out>
   @override
   ImprovisationModelCopyWith<$R2, ImprovisationModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _ImprovisationModelCopyWithImpl($value, $cast, t);
+      _ImprovisationModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

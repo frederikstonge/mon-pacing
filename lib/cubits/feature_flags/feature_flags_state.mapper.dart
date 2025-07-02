@@ -65,8 +65,9 @@ mixin FeatureFlagsStateMappable {
 
   FeatureFlagsStateCopyWith<FeatureFlagsState, FeatureFlagsState,
           FeatureFlagsState>
-      get copyWith => _FeatureFlagsStateCopyWithImpl(
-          this as FeatureFlagsState, $identity, $identity);
+      get copyWith =>
+          _FeatureFlagsStateCopyWithImpl<FeatureFlagsState, FeatureFlagsState>(
+              this as FeatureFlagsState, $identity, $identity);
   @override
   String toString() {
     return FeatureFlagsStateMapper.ensureInitialized()
@@ -89,8 +90,8 @@ mixin FeatureFlagsStateMappable {
 extension FeatureFlagsStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, FeatureFlagsState, $Out> {
   FeatureFlagsStateCopyWith<$R, FeatureFlagsState, $Out>
-      get $asFeatureFlagsState =>
-          $base.as((v, t, t2) => _FeatureFlagsStateCopyWithImpl(v, t, t2));
+      get $asFeatureFlagsState => $base
+          .as((v, t, t2) => _FeatureFlagsStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class FeatureFlagsStateCopyWith<$R, $In extends FeatureFlagsState,
@@ -123,5 +124,5 @@ class _FeatureFlagsStateCopyWithImpl<$R, $Out>
   @override
   FeatureFlagsStateCopyWith<$R2, FeatureFlagsState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _FeatureFlagsStateCopyWithImpl($value, $cast, t);
+      _FeatureFlagsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

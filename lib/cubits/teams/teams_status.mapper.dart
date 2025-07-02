@@ -25,13 +25,13 @@ class TeamsStatusMapper extends EnumMapper<TeamsStatus> {
   @override
   TeamsStatus decode(dynamic value) {
     switch (value) {
-      case 'initial':
+      case r'initial':
         return TeamsStatus.initial;
-      case 'loading':
+      case r'loading':
         return TeamsStatus.loading;
-      case 'error':
+      case r'error':
         return TeamsStatus.error;
-      case 'success':
+      case r'success':
         return TeamsStatus.success;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -42,13 +42,13 @@ class TeamsStatusMapper extends EnumMapper<TeamsStatus> {
   dynamic encode(TeamsStatus self) {
     switch (self) {
       case TeamsStatus.initial:
-        return 'initial';
+        return r'initial';
       case TeamsStatus.loading:
-        return 'loading';
+        return r'loading';
       case TeamsStatus.error:
-        return 'error';
+        return r'error';
       case TeamsStatus.success:
-        return 'success';
+        return r'success';
     }
   }
 }

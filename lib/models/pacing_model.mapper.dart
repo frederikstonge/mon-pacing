@@ -106,7 +106,8 @@ mixin PacingModelMappable {
   }
 
   PacingModelCopyWith<PacingModel, PacingModel, PacingModel> get copyWith =>
-      _PacingModelCopyWithImpl(this as PacingModel, $identity, $identity);
+      _PacingModelCopyWithImpl<PacingModel, PacingModel>(
+          this as PacingModel, $identity, $identity);
   @override
   String toString() {
     return PacingModelMapper.ensureInitialized()
@@ -128,7 +129,7 @@ mixin PacingModelMappable {
 extension PacingModelValueCopy<$R, $Out>
     on ObjectCopyWith<$R, PacingModel, $Out> {
   PacingModelCopyWith<$R, PacingModel, $Out> get $asPacingModel =>
-      $base.as((v, t, t2) => _PacingModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _PacingModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class PacingModelCopyWith<$R, $In extends PacingModel, $Out>
@@ -220,5 +221,5 @@ class _PacingModelCopyWithImpl<$R, $Out>
   @override
   PacingModelCopyWith<$R2, PacingModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _PacingModelCopyWithImpl($value, $cast, t);
+      _PacingModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

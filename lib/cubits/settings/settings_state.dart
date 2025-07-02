@@ -9,7 +9,6 @@ part 'settings_state.mapper.dart';
 class SettingsState with SettingsStateMappable {
   final String language;
   final ThemeType theme;
-  final bool onboardingDone;
   final bool enableWakelock;
   final bool enableHapticFeedback;
   final bool enableTimerHapticFeedback;
@@ -27,7 +26,6 @@ class SettingsState with SettingsStateMappable {
   const SettingsState({
     required this.language,
     required this.theme,
-    this.onboardingDone = false,
     this.enableWakelock = true,
     this.enableHapticFeedback = true,
     this.enableTimerHapticFeedback = true,

@@ -83,7 +83,8 @@ mixin MatchStateMappable {
   }
 
   MatchStateCopyWith<MatchState, MatchState, MatchState> get copyWith =>
-      _MatchStateCopyWithImpl(this as MatchState, $identity, $identity);
+      _MatchStateCopyWithImpl<MatchState, MatchState>(
+          this as MatchState, $identity, $identity);
   @override
   String toString() {
     return MatchStateMapper.ensureInitialized()
@@ -105,7 +106,7 @@ mixin MatchStateMappable {
 extension MatchStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MatchState, $Out> {
   MatchStateCopyWith<$R, MatchState, $Out> get $asMatchState =>
-      $base.as((v, t, t2) => _MatchStateCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _MatchStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class MatchStateCopyWith<$R, $In extends MatchState, $Out>
@@ -160,5 +161,5 @@ class _MatchStateCopyWithImpl<$R, $Out>
   @override
   MatchStateCopyWith<$R2, MatchState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _MatchStateCopyWithImpl($value, $cast, t);
+      _MatchStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

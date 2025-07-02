@@ -79,7 +79,8 @@ mixin PenaltyModelMappable {
   }
 
   PenaltyModelCopyWith<PenaltyModel, PenaltyModel, PenaltyModel> get copyWith =>
-      _PenaltyModelCopyWithImpl(this as PenaltyModel, $identity, $identity);
+      _PenaltyModelCopyWithImpl<PenaltyModel, PenaltyModel>(
+          this as PenaltyModel, $identity, $identity);
   @override
   String toString() {
     return PenaltyModelMapper.ensureInitialized()
@@ -102,7 +103,7 @@ mixin PenaltyModelMappable {
 extension PenaltyModelValueCopy<$R, $Out>
     on ObjectCopyWith<$R, PenaltyModel, $Out> {
   PenaltyModelCopyWith<$R, PenaltyModel, $Out> get $asPenaltyModel =>
-      $base.as((v, t, t2) => _PenaltyModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _PenaltyModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class PenaltyModelCopyWith<$R, $In extends PenaltyModel, $Out>
@@ -153,5 +154,5 @@ class _PenaltyModelCopyWithImpl<$R, $Out>
   @override
   PenaltyModelCopyWith<$R2, PenaltyModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _PenaltyModelCopyWithImpl($value, $cast, t);
+      _PenaltyModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

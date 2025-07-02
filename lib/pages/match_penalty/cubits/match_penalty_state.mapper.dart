@@ -78,8 +78,9 @@ mixin MatchPenaltyStateMappable {
 
   MatchPenaltyStateCopyWith<MatchPenaltyState, MatchPenaltyState,
           MatchPenaltyState>
-      get copyWith => _MatchPenaltyStateCopyWithImpl(
-          this as MatchPenaltyState, $identity, $identity);
+      get copyWith =>
+          _MatchPenaltyStateCopyWithImpl<MatchPenaltyState, MatchPenaltyState>(
+              this as MatchPenaltyState, $identity, $identity);
   @override
   String toString() {
     return MatchPenaltyStateMapper.ensureInitialized()
@@ -102,8 +103,8 @@ mixin MatchPenaltyStateMappable {
 extension MatchPenaltyStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MatchPenaltyState, $Out> {
   MatchPenaltyStateCopyWith<$R, MatchPenaltyState, $Out>
-      get $asMatchPenaltyState =>
-          $base.as((v, t, t2) => _MatchPenaltyStateCopyWithImpl(v, t, t2));
+      get $asMatchPenaltyState => $base
+          .as((v, t, t2) => _MatchPenaltyStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class MatchPenaltyStateCopyWith<$R, $In extends MatchPenaltyState,
@@ -169,5 +170,5 @@ class _MatchPenaltyStateCopyWithImpl<$R, $Out>
   @override
   MatchPenaltyStateCopyWith<$R2, MatchPenaltyState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _MatchPenaltyStateCopyWithImpl($value, $cast, t);
+      _MatchPenaltyStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

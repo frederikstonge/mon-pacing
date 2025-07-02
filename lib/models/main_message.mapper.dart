@@ -64,7 +64,8 @@ mixin MainMessageMappable {
   }
 
   MainMessageCopyWith<MainMessage, MainMessage, MainMessage> get copyWith =>
-      _MainMessageCopyWithImpl(this as MainMessage, $identity, $identity);
+      _MainMessageCopyWithImpl<MainMessage, MainMessage>(
+          this as MainMessage, $identity, $identity);
   @override
   String toString() {
     return MainMessageMapper.ensureInitialized()
@@ -86,7 +87,7 @@ mixin MainMessageMappable {
 extension MainMessageValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MainMessage, $Out> {
   MainMessageCopyWith<$R, MainMessage, $Out> get $asMainMessage =>
-      $base.as((v, t, t2) => _MainMessageCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _MainMessageCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class MainMessageCopyWith<$R, $In extends MainMessage, $Out>
@@ -119,5 +120,5 @@ class _MainMessageCopyWithImpl<$R, $Out>
   @override
   MainMessageCopyWith<$R2, MainMessage, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _MainMessageCopyWithImpl($value, $cast, t);
+      _MainMessageCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

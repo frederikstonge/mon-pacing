@@ -25,9 +25,9 @@ class PenaltiesImpactTypeMapper extends EnumMapper<PenaltiesImpactType> {
   @override
   PenaltiesImpactType decode(dynamic value) {
     switch (value) {
-      case 'addPoints':
+      case r'addPoints':
         return PenaltiesImpactType.addPoints;
-      case 'substractPoints':
+      case r'substractPoints':
         return PenaltiesImpactType.substractPoints;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -38,9 +38,9 @@ class PenaltiesImpactTypeMapper extends EnumMapper<PenaltiesImpactType> {
   dynamic encode(PenaltiesImpactType self) {
     switch (self) {
       case PenaltiesImpactType.addPoints:
-        return 'addPoints';
+        return r'addPoints';
       case PenaltiesImpactType.substractPoints:
-        return 'substractPoints';
+        return r'substractPoints';
     }
   }
 }

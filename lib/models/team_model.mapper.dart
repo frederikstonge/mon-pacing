@@ -99,7 +99,8 @@ mixin TeamModelMappable {
   }
 
   TeamModelCopyWith<TeamModel, TeamModel, TeamModel> get copyWith =>
-      _TeamModelCopyWithImpl(this as TeamModel, $identity, $identity);
+      _TeamModelCopyWithImpl<TeamModel, TeamModel>(
+          this as TeamModel, $identity, $identity);
   @override
   String toString() {
     return TeamModelMapper.ensureInitialized()
@@ -120,7 +121,7 @@ mixin TeamModelMappable {
 
 extension TeamModelValueCopy<$R, $Out> on ObjectCopyWith<$R, TeamModel, $Out> {
   TeamModelCopyWith<$R, TeamModel, $Out> get $asTeamModel =>
-      $base.as((v, t, t2) => _TeamModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _TeamModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class TeamModelCopyWith<$R, $In extends TeamModel, $Out>
@@ -200,5 +201,5 @@ class _TeamModelCopyWithImpl<$R, $Out>
   @override
   TeamModelCopyWith<$R2, TeamModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _TeamModelCopyWithImpl($value, $cast, t);
+      _TeamModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

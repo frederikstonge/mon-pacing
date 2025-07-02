@@ -58,7 +58,8 @@ mixin TimerStateMappable {
   }
 
   TimerStateCopyWith<TimerState, TimerState, TimerState> get copyWith =>
-      _TimerStateCopyWithImpl(this as TimerState, $identity, $identity);
+      _TimerStateCopyWithImpl<TimerState, TimerState>(
+          this as TimerState, $identity, $identity);
   @override
   String toString() {
     return TimerStateMapper.ensureInitialized()
@@ -80,7 +81,7 @@ mixin TimerStateMappable {
 extension TimerStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, TimerState, $Out> {
   TimerStateCopyWith<$R, TimerState, $Out> get $asTimerState =>
-      $base.as((v, t, t2) => _TimerStateCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _TimerStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class TimerStateCopyWith<$R, $In extends TimerState, $Out>
@@ -111,5 +112,5 @@ class _TimerStateCopyWithImpl<$R, $Out>
   @override
   TimerStateCopyWith<$R2, TimerState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _TimerStateCopyWithImpl($value, $cast, t);
+      _TimerStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

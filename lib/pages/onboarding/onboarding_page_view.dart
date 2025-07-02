@@ -11,6 +11,7 @@ import '../../components/duration_picker/duration_picker.dart';
 import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
+import '../../cubits/onboarding/onboarding_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../extensions/duration_extensions.dart';
@@ -513,7 +514,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
           ),
           overrideDone: LoadingButton.filled(
             onPressed: () {
-              context.read<SettingsCubit>().edit(settingsState.copyWith(onboardingDone: true));
+              context.read<OnboardingCubit>().finishOnboarding();
               context.goNamed(Routes.pacings);
             },
             child: Text(S.of(context).onboardingDone),

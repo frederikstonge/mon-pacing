@@ -7,6 +7,7 @@ import 'package:toastification/toastification.dart';
 import 'app.dart';
 import 'cubits/feature_flags/feature_flags_cubit.dart';
 import 'cubits/matches/matches_cubit.dart';
+import 'cubits/onboarding/onboarding_cubit.dart';
 import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/teams/teams_cubit.dart';
@@ -61,6 +62,7 @@ class Bootstrapper extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (blocContext) => OnboardingCubit()),
           BlocProvider(create: (blocContext) => SettingsCubit()),
           BlocProvider(
             create: (blocContext) => PacingsCubit(

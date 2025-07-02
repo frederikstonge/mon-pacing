@@ -74,8 +74,9 @@ mixin PerformerModelMappable {
   }
 
   PerformerModelCopyWith<PerformerModel, PerformerModel, PerformerModel>
-      get copyWith => _PerformerModelCopyWithImpl(
-          this as PerformerModel, $identity, $identity);
+      get copyWith =>
+          _PerformerModelCopyWithImpl<PerformerModel, PerformerModel>(
+              this as PerformerModel, $identity, $identity);
   @override
   String toString() {
     return PerformerModelMapper.ensureInitialized()
@@ -98,7 +99,7 @@ mixin PerformerModelMappable {
 extension PerformerModelValueCopy<$R, $Out>
     on ObjectCopyWith<$R, PerformerModel, $Out> {
   PerformerModelCopyWith<$R, PerformerModel, $Out> get $asPerformerModel =>
-      $base.as((v, t, t2) => _PerformerModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _PerformerModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class PerformerModelCopyWith<$R, $In extends PerformerModel, $Out>
@@ -146,5 +147,5 @@ class _PerformerModelCopyWithImpl<$R, $Out>
   @override
   PerformerModelCopyWith<$R2, PerformerModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _PerformerModelCopyWithImpl($value, $cast, t);
+      _PerformerModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

@@ -25,13 +25,13 @@ class FeatureFlagsStatusMapper extends EnumMapper<FeatureFlagsStatus> {
   @override
   FeatureFlagsStatus decode(dynamic value) {
     switch (value) {
-      case 'initial':
+      case r'initial':
         return FeatureFlagsStatus.initial;
-      case 'loading':
+      case r'loading':
         return FeatureFlagsStatus.loading;
-      case 'success':
+      case r'success':
         return FeatureFlagsStatus.success;
-      case 'failure':
+      case r'failure':
         return FeatureFlagsStatus.failure;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -42,13 +42,13 @@ class FeatureFlagsStatusMapper extends EnumMapper<FeatureFlagsStatus> {
   dynamic encode(FeatureFlagsStatus self) {
     switch (self) {
       case FeatureFlagsStatus.initial:
-        return 'initial';
+        return r'initial';
       case FeatureFlagsStatus.loading:
-        return 'loading';
+        return r'loading';
       case FeatureFlagsStatus.success:
-        return 'success';
+        return r'success';
       case FeatureFlagsStatus.failure:
-        return 'failure';
+        return r'failure';
     }
   }
 }

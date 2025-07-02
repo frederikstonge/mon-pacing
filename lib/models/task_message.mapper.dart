@@ -74,7 +74,8 @@ mixin TaskMessageMappable {
   }
 
   TaskMessageCopyWith<TaskMessage, TaskMessage, TaskMessage> get copyWith =>
-      _TaskMessageCopyWithImpl(this as TaskMessage, $identity, $identity);
+      _TaskMessageCopyWithImpl<TaskMessage, TaskMessage>(
+          this as TaskMessage, $identity, $identity);
   @override
   String toString() {
     return TaskMessageMapper.ensureInitialized()
@@ -96,7 +97,7 @@ mixin TaskMessageMappable {
 extension TaskMessageValueCopy<$R, $Out>
     on ObjectCopyWith<$R, TaskMessage, $Out> {
   TaskMessageCopyWith<$R, TaskMessage, $Out> get $asTaskMessage =>
-      $base.as((v, t, t2) => _TaskMessageCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _TaskMessageCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class TaskMessageCopyWith<$R, $In extends TaskMessage, $Out>
@@ -141,5 +142,5 @@ class _TaskMessageCopyWithImpl<$R, $Out>
   @override
   TaskMessageCopyWith<$R2, TaskMessage, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _TaskMessageCopyWithImpl($value, $cast, t);
+      _TaskMessageCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

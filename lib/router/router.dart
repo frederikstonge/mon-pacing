@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../cubits/settings/settings_cubit.dart';
+import '../cubits/onboarding/onboarding_cubit.dart';
 import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
@@ -24,7 +24,7 @@ final router = GoRouter(
   navigatorKey: rootNavigatorKey,
   redirect: (context, state) {
     // Redirect to onboarding if the user has not completed it
-    final isOnboardingDone = context.read<SettingsCubit>().state.onboardingDone;
+    final isOnboardingDone = context.read<OnboardingCubit>().state.onboardingFinished;
     if (!isOnboardingDone && state.path != '/onboarding') {
       return '/onboarding';
     }

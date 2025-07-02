@@ -25,9 +25,9 @@ class ImprovisationTypeMapper extends EnumMapper<ImprovisationType> {
   @override
   ImprovisationType decode(dynamic value) {
     switch (value) {
-      case 'mixed':
+      case r'mixed':
         return ImprovisationType.mixed;
-      case 'compared':
+      case r'compared':
         return ImprovisationType.compared;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -38,9 +38,9 @@ class ImprovisationTypeMapper extends EnumMapper<ImprovisationType> {
   dynamic encode(ImprovisationType self) {
     switch (self) {
       case ImprovisationType.mixed:
-        return 'mixed';
+        return r'mixed';
       case ImprovisationType.compared:
-        return 'compared';
+        return r'compared';
     }
   }
 }

@@ -69,8 +69,9 @@ mixin TeamDetailStateMappable {
   }
 
   TeamDetailStateCopyWith<TeamDetailState, TeamDetailState, TeamDetailState>
-      get copyWith => _TeamDetailStateCopyWithImpl(
-          this as TeamDetailState, $identity, $identity);
+      get copyWith =>
+          _TeamDetailStateCopyWithImpl<TeamDetailState, TeamDetailState>(
+              this as TeamDetailState, $identity, $identity);
   @override
   String toString() {
     return TeamDetailStateMapper.ensureInitialized()
@@ -93,7 +94,7 @@ mixin TeamDetailStateMappable {
 extension TeamDetailStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, TeamDetailState, $Out> {
   TeamDetailStateCopyWith<$R, TeamDetailState, $Out> get $asTeamDetailState =>
-      $base.as((v, t, t2) => _TeamDetailStateCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _TeamDetailStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class TeamDetailStateCopyWith<$R, $In extends TeamDetailState, $Out>
@@ -132,5 +133,5 @@ class _TeamDetailStateCopyWithImpl<$R, $Out>
   @override
   TeamDetailStateCopyWith<$R2, TeamDetailState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _TeamDetailStateCopyWithImpl($value, $cast, t);
+      _TeamDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

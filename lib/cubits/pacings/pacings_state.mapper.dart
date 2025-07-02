@@ -75,7 +75,8 @@ mixin PacingsStateMappable {
   }
 
   PacingsStateCopyWith<PacingsState, PacingsState, PacingsState> get copyWith =>
-      _PacingsStateCopyWithImpl(this as PacingsState, $identity, $identity);
+      _PacingsStateCopyWithImpl<PacingsState, PacingsState>(
+          this as PacingsState, $identity, $identity);
   @override
   String toString() {
     return PacingsStateMapper.ensureInitialized()
@@ -98,7 +99,7 @@ mixin PacingsStateMappable {
 extension PacingsStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, PacingsState, $Out> {
   PacingsStateCopyWith<$R, PacingsState, $Out> get $asPacingsState =>
-      $base.as((v, t, t2) => _PacingsStateCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _PacingsStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class PacingsStateCopyWith<$R, $In extends PacingsState, $Out>
@@ -148,5 +149,5 @@ class _PacingsStateCopyWithImpl<$R, $Out>
   @override
   PacingsStateCopyWith<$R2, PacingsState, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _PacingsStateCopyWithImpl($value, $cast, t);
+      _PacingsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }

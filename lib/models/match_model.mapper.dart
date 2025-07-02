@@ -204,7 +204,8 @@ mixin MatchModelMappable {
   }
 
   MatchModelCopyWith<MatchModel, MatchModel, MatchModel> get copyWith =>
-      _MatchModelCopyWithImpl(this as MatchModel, $identity, $identity);
+      _MatchModelCopyWithImpl<MatchModel, MatchModel>(
+          this as MatchModel, $identity, $identity);
   @override
   String toString() {
     return MatchModelMapper.ensureInitialized()
@@ -226,7 +227,7 @@ mixin MatchModelMappable {
 extension MatchModelValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MatchModel, $Out> {
   MatchModelCopyWith<$R, MatchModel, $Out> get $asMatchModel =>
-      $base.as((v, t, t2) => _MatchModelCopyWithImpl(v, t, t2));
+      $base.as((v, t, t2) => _MatchModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
@@ -429,5 +430,5 @@ class _MatchModelCopyWithImpl<$R, $Out>
   @override
   MatchModelCopyWith<$R2, MatchModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _MatchModelCopyWithImpl($value, $cast, t);
+      _MatchModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
