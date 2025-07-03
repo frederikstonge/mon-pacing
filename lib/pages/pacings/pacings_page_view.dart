@@ -24,6 +24,7 @@ import '../../cubits/timer/timer_state.dart';
 import '../../cubits/tutorials/tutorials_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../models/pacing_model.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -38,13 +39,15 @@ class PacingsPageView extends StatefulWidget {
   State<PacingsPageView> createState() => _PacingsPageViewState();
 }
 
-class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
-  final GlobalKey _pacingsFabKey = GlobalKey();
+class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
+  final GlobalKey _addPacingButtonKey = GlobalKey();
+  final GlobalKey _firstPacingCardKey = GlobalKey();
   late ScrollController _scrollController;
   final _scrollThreshold = 200.0;
 
   @override
   void initState() {
+    GoRouter.of(context).routerDelegate.addListener(_showTutorials);
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
     super.initState();
@@ -52,6 +55,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
 
   @override
   void dispose() {
+    GoRouter.of(context).routerDelegate.removeListener(_showTutorials);
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
@@ -60,41 +64,8 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PacingsCubit, PacingsState>(
-      listener: (context, pacingsState) {
-        if (pacingsState.status == PacingsStatus.success) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!context.read<TutorialsCubit>().state.pacingsFinished) {
-              initTutorialCoachMark(
-                targets: [
-                  TargetFocus(
-                    keyTarget: _pacingsFabKey,
-                    enableOverlayTab: true,
-                    contents: [
-                      TargetContent(
-                        align: ContentAlign.top,
-                        child: Row(
-                          children: [
-                            Text(
-                              S.of(context).createNewPacingTooltip,
-                              style: Theme.of(
-                                context,
-                              ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-              showTutorialCoachMark(context, () {
-                if (!kDebugMode) {
-                  context.read<TutorialsCubit>().setPacingsFinished();
-                }
-              });
-            }
-          });
-        }
+      listener: (_, _) {
+        _showTutorials();
       },
       builder: (context, pacingsState) {
         return RefreshIndicator(
@@ -106,7 +77,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
                 scrollController: _scrollController,
                 scrollPhysics: const AlwaysScrollableScrollPhysics(),
                 floatingActionButton: FloatingActionButton(
-                  key: _pacingsFabKey,
+                  key: _addPacingButtonKey,
                   heroTag: 'pacings_fab',
                   onPressed: _addPacing,
                   tooltip: S.of(context).createNewPacingTooltip,
@@ -123,7 +94,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
                         LoadingIconButton(
                           icon: const Icon(Icons.download),
                           tooltip: S.of(context).importPacingTooltip,
-                          onPressed: () async => context.read<PacingsCubit>().import(),
+                          onPressed: () async => _onImportPressed(context),
                         ),
                         BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
                           builder: (context, featureFlagState) {
@@ -131,7 +102,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
                               return LoadingIconButton(
                                 icon: const Icon(Icons.qr_code),
                                 tooltip: S.of(context).scanner,
-                                onPressed: () async => context.pushNamed(Routes.scanner),
+                                onPressed: () async => _onIntegrationPressed(context),
                               );
                             }
                             return SizedBox();
@@ -140,13 +111,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
                         LoadingIconButton(
                           icon: const Icon(Icons.search),
                           tooltip: S.of(context).search(category: S.of(context).pacings),
-                          onPressed: () async {
-                            final router = GoRouter.of(context);
-                            final result = await PacingsSearchPageView.showDialog(context);
-                            if (result != null) {
-                              router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
-                            }
-                          },
+                          onPressed: () async => await _onSearchPressed(context),
                         ),
                       ],
                     );
@@ -167,58 +132,15 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
 
                         final pacing = pacingsState.pacings.elementAt(index);
                         return PacingCard(
+                          key: index == 0 ? _firstPacingCardKey : null,
                           pacing: pacing,
-                          onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                          edit: () =>
-                              GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'}),
-                          shouldDelete: () => MessageBoxDialog.questionShow(
-                            context,
-                            S
-                                .of(context)
-                                .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: pacing.name),
-                            S.of(context).delete,
-                            S.of(context).cancel,
-                          ),
-                          delete: () => context.read<PacingsCubit>().delete(pacing),
-                          export: () => context.read<PacingsCubit>().export(pacing),
-                          duplicate: () {
-                            return BottomSheetDialog.showDialog(
-                              context: context,
-                              child: PacingDetailPageShell(
-                                editMode: false,
-                                pacing: pacing.copyWith(
-                                  id: 0,
-                                  // Temporary id to support ReorderableListView
-                                  improvisations: pacing.improvisations.map((e) => e.copyWith(id: -e.id)).toList(),
-                                  tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
-                                ),
-                                onConfirm: (pacing, dialogContext) async {
-                                  final navigator = Navigator.of(dialogContext);
-                                  final router = GoRouter.of(context);
-                                  final pacingModel = await context.read<PacingsCubit>().add(pacing);
-                                  if (pacingModel != null) {
-                                    navigator.pop();
-                                    router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
-                                  }
-                                },
-                              ),
-                            );
-                          },
-                          startMatch: () => BottomSheetDialog.showDialog(
-                            context: context,
-                            child: MatchDetailPageShell(
-                              pacing: pacing,
-                              onConfirm: (match, dialogContext) async {
-                                final navigator = Navigator.of(dialogContext);
-                                final router = GoRouter.of(context);
-                                final matchModel = await context.read<MatchesCubit>().add(match);
-                                if (matchModel != null) {
-                                  navigator.pop();
-                                  router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
-                                }
-                              },
-                            ),
-                          ),
+                          onLongPress: () => _onLongPress(context),
+                          edit: () => _edit(context, pacing),
+                          shouldDelete: () => _shouldDelete(context, pacing),
+                          delete: () => _delete(context, pacing),
+                          export: () => _export(context, pacing),
+                          duplicate: () => _duplicate(context, pacing),
+                          startMatch: () => _startMatch(context, pacing),
                         );
                       },
                     ),
@@ -229,6 +151,78 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
           ),
         );
       },
+    );
+  }
+
+  Future<PacingModel?> _onImportPressed(BuildContext context) => context.read<PacingsCubit>().import();
+
+  Future<Object?> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
+
+  Future<void> _onSearchPressed(BuildContext context) async {
+    final router = GoRouter.of(context);
+    final result = await PacingsSearchPageView.showDialog(context);
+    if (result != null) {
+      router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
+    }
+  }
+
+  Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
+
+  Future<bool> _export(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().export(pacing);
+
+  Future<void> _delete(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().delete(pacing);
+
+  void _edit(BuildContext context, PacingModel pacing) =>
+      GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'});
+
+  Future<bool?> _shouldDelete(BuildContext context, PacingModel pacing) {
+    return MessageBoxDialog.questionShow(
+      context,
+      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: pacing.name),
+      S.of(context).delete,
+      S.of(context).cancel,
+    );
+  }
+
+  Future<void> _startMatch(BuildContext context, PacingModel pacing) {
+    return BottomSheetDialog.showDialog(
+      context: context,
+      child: MatchDetailPageShell(
+        pacing: pacing,
+        onConfirm: (match, dialogContext) async {
+          final navigator = Navigator.of(dialogContext);
+          final router = GoRouter.of(context);
+          final matchModel = await context.read<MatchesCubit>().add(match);
+          if (matchModel != null) {
+            navigator.pop();
+            router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+          }
+        },
+      ),
+    );
+  }
+
+  Future<void> _duplicate(BuildContext context, PacingModel pacing) {
+    return BottomSheetDialog.showDialog(
+      context: context,
+      child: PacingDetailPageShell(
+        editMode: false,
+        pacing: pacing.copyWith(
+          id: 0,
+          // Temporary id to support ReorderableListView
+          improvisations: pacing.improvisations.map((e) => e.copyWith(id: -e.id)).toList(),
+          tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
+        ),
+        onConfirm: (pacing, dialogContext) async {
+          final navigator = Navigator.of(dialogContext);
+          final router = GoRouter.of(context);
+          final pacingModel = await context.read<PacingsCubit>().add(pacing);
+          if (pacingModel != null) {
+            navigator.pop();
+            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+          }
+        },
+      ),
     );
   }
 
@@ -256,5 +250,82 @@ class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
     if (maxScroll - currentScroll <= _scrollThreshold) {
       await context.read<PacingsCubit>().fetch();
     }
+  }
+
+  Future<void> _showTutorials() async {
+    final router = GoRouter.of(context);
+    final pacingsCubit = context.read<PacingsCubit>();
+    final tutorialsCubit = context.read<TutorialsCubit>();
+
+    final displayAddPacing =
+        router.state.name == Routes.pacings &&
+        pacingsCubit.state.status == PacingsStatus.success &&
+        pacingsCubit.state.pacings.isEmpty &&
+        !tutorialsCubit.state.addPacingFinished;
+
+    final displayStartMatch =
+        router.state.name == Routes.pacings &&
+        pacingsCubit.state.status == PacingsStatus.success &&
+        pacingsCubit.state.pacings.isNotEmpty &&
+        !tutorialsCubit.state.startMatchFinished;
+
+    if (displayAddPacing) {
+      initTutorialCoachMark(
+        targets: [
+          TargetFocus(
+            keyTarget: _addPacingButtonKey,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.Circle,
+            contents: [
+              TargetContent(
+                align: ContentAlign.top,
+                child: Text(
+                  'To start, create your first pacing by tapping the button below.',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    } else if (displayStartMatch) {
+      initTutorialCoachMark(
+        targets: [
+          TargetFocus(
+            keyTarget: _firstPacingCardKey,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.RRect,
+            contents: [
+              TargetContent(
+                align: ContentAlign.bottom,
+                child: Text(
+                  'Swipe right on a pacing to start a match. You can also long-press or tap the more button to access more options.',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted && (displayAddPacing || displayStartMatch)) {
+          showTutorialCoachMark(context, () {
+            if (!kDebugMode) {
+              if (displayAddPacing) {
+                tutorialsCubit.setAddPacingFinished();
+              } else if (displayStartMatch) {
+                tutorialsCubit.setStartMatchFinished();
+              }
+            }
+          });
+        }
+      });
+    });
   }
 }

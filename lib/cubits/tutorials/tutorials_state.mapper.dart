@@ -20,17 +20,37 @@ class TutorialsStateMapper extends ClassMapperBase<TutorialsState> {
   @override
   final String id = 'TutorialsState';
 
-  static bool _$pacingsFinished(TutorialsState v) => v.pacingsFinished;
-  static const Field<TutorialsState, bool> _f$pacingsFinished =
-      Field('pacingsFinished', _$pacingsFinished, opt: true, def: false);
+  static bool _$addPacingFinished(TutorialsState v) => v.addPacingFinished;
+  static const Field<TutorialsState, bool> _f$addPacingFinished =
+      Field('addPacingFinished', _$addPacingFinished, opt: true, def: false);
+  static bool _$startMatchFinished(TutorialsState v) => v.startMatchFinished;
+  static const Field<TutorialsState, bool> _f$startMatchFinished =
+      Field('startMatchFinished', _$startMatchFinished, opt: true, def: false);
+  static bool _$addImprovisationFinished(TutorialsState v) =>
+      v.addImprovisationFinished;
+  static const Field<TutorialsState, bool> _f$addImprovisationFinished = Field(
+      'addImprovisationFinished', _$addImprovisationFinished,
+      opt: true, def: false);
+  static bool _$improvisationFinished(TutorialsState v) =>
+      v.improvisationFinished;
+  static const Field<TutorialsState, bool> _f$improvisationFinished = Field(
+      'improvisationFinished', _$improvisationFinished,
+      opt: true, def: false);
 
   @override
   final MappableFields<TutorialsState> fields = const {
-    #pacingsFinished: _f$pacingsFinished,
+    #addPacingFinished: _f$addPacingFinished,
+    #startMatchFinished: _f$startMatchFinished,
+    #addImprovisationFinished: _f$addImprovisationFinished,
+    #improvisationFinished: _f$improvisationFinished,
   };
 
   static TutorialsState _instantiate(DecodingData data) {
-    return TutorialsState(pacingsFinished: data.dec(_f$pacingsFinished));
+    return TutorialsState(
+        addPacingFinished: data.dec(_f$addPacingFinished),
+        startMatchFinished: data.dec(_f$startMatchFinished),
+        addImprovisationFinished: data.dec(_f$addImprovisationFinished),
+        improvisationFinished: data.dec(_f$improvisationFinished));
   }
 
   @override
@@ -87,7 +107,11 @@ extension TutorialsStateValueCopy<$R, $Out>
 
 abstract class TutorialsStateCopyWith<$R, $In extends TutorialsState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({bool? pacingsFinished});
+  $R call(
+      {bool? addPacingFinished,
+      bool? startMatchFinished,
+      bool? addImprovisationFinished,
+      bool? improvisationFinished});
   TutorialsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
 }
@@ -101,11 +125,29 @@ class _TutorialsStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<TutorialsState> $mapper =
       TutorialsStateMapper.ensureInitialized();
   @override
-  $R call({bool? pacingsFinished}) => $apply(FieldCopyWithData(
-      {if (pacingsFinished != null) #pacingsFinished: pacingsFinished}));
+  $R call(
+          {bool? addPacingFinished,
+          bool? startMatchFinished,
+          bool? addImprovisationFinished,
+          bool? improvisationFinished}) =>
+      $apply(FieldCopyWithData({
+        if (addPacingFinished != null) #addPacingFinished: addPacingFinished,
+        if (startMatchFinished != null) #startMatchFinished: startMatchFinished,
+        if (addImprovisationFinished != null)
+          #addImprovisationFinished: addImprovisationFinished,
+        if (improvisationFinished != null)
+          #improvisationFinished: improvisationFinished
+      }));
   @override
   TutorialsState $make(CopyWithData data) => TutorialsState(
-      pacingsFinished: data.get(#pacingsFinished, or: $value.pacingsFinished));
+      addPacingFinished:
+          data.get(#addPacingFinished, or: $value.addPacingFinished),
+      startMatchFinished:
+          data.get(#startMatchFinished, or: $value.startMatchFinished),
+      addImprovisationFinished: data.get(#addImprovisationFinished,
+          or: $value.addImprovisationFinished),
+      improvisationFinished:
+          data.get(#improvisationFinished, or: $value.improvisationFinished));
 
   @override
   TutorialsStateCopyWith<$R2, TutorialsState, $Out2> $chain<$R2, $Out2>(

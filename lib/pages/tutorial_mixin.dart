@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-mixin Tutorial {
+mixin TutorialMixin {
   TutorialCoachMark? _tutorialCoachMark;
   bool isShown = false;
 

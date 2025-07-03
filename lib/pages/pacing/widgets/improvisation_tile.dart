@@ -23,6 +23,8 @@ class ImprovisationTile extends StatefulWidget {
   final bool dragEnabled;
   final FutureOr<void> Function() onDragStart;
   final Future<List<String>> Function({String search}) getAllCategories;
+  final Key? cardKey;
+  final Key? dragKey;
 
   const ImprovisationTile({
     super.key,
@@ -35,6 +37,8 @@ class ImprovisationTile extends StatefulWidget {
     required this.dragEnabled,
     required this.onDragStart,
     required this.getAllCategories,
+    this.cardKey,
+    this.dragKey,
   });
 
   @override
@@ -61,6 +65,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
         confirmDismiss: (direction) async => await widget.onConfirmDelete.call(widget.improvisation),
         onDismissed: (direction) async => await widget.onDelete.call(widget.improvisation),
         child: CustomCard(
+          key: widget.cardKey,
           showIndicator: true,
           indicatorColor: widget.improvisation.type == ImprovisationType.compared
               ? Theme.of(context).colorScheme.primary
@@ -73,7 +78,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
             leading: ReorderableDragStartListener(
               index: widget.index,
               enabled: widget.dragEnabled,
-              child: const Icon(Icons.drag_handle),
+              child: Icon(key: widget.dragKey, Icons.drag_handle),
             ),
             title: Column(
               mainAxisSize: MainAxisSize.min,
