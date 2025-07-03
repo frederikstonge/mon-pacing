@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'onboarding_state.dart';
@@ -11,11 +12,19 @@ class OnboardingCubit extends HydratedCubit<OnboardingState> {
 
   @override
   OnboardingState? fromJson(Map<String, dynamic> json) {
+    if (kDebugMode) {
+      return null;
+    }
+
     return OnboardingStateMapper.fromMap(json);
   }
 
   @override
   Map<String, dynamic>? toJson(OnboardingState state) {
+    if (kDebugMode) {
+      return null;
+    }
+
     return state.toMap();
   }
 }
