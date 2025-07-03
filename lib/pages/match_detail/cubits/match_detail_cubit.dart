@@ -119,7 +119,8 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   void onTeamSelected(TeamModel team, TeamModel selectedTeam) {
-    int tempId = -1;
+    final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t) => t.performers));
+    int tempId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0;
     final newTeam = team.copyWith(
       name: selectedTeam.name,
       color: selectedTeam.color,
