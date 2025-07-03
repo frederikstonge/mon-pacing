@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'tutorials_state.dart';
@@ -7,11 +8,19 @@ class TutorialsCubit extends HydratedCubit<TutorialsState> {
 
   @override
   TutorialsState? fromJson(Map<String, dynamic> json) {
+    if (kDebugMode) {
+      return null;
+    }
+
     return TutorialsStateMapper.fromMap(json);
   }
 
   @override
   Map<String, dynamic>? toJson(TutorialsState state) {
+    if (kDebugMode) {
+      return null;
+    }
+
     return state.toMap();
   }
 

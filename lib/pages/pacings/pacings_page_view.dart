@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -316,12 +315,10 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted && (displayAddPacing || displayStartMatch)) {
           showTutorialCoachMark(context, () {
-            if (!kDebugMode) {
-              if (displayAddPacing) {
-                tutorialsCubit.setAddPacingFinished();
-              } else if (displayStartMatch) {
-                tutorialsCubit.setStartMatchFinished();
-              }
+            if (displayAddPacing) {
+              tutorialsCubit.setAddPacingFinished();
+            } else if (displayStartMatch) {
+              tutorialsCubit.setStartMatchFinished();
             }
           });
         }
