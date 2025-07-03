@@ -15,7 +15,19 @@ class TutorialsCubit extends HydratedCubit<TutorialsState> {
     return state.toMap();
   }
 
-  void setPacingsFinished() {
-    emit(state.copyWith(pacingsFinished: true));
+  void setAddPacingFinished() {
+    emit(state.copyWith(addPacingFinished: true));
+  }
+
+  void setStartMatchFinished() {
+    emit(state.copyWith(startMatchFinished: true));
+  }
+
+  void setAddImprovisationFinished() {
+    emit(state.copyWith(addImprovisationFinished: true));
+  }
+
+  void setImprovisationFinished() {
+    emit(state.copyWith(improvisationFinished: true));
   }
 }
