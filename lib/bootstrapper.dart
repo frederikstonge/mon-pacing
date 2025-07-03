@@ -12,6 +12,7 @@ import 'cubits/pacings/pacings_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/teams/teams_cubit.dart';
 import 'cubits/timer/timer_cubit.dart';
+import 'cubits/tutorials/tutorials_cubit.dart';
 import 'repositories/database_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
@@ -63,6 +64,7 @@ class Bootstrapper extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (blocContext) => OnboardingCubit()),
+          BlocProvider(create: (blocContext) => TutorialsCubit()),
           BlocProvider(create: (blocContext) => SettingsCubit()),
           BlocProvider(
             create: (blocContext) => PacingsCubit(

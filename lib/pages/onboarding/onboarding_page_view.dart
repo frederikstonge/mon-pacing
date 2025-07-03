@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
-import '../../components/buttons/loading_button.dart';
 import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/display_language/display_language.dart';
 import '../../components/duration_picker/duration_picker.dart';
@@ -504,21 +503,13 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
             ],
           ],
           showBackButton: true,
-          overrideNext: LoadingButton.filled(
-            onPressed: () => introKey.currentState?.next(),
-            child: Text(S.of(context).onboardingNext),
-          ),
-          overrideBack: LoadingButton.tonal(
-            onPressed: () => introKey.currentState?.previous(),
-            child: Text(S.of(context).onboardingPrevious),
-          ),
-          overrideDone: LoadingButton.filled(
-            onPressed: () {
-              context.read<OnboardingCubit>().finishOnboarding();
-              context.goNamed(Routes.pacings);
-            },
-            child: Text(S.of(context).onboardingDone),
-          ),
+          next: Text(S.of(context).onboardingNext),
+          back: Text(S.of(context).onboardingPrevious),
+          onDone: () {
+            context.read<OnboardingCubit>().finishOnboarding();
+            context.goNamed(Routes.pacings);
+          },
+          done: Text(S.of(context).onboardingDone),
         );
       },
     );

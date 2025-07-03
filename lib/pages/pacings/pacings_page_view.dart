@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
@@ -19,12 +21,14 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
+import '../../cubits/tutorials/tutorials_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
+import '../tutorial_mixin.dart';
 import 'widgets/pacing_card.dart';
 
 class PacingsPageView extends StatefulWidget {
@@ -34,7 +38,8 @@ class PacingsPageView extends StatefulWidget {
   State<PacingsPageView> createState() => _PacingsPageViewState();
 }
 
-class _PacingsPageViewState extends State<PacingsPageView> {
+class _PacingsPageViewState extends State<PacingsPageView> with Tutorial {
+  final GlobalKey _pacingsFabKey = GlobalKey();
   late ScrollController _scrollController;
   final _scrollThreshold = 200.0;
 
@@ -54,7 +59,43 @@ class _PacingsPageViewState extends State<PacingsPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PacingsCubit, PacingsState>(
+    return BlocConsumer<PacingsCubit, PacingsState>(
+      listener: (context, pacingsState) {
+        if (pacingsState.status == PacingsStatus.success) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!context.read<TutorialsCubit>().state.pacingsFinished) {
+              initTutorialCoachMark(
+                targets: [
+                  TargetFocus(
+                    keyTarget: _pacingsFabKey,
+                    enableOverlayTab: true,
+                    contents: [
+                      TargetContent(
+                        align: ContentAlign.top,
+                        child: Row(
+                          children: [
+                            Text(
+                              S.of(context).createNewPacingTooltip,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+              showTutorialCoachMark(context, () {
+                if (!kDebugMode) {
+                  context.read<TutorialsCubit>().setPacingsFinished();
+                }
+              });
+            }
+          });
+        }
+      },
       builder: (context, pacingsState) {
         return RefreshIndicator(
           edgeOffset: MediaQuery.of(context).padding.top + Constants.expandedAppbarHeight,
@@ -65,24 +106,9 @@ class _PacingsPageViewState extends State<PacingsPageView> {
                 scrollController: _scrollController,
                 scrollPhysics: const AlwaysScrollableScrollPhysics(),
                 floatingActionButton: FloatingActionButton(
+                  key: _pacingsFabKey,
                   heroTag: 'pacings_fab',
-                  onPressed: () {
-                    BottomSheetDialog.showDialog(
-                      context: context,
-                      child: PacingDetailPageShell(
-                        editMode: false,
-                        onConfirm: (pacing, dialogContext) async {
-                          final navigator = Navigator.of(dialogContext);
-                          final router = GoRouter.of(context);
-                          final pacingModel = await context.read<PacingsCubit>().add(pacing);
-                          if (pacingModel != null) {
-                            navigator.pop();
-                            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
-                          }
-                        },
-                      ),
-                    );
-                  },
+                  onPressed: _addPacing,
                   tooltip: S.of(context).createNewPacingTooltip,
                   child: const Icon(Icons.add),
                 ),
@@ -203,6 +229,24 @@ class _PacingsPageViewState extends State<PacingsPageView> {
           ),
         );
       },
+    );
+  }
+
+  Future<void> _addPacing() async {
+    await BottomSheetDialog.showDialog(
+      context: context,
+      child: PacingDetailPageShell(
+        editMode: false,
+        onConfirm: (pacing, dialogContext) async {
+          final navigator = Navigator.of(dialogContext);
+          final router = GoRouter.of(context);
+          final pacingModel = await context.read<PacingsCubit>().add(pacing);
+          if (pacingModel != null) {
+            navigator.pop();
+            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+          }
+        },
+      ),
     );
   }
 
