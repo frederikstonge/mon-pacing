@@ -104,7 +104,7 @@ class PacingsCubit extends Cubit<PacingsState> {
           pacing
               .copyWith(
                 id: 0,
-                improvisations: pacing.improvisations.map((e) => e.copyWith(id: 0)).toList(),
+                improvisations: pacing.improvisations.map((e) => e.copyWith(id: -e.id)).toList(),
                 tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
               )
               .toEntity(),

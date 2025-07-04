@@ -103,7 +103,7 @@ class TeamsCubit extends Cubit<TeamsState> {
           team
               .copyWith(
                 id: 0,
-                performers: team.performers.map((e) => e.copyWith(id: 0)).toList(),
+                performers: team.performers.map((e) => e.copyWith(id: -e.id)).toList(),
                 tags: team.tags.map((e) => e.copyWith(id: 0)).toList(),
               )
               .toEntity(),

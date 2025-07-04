@@ -43,10 +43,11 @@ class PacingsRepository {
     final removedImprovisations = previousEntity!.improvisations
         .where((e) => !entity.improvisations.any((i) => i.id == e.id))
         .toList();
-    final editedImprovisations = entity.improvisations.where((e) => e.id != 0).toList();
+
+    final editedImprovisations = entity.improvisations.where((e) => e.id > 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
-    final editedTags = entity.tags.where((e) => e.id != 0).toList();
+    final editedTags = entity.tags.where((e) => e.id > 0).toList();
 
     db.runInTransaction(TxMode.write, () {
       improvisationBox.putMany(editedImprovisations);
