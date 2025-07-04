@@ -3,7 +3,6 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 mixin TutorialMixin {
   TutorialCoachMark? _tutorialCoachMark;
-  bool isShown = false;
 
   /// Initializes the tutorial coach mark.
   void initTutorialCoachMark({required List<TargetFocus> targets}) {
