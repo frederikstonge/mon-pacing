@@ -136,7 +136,14 @@ class _PacingPageViewState extends State<PacingPageView> {
                                         context: context,
                                         child: PacingDetailPageShell(
                                           editMode: false,
-                                          pacing: pacing,
+                                          pacing: pacing.copyWith(
+                                            id: 0,
+                                            // Temporary id to support ReorderableListView
+                                            improvisations: pacing.improvisations
+                                                .map((e) => e.copyWith(id: -e.id))
+                                                .toList(),
+                                            tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
+                                          ),
                                           onConfirm: (pacing, dialogContext) async {
                                             final navigator = Navigator.of(dialogContext);
                                             final router = GoRouter.of(context);

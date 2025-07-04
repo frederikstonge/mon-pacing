@@ -64,29 +64,28 @@ class MatchesRepository {
     final removedImprovisations = previousEntity!.improvisations
         .where((e) => !entity.improvisations.any((i) => i.id == e.id))
         .toList();
-
-    final editedImprovisations = entity.improvisations.where((e) => e.id > 0).toList();
+    final editedImprovisations = entity.improvisations.where((e) => e.id == 0).toList();
 
     final removedPerformers = previousEntity.teams
         .selectMany((t) => t.performers)
         .where((e) => !entity.teams.selectMany((nt) => nt.performers).any((i) => i.id == e.id))
         .toList();
-    final editedPerformers = entity.teams.selectMany((t) => t.performers).where((e) => e.id > 0).toList();
+    final editedPerformers = entity.teams.selectMany((t) => t.performers).where((e) => e.id == 0).toList();
 
     final removedTeams = previousEntity.teams.where((e) => !entity.teams.any((i) => i.id == e.id)).toList();
-    final editedTeams = entity.teams.where((e) => e.id > 0).toList();
-
-    final removedPoints = previousEntity.points.where((e) => !entity.points.any((i) => i.id == e.id)).toList();
-    final editedPoints = entity.points.where((e) => e.id > 0).toList();
+    final editedTeams = entity.teams.where((e) => e.id == 0).toList();
 
     final removedPenalties = previousEntity.penalties.where((e) => !entity.penalties.any((i) => i.id == e.id)).toList();
-    final editedPenalties = entity.penalties.where((e) => e.id > 0).toList();
+    final editedPenalties = entity.penalties.where((e) => e.id == 0).toList();
+
+    final removedPoints = previousEntity.points.where((e) => !entity.points.any((i) => i.id == e.id)).toList();
+    final editedPoints = entity.points.where((e) => e.id == 0).toList();
 
     final removedStars = previousEntity.stars.where((e) => !entity.stars.any((i) => i.id == e.id)).toList();
-    final editedStars = entity.stars.where((e) => e.id > 0).toList();
+    final editedStars = entity.stars.where((e) => e.id == 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
-    final editedTags = entity.tags.where((e) => e.id > 0).toList();
+    final editedTags = entity.tags.where((e) => e.id == 0).toList();
 
     db.runInTransaction(TxMode.write, () {
       improvisationBox.putMany(editedImprovisations);
@@ -98,11 +97,11 @@ class MatchesRepository {
       teamBox.putMany(editedTeams);
       teamBox.removeMany(removedTeams.map((e) => e.id).toList());
 
-      pointBox.putMany(editedPoints);
-      pointBox.removeMany(removedPoints.map((e) => e.id).toList());
-
       penaltyBox.putMany(editedPenalties);
       penaltyBox.removeMany(removedPenalties.map((e) => e.id).toList());
+
+      pointBox.putMany(editedPoints);
+      pointBox.removeMany(removedPoints.map((e) => e.id).toList());
 
       starBox.putMany(editedStars);
       starBox.removeMany(removedStars.map((e) => e.id).toList());

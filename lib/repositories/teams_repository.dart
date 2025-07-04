@@ -44,10 +44,10 @@ class TeamsRepository {
         .where((e) => !entity.performers.any((i) => i.id == e.id))
         .toList();
 
-    final editedPerformers = entity.performers.where((e) => e.id > 0).toList();
+    final editedPerformers = entity.performers.where((e) => e.id == 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
-    final editedTags = entity.tags.where((e) => e.id > 0).toList();
+    final editedTags = entity.tags.where((e) => e.id == 0).toList();
 
     db.runInTransaction(TxMode.write, () {
       performerBox.putMany(editedPerformers);

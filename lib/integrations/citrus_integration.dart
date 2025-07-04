@@ -13,6 +13,7 @@ import '../extensions/improvisation_extensions.dart';
 import '../extensions/match_extensions.dart';
 import '../l10n/localizer.dart';
 import '../models/constants.dart';
+import '../models/improvisation_model.dart';
 import '../models/improvisation_type.dart';
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
@@ -102,7 +103,7 @@ class CitrusIntegration implements MatchIntegrationBase {
         _extractTeam(document, 1, '#alignement1', team1Color!, () => performerId++),
         _extractTeam(document, 2, '#alignement2', team2Color!, () => performerId++),
       ],
-      improvisations: List.from(pacing.improvisations),
+      improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.copyWith(id: -e.id))),
       penalties: [],
       points: [],
       enableStatistics: true,

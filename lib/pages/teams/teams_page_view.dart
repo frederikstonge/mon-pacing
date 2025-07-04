@@ -133,7 +133,12 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                             context: context,
                             child: TeamDetailPageShell(
                               editMode: false,
-                              team: team,
+                              team: team.copyWith(
+                                id: 0,
+                                // Temporary id to support ReorderableListView
+                                performers: team.performers.map((e) => e.copyWith(id: -e.id)).toList(),
+                                tags: team.tags.map((e) => e.copyWith(id: 0)).toList(),
+                              ),
                               onConfirm: (team, dialogContext) async {
                                 final navigator = Navigator.of(dialogContext);
                                 await context.read<TeamsCubit>().add(team);
