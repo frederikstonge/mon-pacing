@@ -146,7 +146,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
     }
   }
 
-  Future<Object?> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
+  Future<void> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
 
   Future<void> _onScroll() async {
     final maxScroll = _scrollController.position.maxScrollExtent;

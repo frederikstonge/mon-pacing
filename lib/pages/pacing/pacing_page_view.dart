@@ -40,6 +40,7 @@ class PacingPageView extends StatefulWidget {
 }
 
 class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
+  late final GoRouter router = GoRouter.of(context);
   final GlobalKey _addImprovisationButtonKey = GlobalKey();
   final GlobalKey _firstImprovisationCardKey = GlobalKey();
   final GlobalKey _firstImprovisationDragKey = GlobalKey();
@@ -47,13 +48,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   @override
   void initState() {
-    GoRouter.of(context).routerDelegate.addListener(_showTutorials);
+    router.routerDelegate.addListener(_showTutorials);
     super.initState();
   }
 
   @override
   void dispose() {
-    GoRouter.of(context).routerDelegate.removeListener(_showTutorials);
+    router.routerDelegate.removeListener(_showTutorials);
     super.dispose();
   }
 
@@ -61,7 +62,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<PacingCubit, PacingState>(
-        listener: (_, _) {
+        listener: (_, pacingState) {
           _showTutorials();
         },
         builder: (context, pacingState) {
@@ -264,7 +265,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
   }
 
   Future<void> _showTutorials() async {
-    final router = GoRouter.of(context);
+    if (!mounted) return;
     final pacingCubit = context.read<PacingCubit>();
     final tutorialsCubit = context.read<TutorialsCubit>();
 

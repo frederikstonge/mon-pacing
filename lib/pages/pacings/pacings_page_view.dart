@@ -39,6 +39,7 @@ class PacingsPageView extends StatefulWidget {
 }
 
 class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
+  late final GoRouter router = GoRouter.of(context);
   final GlobalKey _addPacingButtonKey = GlobalKey();
   final GlobalKey _firstPacingCardKey = GlobalKey();
   late ScrollController _scrollController;
@@ -46,7 +47,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   @override
   void initState() {
-    GoRouter.of(context).routerDelegate.addListener(_showTutorials);
+    router.routerDelegate.addListener(_showTutorials);
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
     super.initState();
@@ -54,7 +55,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   @override
   void dispose() {
-    GoRouter.of(context).routerDelegate.removeListener(_showTutorials);
+    router.routerDelegate.removeListener(_showTutorials);
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
@@ -155,7 +156,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<PacingModel?> _onImportPressed(BuildContext context) => context.read<PacingsCubit>().import();
 
-  Future<Object?> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
+  Future<void> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
 
   Future<void> _onSearchPressed(BuildContext context) async {
     final router = GoRouter.of(context);
@@ -252,7 +253,6 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   }
 
   Future<void> _showTutorials() async {
-    final router = GoRouter.of(context);
     final pacingsCubit = context.read<PacingsCubit>();
     final tutorialsCubit = context.read<TutorialsCubit>();
 
@@ -300,7 +300,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
               TargetContent(
                 align: ContentAlign.bottom,
                 child: Text(
-                  'Swipe right on a pacing to start a match. You can also long-press or tap the more button to access more options.',
+                  'Swipe right or press play button to start a match. You can also long-press or tap the more button to access more options.',
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
