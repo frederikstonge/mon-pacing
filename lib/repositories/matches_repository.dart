@@ -35,17 +35,15 @@ class MatchesRepository {
     final starBox = db.box<StarEntity>();
     final tagBox = db.box<TagEntity>();
 
-    db.runInTransaction(TxMode.write, () {
-      starBox.removeMany(entity.stars.map((e) => e.id).toList());
-      pointBox.removeMany(entity.points.map((e) => e.id).toList());
-      penaltyBox.removeMany(entity.penalties.map((e) => e.id).toList());
-      performerBox.removeMany(entity.teams.selectMany((t) => t.performers).map((e) => e.id).toList());
-      teamBox.removeMany(entity.teams.map((e) => e.id).toList());
-      improvisationBox.removeMany(entity.improvisations.map((e) => e.id).toList());
-      tagBox.removeMany(entity.tags.map((e) => e.id).toList());
+    starBox.removeMany(entity.stars.map((e) => e.id).toList());
+    pointBox.removeMany(entity.points.map((e) => e.id).toList());
+    penaltyBox.removeMany(entity.penalties.map((e) => e.id).toList());
+    performerBox.removeMany(entity.teams.selectMany((t) => t.performers).map((e) => e.id).toList());
+    teamBox.removeMany(entity.teams.map((e) => e.id).toList());
+    improvisationBox.removeMany(entity.improvisations.map((e) => e.id).toList());
+    tagBox.removeMany(entity.tags.map((e) => e.id).toList());
 
-      box.remove(entity.id);
-    });
+    box.remove(entity.id);
   }
 
   Future<MatchEntity> edit(MatchEntity entity) async {
@@ -60,55 +58,56 @@ class MatchesRepository {
     final tagBox = db.box<TagEntity>();
 
     final previousEntity = await box.getAsync(entity.id);
+    if (previousEntity == null) {
+      throw Exception('MatchEntity with id ${entity.id} not found');
+    }
 
-    final removedImprovisations = previousEntity!.improvisations
-        .where((e) => !entity.improvisations.any((i) => i.id == e.id))
-        .toList();
-    final editedImprovisations = entity.improvisations.where((e) => e.id == 0).toList();
+    final removedStars = previousEntity.stars.where((e) => !entity.stars.any((i) => i.id == e.id)).toList();
+    final editedStars = entity.stars.where((e) => e.id > 0).toList();
+
+    final removedPoints = previousEntity.points.where((e) => !entity.points.any((i) => i.id == e.id)).toList();
+    final editedPoints = entity.points.where((e) => e.id > 0).toList();
+
+    final removedPenalties = previousEntity.penalties.where((e) => !entity.penalties.any((i) => i.id == e.id)).toList();
+    final editedPenalties = entity.penalties.where((e) => e.id > 0).toList();
 
     final removedPerformers = previousEntity.teams
         .selectMany((t) => t.performers)
         .where((e) => !entity.teams.selectMany((nt) => nt.performers).any((i) => i.id == e.id))
         .toList();
-    final editedPerformers = entity.teams.selectMany((t) => t.performers).where((e) => e.id == 0).toList();
+    final editedPerformers = entity.teams.selectMany((t) => t.performers).where((e) => e.id > 0).toList();
 
     final removedTeams = previousEntity.teams.where((e) => !entity.teams.any((i) => i.id == e.id)).toList();
-    final editedTeams = entity.teams.where((e) => e.id == 0).toList();
+    final editedTeams = entity.teams.where((e) => e.id > 0).toList();
 
-    final removedPenalties = previousEntity.penalties.where((e) => !entity.penalties.any((i) => i.id == e.id)).toList();
-    final editedPenalties = entity.penalties.where((e) => e.id == 0).toList();
-
-    final removedPoints = previousEntity.points.where((e) => !entity.points.any((i) => i.id == e.id)).toList();
-    final editedPoints = entity.points.where((e) => e.id == 0).toList();
-
-    final removedStars = previousEntity.stars.where((e) => !entity.stars.any((i) => i.id == e.id)).toList();
-    final editedStars = entity.stars.where((e) => e.id == 0).toList();
+    final removedImprovisations = previousEntity.improvisations
+        .where((e) => !entity.improvisations.any((i) => i.id == e.id))
+        .toList();
+    final editedImprovisations = entity.improvisations.where((e) => e.id > 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
-    final editedTags = entity.tags.where((e) => e.id == 0).toList();
+    final editedTags = entity.tags.where((e) => e.id > 0).toList();
 
-    db.runInTransaction(TxMode.write, () {
-      improvisationBox.putMany(editedImprovisations);
-      improvisationBox.removeMany(removedImprovisations.map((e) => e.id).toList());
+    starBox.putMany(editedStars);
+    starBox.removeMany(removedStars.map((e) => e.id).toList());
 
-      performerBox.putMany(editedPerformers);
-      performerBox.removeMany(removedPerformers.map((e) => e.id).toList());
+    pointBox.putMany(editedPoints);
+    pointBox.removeMany(removedPoints.map((e) => e.id).toList());
 
-      teamBox.putMany(editedTeams);
-      teamBox.removeMany(removedTeams.map((e) => e.id).toList());
+    penaltyBox.putMany(editedPenalties);
+    penaltyBox.removeMany(removedPenalties.map((e) => e.id).toList());
 
-      penaltyBox.putMany(editedPenalties);
-      penaltyBox.removeMany(removedPenalties.map((e) => e.id).toList());
+    performerBox.putMany(editedPerformers);
+    performerBox.removeMany(removedPerformers.map((e) => e.id).toList());
 
-      pointBox.putMany(editedPoints);
-      pointBox.removeMany(removedPoints.map((e) => e.id).toList());
+    teamBox.putMany(editedTeams);
+    teamBox.removeMany(removedTeams.map((e) => e.id).toList());
 
-      starBox.putMany(editedStars);
-      starBox.removeMany(removedStars.map((e) => e.id).toList());
+    improvisationBox.putMany(editedImprovisations);
+    improvisationBox.removeMany(removedImprovisations.map((e) => e.id).toList());
 
-      tagBox.putMany(editedTags);
-      tagBox.removeMany(removedTags.map((e) => e.id).toList());
-    });
+    tagBox.putMany(editedTags);
+    tagBox.removeMany(removedTags.map((e) => e.id).toList());
 
     entity.modifiedDate = DateTime.now();
     return box.putAndGetAsync(entity);

@@ -24,12 +24,10 @@ class PacingsRepository {
     final improvisationBox = db.box<ImprovisationEntity>();
     final tagBox = db.box<TagEntity>();
 
-    db.runInTransaction(TxMode.write, () {
-      improvisationBox.removeMany(entity.improvisations.map((e) => e.id).toList());
-      tagBox.removeMany(entity.tags.map((e) => e.id).toList());
+    improvisationBox.removeMany(entity.improvisations.map((e) => e.id).toList());
+    tagBox.removeMany(entity.tags.map((e) => e.id).toList());
 
-      box.remove(entity.id);
-    });
+    box.remove(entity.id);
   }
 
   Future<PacingEntity> edit(PacingEntity entity) async {
@@ -44,18 +42,16 @@ class PacingsRepository {
         .where((e) => !entity.improvisations.any((i) => i.id == e.id))
         .toList();
 
-    final editedImprovisations = entity.improvisations.where((e) => e.id == 0).toList();
+    final editedImprovisations = entity.improvisations.where((e) => e.id > 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
-    final editedTags = entity.tags.where((e) => e.id == 0).toList();
+    final editedTags = entity.tags.where((e) => e.id > 0).toList();
 
-    db.runInTransaction(TxMode.write, () {
-      improvisationBox.putMany(editedImprovisations);
-      improvisationBox.removeMany(removedImprovisations.map((e) => e.id).toList());
+    improvisationBox.putMany(editedImprovisations);
+    improvisationBox.removeMany(removedImprovisations.map((e) => e.id).toList());
 
-      tagBox.putMany(editedTags);
-      tagBox.removeMany(removedTags.map((e) => e.id).toList());
-    });
+    tagBox.putMany(editedTags);
+    tagBox.removeMany(removedTags.map((e) => e.id).toList());
 
     entity.modifiedDate = DateTime.now();
     return box.putAndGetAsync(entity);

@@ -24,12 +24,10 @@ class TeamsRepository {
     final performerBox = db.box<PerformerEntity>();
     final tagBox = db.box<TagEntity>();
 
-    db.runInTransaction(TxMode.write, () {
-      performerBox.removeMany(entity.performers.map((e) => e.id).toList());
-      tagBox.removeMany(entity.tags.map((e) => e.id).toList());
+    performerBox.removeMany(entity.performers.map((e) => e.id).toList());
+    tagBox.removeMany(entity.tags.map((e) => e.id).toList());
 
-      box.remove(entity.id);
-    });
+    box.remove(entity.id);
   }
 
   Future<TeamEntity> edit(TeamEntity entity) async {
@@ -44,10 +42,10 @@ class TeamsRepository {
         .where((e) => !entity.performers.any((i) => i.id == e.id))
         .toList();
 
-    final editedPerformers = entity.performers.where((e) => e.id == 0).toList();
+    final editedPerformers = entity.performers.where((e) => e.id > 0).toList();
 
     final removedTags = previousEntity.tags.where((e) => !entity.tags.any((i) => i.id == e.id)).toList();
-    final editedTags = entity.tags.where((e) => e.id == 0).toList();
+    final editedTags = entity.tags.where((e) => e.id > 0).toList();
 
     db.runInTransaction(TxMode.write, () {
       performerBox.putMany(editedPerformers);
