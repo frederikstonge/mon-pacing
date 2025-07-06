@@ -29,7 +29,8 @@ class OnboardingPageView extends StatefulWidget {
 }
 
 class _OnboardingPageViewState extends State<OnboardingPageView> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> pacingsFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> penaltiesFormKey = GlobalKey<FormState>();
   final GlobalKey<IntroductionScreenState> introKey = GlobalKey<IntroductionScreenState>();
 
   @override
@@ -133,35 +134,38 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                   Text(S.of(context).onboardingByDefault, style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
-              bodyWidget: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            S.of(context).numberOfTeamsByDefault,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+              bodyWidget: Form(
+                key: pacingsFormKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              S.of(context).numberOfTeamsByDefault,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        QuantityStepperFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          initialValue: settingsState.defaultNumberOfTeams,
-                          onChanged: (value) {
-                            if (value != null) {
-                              context.read<SettingsCubit>().edit(settingsState.copyWith(defaultNumberOfTeams: value));
-                            }
-                          },
-                          minValue: Constants.minimumTeams,
-                          maxValue: Constants.maximumTeams,
-                        ),
-                      ],
+                          QuantityStepperFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            initialValue: settingsState.defaultNumberOfTeams,
+                            onChanged: (value) {
+                              if (value != null && pacingsFormKey.currentState!.validate()) {
+                                context.read<SettingsCubit>().edit(settingsState.copyWith(defaultNumberOfTeams: value));
+                              }
+                            },
+                            minValue: Constants.minimumTeams,
+                            maxValue: Constants.maximumTeams,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             PageViewModel(
@@ -381,139 +385,158 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                     Text(S.of(context).onboardingByDefault, style: Theme.of(context).textTheme.bodySmall),
                   ],
                 ),
-                bodyWidget: Column(
-                  children: [
-                    SettingsTile(
-                      leading: const Icon(Icons.sports),
-                      title: Row(
-                        children: [
-                          Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: CustomTooltip(tooltip: S.of(context).penaltiesImpactPointsTooltip),
-                          ),
-                        ],
+                bodyWidget: Form(
+                  key: penaltiesFormKey,
+                  child: Column(
+                    children: [
+                      SettingsTile(
+                        leading: const Icon(Icons.sports),
+                        title: Row(
+                          children: [
+                            Flexible(child: Text(S.of(context).enablePenaltiesImpactPoints)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(tooltip: S.of(context).penaltiesImpactPointsTooltip),
+                            ),
+                          ],
+                        ),
+                        trailing: Switch(
+                          value: settingsState.enableDefaultPenaltiesImpactPoints,
+                          onChanged: (value) {
+                            context.read<SettingsCubit>().edit(
+                              settingsState.copyWith(enableDefaultPenaltiesImpactPoints: value),
+                            );
+                          },
+                        ),
                       ),
-                      trailing: Switch(
-                        value: settingsState.enableDefaultPenaltiesImpactPoints,
-                        onChanged: (value) {
-                          context.read<SettingsCubit>().edit(
-                            settingsState.copyWith(enableDefaultPenaltiesImpactPoints: value),
+                      SettingsTile(
+                        leading: const Icon(Icons.sports),
+                        title: Text(S.of(context).penaltiesImpactType),
+                        subTitle: Text(switch (settingsState.defaultPenaltiesImpactType) {
+                          PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
+                          PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
+                        }),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () {
+                          BottomSheetDialog.showDialog(
+                            context: context,
+                            child: PenaltiesImpactTypeView(
+                              currentPenaltiesImpactType: settingsState.defaultPenaltiesImpactType,
+                              onChanged: (penaltiesImpactType) => context.read<SettingsCubit>().edit(
+                                settingsState.copyWith(defaultPenaltiesImpactType: penaltiesImpactType),
+                              ),
+                            ),
                           );
                         },
                       ),
-                    ),
-                    SettingsTile(
-                      leading: const Icon(Icons.sports),
-                      title: Text(S.of(context).penaltiesImpactType),
-                      subTitle: Text(switch (settingsState.defaultPenaltiesImpactType) {
-                        PenaltiesImpactType.addPoints => S.of(context).penaltiesImpactTypeAdd,
-                        PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
-                      }),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () {
-                        BottomSheetDialog.showDialog(
-                          context: context,
-                          child: PenaltiesImpactTypeView(
-                            currentPenaltiesImpactType: settingsState.defaultPenaltiesImpactType,
-                            onChanged: (penaltiesImpactType) => context.read<SettingsCubit>().edit(
-                              settingsState.copyWith(defaultPenaltiesImpactType: penaltiesImpactType),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                S.of(context).penaltiesRequiredToImpactPoints,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              S.of(context).penaltiesRequiredToImpactPoints,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            QuantityStepperFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              initialValue: settingsState.defaultPenaltiesRequiredToImpactPoints,
+                              onChanged: (value) {
+                                if (value != null && penaltiesFormKey.currentState!.validate()) {
+                                  context.read<SettingsCubit>().edit(
+                                    settingsState.copyWith(defaultPenaltiesRequiredToImpactPoints: value),
+                                  );
+                                }
+                              },
+                              minValue: 1,
                             ),
-                          ),
-                          QuantityStepperFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            initialValue: settingsState.defaultPenaltiesRequiredToImpactPoints,
-                            onChanged: (value) {
-                              if (value != null && formKey.currentState!.validate()) {
-                                context.read<SettingsCubit>().edit(
-                                  settingsState.copyWith(defaultPenaltiesRequiredToImpactPoints: value),
-                                );
-                              }
-                            },
-                            minValue: 1,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const Divider(),
-                    SettingsTile(
-                      leading: const Icon(Icons.sports),
-                      title: Row(
-                        children: [
-                          Flexible(child: Text(S.of(context).enableMatchExpulsion)),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: CustomTooltip(tooltip: S.of(context).enableMatchExpulsionTooltip),
-                          ),
-                        ],
-                      ),
-                      trailing: Switch(
-                        value: settingsState.enableDefaultMatchExpulsion,
-                        onChanged: (value) {
-                          context.read<SettingsCubit>().edit(
-                            settingsState.copyWith(enableDefaultMatchExpulsion: value),
-                          );
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              S.of(context).penaltiesRequiredToExpel,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                      const Divider(),
+                      SettingsTile(
+                        leading: const Icon(Icons.sports),
+                        title: Row(
+                          children: [
+                            Flexible(child: Text(S.of(context).enableMatchExpulsion)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: CustomTooltip(tooltip: S.of(context).enableMatchExpulsionTooltip),
                             ),
-                          ),
-                          QuantityStepperFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            initialValue: settingsState.defaultPenaltiesRequiredToExpel,
-                            onChanged: (value) {
-                              if (value != null && formKey.currentState!.validate()) {
-                                context.read<SettingsCubit>().edit(
-                                  settingsState.copyWith(defaultPenaltiesRequiredToExpel: value),
-                                );
-                              }
-                            },
-                            minValue: 1,
-                          ),
-                        ],
+                          ],
+                        ),
+                        trailing: Switch(
+                          value: settingsState.enableDefaultMatchExpulsion,
+                          onChanged: (value) {
+                            context.read<SettingsCubit>().edit(
+                              settingsState.copyWith(enableDefaultMatchExpulsion: value),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                S.of(context).penaltiesRequiredToExpel,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            QuantityStepperFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              initialValue: settingsState.defaultPenaltiesRequiredToExpel,
+                              onChanged: (value) {
+                                if (value != null && penaltiesFormKey.currentState!.validate()) {
+                                  context.read<SettingsCubit>().edit(
+                                    settingsState.copyWith(defaultPenaltiesRequiredToExpel: value),
+                                  );
+                                }
+                              },
+                              minValue: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ],
           showBackButton: true,
           overrideNext: LoadingButton.filled(
-            onPressed: () => introKey.currentState?.next(),
+            onPressed: () {
+              if (!isPacingsValid || !isPenaltiesValid) {
+                return;
+              }
+
+              introKey.currentState?.next();
+            },
             child: Text(S.of(context).onboardingNext),
           ),
           overrideBack: LoadingButton.tonal(
-            onPressed: () => introKey.currentState?.previous(),
+            onPressed: () {
+              if (!isPacingsValid || !isPenaltiesValid) {
+                return;
+              }
+
+              introKey.currentState?.previous();
+            },
             child: Text(S.of(context).onboardingPrevious),
           ),
           overrideDone: LoadingButton.filled(
             onPressed: () {
+              if (!isPacingsValid || !isPenaltiesValid) {
+                return;
+              }
+
               context.read<OnboardingCubit>().finishOnboarding();
               context.goNamed(Routes.pacings);
             },
@@ -523,4 +546,9 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
       },
     );
   }
+
+  bool get isPacingsValid =>
+      introKey.currentState?.getCurrentPage() != 1 || pacingsFormKey.currentState?.validate() == true;
+  bool get isPenaltiesValid =>
+      introKey.currentState?.getCurrentPage() != 4 || penaltiesFormKey.currentState?.validate() == true;
 }
