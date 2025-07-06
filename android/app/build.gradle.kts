@@ -35,6 +35,12 @@ android {
     }
 
     defaultConfig {
+        ndk {
+            // Filter for architectures supported by Flutter
+            // https://docs.flutter.dev/add-to-app/android/project-setup
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
+
         applicationId = "com.stongef.monpacing"
         minSdk = 24 //flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
