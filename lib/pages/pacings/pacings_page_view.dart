@@ -279,7 +279,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
               TargetContent(
                 align: ContentAlign.top,
                 child: Text(
-                  'To start, create your first pacing by tapping the button below.',
+                  S.of(context).tutorialAddPacing,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
@@ -300,7 +300,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
               TargetContent(
                 align: ContentAlign.bottom,
                 child: Text(
-                  'Swipe right or press play button to start a match. You can also long-press or tap the more button to access more options.',
+                  S.of(context).tutorialStartMatch,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),

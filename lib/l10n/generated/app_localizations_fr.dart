@@ -118,7 +118,7 @@ class SFr extends S {
   String get editPacing => 'Modifier le pacing';
 
   @override
-  String get editPenalty => 'Modifier une pénalité';
+  String get editPenalty => 'Modifier la pénalité';
 
   @override
   String get editTeam => 'Modifier l\'équipe';
@@ -127,7 +127,7 @@ class SFr extends S {
   String get enableHapticFeedback => 'Activer la vibration';
 
   @override
-  String get enableMatchExpulsion => 'Activé les expulsions de match';
+  String get enableMatchExpulsion => 'Activer les expulsions de match';
 
   @override
   String get enableMatchExpulsionTooltip => 'Un interprète avec trop de points de pénalité sera expulsé du match.';
@@ -139,23 +139,23 @@ class SFr extends S {
   String get enableStatistics => 'Activer les statistiques';
 
   @override
-  String get enableStatisticsTooltip => 'Ajouter les alignements des équipes et calculer les points, pénalités etc';
+  String get enableStatisticsTooltip => 'Ajouter les alignements des équipes et calculer les points, pénalités, etc.';
 
   @override
   String get enableTimerHapticFeedback => 'Activer la vibration du chronomètre';
 
   @override
-  String get enableWakelock => 'Activer le vérouillage de réveil';
+  String get enableWakelock => 'Activer le verrouillage de réveil';
 
   @override
-  String get enableWakelockTooltip => 'Empêche l\'écran de fermer lorsque le chronomètre est actif.';
+  String get enableWakelockTooltip => 'Empêche l\'écran de se fermer lorsque le chronomètre est actif.';
 
   @override
   String get exportMatchSheet => 'Exporter la feuille de match';
 
   @override
   String exportMatchSheetTo({required String integrationId}) {
-    return 'Exporter la feuille de match à $integrationId';
+    return 'Exporter la feuille de match vers $integrationId';
   }
 
   @override
@@ -196,7 +196,7 @@ class SFr extends S {
 
   @override
   String improvisationCount({required int count}) {
-    return 'Nombre d\'improvisations: $count';
+    return 'Nombre d\'improvisations : $count';
   }
 
   @override
@@ -207,7 +207,7 @@ class SFr extends S {
 
   @override
   String improvisationNumber({required int order}) {
-    return 'Improvisation #$order';
+    return 'Improvisation n°$order';
   }
 
   @override
@@ -287,11 +287,11 @@ class SFr extends S {
 
   @override
   String get missingIgnoreBatteryOptimizationError =>
-      'L\'optimisation de la batterie est toujours activé. Veuillez aller dans les paramêtres de votre appareil pour ignorer l\'optimisation de la batterie.';
+      'L\'optimisation de la batterie est toujours activée. Veuillez aller dans les paramètres de votre appareil pour ignorer l\'optimisation de la batterie.';
 
   @override
   String get missingNotificationPermissionError =>
-      'La permission de recevoir des notifications a été déclinée. Veuillez aller dans les paramêtres de votre appareil pour autoriser les notifications.';
+      'La permission de recevoir des notifications a été déclinée. Veuillez aller dans les paramètres de votre appareil pour autoriser les notifications.';
 
   @override
   String get mixed => 'Mixte';
@@ -301,7 +301,7 @@ class SFr extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Date de modification: $dateString';
+    return 'Date de modification : $dateString';
   }
 
   @override
@@ -344,7 +344,7 @@ class SFr extends S {
   String get onboardingLanguageTitle => 'Bienvenue sur Mon Pacing';
 
   @override
-  String get onboardingLanguageDescription => 'Selectionnez votre langue.';
+  String get onboardingLanguageDescription => 'Sélectionnez votre langue.';
 
   @override
   String get onboardingPacingsTitle => 'Créez vos pacings';
@@ -353,7 +353,7 @@ class SFr extends S {
   String get onboardingPacingsDescription => 'Créez des pacings pour vos matchs avec notre outil.';
 
   @override
-  String get onboardingImprovisationsTitle => 'Personalisez vos improvisations';
+  String get onboardingImprovisationsTitle => 'Personnalisez vos improvisations';
 
   @override
   String get onboardingImprovisationsDescription =>
@@ -390,7 +390,7 @@ class SFr extends S {
   String get pacings => 'Pacings';
 
   @override
-  String get pause => 'Pauser';
+  String get pause => 'Pause';
 
   @override
   String get penalties => 'Pénalités';
@@ -405,7 +405,7 @@ class SFr extends S {
   String get penaltiesImpactTypeAdd => 'Les pénalités ajoutent des points aux autres équipes';
 
   @override
-  String get penaltiesImpactTypeSubstract => 'Les pénalités enlèvent des points a son équipe';
+  String get penaltiesImpactTypeSubstract => 'Les pénalités enlèvent des points à son équipe';
 
   @override
   String get penaltiesRequiredToExpel => 'Pénalités requises pour expulser un interprète';
@@ -421,7 +421,7 @@ class SFr extends S {
 
   @override
   String performerCount({required int count}) {
-    return 'Nombre d\'interprètes: $count';
+    return 'Nombre d\'interprètes : $count';
   }
 
   @override
@@ -446,7 +446,7 @@ class SFr extends S {
   String get save => 'Sauvegarder';
 
   @override
-  String get scanner => 'Scan pour les intégrations';
+  String get scanner => 'Scanner pour les intégrations';
 
   @override
   String get scoreboard => 'Panneau de résultats';
@@ -478,7 +478,7 @@ class SFr extends S {
   String get tags => 'Étiquettes';
 
   @override
-  String get tagsHint => 'séparé par une virgule (,)';
+  String get tagsHint => 'séparées par une virgule (,)';
 
   @override
   String get team => 'Équipe';
@@ -494,7 +494,7 @@ class SFr extends S {
 
   @override
   String get timeBufferTooltip =>
-      'Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser pour le vote etc. Cette valeur ne sera utilisée que pour évaluer la durée totale d\'un pacing.';
+      'Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser le vote, etc. Cette valeur ne sera utilisée que pour évaluer la durée totale d\'un pacing.';
 
   @override
   String get timerHapticFeedbackTooltip =>
@@ -512,7 +512,7 @@ class SFr extends S {
   String get toasterMatchDeleted => 'Match supprimé.';
 
   @override
-  String get toasterMatchResultExported => 'Le résultat de match a été exporté.';
+  String get toasterMatchResultExported => 'Le résultat du match a été exporté.';
 
   @override
   String get toasterPacingDeleted => 'Pacing supprimé.';
@@ -546,6 +546,24 @@ class SFr extends S {
   String get total => 'Total';
 
   @override
+  String get tutorialAddPacing => 'Pour commencer, créez votre premier pacing en appuyant sur le bouton ci-dessous.';
+
+  @override
+  String get tutorialStartMatch =>
+      'Faites glisser vers la droite ou appuyez sur le bouton play pour démarrer un match. Vous pouvez également appuyer longtemps ou appuyer sur le bouton plus pour voir plus d\'options.';
+
+  @override
+  String get tutorialAddImprovisation =>
+      'Ajoutez des improvisations à votre pacing en appuyant sur le bouton ci-dessous.';
+
+  @override
+  String get tutorialFirstImprovisationCard =>
+      'Appuyez sur la carte d\'improvisation pour l\'agrandir et ajouter des détails ou faites glisser vers la gauche pour la supprimer.';
+
+  @override
+  String get tutorialFirstImprovisationDrag => 'Appuyez et maintenez cette icône pour réorganiser les improvisations.';
+
+  @override
   String get type => 'Type';
 
   @override
@@ -553,7 +571,7 @@ class SFr extends S {
 
   @override
   String version({required String version}) {
-    return 'Version: $version';
+    return 'Version : $version';
   }
 
   @override

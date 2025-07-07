@@ -292,7 +292,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
               TargetContent(
                 align: ContentAlign.top,
                 child: Text(
-                  'Add your first improvisation by tapping the button below.',
+                  S.of(context).tutorialAddImprovisation,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
@@ -313,7 +313,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
               TargetContent(
                 align: ContentAlign.bottom,
                 child: Text(
-                  'Tap on the improvisation card to expand it and add details or swipe left to remove.',
+                  S.of(context).tutorialFirstImprovisationCard,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
@@ -329,7 +329,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
               TargetContent(
                 align: ContentAlign.bottom,
                 child: Text(
-                  'Tap and hold the icon to reorder improvisations.',
+                  S.of(context).tutorialFirstImprovisationDrag,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),

@@ -58,10 +58,10 @@ class SEn extends S {
   String get create => 'Create';
 
   @override
-  String get createNewPacingTooltip => 'Create new pacing';
+  String get createNewPacingTooltip => 'Create a new pacing';
 
   @override
-  String get createNewTeamTooltip => 'Create new team';
+  String get createNewTeamTooltip => 'Create a new team';
 
   @override
   String get createPacing => 'Create pacing';
@@ -74,19 +74,19 @@ class SEn extends S {
 
   @override
   String get defaultImprovisationSettingsTooltip =>
-      'These settings will be used as default when creating new improvisations, but can be changed individually.';
+      'These settings will be used as defaults when creating new improvisations, but can be changed individually.';
 
   @override
   String get defaultMatchSettingsTooltip =>
-      'These settings will be used as default when creating new matches, but can be changed individually.';
+      'These settings will be used as defaults when creating new matches, but can be changed individually.';
 
   @override
   String get defaultPacingSettingsTooltip =>
-      'These settings will be used as default when creating new pacings, but can be changed individually.';
+      'These settings will be used as defaults when creating new pacings, but can be changed individually.';
 
   @override
   String get defaultPenaltySettingsTooltip =>
-      'These settings will be used as default when creating new penalties, but can be changed individually.';
+      'These settings will be used as defaults when creating new penalties, but can be changed individually.';
 
   @override
   String get delete => 'Delete';
@@ -133,13 +133,13 @@ class SEn extends S {
   String get enableMatchExpulsionTooltip => 'A performer with too many penalty points will be expelled from the match.';
 
   @override
-  String get enablePenaltiesImpactPoints => 'Enable penalties impact points';
+  String get enablePenaltiesImpactPoints => 'Enable penalties to impact points';
 
   @override
   String get enableStatistics => 'Enable statistics';
 
   @override
-  String get enableStatisticsTooltip => 'Add team lineups and track points, penalties etc';
+  String get enableStatisticsTooltip => 'Add team lineups and track points, penalties, etc.';
 
   @override
   String get enableTimerHapticFeedback => 'Enable timer haptic feedback';
@@ -240,7 +240,7 @@ class SEn extends S {
 
   @override
   String lesserThan({required int max}) {
-    return 'Must be lesser than $max';
+    return 'Must be less than $max';
   }
 
   @override
@@ -287,11 +287,11 @@ class SEn extends S {
 
   @override
   String get missingIgnoreBatteryOptimizationError =>
-      'Battery Optimization is still enabled. Please go to your device\'\'s settings to ignore battery optimization.';
+      'Battery optimization is still enabled. Please go to your device\'s settings to ignore battery optimization.';
 
   @override
   String get missingNotificationPermissionError =>
-      'Notification permission has been denied. Please go to your device\'\'s settings to allow notifications.';
+      'Notification permission has been denied. Please go to your device\'s settings to allow notifications.';
 
   @override
   String get mixed => 'Mixed';
@@ -334,10 +334,10 @@ class SEn extends S {
   String get notificationTitle => 'Timer';
 
   @override
-  String get numberOfTeamsByDefault => 'Number of teams by default';
+  String get numberOfTeamsByDefault => 'Default number of teams';
 
   @override
-  String get onboardingByDefault => 'These settings will be used as default, but can be changed individually.';
+  String get onboardingByDefault => 'These settings will be used as defaults, but can be changed individually.';
 
   @override
   String get onboardingLanguageTitle => 'Welcome to Mon Pacing';
@@ -356,7 +356,7 @@ class SEn extends S {
 
   @override
   String get onboardingImprovisationsDescription =>
-      'Customize your improvisations with durations, types, tags and more.';
+      'Customize your improvisations with durations, types, tags, and more.';
 
   @override
   String get onboardingMatchesTitle => 'Enrich your matches';
@@ -404,7 +404,7 @@ class SEn extends S {
   String get penaltiesImpactTypeAdd => 'Penalties add points to other teams';
 
   @override
-  String get penaltiesImpactTypeSubstract => 'Penalties substract points to its team';
+  String get penaltiesImpactTypeSubstract => 'Penalties subtract points from their team';
 
   @override
   String get penaltiesRequiredToExpel => 'Penalties required to expel a performer';
@@ -477,7 +477,7 @@ class SEn extends S {
   String get tags => 'Tags';
 
   @override
-  String get tagsHint => 'separated by comma (,)';
+  String get tagsHint => 'Separated by comma (,)';
 
   @override
   String get team => 'Team';
@@ -493,7 +493,7 @@ class SEn extends S {
 
   @override
   String get timeBufferTooltip =>
-      'Extra time that will be added on top of each improvisation\'\'s duration to compensate for the voting and more. This is only used to evaluate the total time of a pacing.';
+      'Extra time that will be added on top of each improvisation\'s duration to compensate for voting and more. This is only used to evaluate the total time of a pacing.';
 
   @override
   String get timerHapticFeedbackTooltip => 'Timer will vibrate every minute, 30 seconds, 10 seconds, 5, 4, 3, 2, 1.';
@@ -531,16 +531,33 @@ class SEn extends S {
   String get toasterTeamImported => 'Team imported.';
 
   @override
-  String get toasterYouCantStartAMatchWithAnEmptyTeam => 'You can\'\'t start a match with an empty. team';
+  String get toasterYouCantStartAMatchWithAnEmptyTeam => 'You can\'t start a match with an empty team.';
 
   @override
-  String get toasterYouCantStartAMatchWithoutImprovisation => 'You can\'\'t start a match without improvisation.';
+  String get toasterYouCantStartAMatchWithoutImprovisation => 'You can\'t start a match without improvisation.';
 
   @override
-  String get toasterYouMustFillAllPerformersName => 'You must fill all performers\'\' name.';
+  String get toasterYouMustFillAllPerformersName => 'You must fill in all performers\' names.';
 
   @override
   String get total => 'Total';
+
+  @override
+  String get tutorialAddPacing => 'To start, create your first pacing by tapping the button below.';
+
+  @override
+  String get tutorialStartMatch =>
+      'Swipe right or press the play button to start a match. You can also long-press or tap the more button to see more options.';
+
+  @override
+  String get tutorialAddImprovisation => 'Add improvisations to your pacing by tapping the button below.';
+
+  @override
+  String get tutorialFirstImprovisationCard =>
+      'Tap on the improvisation card to expand it and add details, or swipe left to remove it.';
+
+  @override
+  String get tutorialFirstImprovisationDrag => 'Tap and hold this icon to reorder improvisations.';
 
   @override
   String get type => 'Type';

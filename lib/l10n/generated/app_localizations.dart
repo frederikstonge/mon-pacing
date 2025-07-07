@@ -185,13 +185,13 @@ abstract class S {
   /// No description provided for @createNewPacingTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Create new pacing'**
+  /// **'Create a new pacing'**
   String get createNewPacingTooltip;
 
   /// No description provided for @createNewTeamTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Create new team'**
+  /// **'Create a new team'**
   String get createNewTeamTooltip;
 
   /// No description provided for @createPacing.
@@ -215,25 +215,25 @@ abstract class S {
   /// No description provided for @defaultImprovisationSettingsTooltip.
   ///
   /// In en, this message translates to:
-  /// **'These settings will be used as default when creating new improvisations, but can be changed individually.'**
+  /// **'These settings will be used as defaults when creating new improvisations, but can be changed individually.'**
   String get defaultImprovisationSettingsTooltip;
 
   /// No description provided for @defaultMatchSettingsTooltip.
   ///
   /// In en, this message translates to:
-  /// **'These settings will be used as default when creating new matches, but can be changed individually.'**
+  /// **'These settings will be used as defaults when creating new matches, but can be changed individually.'**
   String get defaultMatchSettingsTooltip;
 
   /// No description provided for @defaultPacingSettingsTooltip.
   ///
   /// In en, this message translates to:
-  /// **'These settings will be used as default when creating new pacings, but can be changed individually.'**
+  /// **'These settings will be used as defaults when creating new pacings, but can be changed individually.'**
   String get defaultPacingSettingsTooltip;
 
   /// No description provided for @defaultPenaltySettingsTooltip.
   ///
   /// In en, this message translates to:
-  /// **'These settings will be used as default when creating new penalties, but can be changed individually.'**
+  /// **'These settings will be used as defaults when creating new penalties, but can be changed individually.'**
   String get defaultPenaltySettingsTooltip;
 
   /// No description provided for @delete.
@@ -323,7 +323,7 @@ abstract class S {
   /// No description provided for @enablePenaltiesImpactPoints.
   ///
   /// In en, this message translates to:
-  /// **'Enable penalties impact points'**
+  /// **'Enable penalties to impact points'**
   String get enablePenaltiesImpactPoints;
 
   /// No description provided for @enableStatistics.
@@ -335,7 +335,7 @@ abstract class S {
   /// No description provided for @enableStatisticsTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Add team lineups and track points, penalties etc'**
+  /// **'Add team lineups and track points, penalties, etc.'**
   String get enableStatisticsTooltip;
 
   /// No description provided for @enableTimerHapticFeedback.
@@ -485,7 +485,7 @@ abstract class S {
   /// No description provided for @lesserThan.
   ///
   /// In en, this message translates to:
-  /// **'Must be lesser than {max}'**
+  /// **'Must be less than {max}'**
   String lesserThan({required int max});
 
   /// No description provided for @light.
@@ -575,13 +575,13 @@ abstract class S {
   /// No description provided for @missingIgnoreBatteryOptimizationError.
   ///
   /// In en, this message translates to:
-  /// **'Battery Optimization is still enabled. Please go to your device\'\'s settings to ignore battery optimization.'**
+  /// **'Battery optimization is still enabled. Please go to your device\'s settings to ignore battery optimization.'**
   String get missingIgnoreBatteryOptimizationError;
 
   /// No description provided for @missingNotificationPermissionError.
   ///
   /// In en, this message translates to:
-  /// **'Notification permission has been denied. Please go to your device\'\'s settings to allow notifications.'**
+  /// **'Notification permission has been denied. Please go to your device\'s settings to allow notifications.'**
   String get missingNotificationPermissionError;
 
   /// No description provided for @mixed.
@@ -653,13 +653,13 @@ abstract class S {
   /// No description provided for @numberOfTeamsByDefault.
   ///
   /// In en, this message translates to:
-  /// **'Number of teams by default'**
+  /// **'Default number of teams'**
   String get numberOfTeamsByDefault;
 
   /// No description provided for @onboardingByDefault.
   ///
   /// In en, this message translates to:
-  /// **'These settings will be used as default, but can be changed individually.'**
+  /// **'These settings will be used as defaults, but can be changed individually.'**
   String get onboardingByDefault;
 
   /// No description provided for @onboardingLanguageTitle.
@@ -695,7 +695,7 @@ abstract class S {
   /// No description provided for @onboardingImprovisationsDescription.
   ///
   /// In en, this message translates to:
-  /// **'Customize your improvisations with durations, types, tags and more.'**
+  /// **'Customize your improvisations with durations, types, tags, and more.'**
   String get onboardingImprovisationsDescription;
 
   /// No description provided for @onboardingMatchesTitle.
@@ -791,7 +791,7 @@ abstract class S {
   /// No description provided for @penaltiesImpactTypeSubstract.
   ///
   /// In en, this message translates to:
-  /// **'Penalties substract points to its team'**
+  /// **'Penalties subtract points from their team'**
   String get penaltiesImpactTypeSubstract;
 
   /// No description provided for @penaltiesRequiredToExpel.
@@ -929,7 +929,7 @@ abstract class S {
   /// No description provided for @tagsHint.
   ///
   /// In en, this message translates to:
-  /// **'separated by comma (,)'**
+  /// **'Separated by comma (,)'**
   String get tagsHint;
 
   /// No description provided for @team.
@@ -959,7 +959,7 @@ abstract class S {
   /// No description provided for @timeBufferTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Extra time that will be added on top of each improvisation\'\'s duration to compensate for the voting and more. This is only used to evaluate the total time of a pacing.'**
+  /// **'Extra time that will be added on top of each improvisation\'s duration to compensate for voting and more. This is only used to evaluate the total time of a pacing.'**
   String get timeBufferTooltip;
 
   /// No description provided for @timerHapticFeedbackTooltip.
@@ -1031,19 +1031,19 @@ abstract class S {
   /// No description provided for @toasterYouCantStartAMatchWithAnEmptyTeam.
   ///
   /// In en, this message translates to:
-  /// **'You can\'\'t start a match with an empty. team'**
+  /// **'You can\'t start a match with an empty team.'**
   String get toasterYouCantStartAMatchWithAnEmptyTeam;
 
   /// No description provided for @toasterYouCantStartAMatchWithoutImprovisation.
   ///
   /// In en, this message translates to:
-  /// **'You can\'\'t start a match without improvisation.'**
+  /// **'You can\'t start a match without improvisation.'**
   String get toasterYouCantStartAMatchWithoutImprovisation;
 
   /// No description provided for @toasterYouMustFillAllPerformersName.
   ///
   /// In en, this message translates to:
-  /// **'You must fill all performers\'\' name.'**
+  /// **'You must fill in all performers\' names.'**
   String get toasterYouMustFillAllPerformersName;
 
   /// No description provided for @total.
@@ -1051,6 +1051,36 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Total'**
   String get total;
+
+  /// No description provided for @tutorialAddPacing.
+  ///
+  /// In en, this message translates to:
+  /// **'To start, create your first pacing by tapping the button below.'**
+  String get tutorialAddPacing;
+
+  /// No description provided for @tutorialStartMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe right or press the play button to start a match. You can also long-press or tap the more button to see more options.'**
+  String get tutorialStartMatch;
+
+  /// No description provided for @tutorialAddImprovisation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add improvisations to your pacing by tapping the button below.'**
+  String get tutorialAddImprovisation;
+
+  /// No description provided for @tutorialFirstImprovisationCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap on the improvisation card to expand it and add details, or swipe left to remove it.'**
+  String get tutorialFirstImprovisationCard;
+
+  /// No description provided for @tutorialFirstImprovisationDrag.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap and hold this icon to reorder improvisations.'**
+  String get tutorialFirstImprovisationDrag;
 
   /// No description provided for @type.
   ///
