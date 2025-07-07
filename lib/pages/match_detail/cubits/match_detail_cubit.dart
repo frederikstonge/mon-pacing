@@ -120,6 +120,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   void onTeamSelected(TeamModel team, TeamModel selectedTeam) {
     final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t) => t.performers));
+    // Temporary id to support ReorderableListView
     int tempId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0;
     final newTeam = team.copyWith(
       name: selectedTeam.name,

@@ -19,6 +19,7 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
+import '../../models/match_model.dart';
 import '../../router/routes.dart';
 import '../matches_search/matches_search_page_view.dart';
 import 'widgets/match_card.dart';
@@ -74,7 +75,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                               return LoadingIconButton(
                                 icon: const Icon(Icons.qr_code),
                                 tooltip: S.of(context).scanner,
-                                onPressed: () async => context.pushNamed(Routes.scanner),
+                                onPressed: () async => _onIntegrationPressed(context),
                               );
                             }
                             return SizedBox();
@@ -83,13 +84,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                         LoadingIconButton(
                           icon: const Icon(Icons.search),
                           tooltip: S.of(context).search(category: S.of(context).matches),
-                          onPressed: () async {
-                            final router = GoRouter.of(context);
-                            final result = await MatchesSearchPageView.showDialog(context);
-                            if (result != null) {
-                              router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
-                            }
-                          },
+                          onPressed: () async => await _onSearchPressed(context),
                         ),
                       ],
                     );
@@ -110,17 +105,10 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                         final match = matchesState.matches.elementAt(index);
                         return MatchCard(
                           match: match,
-                          onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                          edit: () => GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'}),
-                          shouldDelete: () => MessageBoxDialog.questionShow(
-                            context,
-                            S
-                                .of(context)
-                                .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
-                            S.of(context).delete,
-                            S.of(context).cancel,
-                          ),
-                          delete: () => context.read<MatchesCubit>().delete(match),
+                          onLongPress: () => _onLongPress(context),
+                          edit: () => _edit(context, match),
+                          shouldDelete: () => _shouldDelete(context, match),
+                          delete: () => _delete(context, match),
                         );
                       },
                     ),
@@ -133,6 +121,32 @@ class _MatchesPageViewState extends State<MatchesPageView> {
       },
     );
   }
+
+  Future<void> _delete(BuildContext context, MatchModel match) => context.read<MatchesCubit>().delete(match);
+
+  Future<bool?> _shouldDelete(BuildContext context, MatchModel match) {
+    return MessageBoxDialog.questionShow(
+      context,
+      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
+      S.of(context).delete,
+      S.of(context).cancel,
+    );
+  }
+
+  void _edit(BuildContext context, MatchModel match) =>
+      GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'});
+
+  Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
+
+  Future<void> _onSearchPressed(BuildContext context) async {
+    final router = GoRouter.of(context);
+    final result = await MatchesSearchPageView.showDialog(context);
+    if (result != null) {
+      router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
+    }
+  }
+
+  Future<void> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
 
   Future<void> _onScroll() async {
     final maxScroll = _scrollController.position.maxScrollExtent;
