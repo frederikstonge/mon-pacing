@@ -1061,7 +1061,7 @@ abstract class S {
   /// No description provided for @tutorialStartMatch.
   ///
   /// In en, this message translates to:
-  /// **'Swipe right or press the play button to start a match. You can also long-press or tap the more button to see more options.'**
+  /// **'Swipe right or press the play button to start a match.'**
   String get tutorialStartMatch;
 
   /// No description provided for @tutorialAddImprovisation.
@@ -1073,7 +1073,7 @@ abstract class S {
   /// No description provided for @tutorialFirstImprovisationCard.
   ///
   /// In en, this message translates to:
-  /// **'Tap on the improvisation card to expand it and add details, or swipe left to remove it.'**
+  /// **'Tap on the improvisation card to expand it and add details.'**
   String get tutorialFirstImprovisationCard;
 
   /// No description provided for @tutorialFirstImprovisationDrag.

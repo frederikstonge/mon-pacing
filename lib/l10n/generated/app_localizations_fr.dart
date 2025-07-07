@@ -550,7 +550,7 @@ class SFr extends S {
 
   @override
   String get tutorialStartMatch =>
-      'Faites glisser vers la droite ou appuyez sur le bouton play pour démarrer un match. Vous pouvez également appuyer longtemps ou appuyer sur le bouton plus pour voir plus d\'options.';
+      'Faites glisser vers la droite ou appuyez sur le bouton play pour démarrer un match.';
 
   @override
   String get tutorialAddImprovisation =>
@@ -558,7 +558,7 @@ class SFr extends S {
 
   @override
   String get tutorialFirstImprovisationCard =>
-      'Appuyez sur la carte d\'improvisation pour l\'agrandir et ajouter des détails ou faites glisser vers la gauche pour la supprimer.';
+      'Appuyez sur la carte d\'improvisation pour l\'agrandir et ajouter des détails.';
 
   @override
   String get tutorialFirstImprovisationDrag => 'Appuyez et maintenez cette icône pour réorganiser les improvisations.';

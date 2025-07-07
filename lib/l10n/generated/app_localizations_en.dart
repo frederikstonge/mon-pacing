@@ -546,15 +546,13 @@ class SEn extends S {
   String get tutorialAddPacing => 'To start, create your first pacing by tapping the button below.';
 
   @override
-  String get tutorialStartMatch =>
-      'Swipe right or press the play button to start a match. You can also long-press or tap the more button to see more options.';
+  String get tutorialStartMatch => 'Swipe right or press the play button to start a match.';
 
   @override
   String get tutorialAddImprovisation => 'Add improvisations to your pacing by tapping the button below.';
 
   @override
-  String get tutorialFirstImprovisationCard =>
-      'Tap on the improvisation card to expand it and add details, or swipe left to remove it.';
+  String get tutorialFirstImprovisationCard => 'Tap on the improvisation card to expand it and add details.';
 
   @override
   String get tutorialFirstImprovisationDrag => 'Tap and hold this icon to reorder improvisations.';
