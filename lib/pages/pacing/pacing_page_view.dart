@@ -278,13 +278,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     final displayImprovisationDetails =
         router.state.name == Routes.pacing &&
         pacingCubit.state.status == PacingStatus.success &&
-        pacingCubit.state.pacing!.improvisations.length == 1 &&
+        pacingCubit.state.pacing!.improvisations.isNotEmpty &&
         !tutorialsCubit.state.improvisationDetailsFinished;
 
     final displayImprovisationDrag =
         router.state.name == Routes.pacing &&
         pacingCubit.state.status == PacingStatus.success &&
-        pacingCubit.state.pacing!.improvisations.length == 2 &&
+        pacingCubit.state.pacing!.improvisations.length >= 2 &&
         !tutorialsCubit.state.improvisationDragFinished;
 
     if (displayAddImprovisation) {
