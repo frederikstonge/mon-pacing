@@ -275,17 +275,11 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
         pacingCubit.state.pacing!.improvisations.isEmpty &&
         !tutorialsCubit.state.addImprovisationFinished;
 
-    final displayImprovisationDetails =
+    final displayImprovisation =
         router.state.name == Routes.pacing &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isNotEmpty &&
-        !tutorialsCubit.state.improvisationDetailsFinished;
-
-    final displayImprovisationDrag =
-        router.state.name == Routes.pacing &&
-        pacingCubit.state.status == PacingStatus.success &&
-        pacingCubit.state.pacing!.improvisations.length >= 2 &&
-        !tutorialsCubit.state.improvisationDragFinished;
+        !tutorialsCubit.state.improvisationFinished;
 
     if (displayAddImprovisation) {
       initTutorialCoachMark(
@@ -308,7 +302,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
           ),
         ],
       );
-    } else if (displayImprovisationDetails) {
+    } else if (displayImprovisation) {
       initTutorialCoachMark(
         targets: [
           TargetFocus(
@@ -327,11 +321,6 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
               ),
             ],
           ),
-        ],
-      );
-    } else if (displayImprovisationDrag) {
-      initTutorialCoachMark(
-        targets: [
           TargetFocus(
             keyTarget: _firstImprovisationDragKey,
             enableOverlayTab: true,
@@ -353,14 +342,12 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted && (displayAddImprovisation || displayImprovisationDetails || displayImprovisationDrag)) {
+        if (mounted && (displayAddImprovisation || displayImprovisation)) {
           showTutorialCoachMark(context, () {
             if (displayAddImprovisation) {
               tutorialsCubit.setAddImprovisationFinished();
-            } else if (displayImprovisationDetails) {
-              tutorialsCubit.setImprovisationDetailsFinished();
-            } else if (displayImprovisationDrag) {
-              tutorialsCubit.setImprovisationDragFinished();
+            } else if (displayImprovisation) {
+              tutorialsCubit.setImprovisationFinished();
             }
           });
         }

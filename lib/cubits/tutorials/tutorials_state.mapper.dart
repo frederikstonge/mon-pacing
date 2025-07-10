@@ -31,15 +31,10 @@ class TutorialsStateMapper extends ClassMapperBase<TutorialsState> {
   static const Field<TutorialsState, bool> _f$addImprovisationFinished = Field(
       'addImprovisationFinished', _$addImprovisationFinished,
       opt: true, def: false);
-  static bool _$improvisationDetailsFinished(TutorialsState v) =>
-      v.improvisationDetailsFinished;
-  static const Field<TutorialsState, bool> _f$improvisationDetailsFinished =
-      Field('improvisationDetailsFinished', _$improvisationDetailsFinished,
-          opt: true, def: false);
-  static bool _$improvisationDragFinished(TutorialsState v) =>
-      v.improvisationDragFinished;
-  static const Field<TutorialsState, bool> _f$improvisationDragFinished = Field(
-      'improvisationDragFinished', _$improvisationDragFinished,
+  static bool _$improvisationFinished(TutorialsState v) =>
+      v.improvisationFinished;
+  static const Field<TutorialsState, bool> _f$improvisationFinished = Field(
+      'improvisationFinished', _$improvisationFinished,
       opt: true, def: false);
 
   @override
@@ -47,8 +42,7 @@ class TutorialsStateMapper extends ClassMapperBase<TutorialsState> {
     #addPacingFinished: _f$addPacingFinished,
     #startMatchFinished: _f$startMatchFinished,
     #addImprovisationFinished: _f$addImprovisationFinished,
-    #improvisationDetailsFinished: _f$improvisationDetailsFinished,
-    #improvisationDragFinished: _f$improvisationDragFinished,
+    #improvisationFinished: _f$improvisationFinished,
   };
 
   static TutorialsState _instantiate(DecodingData data) {
@@ -56,8 +50,7 @@ class TutorialsStateMapper extends ClassMapperBase<TutorialsState> {
         addPacingFinished: data.dec(_f$addPacingFinished),
         startMatchFinished: data.dec(_f$startMatchFinished),
         addImprovisationFinished: data.dec(_f$addImprovisationFinished),
-        improvisationDetailsFinished: data.dec(_f$improvisationDetailsFinished),
-        improvisationDragFinished: data.dec(_f$improvisationDragFinished));
+        improvisationFinished: data.dec(_f$improvisationFinished));
   }
 
   @override
@@ -118,8 +111,7 @@ abstract class TutorialsStateCopyWith<$R, $In extends TutorialsState, $Out>
       {bool? addPacingFinished,
       bool? startMatchFinished,
       bool? addImprovisationFinished,
-      bool? improvisationDetailsFinished,
-      bool? improvisationDragFinished});
+      bool? improvisationFinished});
   TutorialsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
 }
@@ -137,17 +129,14 @@ class _TutorialsStateCopyWithImpl<$R, $Out>
           {bool? addPacingFinished,
           bool? startMatchFinished,
           bool? addImprovisationFinished,
-          bool? improvisationDetailsFinished,
-          bool? improvisationDragFinished}) =>
+          bool? improvisationFinished}) =>
       $apply(FieldCopyWithData({
         if (addPacingFinished != null) #addPacingFinished: addPacingFinished,
         if (startMatchFinished != null) #startMatchFinished: startMatchFinished,
         if (addImprovisationFinished != null)
           #addImprovisationFinished: addImprovisationFinished,
-        if (improvisationDetailsFinished != null)
-          #improvisationDetailsFinished: improvisationDetailsFinished,
-        if (improvisationDragFinished != null)
-          #improvisationDragFinished: improvisationDragFinished
+        if (improvisationFinished != null)
+          #improvisationFinished: improvisationFinished
       }));
   @override
   TutorialsState $make(CopyWithData data) => TutorialsState(
@@ -157,10 +146,8 @@ class _TutorialsStateCopyWithImpl<$R, $Out>
           data.get(#startMatchFinished, or: $value.startMatchFinished),
       addImprovisationFinished: data.get(#addImprovisationFinished,
           or: $value.addImprovisationFinished),
-      improvisationDetailsFinished: data.get(#improvisationDetailsFinished,
-          or: $value.improvisationDetailsFinished),
-      improvisationDragFinished: data.get(#improvisationDragFinished,
-          or: $value.improvisationDragFinished));
+      improvisationFinished:
+          data.get(#improvisationFinished, or: $value.improvisationFinished));
 
   @override
   TutorialsStateCopyWith<$R2, TutorialsState, $Out2> $chain<$R2, $Out2>(

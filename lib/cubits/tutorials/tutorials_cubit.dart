@@ -36,11 +36,7 @@ class TutorialsCubit extends HydratedCubit<TutorialsState> {
     emit(state.copyWith(addImprovisationFinished: true));
   }
 
-  void setImprovisationDetailsFinished() {
-    emit(state.copyWith(improvisationDetailsFinished: true));
-  }
-
-  void setImprovisationDragFinished() {
-    emit(state.copyWith(improvisationDragFinished: true));
+  void setImprovisationFinished() {
+    emit(state.copyWith(improvisationFinished: true));
   }
 }
