@@ -120,8 +120,13 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
   void onTeamSelected(TeamModel team, TeamModel selectedTeam) {
     final allPerformers = List<PerformerModel>.from(state.match.teams.selectMany((t) => t.performers));
-    // Temporary id to support ReorderableListView
+
+    // Temporary id is used for new entities before they are saved in the database.
     int tempId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0;
+    if (tempId > 0) {
+      tempId = 0;
+    }
+
     final newTeam = team.copyWith(
       name: selectedTeam.name,
       color: selectedTeam.color,
@@ -134,8 +139,15 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   TeamModel _createTeam(List<TeamModel> teams) {
     final random = Random();
     final allPerformers = List<PerformerModel>.from(teams.selectMany((t) => t.performers));
+
+    // Temporary id is used for new entities before they are saved in the database.
+    int tempId = teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(min) - 1 : 0;
+    if (tempId > 0) {
+      tempId = 0;
+    }
+
     return TeamModel(
-      id: teams.isNotEmpty ? teams.map((e) => e.id).toList().reduce(min) - 1 : 0,
+      id: tempId,
       createdDate: null,
       modifiedDate: null,
       name: '${Localizer.current.team} ${teams.length + 1}',
@@ -145,10 +157,11 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
   }
 
   PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
-    return PerformerModel(
-      // Temporary id to support ReorderableListView
-      id: allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0,
-      name: '',
-    );
+    // Temporary id is used for new entities before they are saved in the database.
+    int tempId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0;
+    if (tempId > 0) {
+      tempId = 0;
+    }
+    return PerformerModel(id: tempId, name: '');
   }
 }

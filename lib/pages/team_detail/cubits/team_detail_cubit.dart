@@ -79,10 +79,12 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
   }
 
   PerformerModel _createPerformer(List<PerformerModel> allPerformers) {
-    return PerformerModel(
-      // Temporary id to support ReorderableListView
-      id: allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0,
-      name: '',
-    );
+    // Temporary id is used for new entities before they are saved in the database.
+    int tempId = allPerformers.isNotEmpty ? allPerformers.map((e) => e.id).toList().reduce(min) - 1 : 0;
+    if (tempId > 0) {
+      tempId = 0;
+    }
+
+    return PerformerModel(id: tempId, name: '');
   }
 }
