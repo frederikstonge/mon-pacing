@@ -499,8 +499,11 @@ class MockSettingsCubit extends _i1.Mock implements _i18.SettingsCubit {
           as _i28.Future<void>);
 
   @override
-  void hydrate({_i33.Storage? storage}) => super.noSuchMethod(
-    Invocation.method(#hydrate, [], {#storage: storage}),
+  void hydrate({
+    _i33.Storage? storage,
+    _i33.OnHydrationError? onError = _i33.defaultOnHydrationError,
+  }) => super.noSuchMethod(
+    Invocation.method(#hydrate, [], {#storage: storage, #onError: onError}),
     returnValueForMissingStub: null,
   );
 
