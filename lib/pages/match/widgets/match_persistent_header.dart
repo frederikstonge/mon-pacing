@@ -45,7 +45,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
                 },
                 child: Card(
                   margin: EdgeInsets.zero,
-                  color: improvisation.key == selectedImprovisationIndex ? Theme.of(context).primaryColor : null,
+                  color: selectedImprovisationIndex == improvisation.key ? Theme.of(context).primaryColor : null,
                   child: SizedBox(
                     width: 50,
                     child: Center(
@@ -53,7 +53,7 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
                         '${improvisation.key + 1}',
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: improvisation.key == selectedImprovisationIndex
+                          color: selectedImprovisationIndex == improvisation.key
                               ? Theme.of(context).colorScheme.onPrimary
                               : null,
                           fontWeight: FontWeight.w500,
@@ -65,6 +65,36 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
               ),
             );
           }),
+          if (match.enableStatistics) ...[
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
+              child: InkWell(
+                onTap: () {
+                  changePage(match.improvisations.length);
+                },
+                child: Card(
+                  color: selectedImprovisationIndex == match.improvisations.length
+                      ? Theme.of(context).primaryColor
+                      : null,
+                  margin: EdgeInsets.zero,
+                  child: SizedBox(
+                    width: 50,
+                    child: Tooltip(
+                      message: S.of(context).matchSummary,
+                      child: Center(
+                        child: Icon(
+                          Icons.summarize,
+                          color: selectedImprovisationIndex == match.improvisations.length
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
           if (onAdd != null) ...[
             Padding(
               padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
