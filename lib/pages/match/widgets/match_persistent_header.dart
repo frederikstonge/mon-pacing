@@ -48,15 +48,18 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
                   color: selectedImprovisationIndex == improvisation.key ? Theme.of(context).primaryColor : null,
                   child: SizedBox(
                     width: 50,
-                    child: Center(
-                      child: Text(
-                        '${improvisation.key + 1}',
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: selectedImprovisationIndex == improvisation.key
-                              ? Theme.of(context).colorScheme.onPrimary
-                              : null,
-                          fontWeight: FontWeight.w500,
+                    child: Tooltip(
+                      message: S.of(context).improvisationNumber(order: improvisation.key + 1),
+                      child: Center(
+                        child: Text(
+                          '${improvisation.key + 1}',
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                            color: selectedImprovisationIndex == improvisation.key
+                                ? Theme.of(context).colorScheme.onPrimary
+                                : null,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
