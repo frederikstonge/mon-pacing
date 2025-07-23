@@ -175,7 +175,6 @@
     }
   },
   "name": "Name",
-  "nextImprovisation": "Next improvisation",
   "noIntegrationFound": "No integration found.",
   "noPenalty": "No penalty.",
   "noStar": "No star.",
@@ -219,7 +218,6 @@
   },
   "performers": "Performers",
   "points": "Points",
-  "previousImprovisation": "Previous improvisation",
   "required": "Field is required",
   "remove": "Remove",
   "resetSettingsToDefault": "Reset settings to default",

@@ -614,12 +614,6 @@ abstract class S {
   /// **'Name'**
   String get name;
 
-  /// No description provided for @nextImprovisation.
-  ///
-  /// In en, this message translates to:
-  /// **'Next improvisation'**
-  String get nextImprovisation;
-
   /// No description provided for @noIntegrationFound.
   ///
   /// In en, this message translates to:
@@ -835,12 +829,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Points'**
   String get points;
-
-  /// No description provided for @previousImprovisation.
-  ///
-  /// In en, this message translates to:
-  /// **'Previous improvisation'**
-  String get previousImprovisation;
 
   /// No description provided for @required.
   ///

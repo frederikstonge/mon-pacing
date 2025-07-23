@@ -316,9 +316,6 @@ class SFr extends S {
   String get name => 'Nom';
 
   @override
-  String get nextImprovisation => 'Improvisation suivante';
-
-  @override
   String get noIntegrationFound => 'Aucune intégration trouvée.';
 
   @override
@@ -429,9 +426,6 @@ class SFr extends S {
 
   @override
   String get points => 'Points';
-
-  @override
-  String get previousImprovisation => 'Improvisation précédente';
 
   @override
   String get required => 'Le champ est requis';

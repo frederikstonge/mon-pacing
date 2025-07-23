@@ -316,9 +316,6 @@ class SEn extends S {
   String get name => 'Name';
 
   @override
-  String get nextImprovisation => 'Next improvisation';
-
-  @override
   String get noIntegrationFound => 'No integration found.';
 
   @override
@@ -428,9 +425,6 @@ class SEn extends S {
 
   @override
   String get points => 'Points';
-
-  @override
-  String get previousImprovisation => 'Previous improvisation';
 
   @override
   String get required => 'Field is required';

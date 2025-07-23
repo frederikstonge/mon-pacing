@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../components/buttons/loading_icon_button.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
 
 class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
-  static const double height = 70;
+  static const double height = 60;
   final MatchModel match;
   final int selectedImprovisationIndex;
   final void Function(int page) changePage;
@@ -32,58 +31,61 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
+      alignment: Alignment.topCenter,
       color: Theme.of(context).colorScheme.surface,
-      child: NavigationToolbar(
-        leading: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LoadingIconButton(
-              icon: const Icon(Icons.arrow_back),
-              tooltip: S.of(context).previousImprovisation,
-              onPressed: selectedImprovisationIndex > 0 ? () => changePage(selectedImprovisationIndex - 1) : null,
-            ),
-          ],
-        ),
-        middle: DropdownButtonFormField<int>(
-          isExpanded: true,
-          decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
-          icon: const Icon(Icons.arrow_downward),
-          value: selectedImprovisationIndex,
-          onChanged: (value) {
-            if (value != null) {
-              changePage(value);
-            }
-          },
-          items: [
-            ...match.improvisations.asMap().entries.map(
-              (e) => DropdownMenuItem(
-                value: e.key,
-                child: Row(
-                  children: [Expanded(child: Text(S.of(context).improvisationNumber(order: e.key + 1)))],
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          ...match.improvisations.asMap().entries.map((improvisation) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
+              child: InkWell(
+                onTap: () {
+                  changePage(improvisation.key);
+                },
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  color: improvisation.key == selectedImprovisationIndex ? Theme.of(context).primaryColor : null,
+                  child: SizedBox(
+                    width: 50,
+                    child: Center(
+                      child: Text(
+                        '${improvisation.key + 1}',
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: improvisation.key == selectedImprovisationIndex
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : null,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+          if (onAdd != null) ...[
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
+              child: InkWell(
+                onTap: onAdd,
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: SizedBox(
+                    width: 50,
+                    height: 60,
+                    child: Tooltip(
+                      message: S.of(context).addImprovisation,
+                      child: Center(child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSecondary)),
+                    ),
+                  ),
                 ),
               ),
             ),
-            if (match.enableStatistics) ...[
-              DropdownMenuItem(
-                value: match.improvisations.length,
-                child: Row(children: [Expanded(child: Text(S.of(context).matchSummary))]),
-              ),
-            ],
           ],
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LoadingIconButton(icon: const Icon(Icons.add), tooltip: S.of(context).addImprovisation, onPressed: onAdd),
-            LoadingIconButton(
-              icon: const Icon(Icons.arrow_forward),
-              tooltip: S.of(context).nextImprovisation,
-              onPressed: selectedImprovisationIndex < (match.improvisations.length - (match.enableStatistics ? 0 : 1))
-                  ? () => changePage(selectedImprovisationIndex + 1)
-                  : null,
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }
