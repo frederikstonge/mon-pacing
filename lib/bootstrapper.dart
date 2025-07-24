@@ -6,6 +6,7 @@ import 'package:toastification/toastification.dart';
 
 import 'app.dart';
 import 'cubits/feature_flags/feature_flags_cubit.dart';
+import 'cubits/integrations/integrations_cubit.dart';
 import 'cubits/matches/matches_cubit.dart';
 import 'cubits/onboarding/onboarding_cubit.dart';
 import 'cubits/pacings/pacings_cubit.dart';
@@ -20,7 +21,6 @@ import 'repositories/tags_repository.dart';
 import 'repositories/teams_repository.dart';
 import 'services/analytics_service.dart';
 import 'services/excel_service.dart';
-import 'services/integration_service.dart';
 import 'services/package_info_service.dart';
 import 'services/timer_service.dart';
 import 'services/toaster_service.dart';
@@ -33,12 +33,10 @@ class Bootstrapper extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (repositoryContext) => ExcelService()),
-        RepositoryProvider(create: (repositoryContext) => IntegrationService()),
         RepositoryProvider(create: (repositoryContext) => TimerService()),
         RepositoryProvider(create: (repositoryContext) => PackageInfoService()),
         RepositoryProvider(create: (repositoryContext) => ToasterService(toastification: Toastification())),
         RepositoryProvider(create: (repositoryContext) => AnalyticsService(analytics: FirebaseAnalytics.instance)),
-
         RepositoryProvider(
           create: (repositoryContext) => DatabaseRepository(),
           lazy: false,
@@ -66,6 +64,10 @@ class Bootstrapper extends StatelessWidget {
           BlocProvider(create: (blocContext) => OnboardingCubit()),
           BlocProvider(create: (blocContext) => TutorialsCubit()),
           BlocProvider(create: (blocContext) => SettingsCubit()),
+          BlocProvider(
+            create: (blocContext) => IntegrationsCubit(remoteConfig: FirebaseRemoteConfig.instance)..initialize(),
+            lazy: false,
+          ),
           BlocProvider(
             create: (blocContext) => PacingsCubit(
               pacingsRepository: blocContext.read<PacingsRepository>(),

@@ -39,6 +39,8 @@ Future<void> main() async {
         RemoteConfigSettings(fetchTimeout: const Duration(minutes: 1), minimumFetchInterval: const Duration(hours: 6)),
       );
 
+      await FirebaseRemoteConfig.instance.fetchAndActivate();
+
       // SYSTEM CHROME
       await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

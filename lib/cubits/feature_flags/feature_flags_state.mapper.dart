@@ -24,20 +24,14 @@ class FeatureFlagsStateMapper extends ClassMapperBase<FeatureFlagsState> {
   static FeatureFlagsStatus _$status(FeatureFlagsState v) => v.status;
   static const Field<FeatureFlagsState, FeatureFlagsStatus> _f$status =
       Field('status', _$status);
-  static bool _$enableIntegrations(FeatureFlagsState v) => v.enableIntegrations;
-  static const Field<FeatureFlagsState, bool> _f$enableIntegrations =
-      Field('enableIntegrations', _$enableIntegrations, opt: true, def: false);
 
   @override
   final MappableFields<FeatureFlagsState> fields = const {
     #status: _f$status,
-    #enableIntegrations: _f$enableIntegrations,
   };
 
   static FeatureFlagsState _instantiate(DecodingData data) {
-    return FeatureFlagsState(
-        status: data.dec(_f$status),
-        enableIntegrations: data.dec(_f$enableIntegrations));
+    return FeatureFlagsState(status: data.dec(_f$status));
   }
 
   @override
@@ -96,7 +90,7 @@ extension FeatureFlagsStateValueCopy<$R, $Out>
 
 abstract class FeatureFlagsStateCopyWith<$R, $In extends FeatureFlagsState,
     $Out> implements ClassCopyWith<$R, $In, $Out> {
-  $R call({FeatureFlagsStatus? status, bool? enableIntegrations});
+  $R call({FeatureFlagsStatus? status});
   FeatureFlagsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
 }
@@ -110,16 +104,11 @@ class _FeatureFlagsStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<FeatureFlagsState> $mapper =
       FeatureFlagsStateMapper.ensureInitialized();
   @override
-  $R call({FeatureFlagsStatus? status, bool? enableIntegrations}) =>
-      $apply(FieldCopyWithData({
-        if (status != null) #status: status,
-        if (enableIntegrations != null) #enableIntegrations: enableIntegrations
-      }));
+  $R call({FeatureFlagsStatus? status}) =>
+      $apply(FieldCopyWithData({if (status != null) #status: status}));
   @override
-  FeatureFlagsState $make(CopyWithData data) => FeatureFlagsState(
-      status: data.get(#status, or: $value.status),
-      enableIntegrations:
-          data.get(#enableIntegrations, or: $value.enableIntegrations));
+  FeatureFlagsState $make(CopyWithData data) =>
+      FeatureFlagsState(status: data.get(#status, or: $value.status));
 
   @override
   FeatureFlagsStateCopyWith<$R2, FeatureFlagsState, $Out2> $chain<$R2, $Out2>(

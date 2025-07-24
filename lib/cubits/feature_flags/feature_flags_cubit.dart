@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import 'feature_flags_name.dart';
 import 'feature_flags_state.dart';
 import 'feature_flags_status.dart';
 
@@ -25,13 +24,7 @@ class FeatureFlagsCubit extends Cubit<FeatureFlagsState> {
   Future<void> initialize() async {
     try {
       emit(state.copyWith(status: FeatureFlagsStatus.loading));
-      await remoteConfig.fetchAndActivate();
-      emit(
-        state.copyWith(
-          status: FeatureFlagsStatus.success,
-          enableIntegrations: remoteConfig.getBool(FeatureFlagsName.enableIntegrations),
-        ),
-      );
+      emit(state.copyWith(status: FeatureFlagsStatus.success));
     } catch (e) {
       emit(state.copyWith(status: FeatureFlagsStatus.failure));
     }

@@ -10,6 +10,9 @@ import 'package:mockito/mockito.dart';
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_cubit.dart';
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_state.dart';
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_status.dart';
+import 'package:mon_pacing/cubits/integrations/integrations_cubit.dart';
+import 'package:mon_pacing/cubits/integrations/integrations_state.dart';
+import 'package:mon_pacing/cubits/integrations/integrations_status.dart';
 import 'package:mon_pacing/cubits/matches/matches_cubit.dart';
 import 'package:mon_pacing/cubits/matches/matches_state.dart';
 import 'package:mon_pacing/cubits/matches/matches_status.dart';
@@ -46,7 +49,6 @@ import 'package:mon_pacing/pages/settings/settings_page_view.dart';
 import 'package:mon_pacing/pages/teams/teams_page_view.dart';
 import 'package:mon_pacing/services/analytics_service.dart';
 import 'package:mon_pacing/services/excel_service.dart';
-import 'package:mon_pacing/services/integration_service.dart';
 import 'package:mon_pacing/services/package_info_service.dart';
 import 'package:mon_pacing/services/toaster_service.dart';
 import 'package:mon_pacing/themes/themes.dart';
@@ -60,7 +62,7 @@ import 'shell_wrapper.dart';
   MockSpec<ToasterService>(),
   MockSpec<ExcelService>(),
   MockSpec<PackageInfoService>(),
-  MockSpec<IntegrationService>(),
+  MockSpec<IntegrationsCubit>(),
   MockSpec<AnalyticsService>(),
   MockSpec<SettingsCubit>(),
   MockSpec<FeatureFlagsCubit>(),
@@ -74,7 +76,7 @@ import 'shell_wrapper.dart';
 late final MockToasterService toasterService;
 late final MockExcelService excelService;
 late final MockPackageInfoService packageInfoService;
-late final MockIntegrationService integrationService;
+late final MockIntegrationsCubit integrationCubit;
 late final MockAnalyticsService analyticsService;
 
 late final MockSettingsCubit settingsCubit;
@@ -93,7 +95,7 @@ void main() {
     toasterService = MockToasterService();
     excelService = MockExcelService();
     packageInfoService = MockPackageInfoService();
-    integrationService = MockIntegrationService();
+    integrationCubit = MockIntegrationsCubit();
     analyticsService = MockAnalyticsService();
 
     settingsCubit = MockSettingsCubit();
@@ -175,9 +177,10 @@ void main() {
     );
 
     when(packageInfoService.getAppVersion()).thenAnswer((_) async => '1.0.0');
+    when(featureFlagsCubit.state).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success));
     when(
-      featureFlagsCubit.state,
-    ).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success, enableIntegrations: true));
+      integrationCubit.state,
+    ).thenReturn(const IntegrationsState(status: IntegrationsStatus.success, integrations: []));
     when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing], hasMore: false));
     when(matchesCubit.state).thenReturn(MatchesState(status: MatchesStatus.success, matches: [match], hasMore: false));
     when(teamsCubit.state).thenReturn(TeamsState(status: TeamsStatus.success, teams: teams, hasMore: false));
@@ -278,7 +281,7 @@ void _screenshotWidget({
               RepositoryProvider<ToasterService>(create: (context) => toasterService),
               RepositoryProvider<PackageInfoService>(create: (context) => packageInfoService),
               RepositoryProvider<ExcelService>(create: (context) => excelService),
-              RepositoryProvider<IntegrationService>(create: (context) => integrationService),
+              RepositoryProvider<IntegrationsCubit>(create: (context) => integrationCubit),
               RepositoryProvider<AnalyticsService>(create: (context) => analyticsService),
             ],
             child: MultiBlocProvider(

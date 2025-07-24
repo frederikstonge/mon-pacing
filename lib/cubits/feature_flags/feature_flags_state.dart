@@ -7,7 +7,6 @@ part 'feature_flags_state.mapper.dart';
 @MappableClass()
 class FeatureFlagsState with FeatureFlagsStateMappable {
   final FeatureFlagsStatus status;
-  final bool enableIntegrations;
 
-  const FeatureFlagsState({required this.status, this.enableIntegrations = false});
+  const FeatureFlagsState({required this.status});
 }

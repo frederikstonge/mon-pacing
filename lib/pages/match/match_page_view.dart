@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,8 @@ import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../components/timer_banner/timer_banner.dart';
+import '../../cubits/integrations/integrations_cubit.dart';
+import '../../cubits/integrations/integrations_state.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
@@ -24,7 +27,6 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/penalty_model.dart';
-import '../../services/integration_service.dart';
 import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_improvisation/match_improvisation_shell.dart';
@@ -217,14 +219,22 @@ class MatchPageView extends StatelessWidget {
                           ],
                         ] else ...[
                           SliverToBoxAdapter(
-                            child: MatchSummary(
-                              match: match,
-                              onExport: () => _export(context),
-                              onExportIntegration: match.integrationId != null
-                                  ? () async {
-                                      await _onExportIntegration(context, match);
-                                    }
-                                  : null,
+                            child: BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                              builder: (context, integrationsState) {
+                                final integration = integrationsState.integrations
+                                    .whereType<MatchIntegrationBase>()
+                                    .firstWhereOrNull((i) => i.integrationId == match.integrationId);
+
+                                return MatchSummary(
+                                  match: match,
+                                  onExport: () => _export(context),
+                                  onExportIntegration: integration != null
+                                      ? () async {
+                                          await _onExportIntegration(context, match, integration);
+                                        }
+                                      : null,
+                                );
+                              },
                             ),
                           ),
                         ],
@@ -370,8 +380,7 @@ class MatchPageView extends StatelessWidget {
     );
   }
 
-  Future<void> _onExportIntegration(BuildContext context, MatchModel match) async {
-    final integration = context.read<IntegrationService>().getIntegration<MatchIntegrationBase>(match.integrationId!);
+  Future<void> _onExportIntegration(BuildContext context, MatchModel match, MatchIntegrationBase integration) async {
     final toasterService = context.read<ToasterService>();
     final localizer = S.of(context);
     final result = await MessageBoxDialog.questionShow(

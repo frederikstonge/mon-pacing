@@ -6,9 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../cubits/integrations/integrations_cubit.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
-import '../../integrations/integration_base.dart';
 import '../../integrations/match_integration_base.dart';
 import '../../integrations/pacing_integration_base.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -16,7 +16,6 @@ import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
 import '../../router/routes.dart';
 import '../../services/analytics_service.dart';
-import '../../services/integration_service.dart';
 import '../../services/toaster_service.dart';
 import '../pacings_search/pacings_search_page_view.dart';
 
@@ -123,7 +122,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     final analyticsService = context.read<AnalyticsService>();
     final localizer = S.of(context);
 
-    final integrations = context.read<IntegrationService>().getIntegrationsByType<IntegrationBase>();
+    final integrations = context.read<IntegrationsCubit>().state.integrations;
     for (final integration in integrations) {
       if (await integration.integrationIsValid(barcodeCapture.barcodes.first.rawValue!)) {
         PacingModel? pacing;

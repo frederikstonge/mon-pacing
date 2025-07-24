@@ -10,8 +10,8 @@ import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
-import '../../cubits/feature_flags/feature_flags_cubit.dart';
-import '../../cubits/feature_flags/feature_flags_state.dart';
+import '../../cubits/integrations/integrations_cubit.dart';
+import '../../cubits/integrations/integrations_state.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
 import '../../cubits/pacings/pacings_state.dart';
@@ -96,9 +96,9 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
                           tooltip: S.of(context).importPacingTooltip,
                           onPressed: () async => _onImportPressed(context),
                         ),
-                        BlocBuilder<FeatureFlagsCubit, FeatureFlagsState>(
-                          builder: (context, featureFlagState) {
-                            if (featureFlagState.enableIntegrations) {
+                        BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                          builder: (context, integrationsState) {
+                            if (integrationsState.integrations.isNotEmpty) {
                               return LoadingIconButton(
                                 icon: const Icon(Icons.qr_code),
                                 tooltip: S.of(context).scanner,
