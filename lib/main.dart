@@ -52,6 +52,7 @@ Future<void> main() async {
       );
 
       // DART_MAPPABLE
+      // Used to be backward compatible with old exported pacings
       MapperContainer.globals.use(TagMapper());
 
       // APP
