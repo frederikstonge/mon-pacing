@@ -40,7 +40,7 @@ class PacingPageView extends StatefulWidget {
 }
 
 class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
-  late final GoRouter router = GoRouter.of(context);
+  late final GoRouter? router = GoRouter.maybeOf(context);
   final GlobalKey _addImprovisationButtonKey = GlobalKey();
   final GlobalKey _firstImprovisationCardKey = GlobalKey();
   final GlobalKey _firstImprovisationDragKey = GlobalKey();
@@ -48,13 +48,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   @override
   void initState() {
-    router.routerDelegate.addListener(_showTutorials);
+    router?.routerDelegate.addListener(_showTutorials);
     super.initState();
   }
 
   @override
   void dispose() {
-    router.routerDelegate.removeListener(_showTutorials);
+    router?.routerDelegate.removeListener(_showTutorials);
     super.dispose();
   }
 
@@ -270,13 +270,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     final displayAddImprovisation =
-        router.state.name == Routes.pacing &&
+        router?.state.name == Routes.pacing &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isEmpty &&
         !tutorialsCubit.state.addImprovisationFinished;
 
     final displayImprovisation =
-        router.state.name == Routes.pacing &&
+        router?.state.name == Routes.pacing &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isNotEmpty &&
         !tutorialsCubit.state.improvisationFinished;

@@ -39,7 +39,7 @@ class PacingsPageView extends StatefulWidget {
 }
 
 class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
-  late final GoRouter router = GoRouter.of(context);
+  late final GoRouter? router = GoRouter.maybeOf(context);
   final GlobalKey _addPacingButtonKey = GlobalKey();
   final GlobalKey _firstPacingCardKey = GlobalKey();
   late ScrollController _scrollController;
@@ -47,7 +47,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   @override
   void initState() {
-    router.routerDelegate.addListener(_showTutorials);
+    router?.routerDelegate.addListener(_showTutorials);
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
     super.initState();
@@ -55,7 +55,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   @override
   void dispose() {
-    router.routerDelegate.removeListener(_showTutorials);
+    router?.routerDelegate.removeListener(_showTutorials);
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
@@ -257,13 +257,13 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     final displayAddPacing =
-        router.state.name == Routes.pacings &&
+        router?.state.name == Routes.pacings &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isEmpty &&
         !tutorialsCubit.state.addPacingFinished;
 
     final displayStartMatch =
-        router.state.name == Routes.pacings &&
+        router?.state.name == Routes.pacings &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isNotEmpty &&
         !tutorialsCubit.state.startMatchFinished;
