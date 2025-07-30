@@ -218,13 +218,13 @@ jobs:
         run: |
           bundle exec fastlane generate_screenshots
 
-      - name: Run Fastlane
-        working-directory: android
-        shell: bash
-        run: |
-          bundle exec fastlane build_deploy \
-            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
-            package_name:'com.stongef.monpacing' \
-            upload_screenshots:${{ inputs.generate-screenshots }} \
-            upload_images:${{ inputs.upload-images }} \
-            playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'
+      # - name: Run Fastlane
+      #   working-directory: android
+      #   shell: bash
+      #   run: |
+      #     bundle exec fastlane build_deploy \
+      #       build_number:'${{ needs.set_build_number.outputs.build_number }}' \
+      #       package_name:'com.stongef.monpacing' \
+      #       upload_screenshots:${{ inputs.generate-screenshots }} \
+      #       upload_images:${{ inputs.upload-images }} \
+      #       playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'
