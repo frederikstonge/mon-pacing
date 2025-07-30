@@ -98,11 +98,12 @@ class ScoreDetail extends StatelessWidget {
             Text(S.of(context).noPenalty, maxLines: 1, overflow: TextOverflow.ellipsis),
           ] else ...[
             ...match.getPenaltiesGroupedByImprovisationId().entries.map((e) {
+              final improvisationNumber = match.improvisations.indexWhere((element) => element.id == e.key) + 1;
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${S.of(context).improvisationNumber(order: e.key + 1)}: ',
+                    '${S.of(context).improvisationNumber(order: improvisationNumber)}: ',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
