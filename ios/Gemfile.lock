@@ -318,6 +318,7 @@ PLATFORMS
 
 DEPENDENCIES
   abbrev
+  benchmark
   cocoapods
   fastlane
   ostruct
