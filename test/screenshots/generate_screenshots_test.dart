@@ -16,6 +16,8 @@ import 'package:mon_pacing/cubits/integrations/integrations_status.dart';
 import 'package:mon_pacing/cubits/matches/matches_cubit.dart';
 import 'package:mon_pacing/cubits/matches/matches_state.dart';
 import 'package:mon_pacing/cubits/matches/matches_status.dart';
+import 'package:mon_pacing/cubits/onboarding/onboarding_cubit.dart';
+import 'package:mon_pacing/cubits/onboarding/onboarding_state.dart';
 import 'package:mon_pacing/cubits/pacings/pacings_cubit.dart';
 import 'package:mon_pacing/cubits/pacings/pacings_state.dart';
 import 'package:mon_pacing/cubits/pacings/pacings_status.dart';
@@ -26,6 +28,8 @@ import 'package:mon_pacing/cubits/teams/teams_state.dart';
 import 'package:mon_pacing/cubits/teams/teams_status.dart';
 import 'package:mon_pacing/cubits/timer/timer_cubit.dart';
 import 'package:mon_pacing/cubits/timer/timer_state.dart';
+import 'package:mon_pacing/cubits/tutorials/tutorials_cubit.dart';
+import 'package:mon_pacing/cubits/tutorials/tutorials_state.dart';
 import 'package:mon_pacing/extensions/color_extensions.dart';
 import 'package:mon_pacing/l10n/generated/app_localizations.dart';
 import 'package:mon_pacing/models/improvisation_model.dart';
@@ -62,9 +66,11 @@ import 'shell_wrapper.dart';
   MockSpec<ToasterService>(),
   MockSpec<ExcelService>(),
   MockSpec<PackageInfoService>(),
-  MockSpec<IntegrationsCubit>(),
   MockSpec<AnalyticsService>(),
   MockSpec<SettingsCubit>(),
+  MockSpec<TutorialsCubit>(),
+  MockSpec<OnboardingCubit>(),
+  MockSpec<IntegrationsCubit>(),
   MockSpec<FeatureFlagsCubit>(),
   MockSpec<PacingsCubit>(),
   MockSpec<MatchesCubit>(),
@@ -76,10 +82,12 @@ import 'shell_wrapper.dart';
 late final MockToasterService toasterService;
 late final MockExcelService excelService;
 late final MockPackageInfoService packageInfoService;
-late final MockIntegrationsCubit integrationCubit;
 late final MockAnalyticsService analyticsService;
 
 late final MockSettingsCubit settingsCubit;
+late final MockIntegrationsCubit integrationsCubit;
+late final MockOnboardingCubit onboardingCubit;
+late final MockTutorialsCubit tutorialsCubit;
 late final MockFeatureFlagsCubit featureFlagsCubit;
 late final MockPacingsCubit pacingsCubit;
 late final MockMatchesCubit matchesCubit;
@@ -95,10 +103,12 @@ void main() {
     toasterService = MockToasterService();
     excelService = MockExcelService();
     packageInfoService = MockPackageInfoService();
-    integrationCubit = MockIntegrationsCubit();
     analyticsService = MockAnalyticsService();
 
     settingsCubit = MockSettingsCubit();
+    onboardingCubit = MockOnboardingCubit();
+    tutorialsCubit = MockTutorialsCubit();
+    integrationsCubit = MockIntegrationsCubit();
     featureFlagsCubit = MockFeatureFlagsCubit();
     pacingsCubit = MockPacingsCubit();
     matchesCubit = MockMatchesCubit();
@@ -176,10 +186,19 @@ void main() {
       points: [],
     );
 
+    when(onboardingCubit.state).thenReturn(OnboardingState(onboardingFinished: true));
+    when(tutorialsCubit.state).thenReturn(
+      TutorialsState(
+        addPacingFinished: true,
+        startMatchFinished: true,
+        addImprovisationFinished: true,
+        improvisationFinished: true,
+      ),
+    );
     when(packageInfoService.getAppVersion()).thenAnswer((_) async => '1.0.0');
     when(featureFlagsCubit.state).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success));
     when(
-      integrationCubit.state,
+      integrationsCubit.state,
     ).thenReturn(const IntegrationsState(status: IntegrationsStatus.success, integrations: []));
     when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing], hasMore: false));
     when(matchesCubit.state).thenReturn(MatchesState(status: MatchesStatus.success, matches: [match], hasMore: false));
@@ -281,7 +300,7 @@ void _screenshotWidget({
               RepositoryProvider<ToasterService>(create: (context) => toasterService),
               RepositoryProvider<PackageInfoService>(create: (context) => packageInfoService),
               RepositoryProvider<ExcelService>(create: (context) => excelService),
-              RepositoryProvider<IntegrationsCubit>(create: (context) => integrationCubit),
+              RepositoryProvider<IntegrationsCubit>(create: (context) => integrationsCubit),
               RepositoryProvider<AnalyticsService>(create: (context) => analyticsService),
             ],
             child: MultiBlocProvider(
