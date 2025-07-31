@@ -290,19 +290,9 @@ void _screenshotWidget({
     final theme = ThemeType.light;
     for (final goldenDevice in goldenDevices) {
       for (final locale in S.supportedLocales) {
-        testWidgets('for ${goldenDevice.name}-${theme.name}-${locale.toLanguageTag()}', (tester) async {
+        testGoldens('for ${goldenDevice.name}-${theme.name}-${locale.toLanguageTag()}', (tester) async {
           when(settingsCubit.state).thenReturn(SettingsState(language: locale.toLanguageTag(), theme: theme));
           final device = goldenDevice.device;
-
-          var materialAppTheme = switch (theme) {
-            ThemeType.light => Themes.light(),
-            ThemeType.dark => Themes.dark(),
-            ThemeType.lni => Themes.lni(),
-            ThemeType.ligma => Themes.ligma(),
-          };
-          materialAppTheme = materialAppTheme.copyWith(
-            floatingActionButtonTheme: materialAppTheme.floatingActionButtonTheme.copyWith(elevation: 1),
-          );
 
           // Build widget tree around our child widget.
           final widget = MultiRepositoryProvider(
@@ -325,7 +315,12 @@ void _screenshotWidget({
                 BlocProvider<MatchCubit>(create: (context) => matchCubit),
               ],
               child: ScreenshotApp(
-                theme: materialAppTheme,
+                theme: switch (theme) {
+                  ThemeType.light => Themes.light(),
+                  ThemeType.dark => Themes.dark(),
+                  ThemeType.lni => Themes.lni(),
+                  ThemeType.ligma => Themes.ligma(),
+                },
                 localizationsDelegates: S.localizationsDelegates,
                 supportedLocales: S.supportedLocales,
                 locale: locale,
