@@ -28,7 +28,7 @@ class TeamsSearchPageView extends StatelessWidget {
       hintText: S.of(context).search(category: S.of(context).teams),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
-          Navigator.of(context).pop(item);
+          Navigator.of(context).maybePop(item);
         },
         child: ListTile(
           leading: TeamColorAvatar(color: Color(item.color)),

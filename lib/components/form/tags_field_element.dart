@@ -17,7 +17,7 @@ class TagsFieldElement extends StatefulWidget {
   final bool autoUnfocus;
   final FutureOr<void> Function(List<TagModel> value)? onChanged;
   final FocusNode? focusNode;
-  final Future<List<TagModel>> Function(String search) getAllTags;
+  final Future<List<String>> Function(String search) getAllTags;
 
   const TagsFieldElement({
     super.key,
@@ -92,7 +92,7 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
                     onPressed: () async {
                       final result = await TagsSearchPageView.showDialog(context);
                       if (result != null) {
-                        textFieldValues.onTagSubmitted(result.name);
+                        textFieldValues.onTagSubmitted(result);
                       }
                     },
                   ),

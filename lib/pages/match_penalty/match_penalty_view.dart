@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
 import '../../components/bottom_sheet/bottom_sheet_scaffold.dart';
 import '../../components/buttons/loading_button.dart';
+import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/drop_down_element.dart';
 import '../../components/form/text_field_element.dart';
@@ -12,6 +13,7 @@ import '../../components/settings_tile/settings_tile.dart';
 import '../../components/team_color_avatar/team_color_avatar.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../validators/validators.dart';
+import '../penalties_search/penalties_search_page_view.dart';
 import 'cubits/match_penalty_cubit.dart';
 import 'cubits/match_penalty_state.dart';
 
@@ -134,6 +136,18 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                           onChanged: (value) {
                             context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(type: value));
                           },
+                          suffixIcon: LoadingIconButton(
+                            tooltip: S.of(context).search(category: S.of(context).penalties.toLowerCase()),
+                            icon: const Icon(Icons.search),
+                            onPressed: () async {
+                              final cubit = context.read<MatchPenaltyCubit>();
+                              final result = await PenaltiesSearchPageView.showDialog(context);
+                              if (result != null) {
+                                _typeController.text = result;
+                                cubit.edit(matchPenaltyState.penalty.copyWith(type: result));
+                              }
+                            },
+                          ),
                         ),
                       ],
                       SettingsTile(

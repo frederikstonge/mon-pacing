@@ -6,21 +6,21 @@ import 'package:go_router/go_router.dart';
 
 import '../../components/search/search_dialog.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../../repositories/pacings_repository.dart';
+import '../../repositories/matches_repository.dart';
 import '../../router/routes.dart';
 
-class CategoriesSearchPageView extends StatelessWidget {
-  const CategoriesSearchPageView({super.key});
+class PenaltiesSearchPageView extends StatelessWidget {
+  const PenaltiesSearchPageView({super.key});
 
   static Future<String?> showDialog(BuildContext context) async {
-    return await GoRouter.of(context).pushNamed<String>(Routes.categoriesSearch);
+    return await GoRouter.of(context).pushNamed<String>(Routes.penaltiesSearch);
   }
 
   @override
   Widget build(BuildContext context) {
     return SearchDialog(
-      onChanged: (query, _) => context.read<PacingsRepository>().getAllCategories(search: query),
-      hintText: S.of(context).search(category: S.of(context).categories),
+      onChanged: (query, _) => context.read<MatchesRepository>().getAllPenaltyTypes(search: query),
+      hintText: S.of(context).search(category: S.of(context).penalties),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
           Navigator.of(context).maybePop(item);

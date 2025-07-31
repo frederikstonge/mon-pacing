@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import '../extensions/iterable_extensions.dart';
 import 'database_repository.dart';
 import 'entities/improvisation_entity.dart';
@@ -144,5 +146,23 @@ class MatchesRepository {
     final returnValue = await query.findAsync();
     query.close();
     return returnValue;
+  }
+
+  Future<List<String>> getAllPenaltyTypes({String search = ''}) async {
+    final db = await databaseRepository.database;
+    final box = db.box<PenaltyEntity>();
+    final builder = box.query(
+      PenaltyEntity_.type.notEquals('').and(PenaltyEntity_.type.contains(search, caseSensitive: false)),
+    );
+    final query = builder.build();
+    final returnValue = await query.findAsync();
+    query.close();
+    return returnValue
+        .groupListsBy((p) => p.type)
+        .entries
+        .sortedBy((a) => a.value.length)
+        .reversed
+        .map((e) => e.key)
+        .toList();
   }
 }

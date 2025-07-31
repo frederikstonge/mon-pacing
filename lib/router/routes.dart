@@ -11,5 +11,6 @@ class Routes {
   static const String settings = 'Settings';
   static const String scanner = 'Scanner';
   static const String categoriesSearch = 'CategoriesSearch';
+  static const String penaltiesSearch = 'PenaltiesSearch';
   static const String tagsSearch = 'TagsSearch';
 }

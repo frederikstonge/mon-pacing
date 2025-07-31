@@ -14,7 +14,6 @@ import '../../components/text_header/text_header.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/pacing_model.dart';
-import '../../models/tag_model.dart';
 import '../../repositories/tags_repository.dart';
 import '../../validators/validators.dart';
 import 'cubits/pacing_detail_cubit.dart';
@@ -83,8 +82,7 @@ class _PacingDetailPageViewState extends State<PacingDetailPageView> {
                       hintText: S.of(context).tagsHint,
                       initialTags: state.pacing.tags,
                       getAllTags: (search) async {
-                        final tags = await context.read<TagsRepository>().getAllTags(search: search);
-                        return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                        return await context.read<TagsRepository>().getAllTags(search: search);
                       },
                       onChanged: (value) {
                         context.read<PacingDetailCubit>().edit(state.pacing.copyWith(tags: value));

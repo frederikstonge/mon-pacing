@@ -22,7 +22,6 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/match_model.dart';
 import '../../models/penalties_impact_type.dart';
-import '../../models/tag_model.dart';
 import '../../repositories/tags_repository.dart';
 import '../../validators/validators.dart';
 import 'cubits/match_detail_cubit.dart';
@@ -95,8 +94,7 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                         hintText: S.of(context).tagsHint,
                         initialTags: matchDetailState.match.tags,
                         getAllTags: (search) async {
-                          final tags = await context.read<TagsRepository>().getAllTags(search: search);
-                          return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                          return await context.read<TagsRepository>().getAllTags(search: search);
                         },
                         onChanged: (value) {
                           context.read<MatchDetailCubit>().edit(matchDetailState.match.copyWith(tags: value));

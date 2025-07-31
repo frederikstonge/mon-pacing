@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import 'database_repository.dart';
 import 'entities/improvisation_entity.dart';
 import 'entities/pacing_entity.dart';
@@ -100,6 +102,12 @@ class PacingsRepository {
     final query = builder.build();
     final returnValue = await query.findAsync();
     query.close();
-    return returnValue.map((e) => e.category).toSet().toList();
+    return returnValue
+        .groupListsBy((p) => p.category)
+        .entries
+        .sortedBy((a) => a.value.length)
+        .reversed
+        .map((e) => e.key)
+        .toList();
   }
 }

@@ -27,7 +27,7 @@ class MatchesSearchPageView extends StatelessWidget {
       hintText: S.of(context).search(category: S.of(context).matches),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
-          Navigator.of(context).pop(item);
+          Navigator.of(context).maybePop(item);
         },
         child: ListTile(
           leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),

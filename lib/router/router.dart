@@ -11,6 +11,7 @@ import '../pages/onboarding/onboarding_page_view.dart';
 import '../pages/pacing/pacing_page_shell.dart';
 import '../pages/pacings/pacings_page_shell.dart';
 import '../pages/pacings_search/pacings_search_page_shell.dart';
+import '../pages/penalties_search/penalties_search_page_shell.dart';
 import '../pages/scanner/scanner_page_shell.dart';
 import '../pages/settings/settings_page_shell.dart';
 import '../pages/shell/shell_page_shell.dart';
@@ -141,6 +142,11 @@ final router = GoRouter(
       name: Routes.categoriesSearch,
       path: '/categories/search',
       builder: (context, state) => CategoriesSearchPageShell(key: state.pageKey),
+    ),
+    GoRoute(
+      name: Routes.penaltiesSearch,
+      path: '/penalties/search',
+      builder: (context, state) => PenaltiesSearchPageShell(key: state.pageKey),
     ),
     GoRoute(
       name: Routes.tagsSearch,

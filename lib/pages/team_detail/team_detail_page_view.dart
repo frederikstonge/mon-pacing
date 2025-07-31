@@ -17,7 +17,6 @@ import '../../components/text_header/text_header.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../extensions/color_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../../models/tag_model.dart';
 import '../../models/team_model.dart';
 import '../../repositories/tags_repository.dart';
 import '../../validators/validators.dart';
@@ -114,8 +113,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                         hintText: S.of(context).tagsHint,
                         initialTags: teamDetailState.team.tags,
                         getAllTags: (search) async {
-                          final tags = await context.read<TagsRepository>().getAllTags(search: search);
-                          return tags.map((e) => TagModel.fromEntity(entity: e)).toList();
+                          return await context.read<TagsRepository>().getAllTags(search: search);
                         },
                         onChanged: (value) {
                           context.read<TeamDetailCubit>().edit(teamDetailState.team.copyWith(tags: value));
