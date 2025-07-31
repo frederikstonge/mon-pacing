@@ -217,29 +217,29 @@ void main() {
 
     _screenshotWidget(
       goldenFileName: '1_pacings',
-      child: ShellWrapper(body: PacingsPageView(), selectedIndex: 0),
+      builder: () => ShellWrapper(body: PacingsPageView(), selectedIndex: 0),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(goldenFileName: '2_pacing', child: PacingPageView(), goldenDevices: goldenDevices);
+    _screenshotWidget(goldenFileName: '2_pacing', builder: () => PacingPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '3_matches',
-      child: ShellWrapper(body: MatchesPageView(), selectedIndex: 1),
+      builder: () => ShellWrapper(body: MatchesPageView(), selectedIndex: 1),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(goldenFileName: '4_match', child: MatchPageView(), goldenDevices: goldenDevices);
+    _screenshotWidget(goldenFileName: '4_match', builder: () => MatchPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '5_teams',
-      child: ShellWrapper(body: TeamsPageView(), selectedIndex: 2),
+      builder: () => ShellWrapper(body: TeamsPageView(), selectedIndex: 2),
       goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
       goldenFileName: '6_settings',
-      child: ShellWrapper(body: SettingsPageView(), selectedIndex: 3),
+      builder: () => ShellWrapper(body: SettingsPageView(), selectedIndex: 3),
       goldenDevices: goldenDevices,
     );
   });
@@ -253,29 +253,29 @@ void main() {
 
     _screenshotWidget(
       goldenFileName: '1_pacings',
-      child: ShellWrapper(body: PacingsPageView(), selectedIndex: 0),
+      builder: () => ShellWrapper(body: PacingsPageView(), selectedIndex: 0),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(goldenFileName: '2_pacing', child: PacingPageView(), goldenDevices: goldenDevices);
+    _screenshotWidget(goldenFileName: '2_pacing', builder: () => PacingPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '3_matches',
-      child: ShellWrapper(body: MatchesPageView(), selectedIndex: 1),
+      builder: () => ShellWrapper(body: MatchesPageView(), selectedIndex: 1),
       goldenDevices: goldenDevices,
     );
 
-    _screenshotWidget(goldenFileName: '4_match', child: MatchPageView(), goldenDevices: goldenDevices);
+    _screenshotWidget(goldenFileName: '4_match', builder: () => MatchPageView(), goldenDevices: goldenDevices);
 
     _screenshotWidget(
       goldenFileName: '5_teams',
-      child: ShellWrapper(body: TeamsPageView(), selectedIndex: 2),
+      builder: () => ShellWrapper(body: TeamsPageView(), selectedIndex: 2),
       goldenDevices: goldenDevices,
     );
 
     _screenshotWidget(
       goldenFileName: '6_settings',
-      child: ShellWrapper(body: SettingsPageView(), selectedIndex: 3),
+      builder: () => ShellWrapper(body: SettingsPageView(), selectedIndex: 3),
       goldenDevices: goldenDevices,
     );
   });
@@ -283,7 +283,7 @@ void main() {
 
 void _screenshotWidget({
   required String goldenFileName,
-  required Widget child,
+  required Widget Function() builder,
   required List<CustomGoldenScreenshotDevices> goldenDevices,
 }) {
   group(goldenFileName, () {
@@ -293,6 +293,16 @@ void _screenshotWidget({
         testWidgets('for ${goldenDevice.name}-${theme.name}-${locale.toLanguageTag()}', (tester) async {
           when(settingsCubit.state).thenReturn(SettingsState(language: locale.toLanguageTag(), theme: theme));
           final device = goldenDevice.device;
+
+          var materialAppTheme = switch (theme) {
+            ThemeType.light => Themes.light(),
+            ThemeType.dark => Themes.dark(),
+            ThemeType.lni => Themes.lni(),
+            ThemeType.ligma => Themes.ligma(),
+          };
+          materialAppTheme = materialAppTheme.copyWith(
+            floatingActionButtonTheme: materialAppTheme.floatingActionButtonTheme.copyWith(elevation: 1),
+          );
 
           // Build widget tree around our child widget.
           final widget = MultiRepositoryProvider(
@@ -315,17 +325,12 @@ void _screenshotWidget({
                 BlocProvider<MatchCubit>(create: (context) => matchCubit),
               ],
               child: ScreenshotApp(
-                theme: switch (theme) {
-                  ThemeType.light => Themes.light(),
-                  ThemeType.dark => Themes.dark(),
-                  ThemeType.lni => Themes.lni(),
-                  ThemeType.ligma => Themes.ligma(),
-                },
+                theme: materialAppTheme,
                 localizationsDelegates: S.localizationsDelegates,
                 supportedLocales: S.supportedLocales,
                 locale: locale,
                 device: device,
-                child: child,
+                child: builder(),
               ),
             ),
           );
@@ -379,7 +384,7 @@ void _screenshotWidget({
           }
 
           tester.useFuzzyComparator(allowedDiffPercent: 0.1);
-          await expectLater(find.byType(MaterialApp), matchesGoldenFile(p.join(filePath, fileName)));
+          await expectLater(find.bySubtype<MaterialApp>(), matchesGoldenFile(p.join(filePath, fileName)));
         });
       }
     }
