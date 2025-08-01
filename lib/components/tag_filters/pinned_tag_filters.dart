@@ -37,10 +37,10 @@ class PinnedTagFilters extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 50.0;
+  double get maxExtent => 36.0;
 
   @override
-  double get minExtent => 50.0;
+  double get minExtent => 36.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => true;

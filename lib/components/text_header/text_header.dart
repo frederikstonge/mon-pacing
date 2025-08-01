@@ -19,7 +19,7 @@ class TextHeader extends StatelessWidget {
               Flexible(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

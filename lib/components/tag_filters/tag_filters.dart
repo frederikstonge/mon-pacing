@@ -41,7 +41,7 @@ class _TagFiltersState extends State<TagFilters> {
     });
 
     return SizedBox(
-      height: 50,
+      height: 36,
       width: double.infinity,
       child: ListView.builder(
         controller: _scrollController,
@@ -53,6 +53,8 @@ class _TagFiltersState extends State<TagFilters> {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: FilterChip(
+              labelPadding: EdgeInsets.zero,
+              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               label: Text(tag),
               selected: isSelected,
               onSelected: (value) async {
