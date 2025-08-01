@@ -65,10 +65,16 @@ class PacingsRepository {
     return await box.getAsync(id);
   }
 
-  Future<List<PacingEntity>> getList(int skip, int take) async {
+  Future<List<PacingEntity>> getList(int skip, int take, List<String> selectedTags) async {
     final db = await databaseRepository.database;
     final box = db.box<PacingEntity>();
-    final query = box.query().order(PacingEntity_.createdDate, flags: Order.descending).build();
+
+    final builder = box.query().order(PacingEntity_.createdDate, flags: Order.descending);
+    if (selectedTags.isNotEmpty) {
+      builder.linkMany(PacingEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
+    }
+
+    final query = builder.build();
     query.limit = take;
     query.offset = skip;
     final returnValue = await query.findAsync();

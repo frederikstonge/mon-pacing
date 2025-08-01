@@ -122,10 +122,16 @@ class MatchesRepository {
     return entity;
   }
 
-  Future<List<MatchEntity>> getList(int skip, int take) async {
+  Future<List<MatchEntity>> getList(int skip, int take, List<String> selectedTags) async {
     final db = await databaseRepository.database;
     final box = db.box<MatchEntity>();
-    final query = box.query().order(MatchEntity_.createdDate, flags: Order.descending).build();
+
+    final builder = box.query().order(MatchEntity_.createdDate, flags: Order.descending);
+    if (selectedTags.isNotEmpty) {
+      builder.linkMany(MatchEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
+    }
+
+    final query = builder.build();
     query.limit = take;
     query.offset = skip;
     final returnValue = await query.findAsync();

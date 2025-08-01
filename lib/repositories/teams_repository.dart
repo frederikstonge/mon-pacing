@@ -63,13 +63,18 @@ class TeamsRepository {
     return await box.getAsync(id);
   }
 
-  Future<List<TeamEntity>> getList(int skip, int take) async {
+  Future<List<TeamEntity>> getList(int skip, int take, List<String> selectedTags) async {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
-    final query = box
+    final builder = box
         .query(TeamEntity_.hasMatch.equals(false))
-        .order(TeamEntity_.createdDate, flags: Order.descending)
-        .build();
+        .order(TeamEntity_.createdDate, flags: Order.descending);
+
+    if (selectedTags.isNotEmpty) {
+      builder.linkMany(TeamEntity_.tags, TagEntity_.name.oneOf(selectedTags, caseSensitive: false));
+    }
+
+    final query = builder.build();
     query.limit = take;
     query.offset = skip;
     final returnValue = await query.findAsync();

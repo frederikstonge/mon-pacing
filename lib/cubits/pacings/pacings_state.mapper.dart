@@ -31,6 +31,12 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
   static List<PacingModel> _$pacings(PacingsState v) => v.pacings;
   static const Field<PacingsState, List<PacingModel>> _f$pacings =
       Field('pacings', _$pacings, opt: true, def: const []);
+  static List<String> _$tags(PacingsState v) => v.tags;
+  static const Field<PacingsState, List<String>> _f$tags =
+      Field('tags', _$tags, opt: true, def: const []);
+  static List<String> _$selectedTags(PacingsState v) => v.selectedTags;
+  static const Field<PacingsState, List<String>> _f$selectedTags =
+      Field('selectedTags', _$selectedTags, opt: true, def: const []);
   static bool _$hasMore(PacingsState v) => v.hasMore;
   static const Field<PacingsState, bool> _f$hasMore =
       Field('hasMore', _$hasMore, opt: true, def: true);
@@ -40,6 +46,8 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
     #status: _f$status,
     #error: _f$error,
     #pacings: _f$pacings,
+    #tags: _f$tags,
+    #selectedTags: _f$selectedTags,
     #hasMore: _f$hasMore,
   };
 
@@ -48,6 +56,8 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
         status: data.dec(_f$status),
         error: data.dec(_f$error),
         pacings: data.dec(_f$pacings),
+        tags: data.dec(_f$tags),
+        selectedTags: data.dec(_f$selectedTags),
         hasMore: data.dec(_f$hasMore));
   }
 
@@ -106,10 +116,14 @@ abstract class PacingsStateCopyWith<$R, $In extends PacingsState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, PacingModel,
       PacingModelCopyWith<$R, PacingModel, PacingModel>> get pacings;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get selectedTags;
   $R call(
       {PacingsStatus? status,
       String? error,
       List<PacingModel>? pacings,
+      List<String>? tags,
+      List<String>? selectedTags,
       bool? hasMore});
   PacingsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -128,15 +142,29 @@ class _PacingsStateCopyWithImpl<$R, $Out>
       get pacings => ListCopyWith($value.pacings,
           (v, t) => v.copyWith.$chain(t), (v) => call(pacings: v));
   @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
+      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(tags: v));
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
+      get selectedTags => ListCopyWith(
+          $value.selectedTags,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(selectedTags: v));
+  @override
   $R call(
           {PacingsStatus? status,
           Object? error = $none,
           List<PacingModel>? pacings,
+          List<String>? tags,
+          List<String>? selectedTags,
           bool? hasMore}) =>
       $apply(FieldCopyWithData({
         if (status != null) #status: status,
         if (error != $none) #error: error,
         if (pacings != null) #pacings: pacings,
+        if (tags != null) #tags: tags,
+        if (selectedTags != null) #selectedTags: selectedTags,
         if (hasMore != null) #hasMore: hasMore
       }));
   @override
@@ -144,6 +172,8 @@ class _PacingsStateCopyWithImpl<$R, $Out>
       status: data.get(#status, or: $value.status),
       error: data.get(#error, or: $value.error),
       pacings: data.get(#pacings, or: $value.pacings),
+      tags: data.get(#tags, or: $value.tags),
+      selectedTags: data.get(#selectedTags, or: $value.selectedTags),
       hasMore: data.get(#hasMore, or: $value.hasMore));
 
   @override

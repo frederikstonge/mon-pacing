@@ -286,6 +286,11 @@ class SEn extends S {
   String get migrationTeams => 'Migrating teams...';
 
   @override
+  String minimumLength({required int length}) {
+    return 'Must be at least $length characters long';
+  }
+
+  @override
   String get missingIgnoreBatteryOptimizationError =>
       'Battery optimization is still enabled. Please go to your device\'s settings to ignore battery optimization.';
 

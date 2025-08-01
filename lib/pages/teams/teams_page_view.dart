@@ -7,6 +7,7 @@ import '../../components/buttons/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/sliver_scaffold/sliver_scaffold.dart';
+import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/settings/settings_cubit.dart';
 import '../../cubits/settings/settings_state.dart';
@@ -93,6 +94,18 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                   },
                 ),
                 slivers: [
+                  if (teamsState.tags.isNotEmpty) ...[
+                    SliverPersistentHeader(
+                      delegate: PinnedTagFilters(
+                        allTags: teamsState.tags,
+                        selectedTags: teamsState.selectedTags,
+                        onTagSelected: context.read<TeamsCubit>().selectTag,
+                        onTagDeselected: context.read<TeamsCubit>().deselectTag,
+                      ),
+                      pinned: true,
+                      floating: false,
+                    ),
+                  ],
                   switch (teamsState.status) {
                     TeamsStatus.initial => const SliverFillRemaining(child: Center(child: CircularProgressIndicator())),
                     TeamsStatus.error => SliverFillRemaining(child: Center(child: Text(teamsState.error ?? ''))),

@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../extensions/iterable_extensions.dart';
 import '../../l10n/localizer.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
@@ -59,6 +61,24 @@ class PacingsCubit extends Cubit<PacingsState> {
     }
   }
 
+  Future<void> selectTag(String tag) async {
+    if (state.selectedTags.contains(tag)) {
+      return;
+    }
+
+    emit(state.copyWith(selectedTags: [...state.selectedTags, tag]));
+    await refresh();
+  }
+
+  Future<void> deselectTag(String tag) async {
+    if (!state.selectedTags.contains(tag)) {
+      return;
+    }
+
+    emit(state.copyWith(selectedTags: state.selectedTags.where((t) => t != tag).toList()));
+    await refresh();
+  }
+
   Future<void> fetch() async {
     if (state.status == PacingsStatus.loading || !state.hasMore) {
       return;
@@ -66,11 +86,23 @@ class PacingsCubit extends Cubit<PacingsState> {
 
     emit(state.copyWith(status: PacingsStatus.loading));
     try {
-      final response = await pacingsRepository.getList(state.pacings.length, _pageSize);
+      final response = await pacingsRepository.getList(state.pacings.length, _pageSize, state.selectedTags);
+      final pacings = state.pacings + response.map((e) => PacingModel.fromEntity(entity: e)).toList();
+
+      final tags = pacings
+          .selectMany((e) => e.tags)
+          .map((e) => e.name)
+          .groupListsBy((e) => e)
+          .values
+          .sorted((a, b) => b.length - a.length)
+          .map((e) => e.first)
+          .toList();
       emit(
         state.copyWith(
           status: PacingsStatus.success,
-          pacings: state.pacings + response.map((e) => PacingModel.fromEntity(entity: e)).toList(),
+          pacings: pacings,
+          tags: tags,
+          selectedTags: state.selectedTags.where((t) => tags.contains(t)).toList(),
           hasMore: response.length == _pageSize,
         ),
       );
@@ -82,7 +114,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<void> refresh() async {
     if (state.status != PacingsStatus.initial) {
-      emit(const PacingsState(status: PacingsStatus.initial));
+      emit(PacingsState(status: PacingsStatus.initial, tags: state.tags, selectedTags: state.selectedTags));
       await fetch();
     }
   }

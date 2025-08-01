@@ -31,6 +31,12 @@ class MatchesStateMapper extends ClassMapperBase<MatchesState> {
   static List<MatchModel> _$matches(MatchesState v) => v.matches;
   static const Field<MatchesState, List<MatchModel>> _f$matches =
       Field('matches', _$matches, opt: true, def: const []);
+  static List<String> _$tags(MatchesState v) => v.tags;
+  static const Field<MatchesState, List<String>> _f$tags =
+      Field('tags', _$tags, opt: true, def: const []);
+  static List<String> _$selectedTags(MatchesState v) => v.selectedTags;
+  static const Field<MatchesState, List<String>> _f$selectedTags =
+      Field('selectedTags', _$selectedTags, opt: true, def: const []);
   static bool _$hasMore(MatchesState v) => v.hasMore;
   static const Field<MatchesState, bool> _f$hasMore =
       Field('hasMore', _$hasMore, opt: true, def: true);
@@ -40,6 +46,8 @@ class MatchesStateMapper extends ClassMapperBase<MatchesState> {
     #status: _f$status,
     #error: _f$error,
     #matches: _f$matches,
+    #tags: _f$tags,
+    #selectedTags: _f$selectedTags,
     #hasMore: _f$hasMore,
   };
 
@@ -48,6 +56,8 @@ class MatchesStateMapper extends ClassMapperBase<MatchesState> {
         status: data.dec(_f$status),
         error: data.dec(_f$error),
         matches: data.dec(_f$matches),
+        tags: data.dec(_f$tags),
+        selectedTags: data.dec(_f$selectedTags),
         hasMore: data.dec(_f$hasMore));
   }
 
@@ -106,10 +116,14 @@ abstract class MatchesStateCopyWith<$R, $In extends MatchesState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, MatchModel, MatchModelCopyWith<$R, MatchModel, MatchModel>>
       get matches;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get selectedTags;
   $R call(
       {MatchesStatus? status,
       String? error,
       List<MatchModel>? matches,
+      List<String>? tags,
+      List<String>? selectedTags,
       bool? hasMore});
   MatchesStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -127,15 +141,29 @@ class _MatchesStateCopyWithImpl<$R, $Out>
       get matches => ListCopyWith($value.matches,
           (v, t) => v.copyWith.$chain(t), (v) => call(matches: v));
   @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
+      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(tags: v));
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
+      get selectedTags => ListCopyWith(
+          $value.selectedTags,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(selectedTags: v));
+  @override
   $R call(
           {MatchesStatus? status,
           Object? error = $none,
           List<MatchModel>? matches,
+          List<String>? tags,
+          List<String>? selectedTags,
           bool? hasMore}) =>
       $apply(FieldCopyWithData({
         if (status != null) #status: status,
         if (error != $none) #error: error,
         if (matches != null) #matches: matches,
+        if (tags != null) #tags: tags,
+        if (selectedTags != null) #selectedTags: selectedTags,
         if (hasMore != null) #hasMore: hasMore
       }));
   @override
@@ -143,6 +171,8 @@ class _MatchesStateCopyWithImpl<$R, $Out>
       status: data.get(#status, or: $value.status),
       error: data.get(#error, or: $value.error),
       matches: data.get(#matches, or: $value.matches),
+      tags: data.get(#tags, or: $value.tags),
+      selectedTags: data.get(#selectedTags, or: $value.selectedTags),
       hasMore: data.get(#hasMore, or: $value.hasMore));
 
   @override

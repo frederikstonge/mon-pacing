@@ -24,4 +24,8 @@ class Validators {
   static String? duplicateTag(String value, List<String> tags) {
     return tags.contains(value) ? Localizer.current.duplicateTag(tag: value) : null;
   }
+
+  static String? minimumLength(String value, int length) {
+    return value.length < length ? Localizer.current.minimumLength(length: length) : null;
+  }
 }

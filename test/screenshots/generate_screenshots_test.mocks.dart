@@ -1112,6 +1112,24 @@ class MockPacingsCubit extends _i1.Mock implements _i24.PacingsCubit {
           as _i31.Future<void>);
 
   @override
+  _i31.Future<void> selectTag(String? tag) =>
+      (super.noSuchMethod(
+            Invocation.method(#selectTag, [tag]),
+            returnValue: _i31.Future<void>.value(),
+            returnValueForMissingStub: _i31.Future<void>.value(),
+          )
+          as _i31.Future<void>);
+
+  @override
+  _i31.Future<void> deselectTag(String? tag) =>
+      (super.noSuchMethod(
+            Invocation.method(#deselectTag, [tag]),
+            returnValue: _i31.Future<void>.value(),
+            returnValueForMissingStub: _i31.Future<void>.value(),
+          )
+          as _i31.Future<void>);
+
+  @override
   _i31.Future<void> fetch() =>
       (super.noSuchMethod(
             Invocation.method(#fetch, []),
@@ -1292,6 +1310,24 @@ class MockMatchesCubit extends _i1.Mock implements _i26.MatchesCubit {
           as _i31.Future<void>);
 
   @override
+  _i31.Future<void> selectTag(String? tag) =>
+      (super.noSuchMethod(
+            Invocation.method(#selectTag, [tag]),
+            returnValue: _i31.Future<void>.value(),
+            returnValueForMissingStub: _i31.Future<void>.value(),
+          )
+          as _i31.Future<void>);
+
+  @override
+  _i31.Future<void> deselectTag(String? tag) =>
+      (super.noSuchMethod(
+            Invocation.method(#deselectTag, [tag]),
+            returnValue: _i31.Future<void>.value(),
+            returnValueForMissingStub: _i31.Future<void>.value(),
+          )
+          as _i31.Future<void>);
+
+  @override
   _i31.Future<void> fetch() =>
       (super.noSuchMethod(
             Invocation.method(#fetch, []),
@@ -1433,6 +1469,24 @@ class MockTeamsCubit extends _i1.Mock implements _i40.TeamsCubit {
   _i31.Future<void> delete(_i20.TeamModel? model) =>
       (super.noSuchMethod(
             Invocation.method(#delete, [model]),
+            returnValue: _i31.Future<void>.value(),
+            returnValueForMissingStub: _i31.Future<void>.value(),
+          )
+          as _i31.Future<void>);
+
+  @override
+  _i31.Future<void> selectTag(String? tag) =>
+      (super.noSuchMethod(
+            Invocation.method(#selectTag, [tag]),
+            returnValue: _i31.Future<void>.value(),
+            returnValueForMissingStub: _i31.Future<void>.value(),
+          )
+          as _i31.Future<void>);
+
+  @override
+  _i31.Future<void> deselectTag(String? tag) =>
+      (super.noSuchMethod(
+            Invocation.method(#deselectTag, [tag]),
             returnValue: _i31.Future<void>.value(),
             returnValueForMissingStub: _i31.Future<void>.value(),
           )
