@@ -35,25 +35,22 @@ class _TagsDisplayState extends State<TagsDisplay> {
     return SizedBox(
       height: 36,
       width: double.infinity,
-      child: SingleChildScrollView(
+      child: ListView.builder(
         controller: _scrollController,
+        shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: widget.tags.length,
-          itemBuilder: (context, index) {
-            final tag = widget.tags.elementAt(index);
-            return Padding(
-              padding: const EdgeInsets.only(right: 4.0),
-              child: Chip(
-                labelPadding: EdgeInsets.zero,
-                visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-                label: Text(tag.name),
-              ),
-            );
-          },
-        ),
+        itemCount: widget.tags.length,
+        itemBuilder: (context, index) {
+          final tag = widget.tags.elementAt(index);
+          return Padding(
+            padding: const EdgeInsets.only(right: 4.0),
+            child: Chip(
+              labelPadding: EdgeInsets.zero,
+              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+              label: Text(tag.name),
+            ),
+          );
+        },
       ),
     );
   }

@@ -286,6 +286,11 @@ class SFr extends S {
   String get migrationTeams => 'Migration des équipes...';
 
   @override
+  String minimumLength({required int length}) {
+    return 'Doit comporter au moins $length caractères';
+  }
+
+  @override
   String get missingIgnoreBatteryOptimizationError =>
       'L\'optimisation de la batterie est toujours activée. Veuillez aller dans les paramètres de votre appareil pour ignorer l\'optimisation de la batterie.';
 

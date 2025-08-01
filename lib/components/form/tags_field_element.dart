@@ -76,7 +76,9 @@ class _TagsFieldElementState extends State<TagsFieldElement> {
         ),
         TextFieldTags<String>(
           textSeparators: const [','],
-          validator: (value) => Validators.duplicateTag(value, widget.initialTags.map((e) => e.name).toList()),
+          validator: (value) =>
+              Validators.minimumLength(value, 3) ??
+              Validators.duplicateTag(value, widget.initialTags.map((e) => e.name).toList()),
           textfieldTagsController: _tagController,
           initialTags: widget.initialTags.map((e) => e.name).toList(),
           letterCase: LetterCase.normal,

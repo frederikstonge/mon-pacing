@@ -41,31 +41,31 @@ class _TagFiltersState extends State<TagFilters> {
     });
 
     return SizedBox(
-      height: 50,
+      height: 36,
       width: double.infinity,
-      child: SingleChildScrollView(
+      child: ListView.builder(
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: allTags.length,
-          itemBuilder: (context, index) {
-            final tag = allTags.elementAt(index);
-            final isSelected = widget.selectedTags.contains(tag);
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: FilterChip(
-                label: Text(tag),
-                selected: isSelected,
-                onSelected: (value) async {
-                  await widget.onTagSelected(tag, value);
+        itemCount: allTags.length,
+        itemBuilder: (context, index) {
+          final tag = allTags.elementAt(index);
+          final isSelected = widget.selectedTags.contains(tag);
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: FilterChip(
+              labelPadding: EdgeInsets.zero,
+              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+              label: Text(tag),
+              selected: isSelected,
+              onSelected: (value) async {
+                await widget.onTagSelected(tag, value);
+                if (_scrollController.hasClients) {
                   _scrollController.jumpTo(0);
-                },
-              ),
-            );
-          },
-        ),
+                }
+              },
+            ),
+          );
+        },
       ),
     );
   }

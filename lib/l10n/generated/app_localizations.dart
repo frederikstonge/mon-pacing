@@ -572,6 +572,12 @@ abstract class S {
   /// **'Migrating teams...'**
   String get migrationTeams;
 
+  /// No description provided for @minimumLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be at least {length} characters long'**
+  String minimumLength({required int length});
+
   /// No description provided for @missingIgnoreBatteryOptimizationError.
   ///
   /// In en, this message translates to:

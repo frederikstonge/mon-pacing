@@ -80,6 +80,7 @@
   "migrationPacings": "Migration des pacings...",
   "migrationStarted": "Migration de la base de données...",
   "migrationTeams": "Migration des équipes...",
+  "minimumLength": "Doit comporter au moins {length} caractères",
   "missingIgnoreBatteryOptimizationError": "L'optimisation de la batterie est toujours activée. Veuillez aller dans les paramètres de votre appareil pour ignorer l'optimisation de la batterie.",
   "missingNotificationPermissionError": "La permission de recevoir des notifications a été déclinée. Veuillez aller dans les paramètres de votre appareil pour autoriser les notifications.",
   "mixed": "Mixte",

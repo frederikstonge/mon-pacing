@@ -31,6 +31,12 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
   static List<TeamModel> _$teams(TeamsState v) => v.teams;
   static const Field<TeamsState, List<TeamModel>> _f$teams =
       Field('teams', _$teams, opt: true, def: const []);
+  static List<String> _$tags(TeamsState v) => v.tags;
+  static const Field<TeamsState, List<String>> _f$tags =
+      Field('tags', _$tags, opt: true, def: const []);
+  static List<String> _$selectedTags(TeamsState v) => v.selectedTags;
+  static const Field<TeamsState, List<String>> _f$selectedTags =
+      Field('selectedTags', _$selectedTags, opt: true, def: const []);
   static bool _$hasMore(TeamsState v) => v.hasMore;
   static const Field<TeamsState, bool> _f$hasMore =
       Field('hasMore', _$hasMore, opt: true, def: true);
@@ -40,6 +46,8 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
     #status: _f$status,
     #error: _f$error,
     #teams: _f$teams,
+    #tags: _f$tags,
+    #selectedTags: _f$selectedTags,
     #hasMore: _f$hasMore,
   };
 
@@ -48,6 +56,8 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
         status: data.dec(_f$status),
         error: data.dec(_f$error),
         teams: data.dec(_f$teams),
+        tags: data.dec(_f$tags),
+        selectedTags: data.dec(_f$selectedTags),
         hasMore: data.dec(_f$hasMore));
   }
 
@@ -105,10 +115,14 @@ abstract class TeamsStateCopyWith<$R, $In extends TeamsState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
       get teams;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get selectedTags;
   $R call(
       {TeamsStatus? status,
       String? error,
       List<TeamModel>? teams,
+      List<String>? tags,
+      List<String>? selectedTags,
       bool? hasMore});
   TeamsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -126,15 +140,29 @@ class _TeamsStateCopyWithImpl<$R, $Out>
       get teams => ListCopyWith(
           $value.teams, (v, t) => v.copyWith.$chain(t), (v) => call(teams: v));
   @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
+      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(tags: v));
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
+      get selectedTags => ListCopyWith(
+          $value.selectedTags,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(selectedTags: v));
+  @override
   $R call(
           {TeamsStatus? status,
           Object? error = $none,
           List<TeamModel>? teams,
+          List<String>? tags,
+          List<String>? selectedTags,
           bool? hasMore}) =>
       $apply(FieldCopyWithData({
         if (status != null) #status: status,
         if (error != $none) #error: error,
         if (teams != null) #teams: teams,
+        if (tags != null) #tags: tags,
+        if (selectedTags != null) #selectedTags: selectedTags,
         if (hasMore != null) #hasMore: hasMore
       }));
   @override
@@ -142,6 +170,8 @@ class _TeamsStateCopyWithImpl<$R, $Out>
       status: data.get(#status, or: $value.status),
       error: data.get(#error, or: $value.error),
       teams: data.get(#teams, or: $value.teams),
+      tags: data.get(#tags, or: $value.tags),
+      selectedTags: data.get(#selectedTags, or: $value.selectedTags),
       hasMore: data.get(#hasMore, or: $value.hasMore));
 
   @override
