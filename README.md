@@ -4,7 +4,7 @@
 
 ![Build & Deploy](https://github.com/frederikstonge/mon-pacing/actions/workflows/build-deploy.yml/badge.svg)
 
-A project used by referees for Robert Gravel's Improvisation style matches.
+Mobile app for improvisation match referees, based on Robert Gravel's idea to mix improv with hockey rules.
 
 - [Mon Pacing](https://linktr.ee/monpacing)
 - [Ligue Nationale d'Improvisation](https://en.wikipedia.org/wiki/Ligue_nationale_d%27improvisation)
@@ -23,33 +23,6 @@ dart pub run build_runner build --delete-conflicting-outputs
 - l10n (translations)
 ```bash
 flutter gen-l10n
-```
-
-### Generate screenshots
-To generate screenshots, make sure you have [imagemagick](https://imagemagick.org/script/download.php).
-
-#### Android
-```bash
-# Change base path
-cd android
-
-# Install fastlane if you haven't already
-bundle install
-
-# Generate script
-fastlane generate_screenshots
-```
-
-#### iOS
-```bash
-# Change base path
-cd ios
-
-# Install fastlane if you haven't already
-bundle install
-
-# Generate script
-fastlane generate_screenshots
 ```
 
 ### Splash Screen
