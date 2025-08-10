@@ -60,7 +60,7 @@ class ImprovisationPoints extends StatelessWidget {
                       }
                     },
                     minValue: 0,
-                    maxValue: match.maximumPointsPerImprovisation,
+                    maxValue: match.maximumPointsPerImprovisation ?? 999,
                   ),
                 ],
               ),
