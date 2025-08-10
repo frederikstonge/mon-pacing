@@ -330,7 +330,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(5, 8822958598216247929),
     name: 'PenaltyEntity',
-    lastPropertyId: const obx_int.IdUid(6, 7726242346064950081),
+    lastPropertyId: const obx_int.IdUid(8, 29886492798158384),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -367,6 +367,18 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(6, 7726242346064950081),
         name: 'improvisationId',
         type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 6104387141158122119),
+        name: 'integrationEntityId',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 29886492798158384),
+        name: 'integrationAdditionalData',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -416,7 +428,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(7, 8160220251486354996),
     name: 'PointEntity',
-    lastPropertyId: const obx_int.IdUid(4, 1358822669887476775),
+    lastPropertyId: const obx_int.IdUid(6, 6664286890174667097),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -443,6 +455,18 @@ final _entities = <obx_int.ModelEntity>[
         type: 6,
         flags: 0,
       ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 2836773694263113959),
+        name: 'integrationEntityId',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 6664286890174667097),
+        name: 'integrationAdditionalData',
+        type: 9,
+        flags: 0,
+      ),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
@@ -450,7 +474,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(8, 5250281909069223402),
     name: 'StarEntity',
-    lastPropertyId: const obx_int.IdUid(4, 4410339759004335565),
+    lastPropertyId: const obx_int.IdUid(6, 2047213223747994388),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -475,6 +499,18 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(4, 4410339759004335565),
         name: 'order',
         type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 8617778164047840157),
+        name: 'integrationEntityId',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 2047213223747994388),
+        name: 'integrationAdditionalData',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -1052,13 +1088,22 @@ obx_int.ModelDefinition getObjectBoxModel() {
       },
       objectToFB: (PenaltyEntity object, fb.Builder fbb) {
         final typeOffset = fbb.writeString(object.type);
-        fbb.startTable(7);
+        final integrationEntityIdOffset = object.integrationEntityId == null
+            ? null
+            : fbb.writeString(object.integrationEntityId!);
+        final integrationAdditionalDataOffset =
+            object.integrationAdditionalData == null
+            ? null
+            : fbb.writeString(object.integrationAdditionalData!);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addBool(1, object.major);
         fbb.addOffset(2, typeOffset);
         fbb.addInt64(3, object.performerId);
         fbb.addInt64(4, object.teamId);
         fbb.addInt64(5, object.improvisationId);
+        fbb.addOffset(6, integrationEntityIdOffset);
+        fbb.addOffset(7, integrationAdditionalDataOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1097,6 +1142,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           rootOffset,
           10,
         );
+        final integrationEntityIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 16);
+        final integrationAdditionalDataParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
         final object = PenaltyEntity(
           id: idParam,
           major: majorParam,
@@ -1104,6 +1155,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           teamId: teamIdParam,
           improvisationId: improvisationIdParam,
           performerId: performerIdParam,
+          integrationEntityId: integrationEntityIdParam,
+          integrationAdditionalData: integrationAdditionalDataParam,
         );
 
         return object;
@@ -1179,11 +1232,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (PointEntity object, fb.Builder fbb) {
-        fbb.startTable(5);
+        final integrationEntityIdOffset = object.integrationEntityId == null
+            ? null
+            : fbb.writeString(object.integrationEntityId!);
+        final integrationAdditionalDataOffset =
+            object.integrationAdditionalData == null
+            ? null
+            : fbb.writeString(object.integrationAdditionalData!);
+        fbb.startTable(7);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.teamId);
         fbb.addInt64(2, object.improvisationId);
         fbb.addInt64(3, object.value);
+        fbb.addOffset(4, integrationEntityIdOffset);
+        fbb.addOffset(5, integrationAdditionalDataOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1214,11 +1276,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
           10,
           0,
         );
+        final integrationEntityIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final integrationAdditionalDataParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
         final object = PointEntity(
           id: idParam,
           teamId: teamIdParam,
           improvisationId: improvisationIdParam,
           value: valueParam,
+          integrationEntityId: integrationEntityIdParam,
+          integrationAdditionalData: integrationAdditionalDataParam,
         );
 
         return object;
@@ -1233,11 +1303,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (StarEntity object, fb.Builder fbb) {
-        fbb.startTable(5);
+        final integrationEntityIdOffset = object.integrationEntityId == null
+            ? null
+            : fbb.writeString(object.integrationEntityId!);
+        final integrationAdditionalDataOffset =
+            object.integrationAdditionalData == null
+            ? null
+            : fbb.writeString(object.integrationAdditionalData!);
+        fbb.startTable(7);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.performerId);
         fbb.addInt64(2, object.teamId);
         fbb.addInt64(3, object.order);
+        fbb.addOffset(4, integrationEntityIdOffset);
+        fbb.addOffset(5, integrationAdditionalDataOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1268,11 +1347,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
           8,
           0,
         );
+        final integrationEntityIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final integrationAdditionalDataParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
         final object = StarEntity(
           id: idParam,
           order: orderParam,
           performerId: performerIdParam,
           teamId: teamIdParam,
+          integrationEntityId: integrationEntityIdParam,
+          integrationAdditionalData: integrationAdditionalDataParam,
         );
 
         return object;
@@ -1674,6 +1761,15 @@ class PenaltyEntity_ {
   static final improvisationId = obx.QueryIntegerProperty<PenaltyEntity>(
     _entities[3].properties[5],
   );
+
+  /// See [PenaltyEntity.integrationEntityId].
+  static final integrationEntityId = obx.QueryStringProperty<PenaltyEntity>(
+    _entities[3].properties[6],
+  );
+
+  /// See [PenaltyEntity.integrationAdditionalData].
+  static final integrationAdditionalData =
+      obx.QueryStringProperty<PenaltyEntity>(_entities[3].properties[7]);
 }
 
 /// [PerformerEntity] entity fields to define ObjectBox queries.
@@ -1724,6 +1820,16 @@ class PointEntity_ {
   static final value = obx.QueryIntegerProperty<PointEntity>(
     _entities[5].properties[3],
   );
+
+  /// See [PointEntity.integrationEntityId].
+  static final integrationEntityId = obx.QueryStringProperty<PointEntity>(
+    _entities[5].properties[4],
+  );
+
+  /// See [PointEntity.integrationAdditionalData].
+  static final integrationAdditionalData = obx.QueryStringProperty<PointEntity>(
+    _entities[5].properties[5],
+  );
 }
 
 /// [StarEntity] entity fields to define ObjectBox queries.
@@ -1746,6 +1852,16 @@ class StarEntity_ {
   /// See [StarEntity.order].
   static final order = obx.QueryIntegerProperty<StarEntity>(
     _entities[6].properties[3],
+  );
+
+  /// See [StarEntity.integrationEntityId].
+  static final integrationEntityId = obx.QueryStringProperty<StarEntity>(
+    _entities[6].properties[4],
+  );
+
+  /// See [StarEntity.integrationAdditionalData].
+  static final integrationAdditionalData = obx.QueryStringProperty<StarEntity>(
+    _entities[6].properties[5],
   );
 }
 

@@ -6,6 +6,15 @@ class StarEntity {
   int order;
   int performerId;
   int teamId;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
-  StarEntity({this.id = 0, required this.order, required this.performerId, required this.teamId});
+  StarEntity({
+    this.id = 0,
+    required this.order,
+    required this.performerId,
+    required this.teamId,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
+  });
 }

@@ -2,11 +2,12 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/improvisation_entity.dart';
 import 'improvisation_type.dart';
+import 'integration_base_model.dart';
 
 part 'improvisation_model.mapper.dart';
 
 @MappableClass()
-class ImprovisationModel with ImprovisationModelMappable {
+class ImprovisationModel extends IntegrationBaseModel with ImprovisationModelMappable {
   final int id;
   final ImprovisationType type;
   final String category;
@@ -16,8 +17,6 @@ class ImprovisationModel with ImprovisationModelMappable {
   final String notes;
   final int timeBufferInSeconds;
   final int huddleTimerInSeconds;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
 
   const ImprovisationModel({
     required this.id,
@@ -29,8 +28,8 @@ class ImprovisationModel with ImprovisationModelMappable {
     required this.notes,
     this.timeBufferInSeconds = 30,
     this.huddleTimerInSeconds = 30,
-    this.integrationEntityId,
-    this.integrationAdditionalData,
+    super.integrationEntityId,
+    super.integrationAdditionalData,
   });
 
   factory ImprovisationModel.fromEntity({required ImprovisationEntity entity}) => ImprovisationModel(

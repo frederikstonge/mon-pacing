@@ -81,6 +81,9 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static const Field<MatchModel, int> _f$penaltiesRequiredToExpel = Field(
       'penaltiesRequiredToExpel', _$penaltiesRequiredToExpel,
       opt: true, def: 3);
+  static List<TagModel> _$tags(MatchModel v) => v.tags;
+  static const Field<MatchModel, List<TagModel>> _f$tags =
+      Field('tags', _$tags, opt: true, def: const []);
   static String? _$integrationId(MatchModel v) => v.integrationId;
   static const Field<MatchModel, String> _f$integrationId =
       Field('integrationId', _$integrationId, opt: true);
@@ -115,9 +118,6 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
       v.integrationPenaltyTypes;
   static const Field<MatchModel, List<String>> _f$integrationPenaltyTypes =
       Field('integrationPenaltyTypes', _$integrationPenaltyTypes, opt: true);
-  static List<TagModel> _$tags(MatchModel v) => v.tags;
-  static const Field<MatchModel, List<TagModel>> _f$tags =
-      Field('tags', _$tags, opt: true, def: const []);
 
   @override
   final MappableFields<MatchModel> fields = const {
@@ -136,6 +136,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
     #penaltiesRequiredToImpactPoints: _f$penaltiesRequiredToImpactPoints,
     #enableMatchExpulsion: _f$enableMatchExpulsion,
     #penaltiesRequiredToExpel: _f$penaltiesRequiredToExpel,
+    #tags: _f$tags,
     #integrationId: _f$integrationId,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
@@ -146,7 +147,6 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
     #integrationMaxNumberOfImprovisations:
         _f$integrationMaxNumberOfImprovisations,
     #integrationPenaltyTypes: _f$integrationPenaltyTypes,
-    #tags: _f$tags,
   };
 
   static MatchModel _instantiate(DecodingData data) {
@@ -167,6 +167,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
             data.dec(_f$penaltiesRequiredToImpactPoints),
         enableMatchExpulsion: data.dec(_f$enableMatchExpulsion),
         penaltiesRequiredToExpel: data.dec(_f$penaltiesRequiredToExpel),
+        tags: data.dec(_f$tags),
         integrationId: data.dec(_f$integrationId),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData),
@@ -176,8 +177,7 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
             data.dec(_f$integrationMinNumberOfImprovisations),
         integrationMaxNumberOfImprovisations:
             data.dec(_f$integrationMaxNumberOfImprovisations),
-        integrationPenaltyTypes: data.dec(_f$integrationPenaltyTypes),
-        tags: data.dec(_f$tags));
+        integrationPenaltyTypes: data.dec(_f$integrationPenaltyTypes));
   }
 
   @override
@@ -245,9 +245,9 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       get points;
   ListCopyWith<$R, StarModel, StarModelCopyWith<$R, StarModel, StarModel>>
       get stars;
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
       get integrationPenaltyTypes;
-  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   $R call(
       {int? id,
       String? name,
@@ -264,14 +264,14 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       int? penaltiesRequiredToImpactPoints,
       bool? enableMatchExpulsion,
       int? penaltiesRequiredToExpel,
+      List<TagModel>? tags,
       String? integrationId,
       String? integrationEntityId,
       String? integrationAdditionalData,
       int? integrationRestrictMaximumPointPerImprovisation,
       int? integrationMinNumberOfImprovisations,
       int? integrationMaxNumberOfImprovisations,
-      List<String>? integrationPenaltyTypes,
-      List<TagModel>? tags});
+      List<String>? integrationPenaltyTypes});
   MatchModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -310,6 +310,10 @@ class _MatchModelCopyWithImpl<$R, $Out>
       get stars => ListCopyWith(
           $value.stars, (v, t) => v.copyWith.$chain(t), (v) => call(stars: v));
   @override
+  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>>
+      get tags => ListCopyWith(
+          $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
+  @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
       get integrationPenaltyTypes => $value.integrationPenaltyTypes != null
           ? ListCopyWith(
@@ -317,10 +321,6 @@ class _MatchModelCopyWithImpl<$R, $Out>
               (v, t) => ObjectCopyWith(v, $identity, t),
               (v) => call(integrationPenaltyTypes: v))
           : null;
-  @override
-  ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>>
-      get tags => ListCopyWith(
-          $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
   @override
   $R call(
           {int? id,
@@ -338,14 +338,14 @@ class _MatchModelCopyWithImpl<$R, $Out>
           int? penaltiesRequiredToImpactPoints,
           bool? enableMatchExpulsion,
           int? penaltiesRequiredToExpel,
+          List<TagModel>? tags,
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none,
           Object? integrationRestrictMaximumPointPerImprovisation = $none,
           Object? integrationMinNumberOfImprovisations = $none,
           Object? integrationMaxNumberOfImprovisations = $none,
-          Object? integrationPenaltyTypes = $none,
-          List<TagModel>? tags}) =>
+          Object? integrationPenaltyTypes = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
@@ -367,6 +367,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
           #enableMatchExpulsion: enableMatchExpulsion,
         if (penaltiesRequiredToExpel != null)
           #penaltiesRequiredToExpel: penaltiesRequiredToExpel,
+        if (tags != null) #tags: tags,
         if (integrationId != $none) #integrationId: integrationId,
         if (integrationEntityId != $none)
           #integrationEntityId: integrationEntityId,
@@ -382,8 +383,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
           #integrationMaxNumberOfImprovisations:
               integrationMaxNumberOfImprovisations,
         if (integrationPenaltyTypes != $none)
-          #integrationPenaltyTypes: integrationPenaltyTypes,
-        if (tags != null) #tags: tags
+          #integrationPenaltyTypes: integrationPenaltyTypes
       }));
   @override
   MatchModel $make(CopyWithData data) => MatchModel(
@@ -409,6 +409,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
           data.get(#enableMatchExpulsion, or: $value.enableMatchExpulsion),
       penaltiesRequiredToExpel: data.get(#penaltiesRequiredToExpel,
           or: $value.penaltiesRequiredToExpel),
+      tags: data.get(#tags, or: $value.tags),
       integrationId: data.get(#integrationId, or: $value.integrationId),
       integrationEntityId:
           data.get(#integrationEntityId, or: $value.integrationEntityId),
@@ -424,8 +425,7 @@ class _MatchModelCopyWithImpl<$R, $Out>
           #integrationMaxNumberOfImprovisations,
           or: $value.integrationMaxNumberOfImprovisations),
       integrationPenaltyTypes: data.get(#integrationPenaltyTypes,
-          or: $value.integrationPenaltyTypes),
-      tags: data.get(#tags, or: $value.tags));
+          or: $value.integrationPenaltyTypes));
 
   @override
   MatchModelCopyWith<$R2, MatchModel, $Out2> $chain<$R2, $Out2>(

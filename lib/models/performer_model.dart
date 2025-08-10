@@ -1,21 +1,20 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/performer_entity.dart';
+import 'integration_base_model.dart';
 
 part 'performer_model.mapper.dart';
 
 @MappableClass()
-class PerformerModel with PerformerModelMappable {
+class PerformerModel extends IntegrationBaseModel with PerformerModelMappable {
   final int id;
   final String name;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
 
   const PerformerModel({
     required this.id,
     required this.name,
-    this.integrationEntityId,
-    this.integrationAdditionalData,
+    super.integrationEntityId,
+    super.integrationAdditionalData,
   });
 
   factory PerformerModel.fromEntity({required PerformerEntity entity}) => PerformerModel(

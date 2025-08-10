@@ -1,11 +1,14 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../../cubits/integrations/integrations_cubit.dart';
 import '../../../cubits/matches/matches_cubit.dart';
 import '../../../extensions/match_extensions.dart';
+import '../../../integrations/real_time_match_integration_base.dart';
 import '../../../l10n/localizer.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
@@ -25,6 +28,7 @@ class MatchCubit extends Cubit<MatchState> {
   final ToasterService toasterService;
   final ExcelService excelService;
   final AnalyticsService analyticsService;
+  final IntegrationsCubit integrationsCubit;
 
   MatchCubit({
     required this.matchesRepository,
@@ -32,6 +36,7 @@ class MatchCubit extends Cubit<MatchState> {
     required this.toasterService,
     required this.excelService,
     required this.analyticsService,
+    required this.integrationsCubit,
   }) : super(const MatchState(status: MatchStatus.initial));
 
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
@@ -249,6 +254,18 @@ class MatchCubit extends Cubit<MatchState> {
     }
 
     return false;
+  }
+
+  @override
+  void onChange(Change<MatchState> change) {
+    if (change.nextState.match != null) {
+      integrationsCubit.state.integrations
+          .whereType<RealTimeMatchIntegrationBase>()
+          .firstWhereOrNull((i) => i.integrationId == change.nextState.match!.integrationId)
+          ?.onMatchUpdate(change.nextState.match!);
+
+      super.onChange(change);
+    }
   }
 
   void _validatePenalty(MatchModel match, PenaltyModel penalty) {

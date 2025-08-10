@@ -8,6 +8,8 @@ class PenaltyEntity {
   int? performerId;
   int teamId;
   int improvisationId;
+  String? integrationEntityId;
+  String? integrationAdditionalData;
 
   PenaltyEntity({
     this.id = 0,
@@ -16,5 +18,7 @@ class PenaltyEntity {
     required this.teamId,
     required this.improvisationId,
     this.performerId,
+    this.integrationEntityId,
+    this.integrationAdditionalData,
   });
 }

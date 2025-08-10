@@ -88,13 +88,7 @@ class TimerWidget extends StatelessWidget {
               children: [
                 LoadingIconButton.tonal(
                   onPressed: isActive
-                      ? () async => await context.read<TimerCubit>().start(
-                          match.id,
-                          match.name,
-                          improvisation.id,
-                          durationIndex,
-                          currentDuration,
-                        )
+                      ? () async => await context.read<TimerCubit>().start(match, improvisation.id, durationIndex)
                       : null,
                   icon: const Icon(Icons.replay),
                   tooltip: S.of(context).pause,
@@ -104,13 +98,7 @@ class TimerWidget extends StatelessWidget {
                       ? timerState.timer!.status == TimerStatus.paused
                             ? () => context.read<TimerCubit>().resume()
                             : () => context.read<TimerCubit>().pause()
-                      : () async => await context.read<TimerCubit>().start(
-                          match.id,
-                          match.name,
-                          improvisation.id,
-                          durationIndex,
-                          currentDuration,
-                        ),
+                      : () async => await context.read<TimerCubit>().start(match, improvisation.id, durationIndex),
                   icon: isActive
                       ? timerState.timer!.status == TimerStatus.paused
                             ? const Icon(Icons.play_arrow)
