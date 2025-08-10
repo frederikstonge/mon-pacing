@@ -112,7 +112,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 7328884561935232436),
     name: 'MatchEntity',
-    lastPropertyId: const obx_int.IdUid(18, 7018269910061947127),
+    lastPropertyId: const obx_int.IdUid(22, 1928404867438195825),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -197,26 +197,26 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(15, 1994226352184633381),
-        name: 'integrationRestrictMaximumPointPerImprovisation',
+        id: const obx_int.IdUid(19, 5300554953883517586),
+        name: 'maximumPointsPerImprovisation',
         type: 6,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(16, 1550223078012945261),
-        name: 'integrationMinNumberOfImprovisations',
+        id: const obx_int.IdUid(20, 3761328257463516081),
+        name: 'minNumberOfImprovisations',
         type: 6,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(17, 6040221050144242742),
-        name: 'integrationMaxNumberOfImprovisations',
+        id: const obx_int.IdUid(21, 4076638638679711664),
+        name: 'maxNumberOfImprovisations',
         type: 6,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(18, 7018269910061947127),
-        name: 'integrationPenaltyTypes',
+        id: const obx_int.IdUid(22, 1928404867438195825),
+        name: 'penaltyTypes',
         type: 30,
         flags: 0,
       ),
@@ -666,6 +666,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
       1472699283272810640,
       4337454576444043536,
       4968754909771031518,
+      1994226352184633381,
+      1550223078012945261,
+      6040221050144242742,
+      7018269910061947127,
     ],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -814,15 +818,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
             object.integrationAdditionalData == null
             ? null
             : fbb.writeString(object.integrationAdditionalData!);
-        final integrationPenaltyTypesOffset =
-            object.integrationPenaltyTypes == null
+        final penaltyTypesOffset = object.penaltyTypes == null
             ? null
             : fbb.writeList(
-                object.integrationPenaltyTypes!
+                object.penaltyTypes!
                     .map(fbb.writeString)
                     .toList(growable: false),
               );
-        fbb.startTable(19);
+        fbb.startTable(23);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addInt64(2, object.createdDate?.millisecondsSinceEpoch);
@@ -836,13 +839,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(11, integrationIdOffset);
         fbb.addOffset(12, integrationEntityIdOffset);
         fbb.addOffset(13, integrationAdditionalDataOffset);
-        fbb.addInt64(
-          14,
-          object.integrationRestrictMaximumPointPerImprovisation,
-        );
-        fbb.addInt64(15, object.integrationMinNumberOfImprovisations);
-        fbb.addInt64(16, object.integrationMaxNumberOfImprovisations);
-        fbb.addOffset(17, integrationPenaltyTypesOffset);
+        fbb.addInt64(18, object.maximumPointsPerImprovisation);
+        fbb.addInt64(19, object.minNumberOfImprovisations);
+        fbb.addInt64(20, object.maxNumberOfImprovisations);
+        fbb.addOffset(21, penaltyTypesOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -911,16 +911,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final integrationAdditionalDataParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 30);
-        final integrationRestrictMaximumPointPerImprovisationParam =
-            const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 32);
-        final integrationMinNumberOfImprovisationsParam = const fb.Int64Reader()
-            .vTableGetNullable(buffer, rootOffset, 34);
-        final integrationMaxNumberOfImprovisationsParam = const fb.Int64Reader()
-            .vTableGetNullable(buffer, rootOffset, 36);
-        final integrationPenaltyTypesParam = const fb.ListReader<String>(
+        final maximumPointsPerImprovisationParam = const fb.Int64Reader()
+            .vTableGetNullable(buffer, rootOffset, 40);
+        final minNumberOfImprovisationsParam = const fb.Int64Reader()
+            .vTableGetNullable(buffer, rootOffset, 42);
+        final maxNumberOfImprovisationsParam = const fb.Int64Reader()
+            .vTableGetNullable(buffer, rootOffset, 44);
+        final penaltyTypesParam = const fb.ListReader<String>(
           fb.StringReader(asciiOptimization: true),
           lazy: false,
-        ).vTableGetNullable(buffer, rootOffset, 38);
+        ).vTableGetNullable(buffer, rootOffset, 46);
         final object = MatchEntity(
           id: idParam,
           name: nameParam,
@@ -935,13 +935,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           integrationId: integrationIdParam,
           integrationEntityId: integrationEntityIdParam,
           integrationAdditionalData: integrationAdditionalDataParam,
-          integrationRestrictMaximumPointPerImprovisation:
-              integrationRestrictMaximumPointPerImprovisationParam,
-          integrationMinNumberOfImprovisations:
-              integrationMinNumberOfImprovisationsParam,
-          integrationMaxNumberOfImprovisations:
-              integrationMaxNumberOfImprovisationsParam,
-          integrationPenaltyTypes: integrationPenaltyTypesParam,
+          maximumPointsPerImprovisation: maximumPointsPerImprovisationParam,
+          minNumberOfImprovisations: minNumberOfImprovisationsParam,
+          maxNumberOfImprovisations: maxNumberOfImprovisationsParam,
+          penaltyTypes: penaltyTypesParam,
         );
         obx_int.InternalToManyAccess.setRelInfo<MatchEntity>(
           object.teams,
@@ -1629,21 +1626,22 @@ class MatchEntity_ {
     _entities[1].properties[12],
   );
 
-  /// See [MatchEntity.integrationRestrictMaximumPointPerImprovisation].
-  static final integrationRestrictMaximumPointPerImprovisation =
+  /// See [MatchEntity.maximumPointsPerImprovisation].
+  static final maximumPointsPerImprovisation =
       obx.QueryIntegerProperty<MatchEntity>(_entities[1].properties[13]);
 
-  /// See [MatchEntity.integrationMinNumberOfImprovisations].
-  static final integrationMinNumberOfImprovisations =
+  /// See [MatchEntity.minNumberOfImprovisations].
+  static final minNumberOfImprovisations =
       obx.QueryIntegerProperty<MatchEntity>(_entities[1].properties[14]);
 
-  /// See [MatchEntity.integrationMaxNumberOfImprovisations].
-  static final integrationMaxNumberOfImprovisations =
+  /// See [MatchEntity.maxNumberOfImprovisations].
+  static final maxNumberOfImprovisations =
       obx.QueryIntegerProperty<MatchEntity>(_entities[1].properties[15]);
 
-  /// See [MatchEntity.integrationPenaltyTypes].
-  static final integrationPenaltyTypes =
-      obx.QueryStringVectorProperty<MatchEntity>(_entities[1].properties[16]);
+  /// See [MatchEntity.penaltyTypes].
+  static final penaltyTypes = obx.QueryStringVectorProperty<MatchEntity>(
+    _entities[1].properties[16],
+  );
 
   /// see [MatchEntity.teams]
   static final teams = obx.QueryRelationToMany<MatchEntity, TeamEntity>(

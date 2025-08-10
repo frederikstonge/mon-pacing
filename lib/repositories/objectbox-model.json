@@ -74,7 +74,7 @@
     },
     {
       "id": "2:7328884561935232436",
-      "lastPropertyId": "18:7018269910061947127",
+      "lastPropertyId": "22:1928404867438195825",
       "name": "MatchEntity",
       "properties": [
         {
@@ -150,23 +150,23 @@
           "type": 9
         },
         {
-          "id": "15:1994226352184633381",
-          "name": "integrationRestrictMaximumPointPerImprovisation",
+          "id": "19:5300554953883517586",
+          "name": "maximumPointsPerImprovisation",
           "type": 6
         },
         {
-          "id": "16:1550223078012945261",
-          "name": "integrationMinNumberOfImprovisations",
+          "id": "20:3761328257463516081",
+          "name": "minNumberOfImprovisations",
           "type": 6
         },
         {
-          "id": "17:6040221050144242742",
-          "name": "integrationMaxNumberOfImprovisations",
+          "id": "21:4076638638679711664",
+          "name": "maxNumberOfImprovisations",
           "type": 6
         },
         {
-          "id": "18:7018269910061947127",
-          "name": "integrationPenaltyTypes",
+          "id": "22:1928404867438195825",
+          "name": "penaltyTypes",
           "type": 30
         }
       ],
@@ -534,7 +534,11 @@
     6599612206698723775,
     1472699283272810640,
     4337454576444043536,
-    4968754909771031518
+    4968754909771031518,
+    1994226352184633381,
+    1550223078012945261,
+    6040221050144242742,
+    7018269910061947127
   ],
   "retiredRelationUids": [],
   "version": 1

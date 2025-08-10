@@ -1988,6 +1988,21 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
           as _i15.AnalyticsService);
 
   @override
+  _i23.IntegrationsCubit get integrationsCubit =>
+      (super.noSuchMethod(
+            Invocation.getter(#integrationsCubit),
+            returnValue: _FakeIntegrationsCubit_21(
+              this,
+              Invocation.getter(#integrationsCubit),
+            ),
+            returnValueForMissingStub: _FakeIntegrationsCubit_21(
+              this,
+              Invocation.getter(#integrationsCubit),
+            ),
+          )
+          as _i23.IntegrationsCubit);
+
+  @override
   _i29.MatchState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
@@ -2175,14 +2190,14 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
           as _i32.Future<bool>);
 
   @override
-  void emit(_i29.MatchState? state) => super.noSuchMethod(
-    Invocation.method(#emit, [state]),
+  void onChange(_i36.Change<_i29.MatchState>? change) => super.noSuchMethod(
+    Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void onChange(_i36.Change<_i29.MatchState>? change) => super.noSuchMethod(
-    Invocation.method(#onChange, [change]),
+  void emit(_i29.MatchState? state) => super.noSuchMethod(
+    Invocation.method(#emit, [state]),
     returnValueForMissingStub: null,
   );
 

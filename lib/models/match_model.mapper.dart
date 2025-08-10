@@ -95,29 +95,24 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
   static const Field<MatchModel, String> _f$integrationAdditionalData = Field(
       'integrationAdditionalData', _$integrationAdditionalData,
       opt: true);
-  static int? _$integrationRestrictMaximumPointPerImprovisation(MatchModel v) =>
-      v.integrationRestrictMaximumPointPerImprovisation;
-  static const Field<MatchModel, int>
-      _f$integrationRestrictMaximumPointPerImprovisation = Field(
-          'integrationRestrictMaximumPointPerImprovisation',
-          _$integrationRestrictMaximumPointPerImprovisation,
-          opt: true);
-  static int? _$integrationMinNumberOfImprovisations(MatchModel v) =>
-      v.integrationMinNumberOfImprovisations;
-  static const Field<MatchModel, int> _f$integrationMinNumberOfImprovisations =
-      Field('integrationMinNumberOfImprovisations',
-          _$integrationMinNumberOfImprovisations,
-          opt: true);
-  static int? _$integrationMaxNumberOfImprovisations(MatchModel v) =>
-      v.integrationMaxNumberOfImprovisations;
-  static const Field<MatchModel, int> _f$integrationMaxNumberOfImprovisations =
-      Field('integrationMaxNumberOfImprovisations',
-          _$integrationMaxNumberOfImprovisations,
-          opt: true);
-  static List<String>? _$integrationPenaltyTypes(MatchModel v) =>
-      v.integrationPenaltyTypes;
-  static const Field<MatchModel, List<String>> _f$integrationPenaltyTypes =
-      Field('integrationPenaltyTypes', _$integrationPenaltyTypes, opt: true);
+  static int? _$maximumPointsPerImprovisation(MatchModel v) =>
+      v.maximumPointsPerImprovisation;
+  static const Field<MatchModel, int> _f$maximumPointsPerImprovisation = Field(
+      'maximumPointsPerImprovisation', _$maximumPointsPerImprovisation,
+      opt: true);
+  static int? _$minNumberOfImprovisations(MatchModel v) =>
+      v.minNumberOfImprovisations;
+  static const Field<MatchModel, int> _f$minNumberOfImprovisations = Field(
+      'minNumberOfImprovisations', _$minNumberOfImprovisations,
+      opt: true);
+  static int? _$maxNumberOfImprovisations(MatchModel v) =>
+      v.maxNumberOfImprovisations;
+  static const Field<MatchModel, int> _f$maxNumberOfImprovisations = Field(
+      'maxNumberOfImprovisations', _$maxNumberOfImprovisations,
+      opt: true);
+  static List<String>? _$penaltyTypes(MatchModel v) => v.penaltyTypes;
+  static const Field<MatchModel, List<String>> _f$penaltyTypes =
+      Field('penaltyTypes', _$penaltyTypes, opt: true);
 
   @override
   final MappableFields<MatchModel> fields = const {
@@ -140,13 +135,10 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
     #integrationId: _f$integrationId,
     #integrationEntityId: _f$integrationEntityId,
     #integrationAdditionalData: _f$integrationAdditionalData,
-    #integrationRestrictMaximumPointPerImprovisation:
-        _f$integrationRestrictMaximumPointPerImprovisation,
-    #integrationMinNumberOfImprovisations:
-        _f$integrationMinNumberOfImprovisations,
-    #integrationMaxNumberOfImprovisations:
-        _f$integrationMaxNumberOfImprovisations,
-    #integrationPenaltyTypes: _f$integrationPenaltyTypes,
+    #maximumPointsPerImprovisation: _f$maximumPointsPerImprovisation,
+    #minNumberOfImprovisations: _f$minNumberOfImprovisations,
+    #maxNumberOfImprovisations: _f$maxNumberOfImprovisations,
+    #penaltyTypes: _f$penaltyTypes,
   };
 
   static MatchModel _instantiate(DecodingData data) {
@@ -171,13 +163,11 @@ class MatchModelMapper extends ClassMapperBase<MatchModel> {
         integrationId: data.dec(_f$integrationId),
         integrationEntityId: data.dec(_f$integrationEntityId),
         integrationAdditionalData: data.dec(_f$integrationAdditionalData),
-        integrationRestrictMaximumPointPerImprovisation:
-            data.dec(_f$integrationRestrictMaximumPointPerImprovisation),
-        integrationMinNumberOfImprovisations:
-            data.dec(_f$integrationMinNumberOfImprovisations),
-        integrationMaxNumberOfImprovisations:
-            data.dec(_f$integrationMaxNumberOfImprovisations),
-        integrationPenaltyTypes: data.dec(_f$integrationPenaltyTypes));
+        maximumPointsPerImprovisation:
+            data.dec(_f$maximumPointsPerImprovisation),
+        minNumberOfImprovisations: data.dec(_f$minNumberOfImprovisations),
+        maxNumberOfImprovisations: data.dec(_f$maxNumberOfImprovisations),
+        penaltyTypes: data.dec(_f$penaltyTypes));
   }
 
   @override
@@ -247,7 +237,7 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       get stars;
   ListCopyWith<$R, TagModel, TagModelCopyWith<$R, TagModel, TagModel>> get tags;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
-      get integrationPenaltyTypes;
+      get penaltyTypes;
   $R call(
       {int? id,
       String? name,
@@ -268,10 +258,10 @@ abstract class MatchModelCopyWith<$R, $In extends MatchModel, $Out>
       String? integrationId,
       String? integrationEntityId,
       String? integrationAdditionalData,
-      int? integrationRestrictMaximumPointPerImprovisation,
-      int? integrationMinNumberOfImprovisations,
-      int? integrationMaxNumberOfImprovisations,
-      List<String>? integrationPenaltyTypes});
+      int? maximumPointsPerImprovisation,
+      int? minNumberOfImprovisations,
+      int? maxNumberOfImprovisations,
+      List<String>? penaltyTypes});
   MatchModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -315,11 +305,11 @@ class _MatchModelCopyWithImpl<$R, $Out>
           $value.tags, (v, t) => v.copyWith.$chain(t), (v) => call(tags: v));
   @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
-      get integrationPenaltyTypes => $value.integrationPenaltyTypes != null
+      get penaltyTypes => $value.penaltyTypes != null
           ? ListCopyWith(
-              $value.integrationPenaltyTypes!,
+              $value.penaltyTypes!,
               (v, t) => ObjectCopyWith(v, $identity, t),
-              (v) => call(integrationPenaltyTypes: v))
+              (v) => call(penaltyTypes: v))
           : null;
   @override
   $R call(
@@ -342,10 +332,10 @@ class _MatchModelCopyWithImpl<$R, $Out>
           Object? integrationId = $none,
           Object? integrationEntityId = $none,
           Object? integrationAdditionalData = $none,
-          Object? integrationRestrictMaximumPointPerImprovisation = $none,
-          Object? integrationMinNumberOfImprovisations = $none,
-          Object? integrationMaxNumberOfImprovisations = $none,
-          Object? integrationPenaltyTypes = $none}) =>
+          Object? maximumPointsPerImprovisation = $none,
+          Object? minNumberOfImprovisations = $none,
+          Object? maxNumberOfImprovisations = $none,
+          Object? penaltyTypes = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
@@ -373,17 +363,13 @@ class _MatchModelCopyWithImpl<$R, $Out>
           #integrationEntityId: integrationEntityId,
         if (integrationAdditionalData != $none)
           #integrationAdditionalData: integrationAdditionalData,
-        if (integrationRestrictMaximumPointPerImprovisation != $none)
-          #integrationRestrictMaximumPointPerImprovisation:
-              integrationRestrictMaximumPointPerImprovisation,
-        if (integrationMinNumberOfImprovisations != $none)
-          #integrationMinNumberOfImprovisations:
-              integrationMinNumberOfImprovisations,
-        if (integrationMaxNumberOfImprovisations != $none)
-          #integrationMaxNumberOfImprovisations:
-              integrationMaxNumberOfImprovisations,
-        if (integrationPenaltyTypes != $none)
-          #integrationPenaltyTypes: integrationPenaltyTypes
+        if (maximumPointsPerImprovisation != $none)
+          #maximumPointsPerImprovisation: maximumPointsPerImprovisation,
+        if (minNumberOfImprovisations != $none)
+          #minNumberOfImprovisations: minNumberOfImprovisations,
+        if (maxNumberOfImprovisations != $none)
+          #maxNumberOfImprovisations: maxNumberOfImprovisations,
+        if (penaltyTypes != $none) #penaltyTypes: penaltyTypes
       }));
   @override
   MatchModel $make(CopyWithData data) => MatchModel(
@@ -415,17 +401,13 @@ class _MatchModelCopyWithImpl<$R, $Out>
           data.get(#integrationEntityId, or: $value.integrationEntityId),
       integrationAdditionalData: data.get(#integrationAdditionalData,
           or: $value.integrationAdditionalData),
-      integrationRestrictMaximumPointPerImprovisation: data.get(
-          #integrationRestrictMaximumPointPerImprovisation,
-          or: $value.integrationRestrictMaximumPointPerImprovisation),
-      integrationMinNumberOfImprovisations: data.get(
-          #integrationMinNumberOfImprovisations,
-          or: $value.integrationMinNumberOfImprovisations),
-      integrationMaxNumberOfImprovisations: data.get(
-          #integrationMaxNumberOfImprovisations,
-          or: $value.integrationMaxNumberOfImprovisations),
-      integrationPenaltyTypes: data.get(#integrationPenaltyTypes,
-          or: $value.integrationPenaltyTypes));
+      maximumPointsPerImprovisation: data.get(#maximumPointsPerImprovisation,
+          or: $value.maximumPointsPerImprovisation),
+      minNumberOfImprovisations: data.get(#minNumberOfImprovisations,
+          or: $value.minNumberOfImprovisations),
+      maxNumberOfImprovisations: data.get(#maxNumberOfImprovisations,
+          or: $value.maxNumberOfImprovisations),
+      penaltyTypes: data.get(#penaltyTypes, or: $value.penaltyTypes));
 
   @override
   MatchModelCopyWith<$R2, MatchModel, $Out2> $chain<$R2, $Out2>(

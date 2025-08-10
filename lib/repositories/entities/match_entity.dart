@@ -27,10 +27,10 @@ class MatchEntity {
   String? integrationId;
   String? integrationEntityId;
   String? integrationAdditionalData;
-  int? integrationRestrictMaximumPointPerImprovisation;
-  int? integrationMinNumberOfImprovisations;
-  int? integrationMaxNumberOfImprovisations;
-  List<String>? integrationPenaltyTypes;
+  int? maximumPointsPerImprovisation;
+  int? minNumberOfImprovisations;
+  int? maxNumberOfImprovisations;
+  List<String>? penaltyTypes;
 
   final teams = ToMany<TeamEntity>();
   final improvisations = ToMany<ImprovisationEntity>();
@@ -53,9 +53,9 @@ class MatchEntity {
     this.integrationId,
     this.integrationEntityId,
     this.integrationAdditionalData,
-    this.integrationRestrictMaximumPointPerImprovisation,
-    this.integrationMinNumberOfImprovisations,
-    this.integrationMaxNumberOfImprovisations,
-    this.integrationPenaltyTypes,
+    this.maximumPointsPerImprovisation,
+    this.minNumberOfImprovisations,
+    this.maxNumberOfImprovisations,
+    this.penaltyTypes,
   });
 }

@@ -32,6 +32,18 @@ class MatchModel extends IntegrationBaseModel with MatchModelMappable implements
   final bool enableMatchExpulsion;
   final int penaltiesRequiredToExpel;
 
+  /// Integration-specific
+  final int? maximumPointsPerImprovisation;
+
+  /// Integration-specific
+  final int? minNumberOfImprovisations;
+
+  /// Integration-specific settings
+  final int? maxNumberOfImprovisations;
+
+  /// Integration-specific settings
+  final List<String>? penaltyTypes;
+
   @override
   final List<TagModel> tags;
 
@@ -55,10 +67,10 @@ class MatchModel extends IntegrationBaseModel with MatchModelMappable implements
     super.integrationId,
     super.integrationEntityId,
     super.integrationAdditionalData,
-    super.integrationRestrictMaximumPointPerImprovisation,
-    super.integrationMinNumberOfImprovisations,
-    super.integrationMaxNumberOfImprovisations,
-    super.integrationPenaltyTypes,
+    this.maximumPointsPerImprovisation,
+    this.minNumberOfImprovisations,
+    this.maxNumberOfImprovisations,
+    this.penaltyTypes,
   });
 
   factory MatchModel.fromEntity({required MatchEntity entity}) {
@@ -85,10 +97,10 @@ class MatchModel extends IntegrationBaseModel with MatchModelMappable implements
       integrationId: entity.integrationId,
       integrationEntityId: entity.integrationEntityId,
       integrationAdditionalData: entity.integrationAdditionalData,
-      integrationRestrictMaximumPointPerImprovisation: entity.integrationRestrictMaximumPointPerImprovisation,
-      integrationMinNumberOfImprovisations: entity.integrationMinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: entity.integrationMaxNumberOfImprovisations,
-      integrationPenaltyTypes: entity.integrationPenaltyTypes,
+      maximumPointsPerImprovisation: entity.maximumPointsPerImprovisation,
+      minNumberOfImprovisations: entity.minNumberOfImprovisations,
+      maxNumberOfImprovisations: entity.maxNumberOfImprovisations,
+      penaltyTypes: entity.penaltyTypes,
     );
   }
 
@@ -107,10 +119,10 @@ class MatchModel extends IntegrationBaseModel with MatchModelMappable implements
       integrationId: integrationId,
       integrationEntityId: integrationEntityId,
       integrationAdditionalData: integrationAdditionalData,
-      integrationRestrictMaximumPointPerImprovisation: integrationRestrictMaximumPointPerImprovisation,
-      integrationMinNumberOfImprovisations: integrationMinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: integrationMaxNumberOfImprovisations,
-      integrationPenaltyTypes: integrationPenaltyTypes,
+      maximumPointsPerImprovisation: maximumPointsPerImprovisation,
+      minNumberOfImprovisations: minNumberOfImprovisations,
+      maxNumberOfImprovisations: maxNumberOfImprovisations,
+      penaltyTypes: penaltyTypes,
     );
 
     match.improvisations.addAll(improvisations.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
