@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../integrations/citrus_integration.dart';
 import '../../integrations/integration_base.dart';
+import '../../integrations/scoreboardussy_integration.dart';
 import 'integrations_state.dart';
 import 'integrations_status.dart';
 
@@ -28,12 +29,15 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
   Future<void> initialize() async {
     try {
       emit(state.copyWith(status: IntegrationsStatus.loading));
-      final List<IntegrationBase> integrations = [CitrusIntegration(client: Dio())];
+      final List<IntegrationBase> integrations = [
+        CitrusIntegration(client: Dio()),
+        ScoreboardussyIntegration(client: Dio()),
+      ];
       await remoteConfig.activate();
       emit(
         state.copyWith(
           status: IntegrationsStatus.success,
-          integrations: integrations.where((i) => remoteConfig.getBool(i.featureFlagName)).toList(),
+          integrations: integrations, //integrations.where((i) => remoteConfig.getBool(i.featureFlagName)).toList(),
         ),
       );
     } catch (e) {

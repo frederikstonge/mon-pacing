@@ -19,7 +19,6 @@ import '../models/match_model.dart';
 import '../models/pacing_model.dart';
 import '../models/penalties_impact_type.dart';
 import '../models/performer_model.dart';
-import '../models/tag_model.dart';
 import '../models/team_model.dart';
 import 'match_integration_base.dart';
 
@@ -101,7 +100,6 @@ class CitrusIntegration implements MatchIntegrationBase {
       name: matchName,
       createdDate: null,
       modifiedDate: null,
-      tags: [TagModel(id: 0, name: integrationId)],
       teams: [
         _extractTeam(document, 1, '#alignement1', team1Color!, () => performerId++),
         _extractTeam(document, 2, '#alignement2', team2Color!, () => performerId++),

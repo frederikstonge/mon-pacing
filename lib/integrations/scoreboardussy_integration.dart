@@ -50,10 +50,10 @@ class ScoreboardussyIntegration implements RealTimeMatchIntegrationBase {
     final id = match.integrationEntityId!;
     final token = json['token'].toString();
 
-    final planUri = Uri.parse(url);
-    planUri.pathSegments.add('match');
+    final uri = Uri.parse(url);
+
     await client.postUri(
-      planUri,
+      uri.replace(pathSegments: [...uri.pathSegments, 'match']),
       data: {'version': 1, 'matchId': id, 'match': match.toMap()},
       options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
     );
@@ -69,11 +69,10 @@ class ScoreboardussyIntegration implements RealTimeMatchIntegrationBase {
     final id = integration.integrationEntityId!;
     final token = json['token'].toString();
 
-    final eventUri = Uri.parse(url);
-    eventUri.pathSegments.add('timer');
+    final uri = Uri.parse(url);
 
     await client.postUri(
-      eventUri,
+      uri.replace(pathSegments: [...uri.pathSegments, 'timer']),
       data: {
         'version': 1,
         'matchId': id,
