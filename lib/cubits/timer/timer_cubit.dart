@@ -83,7 +83,7 @@ class TimerCubit extends Cubit<TimerState> {
       integrationsCubit.state.integrations
           .whereType<RealTimeMatchIntegrationBase>()
           .firstWhereOrNull((i) => i.integrationId == integration.integrationId)
-          ?.onTimerUpdate(integration, change.currentState.timer, change.nextState.timer);
+          ?.onTimerUpdate(integration, change.nextState.timer);
     }
 
     super.onChange(change);

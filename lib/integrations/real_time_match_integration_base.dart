@@ -7,6 +7,6 @@ import 'integration_base.dart';
 
 abstract class RealTimeMatchIntegrationBase extends IntegrationBase {
   FutureOr<MatchModel> enrichMatch(String scanData, MatchModel match);
-  FutureOr<bool> onMatchUpdate(MatchModel? oldMatch, MatchModel newMatch);
-  FutureOr<bool> onTimerUpdate(IntegrationBaseModel integration, TimerModel? oldTimer, TimerModel? newTimer);
+  FutureOr<bool> onMatchUpdate(MatchModel match);
+  FutureOr<bool> onTimerUpdate(IntegrationBaseModel integration, TimerModel? timer);
 }

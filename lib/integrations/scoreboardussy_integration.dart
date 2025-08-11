@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import '../models/integration_base_model.dart';
 import '../models/match_model.dart';
 import '../models/timer_model.dart';
+import '../models/timer_status.dart';
 import 'real_time_match_integration_base.dart';
 
 class ScoreboardussyIntegration implements RealTimeMatchIntegrationBase {
@@ -41,149 +42,51 @@ class ScoreboardussyIntegration implements RealTimeMatchIntegrationBase {
     return enrichedMatch;
   }
 
+  /// Called when a match is updated. This includes match details, teams, performers, points, penalties and stars
   @override
-  FutureOr<bool> onMatchUpdate(MatchModel? oldMatch, MatchModel newMatch) async {
-    final json = jsonDecode(newMatch.integrationAdditionalData!);
+  FutureOr<bool> onMatchUpdate(MatchModel match) async {
+    final json = jsonDecode(match.integrationAdditionalData!);
     final url = json['url'].toString();
-    final id = newMatch.integrationEntityId!;
+    final id = match.integrationEntityId!;
     final token = json['token'].toString();
 
-    await planImport(url, id, token, newMatch);
+    final planUri = Uri.parse(url);
+    planUri.pathSegments.add('match');
+    await client.postUri(
+      planUri,
+      data: {'version': 1, 'matchId': id, 'match': match.toMap()},
+      options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
+    );
 
     return true;
   }
 
+  // Called when the timer is updated.
   @override
-  FutureOr<bool> onTimerUpdate(IntegrationBaseModel integration, TimerModel? oldTimer, TimerModel? newTimer) async {
+  FutureOr<bool> onTimerUpdate(IntegrationBaseModel integration, TimerModel? timer) async {
     final json = jsonDecode(integration.integrationAdditionalData!);
     final url = json['url'].toString();
     final id = integration.integrationEntityId!;
     final token = json['token'].toString();
 
-    await timerControl(url, id, token, 'timer', action: 'start', durationInSeconds: newTimer?.durationInSeconds);
-
-    return true;
-  }
-
-  Future<bool> planImport(String baseUrl, String entityId, String token, MatchModel match) async {
-    final planUri = Uri.parse(baseUrl);
-    planUri.pathSegments.add('plan');
-    await client.postUri(
-      planUri,
-      data: {
-        'version': 1,
-        'matchId': entityId,
-        'teams': [
-          {'id': 'A', 'name': 'Team A', 'color': '#ff3333'},
-          {'id': 'B', 'name': 'Team B', 'color': '#3333ff'},
-        ],
-        'rounds': [
-          {
-            'id': 'r1',
-            'order': 1,
-            'category': 'Open',
-            'theme': 'Welcome scene',
-            'minutes': 2,
-            'seconds': 0,
-            'type': 'set', // optional; if omitted, derived from category map
-            'mixed': false,
-          },
-        ],
-      },
-      options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
-    );
-
-    return true;
-  }
-
-  /// type: timer -> start | stop | set (with durationSec)
-  ///       pause
-  ///       resume
-  Future<bool> timerControl(
-    String baseUrl,
-    String entityId,
-    String token,
-    String type, {
-    String? action,
-    int? durationInSeconds,
-  }) async {
-    final eventUri = Uri.parse(baseUrl);
-    eventUri.pathSegments.add('event');
+    final eventUri = Uri.parse(url);
+    eventUri.pathSegments.add('timer');
 
     await client.postUri(
       eventUri,
       data: {
         'version': 1,
-        'matchId': entityId,
-        'type': type,
-        if (action != null) ...{
-          'payload': {
-            'action': action,
-            if (durationInSeconds != null) ...{'durationSec': durationInSeconds},
-          },
+        'matchId': id,
+        'status': switch (timer?.status) {
+          TimerStatus.started => 'start',
+          TimerStatus.paused => 'pause',
+          TimerStatus.stopped => 'stop',
+          null => 'stop',
         },
-      },
-      options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
-    );
-
-    return true;
-  }
-
-  Future<bool> roundLifeCycle(
-    String baseUrl,
-    String entityId,
-    String token,
-    String type, {
-    String? improvisationId,
-  }) async {
-    final eventUri = Uri.parse(baseUrl);
-    eventUri.pathSegments.add('event');
-
-    await client.postUri(
-      eventUri,
-      data: {
-        'version': 1,
-        'matchId': entityId,
-        'type': type,
-        'payload': {
-          if (improvisationId != null) ...{'roundId': improvisationId},
+        if (timer != null) ...{
+          'totalDuration': Duration(seconds: timer.durationInSeconds).inSeconds,
+          'remainingDuration': Duration(milliseconds: timer.remainingMilliseconds).inSeconds,
         },
-      },
-      options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
-    );
-
-    return true;
-  }
-
-  Future<bool> score(String baseUrl, String entityId, String token, String team, int points) async {
-    final eventUri = Uri.parse(baseUrl);
-    eventUri.pathSegments.add('event');
-
-    await client.postUri(
-      eventUri,
-      data: {
-        'version': 1,
-        'matchId': entityId,
-        'type': 'points',
-        'payload': {'team': team, 'points': points},
-      },
-      options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
-    );
-
-    return true;
-  }
-
-  Future<bool> penalty(String baseUrl, String entityId, String token, String team, String kind) async {
-    final eventUri = Uri.parse(baseUrl);
-    eventUri.pathSegments.add('event');
-
-    await client.postUri(
-      eventUri,
-      data: {
-        'version': 1,
-        'matchId': entityId,
-        'type': 'penalty',
-        'payload': {'team': team, 'kind': kind},
       },
       options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
     );
