@@ -54,7 +54,51 @@ class ScoreboardussyIntegration implements RealTimeMatchIntegrationBase {
 
     await client.postUri(
       uri.replace(pathSegments: [...uri.pathSegments, 'match']),
-      data: {'version': 1, 'matchId': id, 'match': match.toMap()},
+      data: {
+        'version': 1,
+        'matchId': id,
+        'match': {
+          'id': match.id,
+          'name': match.name,
+          'teams': match.teams
+              .map(
+                (team) => {
+                  'id': team.id,
+                  'name': team.name,
+                  'color': '#${team.color.toRadixString(16).substring(2)}',
+                  'performers': team.performers
+                      .map((performer) => {'id': performer.id, 'name': performer.name})
+                      .toList(),
+                },
+              )
+              .toList(),
+          'points': match.points
+              .map(
+                (point) => {
+                  'id': point.id,
+                  'teamId': point.teamId,
+                  'improvisationId': point.improvisationId,
+                  'value': point.value,
+                },
+              )
+              .toList(),
+          'penalties': match.penalties
+              .map(
+                (penalty) => {
+                  'id': penalty.id,
+                  'teamId': penalty.teamId,
+                  'improvisationId': penalty.improvisationId,
+                  'type': penalty.type,
+                  'major': penalty.major,
+                  if (penalty.performerId != null) ...{'performerId': penalty.performerId},
+                },
+              )
+              .toList(),
+          'stars': match.stars
+              .map((star) => {'id': star.id, 'teamId': star.teamId, 'performerId': star.performerId})
+              .toList(),
+        },
+      },
       options: Options(headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'}),
     );
 
