@@ -24,14 +24,19 @@ class TimerStateMapper extends ClassMapperBase<TimerState> {
   static TimerModel? _$timer(TimerState v) => v.timer;
   static const Field<TimerState, TimerModel> _f$timer =
       Field('timer', _$timer, opt: true);
+  static IntegrationBaseModel? _$integration(TimerState v) => v.integration;
+  static const Field<TimerState, IntegrationBaseModel> _f$integration =
+      Field('integration', _$integration, opt: true);
 
   @override
   final MappableFields<TimerState> fields = const {
     #timer: _f$timer,
+    #integration: _f$integration,
   };
 
   static TimerState _instantiate(DecodingData data) {
-    return TimerState(timer: data.dec(_f$timer));
+    return TimerState(
+        timer: data.dec(_f$timer), integration: data.dec(_f$integration));
   }
 
   @override
@@ -87,7 +92,7 @@ extension TimerStateValueCopy<$R, $Out>
 abstract class TimerStateCopyWith<$R, $In extends TimerState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   TimerModelCopyWith<$R, TimerModel, TimerModel>? get timer;
-  $R call({TimerModel? timer});
+  $R call({TimerModel? timer, IntegrationBaseModel? integration});
   TimerStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -103,11 +108,15 @@ class _TimerStateCopyWithImpl<$R, $Out>
   TimerModelCopyWith<$R, TimerModel, TimerModel>? get timer =>
       $value.timer?.copyWith.$chain((v) => call(timer: v));
   @override
-  $R call({Object? timer = $none}) =>
-      $apply(FieldCopyWithData({if (timer != $none) #timer: timer}));
+  $R call({Object? timer = $none, Object? integration = $none}) =>
+      $apply(FieldCopyWithData({
+        if (timer != $none) #timer: timer,
+        if (integration != $none) #integration: integration
+      }));
   @override
-  TimerState $make(CopyWithData data) =>
-      TimerState(timer: data.get(#timer, or: $value.timer));
+  TimerState $make(CopyWithData data) => TimerState(
+      timer: data.get(#timer, or: $value.timer),
+      integration: data.get(#integration, or: $value.integration));
 
   @override
   TimerStateCopyWith<$R2, TimerState, $Out2> $chain<$R2, $Out2>(

@@ -27,19 +27,31 @@ class StarModelMapper extends ClassMapperBase<StarModel> {
       Field('performerId', _$performerId);
   static int _$teamId(StarModel v) => v.teamId;
   static const Field<StarModel, int> _f$teamId = Field('teamId', _$teamId);
+  static String? _$integrationEntityId(StarModel v) => v.integrationEntityId;
+  static const Field<StarModel, String> _f$integrationEntityId =
+      Field('integrationEntityId', _$integrationEntityId, opt: true);
+  static String? _$integrationAdditionalData(StarModel v) =>
+      v.integrationAdditionalData;
+  static const Field<StarModel, String> _f$integrationAdditionalData = Field(
+      'integrationAdditionalData', _$integrationAdditionalData,
+      opt: true);
 
   @override
   final MappableFields<StarModel> fields = const {
     #id: _f$id,
     #performerId: _f$performerId,
     #teamId: _f$teamId,
+    #integrationEntityId: _f$integrationEntityId,
+    #integrationAdditionalData: _f$integrationAdditionalData,
   };
 
   static StarModel _instantiate(DecodingData data) {
     return StarModel(
         id: data.dec(_f$id),
         performerId: data.dec(_f$performerId),
-        teamId: data.dec(_f$teamId));
+        teamId: data.dec(_f$teamId),
+        integrationEntityId: data.dec(_f$integrationEntityId),
+        integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
 
   @override
@@ -93,7 +105,12 @@ extension StarModelValueCopy<$R, $Out> on ObjectCopyWith<$R, StarModel, $Out> {
 
 abstract class StarModelCopyWith<$R, $In extends StarModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({int? id, int? performerId, int? teamId});
+  $R call(
+      {int? id,
+      int? performerId,
+      int? teamId,
+      String? integrationEntityId,
+      String? integrationAdditionalData});
   StarModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -106,17 +123,30 @@ class _StarModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<StarModel> $mapper =
       StarModelMapper.ensureInitialized();
   @override
-  $R call({int? id, int? performerId, int? teamId}) =>
+  $R call(
+          {int? id,
+          int? performerId,
+          int? teamId,
+          Object? integrationEntityId = $none,
+          Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (performerId != null) #performerId: performerId,
-        if (teamId != null) #teamId: teamId
+        if (teamId != null) #teamId: teamId,
+        if (integrationEntityId != $none)
+          #integrationEntityId: integrationEntityId,
+        if (integrationAdditionalData != $none)
+          #integrationAdditionalData: integrationAdditionalData
       }));
   @override
   StarModel $make(CopyWithData data) => StarModel(
       id: data.get(#id, or: $value.id),
       performerId: data.get(#performerId, or: $value.performerId),
-      teamId: data.get(#teamId, or: $value.teamId));
+      teamId: data.get(#teamId, or: $value.teamId),
+      integrationEntityId:
+          data.get(#integrationEntityId, or: $value.integrationEntityId),
+      integrationAdditionalData: data.get(#integrationAdditionalData,
+          or: $value.integrationAdditionalData));
 
   @override
   StarModelCopyWith<$R2, StarModel, $Out2> $chain<$R2, $Out2>(

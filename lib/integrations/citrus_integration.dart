@@ -117,10 +117,10 @@ class CitrusIntegration implements MatchIntegrationBase {
       penaltiesRequiredToExpel: 3,
       integrationId: integrationId,
       integrationEntityId: matchId,
-      integrationRestrictMaximumPointPerImprovisation: 1,
-      integrationMinNumberOfImprovisations: MinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: MaxNumberOfImprovisations,
-      integrationPenaltyTypes: penaltyTypes.isNotEmpty ? penaltyTypes : null,
+      maximumPointsPerImprovisation: 1,
+      minNumberOfImprovisations: MinNumberOfImprovisations,
+      maxNumberOfImprovisations: MaxNumberOfImprovisations,
+      penaltyTypes: penaltyTypes.isNotEmpty ? penaltyTypes : null,
       integrationAdditionalData: jsonEncode({'csrfToken': csrfToken, 'exportUrl': url.toString()}),
     );
   }

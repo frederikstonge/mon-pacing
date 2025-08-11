@@ -34,6 +34,14 @@ class PenaltyModelMapper extends ClassMapperBase<PenaltyModel> {
   static int _$improvisationId(PenaltyModel v) => v.improvisationId;
   static const Field<PenaltyModel, int> _f$improvisationId =
       Field('improvisationId', _$improvisationId);
+  static String? _$integrationEntityId(PenaltyModel v) => v.integrationEntityId;
+  static const Field<PenaltyModel, String> _f$integrationEntityId =
+      Field('integrationEntityId', _$integrationEntityId, opt: true);
+  static String? _$integrationAdditionalData(PenaltyModel v) =>
+      v.integrationAdditionalData;
+  static const Field<PenaltyModel, String> _f$integrationAdditionalData = Field(
+      'integrationAdditionalData', _$integrationAdditionalData,
+      opt: true);
 
   @override
   final MappableFields<PenaltyModel> fields = const {
@@ -43,6 +51,8 @@ class PenaltyModelMapper extends ClassMapperBase<PenaltyModel> {
     #performerId: _f$performerId,
     #teamId: _f$teamId,
     #improvisationId: _f$improvisationId,
+    #integrationEntityId: _f$integrationEntityId,
+    #integrationAdditionalData: _f$integrationAdditionalData,
   };
 
   static PenaltyModel _instantiate(DecodingData data) {
@@ -52,7 +62,9 @@ class PenaltyModelMapper extends ClassMapperBase<PenaltyModel> {
         type: data.dec(_f$type),
         performerId: data.dec(_f$performerId),
         teamId: data.dec(_f$teamId),
-        improvisationId: data.dec(_f$improvisationId));
+        improvisationId: data.dec(_f$improvisationId),
+        integrationEntityId: data.dec(_f$integrationEntityId),
+        integrationAdditionalData: data.dec(_f$integrationAdditionalData));
   }
 
   @override
@@ -114,7 +126,9 @@ abstract class PenaltyModelCopyWith<$R, $In extends PenaltyModel, $Out>
       String? type,
       int? performerId,
       int? teamId,
-      int? improvisationId});
+      int? improvisationId,
+      String? integrationEntityId,
+      String? integrationAdditionalData});
   PenaltyModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -133,14 +147,20 @@ class _PenaltyModelCopyWithImpl<$R, $Out>
           String? type,
           Object? performerId = $none,
           int? teamId,
-          int? improvisationId}) =>
+          int? improvisationId,
+          Object? integrationEntityId = $none,
+          Object? integrationAdditionalData = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (major != null) #major: major,
         if (type != null) #type: type,
         if (performerId != $none) #performerId: performerId,
         if (teamId != null) #teamId: teamId,
-        if (improvisationId != null) #improvisationId: improvisationId
+        if (improvisationId != null) #improvisationId: improvisationId,
+        if (integrationEntityId != $none)
+          #integrationEntityId: integrationEntityId,
+        if (integrationAdditionalData != $none)
+          #integrationAdditionalData: integrationAdditionalData
       }));
   @override
   PenaltyModel $make(CopyWithData data) => PenaltyModel(
@@ -149,7 +169,11 @@ class _PenaltyModelCopyWithImpl<$R, $Out>
       type: data.get(#type, or: $value.type),
       performerId: data.get(#performerId, or: $value.performerId),
       teamId: data.get(#teamId, or: $value.teamId),
-      improvisationId: data.get(#improvisationId, or: $value.improvisationId));
+      improvisationId: data.get(#improvisationId, or: $value.improvisationId),
+      integrationEntityId:
+          data.get(#integrationEntityId, or: $value.integrationEntityId),
+      integrationAdditionalData: data.get(#integrationAdditionalData,
+          or: $value.integrationAdditionalData));
 
   @override
   PenaltyModelCopyWith<$R2, PenaltyModel, $Out2> $chain<$R2, $Out2>(

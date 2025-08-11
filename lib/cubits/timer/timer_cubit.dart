@@ -1,13 +1,18 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../integrations/real_time_match_integration_base.dart';
 import '../../l10n/localizer.dart';
+import '../../models/integration_base_model.dart';
 import '../../models/main_message.dart';
+import '../../models/match_model.dart';
 import '../../models/task_message.dart';
 import '../../models/timer_model.dart';
 import '../../models/timer_status.dart';
 import '../../services/timer_service.dart';
 import '../../services/toaster_service.dart';
+import '../integrations/integrations_cubit.dart';
 import '../settings/settings_cubit.dart';
 import 'timer_state.dart';
 
@@ -15,33 +20,40 @@ class TimerCubit extends Cubit<TimerState> {
   final SettingsCubit settingsCubit;
   final ToasterService toasterService;
   final TimerService timerService;
+  final IntegrationsCubit integrationsCubit;
 
-  TimerCubit({required this.settingsCubit, required this.toasterService, required this.timerService})
-    : super(const TimerState());
+  TimerCubit({
+    required this.settingsCubit,
+    required this.toasterService,
+    required this.timerService,
+    required this.integrationsCubit,
+  }) : super(const TimerState());
 
   Future<void> initialize() async {
     await _requestPermissions();
     timerService.initialize(taskDataCallback: _onReceiveData);
   }
 
-  Future<void> start(int matchId, String matchName, int improvisationId, int durationIndex, Duration duration) async {
+  Future<void> start(MatchModel match, int improvisationId, int durationIndex) async {
     final hasPermissions = await _requestPermissions();
     if (!hasPermissions) {
       return;
     }
 
+    final improvisation = match.improvisations.firstWhere((i) => i.id == improvisationId);
+    final duration = Duration(seconds: improvisation.durationsInSeconds[durationIndex]);
     final timer = TimerModel(
       durationInSeconds: duration.inSeconds,
-      matchId: matchId,
+      matchId: match.id,
       improvisationId: improvisationId,
       durationIndex: durationIndex,
       remainingMilliseconds: duration.inMilliseconds,
       status: TimerStatus.started,
       hapticFeedback: settingsCubit.state.enableTimerHapticFeedback,
-      notificationTitle: matchName,
+      notificationTitle: match.name,
     );
 
-    final path = '/matches/details/$matchId?improvisationId=$improvisationId&durationIndex=$durationIndex';
+    final path = '/matches/details/${match.id}?improvisationId=$improvisationId&durationIndex=$durationIndex';
 
     await timerService.start(path, enableWakelock: settingsCubit.state.enableWakelock);
 
@@ -61,6 +73,20 @@ class TimerCubit extends Cubit<TimerState> {
   Future<void> stop() async {
     emit(const TimerState());
     await timerService.stop();
+  }
+
+  @override
+  void onChange(Change<TimerState> change) {
+    final integration = change.nextState.integration ?? change.currentState.integration;
+
+    if (integration != null) {
+      integrationsCubit.state.integrations
+          .whereType<RealTimeMatchIntegrationBase>()
+          .firstWhereOrNull((i) => i.integrationId == integration.integrationId)
+          ?.onTimerUpdate(integration, change.nextState.timer);
+    }
+
+    super.onChange(change);
   }
 
   @override
@@ -88,9 +114,9 @@ class TimerCubit extends Cubit<TimerState> {
     }
   }
 
-  void _updateTimer(TimerModel timer) {
+  void _updateTimer(TimerModel timer, {IntegrationBaseModel? integration}) {
     if (timer != state.timer) {
-      emit(TimerState(timer: timer));
+      emit(TimerState(timer: timer, integration: integration ?? state.integration));
 
       final request = TaskMessage(
         status: timer.status,

@@ -1,11 +1,12 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/penalty_entity.dart';
+import 'integration_base_model.dart';
 
 part 'penalty_model.mapper.dart';
 
 @MappableClass()
-class PenaltyModel with PenaltyModelMappable {
+class PenaltyModel extends IntegrationBaseModel with PenaltyModelMappable {
   final int id;
   final bool major;
   final String type;
@@ -20,6 +21,8 @@ class PenaltyModel with PenaltyModelMappable {
     required this.performerId,
     required this.teamId,
     required this.improvisationId,
+    super.integrationEntityId,
+    super.integrationAdditionalData,
   });
 
   factory PenaltyModel.fromEntity({required PenaltyEntity entity}) => PenaltyModel(
@@ -29,6 +32,8 @@ class PenaltyModel with PenaltyModelMappable {
     performerId: entity.performerId,
     teamId: entity.teamId,
     improvisationId: entity.improvisationId,
+    integrationEntityId: entity.integrationEntityId,
+    integrationAdditionalData: entity.integrationAdditionalData,
   );
 
   PenaltyEntity toEntity() => PenaltyEntity(
@@ -38,5 +43,7 @@ class PenaltyModel with PenaltyModelMappable {
     performerId: performerId,
     teamId: teamId,
     improvisationId: improvisationId,
+    integrationEntityId: integrationEntityId,
+    integrationAdditionalData: integrationAdditionalData,
   );
 }

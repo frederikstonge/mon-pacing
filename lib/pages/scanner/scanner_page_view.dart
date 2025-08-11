@@ -6,17 +6,21 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:toastification/toastification.dart';
 
+import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
+import '../../integrations/integration_base.dart';
 import '../../integrations/match_integration_base.dart';
 import '../../integrations/pacing_integration_base.dart';
+import '../../integrations/real_time_match_integration_base.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
 import '../../router/routes.dart';
 import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
+import '../match_detail/match_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
 
 class ScannerPageView extends StatefulWidget {
@@ -41,7 +45,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       autoStart: true,
     );
     WidgetsBinding.instance.addObserver(this);
-    _subscription = controller.barcodes.listen(_handleBarcode);
+    _subscription = controller.barcodes.listen(handleBarcode);
   }
 
   @override
@@ -56,7 +60,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       case AppLifecycleState.paused:
         return;
       case AppLifecycleState.resumed:
-        _subscription = controller.barcodes.listen(_handleBarcode);
+        _subscription = controller.barcodes.listen(handleBarcode);
         controller.start();
       case AppLifecycleState.inactive:
         _subscription?.cancel();
@@ -109,7 +113,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     );
   }
 
-  Future<void> _handleBarcode(BarcodeCapture barcodeCapture) async {
+  Future<void> handleBarcode(BarcodeCapture barcodeCapture) async {
     final barcodeData = barcodeCapture.barcodes.first.rawValue;
     if (barcodeData == null) {
       return;
@@ -124,45 +128,19 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
 
     final integrations = context.read<IntegrationsCubit>().state.integrations;
     for (final integration in integrations) {
-      if (await integration.integrationIsValid(barcodeCapture.barcodes.first.rawValue!)) {
-        PacingModel? pacing;
-        MatchModel? match;
-        if (integration is PacingIntegrationBase) {
-          pacing = await integration.getPacing(barcodeData);
+      if (await integration.integrationIsValid(barcodeData)) {
+        // Get pacing
+        final pacing = await getPacing(integration, barcodeData);
+        if (pacing == null) {
+          toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
+          unawaited(controller.start());
+          return;
         }
 
-        if (integration is MatchIntegrationBase) {
-          if (pacing == null) {
-            if (!mounted) {
-              unawaited(controller.start());
-              return;
-            }
-
-            final result = await PacingsSearchPageView.showDialog(context);
-
-            if (result == null) {
-              // No pacing selected, restart scanner
-              unawaited(controller.start());
-              return;
-            }
-
-            pacing = result;
-          }
-          try {
-            match = await integration.getMatch(barcodeData, pacing);
-          } catch (e) {
-            unawaited(controller.start());
-            toasterService.show(
-              title: localizer.toasterGenericError,
-              description: e.toString(),
-              type: ToastificationType.error,
-            );
-            return;
-          }
-        }
-
-        // Create pacing
-        if (pacing != null && match == null) {
+        // Create pacing if integration is PacingIntegrationBase only
+        if (integration is PacingIntegrationBase &&
+            integration is! MatchIntegrationBase &&
+            integration is! RealTimeMatchIntegrationBase) {
           final pacingModel = await pacingsCubit.add(pacing);
           if (pacingModel != null) {
             await analyticsService.logIntegration(integration);
@@ -170,23 +148,29 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             return;
           } else {
             toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
-          }
-        }
-        // Create match
-        else if (match != null) {
-          final matchModel = await matchesCubit.add(match);
-          if (matchModel != null) {
-            await analyticsService.logIntegration(integration);
-            router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+            unawaited(controller.start());
             return;
-          } else {
-            toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
           }
         }
 
-        // Integration found but no pacing or match created, restart scanner
-        unawaited(controller.start());
-        return;
+        // Get match
+        final match = await getMatch(integration, barcodeData, pacing);
+        if (match == null) {
+          toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
+          unawaited(controller.start());
+          return;
+        }
+
+        final matchModel = await matchesCubit.add(match);
+        if (matchModel != null) {
+          await analyticsService.logIntegration(integration);
+          router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+          return;
+        } else {
+          toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
+          unawaited(controller.start());
+          return;
+        }
       }
     }
 
@@ -211,5 +195,53 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
         return const SizedBox();
       },
     );
+  }
+
+  Future<PacingModel?> getPacing(IntegrationBase integration, String barcodeData) async {
+    if (integration is PacingIntegrationBase) {
+      try {
+        return await integration.getPacing(barcodeData);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    final result = await PacingsSearchPageView.showDialog(context);
+    return result;
+  }
+
+  Future<MatchModel?> getMatch(IntegrationBase integration, String barcodeData, PacingModel pacing) async {
+    MatchModel? match;
+
+    if (integration is MatchIntegrationBase) {
+      try {
+        match = await integration.getMatch(barcodeData, pacing);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    if (match == null && mounted) {
+      match = await BottomSheetDialog.showDialog<MatchModel>(
+        context: context,
+        child: MatchDetailPageShell(
+          pacing: pacing,
+          onConfirm: (match, dialogContext) async {
+            final navigator = Navigator.of(dialogContext);
+            navigator.pop(match);
+          },
+        ),
+      );
+    }
+
+    if (match == null) {
+      return null;
+    }
+
+    if (integration is RealTimeMatchIntegrationBase) {
+      match = await integration.enrichMatch(barcodeData, match);
+    }
+
+    return match;
   }
 }

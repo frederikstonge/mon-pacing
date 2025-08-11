@@ -74,7 +74,7 @@
     },
     {
       "id": "2:7328884561935232436",
-      "lastPropertyId": "18:7018269910061947127",
+      "lastPropertyId": "22:1928404867438195825",
       "name": "MatchEntity",
       "properties": [
         {
@@ -150,23 +150,23 @@
           "type": 9
         },
         {
-          "id": "15:1994226352184633381",
-          "name": "integrationRestrictMaximumPointPerImprovisation",
+          "id": "19:5300554953883517586",
+          "name": "maximumPointsPerImprovisation",
           "type": 6
         },
         {
-          "id": "16:1550223078012945261",
-          "name": "integrationMinNumberOfImprovisations",
+          "id": "20:3761328257463516081",
+          "name": "minNumberOfImprovisations",
           "type": 6
         },
         {
-          "id": "17:6040221050144242742",
-          "name": "integrationMaxNumberOfImprovisations",
+          "id": "21:4076638638679711664",
+          "name": "maxNumberOfImprovisations",
           "type": 6
         },
         {
-          "id": "18:7018269910061947127",
-          "name": "integrationPenaltyTypes",
+          "id": "22:1928404867438195825",
+          "name": "penaltyTypes",
           "type": 30
         }
       ],
@@ -271,7 +271,7 @@
     },
     {
       "id": "5:8822958598216247929",
-      "lastPropertyId": "6:7726242346064950081",
+      "lastPropertyId": "8:29886492798158384",
       "name": "PenaltyEntity",
       "properties": [
         {
@@ -304,6 +304,16 @@
           "id": "6:7726242346064950081",
           "name": "improvisationId",
           "type": 6
+        },
+        {
+          "id": "7:6104387141158122119",
+          "name": "integrationEntityId",
+          "type": 9
+        },
+        {
+          "id": "8:29886492798158384",
+          "name": "integrationAdditionalData",
+          "type": 9
         }
       ],
       "relations": []
@@ -344,7 +354,7 @@
     },
     {
       "id": "7:8160220251486354996",
-      "lastPropertyId": "4:1358822669887476775",
+      "lastPropertyId": "6:6664286890174667097",
       "name": "PointEntity",
       "properties": [
         {
@@ -367,13 +377,23 @@
           "id": "4:1358822669887476775",
           "name": "value",
           "type": 6
+        },
+        {
+          "id": "5:2836773694263113959",
+          "name": "integrationEntityId",
+          "type": 9
+        },
+        {
+          "id": "6:6664286890174667097",
+          "name": "integrationAdditionalData",
+          "type": 9
         }
       ],
       "relations": []
     },
     {
       "id": "8:5250281909069223402",
-      "lastPropertyId": "4:4410339759004335565",
+      "lastPropertyId": "6:2047213223747994388",
       "name": "StarEntity",
       "properties": [
         {
@@ -396,6 +416,16 @@
           "id": "4:4410339759004335565",
           "name": "order",
           "type": 6
+        },
+        {
+          "id": "5:8617778164047840157",
+          "name": "integrationEntityId",
+          "type": 9
+        },
+        {
+          "id": "6:2047213223747994388",
+          "name": "integrationAdditionalData",
+          "type": 9
         }
       ],
       "relations": []
@@ -504,7 +534,11 @@
     6599612206698723775,
     1472699283272810640,
     4337454576444043536,
-    4968754909771031518
+    4968754909771031518,
+    1994226352184633381,
+    1550223078012945261,
+    6040221050144242742,
+    7018269910061947127
   ],
   "retiredRelationUids": [],
   "version": 1

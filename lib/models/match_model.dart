@@ -3,6 +3,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 import '../repositories/entities/match_entity.dart';
 import 'improvisation_model.dart';
+import 'integration_base_model.dart';
 import 'penalties_impact_type.dart';
 import 'penalty_model.dart';
 import 'point_model.dart';
@@ -14,7 +15,7 @@ import 'team_model.dart';
 part 'match_model.mapper.dart';
 
 @MappableClass()
-class MatchModel extends TagBaseModel with MatchModelMappable {
+class MatchModel extends IntegrationBaseModel with MatchModelMappable implements TagBaseModel {
   final int id;
   final String name;
   final DateTime? createdDate;
@@ -30,13 +31,21 @@ class MatchModel extends TagBaseModel with MatchModelMappable {
   final int penaltiesRequiredToImpactPoints;
   final bool enableMatchExpulsion;
   final int penaltiesRequiredToExpel;
-  final String? integrationId;
-  final String? integrationEntityId;
-  final String? integrationAdditionalData;
-  final int? integrationRestrictMaximumPointPerImprovisation;
-  final int? integrationMinNumberOfImprovisations;
-  final int? integrationMaxNumberOfImprovisations;
-  final List<String>? integrationPenaltyTypes;
+
+  /// Integration-specific
+  final int? maximumPointsPerImprovisation;
+
+  /// Integration-specific
+  final int? minNumberOfImprovisations;
+
+  /// Integration-specific settings
+  final int? maxNumberOfImprovisations;
+
+  /// Integration-specific settings
+  final List<String>? penaltyTypes;
+
+  @override
+  final List<TagModel> tags;
 
   const MatchModel({
     required this.id,
@@ -54,14 +63,14 @@ class MatchModel extends TagBaseModel with MatchModelMappable {
     this.penaltiesRequiredToImpactPoints = 3,
     this.enableMatchExpulsion = true,
     this.penaltiesRequiredToExpel = 3,
-    this.integrationId,
-    this.integrationEntityId,
-    this.integrationAdditionalData,
-    this.integrationRestrictMaximumPointPerImprovisation,
-    this.integrationMinNumberOfImprovisations,
-    this.integrationMaxNumberOfImprovisations,
-    this.integrationPenaltyTypes,
-    super.tags = const [],
+    this.tags = const [],
+    super.integrationId,
+    super.integrationEntityId,
+    super.integrationAdditionalData,
+    this.maximumPointsPerImprovisation,
+    this.minNumberOfImprovisations,
+    this.maxNumberOfImprovisations,
+    this.penaltyTypes,
   });
 
   factory MatchModel.fromEntity({required MatchEntity entity}) {
@@ -88,10 +97,10 @@ class MatchModel extends TagBaseModel with MatchModelMappable {
       integrationId: entity.integrationId,
       integrationEntityId: entity.integrationEntityId,
       integrationAdditionalData: entity.integrationAdditionalData,
-      integrationRestrictMaximumPointPerImprovisation: entity.integrationRestrictMaximumPointPerImprovisation,
-      integrationMinNumberOfImprovisations: entity.integrationMinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: entity.integrationMaxNumberOfImprovisations,
-      integrationPenaltyTypes: entity.integrationPenaltyTypes,
+      maximumPointsPerImprovisation: entity.maximumPointsPerImprovisation,
+      minNumberOfImprovisations: entity.minNumberOfImprovisations,
+      maxNumberOfImprovisations: entity.maxNumberOfImprovisations,
+      penaltyTypes: entity.penaltyTypes,
     );
   }
 
@@ -110,10 +119,10 @@ class MatchModel extends TagBaseModel with MatchModelMappable {
       integrationId: integrationId,
       integrationEntityId: integrationEntityId,
       integrationAdditionalData: integrationAdditionalData,
-      integrationRestrictMaximumPointPerImprovisation: integrationRestrictMaximumPointPerImprovisation,
-      integrationMinNumberOfImprovisations: integrationMinNumberOfImprovisations,
-      integrationMaxNumberOfImprovisations: integrationMaxNumberOfImprovisations,
-      integrationPenaltyTypes: integrationPenaltyTypes,
+      maximumPointsPerImprovisation: maximumPointsPerImprovisation,
+      minNumberOfImprovisations: minNumberOfImprovisations,
+      maxNumberOfImprovisations: maxNumberOfImprovisations,
+      penaltyTypes: penaltyTypes,
     );
 
     match.improvisations.addAll(improvisations.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());

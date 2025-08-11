@@ -60,10 +60,9 @@ class MatchPageView extends StatelessWidget {
                     match.enableStatistics && selectedImprovisationIndex == match.improvisations.length;
                 final improvisation = match.improvisations.elementAtOrNull(selectedImprovisationIndex);
                 final canAddImprovisation =
-                    match.integrationMaxNumberOfImprovisations == null ||
-                    match.improvisations.length < match.integrationMaxNumberOfImprovisations!;
-                final canRemoveImprovisation =
-                    match.improvisations.length > (match.integrationMinNumberOfImprovisations ?? 1);
+                    match.maxNumberOfImprovisations == null ||
+                    match.improvisations.length < match.maxNumberOfImprovisations!;
+                final canRemoveImprovisation = match.improvisations.length > (match.minNumberOfImprovisations ?? 1);
 
                 return BlocBuilder<TimerCubit, TimerState>(
                   builder: (context, timerState) {
@@ -226,7 +225,7 @@ class MatchPageView extends StatelessWidget {
       improvisationId: improvisation.id,
       teams: match.teams,
       penalty: penalty,
-      integrationPenaltyTypes: match.integrationPenaltyTypes,
+      integrationPenaltyTypes: match.penaltyTypes,
       onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
     ),
   );
@@ -238,7 +237,7 @@ class MatchPageView extends StatelessWidget {
         improvisationId: improvisation.id,
         teams: match.teams,
         onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
-        integrationPenaltyTypes: match.integrationPenaltyTypes,
+        integrationPenaltyTypes: match.penaltyTypes,
       ),
     );
   }
