@@ -259,10 +259,14 @@ class MatchCubit extends Cubit<MatchState> {
   @override
   void onChange(Change<MatchState> change) {
     if (change.nextState.match != null) {
-      integrationsCubit.state.integrations
-          .whereType<RealTimeMatchIntegrationBase>()
-          .firstWhereOrNull((i) => i.integrationId == change.nextState.match!.integrationId)
-          ?.onMatchUpdate(change.nextState.match!);
+      try {
+        integrationsCubit.state.integrations
+            .whereType<RealTimeMatchIntegrationBase>()
+            .firstWhereOrNull((i) => i.integrationId == change.nextState.match!.integrationId)
+            ?.onMatchUpdate(change.nextState.match!);
+      } catch (_) {
+        // Handle any errors that occur during the integration update
+      }
 
       super.onChange(change);
     }
