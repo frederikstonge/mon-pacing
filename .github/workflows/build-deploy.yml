@@ -66,8 +66,7 @@ jobs:
 
   build_deploy_ios:
     name: "Build & Deploy iOS"
-    # Use macos-15 until macos-latest is updated to 15 - https://github.com/actions/runner-images/blob/main/README.md
-    runs-on: macos-15 #macos-latest
+    runs-on: macos-latest
     needs: [set_build_number, tests]
     if: ${{ !cancelled() && inputs.deploy-ios && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
     environment: deploy-ios
@@ -85,6 +84,10 @@ jobs:
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 16.0
 
       - name: Install Flutter
         uses: ./.github/actions/setup-flutter
