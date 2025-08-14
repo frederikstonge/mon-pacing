@@ -85,9 +85,9 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v4
 
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: 16.0
+      # - uses: maxim-lobanov/setup-xcode@v1
+      #   with:
+      #     xcode-version: 16.0
 
       - name: Install Flutter
         uses: ./.github/actions/setup-flutter

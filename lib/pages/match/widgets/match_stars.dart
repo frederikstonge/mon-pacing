@@ -88,7 +88,7 @@ class MatchStarItem extends StatelessWidget {
               isExpanded: true,
               decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
               icon: const Icon(Icons.arrow_downward),
-              value: star.teamId,
+              initialValue: star.teamId,
               onChanged: (value) {
                 if (value != null) {
                   final team = teams.firstWhere((t) => t.id == value);
@@ -123,7 +123,7 @@ class MatchStarItem extends StatelessWidget {
               isExpanded: true,
               decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
               icon: const Icon(Icons.arrow_downward),
-              value: star.performerId,
+              initialValue: star.performerId,
               onChanged: (value) {
                 if (value != null) {
                   valueChanged(star.copyWith(performerId: value));

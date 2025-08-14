@@ -5,4 +5,3 @@ output-dir: lib/l10n/generated
 output-class: S
 nullable-getter: false
 use-named-parameters: true
-synthetic-package: false

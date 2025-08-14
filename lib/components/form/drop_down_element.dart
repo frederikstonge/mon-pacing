@@ -27,7 +27,7 @@ class DropDownElement<T> extends StatelessWidget {
         DropdownButtonFormField<T>(
           isExpanded: true,
           decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))),
-          value: value,
+          initialValue: value,
           icon: const Icon(Icons.arrow_downward),
           onChanged: (value) {
             onChanged?.call(value as T);

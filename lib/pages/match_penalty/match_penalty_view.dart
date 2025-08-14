@@ -60,7 +60,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
                         ),
                         icon: const Icon(Icons.arrow_downward),
-                        value: matchPenaltyState.penalty.teamId,
+                        initialValue: matchPenaltyState.penalty.teamId,
                         onChanged: (value) {
                           if (value != null) {
                             context.read<MatchPenaltyCubit>().edit(matchPenaltyState.penalty.copyWith(teamId: value));
@@ -97,7 +97,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
                           ),
                           icon: const Icon(Icons.arrow_downward),
-                          value: matchPenaltyState.penalty.type.isNotEmpty
+                          initialValue: matchPenaltyState.penalty.type.isNotEmpty
                               ? matchPenaltyState.integrationPenaltyTypes!.indexOf(matchPenaltyState.penalty.type)
                               : 0,
                           onChanged: (value) {
