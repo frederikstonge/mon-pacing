@@ -1676,9 +1676,15 @@ class MockTimerCubit extends _i1.Mock implements _i41.TimerCubit {
     _i17.MatchModel? match,
     int? improvisationId,
     int? durationIndex,
+    Duration? duration,
   ) =>
       (super.noSuchMethod(
-            Invocation.method(#start, [match, improvisationId, durationIndex]),
+            Invocation.method(#start, [
+              match,
+              improvisationId,
+              durationIndex,
+              duration,
+            ]),
             returnValue: _i32.Future<void>.value(),
             returnValueForMissingStub: _i32.Future<void>.value(),
           )

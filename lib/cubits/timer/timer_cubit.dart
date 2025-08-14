@@ -34,14 +34,12 @@ class TimerCubit extends Cubit<TimerState> {
     timerService.initialize(taskDataCallback: _onReceiveData);
   }
 
-  Future<void> start(MatchModel match, int improvisationId, int durationIndex) async {
+  Future<void> start(MatchModel match, int improvisationId, int durationIndex, Duration duration) async {
     final hasPermissions = await _requestPermissions();
     if (!hasPermissions) {
       return;
     }
 
-    final improvisation = match.improvisations.firstWhere((i) => i.id == improvisationId);
-    final duration = Duration(seconds: improvisation.durationsInSeconds[durationIndex]);
     final timer = TimerModel(
       durationInSeconds: duration.inSeconds,
       matchId: match.id,
