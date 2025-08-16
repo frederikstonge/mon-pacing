@@ -37,7 +37,7 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
       emit(
         state.copyWith(
           status: IntegrationsStatus.success,
-          integrations: integrations, //integrations.where((i) => remoteConfig.getBool(i.featureFlagName)).toList(),
+          integrations: integrations.where((i) => remoteConfig.getBool(i.featureFlagName)).toList(),
         ),
       );
     } catch (e) {
