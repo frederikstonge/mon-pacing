@@ -75,56 +75,56 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                 final pacing = pacingState.pacing!;
                 return BlocBuilder<TimerCubit, TimerState>(
                   builder: (context, timerState) {
-                    return SliverScaffold(
-                      floatingActionButton: FloatingActionButton(
-                        key: _addImprovisationButtonKey,
-                        heroTag: 'pacing_tab',
-                        onPressed: () => _onAddImprovisationPressed(context),
-                        tooltip: S.of(context).addImprovisation,
-                        child: const Icon(Icons.add),
-                      ),
-                      banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
-                      appBar: BlocBuilder<SettingsCubit, SettingsState>(
-                        builder: (context, settingsState) {
-                          return SliverLogoAppbar(
-                            title: pacing.name,
-                            theme: settingsState.theme,
-                            primary: timerState.timer == null,
-                            actions: [
-                              LoadingIconButton(
-                                tooltip: S.of(context).more,
-                                onPressed: () => BottomSheetDialog.showDialog(
-                                  context: context,
-                                  child: PacingMenu(
-                                    pacing: pacing,
-                                    startMatch: () {
-                                      _startMatch(context, pacing);
-                                    },
-                                    editDetails: () async {
-                                      await _editDetails(context, pacing);
-                                    },
-                                    delete: () async {
-                                      await _delete(context, pacing);
-                                    },
-                                    export: () async {
-                                      await context.read<PacingsCubit>().export(pacing);
-                                    },
-                                    duplicate: () {
-                                      return _duplicate(context, pacing);
-                                    },
+                    return Form(
+                      key: formKey,
+                      child: SliverScaffold(
+                        floatingActionButton: FloatingActionButton(
+                          key: _addImprovisationButtonKey,
+                          heroTag: 'pacing_tab',
+                          onPressed: () => _onAddImprovisationPressed(context),
+                          tooltip: S.of(context).addImprovisation,
+                          child: const Icon(Icons.add),
+                        ),
+                        banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
+                        appBar: BlocBuilder<SettingsCubit, SettingsState>(
+                          builder: (context, settingsState) {
+                            return SliverLogoAppbar(
+                              title: pacing.name,
+                              theme: settingsState.theme,
+                              primary: timerState.timer == null,
+                              actions: [
+                                LoadingIconButton(
+                                  tooltip: S.of(context).more,
+                                  onPressed: () => BottomSheetDialog.showDialog(
+                                    context: context,
+                                    child: PacingMenu(
+                                      pacing: pacing,
+                                      startMatch: () {
+                                        _startMatch(context, pacing);
+                                      },
+                                      editDetails: () async {
+                                        await _editDetails(context, pacing);
+                                      },
+                                      delete: () async {
+                                        await _delete(context, pacing);
+                                      },
+                                      export: () async {
+                                        await context.read<PacingsCubit>().export(pacing);
+                                      },
+                                      duplicate: () {
+                                        return _duplicate(context, pacing);
+                                      },
+                                    ),
                                   ),
+                                  icon: const Icon(Icons.more_vert),
                                 ),
-                                icon: const Icon(Icons.more_vert),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      slivers: [
-                        SliverPersistentHeader(delegate: PacingPersistentHeader(pacing: pacing), pinned: true),
-                        Form(
-                          key: formKey,
-                          child: SliverReorderableList(
+                              ],
+                            );
+                          },
+                        ),
+                        slivers: [
+                          SliverPersistentHeader(delegate: PacingPersistentHeader(pacing: pacing), pinned: true),
+                          SliverReorderableList(
                             itemCount: pacing.improvisations.length,
                             itemBuilder: (context, index) {
                               final improvisation = pacing.improvisations.elementAt(index);
@@ -146,8 +146,8 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                             onReorderStart: (index) => _onDragStart(),
                             onReorder: (oldIndex, newIndex) => _onReorder(context, oldIndex, newIndex),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     );
                   },
                 );

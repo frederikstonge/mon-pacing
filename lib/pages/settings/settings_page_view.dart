@@ -50,17 +50,17 @@ class _SettingsPageViewState extends State<SettingsPageView> {
       builder: (context, settingsState) {
         return BlocBuilder<TimerCubit, TimerState>(
           builder: (context, timerState) {
-            return SliverScaffold(
-              banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
-              appBar: SliverLogoAppbar(
-                title: S.of(context).settings,
-                theme: settingsState.theme,
-                primary: timerState.timer == null,
-              ),
-              slivers: [
-                Form(
-                  key: formKey,
-                  child: SliverList.list(
+            return Form(
+              key: formKey,
+              child: SliverScaffold(
+                banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
+                appBar: SliverLogoAppbar(
+                  title: S.of(context).settings,
+                  theme: settingsState.theme,
+                  primary: timerState.timer == null,
+                ),
+                slivers: [
+                  SliverList.list(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
@@ -505,8 +505,8 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         );

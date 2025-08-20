@@ -1,7 +1,7 @@
 name: mon_pacing
 description: "Mobile app for improvisation match referees, based on Robert Gravel's idea to mix improv with hockey rules."
 publish_to: "none"
-version: 1.8.3+1
+version: 1.9.0+1
 
 environment:
   sdk: ^3.9.0
