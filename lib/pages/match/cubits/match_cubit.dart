@@ -54,12 +54,7 @@ class MatchCubit extends Cubit<MatchState> {
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
 
     emit(
-      state.copyWith(
-        status: MatchStatus.success,
-        match: match,
-        selectedImprovisationIndex: selectedImprovisationIndex,
-        selectedDurationIndex: durationIndex ?? 0,
-      ),
+      state.copyWith(status: MatchStatus.success, match: match, selectedImprovisationIndex: selectedImprovisationIndex),
     );
 
     _validatePenalties(match);
@@ -75,14 +70,7 @@ class MatchCubit extends Cubit<MatchState> {
 
     improvisations.insert(index, improvisation);
     final newMatch = await matchesCubit.edit(state.match!.copyWith(improvisations: improvisations));
-    emit(
-      state.copyWith(
-        status: MatchStatus.success,
-        match: newMatch,
-        selectedImprovisationIndex: index,
-        selectedDurationIndex: 0,
-      ),
-    );
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch, selectedImprovisationIndex: index));
   }
 
   Future<void> editImprovisation(ImprovisationModel improvisation, int index) async {
@@ -93,14 +81,7 @@ class MatchCubit extends Cubit<MatchState> {
     improvisations.insert(index, improvisation);
     final newMatch = await matchesCubit.edit(state.match!.copyWith(improvisations: improvisations));
 
-    emit(
-      state.copyWith(
-        status: MatchStatus.success,
-        match: newMatch,
-        selectedImprovisationIndex: index,
-        selectedDurationIndex: 0,
-      ),
-    );
+    emit(state.copyWith(status: MatchStatus.success, match: newMatch, selectedImprovisationIndex: index));
   }
 
   Future<void> removeImprovisation(ImprovisationModel improvisation) async {
@@ -128,17 +109,12 @@ class MatchCubit extends Cubit<MatchState> {
         status: MatchStatus.success,
         match: newMatch,
         selectedImprovisationIndex: newSelectedImprovisationIndex,
-        selectedDurationIndex: 0,
       ),
     );
   }
 
   void changePage(int page) {
-    emit(state.copyWith(status: MatchStatus.success, selectedImprovisationIndex: page, selectedDurationIndex: 0));
-  }
-
-  void changeDuration(int durationIndex) {
-    emit(state.copyWith(status: MatchStatus.success, selectedDurationIndex: durationIndex));
+    emit(state.copyWith(status: MatchStatus.success, selectedImprovisationIndex: page));
   }
 
   Future<void> setPoint(int improvisationId, int teamId, int value) async {

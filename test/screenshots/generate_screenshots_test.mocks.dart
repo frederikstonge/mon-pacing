@@ -2109,12 +2109,6 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
   );
 
   @override
-  void changeDuration(int? durationIndex) => super.noSuchMethod(
-    Invocation.method(#changeDuration, [durationIndex]),
-    returnValueForMissingStub: null,
-  );
-
-  @override
   _i32.Future<void> setPoint(int? improvisationId, int? teamId, int? value) =>
       (super.noSuchMethod(
             Invocation.method(#setPoint, [improvisationId, teamId, value]),

@@ -7,10 +7,10 @@ import 'package:toastification/toastification.dart';
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
+import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/match_menu/match_menu.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
-import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
 import '../../cubits/integrations/integrations_state.dart';
@@ -39,13 +39,32 @@ import 'widgets/match_persistent_header.dart';
 import 'widgets/match_summary.dart';
 import 'widgets/timer_widget.dart';
 
-class MatchPageView extends StatelessWidget {
-  const MatchPageView({super.key});
+class MatchPageView extends StatefulWidget {
+  final int? durationIndex;
+
+  const MatchPageView({super.key, this.durationIndex});
+
+  @override
+  State<MatchPageView> createState() => _MatchPageViewState();
+}
+
+class _MatchPageViewState extends State<MatchPageView> {
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<MatchCubit, MatchState>(
+      body: BlocConsumer<MatchCubit, MatchState>(
+        listener: (context, state) {
+          if (_pageController.page?.round() != state.selectedImprovisationIndex) {
+            _pageController.animateToPage(
+              state.selectedImprovisationIndex,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          }
+        },
+        listenWhen: (previous, current) => previous.selectedImprovisationIndex != current.selectedImprovisationIndex,
         builder: (context, matchState) {
           return switch (matchState.status) {
             MatchStatus.initial => const Center(child: CircularProgressIndicator()),
@@ -53,67 +72,60 @@ class MatchPageView extends StatelessWidget {
             MatchStatus.error => Center(child: Text(matchState.error ?? '')),
             MatchStatus.success => Builder(
               builder: (context) {
-                final match = matchState.match!;
-                final selectedImprovisationIndex = matchState.selectedImprovisationIndex;
-                final selectedDurationIndex = matchState.selectedDurationIndex;
-                final summarySelected =
-                    match.enableStatistics && selectedImprovisationIndex == match.improvisations.length;
-                final improvisation = match.improvisations.elementAtOrNull(selectedImprovisationIndex);
-                final canAddImprovisation =
-                    match.maxNumberOfImprovisations == null ||
-                    match.improvisations.length < match.maxNumberOfImprovisations!;
-                final canRemoveImprovisation = match.improvisations.length > (match.minNumberOfImprovisations ?? 1);
-
                 return BlocBuilder<TimerCubit, TimerState>(
                   builder: (context, timerState) {
-                    return SliverScaffold(
-                      banner: timerState.timer != null
-                          ? TimerBanner(
-                              timer: timerState.timer!,
-                              match: match,
-                              improvisation: improvisation,
-                              selectedDurationIndex: selectedDurationIndex,
-                            )
-                          : null,
-                      appBar: BlocBuilder<SettingsCubit, SettingsState>(
-                        builder: (context, settingsState) {
-                          return SliverLogoAppbar(
-                            title: match.name,
-                            theme: settingsState.theme,
-                            primary: timerState.timer == null,
-                            actions: [
-                              if (match.enableStatistics) ...[
+                    final match = matchState.match!;
+                    final selectedImprovisationIndex = matchState.selectedImprovisationIndex;
+                    final canAddImprovisation =
+                        match.maxNumberOfImprovisations == null ||
+                        match.improvisations.length < match.maxNumberOfImprovisations!;
+                    return CustomScaffold(
+                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                        if (timerState.timer != null) ...[
+                          TimerBanner(
+                            timer: timerState.timer!,
+                            match: match,
+                            improvisation: match.improvisations.elementAtOrNull(selectedImprovisationIndex),
+                          ),
+                        ],
+                        BlocBuilder<SettingsCubit, SettingsState>(
+                          builder: (context, settingsState) {
+                            return SliverLogoAppbar(
+                              title: match.name,
+                              theme: settingsState.theme,
+                              primary: timerState.timer == null,
+                              actions: [
+                                if (match.enableStatistics) ...[
+                                  LoadingIconButton(
+                                    onPressed: () async {
+                                      await _openScoreboard(context, match);
+                                    },
+                                    tooltip: S.of(context).scoreboard,
+                                    icon: const Icon(Icons.scoreboard),
+                                  ),
+                                ],
                                 LoadingIconButton(
-                                  onPressed: () async {
-                                    await _openScoreboard(context, match);
-                                  },
-                                  tooltip: S.of(context).scoreboard,
-                                  icon: const Icon(Icons.scoreboard),
+                                  tooltip: S.of(context).more,
+                                  onPressed: () => BottomSheetDialog.showDialog(
+                                    context: context,
+                                    child: MatchMenu(
+                                      match: match,
+                                      editDetails: match.integrationId == null
+                                          ? () async {
+                                              await _editDetails(context, match);
+                                            }
+                                          : null,
+                                      delete: () async {
+                                        await _delete(context, match);
+                                      },
+                                    ),
+                                  ),
+                                  icon: const Icon(Icons.more_vert),
                                 ),
                               ],
-                              LoadingIconButton(
-                                tooltip: S.of(context).more,
-                                onPressed: () => BottomSheetDialog.showDialog(
-                                  context: context,
-                                  child: MatchMenu(
-                                    match: match,
-                                    editDetails: match.integrationId == null
-                                        ? () async {
-                                            await _editDetails(context, match);
-                                          }
-                                        : null,
-                                    delete: () async {
-                                      await _delete(context, match);
-                                    },
-                                  ),
-                                ),
-                                icon: const Icon(Icons.more_vert),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      slivers: [
+                            );
+                          },
+                        ),
                         SliverPersistentHeader(
                           delegate: MatchPersistentHeader(
                             match: match,
@@ -123,71 +135,81 @@ class MatchPageView extends StatelessWidget {
                           ),
                           pinned: true,
                         ),
-                        if (!summarySelected && improvisation != null) ...[
-                          SliverToBoxAdapter(
-                            child: ImprovisationCard(
-                              improvisation: improvisation,
-                              index: selectedImprovisationIndex,
-                              onEdit: (improvisation) async => await _editImprovisation(context, match, improvisation),
-                              onDelete: canRemoveImprovisation
-                                  ? (improvisation) async =>
-                                        await _deleteImprovisation(context, improvisation, selectedImprovisationIndex)
-                                  : null,
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: CustomCard(
-                              child: TimerWidget(
-                                match: match,
-                                improvisation: improvisation,
-                                durationIndex: selectedDurationIndex,
-                                onDurationIndexChanged: (durationIndex) =>
-                                    context.read<MatchCubit>().changeDuration(durationIndex),
-                              ),
-                            ),
-                          ),
-                          if (match.enableStatistics) ...[
-                            SliverToBoxAdapter(
-                              child: ImprovisationPoints(
-                                key: ValueKey(improvisation.hashCode),
-                                match: match,
-                                improvisation: improvisation,
-                                onPointChanged: (improvisationId, teamId, value) =>
-                                    context.read<MatchCubit>().setPoint(improvisationId, teamId, value),
-                              ),
-                            ),
-                            SliverToBoxAdapter(
-                              child: ImprovisationPenalties(
-                                match: match,
-                                improvisation: improvisation,
-                                editPenalty: _editPenalty,
-                                addPenalty: _addPenalty,
-                                removePenalty: _removePenalty,
-                              ),
-                            ),
-                          ],
-                        ] else ...[
-                          SliverToBoxAdapter(
-                            child: BlocBuilder<IntegrationsCubit, IntegrationsState>(
-                              builder: (context, integrationsState) {
-                                final integration = integrationsState.integrations
-                                    .whereType<MatchIntegrationBase>()
-                                    .firstWhereOrNull((i) => i.integrationId == match.integrationId);
-
-                                return MatchSummary(
-                                  match: match,
-                                  onExport: () => _export(context),
-                                  onExportIntegration: integration != null
-                                      ? () async {
-                                          await _onExportIntegration(context, match, integration);
-                                        }
-                                      : null,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
                       ],
+                      body: PageView.builder(
+                        controller: _pageController,
+                        onPageChanged: (value) => context.read<MatchCubit>().changePage(value),
+                        itemBuilder: (context, index) {
+                          final summarySelected = match.enableStatistics && index == match.improvisations.length;
+                          final improvisation = match.improvisations.elementAtOrNull(index);
+                          final canRemoveImprovisation =
+                              match.improvisations.length > (match.minNumberOfImprovisations ?? 1);
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                if (!summarySelected && improvisation != null) ...[
+                                  ImprovisationCard(
+                                    improvisation: improvisation,
+                                    index: index,
+                                    onEdit: (improvisation) async =>
+                                        await _editImprovisation(context, match, improvisation),
+                                    onDelete: canRemoveImprovisation
+                                        ? (improvisation) async =>
+                                              await _deleteImprovisation(context, improvisation, index)
+                                        : null,
+                                  ),
+                                  CustomCard(
+                                    child: TimerWidget(
+                                      match: match,
+                                      improvisation: improvisation,
+                                      initialSelectedIndex: selectedImprovisationIndex == index
+                                          ? widget.durationIndex
+                                          : null,
+                                    ),
+                                  ),
+
+                                  if (match.enableStatistics) ...[
+                                    ImprovisationPoints(
+                                      key: ValueKey(improvisation.hashCode),
+                                      match: match,
+                                      improvisation: improvisation,
+                                      onPointChanged: (improvisationId, teamId, value) =>
+                                          context.read<MatchCubit>().setPoint(improvisationId, teamId, value),
+                                    ),
+
+                                    ImprovisationPenalties(
+                                      match: match,
+                                      improvisation: improvisation,
+                                      editPenalty: _editPenalty,
+                                      addPenalty: _addPenalty,
+                                      removePenalty: _removePenalty,
+                                    ),
+                                  ],
+                                ] else ...[
+                                  BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                                    builder: (context, integrationsState) {
+                                      final integration = integrationsState.integrations
+                                          .whereType<MatchIntegrationBase>()
+                                          .firstWhereOrNull((i) => i.integrationId == match.integrationId);
+
+                                      return MatchSummary(
+                                        match: match,
+                                        onExport: () => _export(context),
+                                        onExportIntegration: integration != null
+                                            ? () async {
+                                                await _onExportIntegration(context, match, integration);
+                                              }
+                                            : null,
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ],
+                            ),
+                          );
+                        },
+                        itemCount: match.improvisations.length + (match.enableStatistics ? 1 : 0),
+                      ),
                     );
                   },
                 );

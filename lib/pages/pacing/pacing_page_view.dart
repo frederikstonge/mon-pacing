@@ -6,10 +6,10 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
+import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/pacing_menu/pacing_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
-import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
@@ -77,7 +77,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                   builder: (context, timerState) {
                     return Form(
                       key: formKey,
-                      child: SliverScaffold(
+                      child: CustomScaffold(
                         floatingActionButton: FloatingActionButton(
                           key: _addImprovisationButtonKey,
                           heroTag: 'pacing_tab',
@@ -85,68 +85,76 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                           tooltip: S.of(context).addImprovisation,
                           child: const Icon(Icons.add),
                         ),
-                        banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
-                        appBar: BlocBuilder<SettingsCubit, SettingsState>(
-                          builder: (context, settingsState) {
-                            return SliverLogoAppbar(
-                              title: pacing.name,
-                              theme: settingsState.theme,
-                              primary: timerState.timer == null,
-                              actions: [
-                                LoadingIconButton(
-                                  tooltip: S.of(context).more,
-                                  onPressed: () => BottomSheetDialog.showDialog(
-                                    context: context,
-                                    child: PacingMenu(
-                                      pacing: pacing,
-                                      startMatch: () {
-                                        _startMatch(context, pacing);
-                                      },
-                                      editDetails: () async {
-                                        await _editDetails(context, pacing);
-                                      },
-                                      delete: () async {
-                                        await _delete(context, pacing);
-                                      },
-                                      export: () async {
-                                        await context.read<PacingsCubit>().export(pacing);
-                                      },
-                                      duplicate: () {
-                                        return _duplicate(context, pacing);
-                                      },
+                        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
+                          if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
+                          BlocBuilder<SettingsCubit, SettingsState>(
+                            builder: (context, settingsState) {
+                              return SliverLogoAppbar(
+                                title: pacing.name,
+                                theme: settingsState.theme,
+                                primary: timerState.timer == null,
+                                actions: [
+                                  LoadingIconButton(
+                                    tooltip: S.of(context).more,
+                                    onPressed: () => BottomSheetDialog.showDialog(
+                                      context: context,
+                                      child: PacingMenu(
+                                        pacing: pacing,
+                                        startMatch: () {
+                                          _startMatch(context, pacing);
+                                        },
+                                        editDetails: () async {
+                                          await _editDetails(context, pacing);
+                                        },
+                                        delete: () async {
+                                          await _delete(context, pacing);
+                                        },
+                                        export: () async {
+                                          await context.read<PacingsCubit>().export(pacing);
+                                        },
+                                        duplicate: () {
+                                          return _duplicate(context, pacing);
+                                        },
+                                      ),
                                     ),
+                                    icon: const Icon(Icons.more_vert),
                                   ),
-                                  icon: const Icon(Icons.more_vert),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        slivers: [
-                          SliverPersistentHeader(delegate: PacingPersistentHeader(pacing: pacing), pinned: true),
-                          SliverReorderableList(
-                            itemCount: pacing.improvisations.length,
-                            itemBuilder: (context, index) {
-                              final improvisation = pacing.improvisations.elementAt(index);
-                              return ImprovisationTile(
-                                key: ValueKey(improvisation.id),
-                                cardKey: index == 0 ? _firstImprovisationCardKey : null,
-                                dragKey: index == 0 ? _firstImprovisationDragKey : null,
-                                pacing: pacing,
-                                improvisation: improvisation,
-                                index: index,
-                                getAllCategories: ({String? search}) async => await _getAllCategories(context, search),
-                                onChanged: (value) => _onChanged(context, value),
-                                onConfirmDelete: (value) async => await _onConfirmDelete(context, index),
-                                onDelete: (value) => _onDelete(context, value),
-                                dragEnabled: pacing.improvisations.length > 1,
-                                onDragStart: _onDragStart,
+                                ],
                               );
                             },
-                            onReorderStart: (index) => _onDragStart(),
-                            onReorder: (oldIndex, newIndex) => _onReorder(context, oldIndex, newIndex),
                           ),
+                          SliverPersistentHeader(delegate: PacingPersistentHeader(pacing: pacing), pinned: true),
                         ],
+                        body: CustomScrollView(
+                          slivers: [
+                            SliverReorderableList(
+                              itemCount: pacing.improvisations.length,
+                              itemBuilder: (context, index) {
+                                final improvisation = pacing.improvisations.elementAt(index);
+                                return ImprovisationTile(
+                                  key: ValueKey(improvisation.id),
+                                  cardKey: index == 0 ? _firstImprovisationCardKey : null,
+                                  dragKey: index == 0 ? _firstImprovisationDragKey : null,
+                                  pacing: pacing,
+                                  improvisation: improvisation,
+                                  index: index,
+                                  getAllCategories: ({String? search}) async =>
+                                      await _getAllCategories(context, search),
+                                  onChanged: (value) => _onChanged(context, value),
+                                  onConfirmDelete: (value) async => await _onConfirmDelete(context, index),
+                                  onDelete: (value) => _onDelete(context, value),
+                                  dragEnabled: pacing.improvisations.length > 1,
+                                  onDragStart: _onDragStart,
+                                );
+                              },
+                              onReorderStart: (index) => _onDragStart(),
+                              onReorder: (oldIndex, newIndex) => _onReorder(context, oldIndex, newIndex),
+                            ),
+                            SliverPadding(
+                              padding: EdgeInsets.only(top: 16 * 2, bottom: MediaQuery.paddingOf(context).bottom + 46),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

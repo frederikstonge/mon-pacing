@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../extensions/duration_extensions.dart';
@@ -8,7 +7,6 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/timer_model.dart';
-import '../../pages/match/cubits/match_cubit.dart';
 import '../../router/routes.dart';
 import '../buttons/loading_icon_button.dart';
 
@@ -16,9 +14,8 @@ class TimerBanner extends StatelessWidget {
   final TimerModel timer;
   final MatchModel? match;
   final ImprovisationModel? improvisation;
-  final int? selectedDurationIndex;
 
-  const TimerBanner({super.key, required this.timer, this.match, this.improvisation, this.selectedDurationIndex});
+  const TimerBanner({super.key, required this.timer, this.match, this.improvisation});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +45,7 @@ class TimerBanner extends StatelessWidget {
               ),
               trailing: LoadingIconButton(
                 tooltip: S.of(context).open,
-                onPressed: () => _onAction(context, timer),
+                onPressed: () => _goToMatch(context, timer),
                 icon: Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
@@ -56,25 +53,6 @@ class TimerBanner extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _onAction(BuildContext context, TimerModel timer) {
-    if (match != null && improvisation != null && selectedDurationIndex != null) {
-      if (match!.id == timer.matchId) {
-        if (improvisation!.id != timer.improvisationId) {
-          final page = match!.improvisations.indexWhere((element) => element.id == timer.improvisationId);
-          context.read<MatchCubit>().changePage(page);
-        }
-
-        if (selectedDurationIndex != timer.durationIndex) {
-          context.read<MatchCubit>().changeDuration(timer.durationIndex);
-        }
-      } else {
-        _goToMatch(context, timer);
-      }
-    } else {
-      _goToMatch(context, timer);
-    }
   }
 
   void _goToMatch(BuildContext context, TimerModel timer) {

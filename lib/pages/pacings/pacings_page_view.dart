@@ -6,9 +6,9 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
+import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
-import '../../components/sliver_scaffold/sliver_scaffold.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
@@ -23,7 +23,6 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../cubits/tutorials/tutorials_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../../models/constants.dart';
 import '../../models/pacing_model.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
@@ -43,22 +42,16 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   late final GoRouter? router = GoRouter.maybeOf(context);
   final GlobalKey _addPacingButtonKey = GlobalKey();
   final GlobalKey _firstPacingCardKey = GlobalKey();
-  late ScrollController _scrollController;
-  final _scrollThreshold = 200.0;
 
   @override
   void initState() {
     router?.routerDelegate.addListener(_showTutorials);
-    _scrollController = ScrollController();
-    _scrollController.addListener(_onScroll);
     super.initState();
   }
 
   @override
   void dispose() {
     router?.routerDelegate.removeListener(_showTutorials);
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -68,69 +61,71 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
       listener: (_, _) {
         _showTutorials();
       },
-      builder: (context, pacingsState) {
-        return RefreshIndicator(
-          edgeOffset: MediaQuery.of(context).padding.top + Constants.expandedAppbarHeight,
-          onRefresh: context.read<PacingsCubit>().refresh,
-          child: BlocBuilder<TimerCubit, TimerState>(
-            builder: (context, timerState) {
-              return SliverScaffold(
-                scrollController: _scrollController,
-                scrollPhysics: const AlwaysScrollableScrollPhysics(),
-                floatingActionButton: FloatingActionButton(
-                  key: _addPacingButtonKey,
-                  heroTag: 'pacings_fab',
-                  onPressed: _addPacing,
-                  tooltip: S.of(context).createNewPacingTooltip,
-                  child: const Icon(Icons.add),
-                ),
-                banner: timerState.timer != null ? TimerBanner(timer: timerState.timer!) : null,
-                appBar: BlocBuilder<SettingsCubit, SettingsState>(
-                  builder: (context, settingsState) {
-                    return SliverLogoAppbar(
-                      title: S.of(context).pacings,
-                      theme: settingsState.theme,
-                      primary: timerState.timer == null,
-                      actions: [
-                        LoadingIconButton(
-                          icon: const Icon(Icons.download),
-                          tooltip: S.of(context).importPacingTooltip,
-                          onPressed: () async => _onImportPressed(context),
-                        ),
-                        BlocBuilder<IntegrationsCubit, IntegrationsState>(
-                          builder: (context, integrationsState) {
-                            if (integrationsState.integrations.isNotEmpty) {
-                              return LoadingIconButton(
-                                icon: const Icon(Icons.qr_code),
-                                tooltip: S.of(context).scanner,
-                                onPressed: () async => _onIntegrationPressed(context),
-                              );
-                            }
-                            return SizedBox();
-                          },
-                        ),
-                        LoadingIconButton(
-                          icon: const Icon(Icons.search),
-                          tooltip: S.of(context).search(category: S.of(context).pacings),
-                          onPressed: () async => await _onSearchPressed(context),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                slivers: [
-                  if (pacingsState.tags.isNotEmpty) ...[
-                    SliverPersistentHeader(
-                      delegate: PinnedTagFilters(
-                        allTags: pacingsState.tags,
-                        selectedTags: pacingsState.selectedTags,
-                        onTagSelected: context.read<PacingsCubit>().selectTag,
-                        onTagDeselected: context.read<PacingsCubit>().deselectTag,
+      builder: (context, pacingsState) => BlocBuilder<TimerCubit, TimerState>(
+        builder: (context, timerState) {
+          return CustomScaffold(
+            scrollPhysics: const AlwaysScrollableScrollPhysics(),
+            floatingActionButton: FloatingActionButton(
+              key: _addPacingButtonKey,
+              heroTag: 'pacings_fab',
+              onPressed: _addPacing,
+              tooltip: S.of(context).createNewPacingTooltip,
+              child: const Icon(Icons.add),
+            ),
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
+              BlocBuilder<SettingsCubit, SettingsState>(
+                builder: (context, settingsState) {
+                  return SliverLogoAppbar(
+                    title: S.of(context).pacings,
+                    theme: settingsState.theme,
+                    primary: timerState.timer == null,
+                    actions: [
+                      LoadingIconButton(
+                        icon: const Icon(Icons.download),
+                        tooltip: S.of(context).importPacingTooltip,
+                        onPressed: () async => _onImportPressed(context),
                       ),
-                      pinned: true,
-                      floating: false,
-                    ),
-                  ],
+                      BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                        builder: (context, integrationsState) {
+                          if (integrationsState.integrations.isNotEmpty) {
+                            return LoadingIconButton(
+                              icon: const Icon(Icons.qr_code),
+                              tooltip: S.of(context).scanner,
+                              onPressed: () async => _onIntegrationPressed(context),
+                            );
+                          }
+                          return SizedBox();
+                        },
+                      ),
+                      LoadingIconButton(
+                        icon: const Icon(Icons.search),
+                        tooltip: S.of(context).search(category: S.of(context).pacings),
+                        onPressed: () async => await _onSearchPressed(context),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              if (pacingsState.tags.isNotEmpty) ...[
+                SliverPersistentHeader(
+                  delegate: PinnedTagFilters(
+                    allTags: pacingsState.tags,
+                    selectedTags: pacingsState.selectedTags,
+                    onTagSelected: context.read<PacingsCubit>().selectTag,
+                    onTagDeselected: context.read<PacingsCubit>().deselectTag,
+                  ),
+                  pinned: true,
+                  floating: false,
+                ),
+              ],
+            ],
+            body: RefreshIndicator(
+              onRefresh: context.read<PacingsCubit>().refresh,
+              child: CustomScrollView(
+                primary: true,
+                shrinkWrap: true,
+                slivers: [
                   switch (pacingsState.status) {
                     PacingsStatus.initial => const SliverFillRemaining(
                       child: Center(child: CircularProgressIndicator()),
@@ -140,6 +135,9 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
                       itemCount: pacingsState.hasMore ? pacingsState.pacings.length + 1 : pacingsState.pacings.length,
                       itemBuilder: (context, index) {
                         if (pacingsState.hasMore && index == pacingsState.pacings.length) {
+                          if (pacingsState.status == PacingsStatus.success) {
+                            context.read<PacingsCubit>().fetch();
+                          }
                           return const Center(child: CircularProgressIndicator());
                         }
 
@@ -158,12 +156,15 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
                       },
                     ),
                   },
+                  SliverPadding(
+                    padding: EdgeInsets.only(top: 16 * 2, bottom: MediaQuery.paddingOf(context).bottom + 46),
+                  ),
                 ],
-              );
-            },
-          ),
-        );
-      },
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -255,14 +256,6 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
         },
       ),
     );
-  }
-
-  Future<void> _onScroll() async {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll <= _scrollThreshold) {
-      await context.read<PacingsCubit>().fetch();
-    }
   }
 
   Future<void> _showTutorials() async {

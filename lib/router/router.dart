@@ -85,7 +85,7 @@ final router = GoRouter(
                     final durationIndexQuery = state.uri.queryParameters['durationIndex'];
                     final durationIndex = durationIndexQuery != null ? int.parse(durationIndexQuery) : null;
                     return MatchPageShell(
-                      key: state.pageKey,
+                      key: ValueKey(state.uri),
                       id: int.parse(state.pathParameters['id']!),
                       improvisationId: improvisationId,
                       durationIndex: durationIndex,

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,35 +10,34 @@ import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/timer_status.dart';
 
-class TimerWidget extends StatelessWidget {
+class TimerWidget extends StatefulWidget {
   final MatchModel match;
   final ImprovisationModel improvisation;
-  final int durationIndex;
-  final FutureOr<void> Function(int durationIndex) onDurationIndexChanged;
+  final int? initialSelectedIndex;
 
-  const TimerWidget({
-    super.key,
-    required this.match,
-    required this.improvisation,
-    required this.durationIndex,
-    required this.onDurationIndexChanged,
-  });
+  const TimerWidget({super.key, required this.match, required this.improvisation, this.initialSelectedIndex});
 
+  @override
+  State<TimerWidget> createState() => _TimerWidgetState();
+}
+
+class _TimerWidgetState extends State<TimerWidget> {
+  late int durationIndex = widget.initialSelectedIndex ?? 0;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, timerState) {
         final isActive =
             timerState.timer != null &&
-            timerState.timer!.matchId == match.id &&
-            timerState.timer!.improvisationId == improvisation.id &&
+            timerState.timer!.matchId == widget.match.id &&
+            timerState.timer!.improvisationId == widget.improvisation.id &&
             timerState.timer!.durationIndex == durationIndex;
 
-        final includeHuddleTimer = improvisation.huddleTimerInSeconds > 0;
+        final includeHuddleTimer = widget.improvisation.huddleTimerInSeconds > 0;
 
         final durations = [
-          if (includeHuddleTimer) ...[Duration(seconds: improvisation.huddleTimerInSeconds)],
-          ...improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
+          if (includeHuddleTimer) ...[Duration(seconds: widget.improvisation.huddleTimerInSeconds)],
+          ...widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
         ];
 
         final currentDuration = durations.elementAt(durationIndex);
@@ -69,7 +66,7 @@ class TimerWidget extends StatelessWidget {
                       .toList(),
                   selected: {durationIndex},
                   onSelectionChanged: (values) async {
-                    await onDurationIndexChanged(values.first);
+                    setState(() => durationIndex = values.first);
                   },
                 ),
               ),
@@ -89,8 +86,8 @@ class TimerWidget extends StatelessWidget {
                 LoadingIconButton.tonal(
                   onPressed: isActive
                       ? () async => await context.read<TimerCubit>().start(
-                          match,
-                          improvisation.id,
+                          widget.match,
+                          widget.improvisation.id,
                           durationIndex,
                           currentDuration,
                         )
@@ -104,8 +101,8 @@ class TimerWidget extends StatelessWidget {
                             ? () => context.read<TimerCubit>().resume()
                             : () => context.read<TimerCubit>().pause()
                       : () async => await context.read<TimerCubit>().start(
-                          match,
-                          improvisation.id,
+                          widget.match,
+                          widget.improvisation.id,
                           durationIndex,
                           currentDuration,
                         ),
@@ -130,5 +127,11 @@ class TimerWidget extends StatelessWidget {
         );
       },
     );
+  }
+
+  void setDurationIndex(int index) {
+    setState(() {
+      durationIndex = index;
+    });
   }
 }
