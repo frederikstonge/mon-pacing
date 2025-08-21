@@ -84,6 +84,7 @@ class _MatchPageViewState extends State<MatchPageView> {
                             timer: timerState.timer!,
                             match: match,
                             improvisation: match.improvisations.elementAtOrNull(selectedImprovisationIndex),
+                            selectedDurationIndex: matchState.selectedDurationIndex,
                           ),
                         ],
                         BlocBuilder<SettingsCubit, SettingsState>(

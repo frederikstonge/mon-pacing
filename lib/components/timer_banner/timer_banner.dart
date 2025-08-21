@@ -16,8 +16,9 @@ class TimerBanner extends StatelessWidget {
   final TimerModel timer;
   final MatchModel? match;
   final ImprovisationModel? improvisation;
+  final int? selectedDurationIndex;
 
-  const TimerBanner({super.key, required this.timer, this.match, this.improvisation});
+  const TimerBanner({super.key, required this.timer, this.match, this.improvisation, this.selectedDurationIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +61,14 @@ class TimerBanner extends StatelessWidget {
   void _onAction(BuildContext context, TimerModel timer) {
     if (match != null && improvisation != null) {
       if (match!.id == timer.matchId) {
-        final page = match!.improvisations.indexWhere((element) => element.id == timer.improvisationId);
-        context.read<MatchCubit>().changePage(page);
-        context.read<MatchCubit>().setDurationIndex(timer.durationIndex);
+        if (improvisation!.id != timer.improvisationId) {
+          final page = match!.improvisations.indexWhere((element) => element.id == timer.improvisationId);
+          context.read<MatchCubit>().changePage(page);
+        }
+
+        if (selectedDurationIndex != timer.durationIndex) {
+          context.read<MatchCubit>().setDurationIndex(timer.durationIndex);
+        }
       } else {
         _goToMatch(context, timer);
       }
