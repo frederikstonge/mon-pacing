@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,18 +27,18 @@ import 'match_status.dart';
 class MatchCubit extends Cubit<MatchState> {
   final MatchesRepository matchesRepository;
   final MatchesCubit matchesCubit;
+  final IntegrationsCubit integrationsCubit;
   final ToasterService toasterService;
   final ExcelService excelService;
   final AnalyticsService analyticsService;
-  final IntegrationsCubit integrationsCubit;
 
   MatchCubit({
     required this.matchesRepository,
     required this.matchesCubit,
+    required this.integrationsCubit,
     required this.toasterService,
     required this.excelService,
     required this.analyticsService,
-    required this.integrationsCubit,
   }) : super(const MatchState(status: MatchStatus.initial));
 
   Future<void> initialize(int id, {int? improvisationId, int? durationIndex}) async {
@@ -115,6 +117,10 @@ class MatchCubit extends Cubit<MatchState> {
 
   void changePage(int page) {
     emit(state.copyWith(status: MatchStatus.success, selectedImprovisationIndex: page));
+  }
+
+  void setDurationIndex(int selectedDurationIndex) {
+    emit(state.copyWith(status: MatchStatus.success, selectedDurationIndex: selectedDurationIndex));
   }
 
   Future<void> setPoint(int improvisationId, int teamId, int value) async {

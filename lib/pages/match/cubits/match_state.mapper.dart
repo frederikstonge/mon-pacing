@@ -36,6 +36,9 @@ class MatchStateMapper extends ClassMapperBase<MatchState> {
   static const Field<MatchState, int> _f$selectedImprovisationIndex = Field(
       'selectedImprovisationIndex', _$selectedImprovisationIndex,
       opt: true, def: 0);
+  static int? _$selectedDurationIndex(MatchState v) => v.selectedDurationIndex;
+  static const Field<MatchState, int> _f$selectedDurationIndex =
+      Field('selectedDurationIndex', _$selectedDurationIndex, opt: true);
 
   @override
   final MappableFields<MatchState> fields = const {
@@ -43,6 +46,7 @@ class MatchStateMapper extends ClassMapperBase<MatchState> {
     #error: _f$error,
     #match: _f$match,
     #selectedImprovisationIndex: _f$selectedImprovisationIndex,
+    #selectedDurationIndex: _f$selectedDurationIndex,
   };
 
   static MatchState _instantiate(DecodingData data) {
@@ -50,7 +54,8 @@ class MatchStateMapper extends ClassMapperBase<MatchState> {
         status: data.dec(_f$status),
         error: data.dec(_f$error),
         match: data.dec(_f$match),
-        selectedImprovisationIndex: data.dec(_f$selectedImprovisationIndex));
+        selectedImprovisationIndex: data.dec(_f$selectedImprovisationIndex),
+        selectedDurationIndex: data.dec(_f$selectedDurationIndex));
   }
 
   @override
@@ -110,7 +115,8 @@ abstract class MatchStateCopyWith<$R, $In extends MatchState, $Out>
       {MatchStatus? status,
       String? error,
       MatchModel? match,
-      int? selectedImprovisationIndex});
+      int? selectedImprovisationIndex,
+      int? selectedDurationIndex});
   MatchStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -130,13 +136,16 @@ class _MatchStateCopyWithImpl<$R, $Out>
           {MatchStatus? status,
           Object? error = $none,
           Object? match = $none,
-          int? selectedImprovisationIndex}) =>
+          int? selectedImprovisationIndex,
+          Object? selectedDurationIndex = $none}) =>
       $apply(FieldCopyWithData({
         if (status != null) #status: status,
         if (error != $none) #error: error,
         if (match != $none) #match: match,
         if (selectedImprovisationIndex != null)
-          #selectedImprovisationIndex: selectedImprovisationIndex
+          #selectedImprovisationIndex: selectedImprovisationIndex,
+        if (selectedDurationIndex != $none)
+          #selectedDurationIndex: selectedDurationIndex
       }));
   @override
   MatchState $make(CopyWithData data) => MatchState(
@@ -144,7 +153,9 @@ class _MatchStateCopyWithImpl<$R, $Out>
       error: data.get(#error, or: $value.error),
       match: data.get(#match, or: $value.match),
       selectedImprovisationIndex: data.get(#selectedImprovisationIndex,
-          or: $value.selectedImprovisationIndex));
+          or: $value.selectedImprovisationIndex),
+      selectedDurationIndex:
+          data.get(#selectedDurationIndex, or: $value.selectedDurationIndex));
 
   @override
   MatchStateCopyWith<$R2, MatchState, $Out2> $chain<$R2, $Out2>(

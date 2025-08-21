@@ -14,8 +14,15 @@ class TimerWidget extends StatefulWidget {
   final MatchModel match;
   final ImprovisationModel improvisation;
   final int? initialSelectedIndex;
+  final void Function(int durationIndex) onDurationIndexChanged;
 
-  const TimerWidget({super.key, required this.match, required this.improvisation, this.initialSelectedIndex});
+  const TimerWidget({
+    super.key,
+    required this.match,
+    required this.improvisation,
+    required this.onDurationIndexChanged,
+    this.initialSelectedIndex,
+  });
 
   @override
   State<TimerWidget> createState() => _TimerWidgetState();
@@ -23,6 +30,17 @@ class TimerWidget extends StatefulWidget {
 
 class _TimerWidgetState extends State<TimerWidget> {
   late int durationIndex = widget.initialSelectedIndex ?? 0;
+
+  @override
+  void didUpdateWidget(covariant TimerWidget oldWidget) {
+    // TODO???
+    if (widget.initialSelectedIndex != null && widget.initialSelectedIndex != durationIndex) {
+      setDurationIndex(widget.initialSelectedIndex ?? 0);
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TimerCubit, TimerState>(
@@ -84,28 +102,16 @@ class _TimerWidgetState extends State<TimerWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 LoadingIconButton.tonal(
-                  onPressed: isActive
-                      ? () async => await context.read<TimerCubit>().start(
-                          widget.match,
-                          widget.improvisation.id,
-                          durationIndex,
-                          currentDuration,
-                        )
-                      : null,
+                  onPressed: isActive ? () async => await startTimer(currentDuration) : null,
                   icon: const Icon(Icons.replay),
                   tooltip: S.of(context).pause,
                 ),
                 LoadingIconButton.filled(
                   onPressed: isActive
                       ? timerState.timer!.status == TimerStatus.paused
-                            ? () => context.read<TimerCubit>().resume()
-                            : () => context.read<TimerCubit>().pause()
-                      : () async => await context.read<TimerCubit>().start(
-                          widget.match,
-                          widget.improvisation.id,
-                          durationIndex,
-                          currentDuration,
-                        ),
+                            ? () => resumeTimer()
+                            : () => pauseTimer()
+                      : () async => await startTimer(currentDuration),
                   icon: isActive
                       ? timerState.timer!.status == TimerStatus.paused
                             ? const Icon(Icons.play_arrow)
@@ -117,7 +123,7 @@ class _TimerWidgetState extends State<TimerWidget> {
                       : S.of(context).start,
                 ),
                 LoadingIconButton.tonal(
-                  onPressed: isActive ? () async => await context.read<TimerCubit>().stop() : null,
+                  onPressed: isActive ? () async => await stopTimer() : null,
                   icon: const Icon(Icons.stop),
                   tooltip: S.of(context).stop,
                 ),
@@ -133,5 +139,22 @@ class _TimerWidgetState extends State<TimerWidget> {
     setState(() {
       durationIndex = index;
     });
+    widget.onDurationIndexChanged(index);
+  }
+
+  Future<void> startTimer(Duration currentDuration) async {
+    await context.read<TimerCubit>().start(widget.match, widget.improvisation.id, durationIndex, currentDuration);
+  }
+
+  Future<void> stopTimer() async {
+    await context.read<TimerCubit>().stop();
+  }
+
+  void resumeTimer() {
+    context.read<TimerCubit>().resume();
+  }
+
+  void pauseTimer() {
+    context.read<TimerCubit>().pause();
   }
 }

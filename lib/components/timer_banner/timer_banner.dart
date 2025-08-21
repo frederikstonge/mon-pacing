@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../extensions/duration_extensions.dart';
@@ -7,6 +8,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/timer_model.dart';
+import '../../pages/match/cubits/match_cubit.dart';
 import '../../router/routes.dart';
 import '../buttons/loading_icon_button.dart';
 
@@ -45,7 +47,7 @@ class TimerBanner extends StatelessWidget {
               ),
               trailing: LoadingIconButton(
                 tooltip: S.of(context).open,
-                onPressed: () => _goToMatch(context, timer),
+                onPressed: () => _onAction(context, timer),
                 icon: Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
@@ -53,6 +55,20 @@ class TimerBanner extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onAction(BuildContext context, TimerModel timer) {
+    if (match != null && improvisation != null) {
+      if (match!.id == timer.matchId) {
+        final page = match!.improvisations.indexWhere((element) => element.id == timer.improvisationId);
+        context.read<MatchCubit>().changePage(page);
+        context.read<MatchCubit>().setDurationIndex(timer.durationIndex);
+      } else {
+        _goToMatch(context, timer);
+      }
+    } else {
+      _goToMatch(context, timer);
+    }
   }
 
   void _goToMatch(BuildContext context, TimerModel timer) {

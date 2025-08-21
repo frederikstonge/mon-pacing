@@ -40,9 +40,7 @@ import 'widgets/match_summary.dart';
 import 'widgets/timer_widget.dart';
 
 class MatchPageView extends StatefulWidget {
-  final int? durationIndex;
-
-  const MatchPageView({super.key, this.durationIndex});
+  const MatchPageView({super.key});
 
   @override
   State<MatchPageView> createState() => _MatchPageViewState();
@@ -163,11 +161,12 @@ class _MatchPageViewState extends State<MatchPageView> {
                                       match: match,
                                       improvisation: improvisation,
                                       initialSelectedIndex: selectedImprovisationIndex == index
-                                          ? widget.durationIndex
+                                          ? matchState.selectedDurationIndex
                                           : null,
+                                      onDurationIndexChanged: (durationIndex) =>
+                                          context.read<MatchCubit>().setDurationIndex(durationIndex),
                                     ),
                                   ),
-
                                   if (match.enableStatistics) ...[
                                     ImprovisationPoints(
                                       key: ValueKey(improvisation.hashCode),
@@ -176,7 +175,6 @@ class _MatchPageViewState extends State<MatchPageView> {
                                       onPointChanged: (improvisationId, teamId, value) =>
                                           context.read<MatchCubit>().setPoint(improvisationId, teamId, value),
                                     ),
-
                                     ImprovisationPenalties(
                                       match: match,
                                       improvisation: improvisation,

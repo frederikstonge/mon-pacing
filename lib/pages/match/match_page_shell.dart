@@ -23,12 +23,12 @@ class MatchPageShell extends StatelessWidget {
       create: (context) => MatchCubit(
         matchesRepository: context.read<MatchesRepository>(),
         matchesCubit: context.read<MatchesCubit>(),
+        integrationsCubit: context.read<IntegrationsCubit>(),
         toasterService: context.read<ToasterService>(),
         excelService: context.read<ExcelService>(),
         analyticsService: context.read<AnalyticsService>(),
-        integrationsCubit: context.read<IntegrationsCubit>(),
       )..initialize(id, improvisationId: improvisationId),
-      child: MatchPageView(durationIndex: durationIndex),
+      child: MatchPageView(),
     );
   }
 }
