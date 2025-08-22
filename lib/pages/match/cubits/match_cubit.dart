@@ -56,7 +56,12 @@ class MatchCubit extends Cubit<MatchState> {
     selectedImprovisationIndex = selectedImprovisationIndex >= 0 ? selectedImprovisationIndex : 0;
 
     emit(
-      state.copyWith(status: MatchStatus.success, match: match, selectedImprovisationIndex: selectedImprovisationIndex),
+      state.copyWith(
+        status: MatchStatus.success,
+        match: match,
+        selectedImprovisationIndex: selectedImprovisationIndex,
+        selectedDurationIndex: durationIndex,
+      ),
     );
 
     _validatePenalties(match);
@@ -115,8 +120,14 @@ class MatchCubit extends Cubit<MatchState> {
     );
   }
 
-  void changePage(int page) {
-    emit(state.copyWith(status: MatchStatus.success, selectedImprovisationIndex: page));
+  void changePage(int page, {int? selectedDurationIndex}) {
+    emit(
+      state.copyWith(
+        status: MatchStatus.success,
+        selectedImprovisationIndex: page,
+        selectedDurationIndex: selectedDurationIndex,
+      ),
+    );
   }
 
   void setDurationIndex(int selectedDurationIndex) {

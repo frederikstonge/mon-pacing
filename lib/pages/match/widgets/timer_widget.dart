@@ -28,14 +28,19 @@ class TimerWidget extends StatefulWidget {
   State<TimerWidget> createState() => _TimerWidgetState();
 }
 
-class _TimerWidgetState extends State<TimerWidget> {
-  late int durationIndex = widget.initialSelectedIndex ?? 0;
+class _TimerWidgetState extends State<TimerWidget> with AutomaticKeepAliveClientMixin {
+  late int durationIndex;
+
+  @override
+  void initState() {
+    durationIndex = widget.initialSelectedIndex ?? 0;
+    super.initState();
+  }
 
   @override
   void didUpdateWidget(covariant TimerWidget oldWidget) {
-    // TODO???
     if (widget.initialSelectedIndex != null && widget.initialSelectedIndex != durationIndex) {
-      setDurationIndex(widget.initialSelectedIndex ?? 0);
+      setDurationIndex(widget.initialSelectedIndex!);
     }
 
     super.didUpdateWidget(oldWidget);
@@ -43,6 +48,7 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, timerState) {
         final isActive =
@@ -84,7 +90,7 @@ class _TimerWidgetState extends State<TimerWidget> {
                       .toList(),
                   selected: {durationIndex},
                   onSelectionChanged: (values) async {
-                    setState(() => durationIndex = values.first);
+                    setDurationIndex(values.first);
                   },
                 ),
               ),
@@ -157,4 +163,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   void pauseTimer() {
     context.read<TimerCubit>().pause();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

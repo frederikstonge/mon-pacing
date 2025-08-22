@@ -48,18 +48,24 @@ class MatchPageView extends StatefulWidget {
 
 class _MatchPageViewState extends State<MatchPageView> {
   final PageController _pageController = PageController();
+  bool _lock = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<MatchCubit, MatchState>(
         listener: (context, state) {
-          if (_pageController.page?.round() != state.selectedImprovisationIndex) {
-            _pageController.animateToPage(
-              state.selectedImprovisationIndex,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
+          if (_lock == false && _pageController.page?.round() != state.selectedImprovisationIndex) {
+            _lock = true;
+            _pageController
+                .animateToPage(
+                  state.selectedImprovisationIndex,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                )
+                .then((_) {
+                  _lock = false;
+                });
           }
         },
         listenWhen: (previous, current) => previous.selectedImprovisationIndex != current.selectedImprovisationIndex,
@@ -137,7 +143,13 @@ class _MatchPageViewState extends State<MatchPageView> {
                       ],
                       body: PageView.builder(
                         controller: _pageController,
-                        onPageChanged: (value) => context.read<MatchCubit>().changePage(value),
+                        onPageChanged: (value) {
+                          if (_lock == false && value != matchState.selectedImprovisationIndex) {
+                            _lock = true;
+                            context.read<MatchCubit>().changePage(value);
+                            _lock = false;
+                          }
+                        },
                         itemBuilder: (context, index) {
                           final summarySelected = match.enableStatistics && index == match.improvisations.length;
                           final improvisation = match.improvisations.elementAtOrNull(index);
