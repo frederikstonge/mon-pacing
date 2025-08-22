@@ -45,11 +45,12 @@ class ImprovisationTile extends StatefulWidget {
   State<ImprovisationTile> createState() => _ImprovisationTileState();
 }
 
-class _ImprovisationTileState extends State<ImprovisationTile> {
+class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKeepAliveClientMixin {
   bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Material(
       child: Dismissible(
         key: ValueKey(widget.improvisation.id),
@@ -160,4 +161,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
