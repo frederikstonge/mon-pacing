@@ -36,10 +36,9 @@ class MatchStateMapper extends ClassMapperBase<MatchState> {
   static const Field<MatchState, int> _f$selectedImprovisationIndex = Field(
       'selectedImprovisationIndex', _$selectedImprovisationIndex,
       opt: true, def: 0);
-  static int _$selectedDurationIndex(MatchState v) => v.selectedDurationIndex;
-  static const Field<MatchState, int> _f$selectedDurationIndex = Field(
-      'selectedDurationIndex', _$selectedDurationIndex,
-      opt: true, def: 0);
+  static int? _$selectedDurationIndex(MatchState v) => v.selectedDurationIndex;
+  static const Field<MatchState, int> _f$selectedDurationIndex =
+      Field('selectedDurationIndex', _$selectedDurationIndex, opt: true);
 
   @override
   final MappableFields<MatchState> fields = const {
@@ -138,14 +137,14 @@ class _MatchStateCopyWithImpl<$R, $Out>
           Object? error = $none,
           Object? match = $none,
           int? selectedImprovisationIndex,
-          int? selectedDurationIndex}) =>
+          Object? selectedDurationIndex = $none}) =>
       $apply(FieldCopyWithData({
         if (status != null) #status: status,
         if (error != $none) #error: error,
         if (match != $none) #match: match,
         if (selectedImprovisationIndex != null)
           #selectedImprovisationIndex: selectedImprovisationIndex,
-        if (selectedDurationIndex != null)
+        if (selectedDurationIndex != $none)
           #selectedDurationIndex: selectedDurationIndex
       }));
   @override

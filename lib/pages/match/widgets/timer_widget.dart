@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,35 +10,58 @@ import '../../../models/improvisation_model.dart';
 import '../../../models/match_model.dart';
 import '../../../models/timer_status.dart';
 
-class TimerWidget extends StatelessWidget {
+class TimerWidget extends StatefulWidget {
   final MatchModel match;
   final ImprovisationModel improvisation;
-  final int durationIndex;
-  final FutureOr<void> Function(int durationIndex) onDurationIndexChanged;
+  final int? initialSelectedIndex;
+  final void Function(int durationIndex) onDurationIndexChanged;
 
   const TimerWidget({
     super.key,
     required this.match,
     required this.improvisation,
-    required this.durationIndex,
     required this.onDurationIndexChanged,
+    this.initialSelectedIndex,
   });
 
   @override
+  State<TimerWidget> createState() => _TimerWidgetState();
+}
+
+class _TimerWidgetState extends State<TimerWidget> with AutomaticKeepAliveClientMixin {
+  late int durationIndex;
+
+  @override
+  void initState() {
+    durationIndex = widget.initialSelectedIndex ?? 0;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant TimerWidget oldWidget) {
+    if (widget.initialSelectedIndex != null && widget.initialSelectedIndex != durationIndex) {
+      setDurationIndex(widget.initialSelectedIndex!);
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, timerState) {
         final isActive =
             timerState.timer != null &&
-            timerState.timer!.matchId == match.id &&
-            timerState.timer!.improvisationId == improvisation.id &&
+            timerState.timer!.matchId == widget.match.id &&
+            timerState.timer!.improvisationId == widget.improvisation.id &&
             timerState.timer!.durationIndex == durationIndex;
 
-        final includeHuddleTimer = improvisation.huddleTimerInSeconds > 0;
+        final includeHuddleTimer = widget.improvisation.huddleTimerInSeconds > 0;
 
         final durations = [
-          if (includeHuddleTimer) ...[Duration(seconds: improvisation.huddleTimerInSeconds)],
-          ...improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
+          if (includeHuddleTimer) ...[Duration(seconds: widget.improvisation.huddleTimerInSeconds)],
+          ...widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e)),
         ];
 
         final currentDuration = durations.elementAt(durationIndex);
@@ -69,7 +90,7 @@ class TimerWidget extends StatelessWidget {
                       .toList(),
                   selected: {durationIndex},
                   onSelectionChanged: (values) async {
-                    await onDurationIndexChanged(values.first);
+                    setDurationIndex(values.first);
                   },
                 ),
               ),
@@ -87,28 +108,16 @@ class TimerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 LoadingIconButton.tonal(
-                  onPressed: isActive
-                      ? () async => await context.read<TimerCubit>().start(
-                          match,
-                          improvisation.id,
-                          durationIndex,
-                          currentDuration,
-                        )
-                      : null,
+                  onPressed: isActive ? () async => await startTimer(currentDuration) : null,
                   icon: const Icon(Icons.replay),
                   tooltip: S.of(context).pause,
                 ),
                 LoadingIconButton.filled(
                   onPressed: isActive
                       ? timerState.timer!.status == TimerStatus.paused
-                            ? () => context.read<TimerCubit>().resume()
-                            : () => context.read<TimerCubit>().pause()
-                      : () async => await context.read<TimerCubit>().start(
-                          match,
-                          improvisation.id,
-                          durationIndex,
-                          currentDuration,
-                        ),
+                            ? () => resumeTimer()
+                            : () => pauseTimer()
+                      : () async => await startTimer(currentDuration),
                   icon: isActive
                       ? timerState.timer!.status == TimerStatus.paused
                             ? const Icon(Icons.play_arrow)
@@ -120,7 +129,7 @@ class TimerWidget extends StatelessWidget {
                       : S.of(context).start,
                 ),
                 LoadingIconButton.tonal(
-                  onPressed: isActive ? () async => await context.read<TimerCubit>().stop() : null,
+                  onPressed: isActive ? () async => await stopTimer() : null,
                   icon: const Icon(Icons.stop),
                   tooltip: S.of(context).stop,
                 ),
@@ -131,4 +140,30 @@ class TimerWidget extends StatelessWidget {
       },
     );
   }
+
+  void setDurationIndex(int index) {
+    setState(() {
+      durationIndex = index;
+    });
+    widget.onDurationIndexChanged(index);
+  }
+
+  Future<void> startTimer(Duration currentDuration) async {
+    await context.read<TimerCubit>().start(widget.match, widget.improvisation.id, durationIndex, currentDuration);
+  }
+
+  Future<void> stopTimer() async {
+    await context.read<TimerCubit>().stop();
+  }
+
+  void resumeTimer() {
+    context.read<TimerCubit>().resume();
+  }
+
+  void pauseTimer() {
+    context.read<TimerCubit>().pause();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

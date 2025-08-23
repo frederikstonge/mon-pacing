@@ -59,15 +59,13 @@ class TimerBanner extends StatelessWidget {
   }
 
   void _onAction(BuildContext context, TimerModel timer) {
-    if (match != null && improvisation != null && selectedDurationIndex != null) {
+    if (match != null) {
       if (match!.id == timer.matchId) {
-        if (improvisation!.id != timer.improvisationId) {
+        if (improvisation?.id != timer.improvisationId) {
           final page = match!.improvisations.indexWhere((element) => element.id == timer.improvisationId);
-          context.read<MatchCubit>().changePage(page);
-        }
-
-        if (selectedDurationIndex != timer.durationIndex) {
-          context.read<MatchCubit>().changeDuration(timer.durationIndex);
+          context.read<MatchCubit>().changePage(page, selectedDurationIndex: timer.durationIndex);
+        } else if (selectedDurationIndex != timer.durationIndex) {
+          context.read<MatchCubit>().setDurationIndex(timer.durationIndex);
         }
       } else {
         _goToMatch(context, timer);

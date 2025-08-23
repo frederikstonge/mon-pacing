@@ -1949,6 +1949,21 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
           as _i27.MatchesCubit);
 
   @override
+  _i23.IntegrationsCubit get integrationsCubit =>
+      (super.noSuchMethod(
+            Invocation.getter(#integrationsCubit),
+            returnValue: _FakeIntegrationsCubit_21(
+              this,
+              Invocation.getter(#integrationsCubit),
+            ),
+            returnValueForMissingStub: _FakeIntegrationsCubit_21(
+              this,
+              Invocation.getter(#integrationsCubit),
+            ),
+          )
+          as _i23.IntegrationsCubit);
+
+  @override
   _i11.ToasterService get toasterService =>
       (super.noSuchMethod(
             Invocation.getter(#toasterService),
@@ -1992,21 +2007,6 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
             ),
           )
           as _i15.AnalyticsService);
-
-  @override
-  _i23.IntegrationsCubit get integrationsCubit =>
-      (super.noSuchMethod(
-            Invocation.getter(#integrationsCubit),
-            returnValue: _FakeIntegrationsCubit_21(
-              this,
-              Invocation.getter(#integrationsCubit),
-            ),
-            returnValueForMissingStub: _FakeIntegrationsCubit_21(
-              this,
-              Invocation.getter(#integrationsCubit),
-            ),
-          )
-          as _i23.IntegrationsCubit);
 
   @override
   _i29.MatchState get state =>
@@ -2103,16 +2103,15 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
           as _i32.Future<void>);
 
   @override
-  void changePage(int? page) => super.noSuchMethod(
-    Invocation.method(#changePage, [page]),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  void changeDuration(int? durationIndex) => super.noSuchMethod(
-    Invocation.method(#changeDuration, [durationIndex]),
-    returnValueForMissingStub: null,
-  );
+  void changePage(int? page, {int? selectedDurationIndex = 0}) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #changePage,
+          [page],
+          {#selectedDurationIndex: selectedDurationIndex},
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   _i32.Future<void> setPoint(int? improvisationId, int? teamId, int? value) =>
