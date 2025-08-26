@@ -47,26 +47,42 @@ class MatchPageView extends StatefulWidget {
 }
 
 class _MatchPageViewState extends State<MatchPageView> {
-  final PageController _pageController = PageController();
+  late final PageController _pageController;
   bool _lock = false;
+
+  @override
+  void initState() {
+    _pageController = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<MatchCubit, MatchState>(
         listener: (context, state) {
-          if (_lock == false && _pageController.page?.round() != state.selectedImprovisationIndex) {
-            _lock = true;
-            _pageController
-                .animateToPage(
-                  state.selectedImprovisationIndex,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                )
-                .then((_) {
-                  _lock = false;
-                });
-          }
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (_lock == false &&
+                _pageController.hasClients &&
+                _pageController.page?.round() != state.selectedImprovisationIndex) {
+              _lock = true;
+              _pageController
+                  .animateToPage(
+                    state.selectedImprovisationIndex,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  )
+                  .then((_) {
+                    _lock = false;
+                  });
+            }
+          });
         },
         listenWhen: (previous, current) => previous.selectedImprovisationIndex != current.selectedImprovisationIndex,
         builder: (context, matchState) {
@@ -171,6 +187,7 @@ class _MatchPageViewState extends State<MatchPageView> {
                                   ),
                                   CustomCard(
                                     child: TimerWidget(
+                                      key: ValueKey(improvisation.id),
                                       match: match,
                                       improvisation: improvisation,
                                       initialSelectedIndex: selectedImprovisationIndex == index

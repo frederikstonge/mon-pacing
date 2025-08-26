@@ -68,21 +68,24 @@ class TimerBanner extends StatelessWidget {
           context.read<MatchCubit>().setDurationIndex(timer.durationIndex);
         }
       } else {
-        _goToMatch(context, timer);
+        context.pushReplacementNamed(
+          Routes.match,
+          pathParameters: {'id': timer.matchId.toString()},
+          queryParameters: {
+            'improvisationId': timer.improvisationId.toString(),
+            'durationIndex': timer.durationIndex.toString(),
+          },
+        );
       }
     } else {
-      _goToMatch(context, timer);
+      context.goNamed(
+        Routes.match,
+        pathParameters: {'id': timer.matchId.toString()},
+        queryParameters: {
+          'improvisationId': timer.improvisationId.toString(),
+          'durationIndex': timer.durationIndex.toString(),
+        },
+      );
     }
-  }
-
-  void _goToMatch(BuildContext context, TimerModel timer) {
-    context.goNamed(
-      Routes.match,
-      pathParameters: {'id': timer.matchId.toString()},
-      queryParameters: {
-        'improvisationId': timer.improvisationId.toString(),
-        'durationIndex': timer.durationIndex.toString(),
-      },
-    );
   }
 }

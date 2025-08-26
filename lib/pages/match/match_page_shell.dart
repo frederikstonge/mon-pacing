@@ -28,7 +28,7 @@ class MatchPageShell extends StatelessWidget {
         excelService: context.read<ExcelService>(),
         analyticsService: context.read<AnalyticsService>(),
       )..initialize(id, improvisationId: improvisationId, durationIndex: durationIndex),
-      child: MatchPageView(),
+      child: const MatchPageView(),
     );
   }
 }
