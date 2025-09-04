@@ -10,6 +10,7 @@ import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/match_menu/match_menu.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
+import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
@@ -222,7 +223,7 @@ class _MatchPageViewState extends State<MatchPageView> {
 
                                       return MatchSummary(
                                         match: match,
-                                        onExport: () => _export(context),
+                                        onShare: () => _share(context, match),
                                         onExportIntegration: integration != null
                                             ? () async {
                                                 await _onExportIntegration(context, match, integration);
@@ -249,7 +250,14 @@ class _MatchPageViewState extends State<MatchPageView> {
     );
   }
 
-  Future<bool> _export(BuildContext context) => context.read<MatchCubit>().exportExcel();
+  Future<void> _share(BuildContext context, MatchModel match) => BottomSheetDialog.showDialog(
+    context: context,
+    child: ShareMenu(
+      title: match.name,
+      shareFile: () => context.read<MatchCubit>().shareFile(),
+      saveFile: () => context.read<MatchCubit>().saveFile(),
+    ),
+  );
 
   Future<void> _removePenalty(BuildContext context, PenaltyModel penalty) async {
     final matchCubit = context.read<MatchCubit>();
@@ -397,14 +405,14 @@ class _MatchPageViewState extends State<MatchPageView> {
     final localizer = S.of(context);
     final result = await MessageBoxDialog.questionShow(
       context,
-      localizer.areYouSureActionName(action: localizer.exportMatchSheet.toLowerCase(), name: match.name),
-      localizer.exportMatchSheet,
+      localizer.areYouSureActionName(action: localizer.shareMatchSheet.toLowerCase(), name: match.name),
+      localizer.shareMatchSheet,
       localizer.cancel,
     );
     if (result ?? false) {
       final exportResult = await integration.exportMatch(match);
       if (exportResult) {
-        toasterService.show(title: localizer.toasterMatchResultExported, type: ToastificationType.success);
+        toasterService.show(title: localizer.toasterMatchResultShared, type: ToastificationType.success);
       } else {
         toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
       }

@@ -8,6 +8,7 @@ import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
+import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -149,7 +150,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
                           edit: () => _edit(context, pacing),
                           shouldDelete: () => _shouldDelete(context, pacing),
                           delete: () => _delete(context, pacing),
-                          export: () => _export(context, pacing),
+                          share: () => _share(context, pacing),
                           duplicate: () => _duplicate(context, pacing),
                           startMatch: () => _startMatch(context, pacing),
                         );
@@ -182,7 +183,15 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
 
-  Future<bool> _export(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().export(pacing);
+  Future<void> _share(BuildContext context, PacingModel pacing) => BottomSheetDialog.showDialog(
+    context: context,
+    child: ShareMenu(
+      title: pacing.name,
+      shareText: () => context.read<PacingsCubit>().shareText(pacing),
+      shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
+      saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
+    ),
+  );
 
   Future<void> _delete(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().delete(pacing);
 

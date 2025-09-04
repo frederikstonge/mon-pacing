@@ -19,10 +19,10 @@ import 'match_stars.dart';
 
 class MatchSummary extends StatelessWidget {
   final MatchModel match;
-  final FutureOr<void> Function() onExport;
+  final FutureOr<void> Function() onShare;
   final FutureOr<void> Function()? onExportIntegration;
 
-  const MatchSummary({super.key, required this.match, required this.onExport, this.onExportIntegration});
+  const MatchSummary({super.key, required this.match, required this.onShare, this.onExportIntegration});
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +75,11 @@ class MatchSummary extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: LoadingButton.tonalIcon(
-            icon: const Icon(Icons.upload),
+            icon: const Icon(Icons.share),
             onPressed: () async {
-              await onExport();
+              await onShare();
             },
-            child: Text(S.of(context).exportMatchSheet),
+            child: Text(S.of(context).shareMatchSheet),
           ),
         ),
         if (onExportIntegration != null) ...[

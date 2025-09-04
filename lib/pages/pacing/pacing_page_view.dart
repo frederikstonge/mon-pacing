@@ -9,6 +9,7 @@ import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/pacing_menu/pacing_menu.dart';
+import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
@@ -109,9 +110,15 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                                         delete: () async {
                                           await _delete(context, pacing);
                                         },
-                                        export: () async {
-                                          await context.read<PacingsCubit>().export(pacing);
-                                        },
+                                        share: () async => BottomSheetDialog.showDialog(
+                                          context: context,
+                                          child: ShareMenu(
+                                            title: pacing.name,
+                                            shareText: () => context.read<PacingsCubit>().shareText(pacing),
+                                            shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
+                                            saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
+                                          ),
+                                        ),
                                         duplicate: () {
                                           return _duplicate(context, pacing);
                                         },

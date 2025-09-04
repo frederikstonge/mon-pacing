@@ -151,18 +151,9 @@ class SFr extends S {
   String get enableWakelockTooltip => 'Empêche l\'écran de se fermer lorsque le chronomètre est actif.';
 
   @override
-  String get exportMatchSheet => 'Exporter la feuille de match';
-
-  @override
   String exportMatchSheetTo({required String integrationId}) {
     return 'Exporter la feuille de match vers $integrationId';
   }
-
-  @override
-  String get exportPacing => 'Exporter le pacing';
-
-  @override
-  String get exportTeam => 'Exporter une équipe';
 
   @override
   String get free => 'Libre';
@@ -456,6 +447,21 @@ class SFr extends S {
   }
 
   @override
+  String get shareText => 'Partager le texte';
+
+  @override
+  String get shareFile => 'Partager le fichier';
+
+  @override
+  String get saveFile => 'Sauvegarder le fichier';
+
+  @override
+  String get share => 'Partager';
+
+  @override
+  String get shareMatchSheet => 'Partager la feuille de match';
+
+  @override
   String get settings => 'Paramètres';
 
   @override
@@ -511,13 +517,13 @@ class SFr extends S {
   String get toasterMatchDeleted => 'Match supprimé.';
 
   @override
-  String get toasterMatchResultExported => 'Le résultat du match a été exporté.';
+  String get toasterMatchResultShared => 'Le résultat du match a été partagé.';
 
   @override
   String get toasterPacingDeleted => 'Pacing supprimé.';
 
   @override
-  String get toasterPacingExported => 'Pacing exporté.';
+  String get toasterPacingShared => 'Pacing partagé.';
 
   @override
   String get toasterPacingImported => 'Pacing importé.';
@@ -526,7 +532,7 @@ class SFr extends S {
   String get toasterTeamDeleted => 'Équipe supprimée.';
 
   @override
-  String get toasterTeamExported => 'Équipe exportée.';
+  String get toasterTeamShared => 'Équipe partagée.';
 
   @override
   String get toasterTeamImported => 'Équipe importée.';

@@ -1163,9 +1163,27 @@ class MockPacingsCubit extends _i1.Mock implements _i25.PacingsCubit {
           as _i32.Future<_i13.PacingModel?>);
 
   @override
-  _i32.Future<bool> export(_i13.PacingModel? model) =>
+  _i32.Future<bool> shareText(_i13.PacingModel? model) =>
       (super.noSuchMethod(
-            Invocation.method(#export, [model]),
+            Invocation.method(#shareText, [model]),
+            returnValue: _i32.Future<bool>.value(false),
+            returnValueForMissingStub: _i32.Future<bool>.value(false),
+          )
+          as _i32.Future<bool>);
+
+  @override
+  _i32.Future<bool> shareFile(_i13.PacingModel? model) =>
+      (super.noSuchMethod(
+            Invocation.method(#shareFile, [model]),
+            returnValue: _i32.Future<bool>.value(false),
+            returnValueForMissingStub: _i32.Future<bool>.value(false),
+          )
+          as _i32.Future<bool>);
+
+  @override
+  _i32.Future<bool> saveFile(_i13.PacingModel? model) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveFile, [model]),
             returnValue: _i32.Future<bool>.value(false),
             returnValueForMissingStub: _i32.Future<bool>.value(false),
           )
@@ -1526,9 +1544,18 @@ class MockTeamsCubit extends _i1.Mock implements _i40.TeamsCubit {
           as _i32.Future<_i20.TeamModel?>);
 
   @override
-  _i32.Future<bool> export(_i20.TeamModel? model) =>
+  _i32.Future<bool> shareFile(_i20.TeamModel? model) =>
       (super.noSuchMethod(
-            Invocation.method(#export, [model]),
+            Invocation.method(#shareFile, [model]),
+            returnValue: _i32.Future<bool>.value(false),
+            returnValueForMissingStub: _i32.Future<bool>.value(false),
+          )
+          as _i32.Future<bool>);
+
+  @override
+  _i32.Future<bool> saveFile(_i20.TeamModel? model) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveFile, [model]),
             returnValue: _i32.Future<bool>.value(false),
             returnValueForMissingStub: _i32.Future<bool>.value(false),
           )
@@ -2192,9 +2219,18 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
           as _i32.Future<void>);
 
   @override
-  _i32.Future<bool> exportExcel() =>
+  _i32.Future<bool> shareFile() =>
       (super.noSuchMethod(
-            Invocation.method(#exportExcel, []),
+            Invocation.method(#shareFile, []),
+            returnValue: _i32.Future<bool>.value(false),
+            returnValueForMissingStub: _i32.Future<bool>.value(false),
+          )
+          as _i32.Future<bool>);
+
+  @override
+  _i32.Future<bool> saveFile() =>
+      (super.noSuchMethod(
+            Invocation.method(#saveFile, []),
             returnValue: _i32.Future<bool>.value(false),
             returnValueForMissingStub: _i32.Future<bool>.value(false),
           )

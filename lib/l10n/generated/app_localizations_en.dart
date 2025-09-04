@@ -151,18 +151,9 @@ class SEn extends S {
   String get enableWakelockTooltip => 'Prevent your screen from turning off when the timer is active.';
 
   @override
-  String get exportMatchSheet => 'Export match sheet';
-
-  @override
   String exportMatchSheetTo({required String integrationId}) {
     return 'Export match sheet to $integrationId';
   }
-
-  @override
-  String get exportPacing => 'Export pacing';
-
-  @override
-  String get exportTeam => 'Export team';
 
   @override
   String get free => 'Free';
@@ -455,6 +446,21 @@ class SEn extends S {
   }
 
   @override
+  String get shareText => 'Share text';
+
+  @override
+  String get shareFile => 'Share file';
+
+  @override
+  String get saveFile => 'Save file';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get shareMatchSheet => 'Share match sheet';
+
+  @override
   String get settings => 'Settings';
 
   @override
@@ -509,13 +515,13 @@ class SEn extends S {
   String get toasterMatchDeleted => 'Match deleted.';
 
   @override
-  String get toasterMatchResultExported => 'Match result exported.';
+  String get toasterMatchResultShared => 'Match result shared.';
 
   @override
   String get toasterPacingDeleted => 'Pacing deleted.';
 
   @override
-  String get toasterPacingExported => 'Pacing exported.';
+  String get toasterPacingShared => 'Pacing shared.';
 
   @override
   String get toasterPacingImported => 'Pacing imported.';
@@ -524,7 +530,7 @@ class SEn extends S {
   String get toasterTeamDeleted => 'Team deleted.';
 
   @override
-  String get toasterTeamExported => 'Team exported.';
+  String get toasterTeamShared => 'Team shared.';
 
   @override
   String get toasterTeamImported => 'Team imported.';
