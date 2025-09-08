@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -25,18 +26,25 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
   static int _$teamId(PointModel v) => v.teamId;
   static const Field<PointModel, int> _f$teamId = Field('teamId', _$teamId);
   static int _$improvisationId(PointModel v) => v.improvisationId;
-  static const Field<PointModel, int> _f$improvisationId =
-      Field('improvisationId', _$improvisationId);
+  static const Field<PointModel, int> _f$improvisationId = Field(
+    'improvisationId',
+    _$improvisationId,
+  );
   static int _$value(PointModel v) => v.value;
   static const Field<PointModel, int> _f$value = Field('value', _$value);
   static String? _$integrationEntityId(PointModel v) => v.integrationEntityId;
-  static const Field<PointModel, String> _f$integrationEntityId =
-      Field('integrationEntityId', _$integrationEntityId, opt: true);
+  static const Field<PointModel, String> _f$integrationEntityId = Field(
+    'integrationEntityId',
+    _$integrationEntityId,
+    opt: true,
+  );
   static String? _$integrationAdditionalData(PointModel v) =>
       v.integrationAdditionalData;
   static const Field<PointModel, String> _f$integrationAdditionalData = Field(
-      'integrationAdditionalData', _$integrationAdditionalData,
-      opt: true);
+    'integrationAdditionalData',
+    _$integrationAdditionalData,
+    opt: true,
+  );
 
   @override
   final MappableFields<PointModel> fields = const {
@@ -50,12 +58,13 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
 
   static PointModel _instantiate(DecodingData data) {
     return PointModel(
-        id: data.dec(_f$id),
-        teamId: data.dec(_f$teamId),
-        improvisationId: data.dec(_f$improvisationId),
-        value: data.dec(_f$value),
-        integrationEntityId: data.dec(_f$integrationEntityId),
-        integrationAdditionalData: data.dec(_f$integrationAdditionalData));
+      id: data.dec(_f$id),
+      teamId: data.dec(_f$teamId),
+      improvisationId: data.dec(_f$improvisationId),
+      value: data.dec(_f$value),
+      integrationEntityId: data.dec(_f$integrationEntityId),
+      integrationAdditionalData: data.dec(_f$integrationAdditionalData),
+    );
   }
 
   @override
@@ -72,28 +81,36 @@ class PointModelMapper extends ClassMapperBase<PointModel> {
 
 mixin PointModelMappable {
   String toJson() {
-    return PointModelMapper.ensureInitialized()
-        .encodeJson<PointModel>(this as PointModel);
+    return PointModelMapper.ensureInitialized().encodeJson<PointModel>(
+      this as PointModel,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return PointModelMapper.ensureInitialized()
-        .encodeMap<PointModel>(this as PointModel);
+    return PointModelMapper.ensureInitialized().encodeMap<PointModel>(
+      this as PointModel,
+    );
   }
 
   PointModelCopyWith<PointModel, PointModel, PointModel> get copyWith =>
       _PointModelCopyWithImpl<PointModel, PointModel>(
-          this as PointModel, $identity, $identity);
+        this as PointModel,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return PointModelMapper.ensureInitialized()
-        .stringifyValue(this as PointModel);
+    return PointModelMapper.ensureInitialized().stringifyValue(
+      this as PointModel,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return PointModelMapper.ensureInitialized()
-        .equalsValue(this as PointModel, other);
+    return PointModelMapper.ensureInitialized().equalsValue(
+      this as PointModel,
+      other,
+    );
   }
 
   @override
@@ -110,13 +127,14 @@ extension PointModelValueCopy<$R, $Out>
 
 abstract class PointModelCopyWith<$R, $In extends PointModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call(
-      {int? id,
-      int? teamId,
-      int? improvisationId,
-      int? value,
-      String? integrationEntityId,
-      String? integrationAdditionalData});
+  $R call({
+    int? id,
+    int? teamId,
+    int? improvisationId,
+    int? value,
+    String? integrationEntityId,
+    String? integrationAdditionalData,
+  });
   PointModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -129,36 +147,44 @@ class _PointModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<PointModel> $mapper =
       PointModelMapper.ensureInitialized();
   @override
-  $R call(
-          {int? id,
-          int? teamId,
-          int? improvisationId,
-          int? value,
-          Object? integrationEntityId = $none,
-          Object? integrationAdditionalData = $none}) =>
-      $apply(FieldCopyWithData({
-        if (id != null) #id: id,
-        if (teamId != null) #teamId: teamId,
-        if (improvisationId != null) #improvisationId: improvisationId,
-        if (value != null) #value: value,
-        if (integrationEntityId != $none)
-          #integrationEntityId: integrationEntityId,
-        if (integrationAdditionalData != $none)
-          #integrationAdditionalData: integrationAdditionalData
-      }));
+  $R call({
+    int? id,
+    int? teamId,
+    int? improvisationId,
+    int? value,
+    Object? integrationEntityId = $none,
+    Object? integrationAdditionalData = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (id != null) #id: id,
+      if (teamId != null) #teamId: teamId,
+      if (improvisationId != null) #improvisationId: improvisationId,
+      if (value != null) #value: value,
+      if (integrationEntityId != $none)
+        #integrationEntityId: integrationEntityId,
+      if (integrationAdditionalData != $none)
+        #integrationAdditionalData: integrationAdditionalData,
+    }),
+  );
   @override
   PointModel $make(CopyWithData data) => PointModel(
-      id: data.get(#id, or: $value.id),
-      teamId: data.get(#teamId, or: $value.teamId),
-      improvisationId: data.get(#improvisationId, or: $value.improvisationId),
-      value: data.get(#value, or: $value.value),
-      integrationEntityId:
-          data.get(#integrationEntityId, or: $value.integrationEntityId),
-      integrationAdditionalData: data.get(#integrationAdditionalData,
-          or: $value.integrationAdditionalData));
+    id: data.get(#id, or: $value.id),
+    teamId: data.get(#teamId, or: $value.teamId),
+    improvisationId: data.get(#improvisationId, or: $value.improvisationId),
+    value: data.get(#value, or: $value.value),
+    integrationEntityId: data.get(
+      #integrationEntityId,
+      or: $value.integrationEntityId,
+    ),
+    integrationAdditionalData: data.get(
+      #integrationAdditionalData,
+      or: $value.integrationAdditionalData,
+    ),
+  );
 
   @override
   PointModelCopyWith<$R2, PointModel, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _PointModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _PointModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

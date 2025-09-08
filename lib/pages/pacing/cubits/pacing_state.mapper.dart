@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -23,14 +24,22 @@ class PacingStateMapper extends ClassMapperBase<PacingState> {
   final String id = 'PacingState';
 
   static PacingStatus _$status(PacingState v) => v.status;
-  static const Field<PacingState, PacingStatus> _f$status =
-      Field('status', _$status);
+  static const Field<PacingState, PacingStatus> _f$status = Field(
+    'status',
+    _$status,
+  );
   static String? _$error(PacingState v) => v.error;
-  static const Field<PacingState, String> _f$error =
-      Field('error', _$error, opt: true);
+  static const Field<PacingState, String> _f$error = Field(
+    'error',
+    _$error,
+    opt: true,
+  );
   static PacingModel? _$pacing(PacingState v) => v.pacing;
-  static const Field<PacingState, PacingModel> _f$pacing =
-      Field('pacing', _$pacing, opt: true);
+  static const Field<PacingState, PacingModel> _f$pacing = Field(
+    'pacing',
+    _$pacing,
+    opt: true,
+  );
 
   @override
   final MappableFields<PacingState> fields = const {
@@ -41,9 +50,10 @@ class PacingStateMapper extends ClassMapperBase<PacingState> {
 
   static PacingState _instantiate(DecodingData data) {
     return PacingState(
-        status: data.dec(_f$status),
-        error: data.dec(_f$error),
-        pacing: data.dec(_f$pacing));
+      status: data.dec(_f$status),
+      error: data.dec(_f$error),
+      pacing: data.dec(_f$pacing),
+    );
   }
 
   @override
@@ -60,28 +70,36 @@ class PacingStateMapper extends ClassMapperBase<PacingState> {
 
 mixin PacingStateMappable {
   String toJson() {
-    return PacingStateMapper.ensureInitialized()
-        .encodeJson<PacingState>(this as PacingState);
+    return PacingStateMapper.ensureInitialized().encodeJson<PacingState>(
+      this as PacingState,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return PacingStateMapper.ensureInitialized()
-        .encodeMap<PacingState>(this as PacingState);
+    return PacingStateMapper.ensureInitialized().encodeMap<PacingState>(
+      this as PacingState,
+    );
   }
 
   PacingStateCopyWith<PacingState, PacingState, PacingState> get copyWith =>
       _PacingStateCopyWithImpl<PacingState, PacingState>(
-          this as PacingState, $identity, $identity);
+        this as PacingState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return PacingStateMapper.ensureInitialized()
-        .stringifyValue(this as PacingState);
+    return PacingStateMapper.ensureInitialized().stringifyValue(
+      this as PacingState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return PacingStateMapper.ensureInitialized()
-        .equalsValue(this as PacingState, other);
+    return PacingStateMapper.ensureInitialized().equalsValue(
+      this as PacingState,
+      other,
+    );
   }
 
   @override
@@ -115,23 +133,27 @@ class _PacingStateCopyWithImpl<$R, $Out>
   PacingModelCopyWith<$R, PacingModel, PacingModel>? get pacing =>
       $value.pacing?.copyWith.$chain((v) => call(pacing: v));
   @override
-  $R call(
-          {PacingStatus? status,
-          Object? error = $none,
-          Object? pacing = $none}) =>
-      $apply(FieldCopyWithData({
-        if (status != null) #status: status,
-        if (error != $none) #error: error,
-        if (pacing != $none) #pacing: pacing
-      }));
+  $R call({
+    PacingStatus? status,
+    Object? error = $none,
+    Object? pacing = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (status != null) #status: status,
+      if (error != $none) #error: error,
+      if (pacing != $none) #pacing: pacing,
+    }),
+  );
   @override
   PacingState $make(CopyWithData data) => PacingState(
-      status: data.get(#status, or: $value.status),
-      error: data.get(#error, or: $value.error),
-      pacing: data.get(#pacing, or: $value.pacing));
+    status: data.get(#status, or: $value.status),
+    error: data.get(#error, or: $value.error),
+    pacing: data.get(#pacing, or: $value.pacing),
+  );
 
   @override
   PacingStateCopyWith<$R2, PacingState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _PacingStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _PacingStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

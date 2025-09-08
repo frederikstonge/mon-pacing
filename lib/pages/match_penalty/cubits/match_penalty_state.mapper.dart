@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -23,19 +24,27 @@ class MatchPenaltyStateMapper extends ClassMapperBase<MatchPenaltyState> {
   final String id = 'MatchPenaltyState';
 
   static bool _$editMode(MatchPenaltyState v) => v.editMode;
-  static const Field<MatchPenaltyState, bool> _f$editMode =
-      Field('editMode', _$editMode);
+  static const Field<MatchPenaltyState, bool> _f$editMode = Field(
+    'editMode',
+    _$editMode,
+  );
   static List<TeamModel> _$teams(MatchPenaltyState v) => v.teams;
-  static const Field<MatchPenaltyState, List<TeamModel>> _f$teams =
-      Field('teams', _$teams);
+  static const Field<MatchPenaltyState, List<TeamModel>> _f$teams = Field(
+    'teams',
+    _$teams,
+  );
   static PenaltyModel _$penalty(MatchPenaltyState v) => v.penalty;
-  static const Field<MatchPenaltyState, PenaltyModel> _f$penalty =
-      Field('penalty', _$penalty);
+  static const Field<MatchPenaltyState, PenaltyModel> _f$penalty = Field(
+    'penalty',
+    _$penalty,
+  );
   static List<String>? _$integrationPenaltyTypes(MatchPenaltyState v) =>
       v.integrationPenaltyTypes;
   static const Field<MatchPenaltyState, List<String>>
-      _f$integrationPenaltyTypes =
-      Field('integrationPenaltyTypes', _$integrationPenaltyTypes);
+  _f$integrationPenaltyTypes = Field(
+    'integrationPenaltyTypes',
+    _$integrationPenaltyTypes,
+  );
 
   @override
   final MappableFields<MatchPenaltyState> fields = const {
@@ -47,10 +56,11 @@ class MatchPenaltyStateMapper extends ClassMapperBase<MatchPenaltyState> {
 
   static MatchPenaltyState _instantiate(DecodingData data) {
     return MatchPenaltyState(
-        editMode: data.dec(_f$editMode),
-        teams: data.dec(_f$teams),
-        penalty: data.dec(_f$penalty),
-        integrationPenaltyTypes: data.dec(_f$integrationPenaltyTypes));
+      editMode: data.dec(_f$editMode),
+      teams: data.dec(_f$teams),
+      penalty: data.dec(_f$penalty),
+      integrationPenaltyTypes: data.dec(_f$integrationPenaltyTypes),
+    );
   }
 
   @override
@@ -76,51 +86,68 @@ mixin MatchPenaltyStateMappable {
         .encodeMap<MatchPenaltyState>(this as MatchPenaltyState);
   }
 
-  MatchPenaltyStateCopyWith<MatchPenaltyState, MatchPenaltyState,
-          MatchPenaltyState>
-      get copyWith =>
-          _MatchPenaltyStateCopyWithImpl<MatchPenaltyState, MatchPenaltyState>(
-              this as MatchPenaltyState, $identity, $identity);
+  MatchPenaltyStateCopyWith<
+    MatchPenaltyState,
+    MatchPenaltyState,
+    MatchPenaltyState
+  >
+  get copyWith =>
+      _MatchPenaltyStateCopyWithImpl<MatchPenaltyState, MatchPenaltyState>(
+        this as MatchPenaltyState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return MatchPenaltyStateMapper.ensureInitialized()
-        .stringifyValue(this as MatchPenaltyState);
+    return MatchPenaltyStateMapper.ensureInitialized().stringifyValue(
+      this as MatchPenaltyState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return MatchPenaltyStateMapper.ensureInitialized()
-        .equalsValue(this as MatchPenaltyState, other);
+    return MatchPenaltyStateMapper.ensureInitialized().equalsValue(
+      this as MatchPenaltyState,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return MatchPenaltyStateMapper.ensureInitialized()
-        .hashValue(this as MatchPenaltyState);
+    return MatchPenaltyStateMapper.ensureInitialized().hashValue(
+      this as MatchPenaltyState,
+    );
   }
 }
 
 extension MatchPenaltyStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MatchPenaltyState, $Out> {
   MatchPenaltyStateCopyWith<$R, MatchPenaltyState, $Out>
-      get $asMatchPenaltyState => $base
-          .as((v, t, t2) => _MatchPenaltyStateCopyWithImpl<$R, $Out>(v, t, t2));
+  get $asMatchPenaltyState => $base.as(
+    (v, t, t2) => _MatchPenaltyStateCopyWithImpl<$R, $Out>(v, t, t2),
+  );
 }
 
-abstract class MatchPenaltyStateCopyWith<$R, $In extends MatchPenaltyState,
-    $Out> implements ClassCopyWith<$R, $In, $Out> {
+abstract class MatchPenaltyStateCopyWith<
+  $R,
+  $In extends MatchPenaltyState,
+  $Out
+>
+    implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
-      get teams;
+  get teams;
   PenaltyModelCopyWith<$R, PenaltyModel, PenaltyModel> get penalty;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
-      get integrationPenaltyTypes;
-  $R call(
-      {bool? editMode,
-      List<TeamModel>? teams,
-      PenaltyModel? penalty,
-      List<String>? integrationPenaltyTypes});
+  get integrationPenaltyTypes;
+  $R call({
+    bool? editMode,
+    List<TeamModel>? teams,
+    PenaltyModel? penalty,
+    List<String>? integrationPenaltyTypes,
+  });
   MatchPenaltyStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
-      Then<$Out2, $R2> t);
+    Then<$Out2, $R2> t,
+  );
 }
 
 class _MatchPenaltyStateCopyWithImpl<$R, $Out>
@@ -133,42 +160,52 @@ class _MatchPenaltyStateCopyWithImpl<$R, $Out>
       MatchPenaltyStateMapper.ensureInitialized();
   @override
   ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
-      get teams => ListCopyWith(
-          $value.teams, (v, t) => v.copyWith.$chain(t), (v) => call(teams: v));
+  get teams => ListCopyWith(
+    $value.teams,
+    (v, t) => v.copyWith.$chain(t),
+    (v) => call(teams: v),
+  );
   @override
   PenaltyModelCopyWith<$R, PenaltyModel, PenaltyModel> get penalty =>
       $value.penalty.copyWith.$chain((v) => call(penalty: v));
   @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
-      get integrationPenaltyTypes => $value.integrationPenaltyTypes != null
-          ? ListCopyWith(
-              $value.integrationPenaltyTypes!,
-              (v, t) => ObjectCopyWith(v, $identity, t),
-              (v) => call(integrationPenaltyTypes: v))
-          : null;
+  get integrationPenaltyTypes => $value.integrationPenaltyTypes != null
+      ? ListCopyWith(
+          $value.integrationPenaltyTypes!,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(integrationPenaltyTypes: v),
+        )
+      : null;
   @override
-  $R call(
-          {bool? editMode,
-          List<TeamModel>? teams,
-          PenaltyModel? penalty,
-          Object? integrationPenaltyTypes = $none}) =>
-      $apply(FieldCopyWithData({
-        if (editMode != null) #editMode: editMode,
-        if (teams != null) #teams: teams,
-        if (penalty != null) #penalty: penalty,
-        if (integrationPenaltyTypes != $none)
-          #integrationPenaltyTypes: integrationPenaltyTypes
-      }));
+  $R call({
+    bool? editMode,
+    List<TeamModel>? teams,
+    PenaltyModel? penalty,
+    Object? integrationPenaltyTypes = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (editMode != null) #editMode: editMode,
+      if (teams != null) #teams: teams,
+      if (penalty != null) #penalty: penalty,
+      if (integrationPenaltyTypes != $none)
+        #integrationPenaltyTypes: integrationPenaltyTypes,
+    }),
+  );
   @override
   MatchPenaltyState $make(CopyWithData data) => MatchPenaltyState(
-      editMode: data.get(#editMode, or: $value.editMode),
-      teams: data.get(#teams, or: $value.teams),
-      penalty: data.get(#penalty, or: $value.penalty),
-      integrationPenaltyTypes: data.get(#integrationPenaltyTypes,
-          or: $value.integrationPenaltyTypes));
+    editMode: data.get(#editMode, or: $value.editMode),
+    teams: data.get(#teams, or: $value.teams),
+    penalty: data.get(#penalty, or: $value.penalty),
+    integrationPenaltyTypes: data.get(
+      #integrationPenaltyTypes,
+      or: $value.integrationPenaltyTypes,
+    ),
+  );
 
   @override
   MatchPenaltyStateCopyWith<$R2, MatchPenaltyState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _MatchPenaltyStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _MatchPenaltyStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

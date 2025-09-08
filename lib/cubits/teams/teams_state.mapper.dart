@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -23,23 +24,44 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
   final String id = 'TeamsState';
 
   static TeamsStatus _$status(TeamsState v) => v.status;
-  static const Field<TeamsState, TeamsStatus> _f$status =
-      Field('status', _$status);
+  static const Field<TeamsState, TeamsStatus> _f$status = Field(
+    'status',
+    _$status,
+  );
   static String? _$error(TeamsState v) => v.error;
-  static const Field<TeamsState, String> _f$error =
-      Field('error', _$error, opt: true);
+  static const Field<TeamsState, String> _f$error = Field(
+    'error',
+    _$error,
+    opt: true,
+  );
   static List<TeamModel> _$teams(TeamsState v) => v.teams;
-  static const Field<TeamsState, List<TeamModel>> _f$teams =
-      Field('teams', _$teams, opt: true, def: const []);
+  static const Field<TeamsState, List<TeamModel>> _f$teams = Field(
+    'teams',
+    _$teams,
+    opt: true,
+    def: const [],
+  );
   static List<String> _$tags(TeamsState v) => v.tags;
-  static const Field<TeamsState, List<String>> _f$tags =
-      Field('tags', _$tags, opt: true, def: const []);
+  static const Field<TeamsState, List<String>> _f$tags = Field(
+    'tags',
+    _$tags,
+    opt: true,
+    def: const [],
+  );
   static List<String> _$selectedTags(TeamsState v) => v.selectedTags;
-  static const Field<TeamsState, List<String>> _f$selectedTags =
-      Field('selectedTags', _$selectedTags, opt: true, def: const []);
+  static const Field<TeamsState, List<String>> _f$selectedTags = Field(
+    'selectedTags',
+    _$selectedTags,
+    opt: true,
+    def: const [],
+  );
   static bool _$hasMore(TeamsState v) => v.hasMore;
-  static const Field<TeamsState, bool> _f$hasMore =
-      Field('hasMore', _$hasMore, opt: true, def: true);
+  static const Field<TeamsState, bool> _f$hasMore = Field(
+    'hasMore',
+    _$hasMore,
+    opt: true,
+    def: true,
+  );
 
   @override
   final MappableFields<TeamsState> fields = const {
@@ -53,12 +75,13 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
 
   static TeamsState _instantiate(DecodingData data) {
     return TeamsState(
-        status: data.dec(_f$status),
-        error: data.dec(_f$error),
-        teams: data.dec(_f$teams),
-        tags: data.dec(_f$tags),
-        selectedTags: data.dec(_f$selectedTags),
-        hasMore: data.dec(_f$hasMore));
+      status: data.dec(_f$status),
+      error: data.dec(_f$error),
+      teams: data.dec(_f$teams),
+      tags: data.dec(_f$tags),
+      selectedTags: data.dec(_f$selectedTags),
+      hasMore: data.dec(_f$hasMore),
+    );
   }
 
   @override
@@ -75,28 +98,36 @@ class TeamsStateMapper extends ClassMapperBase<TeamsState> {
 
 mixin TeamsStateMappable {
   String toJson() {
-    return TeamsStateMapper.ensureInitialized()
-        .encodeJson<TeamsState>(this as TeamsState);
+    return TeamsStateMapper.ensureInitialized().encodeJson<TeamsState>(
+      this as TeamsState,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return TeamsStateMapper.ensureInitialized()
-        .encodeMap<TeamsState>(this as TeamsState);
+    return TeamsStateMapper.ensureInitialized().encodeMap<TeamsState>(
+      this as TeamsState,
+    );
   }
 
   TeamsStateCopyWith<TeamsState, TeamsState, TeamsState> get copyWith =>
       _TeamsStateCopyWithImpl<TeamsState, TeamsState>(
-          this as TeamsState, $identity, $identity);
+        this as TeamsState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return TeamsStateMapper.ensureInitialized()
-        .stringifyValue(this as TeamsState);
+    return TeamsStateMapper.ensureInitialized().stringifyValue(
+      this as TeamsState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return TeamsStateMapper.ensureInitialized()
-        .equalsValue(this as TeamsState, other);
+    return TeamsStateMapper.ensureInitialized().equalsValue(
+      this as TeamsState,
+      other,
+    );
   }
 
   @override
@@ -114,16 +145,17 @@ extension TeamsStateValueCopy<$R, $Out>
 abstract class TeamsStateCopyWith<$R, $In extends TeamsState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
-      get teams;
+  get teams;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get selectedTags;
-  $R call(
-      {TeamsStatus? status,
-      String? error,
-      List<TeamModel>? teams,
-      List<String>? tags,
-      List<String>? selectedTags,
-      bool? hasMore});
+  $R call({
+    TeamsStatus? status,
+    String? error,
+    List<TeamModel>? teams,
+    List<String>? tags,
+    List<String>? selectedTags,
+    bool? hasMore,
+  });
   TeamsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -137,45 +169,56 @@ class _TeamsStateCopyWithImpl<$R, $Out>
       TeamsStateMapper.ensureInitialized();
   @override
   ListCopyWith<$R, TeamModel, TeamModelCopyWith<$R, TeamModel, TeamModel>>
-      get teams => ListCopyWith(
-          $value.teams, (v, t) => v.copyWith.$chain(t), (v) => call(teams: v));
+  get teams => ListCopyWith(
+    $value.teams,
+    (v, t) => v.copyWith.$chain(t),
+    (v) => call(teams: v),
+  );
   @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
-      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(tags: v));
+      ListCopyWith(
+        $value.tags,
+        (v, t) => ObjectCopyWith(v, $identity, t),
+        (v) => call(tags: v),
+      );
   @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
-      get selectedTags => ListCopyWith(
-          $value.selectedTags,
-          (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(selectedTags: v));
+  get selectedTags => ListCopyWith(
+    $value.selectedTags,
+    (v, t) => ObjectCopyWith(v, $identity, t),
+    (v) => call(selectedTags: v),
+  );
   @override
-  $R call(
-          {TeamsStatus? status,
-          Object? error = $none,
-          List<TeamModel>? teams,
-          List<String>? tags,
-          List<String>? selectedTags,
-          bool? hasMore}) =>
-      $apply(FieldCopyWithData({
-        if (status != null) #status: status,
-        if (error != $none) #error: error,
-        if (teams != null) #teams: teams,
-        if (tags != null) #tags: tags,
-        if (selectedTags != null) #selectedTags: selectedTags,
-        if (hasMore != null) #hasMore: hasMore
-      }));
+  $R call({
+    TeamsStatus? status,
+    Object? error = $none,
+    List<TeamModel>? teams,
+    List<String>? tags,
+    List<String>? selectedTags,
+    bool? hasMore,
+  }) => $apply(
+    FieldCopyWithData({
+      if (status != null) #status: status,
+      if (error != $none) #error: error,
+      if (teams != null) #teams: teams,
+      if (tags != null) #tags: tags,
+      if (selectedTags != null) #selectedTags: selectedTags,
+      if (hasMore != null) #hasMore: hasMore,
+    }),
+  );
   @override
   TeamsState $make(CopyWithData data) => TeamsState(
-      status: data.get(#status, or: $value.status),
-      error: data.get(#error, or: $value.error),
-      teams: data.get(#teams, or: $value.teams),
-      tags: data.get(#tags, or: $value.tags),
-      selectedTags: data.get(#selectedTags, or: $value.selectedTags),
-      hasMore: data.get(#hasMore, or: $value.hasMore));
+    status: data.get(#status, or: $value.status),
+    error: data.get(#error, or: $value.error),
+    teams: data.get(#teams, or: $value.teams),
+    tags: data.get(#tags, or: $value.tags),
+    selectedTags: data.get(#selectedTags, or: $value.selectedTags),
+    hasMore: data.get(#hasMore, or: $value.hasMore),
+  );
 
   @override
   TeamsStateCopyWith<$R2, TeamsState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _TeamsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _TeamsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -23,23 +24,44 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
   final String id = 'PacingsState';
 
   static PacingsStatus _$status(PacingsState v) => v.status;
-  static const Field<PacingsState, PacingsStatus> _f$status =
-      Field('status', _$status);
+  static const Field<PacingsState, PacingsStatus> _f$status = Field(
+    'status',
+    _$status,
+  );
   static String? _$error(PacingsState v) => v.error;
-  static const Field<PacingsState, String> _f$error =
-      Field('error', _$error, opt: true);
+  static const Field<PacingsState, String> _f$error = Field(
+    'error',
+    _$error,
+    opt: true,
+  );
   static List<PacingModel> _$pacings(PacingsState v) => v.pacings;
-  static const Field<PacingsState, List<PacingModel>> _f$pacings =
-      Field('pacings', _$pacings, opt: true, def: const []);
+  static const Field<PacingsState, List<PacingModel>> _f$pacings = Field(
+    'pacings',
+    _$pacings,
+    opt: true,
+    def: const [],
+  );
   static List<String> _$tags(PacingsState v) => v.tags;
-  static const Field<PacingsState, List<String>> _f$tags =
-      Field('tags', _$tags, opt: true, def: const []);
+  static const Field<PacingsState, List<String>> _f$tags = Field(
+    'tags',
+    _$tags,
+    opt: true,
+    def: const [],
+  );
   static List<String> _$selectedTags(PacingsState v) => v.selectedTags;
-  static const Field<PacingsState, List<String>> _f$selectedTags =
-      Field('selectedTags', _$selectedTags, opt: true, def: const []);
+  static const Field<PacingsState, List<String>> _f$selectedTags = Field(
+    'selectedTags',
+    _$selectedTags,
+    opt: true,
+    def: const [],
+  );
   static bool _$hasMore(PacingsState v) => v.hasMore;
-  static const Field<PacingsState, bool> _f$hasMore =
-      Field('hasMore', _$hasMore, opt: true, def: true);
+  static const Field<PacingsState, bool> _f$hasMore = Field(
+    'hasMore',
+    _$hasMore,
+    opt: true,
+    def: true,
+  );
 
   @override
   final MappableFields<PacingsState> fields = const {
@@ -53,12 +75,13 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
 
   static PacingsState _instantiate(DecodingData data) {
     return PacingsState(
-        status: data.dec(_f$status),
-        error: data.dec(_f$error),
-        pacings: data.dec(_f$pacings),
-        tags: data.dec(_f$tags),
-        selectedTags: data.dec(_f$selectedTags),
-        hasMore: data.dec(_f$hasMore));
+      status: data.dec(_f$status),
+      error: data.dec(_f$error),
+      pacings: data.dec(_f$pacings),
+      tags: data.dec(_f$tags),
+      selectedTags: data.dec(_f$selectedTags),
+      hasMore: data.dec(_f$hasMore),
+    );
   }
 
   @override
@@ -75,34 +98,43 @@ class PacingsStateMapper extends ClassMapperBase<PacingsState> {
 
 mixin PacingsStateMappable {
   String toJson() {
-    return PacingsStateMapper.ensureInitialized()
-        .encodeJson<PacingsState>(this as PacingsState);
+    return PacingsStateMapper.ensureInitialized().encodeJson<PacingsState>(
+      this as PacingsState,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return PacingsStateMapper.ensureInitialized()
-        .encodeMap<PacingsState>(this as PacingsState);
+    return PacingsStateMapper.ensureInitialized().encodeMap<PacingsState>(
+      this as PacingsState,
+    );
   }
 
   PacingsStateCopyWith<PacingsState, PacingsState, PacingsState> get copyWith =>
       _PacingsStateCopyWithImpl<PacingsState, PacingsState>(
-          this as PacingsState, $identity, $identity);
+        this as PacingsState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return PacingsStateMapper.ensureInitialized()
-        .stringifyValue(this as PacingsState);
+    return PacingsStateMapper.ensureInitialized().stringifyValue(
+      this as PacingsState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return PacingsStateMapper.ensureInitialized()
-        .equalsValue(this as PacingsState, other);
+    return PacingsStateMapper.ensureInitialized().equalsValue(
+      this as PacingsState,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return PacingsStateMapper.ensureInitialized()
-        .hashValue(this as PacingsState);
+    return PacingsStateMapper.ensureInitialized().hashValue(
+      this as PacingsState,
+    );
   }
 }
 
@@ -114,17 +146,22 @@ extension PacingsStateValueCopy<$R, $Out>
 
 abstract class PacingsStateCopyWith<$R, $In extends PacingsState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, PacingModel,
-      PacingModelCopyWith<$R, PacingModel, PacingModel>> get pacings;
+  ListCopyWith<
+    $R,
+    PacingModel,
+    PacingModelCopyWith<$R, PacingModel, PacingModel>
+  >
+  get pacings;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get selectedTags;
-  $R call(
-      {PacingsStatus? status,
-      String? error,
-      List<PacingModel>? pacings,
-      List<String>? tags,
-      List<String>? selectedTags,
-      bool? hasMore});
+  $R call({
+    PacingsStatus? status,
+    String? error,
+    List<PacingModel>? pacings,
+    List<String>? tags,
+    List<String>? selectedTags,
+    bool? hasMore,
+  });
   PacingsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -137,47 +174,61 @@ class _PacingsStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<PacingsState> $mapper =
       PacingsStateMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, PacingModel,
-          PacingModelCopyWith<$R, PacingModel, PacingModel>>
-      get pacings => ListCopyWith($value.pacings,
-          (v, t) => v.copyWith.$chain(t), (v) => call(pacings: v));
+  ListCopyWith<
+    $R,
+    PacingModel,
+    PacingModelCopyWith<$R, PacingModel, PacingModel>
+  >
+  get pacings => ListCopyWith(
+    $value.pacings,
+    (v, t) => v.copyWith.$chain(t),
+    (v) => call(pacings: v),
+  );
   @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get tags =>
-      ListCopyWith($value.tags, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(tags: v));
+      ListCopyWith(
+        $value.tags,
+        (v, t) => ObjectCopyWith(v, $identity, t),
+        (v) => call(tags: v),
+      );
   @override
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
-      get selectedTags => ListCopyWith(
-          $value.selectedTags,
-          (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(selectedTags: v));
+  get selectedTags => ListCopyWith(
+    $value.selectedTags,
+    (v, t) => ObjectCopyWith(v, $identity, t),
+    (v) => call(selectedTags: v),
+  );
   @override
-  $R call(
-          {PacingsStatus? status,
-          Object? error = $none,
-          List<PacingModel>? pacings,
-          List<String>? tags,
-          List<String>? selectedTags,
-          bool? hasMore}) =>
-      $apply(FieldCopyWithData({
-        if (status != null) #status: status,
-        if (error != $none) #error: error,
-        if (pacings != null) #pacings: pacings,
-        if (tags != null) #tags: tags,
-        if (selectedTags != null) #selectedTags: selectedTags,
-        if (hasMore != null) #hasMore: hasMore
-      }));
+  $R call({
+    PacingsStatus? status,
+    Object? error = $none,
+    List<PacingModel>? pacings,
+    List<String>? tags,
+    List<String>? selectedTags,
+    bool? hasMore,
+  }) => $apply(
+    FieldCopyWithData({
+      if (status != null) #status: status,
+      if (error != $none) #error: error,
+      if (pacings != null) #pacings: pacings,
+      if (tags != null) #tags: tags,
+      if (selectedTags != null) #selectedTags: selectedTags,
+      if (hasMore != null) #hasMore: hasMore,
+    }),
+  );
   @override
   PacingsState $make(CopyWithData data) => PacingsState(
-      status: data.get(#status, or: $value.status),
-      error: data.get(#error, or: $value.error),
-      pacings: data.get(#pacings, or: $value.pacings),
-      tags: data.get(#tags, or: $value.tags),
-      selectedTags: data.get(#selectedTags, or: $value.selectedTags),
-      hasMore: data.get(#hasMore, or: $value.hasMore));
+    status: data.get(#status, or: $value.status),
+    error: data.get(#error, or: $value.error),
+    pacings: data.get(#pacings, or: $value.pacings),
+    tags: data.get(#tags, or: $value.tags),
+    selectedTags: data.get(#selectedTags, or: $value.selectedTags),
+    hasMore: data.get(#hasMore, or: $value.hasMore),
+  );
 
   @override
   PacingsStateCopyWith<$R2, PacingsState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _PacingsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _PacingsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

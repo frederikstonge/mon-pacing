@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -22,11 +23,15 @@ class MatchDetailStateMapper extends ClassMapperBase<MatchDetailState> {
   final String id = 'MatchDetailState';
 
   static bool _$editMode(MatchDetailState v) => v.editMode;
-  static const Field<MatchDetailState, bool> _f$editMode =
-      Field('editMode', _$editMode);
+  static const Field<MatchDetailState, bool> _f$editMode = Field(
+    'editMode',
+    _$editMode,
+  );
   static MatchModel _$match(MatchDetailState v) => v.match;
-  static const Field<MatchDetailState, MatchModel> _f$match =
-      Field('match', _$match);
+  static const Field<MatchDetailState, MatchModel> _f$match = Field(
+    'match',
+    _$match,
+  );
 
   @override
   final MappableFields<MatchDetailState> fields = const {
@@ -36,7 +41,9 @@ class MatchDetailStateMapper extends ClassMapperBase<MatchDetailState> {
 
   static MatchDetailState _instantiate(DecodingData data) {
     return MatchDetailState(
-        editMode: data.dec(_f$editMode), match: data.dec(_f$match));
+      editMode: data.dec(_f$editMode),
+      match: data.dec(_f$match),
+    );
   }
 
   @override
@@ -63,33 +70,40 @@ mixin MatchDetailStateMappable {
   }
 
   MatchDetailStateCopyWith<MatchDetailState, MatchDetailState, MatchDetailState>
-      get copyWith =>
-          _MatchDetailStateCopyWithImpl<MatchDetailState, MatchDetailState>(
-              this as MatchDetailState, $identity, $identity);
+  get copyWith =>
+      _MatchDetailStateCopyWithImpl<MatchDetailState, MatchDetailState>(
+        this as MatchDetailState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return MatchDetailStateMapper.ensureInitialized()
-        .stringifyValue(this as MatchDetailState);
+    return MatchDetailStateMapper.ensureInitialized().stringifyValue(
+      this as MatchDetailState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return MatchDetailStateMapper.ensureInitialized()
-        .equalsValue(this as MatchDetailState, other);
+    return MatchDetailStateMapper.ensureInitialized().equalsValue(
+      this as MatchDetailState,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return MatchDetailStateMapper.ensureInitialized()
-        .hashValue(this as MatchDetailState);
+    return MatchDetailStateMapper.ensureInitialized().hashValue(
+      this as MatchDetailState,
+    );
   }
 }
 
 extension MatchDetailStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MatchDetailState, $Out> {
   MatchDetailStateCopyWith<$R, MatchDetailState, $Out>
-      get $asMatchDetailState => $base
-          .as((v, t, t2) => _MatchDetailStateCopyWithImpl<$R, $Out>(v, t, t2));
+  get $asMatchDetailState =>
+      $base.as((v, t, t2) => _MatchDetailStateCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
 abstract class MatchDetailStateCopyWith<$R, $In extends MatchDetailState, $Out>
@@ -97,7 +111,8 @@ abstract class MatchDetailStateCopyWith<$R, $In extends MatchDetailState, $Out>
   MatchModelCopyWith<$R, MatchModel, MatchModel> get match;
   $R call({bool? editMode, MatchModel? match});
   MatchDetailStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
-      Then<$Out2, $R2> t);
+    Then<$Out2, $R2> t,
+  );
 }
 
 class _MatchDetailStateCopyWithImpl<$R, $Out>
@@ -112,17 +127,21 @@ class _MatchDetailStateCopyWithImpl<$R, $Out>
   MatchModelCopyWith<$R, MatchModel, MatchModel> get match =>
       $value.match.copyWith.$chain((v) => call(match: v));
   @override
-  $R call({bool? editMode, MatchModel? match}) => $apply(FieldCopyWithData({
-        if (editMode != null) #editMode: editMode,
-        if (match != null) #match: match
-      }));
+  $R call({bool? editMode, MatchModel? match}) => $apply(
+    FieldCopyWithData({
+      if (editMode != null) #editMode: editMode,
+      if (match != null) #match: match,
+    }),
+  );
   @override
   MatchDetailState $make(CopyWithData data) => MatchDetailState(
-      editMode: data.get(#editMode, or: $value.editMode),
-      match: data.get(#match, or: $value.match));
+    editMode: data.get(#editMode, or: $value.editMode),
+    match: data.get(#match, or: $value.match),
+  );
 
   @override
   MatchDetailStateCopyWith<$R2, MatchDetailState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _MatchDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _MatchDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

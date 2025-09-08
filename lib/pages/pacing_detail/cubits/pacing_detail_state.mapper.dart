@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -22,11 +23,15 @@ class PacingDetailStateMapper extends ClassMapperBase<PacingDetailState> {
   final String id = 'PacingDetailState';
 
   static bool _$editMode(PacingDetailState v) => v.editMode;
-  static const Field<PacingDetailState, bool> _f$editMode =
-      Field('editMode', _$editMode);
+  static const Field<PacingDetailState, bool> _f$editMode = Field(
+    'editMode',
+    _$editMode,
+  );
   static PacingModel _$pacing(PacingDetailState v) => v.pacing;
-  static const Field<PacingDetailState, PacingModel> _f$pacing =
-      Field('pacing', _$pacing);
+  static const Field<PacingDetailState, PacingModel> _f$pacing = Field(
+    'pacing',
+    _$pacing,
+  );
 
   @override
   final MappableFields<PacingDetailState> fields = const {
@@ -36,7 +41,9 @@ class PacingDetailStateMapper extends ClassMapperBase<PacingDetailState> {
 
   static PacingDetailState _instantiate(DecodingData data) {
     return PacingDetailState(
-        editMode: data.dec(_f$editMode), pacing: data.dec(_f$pacing));
+      editMode: data.dec(_f$editMode),
+      pacing: data.dec(_f$pacing),
+    );
   }
 
   @override
@@ -62,43 +69,59 @@ mixin PacingDetailStateMappable {
         .encodeMap<PacingDetailState>(this as PacingDetailState);
   }
 
-  PacingDetailStateCopyWith<PacingDetailState, PacingDetailState,
-          PacingDetailState>
-      get copyWith =>
-          _PacingDetailStateCopyWithImpl<PacingDetailState, PacingDetailState>(
-              this as PacingDetailState, $identity, $identity);
+  PacingDetailStateCopyWith<
+    PacingDetailState,
+    PacingDetailState,
+    PacingDetailState
+  >
+  get copyWith =>
+      _PacingDetailStateCopyWithImpl<PacingDetailState, PacingDetailState>(
+        this as PacingDetailState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return PacingDetailStateMapper.ensureInitialized()
-        .stringifyValue(this as PacingDetailState);
+    return PacingDetailStateMapper.ensureInitialized().stringifyValue(
+      this as PacingDetailState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return PacingDetailStateMapper.ensureInitialized()
-        .equalsValue(this as PacingDetailState, other);
+    return PacingDetailStateMapper.ensureInitialized().equalsValue(
+      this as PacingDetailState,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return PacingDetailStateMapper.ensureInitialized()
-        .hashValue(this as PacingDetailState);
+    return PacingDetailStateMapper.ensureInitialized().hashValue(
+      this as PacingDetailState,
+    );
   }
 }
 
 extension PacingDetailStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, PacingDetailState, $Out> {
   PacingDetailStateCopyWith<$R, PacingDetailState, $Out>
-      get $asPacingDetailState => $base
-          .as((v, t, t2) => _PacingDetailStateCopyWithImpl<$R, $Out>(v, t, t2));
+  get $asPacingDetailState => $base.as(
+    (v, t, t2) => _PacingDetailStateCopyWithImpl<$R, $Out>(v, t, t2),
+  );
 }
 
-abstract class PacingDetailStateCopyWith<$R, $In extends PacingDetailState,
-    $Out> implements ClassCopyWith<$R, $In, $Out> {
+abstract class PacingDetailStateCopyWith<
+  $R,
+  $In extends PacingDetailState,
+  $Out
+>
+    implements ClassCopyWith<$R, $In, $Out> {
   PacingModelCopyWith<$R, PacingModel, PacingModel> get pacing;
   $R call({bool? editMode, PacingModel? pacing});
   PacingDetailStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
-      Then<$Out2, $R2> t);
+    Then<$Out2, $R2> t,
+  );
 }
 
 class _PacingDetailStateCopyWithImpl<$R, $Out>
@@ -113,17 +136,21 @@ class _PacingDetailStateCopyWithImpl<$R, $Out>
   PacingModelCopyWith<$R, PacingModel, PacingModel> get pacing =>
       $value.pacing.copyWith.$chain((v) => call(pacing: v));
   @override
-  $R call({bool? editMode, PacingModel? pacing}) => $apply(FieldCopyWithData({
-        if (editMode != null) #editMode: editMode,
-        if (pacing != null) #pacing: pacing
-      }));
+  $R call({bool? editMode, PacingModel? pacing}) => $apply(
+    FieldCopyWithData({
+      if (editMode != null) #editMode: editMode,
+      if (pacing != null) #pacing: pacing,
+    }),
+  );
   @override
   PacingDetailState $make(CopyWithData data) => PacingDetailState(
-      editMode: data.get(#editMode, or: $value.editMode),
-      pacing: data.get(#pacing, or: $value.pacing));
+    editMode: data.get(#editMode, or: $value.editMode),
+    pacing: data.get(#pacing, or: $value.pacing),
+  );
 
   @override
   PacingDetailStateCopyWith<$R2, PacingDetailState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _PacingDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _PacingDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+
