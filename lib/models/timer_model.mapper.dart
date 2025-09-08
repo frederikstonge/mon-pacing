@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -22,31 +23,48 @@ class TimerModelMapper extends ClassMapperBase<TimerModel> {
   final String id = 'TimerModel';
 
   static int _$durationInSeconds(TimerModel v) => v.durationInSeconds;
-  static const Field<TimerModel, int> _f$durationInSeconds =
-      Field('durationInSeconds', _$durationInSeconds);
+  static const Field<TimerModel, int> _f$durationInSeconds = Field(
+    'durationInSeconds',
+    _$durationInSeconds,
+  );
   static int _$matchId(TimerModel v) => v.matchId;
   static const Field<TimerModel, int> _f$matchId = Field('matchId', _$matchId);
   static int _$improvisationId(TimerModel v) => v.improvisationId;
-  static const Field<TimerModel, int> _f$improvisationId =
-      Field('improvisationId', _$improvisationId);
+  static const Field<TimerModel, int> _f$improvisationId = Field(
+    'improvisationId',
+    _$improvisationId,
+  );
   static int _$durationIndex(TimerModel v) => v.durationIndex;
-  static const Field<TimerModel, int> _f$durationIndex =
-      Field('durationIndex', _$durationIndex);
+  static const Field<TimerModel, int> _f$durationIndex = Field(
+    'durationIndex',
+    _$durationIndex,
+  );
   static TimerStatus _$status(TimerModel v) => v.status;
-  static const Field<TimerModel, TimerStatus> _f$status =
-      Field('status', _$status);
+  static const Field<TimerModel, TimerStatus> _f$status = Field(
+    'status',
+    _$status,
+  );
   static int _$remainingMilliseconds(TimerModel v) => v.remainingMilliseconds;
-  static const Field<TimerModel, int> _f$remainingMilliseconds =
-      Field('remainingMilliseconds', _$remainingMilliseconds);
+  static const Field<TimerModel, int> _f$remainingMilliseconds = Field(
+    'remainingMilliseconds',
+    _$remainingMilliseconds,
+  );
   static bool _$hapticFeedback(TimerModel v) => v.hapticFeedback;
-  static const Field<TimerModel, bool> _f$hapticFeedback =
-      Field('hapticFeedback', _$hapticFeedback);
+  static const Field<TimerModel, bool> _f$hapticFeedback = Field(
+    'hapticFeedback',
+    _$hapticFeedback,
+  );
   static String _$notificationTitle(TimerModel v) => v.notificationTitle;
-  static const Field<TimerModel, String> _f$notificationTitle =
-      Field('notificationTitle', _$notificationTitle);
+  static const Field<TimerModel, String> _f$notificationTitle = Field(
+    'notificationTitle',
+    _$notificationTitle,
+  );
   static TimerStatus? _$requestedStatus(TimerModel v) => v.requestedStatus;
-  static const Field<TimerModel, TimerStatus> _f$requestedStatus =
-      Field('requestedStatus', _$requestedStatus, opt: true);
+  static const Field<TimerModel, TimerStatus> _f$requestedStatus = Field(
+    'requestedStatus',
+    _$requestedStatus,
+    opt: true,
+  );
 
   @override
   final MappableFields<TimerModel> fields = const {
@@ -63,15 +81,16 @@ class TimerModelMapper extends ClassMapperBase<TimerModel> {
 
   static TimerModel _instantiate(DecodingData data) {
     return TimerModel(
-        durationInSeconds: data.dec(_f$durationInSeconds),
-        matchId: data.dec(_f$matchId),
-        improvisationId: data.dec(_f$improvisationId),
-        durationIndex: data.dec(_f$durationIndex),
-        status: data.dec(_f$status),
-        remainingMilliseconds: data.dec(_f$remainingMilliseconds),
-        hapticFeedback: data.dec(_f$hapticFeedback),
-        notificationTitle: data.dec(_f$notificationTitle),
-        requestedStatus: data.dec(_f$requestedStatus));
+      durationInSeconds: data.dec(_f$durationInSeconds),
+      matchId: data.dec(_f$matchId),
+      improvisationId: data.dec(_f$improvisationId),
+      durationIndex: data.dec(_f$durationIndex),
+      status: data.dec(_f$status),
+      remainingMilliseconds: data.dec(_f$remainingMilliseconds),
+      hapticFeedback: data.dec(_f$hapticFeedback),
+      notificationTitle: data.dec(_f$notificationTitle),
+      requestedStatus: data.dec(_f$requestedStatus),
+    );
   }
 
   @override
@@ -88,28 +107,36 @@ class TimerModelMapper extends ClassMapperBase<TimerModel> {
 
 mixin TimerModelMappable {
   String toJson() {
-    return TimerModelMapper.ensureInitialized()
-        .encodeJson<TimerModel>(this as TimerModel);
+    return TimerModelMapper.ensureInitialized().encodeJson<TimerModel>(
+      this as TimerModel,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return TimerModelMapper.ensureInitialized()
-        .encodeMap<TimerModel>(this as TimerModel);
+    return TimerModelMapper.ensureInitialized().encodeMap<TimerModel>(
+      this as TimerModel,
+    );
   }
 
   TimerModelCopyWith<TimerModel, TimerModel, TimerModel> get copyWith =>
       _TimerModelCopyWithImpl<TimerModel, TimerModel>(
-          this as TimerModel, $identity, $identity);
+        this as TimerModel,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return TimerModelMapper.ensureInitialized()
-        .stringifyValue(this as TimerModel);
+    return TimerModelMapper.ensureInitialized().stringifyValue(
+      this as TimerModel,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return TimerModelMapper.ensureInitialized()
-        .equalsValue(this as TimerModel, other);
+    return TimerModelMapper.ensureInitialized().equalsValue(
+      this as TimerModel,
+      other,
+    );
   }
 
   @override
@@ -126,16 +153,17 @@ extension TimerModelValueCopy<$R, $Out>
 
 abstract class TimerModelCopyWith<$R, $In extends TimerModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call(
-      {int? durationInSeconds,
-      int? matchId,
-      int? improvisationId,
-      int? durationIndex,
-      TimerStatus? status,
-      int? remainingMilliseconds,
-      bool? hapticFeedback,
-      String? notificationTitle,
-      TimerStatus? requestedStatus});
+  $R call({
+    int? durationInSeconds,
+    int? matchId,
+    int? improvisationId,
+    int? durationIndex,
+    TimerStatus? status,
+    int? remainingMilliseconds,
+    bool? hapticFeedback,
+    String? notificationTitle,
+    TimerStatus? requestedStatus,
+  });
   TimerModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -148,45 +176,55 @@ class _TimerModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<TimerModel> $mapper =
       TimerModelMapper.ensureInitialized();
   @override
-  $R call(
-          {int? durationInSeconds,
-          int? matchId,
-          int? improvisationId,
-          int? durationIndex,
-          TimerStatus? status,
-          int? remainingMilliseconds,
-          bool? hapticFeedback,
-          String? notificationTitle,
-          Object? requestedStatus = $none}) =>
-      $apply(FieldCopyWithData({
-        if (durationInSeconds != null) #durationInSeconds: durationInSeconds,
-        if (matchId != null) #matchId: matchId,
-        if (improvisationId != null) #improvisationId: improvisationId,
-        if (durationIndex != null) #durationIndex: durationIndex,
-        if (status != null) #status: status,
-        if (remainingMilliseconds != null)
-          #remainingMilliseconds: remainingMilliseconds,
-        if (hapticFeedback != null) #hapticFeedback: hapticFeedback,
-        if (notificationTitle != null) #notificationTitle: notificationTitle,
-        if (requestedStatus != $none) #requestedStatus: requestedStatus
-      }));
+  $R call({
+    int? durationInSeconds,
+    int? matchId,
+    int? improvisationId,
+    int? durationIndex,
+    TimerStatus? status,
+    int? remainingMilliseconds,
+    bool? hapticFeedback,
+    String? notificationTitle,
+    Object? requestedStatus = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (durationInSeconds != null) #durationInSeconds: durationInSeconds,
+      if (matchId != null) #matchId: matchId,
+      if (improvisationId != null) #improvisationId: improvisationId,
+      if (durationIndex != null) #durationIndex: durationIndex,
+      if (status != null) #status: status,
+      if (remainingMilliseconds != null)
+        #remainingMilliseconds: remainingMilliseconds,
+      if (hapticFeedback != null) #hapticFeedback: hapticFeedback,
+      if (notificationTitle != null) #notificationTitle: notificationTitle,
+      if (requestedStatus != $none) #requestedStatus: requestedStatus,
+    }),
+  );
   @override
   TimerModel $make(CopyWithData data) => TimerModel(
-      durationInSeconds:
-          data.get(#durationInSeconds, or: $value.durationInSeconds),
-      matchId: data.get(#matchId, or: $value.matchId),
-      improvisationId: data.get(#improvisationId, or: $value.improvisationId),
-      durationIndex: data.get(#durationIndex, or: $value.durationIndex),
-      status: data.get(#status, or: $value.status),
-      remainingMilliseconds:
-          data.get(#remainingMilliseconds, or: $value.remainingMilliseconds),
-      hapticFeedback: data.get(#hapticFeedback, or: $value.hapticFeedback),
-      notificationTitle:
-          data.get(#notificationTitle, or: $value.notificationTitle),
-      requestedStatus: data.get(#requestedStatus, or: $value.requestedStatus));
+    durationInSeconds: data.get(
+      #durationInSeconds,
+      or: $value.durationInSeconds,
+    ),
+    matchId: data.get(#matchId, or: $value.matchId),
+    improvisationId: data.get(#improvisationId, or: $value.improvisationId),
+    durationIndex: data.get(#durationIndex, or: $value.durationIndex),
+    status: data.get(#status, or: $value.status),
+    remainingMilliseconds: data.get(
+      #remainingMilliseconds,
+      or: $value.remainingMilliseconds,
+    ),
+    hapticFeedback: data.get(#hapticFeedback, or: $value.hapticFeedback),
+    notificationTitle: data.get(
+      #notificationTitle,
+      or: $value.notificationTitle,
+    ),
+    requestedStatus: data.get(#requestedStatus, or: $value.requestedStatus),
+  );
 
   @override
   TimerModelCopyWith<$R2, TimerModel, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _TimerModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _TimerModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

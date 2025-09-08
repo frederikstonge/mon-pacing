@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -22,14 +23,22 @@ class TeamDetailStateMapper extends ClassMapperBase<TeamDetailState> {
   final String id = 'TeamDetailState';
 
   static bool _$editMode(TeamDetailState v) => v.editMode;
-  static const Field<TeamDetailState, bool> _f$editMode =
-      Field('editMode', _$editMode);
+  static const Field<TeamDetailState, bool> _f$editMode = Field(
+    'editMode',
+    _$editMode,
+  );
   static TeamModel _$team(TeamDetailState v) => v.team;
-  static const Field<TeamDetailState, TeamModel> _f$team =
-      Field('team', _$team);
+  static const Field<TeamDetailState, TeamModel> _f$team = Field(
+    'team',
+    _$team,
+  );
   static int _$selectedTeamIndex(TeamDetailState v) => v.selectedTeamIndex;
-  static const Field<TeamDetailState, int> _f$selectedTeamIndex =
-      Field('selectedTeamIndex', _$selectedTeamIndex, opt: true, def: 0);
+  static const Field<TeamDetailState, int> _f$selectedTeamIndex = Field(
+    'selectedTeamIndex',
+    _$selectedTeamIndex,
+    opt: true,
+    def: 0,
+  );
 
   @override
   final MappableFields<TeamDetailState> fields = const {
@@ -40,9 +49,10 @@ class TeamDetailStateMapper extends ClassMapperBase<TeamDetailState> {
 
   static TeamDetailState _instantiate(DecodingData data) {
     return TeamDetailState(
-        editMode: data.dec(_f$editMode),
-        team: data.dec(_f$team),
-        selectedTeamIndex: data.dec(_f$selectedTeamIndex));
+      editMode: data.dec(_f$editMode),
+      team: data.dec(_f$team),
+      selectedTeamIndex: data.dec(_f$selectedTeamIndex),
+    );
   }
 
   @override
@@ -64,30 +74,38 @@ mixin TeamDetailStateMappable {
   }
 
   Map<String, dynamic> toMap() {
-    return TeamDetailStateMapper.ensureInitialized()
-        .encodeMap<TeamDetailState>(this as TeamDetailState);
+    return TeamDetailStateMapper.ensureInitialized().encodeMap<TeamDetailState>(
+      this as TeamDetailState,
+    );
   }
 
   TeamDetailStateCopyWith<TeamDetailState, TeamDetailState, TeamDetailState>
-      get copyWith =>
-          _TeamDetailStateCopyWithImpl<TeamDetailState, TeamDetailState>(
-              this as TeamDetailState, $identity, $identity);
+  get copyWith =>
+      _TeamDetailStateCopyWithImpl<TeamDetailState, TeamDetailState>(
+        this as TeamDetailState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return TeamDetailStateMapper.ensureInitialized()
-        .stringifyValue(this as TeamDetailState);
+    return TeamDetailStateMapper.ensureInitialized().stringifyValue(
+      this as TeamDetailState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return TeamDetailStateMapper.ensureInitialized()
-        .equalsValue(this as TeamDetailState, other);
+    return TeamDetailStateMapper.ensureInitialized().equalsValue(
+      this as TeamDetailState,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return TeamDetailStateMapper.ensureInitialized()
-        .hashValue(this as TeamDetailState);
+    return TeamDetailStateMapper.ensureInitialized().hashValue(
+      this as TeamDetailState,
+    );
   }
 }
 
@@ -102,7 +120,8 @@ abstract class TeamDetailStateCopyWith<$R, $In extends TeamDetailState, $Out>
   TeamModelCopyWith<$R, TeamModel, TeamModel> get team;
   $R call({bool? editMode, TeamModel? team, int? selectedTeamIndex});
   TeamDetailStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
-      Then<$Out2, $R2> t);
+    Then<$Out2, $R2> t,
+  );
 }
 
 class _TeamDetailStateCopyWithImpl<$R, $Out>
@@ -117,21 +136,26 @@ class _TeamDetailStateCopyWithImpl<$R, $Out>
   TeamModelCopyWith<$R, TeamModel, TeamModel> get team =>
       $value.team.copyWith.$chain((v) => call(team: v));
   @override
-  $R call({bool? editMode, TeamModel? team, int? selectedTeamIndex}) =>
-      $apply(FieldCopyWithData({
-        if (editMode != null) #editMode: editMode,
-        if (team != null) #team: team,
-        if (selectedTeamIndex != null) #selectedTeamIndex: selectedTeamIndex
-      }));
+  $R call({bool? editMode, TeamModel? team, int? selectedTeamIndex}) => $apply(
+    FieldCopyWithData({
+      if (editMode != null) #editMode: editMode,
+      if (team != null) #team: team,
+      if (selectedTeamIndex != null) #selectedTeamIndex: selectedTeamIndex,
+    }),
+  );
   @override
   TeamDetailState $make(CopyWithData data) => TeamDetailState(
-      editMode: data.get(#editMode, or: $value.editMode),
-      team: data.get(#team, or: $value.team),
-      selectedTeamIndex:
-          data.get(#selectedTeamIndex, or: $value.selectedTeamIndex));
+    editMode: data.get(#editMode, or: $value.editMode),
+    team: data.get(#team, or: $value.team),
+    selectedTeamIndex: data.get(
+      #selectedTeamIndex,
+      or: $value.selectedTeamIndex,
+    ),
+  );
 
   @override
   TeamDetailStateCopyWith<$R2, TeamDetailState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _TeamDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _TeamDetailStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

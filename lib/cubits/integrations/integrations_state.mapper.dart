@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -22,8 +23,10 @@ class IntegrationsStateMapper extends ClassMapperBase<IntegrationsState> {
   final String id = 'IntegrationsState';
 
   static IntegrationsStatus _$status(IntegrationsState v) => v.status;
-  static const Field<IntegrationsState, IntegrationsStatus> _f$status =
-      Field('status', _$status);
+  static const Field<IntegrationsState, IntegrationsStatus> _f$status = Field(
+    'status',
+    _$status,
+  );
   static List<IntegrationBase> _$integrations(IntegrationsState v) =>
       v.integrations;
   static const Field<IntegrationsState, List<IntegrationBase>> _f$integrations =
@@ -37,7 +40,9 @@ class IntegrationsStateMapper extends ClassMapperBase<IntegrationsState> {
 
   static IntegrationsState _instantiate(DecodingData data) {
     return IntegrationsState(
-        status: data.dec(_f$status), integrations: data.dec(_f$integrations));
+      status: data.dec(_f$status),
+      integrations: data.dec(_f$integrations),
+    );
   }
 
   @override
@@ -63,44 +68,64 @@ mixin IntegrationsStateMappable {
         .encodeMap<IntegrationsState>(this as IntegrationsState);
   }
 
-  IntegrationsStateCopyWith<IntegrationsState, IntegrationsState,
-          IntegrationsState>
-      get copyWith =>
-          _IntegrationsStateCopyWithImpl<IntegrationsState, IntegrationsState>(
-              this as IntegrationsState, $identity, $identity);
+  IntegrationsStateCopyWith<
+    IntegrationsState,
+    IntegrationsState,
+    IntegrationsState
+  >
+  get copyWith =>
+      _IntegrationsStateCopyWithImpl<IntegrationsState, IntegrationsState>(
+        this as IntegrationsState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return IntegrationsStateMapper.ensureInitialized()
-        .stringifyValue(this as IntegrationsState);
+    return IntegrationsStateMapper.ensureInitialized().stringifyValue(
+      this as IntegrationsState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return IntegrationsStateMapper.ensureInitialized()
-        .equalsValue(this as IntegrationsState, other);
+    return IntegrationsStateMapper.ensureInitialized().equalsValue(
+      this as IntegrationsState,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return IntegrationsStateMapper.ensureInitialized()
-        .hashValue(this as IntegrationsState);
+    return IntegrationsStateMapper.ensureInitialized().hashValue(
+      this as IntegrationsState,
+    );
   }
 }
 
 extension IntegrationsStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, IntegrationsState, $Out> {
   IntegrationsStateCopyWith<$R, IntegrationsState, $Out>
-      get $asIntegrationsState => $base
-          .as((v, t, t2) => _IntegrationsStateCopyWithImpl<$R, $Out>(v, t, t2));
+  get $asIntegrationsState => $base.as(
+    (v, t, t2) => _IntegrationsStateCopyWithImpl<$R, $Out>(v, t, t2),
+  );
 }
 
-abstract class IntegrationsStateCopyWith<$R, $In extends IntegrationsState,
-    $Out> implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, IntegrationBase,
-      ObjectCopyWith<$R, IntegrationBase, IntegrationBase>> get integrations;
+abstract class IntegrationsStateCopyWith<
+  $R,
+  $In extends IntegrationsState,
+  $Out
+>
+    implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<
+    $R,
+    IntegrationBase,
+    ObjectCopyWith<$R, IntegrationBase, IntegrationBase>
+  >
+  get integrations;
   $R call({IntegrationsStatus? status, List<IntegrationBase>? integrations});
   IntegrationsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
-      Then<$Out2, $R2> t);
+    Then<$Out2, $R2> t,
+  );
 }
 
 class _IntegrationsStateCopyWithImpl<$R, $Out>
@@ -112,25 +137,33 @@ class _IntegrationsStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<IntegrationsState> $mapper =
       IntegrationsStateMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, IntegrationBase,
-          ObjectCopyWith<$R, IntegrationBase, IntegrationBase>>
-      get integrations => ListCopyWith(
-          $value.integrations,
-          (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(integrations: v));
+  ListCopyWith<
+    $R,
+    IntegrationBase,
+    ObjectCopyWith<$R, IntegrationBase, IntegrationBase>
+  >
+  get integrations => ListCopyWith(
+    $value.integrations,
+    (v, t) => ObjectCopyWith(v, $identity, t),
+    (v) => call(integrations: v),
+  );
   @override
   $R call({IntegrationsStatus? status, List<IntegrationBase>? integrations}) =>
-      $apply(FieldCopyWithData({
-        if (status != null) #status: status,
-        if (integrations != null) #integrations: integrations
-      }));
+      $apply(
+        FieldCopyWithData({
+          if (status != null) #status: status,
+          if (integrations != null) #integrations: integrations,
+        }),
+      );
   @override
   IntegrationsState $make(CopyWithData data) => IntegrationsState(
-      status: data.get(#status, or: $value.status),
-      integrations: data.get(#integrations, or: $value.integrations));
+    status: data.get(#status, or: $value.status),
+    integrations: data.get(#integrations, or: $value.integrations),
+  );
 
   @override
   IntegrationsStateCopyWith<$R2, IntegrationsState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _IntegrationsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _IntegrationsStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

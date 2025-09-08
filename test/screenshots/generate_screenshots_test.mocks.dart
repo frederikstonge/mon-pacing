@@ -2103,7 +2103,7 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
           as _i32.Future<void>);
 
   @override
-  void changePage(int? page, {int? selectedDurationIndex = 0}) =>
+  void changePage(int? page, {int? selectedDurationIndex}) =>
       super.noSuchMethod(
         Invocation.method(
           #changePage,
@@ -2112,6 +2112,12 @@ class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  void setDurationIndex(int? selectedDurationIndex) => super.noSuchMethod(
+    Invocation.method(#setDurationIndex, [selectedDurationIndex]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i32.Future<void> setPoint(int? improvisationId, int? teamId, int? value) =>

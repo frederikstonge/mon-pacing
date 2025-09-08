@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -13,8 +14,9 @@ class MatchImprovisationStateMapper
   static MatchImprovisationStateMapper? _instance;
   static MatchImprovisationStateMapper ensureInitialized() {
     if (_instance == null) {
-      MapperContainer.globals
-          .use(_instance = MatchImprovisationStateMapper._());
+      MapperContainer.globals.use(
+        _instance = MatchImprovisationStateMapper._(),
+      );
       ImprovisationModelMapper.ensureInitialized();
     }
     return _instance!;
@@ -26,13 +28,17 @@ class MatchImprovisationStateMapper
   static ImprovisationModel _$improvisation(MatchImprovisationState v) =>
       v.improvisation;
   static const Field<MatchImprovisationState, ImprovisationModel>
-      _f$improvisation = Field('improvisation', _$improvisation);
+  _f$improvisation = Field('improvisation', _$improvisation);
   static bool _$editMode(MatchImprovisationState v) => v.editMode;
-  static const Field<MatchImprovisationState, bool> _f$editMode =
-      Field('editMode', _$editMode);
+  static const Field<MatchImprovisationState, bool> _f$editMode = Field(
+    'editMode',
+    _$editMode,
+  );
   static int _$index(MatchImprovisationState v) => v.index;
-  static const Field<MatchImprovisationState, int> _f$index =
-      Field('index', _$index);
+  static const Field<MatchImprovisationState, int> _f$index = Field(
+    'index',
+    _$index,
+  );
 
   @override
   final MappableFields<MatchImprovisationState> fields = const {
@@ -43,9 +49,10 @@ class MatchImprovisationStateMapper
 
   static MatchImprovisationState _instantiate(DecodingData data) {
     return MatchImprovisationState(
-        improvisation: data.dec(_f$improvisation),
-        editMode: data.dec(_f$editMode),
-        index: data.dec(_f$index));
+      improvisation: data.dec(_f$improvisation),
+      editMode: data.dec(_f$editMode),
+      index: data.dec(_f$index),
+    );
   }
 
   @override
@@ -71,46 +78,59 @@ mixin MatchImprovisationStateMappable {
         .encodeMap<MatchImprovisationState>(this as MatchImprovisationState);
   }
 
-  MatchImprovisationStateCopyWith<MatchImprovisationState,
-          MatchImprovisationState, MatchImprovisationState>
-      get copyWith => _MatchImprovisationStateCopyWithImpl<
-              MatchImprovisationState, MatchImprovisationState>(
-          this as MatchImprovisationState, $identity, $identity);
+  MatchImprovisationStateCopyWith<
+    MatchImprovisationState,
+    MatchImprovisationState,
+    MatchImprovisationState
+  >
+  get copyWith =>
+      _MatchImprovisationStateCopyWithImpl<
+        MatchImprovisationState,
+        MatchImprovisationState
+      >(this as MatchImprovisationState, $identity, $identity);
   @override
   String toString() {
-    return MatchImprovisationStateMapper.ensureInitialized()
-        .stringifyValue(this as MatchImprovisationState);
+    return MatchImprovisationStateMapper.ensureInitialized().stringifyValue(
+      this as MatchImprovisationState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return MatchImprovisationStateMapper.ensureInitialized()
-        .equalsValue(this as MatchImprovisationState, other);
+    return MatchImprovisationStateMapper.ensureInitialized().equalsValue(
+      this as MatchImprovisationState,
+      other,
+    );
   }
 
   @override
   int get hashCode {
-    return MatchImprovisationStateMapper.ensureInitialized()
-        .hashValue(this as MatchImprovisationState);
+    return MatchImprovisationStateMapper.ensureInitialized().hashValue(
+      this as MatchImprovisationState,
+    );
   }
 }
 
 extension MatchImprovisationStateValueCopy<$R, $Out>
     on ObjectCopyWith<$R, MatchImprovisationState, $Out> {
   MatchImprovisationStateCopyWith<$R, MatchImprovisationState, $Out>
-      get $asMatchImprovisationState => $base.as((v, t, t2) =>
-          _MatchImprovisationStateCopyWithImpl<$R, $Out>(v, t, t2));
+  get $asMatchImprovisationState => $base.as(
+    (v, t, t2) => _MatchImprovisationStateCopyWithImpl<$R, $Out>(v, t, t2),
+  );
 }
 
 abstract class MatchImprovisationStateCopyWith<
-    $R,
-    $In extends MatchImprovisationState,
-    $Out> implements ClassCopyWith<$R, $In, $Out> {
+  $R,
+  $In extends MatchImprovisationState,
+  $Out
+>
+    implements ClassCopyWith<$R, $In, $Out> {
   ImprovisationModelCopyWith<$R, ImprovisationModel, ImprovisationModel>
-      get improvisation;
+  get improvisation;
   $R call({ImprovisationModel? improvisation, bool? editMode, int? index});
   MatchImprovisationStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
-      Then<$Out2, $R2> t);
+    Then<$Out2, $R2> t,
+  );
 }
 
 class _MatchImprovisationStateCopyWithImpl<$R, $Out>
@@ -124,23 +144,27 @@ class _MatchImprovisationStateCopyWithImpl<$R, $Out>
       MatchImprovisationStateMapper.ensureInitialized();
   @override
   ImprovisationModelCopyWith<$R, ImprovisationModel, ImprovisationModel>
-      get improvisation =>
-          $value.improvisation.copyWith.$chain((v) => call(improvisation: v));
+  get improvisation =>
+      $value.improvisation.copyWith.$chain((v) => call(improvisation: v));
   @override
   $R call({ImprovisationModel? improvisation, bool? editMode, int? index}) =>
-      $apply(FieldCopyWithData({
-        if (improvisation != null) #improvisation: improvisation,
-        if (editMode != null) #editMode: editMode,
-        if (index != null) #index: index
-      }));
+      $apply(
+        FieldCopyWithData({
+          if (improvisation != null) #improvisation: improvisation,
+          if (editMode != null) #editMode: editMode,
+          if (index != null) #index: index,
+        }),
+      );
   @override
   MatchImprovisationState $make(CopyWithData data) => MatchImprovisationState(
-      improvisation: data.get(#improvisation, or: $value.improvisation),
-      editMode: data.get(#editMode, or: $value.editMode),
-      index: data.get(#index, or: $value.index));
+    improvisation: data.get(#improvisation, or: $value.improvisation),
+    editMode: data.get(#editMode, or: $value.editMode),
+    index: data.get(#index, or: $value.index),
+  );
 
   @override
   MatchImprovisationStateCopyWith<$R2, MatchImprovisationState, $Out2>
-      $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
-          _MatchImprovisationStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+  $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+      _MatchImprovisationStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

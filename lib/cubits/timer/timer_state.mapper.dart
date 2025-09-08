@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
@@ -22,11 +23,17 @@ class TimerStateMapper extends ClassMapperBase<TimerState> {
   final String id = 'TimerState';
 
   static TimerModel? _$timer(TimerState v) => v.timer;
-  static const Field<TimerState, TimerModel> _f$timer =
-      Field('timer', _$timer, opt: true);
+  static const Field<TimerState, TimerModel> _f$timer = Field(
+    'timer',
+    _$timer,
+    opt: true,
+  );
   static IntegrationBaseModel? _$integration(TimerState v) => v.integration;
-  static const Field<TimerState, IntegrationBaseModel> _f$integration =
-      Field('integration', _$integration, opt: true);
+  static const Field<TimerState, IntegrationBaseModel> _f$integration = Field(
+    'integration',
+    _$integration,
+    opt: true,
+  );
 
   @override
   final MappableFields<TimerState> fields = const {
@@ -36,7 +43,9 @@ class TimerStateMapper extends ClassMapperBase<TimerState> {
 
   static TimerState _instantiate(DecodingData data) {
     return TimerState(
-        timer: data.dec(_f$timer), integration: data.dec(_f$integration));
+      timer: data.dec(_f$timer),
+      integration: data.dec(_f$integration),
+    );
   }
 
   @override
@@ -53,28 +62,36 @@ class TimerStateMapper extends ClassMapperBase<TimerState> {
 
 mixin TimerStateMappable {
   String toJson() {
-    return TimerStateMapper.ensureInitialized()
-        .encodeJson<TimerState>(this as TimerState);
+    return TimerStateMapper.ensureInitialized().encodeJson<TimerState>(
+      this as TimerState,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return TimerStateMapper.ensureInitialized()
-        .encodeMap<TimerState>(this as TimerState);
+    return TimerStateMapper.ensureInitialized().encodeMap<TimerState>(
+      this as TimerState,
+    );
   }
 
   TimerStateCopyWith<TimerState, TimerState, TimerState> get copyWith =>
       _TimerStateCopyWithImpl<TimerState, TimerState>(
-          this as TimerState, $identity, $identity);
+        this as TimerState,
+        $identity,
+        $identity,
+      );
   @override
   String toString() {
-    return TimerStateMapper.ensureInitialized()
-        .stringifyValue(this as TimerState);
+    return TimerStateMapper.ensureInitialized().stringifyValue(
+      this as TimerState,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return TimerStateMapper.ensureInitialized()
-        .equalsValue(this as TimerState, other);
+    return TimerStateMapper.ensureInitialized().equalsValue(
+      this as TimerState,
+      other,
+    );
   }
 
   @override
@@ -108,18 +125,21 @@ class _TimerStateCopyWithImpl<$R, $Out>
   TimerModelCopyWith<$R, TimerModel, TimerModel>? get timer =>
       $value.timer?.copyWith.$chain((v) => call(timer: v));
   @override
-  $R call({Object? timer = $none, Object? integration = $none}) =>
-      $apply(FieldCopyWithData({
-        if (timer != $none) #timer: timer,
-        if (integration != $none) #integration: integration
-      }));
+  $R call({Object? timer = $none, Object? integration = $none}) => $apply(
+    FieldCopyWithData({
+      if (timer != $none) #timer: timer,
+      if (integration != $none) #integration: integration,
+    }),
+  );
   @override
   TimerState $make(CopyWithData data) => TimerState(
-      timer: data.get(#timer, or: $value.timer),
-      integration: data.get(#integration, or: $value.integration));
+    timer: data.get(#timer, or: $value.timer),
+    integration: data.get(#integration, or: $value.integration),
+  );
 
   @override
   TimerStateCopyWith<$R2, TimerState, $Out2> $chain<$R2, $Out2>(
-          Then<$Out2, $R2> t) =>
-      _TimerStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
+    Then<$Out2, $R2> t,
+  ) => _TimerStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+
