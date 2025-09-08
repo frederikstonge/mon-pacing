@@ -510,7 +510,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
             ],
           ],
           showBackButton: true,
-          overrideNext: TextButton(
+          overrideNext: (BuildContext context, Function()? onPressed) => TextButton(
             onPressed: () {
               if (!isPacingsValid || !isPenaltiesValid) {
                 return;
@@ -520,7 +520,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
             },
             child: Text(S.of(context).onboardingNext),
           ),
-          overrideBack: TextButton(
+          overrideBack: (BuildContext context, Function()? onPressed) => TextButton(
             onPressed: () {
               if (!isPacingsValid || !isPenaltiesValid) {
                 return;
@@ -530,7 +530,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
             },
             child: Text(S.of(context).onboardingPrevious),
           ),
-          overrideDone: TextButton(
+          overrideDone: (BuildContext context, Function()? onPressed) => TextButton(
             onPressed: () {
               if (!isPacingsValid || !isPenaltiesValid) {
                 return;
