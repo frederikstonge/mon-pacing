@@ -186,7 +186,6 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   Future<void> _share(BuildContext context, PacingModel pacing) => BottomSheetDialog.showDialog(
     context: context,
     child: ShareMenu(
-      title: pacing.name,
       shareText: () => context.read<PacingsCubit>().shareText(pacing),
       shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
       saveFile: () => context.read<PacingsCubit>().saveFile(pacing),

@@ -253,7 +253,6 @@ class _MatchPageViewState extends State<MatchPageView> {
   Future<void> _share(BuildContext context, MatchModel match) => BottomSheetDialog.showDialog(
     context: context,
     child: ShareMenu(
-      title: match.name,
       shareFile: () => context.read<MatchCubit>().shareFile(),
       saveFile: () => context.read<MatchCubit>().saveFile(),
     ),

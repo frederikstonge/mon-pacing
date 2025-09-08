@@ -133,7 +133,6 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                             share: () => BottomSheetDialog.showDialog(
                               context: context,
                               child: ShareMenu(
-                                title: team.name,
                                 shareFile: () => context.read<TeamsCubit>().shareFile(team),
                                 saveFile: () => context.read<TeamsCubit>().saveFile(team),
                               ),

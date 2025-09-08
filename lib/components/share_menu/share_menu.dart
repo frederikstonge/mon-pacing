@@ -7,18 +7,17 @@ import '../bottom_sheet/bottom_sheet_appbar.dart';
 import '../bottom_sheet/bottom_sheet_scaffold.dart';
 
 class ShareMenu extends StatelessWidget {
-  final String title;
   final FutureOr<void> Function()? shareText;
   final FutureOr<void> Function()? shareFile;
   final FutureOr<void> Function()? saveFile;
 
-  const ShareMenu({super.key, required this.title, this.shareText, this.shareFile, this.saveFile})
+  const ShareMenu({super.key, this.shareText, this.shareFile, this.saveFile})
     : assert(shareText != null || shareFile != null || saveFile != null, 'At least one action must be provided');
 
   @override
   Widget build(BuildContext context) {
     return BottomSheetScaffold(
-      appBar: BottomSheetAppbar(title: title),
+      appBar: BottomSheetAppbar(title: S.of(context).share),
       body: ListView(
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),

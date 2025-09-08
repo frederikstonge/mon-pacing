@@ -113,7 +113,6 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                                         share: () async => BottomSheetDialog.showDialog(
                                           context: context,
                                           child: ShareMenu(
-                                            title: pacing.name,
                                             shareText: () => context.read<PacingsCubit>().shareText(pacing),
                                             shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
                                             saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
