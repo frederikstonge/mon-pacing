@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:sanitize_filename/sanitize_filename.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../cubits/integrations/integrations_cubit.dart';
@@ -225,7 +226,42 @@ class MatchCubit extends Cubit<MatchState> {
     emit(state.copyWith(status: MatchStatus.success, match: newMatch));
   }
 
-  Future<bool> exportExcel() async {
+  Future<bool> shareFile() async {
+    try {
+      final bytes = excelService.exportMatchToExcel(state.match!, Localizer.current);
+
+      if (bytes == null) {
+        return false;
+      }
+
+      final data = Uint8List.fromList(bytes);
+      final fileName = sanitizeFilename('${state.match!.name}.xlsx', replacement: '-');
+      final params = ShareParams(
+        title: state.match!.name,
+        files: [
+          XFile.fromData(
+            data,
+            mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            name: fileName,
+          ),
+        ],
+        fileNameOverrides: [fileName],
+      );
+
+      final result = await SharePlus.instance.share(params);
+
+      if (result.status == ShareResultStatus.success) {
+        toasterService.show(title: Localizer.current.toasterMatchResultShared);
+        return true;
+      }
+    } catch (exception) {
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+    }
+
+    return false;
+  }
+
+  Future<bool> saveFile() async {
     try {
       final bytes = excelService.exportMatchToExcel(state.match!, Localizer.current);
 
@@ -239,7 +275,7 @@ class MatchCubit extends Cubit<MatchState> {
       await analyticsService.logExportToExcel();
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {
-        toasterService.show(title: Localizer.current.toasterMatchResultExported);
+        toasterService.show(title: Localizer.current.toasterMatchResultShared);
         return true;
       }
     } catch (exception) {

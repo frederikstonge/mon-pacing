@@ -356,29 +356,11 @@ abstract class S {
   /// **'Prevent your screen from turning off when the timer is active.'**
   String get enableWakelockTooltip;
 
-  /// No description provided for @exportMatchSheet.
-  ///
-  /// In en, this message translates to:
-  /// **'Export match sheet'**
-  String get exportMatchSheet;
-
   /// No description provided for @exportMatchSheetTo.
   ///
   /// In en, this message translates to:
   /// **'Export match sheet to {integrationId}'**
   String exportMatchSheetTo({required String integrationId});
-
-  /// No description provided for @exportPacing.
-  ///
-  /// In en, this message translates to:
-  /// **'Export pacing'**
-  String get exportPacing;
-
-  /// No description provided for @exportTeam.
-  ///
-  /// In en, this message translates to:
-  /// **'Export team'**
-  String get exportTeam;
 
   /// No description provided for @free.
   ///
@@ -878,6 +860,36 @@ abstract class S {
   /// **'Search {category}...'**
   String search({required String category});
 
+  /// No description provided for @shareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Share text'**
+  String get shareText;
+
+  /// No description provided for @shareFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Share file'**
+  String get shareFile;
+
+  /// No description provided for @saveFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Save file'**
+  String get saveFile;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// No description provided for @shareMatchSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Share match sheet'**
+  String get shareMatchSheet;
+
   /// No description provided for @settings.
   ///
   /// In en, this message translates to:
@@ -980,11 +992,11 @@ abstract class S {
   /// **'Match deleted.'**
   String get toasterMatchDeleted;
 
-  /// No description provided for @toasterMatchResultExported.
+  /// No description provided for @toasterMatchResultShared.
   ///
   /// In en, this message translates to:
-  /// **'Match result exported.'**
-  String get toasterMatchResultExported;
+  /// **'Match result shared.'**
+  String get toasterMatchResultShared;
 
   /// No description provided for @toasterPacingDeleted.
   ///
@@ -992,11 +1004,11 @@ abstract class S {
   /// **'Pacing deleted.'**
   String get toasterPacingDeleted;
 
-  /// No description provided for @toasterPacingExported.
+  /// No description provided for @toasterPacingShared.
   ///
   /// In en, this message translates to:
-  /// **'Pacing exported.'**
-  String get toasterPacingExported;
+  /// **'Pacing shared.'**
+  String get toasterPacingShared;
 
   /// No description provided for @toasterPacingImported.
   ///
@@ -1010,11 +1022,11 @@ abstract class S {
   /// **'Team deleted.'**
   String get toasterTeamDeleted;
 
-  /// No description provided for @toasterTeamExported.
+  /// No description provided for @toasterTeamShared.
   ///
   /// In en, this message translates to:
-  /// **'Team exported.'**
-  String get toasterTeamExported;
+  /// **'Team shared.'**
+  String get toasterTeamShared;
 
   /// No description provided for @toasterTeamImported.
   ///

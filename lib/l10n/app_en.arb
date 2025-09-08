@@ -68,7 +68,6 @@
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
   "enableWakelock": "Enable wakelock",
   "enableWakelockTooltip": "Prevent your screen from turning off when the timer is active.",
-  "exportMatchSheet": "Export match sheet",
   "exportMatchSheetTo": "Export match sheet to {integrationId}",
   "@exportMatchSheetTo": {
     "placeholders": {
@@ -77,8 +76,6 @@
       }
     }
   },
-  "exportPacing": "Export pacing",
-  "exportTeam": "Export team",
   "free": "Free",
   "general": "General",
   "greaterThan": "Must be greater than {min}",
@@ -240,6 +237,11 @@
       }
     }
   },
+  "shareText": "Share text",
+  "shareFile": "Share file",
+  "saveFile": "Save file",
+  "share": "Share",
+  "shareMatchSheet": "Share match sheet",
   "settings": "Settings",
   "stars": "Stars",
   "start": "Start",
@@ -264,12 +266,12 @@
   },
   "toasterGenericError": "An error has occurred.",
   "toasterMatchDeleted": "Match deleted.",
-  "toasterMatchResultExported": "Match result exported.",
+  "toasterMatchResultShared": "Match result shared.",
   "toasterPacingDeleted": "Pacing deleted.",
-  "toasterPacingExported": "Pacing exported.",
+  "toasterPacingShared": "Pacing shared.",
   "toasterPacingImported": "Pacing imported.",
   "toasterTeamDeleted": "Team deleted.",
-  "toasterTeamExported": "Team exported.",
+  "toasterTeamShared": "Team shared.",
   "toasterTeamImported": "Team imported.",
   "toasterYouCantStartAMatchWithAnEmptyTeam": "You can't start a match with an empty team.",
   "toasterYouCantStartAMatchWithoutImprovisation": "You can't start a match without improvisation.",

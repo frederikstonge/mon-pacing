@@ -14,7 +14,7 @@ class PacingCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;
   final FutureOr<void> Function() delete;
   final FutureOr<void> Function() edit;
-  final FutureOr<void> Function() export;
+  final FutureOr<void> Function() share;
   final FutureOr<void> Function() duplicate;
   final FutureOr<void> Function() startMatch;
   final FutureOr<void> Function() onLongPress;
@@ -26,7 +26,7 @@ class PacingCard extends StatelessWidget {
     required this.shouldDelete,
     required this.delete,
     required this.edit,
-    required this.export,
+    required this.share,
     required this.duplicate,
     required this.startMatch,
     required this.onLongPress,
@@ -134,7 +134,7 @@ class PacingCard extends StatelessWidget {
         pacing: pacing,
         startMatch: startMatch,
         edit: edit,
-        export: export,
+        share: share,
         duplicate: duplicate,
         delete: () async {
           final result = await shouldDelete();

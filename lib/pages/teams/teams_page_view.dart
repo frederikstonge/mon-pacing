@@ -6,6 +6,7 @@ import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
+import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -129,7 +130,13 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                               S.of(context).cancel,
                             ),
                             delete: () => context.read<TeamsCubit>().delete(team),
-                            export: () => context.read<TeamsCubit>().export(team),
+                            share: () => BottomSheetDialog.showDialog(
+                              context: context,
+                              child: ShareMenu(
+                                shareFile: () => context.read<TeamsCubit>().shareFile(team),
+                                saveFile: () => context.read<TeamsCubit>().saveFile(team),
+                              ),
+                            ),
                             duplicate: () => BottomSheetDialog.showDialog(
                               context: context,
                               child: TeamDetailPageShell(

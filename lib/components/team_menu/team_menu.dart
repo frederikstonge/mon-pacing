@@ -10,7 +10,7 @@ import '../bottom_sheet/bottom_sheet_scaffold.dart';
 class TeamMenu extends StatelessWidget {
   final TeamModel team;
   final FutureOr<void> Function() edit;
-  final FutureOr<void> Function() export;
+  final FutureOr<void> Function() share;
   final FutureOr<void> Function() duplicate;
   final FutureOr<void> Function() delete;
 
@@ -18,7 +18,7 @@ class TeamMenu extends StatelessWidget {
     super.key,
     required this.team,
     required this.edit,
-    required this.export,
+    required this.share,
     required this.duplicate,
     required this.delete,
   });
@@ -45,11 +45,11 @@ class TeamMenu extends StatelessWidget {
           InkWell(
             onTap: () async {
               Navigator.of(context).pop();
-              await export.call();
+              await share.call();
             },
             child: ListTile(
-              leading: const Icon(Icons.upload),
-              title: Text(S.of(context).exportTeam, maxLines: 1, overflow: TextOverflow.ellipsis),
+              leading: const Icon(Icons.share),
+              title: Text(S.of(context).share, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(

@@ -6,9 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:sanitize_filename/sanitize_filename.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../extensions/iterable_extensions.dart';
+import '../../extensions/pacing_extensions.dart';
 import '../../l10n/localizer.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
@@ -154,14 +156,53 @@ class PacingsCubit extends Cubit<PacingsState> {
     return null;
   }
 
-  Future<bool> export(PacingModel model) async {
+  Future<bool> shareText(PacingModel model) async {
+    try {
+      final params = ShareParams(title: model.name, text: model.toHumanReadableString());
+      final result = await SharePlus.instance.share(params);
+
+      if (result.status == ShareResultStatus.success) {
+        toasterService.show(title: Localizer.current.toasterPacingShared);
+        return true;
+      }
+    } catch (exception) {
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+    }
+
+    return false;
+  }
+
+  Future<bool> shareFile(PacingModel model) async {
+    try {
+      final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+      final fileName = sanitizeFilename('${Localizer.current.pacing}-${model.name}.json', replacement: '-');
+      final params = ShareParams(
+        title: fileName,
+        files: [XFile.fromData(data, mimeType: 'application/json', name: fileName)],
+        fileNameOverrides: [fileName],
+      );
+
+      final result = await SharePlus.instance.share(params);
+
+      if (result.status == ShareResultStatus.success) {
+        toasterService.show(title: Localizer.current.toasterPacingShared);
+        return true;
+      }
+    } catch (exception) {
+      toasterService.show(title: Localizer.current.toasterGenericError, type: ToastificationType.error);
+    }
+
+    return false;
+  }
+
+  Future<bool> saveFile(PacingModel model) async {
     try {
       final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
       final fileName = sanitizeFilename('${Localizer.current.pacing}-${model.name}.json', replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {
-        toasterService.show(title: Localizer.current.toasterPacingExported);
+        toasterService.show(title: Localizer.current.toasterPacingShared);
         return true;
       }
     } catch (exception) {

@@ -15,7 +15,7 @@ class TeamCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;
   final FutureOr<void> Function() delete;
   final FutureOr<void> Function() edit;
-  final FutureOr<void> Function() export;
+  final FutureOr<void> Function() share;
   final FutureOr<void> Function() duplicate;
   final FutureOr<void> Function() onLongPress;
   final TeamModel team;
@@ -26,7 +26,7 @@ class TeamCard extends StatelessWidget {
     required this.shouldDelete,
     required this.delete,
     required this.edit,
-    required this.export,
+    required this.share,
     required this.duplicate,
     required this.onLongPress,
   });
@@ -108,7 +108,7 @@ class TeamCard extends StatelessWidget {
       child: TeamMenu(
         team: team,
         edit: edit,
-        export: export,
+        share: share,
         duplicate: duplicate,
         delete: () async {
           final result = await shouldDelete();
