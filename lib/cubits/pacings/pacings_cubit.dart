@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../extensions/iterable_extensions.dart';
+import '../../extensions/pacing_extensions.dart';
 import '../../l10n/localizer.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
@@ -157,8 +158,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<bool> shareText(PacingModel model) async {
     try {
-      // TODO: Create human readable pacing string
-      final params = ShareParams(title: model.name, text: model.toJson());
+      final params = ShareParams(title: model.name, text: model.toHumanReadableString());
       final result = await SharePlus.instance.share(params);
 
       if (result.status == ShareResultStatus.success) {
