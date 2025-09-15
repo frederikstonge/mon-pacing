@@ -66,7 +66,7 @@ jobs:
 
   build_deploy_ios:
     name: "Build & Deploy iOS"
-    runs-on: macos-latest
+    runs-on: macos-26
     needs: [set_build_number, tests]
     if: ${{ !cancelled() && inputs.deploy-ios && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
     environment: deploy-ios
