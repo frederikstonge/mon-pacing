@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   collection: ^1.18.0
-  country_flags: ^3.0.0
+  country_flags: ^4.0.1
   cupertino_icons: ^1.0.8
   dart_mappable: ^4.3.0
   dio: ^5.7.0
