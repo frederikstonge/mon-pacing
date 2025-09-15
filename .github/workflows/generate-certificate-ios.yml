@@ -5,7 +5,7 @@ on:
 
 jobs:
   generate_certificate_ios:
-    name: "Generate Cerfificate iOS"
+    name: "Generate Certificate iOS"
     runs-on: macos-latest
     environment: certificate
 
