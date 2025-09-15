@@ -104,7 +104,7 @@ class CitrusIntegration implements MatchIntegrationBase {
         _extractTeam(document, 1, '#alignement1', team1Color!, () => performerId++),
         _extractTeam(document, 2, '#alignement2', team2Color!, () => performerId++),
       ],
-      improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.copyWith(id: -e.id))),
+      improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.copyWith(id: -e.id.abs()))),
       penalties: [],
       points: [],
       enableStatistics: true,

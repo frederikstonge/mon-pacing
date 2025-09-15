@@ -207,12 +207,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
       context: context,
       child: PacingDetailPageShell(
         editMode: false,
-        pacing: pacing.copyWith(
-          id: 0,
-          // Temporary id to support ReorderableListView
-          improvisations: pacing.improvisations.map((e) => e.copyWith(id: -e.id)).toList(),
-          tags: pacing.tags.map((e) => e.copyWith(id: 0)).toList(),
-        ),
+        pacing: pacing,
         onConfirm: (pacing, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
           final router = GoRouter.of(context);

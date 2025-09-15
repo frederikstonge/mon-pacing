@@ -22,7 +22,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
               ? editMode
                     ? team.copyWith()
                     // Temporary id to support ReorderableListView
-                    : team.copyWith(id: 0, performers: team.performers.map((e) => e.copyWith(id: -e.id)).toList())
+                    : team.copyWith(id: 0, performers: team.performers.map((e) => e.copyWith(id: -e.id.abs())).toList())
               : const TeamModel(id: 0, createdDate: null, modifiedDate: null, name: '', color: 0),
         ),
       );

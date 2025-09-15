@@ -33,7 +33,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
                   modifiedDate: null,
                   // Temporary id to support ReorderableListView
                   improvisations: List<ImprovisationModel>.from(
-                    pacing.improvisations.map((e) => e.copyWith(id: -e.id)),
+                    pacing.improvisations.map((e) => e.copyWith(id: -e.id.abs())),
                   ),
                   tags: List<TagModel>.from(pacing.tags.map((e) => e.copyWith(id: 0))),
                   teams: [],
