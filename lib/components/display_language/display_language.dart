@@ -21,15 +21,11 @@ class DisplayLanguage extends StatelessWidget {
           FlagCode.fromLanguageCode(locale.languageCode.toLowerCase()) != null
               ? CountryFlag.fromLanguageCode(
                   locale.languageCode,
-                  height: flagHeight,
-                  width: flagWidth,
-                  shape: const RoundedRectangle(2),
+                  theme: ImageTheme(height: flagHeight, width: flagWidth, shape: const RoundedRectangle(2)),
                 )
               : CountryFlag.fromCountryCode(
                   locale.languageCode,
-                  height: flagHeight,
-                  width: flagWidth,
-                  shape: const RoundedRectangle(2),
+                  theme: ImageTheme(height: flagHeight, width: flagWidth, shape: const RoundedRectangle(2)),
                 ),
           const SizedBox(width: 4),
           Text(
