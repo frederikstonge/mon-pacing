@@ -106,8 +106,8 @@ jobs:
         working-directory: ios
         shell: bash
         run: |
-          echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/en-CA/release_notes.txt
-          echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/fr-CA/release_notes.txt
+          echo "${{ inputs.release_notes_en_CA }}" > fastlane/metadata/en-CA/release_notes.txt
+          echo "${{ inputs.release_notes_fr_CA }}" > fastlane/metadata/fr-CA/release_notes.txt
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
@@ -191,8 +191,8 @@ jobs:
         working-directory: android
         shell: bash
         run: |
-          echo "${{ github.event.inputs.release_notes_en_CA }}" > fastlane/metadata/android/en-CA/changelogs/default.txt
-          echo "${{ github.event.inputs.release_notes_fr_CA }}" > fastlane/metadata/android/fr-CA/changelogs/default.txt
+          echo "${{ inputs.release_notes_en_CA }}" > fastlane/metadata/android/en-CA/changelogs/default.txt
+          echo "${{ inputs.release_notes_fr_CA }}" > fastlane/metadata/android/fr-CA/changelogs/default.txt
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1

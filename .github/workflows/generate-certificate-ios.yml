@@ -62,4 +62,4 @@ jobs:
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
             apple_key_filepath:'${{ env.APPLE_KEY_FILE }}' \
-            nuke:${{ github.event.inputs.nuke }}
+            nuke:${{ inputs.nuke }}
