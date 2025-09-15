@@ -2,6 +2,12 @@ name: "Generate Certificate iOS"
 
 on:
   workflow_dispatch:
+    inputs:
+      nuke:
+        type: boolean
+        description: 'Nuke existing certificates and profiles'
+        required: false
+        default: false
 
 jobs:
   generate_certificate_ios:
@@ -55,4 +61,5 @@ jobs:
             apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
-            apple_key_filepath:'${{ env.APPLE_KEY_FILE }}''
+            apple_key_filepath:'${{ env.APPLE_KEY_FILE }}' \
+            nuke:${{ github.event.inputs.nuke }}

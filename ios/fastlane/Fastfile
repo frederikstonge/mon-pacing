@@ -120,6 +120,7 @@ platform :ios do
   #  - apple_key_id
   #  - apple_issuer_id
   #  - apple_key_filepath (path)
+  #  - nuke (boolean) - whether to nuke existing certificates and profiles
   desc "Generate Certificate"
   lane :generate_cert do |options|
 
@@ -134,6 +135,25 @@ platform :ios do
       duration: 1200, # optional (maximum 1200)
       in_house: false, # Is App Store or Enterprise (in house) team
     )
+
+    if options[:nuke]
+      # Nuke existing code signing (certificates and profiles)
+      match_nuke(
+        type: "appstore",
+        readonly: false,
+        app_identifier: options[:bundle_id],
+        force: true,
+        team_id: options[:apple_team_id],
+        api_key: lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+        generate_apple_certs: true,
+        git_url: options[:git_url],
+        git_basic_authorization: options[:git_basic_authorization],
+        git_user_email: "ci@fastlane.tools",
+        git_full_name: "Fastlane",
+        git_branch: "main",
+        skip_confirmation: true,
+      )
+    end
 
     # Sync code signing 
     sync_code_signing(
