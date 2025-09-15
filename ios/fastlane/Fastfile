@@ -75,7 +75,7 @@ platform :ios do
       use_automatic_signing: false,
       path: "Runner.xcodeproj",
       targets: ["Runner"],
-      sdk: "iphoneos",
+      sdk: "iphoneos*",
       build_configurations: ["Release"],
       team_id: options[:apple_team_id],
       bundle_identifier: options[:bundle_id],
