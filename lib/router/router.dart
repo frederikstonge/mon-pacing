@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +23,7 @@ import 'routes.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
+  observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
   navigatorKey: rootNavigatorKey,
   redirect: (context, state) {
     // Redirect to onboarding if the user has not completed it
