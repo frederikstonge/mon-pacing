@@ -6,7 +6,6 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -64,8 +63,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
       },
       builder: (context, pacingsState) => BlocBuilder<TimerCubit, TimerState>(
         builder: (context, timerState) {
-          return CustomScaffold(
-            scrollPhysics: const AlwaysScrollableScrollPhysics(),
+          return Scaffold(
             floatingActionButton: FloatingActionButton(
               key: _addPacingButtonKey,
               heroTag: 'pacings_fab',
@@ -73,60 +71,58 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
               tooltip: S.of(context).createNewPacingTooltip,
               child: const Icon(Icons.add),
             ),
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
-              BlocBuilder<SettingsCubit, SettingsState>(
-                builder: (context, settingsState) {
-                  return SliverLogoAppbar(
-                    title: S.of(context).pacings,
-                    theme: settingsState.theme,
-                    primary: timerState.timer == null,
-                    actions: [
-                      LoadingIconButton(
-                        icon: const Icon(Icons.download),
-                        tooltip: S.of(context).importPacingTooltip,
-                        onPressed: () async => _onImportPressed(context),
-                      ),
-                      BlocBuilder<IntegrationsCubit, IntegrationsState>(
-                        builder: (context, integrationsState) {
-                          if (integrationsState.integrations.isNotEmpty) {
-                            return LoadingIconButton(
-                              icon: const Icon(Icons.qr_code),
-                              tooltip: S.of(context).scanner,
-                              onPressed: () async => _onIntegrationPressed(context),
-                            );
-                          }
-                          return SizedBox();
-                        },
-                      ),
-                      LoadingIconButton(
-                        icon: const Icon(Icons.search),
-                        tooltip: S.of(context).search(category: S.of(context).pacings),
-                        onPressed: () async => await _onSearchPressed(context),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              if (pacingsState.tags.isNotEmpty) ...[
-                SliverPersistentHeader(
-                  delegate: PinnedTagFilters(
-                    allTags: pacingsState.tags,
-                    selectedTags: pacingsState.selectedTags,
-                    onTagSelected: context.read<PacingsCubit>().selectTag,
-                    onTagDeselected: context.read<PacingsCubit>().deselectTag,
-                  ),
-                  pinned: true,
-                  floating: false,
-                ),
-              ],
-            ],
             body: RefreshIndicator(
               onRefresh: context.read<PacingsCubit>().refresh,
               child: CustomScrollView(
-                primary: true,
-                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
                 slivers: [
+                  if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
+                  BlocBuilder<SettingsCubit, SettingsState>(
+                    builder: (context, settingsState) {
+                      return SliverLogoAppbar(
+                        title: S.of(context).pacings,
+                        theme: settingsState.theme,
+                        primary: timerState.timer == null,
+                        actions: [
+                          LoadingIconButton(
+                            icon: const Icon(Icons.download),
+                            tooltip: S.of(context).importPacingTooltip,
+                            onPressed: () async => _onImportPressed(context),
+                          ),
+                          BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                            builder: (context, integrationsState) {
+                              if (integrationsState.integrations.isNotEmpty) {
+                                return LoadingIconButton(
+                                  icon: const Icon(Icons.qr_code),
+                                  tooltip: S.of(context).scanner,
+                                  onPressed: () async => _onIntegrationPressed(context),
+                                );
+                              }
+                              return SizedBox();
+                            },
+                          ),
+                          LoadingIconButton(
+                            icon: const Icon(Icons.search),
+                            tooltip: S.of(context).search(category: S.of(context).pacings),
+                            onPressed: () async => await _onSearchPressed(context),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  if (pacingsState.tags.isNotEmpty) ...[
+                    SliverPersistentHeader(
+                      delegate: PinnedTagFilters(
+                        allTags: pacingsState.tags,
+                        selectedTags: pacingsState.selectedTags,
+                        onTagSelected: context.read<PacingsCubit>().selectTag,
+                        onTagDeselected: context.read<PacingsCubit>().deselectTag,
+                      ),
+                      pinned: true,
+                      floating: false,
+                    ),
+                  ],
+
                   switch (pacingsState.status) {
                     PacingsStatus.initial => const SliverFillRemaining(
                       child: Center(child: CircularProgressIndicator()),

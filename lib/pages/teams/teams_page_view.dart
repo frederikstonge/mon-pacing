@@ -4,7 +4,6 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -35,8 +34,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
       builder: (context, teamsState) {
         return BlocBuilder<TimerCubit, TimerState>(
           builder: (context, timerState) {
-            return CustomScaffold(
-              scrollPhysics: const AlwaysScrollableScrollPhysics(),
+            return Scaffold(
               floatingActionButton: FloatingActionButton(
                 heroTag: 'teams_fab',
                 onPressed: () {
@@ -55,41 +53,41 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                 tooltip: S.of(context).createNewTeamTooltip,
                 child: const Icon(Icons.add),
               ),
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
-                BlocBuilder<SettingsCubit, SettingsState>(
-                  builder: (context, settingsState) {
-                    return SliverLogoAppbar(
-                      title: S.of(context).teams,
-                      theme: settingsState.theme,
-                      primary: timerState.timer == null,
-                      actions: [
-                        LoadingIconButton(
-                          icon: const Icon(Icons.download),
-                          tooltip: S.of(context).importTeamTooltip,
-                          onPressed: () async => context.read<TeamsCubit>().import(),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                if (teamsState.tags.isNotEmpty) ...[
-                  SliverPersistentHeader(
-                    delegate: PinnedTagFilters(
-                      allTags: teamsState.tags,
-                      selectedTags: teamsState.selectedTags,
-                      onTagSelected: context.read<TeamsCubit>().selectTag,
-                      onTagDeselected: context.read<TeamsCubit>().deselectTag,
-                    ),
-                    pinned: true,
-                    floating: false,
-                  ),
-                ],
-              ],
               body: RefreshIndicator(
                 onRefresh: context.read<TeamsCubit>().refresh,
                 child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
+                    if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
+                    BlocBuilder<SettingsCubit, SettingsState>(
+                      builder: (context, settingsState) {
+                        return SliverLogoAppbar(
+                          title: S.of(context).teams,
+                          theme: settingsState.theme,
+                          primary: timerState.timer == null,
+                          actions: [
+                            LoadingIconButton(
+                              icon: const Icon(Icons.download),
+                              tooltip: S.of(context).importTeamTooltip,
+                              onPressed: () async => context.read<TeamsCubit>().import(),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    if (teamsState.tags.isNotEmpty) ...[
+                      SliverPersistentHeader(
+                        delegate: PinnedTagFilters(
+                          allTags: teamsState.tags,
+                          selectedTags: teamsState.selectedTags,
+                          onTagSelected: context.read<TeamsCubit>().selectTag,
+                          onTagDeselected: context.read<TeamsCubit>().deselectTag,
+                        ),
+                        pinned: true,
+                        floating: false,
+                      ),
+                    ],
+
                     switch (teamsState.status) {
                       TeamsStatus.initial => const SliverFillRemaining(
                         child: Center(child: CircularProgressIndicator()),

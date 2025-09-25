@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
@@ -38,55 +37,53 @@ class _MatchesPageViewState extends State<MatchesPageView> {
       builder: (context, matchesState) {
         return BlocBuilder<TimerCubit, TimerState>(
           builder: (context, timerState) {
-            return CustomScaffold(
-              scrollPhysics: const AlwaysScrollableScrollPhysics(),
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
-                BlocBuilder<SettingsCubit, SettingsState>(
-                  builder: (context, settingsState) {
-                    return SliverLogoAppbar(
-                      title: S.of(context).matches,
-                      theme: settingsState.theme,
-                      primary: timerState.timer == null,
-                      actions: [
-                        BlocBuilder<IntegrationsCubit, IntegrationsState>(
-                          builder: (context, integrationsState) {
-                            if (integrationsState.integrations.isNotEmpty) {
-                              return LoadingIconButton(
-                                icon: const Icon(Icons.qr_code),
-                                tooltip: S.of(context).scanner,
-                                onPressed: () async => _onIntegrationPressed(context),
-                              );
-                            }
-                            return SizedBox();
-                          },
-                        ),
-                        LoadingIconButton(
-                          icon: const Icon(Icons.search),
-                          tooltip: S.of(context).search(category: S.of(context).matches),
-                          onPressed: () async => await _onSearchPressed(context),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                if (matchesState.tags.isNotEmpty) ...[
-                  SliverPersistentHeader(
-                    delegate: PinnedTagFilters(
-                      allTags: matchesState.tags,
-                      selectedTags: matchesState.selectedTags,
-                      onTagSelected: context.read<MatchesCubit>().selectTag,
-                      onTagDeselected: context.read<MatchesCubit>().deselectTag,
-                    ),
-                    pinned: true,
-                    floating: false,
-                  ),
-                ],
-              ],
+            return Scaffold(
               body: RefreshIndicator(
                 onRefresh: context.read<MatchesCubit>().refresh,
                 child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
+                    if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
+                    BlocBuilder<SettingsCubit, SettingsState>(
+                      builder: (context, settingsState) {
+                        return SliverLogoAppbar(
+                          title: S.of(context).matches,
+                          theme: settingsState.theme,
+                          primary: timerState.timer == null,
+                          actions: [
+                            BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                              builder: (context, integrationsState) {
+                                if (integrationsState.integrations.isNotEmpty) {
+                                  return LoadingIconButton(
+                                    icon: const Icon(Icons.qr_code),
+                                    tooltip: S.of(context).scanner,
+                                    onPressed: () async => _onIntegrationPressed(context),
+                                  );
+                                }
+                                return SizedBox();
+                              },
+                            ),
+                            LoadingIconButton(
+                              icon: const Icon(Icons.search),
+                              tooltip: S.of(context).search(category: S.of(context).matches),
+                              onPressed: () async => await _onSearchPressed(context),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    if (matchesState.tags.isNotEmpty) ...[
+                      SliverPersistentHeader(
+                        delegate: PinnedTagFilters(
+                          allTags: matchesState.tags,
+                          selectedTags: matchesState.selectedTags,
+                          onTagSelected: context.read<MatchesCubit>().selectTag,
+                          onTagDeselected: context.read<MatchesCubit>().deselectTag,
+                        ),
+                        pinned: true,
+                        floating: false,
+                      ),
+                    ],
                     switch (matchesState.status) {
                       MatchesStatus.initial => const SliverFillRemaining(
                         child: Center(child: CircularProgressIndicator()),

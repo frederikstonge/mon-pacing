@@ -7,7 +7,6 @@ import 'package:toastification/toastification.dart';
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
-import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/match_menu/match_menu.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/share_menu/share_menu.dart';
@@ -100,7 +99,7 @@ class _MatchPageViewState extends State<MatchPageView> {
                     final canAddImprovisation =
                         match.maxNumberOfImprovisations == null ||
                         match.improvisations.length < match.maxNumberOfImprovisations!;
-                    return CustomScaffold(
+                    return NestedScrollView(
                       headerSliverBuilder: (context, innerBoxIsScrolled) => [
                         if (timerState.timer != null) ...[
                           TimerBanner(

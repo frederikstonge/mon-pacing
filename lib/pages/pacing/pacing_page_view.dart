@@ -6,7 +6,6 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/custom_scaffold/custom_scaffold.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/pacing_menu/pacing_menu.dart';
 import '../../components/share_menu/share_menu.dart';
@@ -78,7 +77,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                   builder: (context, timerState) {
                     return Form(
                       key: formKey,
-                      child: CustomScaffold(
+                      child: Scaffold(
                         floatingActionButton: FloatingActionButton(
                           key: _addImprovisationButtonKey,
                           heroTag: 'pacing_tab',
@@ -86,53 +85,52 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                           tooltip: S.of(context).addImprovisation,
                           child: const Icon(Icons.add),
                         ),
-                        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
-                          if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
-                          BlocBuilder<SettingsCubit, SettingsState>(
-                            builder: (context, settingsState) {
-                              return SliverLogoAppbar(
-                                title: pacing.name,
-                                theme: settingsState.theme,
-                                primary: timerState.timer == null,
-                                actions: [
-                                  LoadingIconButton(
-                                    tooltip: S.of(context).more,
-                                    onPressed: () => BottomSheetDialog.showDialog(
-                                      context: context,
-                                      child: PacingMenu(
-                                        pacing: pacing,
-                                        startMatch: () {
-                                          _startMatch(context, pacing);
-                                        },
-                                        editDetails: () async {
-                                          await _editDetails(context, pacing);
-                                        },
-                                        delete: () async {
-                                          await _delete(context, pacing);
-                                        },
-                                        share: () async => BottomSheetDialog.showDialog(
-                                          context: context,
-                                          child: ShareMenu(
-                                            shareText: () => context.read<PacingsCubit>().shareText(pacing),
-                                            shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
-                                            saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
-                                          ),
-                                        ),
-                                        duplicate: () {
-                                          return _duplicate(context, pacing);
-                                        },
-                                      ),
-                                    ),
-                                    icon: const Icon(Icons.more_vert),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                          SliverPersistentHeader(delegate: PacingPersistentHeader(pacing: pacing), pinned: true),
-                        ],
                         body: CustomScrollView(
                           slivers: [
+                            if (timerState.timer != null) ...[TimerBanner(timer: timerState.timer!)],
+                            BlocBuilder<SettingsCubit, SettingsState>(
+                              builder: (context, settingsState) {
+                                return SliverLogoAppbar(
+                                  title: pacing.name,
+                                  theme: settingsState.theme,
+                                  primary: timerState.timer == null,
+                                  actions: [
+                                    LoadingIconButton(
+                                      tooltip: S.of(context).more,
+                                      onPressed: () => BottomSheetDialog.showDialog(
+                                        context: context,
+                                        child: PacingMenu(
+                                          pacing: pacing,
+                                          startMatch: () {
+                                            _startMatch(context, pacing);
+                                          },
+                                          editDetails: () async {
+                                            await _editDetails(context, pacing);
+                                          },
+                                          delete: () async {
+                                            await _delete(context, pacing);
+                                          },
+                                          share: () async => BottomSheetDialog.showDialog(
+                                            context: context,
+                                            child: ShareMenu(
+                                              shareText: () => context.read<PacingsCubit>().shareText(pacing),
+                                              shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
+                                              saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
+                                            ),
+                                          ),
+                                          duplicate: () {
+                                            return _duplicate(context, pacing);
+                                          },
+                                        ),
+                                      ),
+                                      icon: const Icon(Icons.more_vert),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                            SliverPersistentHeader(delegate: PacingPersistentHeader(pacing: pacing), pinned: true),
+
                             SliverReorderableList(
                               itemCount: pacing.improvisations.length,
                               itemBuilder: (context, index) {
