@@ -16,6 +16,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
       MapperContainer.globals.use(_instance = SettingsStateMapper._());
       ThemeTypeMapper.ensureInitialized();
       PenaltiesImpactTypeMapper.ensureInitialized();
+      ImprovisationFieldsMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -140,6 +141,23 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
         opt: true,
         def: 3,
       );
+  static List<ImprovisationFields> _$improvisationFieldsOrder(
+    SettingsState v,
+  ) => v.improvisationFieldsOrder;
+  static const Field<SettingsState, List<ImprovisationFields>>
+  _f$improvisationFieldsOrder = Field(
+    'improvisationFieldsOrder',
+    _$improvisationFieldsOrder,
+    opt: true,
+    def: const [
+      ImprovisationFields.type,
+      ImprovisationFields.performers,
+      ImprovisationFields.durations,
+      ImprovisationFields.category,
+      ImprovisationFields.theme,
+      ImprovisationFields.notes,
+    ],
+  );
 
   @override
   final MappableFields<SettingsState> fields = const {
@@ -160,6 +178,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
         _f$defaultPenaltiesRequiredToImpactPoints,
     #enableDefaultMatchExpulsion: _f$enableDefaultMatchExpulsion,
     #defaultPenaltiesRequiredToExpel: _f$defaultPenaltiesRequiredToExpel,
+    #improvisationFieldsOrder: _f$improvisationFieldsOrder,
   };
 
   static SettingsState _instantiate(DecodingData data) {
@@ -187,6 +206,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
       defaultPenaltiesRequiredToExpel: data.dec(
         _f$defaultPenaltiesRequiredToExpel,
       ),
+      improvisationFieldsOrder: data.dec(_f$improvisationFieldsOrder),
     );
   }
 
@@ -252,6 +272,12 @@ extension SettingsStateValueCopy<$R, $Out>
 
 abstract class SettingsStateCopyWith<$R, $In extends SettingsState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<
+    $R,
+    ImprovisationFields,
+    ObjectCopyWith<$R, ImprovisationFields, ImprovisationFields>
+  >
+  get improvisationFieldsOrder;
   $R call({
     String? language,
     ThemeType? theme,
@@ -268,6 +294,7 @@ abstract class SettingsStateCopyWith<$R, $In extends SettingsState, $Out>
     int? defaultPenaltiesRequiredToImpactPoints,
     bool? enableDefaultMatchExpulsion,
     int? defaultPenaltiesRequiredToExpel,
+    List<ImprovisationFields>? improvisationFieldsOrder,
   });
   SettingsStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -281,6 +308,17 @@ class _SettingsStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<SettingsState> $mapper =
       SettingsStateMapper.ensureInitialized();
   @override
+  ListCopyWith<
+    $R,
+    ImprovisationFields,
+    ObjectCopyWith<$R, ImprovisationFields, ImprovisationFields>
+  >
+  get improvisationFieldsOrder => ListCopyWith(
+    $value.improvisationFieldsOrder,
+    (v, t) => ObjectCopyWith(v, $identity, t),
+    (v) => call(improvisationFieldsOrder: v),
+  );
+  @override
   $R call({
     String? language,
     ThemeType? theme,
@@ -297,6 +335,7 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     int? defaultPenaltiesRequiredToImpactPoints,
     bool? enableDefaultMatchExpulsion,
     int? defaultPenaltiesRequiredToExpel,
+    List<ImprovisationFields>? improvisationFieldsOrder,
   }) => $apply(
     FieldCopyWithData({
       if (language != null) #language: language,
@@ -328,6 +367,8 @@ class _SettingsStateCopyWithImpl<$R, $Out>
         #enableDefaultMatchExpulsion: enableDefaultMatchExpulsion,
       if (defaultPenaltiesRequiredToExpel != null)
         #defaultPenaltiesRequiredToExpel: defaultPenaltiesRequiredToExpel,
+      if (improvisationFieldsOrder != null)
+        #improvisationFieldsOrder: improvisationFieldsOrder,
     }),
   );
   @override
@@ -382,6 +423,10 @@ class _SettingsStateCopyWithImpl<$R, $Out>
     defaultPenaltiesRequiredToExpel: data.get(
       #defaultPenaltiesRequiredToExpel,
       or: $value.defaultPenaltiesRequiredToExpel,
+    ),
+    improvisationFieldsOrder: data.get(
+      #improvisationFieldsOrder,
+      or: $value.improvisationFieldsOrder,
     ),
   );
 
