@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_button.dart';
+import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/display_language/display_language.dart';
@@ -24,6 +26,7 @@ import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';
 import '../../services/package_info_service.dart';
+import 'widgets/improvisation_fields_order.dart';
 import 'widgets/language_view.dart';
 import 'widgets/theme_view.dart';
 
@@ -63,7 +66,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                   SliverList.list(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                        padding: const EdgeInsets.only(left: 16, top: 16),
                         child: TextHeader(title: S.of(context).general),
                       ),
                       CustomCard(
@@ -304,6 +307,39 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                     settingsState.copyWith(defaultTimeBufferInSeconds: newDuration.inSeconds),
                                   );
                                 }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                        child: TextHeader(
+                          title: S.of(context).improvisationFieldsOrder,
+                          tooltip: S.of(context).improvisationFieldsOrderTooltip,
+                          trailing: LoadingIconButton(
+                            icon: Icon(Icons.restore),
+                            onPressed: () {
+                              context.read<SettingsCubit>().edit(
+                                settingsState.copyWith(
+                                  improvisationFieldsOrder: SettingsState.defaultImprovisationFieldsOrder,
+                                ),
+                              );
+                            },
+                            tooltip: S.of(context).resetOrderToDefault,
+                          ),
+                        ),
+                      ),
+                      CustomCard(
+                        child: Column(
+                          children: [
+                            ImprovisationFieldsOrder(
+                              fields: settingsState.improvisationFieldsOrder,
+                              onChanged: (fields) => context.read<SettingsCubit>().edit(
+                                settingsState.copyWith(improvisationFieldsOrder: fields),
+                              ),
+                              onDragStart: () {
+                                context.read<SettingsCubit>().vibrate(HapticsType.selection);
                               },
                             ),
                           ],

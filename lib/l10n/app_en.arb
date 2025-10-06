@@ -101,6 +101,8 @@
     }
   },
   "improvisationDurationInSeconds": "Improvisation duration",
+  "improvisationFieldsOrder": "Improvisation fields order",
+  "improvisationFieldsOrderTooltip": "Change the order that improvisation fields will be displayed.",
   "improvisationIndex": "Improvisation position",
   "improvisationNumber": "Improvisation #{order}",
   "@improvisationNumber": {
@@ -193,6 +195,8 @@
   "onboardingPacingsDescription": "Create pacings for your matches with our tool.",
   "onboardingImprovisationsTitle": "Customize your improvisations",
   "onboardingImprovisationsDescription": "Customize your improvisations with durations, types, tags, and more.",
+  "onboardingImprovisationFieldsOrderTitle": "Make yourself comfortable",
+  "onboardingImprovisationFieldsOrderDescription": "Set the order that improvisation fields will be displayed.",
   "onboardingMatchesTitle": "Enrich your matches",
   "onboardingMatchesDescription": "Add statistics and more to your matches.",
   "onboardingPenaltiesTitle": "Track penalties",
@@ -225,6 +229,7 @@
   "points": "Points",
   "required": "Field is required",
   "remove": "Remove",
+  "resetOrderToDefault": "Reset order to default",
   "resetSettingsToDefault": "Reset settings to default",
   "save": "Save",
   "scanner": "Scanner for integrations",

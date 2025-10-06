@@ -9,6 +9,7 @@ import '../../../extensions/duration_extensions.dart';
 import '../../../extensions/improvisation_extensions.dart';
 import '../../../extensions/pacing_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../../models/improvisation_fields.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
 import '../../../models/pacing_model.dart';
@@ -16,6 +17,7 @@ import '../../../models/pacing_model.dart';
 class ImprovisationTile extends StatefulWidget {
   final PacingModel pacing;
   final ImprovisationModel improvisation;
+  final List<ImprovisationFields> improvisationFieldsOrder;
   final int index;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
   final FutureOr<void> Function(ImprovisationModel value) onDelete;
@@ -30,6 +32,7 @@ class ImprovisationTile extends StatefulWidget {
     super.key,
     required this.pacing,
     required this.improvisation,
+    required this.improvisationFieldsOrder,
     required this.index,
     required this.onChanged,
     required this.onDelete,
@@ -99,38 +102,43 @@ class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKee
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).category}: ${widget.improvisation.getCategoryString(S.of(context))}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).performers}: ${widget.improvisation.getPerformersString(S.of(context))}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).duration}: ${widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          '${S.of(context).theme}: ${widget.improvisation.theme}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ],
+                      children: widget.improvisationFieldsOrder
+                          .map(
+                            (field) => switch (field) {
+                              ImprovisationFields.type => Text(
+                                '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              ImprovisationFields.category => Text(
+                                '${S.of(context).category}: ${widget.improvisation.getCategoryString(S.of(context))}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              ImprovisationFields.performers => Text(
+                                '${S.of(context).performers}: ${widget.improvisation.getPerformersString(S.of(context))}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              ImprovisationFields.durations => Text(
+                                '${S.of(context).duration}: ${widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              ImprovisationFields.theme => Text(
+                                '${S.of(context).theme}: ${widget.improvisation.theme}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              _ => const SizedBox.shrink(),
+                            },
+                          )
+                          .toList(),
                     ),
                   ),
                 ),
@@ -140,6 +148,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKee
             children: [
               ImprovisationDetail(
                 improvisation: widget.improvisation,
+                improvisationFieldsOrder: widget.improvisationFieldsOrder,
                 onChanged: widget.onChanged,
                 onDragStart: widget.onDragStart,
                 getAllCategories: widget.getAllCategories,

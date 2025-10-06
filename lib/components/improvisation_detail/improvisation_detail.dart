@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../extensions/duration_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../models/improvisation_fields.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../../pages/categories_search/categories_search_page_view.dart';
@@ -18,6 +19,7 @@ import 'improvisation_durations.dart';
 
 class ImprovisationDetail extends StatefulWidget {
   final ImprovisationModel improvisation;
+  final List<ImprovisationFields> improvisationFieldsOrder;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
   final FutureOr<void> Function() onDragStart;
   final Future<List<String>> Function({String search}) getAllCategories;
@@ -25,6 +27,7 @@ class ImprovisationDetail extends StatefulWidget {
   const ImprovisationDetail({
     super.key,
     required this.improvisation,
+    required this.improvisationFieldsOrder,
     required this.onChanged,
     required this.onDragStart,
     required this.getAllCategories,
@@ -63,63 +66,81 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DropDownElement<ImprovisationType>(
-          label: S.of(context).type,
-          value: widget.improvisation.type,
-          onChanged: (value) async => await widget.onChanged(widget.improvisation.copyWith(type: value)),
-          items: ImprovisationType.values.map((e) {
-            final display = e == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared;
-            return DropdownMenuItem<ImprovisationType>(
-              value: e,
-              child: Row(children: [Expanded(child: Text(display))]),
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 8),
-        TextFieldElement(
-          label: S.of(context).category,
-          controller: _categoryController,
-          onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
-          hintText: S.of(context).free,
-          suffixIcon: LoadingIconButton(
-            tooltip: S.of(context).search(category: S.of(context).category.toLowerCase()),
-            icon: const Icon(Icons.search),
-            onPressed: () async {
-              final result = await CategoriesSearchPageView.showDialog(context);
-              if (result != null) {
-                _categoryController.text = result;
-                await widget.onChanged.call(widget.improvisation.copyWith(category: result));
-              }
-            },
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextFieldElement(
-          label: S.of(context).performers,
-          controller: _performersController,
-          onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(performers: value)),
-          hintText: S.of(context).unlimited,
-        ),
-        const SizedBox(height: 8),
-        ImprovisationDurations(
-          label: S.of(context).duration,
-          durations: widget.improvisation.durationsInSeconds,
-          onChanged: (value) async =>
-              await widget.onChanged.call(widget.improvisation.copyWith(durationsInSeconds: value)),
-          onDragStart: widget.onDragStart,
-        ),
-        const SizedBox(height: 8),
-        TextFieldElement(
-          label: S.of(context).theme,
-          controller: _themeController,
-          onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(theme: value)),
-        ),
-        const SizedBox(height: 8),
-        TextFieldElement(
-          label: S.of(context).notes,
-          controller: _notesController,
-          multiline: true,
-          onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(notes: value)),
+        ...widget.improvisationFieldsOrder.map(
+          (field) => switch (field) {
+            ImprovisationFields.type => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: DropDownElement<ImprovisationType>(
+                label: S.of(context).type,
+                value: widget.improvisation.type,
+                onChanged: (value) async => await widget.onChanged(widget.improvisation.copyWith(type: value)),
+                items: ImprovisationType.values.map((e) {
+                  final display = e == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared;
+                  return DropdownMenuItem<ImprovisationType>(
+                    value: e,
+                    child: Row(children: [Expanded(child: Text(display))]),
+                  );
+                }).toList(),
+              ),
+            ),
+            ImprovisationFields.category => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: TextFieldElement(
+                label: S.of(context).category,
+                controller: _categoryController,
+                onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
+                hintText: S.of(context).free,
+                suffixIcon: LoadingIconButton(
+                  tooltip: S.of(context).search(category: S.of(context).category.toLowerCase()),
+                  icon: const Icon(Icons.search),
+                  onPressed: () async {
+                    final result = await CategoriesSearchPageView.showDialog(context);
+                    if (result != null) {
+                      _categoryController.text = result;
+                      await widget.onChanged.call(widget.improvisation.copyWith(category: result));
+                    }
+                  },
+                ),
+              ),
+            ),
+            ImprovisationFields.performers => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: TextFieldElement(
+                label: S.of(context).performers,
+                controller: _performersController,
+                onChanged: (value) async =>
+                    await widget.onChanged.call(widget.improvisation.copyWith(performers: value)),
+                hintText: S.of(context).unlimited,
+              ),
+            ),
+            ImprovisationFields.durations => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: ImprovisationDurations(
+                label: S.of(context).duration,
+                durations: widget.improvisation.durationsInSeconds,
+                onChanged: (value) async =>
+                    await widget.onChanged.call(widget.improvisation.copyWith(durationsInSeconds: value)),
+                onDragStart: widget.onDragStart,
+              ),
+            ),
+            ImprovisationFields.theme => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: TextFieldElement(
+                label: S.of(context).theme,
+                controller: _themeController,
+                onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(theme: value)),
+              ),
+            ),
+            ImprovisationFields.notes => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: TextFieldElement(
+                label: S.of(context).notes,
+                controller: _notesController,
+                multiline: true,
+                onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(notes: value)),
+              ),
+            ),
+          },
         ),
         SettingsTile(
           leading: const Icon(Icons.timer),

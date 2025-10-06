@@ -15,15 +15,17 @@ import '../../l10n/localizer.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../services/toaster_service.dart';
+import '../settings/settings_cubit.dart';
 import 'pacings_state.dart';
 import 'pacings_status.dart';
 
 class PacingsCubit extends Cubit<PacingsState> {
   static const int _pageSize = 20;
   final PacingsRepository pacingsRepository;
+  final SettingsCubit settingsCubit;
   final ToasterService toasterService;
 
-  PacingsCubit({required this.pacingsRepository, required this.toasterService})
+  PacingsCubit({required this.pacingsRepository, required this.toasterService, required this.settingsCubit})
     : super(const PacingsState(status: PacingsStatus.initial));
 
   Future<PacingModel?> add(PacingModel model) async {
@@ -158,7 +160,10 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<bool> shareText(PacingModel model) async {
     try {
-      final params = ShareParams(title: model.name, text: model.toHumanReadableString());
+      final params = ShareParams(
+        title: model.name,
+        text: model.toHumanReadableString(settingsCubit.state.improvisationFieldsOrder),
+      );
       final result = await SharePlus.instance.share(params);
 
       if (result.status == ShareResultStatus.success) {

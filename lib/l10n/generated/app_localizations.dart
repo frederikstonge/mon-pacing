@@ -428,6 +428,18 @@ abstract class S {
   /// **'Improvisation duration'**
   String get improvisationDurationInSeconds;
 
+  /// No description provided for @improvisationFieldsOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Improvisation fields order'**
+  String get improvisationFieldsOrder;
+
+  /// No description provided for @improvisationFieldsOrderTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the order that improvisation fields will be displayed.'**
+  String get improvisationFieldsOrderTooltip;
+
   /// No description provided for @improvisationIndex.
   ///
   /// In en, this message translates to:
@@ -680,6 +692,18 @@ abstract class S {
   /// **'Customize your improvisations with durations, types, tags, and more.'**
   String get onboardingImprovisationsDescription;
 
+  /// No description provided for @onboardingImprovisationFieldsOrderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Make yourself comfortable'**
+  String get onboardingImprovisationFieldsOrderTitle;
+
+  /// No description provided for @onboardingImprovisationFieldsOrderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the order that improvisation fields will be displayed.'**
+  String get onboardingImprovisationFieldsOrderDescription;
+
   /// No description provided for @onboardingMatchesTitle.
   ///
   /// In en, this message translates to:
@@ -829,6 +853,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Remove'**
   String get remove;
+
+  /// No description provided for @resetOrderToDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset order to default'**
+  String get resetOrderToDefault;
 
   /// No description provided for @resetSettingsToDefault.
   ///

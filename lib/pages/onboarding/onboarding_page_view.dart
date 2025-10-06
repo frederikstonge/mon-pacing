@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
@@ -18,6 +19,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../router/routes.dart';
+import '../settings/widgets/improvisation_fields_order.dart';
 import '../settings/widgets/language_view.dart';
 
 class OnboardingPageView extends StatefulWidget {
@@ -40,6 +42,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
           key: introKey,
           controlsPadding: EdgeInsets.only(bottom: MediaQuery.viewPaddingOf(context).bottom, left: 8, right: 8),
           pages: [
+            // Language
             PageViewModel(
               decoration: PageDecoration(
                 imageFlex: 1,
@@ -97,6 +100,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                 ],
               ),
             ),
+            // Pacings
             PageViewModel(
               decoration: PageDecoration(
                 imageFlex: 1,
@@ -167,6 +171,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                 ),
               ),
             ),
+            // Improvisations
             PageViewModel(
               decoration: PageDecoration(
                 imageFlex: 1,
@@ -288,6 +293,63 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                 ],
               ),
             ),
+            // Fields order
+            PageViewModel(
+              decoration: PageDecoration(
+                imageFlex: 1,
+                bodyFlex: 2,
+                footerFlex: 1,
+                imagePadding: EdgeInsets.zero,
+                imageAlignment: Alignment.topCenter,
+                safeArea: MediaQuery.viewPaddingOf(context).bottom,
+              ),
+              image: Padding(
+                padding: EdgeInsets.only(top: MediaQuery.viewPaddingOf(context).top),
+                child: Center(
+                  child: Transform(
+                    alignment: FractionalOffset.center,
+                    transform: Matrix4.rotationZ(-0.2),
+                    child: Opacity(
+                      opacity: 0.8,
+                      child: Icon(
+                        Icons.view_list,
+                        size: MediaQuery.sizeOf(context).width / 2,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              titleWidget: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).onboardingImprovisationFieldsOrderTitle,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    S.of(context).onboardingImprovisationFieldsOrderDescription,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(S.of(context).onboardingByDefault, style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+              bodyWidget: Column(
+                children: [
+                  ImprovisationFieldsOrder(
+                    fields: settingsState.improvisationFieldsOrder,
+                    onChanged: (fields) =>
+                        context.read<SettingsCubit>().edit(settingsState.copyWith(improvisationFieldsOrder: fields)),
+                    onDragStart: () {
+                      context.read<SettingsCubit>().vibrate(HapticsType.selection);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            // Matches
             PageViewModel(
               decoration: PageDecoration(
                 imageFlex: 1,
@@ -347,6 +409,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                 ],
               ),
             ),
+            // Penalties
             if (settingsState.defaultEnableStatistics) ...[
               PageViewModel(
                 decoration: PageDecoration(
@@ -549,5 +612,5 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
   bool get isPacingsValid =>
       introKey.currentState?.getCurrentPage() != 1 || pacingsFormKey.currentState?.validate() == true;
   bool get isPenaltiesValid =>
-      introKey.currentState?.getCurrentPage() != 4 || penaltiesFormKey.currentState?.validate() == true;
+      introKey.currentState?.getCurrentPage() != 5 || penaltiesFormKey.currentState?.validate() == true;
 }

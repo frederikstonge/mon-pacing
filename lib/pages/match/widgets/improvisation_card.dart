@@ -7,12 +7,14 @@ import '../../../components/custom_card/custom_card.dart';
 import '../../../extensions/duration_extensions.dart';
 import '../../../extensions/improvisation_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../../models/improvisation_fields.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
 
 class ImprovisationCard extends StatelessWidget {
   static const double _cellPadding = 2.0;
   final ImprovisationModel improvisation;
+  final List<ImprovisationFields> improvisationFieldsOrder;
   final int index;
   final FutureOr<void> Function(ImprovisationModel improvisation) onEdit;
   final FutureOr<void> Function(ImprovisationModel improvisation)? onDelete;
@@ -20,6 +22,7 @@ class ImprovisationCard extends StatelessWidget {
   const ImprovisationCard({
     super.key,
     required this.improvisation,
+    required this.improvisationFieldsOrder,
     required this.index,
     required this.onEdit,
     required this.onDelete,
@@ -66,84 +69,101 @@ class ImprovisationCard extends StatelessWidget {
           Table(
             columnWidths: const <int, TableColumnWidth>{0: IntrinsicColumnWidth(), 1: FlexColumnWidth()},
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: [
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text('${S.of(context).type}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared,
+            children: improvisationFieldsOrder
+                .map(
+                  (field) => switch (field) {
+                    ImprovisationFields.type => TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text('${S.of(context).type}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(
+                            improvisation.type == ImprovisationType.mixed
+                                ? S.of(context).mixed
+                                : S.of(context).compared,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text('${S.of(context).category}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(improvisation.getCategoryString(S.of(context))),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text('${S.of(context).performers}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(improvisation.getPerformersString(S.of(context))),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text('${S.of(context).duration}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(
-                      improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', '),
+                    ImprovisationFields.category => TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(
+                            '${S.of(context).category}: ',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(improvisation.getCategoryString(S.of(context))),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text('${S.of(context).theme}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(improvisation.theme),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text('${S.of(context).notes}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                    child: Text(improvisation.notes),
-                  ),
-                ],
-              ),
-            ],
+                    ImprovisationFields.performers => TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(
+                            '${S.of(context).performers}: ',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(improvisation.getPerformersString(S.of(context))),
+                        ),
+                      ],
+                    ),
+                    ImprovisationFields.durations => TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(
+                            '${S.of(context).duration}: ',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(
+                            improvisation.durationsInSeconds
+                                .map((e) => Duration(seconds: e).toImprovDuration())
+                                .join(', '),
+                          ),
+                        ),
+                      ],
+                    ),
+                    ImprovisationFields.theme => TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text('${S.of(context).theme}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(improvisation.theme),
+                        ),
+                      ],
+                    ),
+                    ImprovisationFields.notes => TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text('${S.of(context).notes}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
+                          child: Text(improvisation.notes),
+                        ),
+                      ],
+                    ),
+                  },
+                )
+                .toList(),
           ),
         ],
       ),
