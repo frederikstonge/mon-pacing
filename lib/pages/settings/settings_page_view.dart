@@ -314,10 +314,9 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-                        // TODO: Translate
                         child: TextHeader(
-                          title: 'Field Order',
-                          tooltip: 'Change the order that improvisation fields will be displayed.',
+                          title: S.of(context).improvisationFieldsOrder,
+                          tooltip: S.of(context).improvisationFieldsOrderTooltip,
                           trailing: LoadingIconButton(
                             icon: Icon(Icons.restore),
                             onPressed: () {
@@ -327,7 +326,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 ),
                               );
                             },
-                            tooltip: 'Reset to default order',
+                            tooltip: S.of(context).resetOrderToDefault,
                           ),
                         ),
                       ),

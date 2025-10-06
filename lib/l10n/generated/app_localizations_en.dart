@@ -194,6 +194,12 @@ class SEn extends S {
   String get improvisationDurationInSeconds => 'Improvisation duration';
 
   @override
+  String get improvisationFieldsOrder => 'Improvisation fields order';
+
+  @override
+  String get improvisationFieldsOrderTooltip => 'Change the order that improvisation fields will be displayed.';
+
+  @override
   String get improvisationIndex => 'Improvisation position';
 
   @override
@@ -352,6 +358,13 @@ class SEn extends S {
       'Customize your improvisations with durations, types, tags, and more.';
 
   @override
+  String get onboardingImprovisationFieldsOrderTitle => 'Make yourself comfortable';
+
+  @override
+  String get onboardingImprovisationFieldsOrderDescription =>
+      'Set the order that improvisation fields will be displayed.';
+
+  @override
   String get onboardingMatchesTitle => 'Enrich your matches';
 
   @override
@@ -427,6 +440,9 @@ class SEn extends S {
 
   @override
   String get remove => 'Remove';
+
+  @override
+  String get resetOrderToDefault => 'Reset order to default';
 
   @override
   String get resetSettingsToDefault => 'Reset settings to default';

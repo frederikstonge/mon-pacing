@@ -323,11 +323,13 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
               titleWidget: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // TODO: Translate
-                  Text('Field Order', style: Theme.of(context).textTheme.headlineMedium),
+                  Text(
+                    S.of(context).onboardingImprovisationFieldsOrderTitle,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
                   const SizedBox(height: 8),
                   Text(
-                    'Change the order that improvisation fields will be displayed.',
+                    S.of(context).onboardingImprovisationFieldsOrderDescription,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 8),

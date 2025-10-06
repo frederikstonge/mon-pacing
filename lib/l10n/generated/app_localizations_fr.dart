@@ -194,6 +194,12 @@ class SFr extends S {
   String get improvisationDurationInSeconds => 'Durée d\'improvisation';
 
   @override
+  String get improvisationFieldsOrder => 'Ordre des champs d\'improvisation';
+
+  @override
+  String get improvisationFieldsOrderTooltip => 'Modifier l\'ordre d\'affichage des champs d\'improvisation.';
+
+  @override
   String get improvisationIndex => 'Position de l\'improvisation';
 
   @override
@@ -353,6 +359,13 @@ class SFr extends S {
       'Personnalisez vos improvisations avec des durées, des types, des étiquettes et plus.';
 
   @override
+  String get onboardingImprovisationFieldsOrderTitle => 'Mettez-vous à l\'aise';
+
+  @override
+  String get onboardingImprovisationFieldsOrderDescription =>
+      'Définissez l\'ordre d\'affichage des champs d\'improvisation.';
+
+  @override
   String get onboardingMatchesTitle => 'Enrichissez vos matchs';
 
   @override
@@ -428,6 +441,9 @@ class SFr extends S {
 
   @override
   String get remove => 'Enlever';
+
+  @override
+  String get resetOrderToDefault => 'Réinitialiser l\'ordre par défaut';
 
   @override
   String get resetSettingsToDefault => 'Réinitialiser les paramètres';
