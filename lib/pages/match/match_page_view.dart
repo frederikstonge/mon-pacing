@@ -65,185 +65,191 @@ class _MatchPageViewState extends State<MatchPageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<MatchCubit, MatchState>(
-        listener: (context, state) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (_lock == false &&
-                _pageController.hasClients &&
-                _pageController.page?.round() != state.selectedImprovisationIndex) {
-              _lock = true;
-              _pageController
-                  .animateToPage(
-                    state.selectedImprovisationIndex,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  )
-                  .then((_) {
-                    _lock = false;
-                  });
-            }
-          });
-        },
-        listenWhen: (previous, current) => previous.selectedImprovisationIndex != current.selectedImprovisationIndex,
-        builder: (context, matchState) {
-          return switch (matchState.status) {
-            MatchStatus.initial => const Center(child: CircularProgressIndicator()),
-            MatchStatus.loading => const Center(child: CircularProgressIndicator()),
-            MatchStatus.error => Center(child: Text(matchState.error ?? '')),
-            MatchStatus.success => Builder(
-              builder: (context) {
-                return BlocBuilder<TimerCubit, TimerState>(
-                  builder: (context, timerState) {
-                    final match = matchState.match!;
-                    final selectedImprovisationIndex = matchState.selectedImprovisationIndex;
-                    final canAddImprovisation =
-                        match.maxNumberOfImprovisations == null ||
-                        match.improvisations.length < match.maxNumberOfImprovisations!;
-                    return NestedScrollView(
-                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                        if (timerState.timer != null) ...[
-                          TimerBanner(
-                            timer: timerState.timer!,
-                            match: match,
-                            improvisation: match.improvisations.elementAtOrNull(selectedImprovisationIndex),
-                            selectedDurationIndex: matchState.selectedDurationIndex,
-                          ),
-                        ],
-                        BlocBuilder<SettingsCubit, SettingsState>(
-                          builder: (context, settingsState) {
-                            return SliverLogoAppbar(
-                              title: match.name,
-                              theme: settingsState.theme,
-                              primary: timerState.timer == null,
-                              actions: [
-                                if (match.enableStatistics) ...[
-                                  LoadingIconButton(
-                                    onPressed: () async {
-                                      await _openScoreboard(context, match);
-                                    },
-                                    tooltip: S.of(context).scoreboard,
-                                    icon: const Icon(Icons.scoreboard),
-                                  ),
-                                ],
-                                LoadingIconButton(
-                                  tooltip: S.of(context).more,
-                                  onPressed: () => BottomSheetDialog.showDialog(
-                                    context: context,
-                                    child: MatchMenu(
-                                      match: match,
-                                      editDetails: match.integrationId == null
-                                          ? () async {
-                                              await _editDetails(context, match);
-                                            }
-                                          : null,
-                                      delete: () async {
-                                        await _delete(context, match);
-                                      },
-                                    ),
-                                  ),
-                                  icon: const Icon(Icons.more_vert),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        SliverPersistentHeader(
-                          delegate: MatchPersistentHeader(
-                            match: match,
-                            selectedImprovisationIndex: selectedImprovisationIndex,
-                            changePage: context.read<MatchCubit>().changePage,
-                            onAdd: canAddImprovisation ? () => _addImprovisation(context, match) : null,
-                          ),
-                          pinned: true,
-                        ),
-                      ],
-                      body: PageView.builder(
-                        controller: _pageController,
-                        onPageChanged: (value) {
-                          if (_lock == false && value != matchState.selectedImprovisationIndex) {
-                            _lock = true;
-                            context.read<MatchCubit>().changePage(value);
-                            _lock = false;
-                          }
-                        },
-                        itemBuilder: (context, index) {
-                          final summarySelected = match.enableStatistics && index == match.improvisations.length;
-                          final improvisation = match.improvisations.elementAtOrNull(index);
-                          final canRemoveImprovisation =
-                              match.improvisations.length > (match.minNumberOfImprovisations ?? 1);
-                          return SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                if (!summarySelected && improvisation != null) ...[
-                                  ImprovisationCard(
-                                    improvisation: improvisation,
-                                    index: index,
-                                    onEdit: (improvisation) async =>
-                                        await _editImprovisation(context, match, improvisation),
-                                    onDelete: canRemoveImprovisation
-                                        ? (improvisation) async =>
-                                              await _deleteImprovisation(context, improvisation, index)
-                                        : null,
-                                  ),
-                                  CustomCard(
-                                    child: TimerWidget(
-                                      key: ValueKey(improvisation.id),
-                                      match: match,
-                                      improvisation: improvisation,
-                                      initialSelectedIndex: selectedImprovisationIndex == index
-                                          ? matchState.selectedDurationIndex
-                                          : null,
-                                      onDurationIndexChanged: (durationIndex) =>
-                                          context.read<MatchCubit>().setDurationIndex(durationIndex),
-                                    ),
-                                  ),
-                                  if (match.enableStatistics) ...[
-                                    ImprovisationPoints(
-                                      key: ValueKey(improvisation.hashCode),
-                                      match: match,
-                                      improvisation: improvisation,
-                                      onPointChanged: (improvisationId, teamId, value) =>
-                                          context.read<MatchCubit>().setPoint(improvisationId, teamId, value),
-                                    ),
-                                    ImprovisationPenalties(
-                                      match: match,
-                                      improvisation: improvisation,
-                                      editPenalty: _editPenalty,
-                                      addPenalty: _addPenalty,
-                                      removePenalty: _removePenalty,
+      body: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, settingsState) {
+          return BlocConsumer<MatchCubit, MatchState>(
+            listener: (context, state) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (_lock == false &&
+                    _pageController.hasClients &&
+                    _pageController.page?.round() != state.selectedImprovisationIndex) {
+                  _lock = true;
+                  _pageController
+                      .animateToPage(
+                        state.selectedImprovisationIndex,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      )
+                      .then((_) {
+                        _lock = false;
+                      });
+                }
+              });
+            },
+            listenWhen: (previous, current) =>
+                previous.selectedImprovisationIndex != current.selectedImprovisationIndex,
+            builder: (context, matchState) {
+              return switch (matchState.status) {
+                MatchStatus.initial => const Center(child: CircularProgressIndicator()),
+                MatchStatus.loading => const Center(child: CircularProgressIndicator()),
+                MatchStatus.error => Center(child: Text(matchState.error ?? '')),
+                MatchStatus.success => Builder(
+                  builder: (context) {
+                    return BlocBuilder<TimerCubit, TimerState>(
+                      builder: (context, timerState) {
+                        final match = matchState.match!;
+                        final selectedImprovisationIndex = matchState.selectedImprovisationIndex;
+                        final canAddImprovisation =
+                            match.maxNumberOfImprovisations == null ||
+                            match.improvisations.length < match.maxNumberOfImprovisations!;
+                        return NestedScrollView(
+                          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                            if (timerState.timer != null) ...[
+                              TimerBanner(
+                                timer: timerState.timer!,
+                                match: match,
+                                improvisation: match.improvisations.elementAtOrNull(selectedImprovisationIndex),
+                                selectedDurationIndex: matchState.selectedDurationIndex,
+                              ),
+                            ],
+                            BlocBuilder<SettingsCubit, SettingsState>(
+                              builder: (context, settingsState) {
+                                return SliverLogoAppbar(
+                                  title: match.name,
+                                  theme: settingsState.theme,
+                                  primary: timerState.timer == null,
+                                  actions: [
+                                    if (match.enableStatistics) ...[
+                                      LoadingIconButton(
+                                        onPressed: () async {
+                                          await _openScoreboard(context, match);
+                                        },
+                                        tooltip: S.of(context).scoreboard,
+                                        icon: const Icon(Icons.scoreboard),
+                                      ),
+                                    ],
+                                    LoadingIconButton(
+                                      tooltip: S.of(context).more,
+                                      onPressed: () => BottomSheetDialog.showDialog(
+                                        context: context,
+                                        child: MatchMenu(
+                                          match: match,
+                                          editDetails: match.integrationId == null
+                                              ? () async {
+                                                  await _editDetails(context, match);
+                                                }
+                                              : null,
+                                          delete: () async {
+                                            await _delete(context, match);
+                                          },
+                                        ),
+                                      ),
+                                      icon: const Icon(Icons.more_vert),
                                     ),
                                   ],
-                                ] else ...[
-                                  BlocBuilder<IntegrationsCubit, IntegrationsState>(
-                                    builder: (context, integrationsState) {
-                                      final integration = integrationsState.integrations
-                                          .whereType<MatchIntegrationBase>()
-                                          .firstWhereOrNull((i) => i.integrationId == match.integrationId);
-
-                                      return MatchSummary(
-                                        match: match,
-                                        onShare: () => _share(context, match),
-                                        onExportIntegration: integration != null
-                                            ? () async {
-                                                await _onExportIntegration(context, match, integration);
-                                              }
-                                            : null,
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ],
+                                );
+                              },
                             ),
-                          );
-                        },
-                        itemCount: match.improvisations.length + (match.enableStatistics ? 1 : 0),
-                      ),
+                            SliverPersistentHeader(
+                              delegate: MatchPersistentHeader(
+                                match: match,
+                                selectedImprovisationIndex: selectedImprovisationIndex,
+                                changePage: context.read<MatchCubit>().changePage,
+                                onAdd: canAddImprovisation ? () => _addImprovisation(context, match) : null,
+                              ),
+                              pinned: true,
+                            ),
+                          ],
+                          body: PageView.builder(
+                            controller: _pageController,
+                            onPageChanged: (value) {
+                              if (_lock == false && value != matchState.selectedImprovisationIndex) {
+                                _lock = true;
+                                context.read<MatchCubit>().changePage(value);
+                                _lock = false;
+                              }
+                            },
+                            itemBuilder: (context, index) {
+                              final summarySelected = match.enableStatistics && index == match.improvisations.length;
+                              final improvisation = match.improvisations.elementAtOrNull(index);
+                              final canRemoveImprovisation =
+                                  match.improvisations.length > (match.minNumberOfImprovisations ?? 1);
+                              return SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    if (!summarySelected && improvisation != null) ...[
+                                      ImprovisationCard(
+                                        improvisation: improvisation,
+                                        improvisationFieldsOrder: settingsState.improvisationFieldsOrder,
+                                        index: index,
+                                        onEdit: (improvisation) async =>
+                                            await _editImprovisation(context, match, improvisation),
+                                        onDelete: canRemoveImprovisation
+                                            ? (improvisation) async =>
+                                                  await _deleteImprovisation(context, improvisation, index)
+                                            : null,
+                                      ),
+                                      CustomCard(
+                                        child: TimerWidget(
+                                          key: ValueKey(improvisation.id),
+                                          match: match,
+                                          improvisation: improvisation,
+                                          initialSelectedIndex: selectedImprovisationIndex == index
+                                              ? matchState.selectedDurationIndex
+                                              : null,
+                                          onDurationIndexChanged: (durationIndex) =>
+                                              context.read<MatchCubit>().setDurationIndex(durationIndex),
+                                        ),
+                                      ),
+                                      if (match.enableStatistics) ...[
+                                        ImprovisationPoints(
+                                          key: ValueKey(improvisation.hashCode),
+                                          match: match,
+                                          improvisation: improvisation,
+                                          onPointChanged: (improvisationId, teamId, value) =>
+                                              context.read<MatchCubit>().setPoint(improvisationId, teamId, value),
+                                        ),
+                                        ImprovisationPenalties(
+                                          match: match,
+                                          improvisation: improvisation,
+                                          editPenalty: _editPenalty,
+                                          addPenalty: _addPenalty,
+                                          removePenalty: _removePenalty,
+                                        ),
+                                      ],
+                                    ] else ...[
+                                      BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                                        builder: (context, integrationsState) {
+                                          final integration = integrationsState.integrations
+                                              .whereType<MatchIntegrationBase>()
+                                              .firstWhereOrNull((i) => i.integrationId == match.integrationId);
+
+                                          return MatchSummary(
+                                            match: match,
+                                            onShare: () => _share(context, match),
+                                            onExportIntegration: integration != null
+                                                ? () async {
+                                                    await _onExportIntegration(context, match, integration);
+                                                  }
+                                                : null,
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              );
+                            },
+                            itemCount: match.improvisations.length + (match.enableStatistics ? 1 : 0),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
-          };
+                ),
+              };
+            },
+          );
         },
       ),
     );
