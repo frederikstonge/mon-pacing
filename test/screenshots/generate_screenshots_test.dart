@@ -325,7 +325,7 @@ void _screenshotWidget({
                 supportedLocales: S.supportedLocales,
                 locale: locale,
                 device: device,
-                child: builder(),
+                home: builder(),
               ),
             ),
           );
@@ -379,7 +379,7 @@ void _screenshotWidget({
           }
 
           tester.useFuzzyComparator(allowedDiffPercent: 0.1);
-          await expectLater(find.bySubtype<MaterialApp>(), matchesGoldenFile(p.join(filePath, fileName)));
+          await expectLater(find.byType(MaterialApp), matchesGoldenFile(p.join(filePath, fileName)));
         });
       }
     }
