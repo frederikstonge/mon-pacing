@@ -37,7 +37,7 @@ dependencies:
   intl: any
   introduction_screen: ^4.0.0
   mobile_scanner: ^7.0.0
-  objectbox: ^4.1.0
+  objectbox: ^5.0.0
   objectbox_flutter_libs: any
   package_info_plus: ^9.0.0
   path: ^1.9.1
