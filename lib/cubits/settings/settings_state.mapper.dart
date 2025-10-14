@@ -149,14 +149,7 @@ class SettingsStateMapper extends ClassMapperBase<SettingsState> {
     'improvisationFieldsOrder',
     _$improvisationFieldsOrder,
     opt: true,
-    def: const [
-      ImprovisationFields.type,
-      ImprovisationFields.performers,
-      ImprovisationFields.durations,
-      ImprovisationFields.category,
-      ImprovisationFields.theme,
-      ImprovisationFields.notes,
-    ],
+    def: Constants.defaultImprovisationFieldsOrder,
   );
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../extensions/color_extensions.dart';
+import 'improvisation_fields.dart';
 
 class Constants {
   static const double expandedAppbarHeight = 112;
@@ -42,4 +43,13 @@ class Constants {
     800: color,
     900: color,
   });
+
+  static const defaultImprovisationFieldsOrder = [
+    ImprovisationFields.type,
+    ImprovisationFields.performers,
+    ImprovisationFields.durations,
+    ImprovisationFields.category,
+    ImprovisationFields.theme,
+    ImprovisationFields.notes,
+  ];
 }

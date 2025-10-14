@@ -322,7 +322,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                             onPressed: () {
                               context.read<SettingsCubit>().edit(
                                 settingsState.copyWith(
-                                  improvisationFieldsOrder: SettingsState.defaultImprovisationFieldsOrder,
+                                  improvisationFieldsOrder: Constants.defaultImprovisationFieldsOrder,
                                 ),
                               );
                             },

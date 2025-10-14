@@ -585,7 +585,7 @@ class SFr extends S {
   String get tutorialFirstImprovisationDrag => 'Appuyez et maintenez cette icône pour réorganiser les improvisations.';
 
   @override
-  String get type => 'Type';
+  String get type => 'Nature';
 
   @override
   String get unlimited => 'Illimité';

@@ -1,5 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
+import '../../models/constants.dart';
 import '../../models/improvisation_fields.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';
@@ -8,15 +9,6 @@ part 'settings_state.mapper.dart';
 
 @MappableClass()
 class SettingsState with SettingsStateMappable {
-  static const defaultImprovisationFieldsOrder = [
-    ImprovisationFields.type,
-    ImprovisationFields.performers,
-    ImprovisationFields.durations,
-    ImprovisationFields.category,
-    ImprovisationFields.theme,
-    ImprovisationFields.notes,
-  ];
-
   final String language;
   final ThemeType theme;
   final bool enableWakelock;
@@ -50,6 +42,6 @@ class SettingsState with SettingsStateMappable {
     this.defaultPenaltiesRequiredToImpactPoints = 3,
     this.enableDefaultMatchExpulsion = true,
     this.defaultPenaltiesRequiredToExpel = 3,
-    this.improvisationFieldsOrder = defaultImprovisationFieldsOrder,
+    this.improvisationFieldsOrder = Constants.defaultImprovisationFieldsOrder,
   });
 }
