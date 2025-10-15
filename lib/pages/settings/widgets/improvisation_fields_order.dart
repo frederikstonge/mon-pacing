@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:recase/recase.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/improvisation_fields.dart';
 
 class ImprovisationFieldsOrder extends StatelessWidget {
@@ -36,7 +36,7 @@ class ImprovisationFieldsOrder extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 16.0),
                         child: ReorderableDragStartListener(index: d.key, child: const Icon(Icons.drag_handle)),
                       ),
-                      Expanded(child: Text(d.value.name.titleCase)),
+                      Expanded(child: Text(_fieldName(context, d.value))),
                     ],
                   ),
                 ),
@@ -57,5 +57,22 @@ class ImprovisationFieldsOrder extends StatelessWidget {
 
     newFields.insert(newIndex, field);
     onChanged.call(newFields);
+  }
+
+  String _fieldName(BuildContext context, ImprovisationFields field) {
+    switch (field) {
+      case ImprovisationFields.type:
+        return S.of(context).type;
+      case ImprovisationFields.performers:
+        return S.of(context).performers;
+      case ImprovisationFields.durations:
+        return S.of(context).duration;
+      case ImprovisationFields.category:
+        return S.of(context).category;
+      case ImprovisationFields.theme:
+        return S.of(context).theme;
+      case ImprovisationFields.notes:
+        return S.of(context).notes;
+    }
   }
 }
