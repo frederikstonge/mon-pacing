@@ -42,7 +42,7 @@ enum CustomGoldenScreenshotDevices {
       resolution: Size(1290, 2796),
       pixelRatio: 3,
       goldenSubFolder: 'ios/',
-      frameBuilder: ScreenshotFrame.newerIphone,
+      frameBuilder: ScreenshotFrame.iphone,
     ),
   ),
 
@@ -56,7 +56,7 @@ enum CustomGoldenScreenshotDevices {
       resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'ios/',
-      frameBuilder: ScreenshotFrame.newerIpad,
+      frameBuilder: ScreenshotFrame.ipad,
     ),
   ),
 
@@ -70,7 +70,7 @@ enum CustomGoldenScreenshotDevices {
       resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'ios/',
-      frameBuilder: ScreenshotFrame.newerIpad,
+      frameBuilder: ScreenshotFrame.ipad,
     ),
   );
 
