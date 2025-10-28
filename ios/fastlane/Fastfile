@@ -5,6 +5,10 @@ default_platform(:ios)
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "10" 
 ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "10"
 
+# Work around
+# https://github.com/fastlane/fastlane/issues/22193
+ENV["SPACESHIP_SCREENSHOT_UPLOAD_TIMEOUT"] = "1"
+
 platform :ios do
 
   desc "Generate screenshots for Apple Store"
