@@ -179,7 +179,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<bool> shareFile(PacingModel model) async {
     try {
-      final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+      final data = Uint8List.fromList(utf8.encode(model.toJson()));
       final fileName = sanitizeFilename('${Localizer.current.pacing}-${model.name}.json', replacement: '-');
       final params = ShareParams(
         title: fileName,
@@ -202,7 +202,7 @@ class PacingsCubit extends Cubit<PacingsState> {
 
   Future<bool> saveFile(PacingModel model) async {
     try {
-      final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+      final data = Uint8List.fromList(utf8.encode(model.toJson()));
       final fileName = sanitizeFilename('${Localizer.current.pacing}-${model.name}.json', replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);

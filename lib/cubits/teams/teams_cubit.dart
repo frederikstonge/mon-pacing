@@ -157,7 +157,7 @@ class TeamsCubit extends Cubit<TeamsState> {
 
   Future<bool> shareFile(TeamModel model) async {
     try {
-      final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+      final data = Uint8List.fromList(utf8.encode(model.toJson()));
       final fileName = sanitizeFilename('${Localizer.current.team}-${model.name}.json', replacement: '-');
       final params = ShareParams(
         title: fileName,
@@ -180,7 +180,7 @@ class TeamsCubit extends Cubit<TeamsState> {
 
   Future<bool> saveFile(TeamModel model) async {
     try {
-      final data = Uint8List.fromList(utf8.encode(jsonEncode(model.toJson())));
+      final data = Uint8List.fromList(utf8.encode(model.toJson()));
       final fileName = sanitizeFilename('${Localizer.current.team}-${model.name}.json', replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);
