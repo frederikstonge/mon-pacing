@@ -39,9 +39,13 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
 
   int index = 0;
 
-  bool get isPacingsValid => index != 1 || pacingsFormKey.currentState?.validate() == true;
+  final int pacingsIndex = 1;
 
-  bool get isPenaltiesValid => index != 5 || penaltiesFormKey.currentState?.validate() == true;
+  final int penaltiesIndex = 5;
+
+  bool get isPacingsValid => index != pacingsIndex || pacingsFormKey.currentState?.validate() == true;
+
+  bool get isPenaltiesValid => index != penaltiesIndex || penaltiesFormKey.currentState?.validate() == true;
 
   @override
   void initState() {
@@ -59,6 +63,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, settingsState) {
+        final pageLength = settingsState.defaultEnableStatistics ? 6 : 5;
         return Scaffold(
           body: SafeArea(
             child: PageView(
@@ -442,7 +447,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
               alignment: Alignment.center,
               children: [
                 DotsIndicator(
-                  dotsCount: settingsState.defaultEnableStatistics ? 6 : 5,
+                  dotsCount: pageLength,
                   position: index.toDouble(),
                   decorator: DotsDecorator(
                     size: const Size.square(9.0),
@@ -467,7 +472,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                     ] else ...[
                       const SizedBox.shrink(),
                     ],
-                    if (index != (settingsState.defaultEnableStatistics ? 5 : 4)) ...[
+                    if (index != pageLength - 1) ...[
                       TextButton(
                         onPressed: () {
                           if (!isPacingsValid || !isPenaltiesValid) {

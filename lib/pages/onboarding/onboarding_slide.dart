@@ -22,16 +22,19 @@ class OnboardingSlide extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Transform(
-            alignment: FractionalOffset.center,
-            transform: Matrix4.rotationZ(iconLeaningLeft ? -0.2 : 0.2),
-            child: Opacity(
-              opacity: 0.2,
-              child: Icon(
-                icon,
-                size: MediaQuery.sizeOf(context).width / 2,
-                color: Theme.of(context).colorScheme.primary,
+          Center(
+            child: Transform(
+              alignment: FractionalOffset.center,
+              transform: Matrix4.rotationZ(iconLeaningLeft ? -0.2 : 0.2),
+              child: Opacity(
+                opacity: 0.2,
+                child: Icon(
+                  icon,
+                  size: MediaQuery.sizeOf(context).width / 2,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
           ),
