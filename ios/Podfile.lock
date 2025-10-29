@@ -105,8 +105,6 @@ PODS:
     - Flutter
   - flutter_foreground_task (0.0.1):
     - Flutter
-  - flutter_keyboard_visibility_temp_fork (0.0.1):
-    - Flutter
   - flutter_native_splash (2.4.3):
     - Flutter
   - GoogleAdsOnDeviceConversion (3.1.0):
@@ -207,7 +205,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_file_dialog (from `.symlinks/plugins/flutter_file_dialog/ios`)
   - flutter_foreground_task (from `.symlinks/plugins/flutter_foreground_task/ios`)
-  - flutter_keyboard_visibility_temp_fork (from `.symlinks/plugins/flutter_keyboard_visibility_temp_fork/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/darwin`)
@@ -260,8 +257,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_file_dialog/ios"
   flutter_foreground_task:
     :path: ".symlinks/plugins/flutter_foreground_task/ios"
-  flutter_keyboard_visibility_temp_fork:
-    :path: ".symlinks/plugins/flutter_keyboard_visibility_temp_fork/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   haptic_feedback:
@@ -305,7 +300,6 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_file_dialog: ca8d7fbd1772d4f0c2777b4ab20a7787ef4e7dd8
   flutter_foreground_task: a159d2c2173b33699ddb3e6c2a067045d7cebb89
-  flutter_keyboard_visibility_temp_fork: 95b2d534bacf6ac62e7fcbe5c2a9e2c2a17ce06f
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   GoogleAdsOnDeviceConversion: e03a386840803ea7eef3fd22a061930142c039c1
   GoogleAppMeasurement: 1e718274b7e015cefd846ac1fcf7820c70dc017d
