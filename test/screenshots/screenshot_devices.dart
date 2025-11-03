@@ -9,7 +9,7 @@ enum CustomGoldenScreenshotDevices {
       resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'android/tenInchScreenshots/',
-      frameBuilder: ScreenshotFrame.noFrame,
+      frameBuilder: ScreenshotFrame.androidTablet,
     ),
   ),
 
@@ -19,7 +19,7 @@ enum CustomGoldenScreenshotDevices {
       resolution: Size(2048, 2732),
       pixelRatio: 2,
       goldenSubFolder: 'android/sevenInchScreenshots/',
-      frameBuilder: ScreenshotFrame.noFrame,
+      frameBuilder: ScreenshotFrame.androidTablet,
     ),
   ),
 
@@ -30,7 +30,7 @@ enum CustomGoldenScreenshotDevices {
       resolution: Size(1080, 2340),
       pixelRatio: 2.5,
       goldenSubFolder: 'android/phoneScreenshots/',
-      frameBuilder: ScreenshotFrame.android,
+      frameBuilder: ScreenshotFrame.androidPhone,
     ),
   ),
 
