@@ -58,7 +58,7 @@ dev_dependencies:
   flutter_native_splash: ^2.4.5
   flutter_test:
     sdk: flutter
-  golden_screenshot: ^6.0.0
+  golden_screenshot: ^7.1.0
   http_mock_adapter: ^0.6.1
   icons_launcher: ^3.0.1
   mockito: ^5.4.5
