@@ -11,6 +11,6 @@
     "explorer.fileNesting.patterns": {
         "pubspec.yaml": "pubspec.lock,pubspec_overrides.yaml,.packages,.flutter-plugins,.flutter-plugins-dependencies,.metadata",
         "*.dart": "${capture}.g.dart,${capture}.freezed.dart,${capture}.mapper.dart,${capture}.mocks.dart"
-    }
-    
+    },
+    "build_runner.excludes": ["**/ios/.symlinks/plugins/**"]
 }
