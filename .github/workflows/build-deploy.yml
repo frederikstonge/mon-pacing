@@ -70,6 +70,7 @@ jobs:
     needs: [set_build_number, tests]
     if: ${{ !cancelled() && inputs.deploy-ios && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
     environment: deploy-ios
+    timeout-minutes: 45
 
     env:
       APPLE_KEY_FILE: apple_key.p8
@@ -152,6 +153,7 @@ jobs:
     needs: [set_build_number, tests]
     if: ${{ !cancelled() && inputs.deploy-android && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
     environment: deploy-android
+    timeout-minutes: 45
 
     env:
       ANDROID_KEY_FILE: app/android-signing-key.jks
