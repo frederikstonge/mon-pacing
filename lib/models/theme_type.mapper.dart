@@ -2,6 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 // ignore_for_file: type=lint
+// ignore_for_file: invalid_use_of_protected_member
 // ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member
 // ignore_for_file: strict_raw_type, inference_failure_on_untyped_parameter
 
@@ -32,8 +33,12 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
         return ThemeType.dark;
       case r'lni':
         return ThemeType.lni;
-      case r'ligma':
-        return ThemeType.ligma;
+      case r'ligmaLight':
+        return ThemeType.ligmaLight;
+      case r'ligmaDark':
+        return ThemeType.ligmaDark;
+      case r'boldor':
+        return ThemeType.boldor;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -48,8 +53,12 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
         return r'dark';
       case ThemeType.lni:
         return r'lni';
-      case ThemeType.ligma:
-        return r'ligma';
+      case ThemeType.ligmaLight:
+        return r'ligmaLight';
+      case ThemeType.ligmaDark:
+        return r'ligmaDark';
+      case ThemeType.boldor:
+        return r'boldor';
     }
   }
 }

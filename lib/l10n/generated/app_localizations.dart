@@ -134,6 +134,12 @@ abstract class S {
   /// **'Are you sure you want to {action} {name}?'**
   String areYouSureActionName({required String action, required String name});
 
+  /// No description provided for @boldor.
+  ///
+  /// In en, this message translates to:
+  /// **'Bol d\'or'**
+  String get boldor;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
@@ -493,6 +499,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'LIGMA'**
   String get ligma;
+
+  /// No description provided for @ligmaDark.
+  ///
+  /// In en, this message translates to:
+  /// **'LIGMA Dark'**
+  String get ligmaDark;
+
+  /// No description provided for @ligmaLight.
+  ///
+  /// In en, this message translates to:
+  /// **'LIGMA Light'**
+  String get ligmaLight;
 
   /// No description provided for @ligmaEasterEgg.
   ///

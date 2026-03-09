@@ -25,7 +25,7 @@ class SliverLogoAppbar extends StatelessWidget {
           : Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: InkWell(
-                onTap: theme == ThemeType.ligma
+                onTap: theme == ThemeType.ligmaLight
                     ? () => MessageBoxDialog.alertShow(context, S.of(context).ligmaEasterEgg, S.of(context).close)
                     : null,
                 child: Image.asset(
@@ -33,7 +33,9 @@ class SliverLogoAppbar extends StatelessWidget {
                     ThemeType.dark => 'assets/MonPacingDark.png',
                     ThemeType.light => 'assets/MonPacingLight.png',
                     ThemeType.lni => 'assets/MonPacingLNI.png',
-                    ThemeType.ligma => 'assets/Ligma.png',
+                    ThemeType.ligmaLight => 'assets/Ligma.png',
+                    ThemeType.ligmaDark => 'assets/Ligma.png',
+                    ThemeType.boldor => 'assets/Boldor.png',
                   },
                   filterQuality: FilterQuality.high,
                   errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
@@ -45,7 +47,7 @@ class SliverLogoAppbar extends StatelessWidget {
         title,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       ),
       centerTitle: true,
       actions: actions,

@@ -34,6 +34,9 @@ class SEn extends S {
   }
 
   @override
+  String get boldor => 'Bol d\'or';
+
+  @override
   String get cancel => 'Cancel';
 
   @override
@@ -245,6 +248,12 @@ class SEn extends S {
 
   @override
   String get ligma => 'LIGMA';
+
+  @override
+  String get ligmaDark => 'LIGMA Dark';
+
+  @override
+  String get ligmaLight => 'LIGMA Light';
 
   @override
   String get ligmaEasterEgg => 'BALLZ';

@@ -34,6 +34,9 @@ class SFr extends S {
   }
 
   @override
+  String get boldor => 'Bol d\'or';
+
+  @override
   String get cancel => 'Annuler';
 
   @override
@@ -245,6 +248,12 @@ class SFr extends S {
 
   @override
   String get ligma => 'LIGMA';
+
+  @override
+  String get ligmaDark => 'LIGMA sombre';
+
+  @override
+  String get ligmaLight => 'LIGMA clair';
 
   @override
   String get ligmaEasterEgg => 'BALLZ';

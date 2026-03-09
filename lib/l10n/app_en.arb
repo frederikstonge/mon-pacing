@@ -24,6 +24,7 @@
       }
     }
   },
+  "boldor": "Bol d'or",
   "cancel": "Cancel",
   "category": "Category",
   "categories": "Categories",
@@ -140,6 +141,8 @@
   },
   "light": "Light",
   "ligma": "LIGMA",
+  "ligmaDark": "LIGMA Dark",
+  "ligmaLight": "LIGMA Light",
   "ligmaEasterEgg": "BALLZ",
   "lni": "LNI Vintage",
   "major": "Major",

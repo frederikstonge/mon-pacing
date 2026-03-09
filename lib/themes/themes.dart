@@ -37,6 +37,24 @@ class Themes {
     );
   }
 
+  static ThemeData boldor() {
+    const primaryColor = Color(0xFFffef01);
+    const secondaryColor = Color(0xFFffef01);
+    final cardBackgroundColor = Colors.grey.shade900;
+    final cardBorderColor = Colors.grey.shade800;
+    final dividerColor = Colors.grey.shade800;
+    final shadowColor = Colors.grey.shade800;
+    return _generateTheme(
+      Brightness.dark,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
+    );
+  }
+
   static ThemeData lni() {
     const primaryColor = Color(0xFF044b89);
     const secondaryColor = Color(0xFFdc1a23);
@@ -55,7 +73,7 @@ class Themes {
     );
   }
 
-  static ThemeData ligma() {
+  static ThemeData ligmaLight() {
     const primaryColor = Color(0xFFa32a5e);
     const secondaryColor = Color(0xFF6ea943);
     final cardBackgroundColor = Colors.grey.shade100;
@@ -64,6 +82,24 @@ class Themes {
     final shadowColor = Colors.grey.shade300;
     return _generateTheme(
       Brightness.light,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
+    );
+  }
+
+  static ThemeData ligmaDark() {
+    const primaryColor = Color(0xFFa32a5e);
+    const secondaryColor = Color(0xFF6ea943);
+    final cardBackgroundColor = Colors.grey.shade900;
+    const cardBorderColor = primaryColor;
+    const dividerColor = secondaryColor;
+    final shadowColor = Colors.grey.shade800;
+    return _generateTheme(
+      Brightness.dark,
       primaryColor,
       secondaryColor,
       cardBackgroundColor,
