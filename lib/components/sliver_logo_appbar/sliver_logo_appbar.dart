@@ -17,7 +17,8 @@ class SliverLogoAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final canPop = Navigator.of(context).canPop();
-    return SliverAppBar.large(
+    return SliverAppBar(
+      pinned: true,
       primary: primary,
       leading: canPop
           ? const BackButton()
@@ -44,7 +45,7 @@ class SliverLogoAppbar extends StatelessWidget {
         title,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
       ),
       centerTitle: true,
       actions: actions,

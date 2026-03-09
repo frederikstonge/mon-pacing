@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "1037488175032",
     "project_id": "mon-pacing",
-    "storage_bucket": "mon-pacing.appspot.com"
+    "storage_bucket": "mon-pacing.firebasestorage.app"
   },
   "client": [
     {

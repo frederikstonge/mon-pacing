@@ -4,10 +4,10 @@ PODS:
     - Flutter
   - flutter_foreground_task (0.0.1):
     - Flutter
-  - ObjectBox (5.1.1)
+  - ObjectBox (5.2.0)
   - objectbox_flutter_libs (0.0.1):
     - Flutter
-    - ObjectBox (= 5.1.1)
+    - ObjectBox (= 5.2.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -33,8 +33,8 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_file_dialog: ca8d7fbd1772d4f0c2777b4ab20a7787ef4e7dd8
   flutter_foreground_task: a159d2c2173b33699ddb3e6c2a067045d7cebb89
-  ObjectBox: 26871f7cce80a8bd2e610bf944aeaded730f6925
-  objectbox_flutter_libs: 28e7bd5ae78e831f141679c8a6e31632453b959f
+  ObjectBox: 946c1e8586aaa61e21b6661bab4948d06fdd51c4
+  objectbox_flutter_libs: 4d609454f39d002fc850b3019e180fc4760cdf36
 
 PODFILE CHECKSUM: 74479ea0c03026413afeea185013f485a807d9c3
 

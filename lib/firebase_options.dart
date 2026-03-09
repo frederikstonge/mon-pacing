@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
     appId: '1:1037488175032:android:0bc109f8170511da31414d',
     messagingSenderId: '1037488175032',
     projectId: 'mon-pacing',
-    storageBucket: 'mon-pacing.appspot.com',
+    storageBucket: 'mon-pacing.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -59,7 +59,8 @@ class DefaultFirebaseOptions {
     appId: '1:1037488175032:ios:9b03859557ed515831414d',
     messagingSenderId: '1037488175032',
     projectId: 'mon-pacing',
-    storageBucket: 'mon-pacing.appspot.com',
+    storageBucket: 'mon-pacing.firebasestorage.app',
     iosBundleId: 'com.stongef.monpacing',
   );
+
 }
