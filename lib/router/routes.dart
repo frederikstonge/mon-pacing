@@ -8,6 +8,8 @@ class Routes {
   static const String matchesSearch = 'MatchSearch';
   static const String teams = 'Teams';
   static const String teamsSearch = 'TeamSearch';
+  static const String improvisations = 'Improvisations';
+  static const String improvisationsSearch = 'ImprovisationsSearch';
   static const String settings = 'Settings';
   static const String scanner = 'Scanner';
   static const String categoriesSearch = 'CategoriesSearch';

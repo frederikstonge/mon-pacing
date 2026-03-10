@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../cubits/onboarding/onboarding_cubit.dart';
-import '../pages/categories_search/categories_search_page_shell.dart';
+import '../pages/improvisations/improvisations_page_shell.dart';
+import '../pages/improvisations_search/improvisations_search_page_shell.dart';
 import '../pages/match/match_page_shell.dart';
 import '../pages/matches/matches_page_shell.dart';
 import '../pages/matches_search/matches_search_page_shell.dart';
@@ -125,6 +126,26 @@ final router = GoRouter(
           ],
         ),
         StatefulShellBranch(
+          initialLocation: '/improvisations',
+          routes: [
+            GoRoute(
+              name: Routes.improvisations,
+              path: '/improvisations',
+              pageBuilder: (context, state) {
+                return NoTransitionPage(child: ImprovisationsPageShell(key: state.pageKey));
+              },
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: rootNavigatorKey,
+                  name: Routes.improvisationsSearch,
+                  path: 'search',
+                  builder: (context, state) => ImprovisationsSearchPageShell(key: state.pageKey),
+                ),
+              ],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
           initialLocation: '/settings',
           routes: [
             GoRoute(
@@ -140,11 +161,6 @@ final router = GoRouter(
     ),
     GoRoute(name: Routes.onboarding, path: '/onboarding', builder: (context, state) => const OnboardingPageView()),
     GoRoute(name: Routes.scanner, path: '/scanner', builder: (context, state) => const ScannerPageShell()),
-    GoRoute(
-      name: Routes.categoriesSearch,
-      path: '/categories/search',
-      builder: (context, state) => CategoriesSearchPageShell(key: state.pageKey),
-    ),
     GoRoute(
       name: Routes.penaltiesSearch,
       path: '/penalties/search',

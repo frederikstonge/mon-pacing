@@ -62,7 +62,9 @@ class PacingModel extends IntegrationBaseModel with PacingModelMappable implemen
       integrationAdditionalData: integrationAdditionalData,
     );
 
-    pacing.improvisations.addAll(improvisations.asMap().entries.map((e) => e.value.toEntity(e.key)).toList());
+    pacing.improvisations.addAll(
+      improvisations.asMap().entries.map((e) => e.value.toEntity(order: e.key, hasParent: true)).toList(),
+    );
     pacing.tags.addAll(tags.map((e) => e.toEntity()).toList());
     return pacing;
   }

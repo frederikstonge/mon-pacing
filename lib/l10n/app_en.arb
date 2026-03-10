@@ -272,6 +272,7 @@
       }
     }
   },
+  "toasterImprovisationDeleted": "Improvisation deleted.",
   "toasterGenericError": "An error has occurred.",
   "toasterMatchDeleted": "Match deleted.",
   "toasterMatchResultShared": "Match result shared.",

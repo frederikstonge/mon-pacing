@@ -9,6 +9,8 @@ part 'improvisation_model.mapper.dart';
 @MappableClass()
 class ImprovisationModel extends IntegrationBaseModel with ImprovisationModelMappable {
   final int id;
+  final DateTime? createdDate;
+  final DateTime? modifiedDate;
   final ImprovisationType type;
   final String category;
   final String theme;
@@ -26,6 +28,8 @@ class ImprovisationModel extends IntegrationBaseModel with ImprovisationModelMap
     required this.durationsInSeconds,
     required this.performers,
     required this.notes,
+    this.createdDate,
+    this.modifiedDate,
     this.timeBufferInSeconds = 30,
     this.huddleTimerInSeconds = 30,
     super.integrationEntityId,
@@ -46,7 +50,7 @@ class ImprovisationModel extends IntegrationBaseModel with ImprovisationModelMap
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  ImprovisationEntity toEntity(int order) => ImprovisationEntity(
+  ImprovisationEntity toEntity({required int order, required bool hasParent}) => ImprovisationEntity(
     id: id < 0 ? 0 : id,
     order: order,
     type: type.index,
@@ -55,6 +59,7 @@ class ImprovisationModel extends IntegrationBaseModel with ImprovisationModelMap
     durationsInSeconds: durationsInSeconds,
     performers: performers,
     notes: notes,
+    hasParent: hasParent,
     timeBufferInSeconds: timeBufferInSeconds,
     huddleTimerInSeconds: huddleTimerInSeconds,
     integrationEntityId: integrationEntityId,

@@ -1028,6 +1028,12 @@ abstract class S {
   /// **'Unable to {action} improvisation. Timer is active.'**
   String timerIsActiveError({required String action});
 
+  /// No description provided for @toasterImprovisationDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Improvisation deleted.'**
+  String get toasterImprovisationDeleted;
+
   /// No description provided for @toasterGenericError.
   ///
   /// In en, this message translates to:

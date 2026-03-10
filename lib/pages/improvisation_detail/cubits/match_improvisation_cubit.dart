@@ -6,12 +6,12 @@ import '../../../models/improvisation_type.dart';
 import '../../../models/match_model.dart';
 import 'match_improvisation_state.dart';
 
-class MatchImprovisationCubit extends Cubit<MatchImprovisationState> {
+class ImprovisationDetailCubit extends Cubit<MatchImprovisationState> {
   final ImprovisationModel? improvisation;
-  final MatchModel match;
+  final MatchModel? match;
   final SettingsCubit settingsCubit;
 
-  MatchImprovisationCubit({this.improvisation, required this.match, required this.settingsCubit})
+  ImprovisationDetailCubit({this.improvisation, required this.match, required this.settingsCubit})
     : super(
         MatchImprovisationState(
           editMode: improvisation != null,
@@ -19,7 +19,9 @@ class MatchImprovisationCubit extends Cubit<MatchImprovisationState> {
               improvisation ??
               ImprovisationModel(
                 id: 0,
-                type: ImprovisationType.values[match.improvisations.length % 2],
+                type: match != null
+                    ? ImprovisationType.values[match.improvisations.length % 2]
+                    : ImprovisationType.compared,
                 durationsInSeconds: [settingsCubit.state.defaultImprovisationDurationInSeconds],
                 category: '',
                 performers: '',
@@ -28,9 +30,11 @@ class MatchImprovisationCubit extends Cubit<MatchImprovisationState> {
                 timeBufferInSeconds: settingsCubit.state.defaultTimeBufferInSeconds,
                 huddleTimerInSeconds: settingsCubit.state.defaultHuddleTimerInSeconds,
               ),
-          index: improvisation != null
-              ? match.improvisations.indexWhere((element) => element.id == improvisation.id)
-              : match.improvisations.length,
+          index: match != null
+              ? improvisation != null
+                    ? match.improvisations.indexWhere((element) => element.id == improvisation.id)
+                    : match.improvisations.length
+              : 0,
         ),
       );
 

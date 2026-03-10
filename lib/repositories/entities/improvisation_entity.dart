@@ -3,6 +3,12 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class ImprovisationEntity {
   int id;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? createdDate;
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime? modifiedDate;
   int order;
   int type;
   String category;
@@ -13,6 +19,7 @@ class ImprovisationEntity {
   String notes;
   int timeBufferInSeconds = 30;
   int huddleTimerInSeconds = 30;
+  bool hasParent;
   String? integrationEntityId;
   String? integrationAdditionalData;
 
@@ -25,6 +32,9 @@ class ImprovisationEntity {
     required this.durationsInSeconds,
     required this.performers,
     required this.notes,
+    required this.hasParent,
+    this.createdDate,
+    this.modifiedDate,
     this.timeBufferInSeconds = 30,
     this.huddleTimerInSeconds = 30,
     this.integrationEntityId,

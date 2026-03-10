@@ -534,6 +534,9 @@ class SEn extends S {
   }
 
   @override
+  String get toasterImprovisationDeleted => 'Improvisation deleted.';
+
+  @override
   String get toasterGenericError => 'An error has occurred.';
 
   @override

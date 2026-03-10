@@ -15,20 +15,19 @@ import '../../cubits/settings/settings_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
-import '../../repositories/pacings_repository.dart';
 import 'cubits/match_improvisation_cubit.dart';
 import 'cubits/match_improvisation_state.dart';
 
-class MatchImprovisationView extends StatefulWidget {
+class ImprovisationDetailPageView extends StatefulWidget {
   final FutureOr<void> Function(ImprovisationModel improvisation, int index, BuildContext context) onConfirm;
 
-  const MatchImprovisationView({super.key, required this.onConfirm});
+  const ImprovisationDetailPageView({super.key, required this.onConfirm});
 
   @override
-  State<MatchImprovisationView> createState() => _MatchImprovisationViewState();
+  State<ImprovisationDetailPageView> createState() => _ImprovisationDetailPageViewState();
 }
 
-class _MatchImprovisationViewState extends State<MatchImprovisationView> {
+class _ImprovisationDetailPageViewState extends State<ImprovisationDetailPageView> {
   late final GlobalKey<FormState> formKey;
 
   @override
@@ -41,7 +40,7 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, settingsState) {
-        return BlocBuilder<MatchImprovisationCubit, MatchImprovisationState>(
+        return BlocBuilder<ImprovisationDetailCubit, MatchImprovisationState>(
           builder: (context, matchImprovisationState) {
             return BottomSheetScaffold(
               appBar: BottomSheetAppbar(
@@ -64,43 +63,43 @@ class _MatchImprovisationViewState extends State<MatchImprovisationView> {
                       contentPadding: 16,
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    S.of(context).improvisationIndex,
-                                    style: Theme.of(context).textTheme.bodyLarge,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
+                          if (context.read<ImprovisationDetailCubit>().match != null) ...[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      S.of(context).improvisationIndex,
+                                      style: Theme.of(context).textTheme.bodyLarge,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                ),
-                                QuantityStepperFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  initialValue: matchImprovisationState.index + 1,
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      context.read<MatchImprovisationCubit>().changeIndex(value - 1);
-                                    }
-                                  },
-                                  minValue: 1,
-                                  maxValue:
-                                      context.read<MatchImprovisationCubit>().match.improvisations.length +
-                                      (matchImprovisationState.editMode ? 0 : 1),
-                                ),
-                              ],
+                                  QuantityStepperFormField(
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    initialValue: matchImprovisationState.index + 1,
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        context.read<ImprovisationDetailCubit>().changeIndex(value - 1);
+                                      }
+                                    },
+                                    minValue: 1,
+                                    maxValue:
+                                        context.read<ImprovisationDetailCubit>().match!.improvisations.length +
+                                        (matchImprovisationState.editMode ? 0 : 1),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                          ],
                           ImprovisationDetail(
                             improvisation: matchImprovisationState.improvisation,
                             improvisationFieldsOrder: settingsState.improvisationFieldsOrder,
                             onChanged: (value) {
-                              context.read<MatchImprovisationCubit>().edit(value);
+                              context.read<ImprovisationDetailCubit>().edit(value);
                             },
-                            getAllCategories: ({String? search}) async {
-                              return await context.read<PacingsRepository>().getAllCategories(search: search ?? '');
-                            },
+                            searchEnabled: context.read<ImprovisationDetailCubit>().match != null,
                             onDragStart: () async => await context.read<SettingsCubit>().vibrate(HapticsType.selection),
                           ),
                         ],

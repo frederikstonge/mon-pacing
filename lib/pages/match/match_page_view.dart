@@ -25,8 +25,8 @@ import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/penalty_model.dart';
 import '../../services/toaster_service.dart';
+import '../improvisation_detail/improvisation_detail_page_shell.dart';
 import '../match_detail/match_detail_page_shell.dart';
-import '../match_improvisation/match_improvisation_shell.dart';
 import '../match_penalty/match_penalty_shell.dart';
 import '../match_scoreboard/match_scoreboard_shell.dart';
 import 'cubits/match_cubit.dart';
@@ -342,7 +342,7 @@ class _MatchPageViewState extends State<MatchPageView> {
 
     await BottomSheetDialog.showDialog(
       context: context,
-      child: MatchImprovisationShell(
+      child: ImprovisationDetailPageShell(
         improvisation: improvisation,
         match: match,
         onConfirm: (improvisation, index, dialogContext) async {
@@ -357,7 +357,7 @@ class _MatchPageViewState extends State<MatchPageView> {
   void _addImprovisation(BuildContext context, MatchModel match) {
     BottomSheetDialog.showDialog(
       context: context,
-      child: MatchImprovisationShell(
+      child: ImprovisationDetailPageShell(
         match: match,
         onConfirm: (improvisation, index, dialogContext) async {
           final navigator = Navigator.of(dialogContext);

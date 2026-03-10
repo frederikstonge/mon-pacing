@@ -67,7 +67,7 @@ class TeamsRepository {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
     final builder = box
-        .query(TeamEntity_.hasMatch.equals(false))
+        .query(TeamEntity_.hasParent.equals(false))
         .order(TeamEntity_.createdDate, flags: Order.descending);
 
     if (selectedTags.isNotEmpty) {
@@ -86,7 +86,7 @@ class TeamsRepository {
     final db = await databaseRepository.database;
     final box = db.box<TeamEntity>();
     final builder = box.query(
-      TeamEntity_.hasMatch.equals(false).and(TeamEntity_.name.contains(search, caseSensitive: false)),
+      TeamEntity_.hasParent.equals(false).and(TeamEntity_.name.contains(search, caseSensitive: false)),
     );
 
     if (selectedTags.isNotEmpty) {

@@ -7,24 +7,24 @@ import '../../cubits/settings/settings_cubit.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import 'cubits/match_improvisation_cubit.dart';
-import 'match_improvisation_view.dart';
+import 'improvisation_detail_page_view.dart';
 
-class MatchImprovisationShell extends StatelessWidget {
+class ImprovisationDetailPageShell extends StatelessWidget {
   final ImprovisationModel? improvisation;
-  final MatchModel match;
+  final MatchModel? match;
   final FutureOr<void> Function(ImprovisationModel improvisation, int index, BuildContext context) onConfirm;
 
-  const MatchImprovisationShell({super.key, this.improvisation, required this.onConfirm, required this.match});
+  const ImprovisationDetailPageShell({super.key, this.improvisation, required this.onConfirm, required this.match});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MatchImprovisationCubit(
+      create: (context) => ImprovisationDetailCubit(
         improvisation: improvisation,
         match: match,
         settingsCubit: context.read<SettingsCubit>(),
       ),
-      child: MatchImprovisationView(onConfirm: onConfirm),
+      child: ImprovisationDetailPageView(onConfirm: onConfirm),
     );
   }
 }

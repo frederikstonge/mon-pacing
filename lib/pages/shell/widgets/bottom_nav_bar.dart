@@ -17,6 +17,7 @@ class BottomNavBar extends StatelessWidget {
         NavigationDestination(icon: const Icon(Icons.list), label: S.of(context).pacings),
         NavigationDestination(icon: const Icon(Icons.list_alt), label: S.of(context).matches),
         NavigationDestination(icon: const Icon(Icons.group), label: S.of(context).teams),
+        NavigationDestination(icon: const Icon(Icons.assignment), label: S.of(context).improvisations),
         NavigationDestination(icon: const Icon(Icons.settings), label: S.of(context).settings),
       ],
     );

@@ -536,6 +536,9 @@ class SFr extends S {
   }
 
   @override
+  String get toasterImprovisationDeleted => 'Improvisation supprimée.';
+
+  @override
   String get toasterGenericError => 'Une erreur est survenue.';
 
   @override

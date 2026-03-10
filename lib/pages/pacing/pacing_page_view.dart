@@ -18,10 +18,10 @@ import '../../cubits/settings/settings_state.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../cubits/tutorials/tutorials_cubit.dart';
+import '../../extensions/pacing_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/pacing_model.dart';
-import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -141,12 +141,10 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                                       key: ValueKey(improvisation.id),
                                       cardKey: index == 0 ? _firstImprovisationCardKey : null,
                                       dragKey: index == 0 ? _firstImprovisationDragKey : null,
-                                      pacing: pacing,
+                                      durationToThisIndex: pacing.totalDuration(take: index),
                                       improvisation: improvisation,
                                       improvisationFieldsOrder: settingsState.improvisationFieldsOrder,
                                       index: index,
-                                      getAllCategories: ({String? search}) async =>
-                                          await _getAllCategories(context, search),
                                       onChanged: (value) => _onChanged(context, value),
                                       onConfirmDelete: (value) async => await _onConfirmDelete(context, index),
                                       onDelete: (value) => _onDelete(context, value),
@@ -201,10 +199,6 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   Future<void> _onChanged(BuildContext context, ImprovisationModel value) =>
       context.read<PacingCubit>().editImprovisation(value);
-
-  Future<List<String>> _getAllCategories(BuildContext context, String? search) async {
-    return await context.read<PacingsRepository>().getAllCategories(search: search ?? '');
-  }
 
   Future<void> _onAddImprovisationPressed(BuildContext context) => context.read<PacingCubit>().addImprovisation();
 

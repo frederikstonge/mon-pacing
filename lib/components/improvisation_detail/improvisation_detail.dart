@@ -7,7 +7,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_fields.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
-import '../../pages/categories_search/categories_search_page_view.dart';
+import '../../pages/improvisations_search/improvisations_search_page_view.dart';
 import '../bottom_sheet/bottom_sheet_dialog.dart';
 import '../buttons/loading_icon_button.dart';
 import '../custom_tooltip/custom_tooltip.dart';
@@ -22,7 +22,7 @@ class ImprovisationDetail extends StatefulWidget {
   final List<ImprovisationFields> improvisationFieldsOrder;
   final FutureOr<void> Function(ImprovisationModel value) onChanged;
   final FutureOr<void> Function() onDragStart;
-  final Future<List<String>> Function({String search}) getAllCategories;
+  final bool searchEnabled;
 
   const ImprovisationDetail({
     super.key,
@@ -30,7 +30,7 @@ class ImprovisationDetail extends StatefulWidget {
     required this.improvisationFieldsOrder,
     required this.onChanged,
     required this.onDragStart,
-    required this.getAllCategories,
+    required this.searchEnabled,
   });
 
   @override
@@ -90,17 +90,19 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
                 controller: _categoryController,
                 onChanged: (value) async => await widget.onChanged.call(widget.improvisation.copyWith(category: value)),
                 hintText: S.of(context).free,
-                suffixIcon: LoadingIconButton(
-                  tooltip: S.of(context).search(category: S.of(context).category.toLowerCase()),
-                  icon: const Icon(Icons.search),
-                  onPressed: () async {
-                    final result = await CategoriesSearchPageView.showDialog(context);
-                    if (result != null) {
-                      _categoryController.text = result;
-                      await widget.onChanged.call(widget.improvisation.copyWith(category: result));
-                    }
-                  },
-                ),
+                suffixIcon: widget.searchEnabled
+                    ? LoadingIconButton(
+                        tooltip: S.of(context).search(category: S.of(context).category.toLowerCase()),
+                        icon: const Icon(Icons.search),
+                        onPressed: () async {
+                          final result = await ImprovisationsSearchPageView.showDialog(context);
+                          if (result != null) {
+                            _categoryController.text = result;
+                            await widget.onChanged.call(widget.improvisation.copyWith(category: result));
+                          }
+                        },
+                      )
+                    : null,
               ),
             ),
             ImprovisationFields.performers => Padding(

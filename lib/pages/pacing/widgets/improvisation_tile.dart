@@ -5,17 +5,15 @@ import 'package:flutter/material.dart';
 import '../../../components/buttons/loading_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/improvisation_detail/improvisation_detail.dart';
+import '../../../components/improvisation_detail/improvisation_short_detail.dart';
 import '../../../extensions/duration_extensions.dart';
-import '../../../extensions/improvisation_extensions.dart';
-import '../../../extensions/pacing_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/improvisation_fields.dart';
 import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
-import '../../../models/pacing_model.dart';
 
 class ImprovisationTile extends StatefulWidget {
-  final PacingModel pacing;
+  final Duration? durationToThisIndex;
   final ImprovisationModel improvisation;
   final List<ImprovisationFields> improvisationFieldsOrder;
   final int index;
@@ -24,13 +22,11 @@ class ImprovisationTile extends StatefulWidget {
   final FutureOr<bool?> Function(ImprovisationModel value) onConfirmDelete;
   final bool dragEnabled;
   final FutureOr<void> Function() onDragStart;
-  final Future<List<String>> Function({String search}) getAllCategories;
   final Key? cardKey;
   final Key? dragKey;
 
   const ImprovisationTile({
     super.key,
-    required this.pacing,
     required this.improvisation,
     required this.improvisationFieldsOrder,
     required this.index,
@@ -39,7 +35,7 @@ class ImprovisationTile extends StatefulWidget {
     required this.onConfirmDelete,
     required this.dragEnabled,
     required this.onDragStart,
-    required this.getAllCategories,
+    this.durationToThisIndex,
     this.cardKey,
     this.dragKey,
   });
@@ -79,66 +75,33 @@ class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKee
             onExpansionChanged: (value) => setState(() {
               isExpanded = value;
             }),
-            leading: ReorderableDragStartListener(
-              index: widget.index,
-              enabled: widget.dragEnabled,
-              child: Icon(key: widget.dragKey, Icons.drag_handle),
-            ),
+            leading: widget.dragEnabled
+                ? ReorderableDragStartListener(
+                    index: widget.index,
+                    enabled: widget.dragEnabled,
+                    child: Icon(key: widget.dragKey, Icons.drag_handle),
+                  )
+                : null,
             title: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '${widget.pacing.totalDuration(take: widget.index).toImprovDuration()} - ${S.of(context).improvisationNumber(order: widget.index + 1)}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+                if (widget.durationToThisIndex != null) ...[
+                  Text(
+                    '${widget.durationToThisIndex!.toImprovDuration()} - ${S.of(context).improvisationNumber(order: widget.index + 1)}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
                 AnimatedSize(
                   alignment: Alignment.topCenter,
                   duration: const Duration(milliseconds: 200),
                   child: SizedBox(
                     height: !isExpanded ? null : 0.0,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: widget.improvisationFieldsOrder
-                          .map(
-                            (field) => switch (field) {
-                              ImprovisationFields.type => Text(
-                                '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              ImprovisationFields.category => Text(
-                                '${S.of(context).category}: ${widget.improvisation.getCategoryString(S.of(context))}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              ImprovisationFields.performers => Text(
-                                '${S.of(context).performers}: ${widget.improvisation.getPerformersString(S.of(context))}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              ImprovisationFields.durations => Text(
-                                '${S.of(context).duration}: ${widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              ImprovisationFields.theme => Text(
-                                '${S.of(context).theme}: ${widget.improvisation.theme}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              _ => const SizedBox.shrink(),
-                            },
-                          )
-                          .toList(),
+                    child: ImprovisationShortDetail(
+                      improvisation: widget.improvisation,
+                      improvisationFieldsOrder: widget.improvisationFieldsOrder,
                     ),
                   ),
                 ),
@@ -151,7 +114,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKee
                 improvisationFieldsOrder: widget.improvisationFieldsOrder,
                 onChanged: widget.onChanged,
                 onDragStart: widget.onDragStart,
-                getAllCategories: widget.getAllCategories,
+                searchEnabled: true,
               ),
               const SizedBox(height: 8),
               LoadingButton.tonalIcon(

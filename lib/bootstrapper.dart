@@ -6,6 +6,7 @@ import 'package:toastification/toastification.dart';
 
 import 'app.dart';
 import 'cubits/feature_flags/feature_flags_cubit.dart';
+import 'cubits/improvisations/improvisations_cubit.dart';
 import 'cubits/integrations/integrations_cubit.dart';
 import 'cubits/matches/matches_cubit.dart';
 import 'cubits/onboarding/onboarding_cubit.dart';
@@ -15,6 +16,7 @@ import 'cubits/teams/teams_cubit.dart';
 import 'cubits/timer/timer_cubit.dart';
 import 'cubits/tutorials/tutorials_cubit.dart';
 import 'repositories/database_repository.dart';
+import 'repositories/improvisations_repository.dart';
 import 'repositories/matches_repository.dart';
 import 'repositories/pacings_repository.dart';
 import 'repositories/tags_repository.dart';
@@ -56,6 +58,10 @@ class Bootstrapper extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (repositoryContext) =>
+              ImprovisationsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
+        ),
+        RepositoryProvider(
+          create: (repositoryContext) =>
               TagsRepository(databaseRepository: repositoryContext.read<DatabaseRepository>()),
         ),
       ],
@@ -85,6 +91,12 @@ class Bootstrapper extends StatelessWidget {
           BlocProvider(
             create: (blocContext) => TeamsCubit(
               teamsRepository: blocContext.read<TeamsRepository>(),
+              toasterService: blocContext.read<ToasterService>(),
+            )..fetch(),
+          ),
+          BlocProvider(
+            create: (blocContext) => ImprovisationsCubit(
+              improvisationsRepository: blocContext.read<ImprovisationsRepository>(),
               toasterService: blocContext.read<ToasterService>(),
             )..fetch(),
           ),

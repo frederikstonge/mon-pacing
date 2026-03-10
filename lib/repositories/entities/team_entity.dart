@@ -15,7 +15,7 @@ class TeamEntity {
   @Index()
   String name;
   int color;
-  bool hasMatch;
+  bool hasParent;
   String? integrationEntityId;
   String? integrationAdditionalData;
 
@@ -26,7 +26,7 @@ class TeamEntity {
     this.id = 0,
     required this.name,
     required this.color,
-    required this.hasMatch,
+    required this.hasParent,
     this.createdDate,
     this.modifiedDate,
     this.integrationEntityId,

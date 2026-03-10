@@ -30,7 +30,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(1, 322570116326816951),
     name: 'ImprovisationEntity',
-    lastPropertyId: const obx_int.IdUid(12, 6240579054792186524),
+    lastPropertyId: const obx_int.IdUid(16, 894373864359351264),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -103,6 +103,26 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(12, 6240579054792186524),
         name: 'order',
         type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 2247473819748666460),
+        name: 'createdDate',
+        type: 10,
+        flags: 8,
+        indexId: const obx_int.IdUid(10, 973933775754774994),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 3958617656482170895),
+        name: 'modifiedDate',
+        type: 10,
+        flags: 8,
+        indexId: const obx_int.IdUid(11, 8751465398935675117),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(16, 894373864359351264),
+        name: 'hasParent',
+        type: 1,
         flags: 0,
       ),
     ],
@@ -520,7 +540,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(9, 1216612997671907182),
     name: 'TeamEntity',
-    lastPropertyId: const obx_int.IdUid(9, 2515836592902002615),
+    lastPropertyId: const obx_int.IdUid(10, 7031958351942318221),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -569,8 +589,8 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 2515836592902002615),
-        name: 'hasMatch',
+        id: const obx_int.IdUid(10, 7031958351942318221),
+        name: 'hasParent',
         type: 1,
         flags: 0,
       ),
@@ -656,11 +676,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
     // Typically, this is done with `dart run build_runner build`.
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(10, 8924922073151694957),
-    lastIndexId: const obx_int.IdUid(9, 6744930328974076098),
+    lastEntityId: const obx_int.IdUid(11, 5200808964335570619),
+    lastIndexId: const obx_int.IdUid(11, 8751465398935675117),
     lastRelationId: const obx_int.IdUid(11, 1703212796788486032),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [1320290470514103811],
+    retiredEntityUids: const [1320290470514103811, 5200808964335570619],
     retiredIndexUids: const [],
     retiredPropertyUids: const [
       3146358308400614885,
@@ -675,6 +695,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
       1550223078012945261,
       6040221050144242742,
       7018269910061947127,
+      303039885335664276,
+      8187535596698390219,
+      3553833697281804637,
+      9195042535493129648,
+      2690704106862659182,
+      6436765608654571211,
+      570810964282039672,
+      403858495456819352,
+      2431913425297482228,
+      8255107316807552358,
+      5864504357891497321,
+      2515836592902002615,
     ],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -706,7 +738,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
             object.integrationAdditionalData == null
             ? null
             : fbb.writeString(object.integrationAdditionalData!);
-        fbb.startTable(13);
+        fbb.startTable(17);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.type);
         fbb.addOffset(2, categoryOffset);
@@ -719,12 +751,25 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(9, integrationEntityIdOffset);
         fbb.addOffset(10, integrationAdditionalDataOffset);
         fbb.addInt64(11, object.order);
+        fbb.addInt64(12, object.createdDate?.millisecondsSinceEpoch);
+        fbb.addInt64(13, object.modifiedDate?.millisecondsSinceEpoch);
+        fbb.addBool(15, object.hasParent);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
+        final createdDateValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          28,
+        );
+        final modifiedDateValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          30,
+        );
         final idParam = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -759,6 +804,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final notesParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 16, '');
+        final hasParentParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          34,
+          false,
+        );
+        final createdDateParam = createdDateValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(createdDateValue);
+        final modifiedDateParam = modifiedDateValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(modifiedDateValue);
         final timeBufferInSecondsParam = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -786,6 +843,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           durationsInSeconds: durationsInSecondsParam,
           performers: performersParam,
           notes: notesParam,
+          hasParent: hasParentParam,
+          createdDate: createdDateParam,
+          modifiedDate: modifiedDateParam,
           timeBufferInSeconds: timeBufferInSecondsParam,
           huddleTimerInSeconds: huddleTimerInSecondsParam,
           integrationEntityId: integrationEntityIdParam,
@@ -1387,7 +1447,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
             object.integrationAdditionalData == null
             ? null
             : fbb.writeString(object.integrationAdditionalData!);
-        fbb.startTable(10);
+        fbb.startTable(11);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.createdDate?.millisecondsSinceEpoch);
         fbb.addInt64(2, object.modifiedDate?.millisecondsSinceEpoch);
@@ -1395,7 +1455,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(4, object.color);
         fbb.addOffset(6, integrationEntityIdOffset);
         fbb.addOffset(7, integrationAdditionalDataOffset);
-        fbb.addBool(8, object.hasMatch);
+        fbb.addBool(9, object.hasParent);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1427,10 +1487,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           12,
           0,
         );
-        final hasMatchParam = const fb.BoolReader().vTableGet(
+        final hasParentParam = const fb.BoolReader().vTableGet(
           buffer,
           rootOffset,
-          20,
+          22,
           false,
         );
         final createdDateParam = createdDateValue == null
@@ -1449,7 +1509,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           id: idParam,
           name: nameParam,
           color: colorParam,
-          hasMatch: hasMatchParam,
+          hasParent: hasParentParam,
           createdDate: createdDateParam,
           modifiedDate: modifiedDateParam,
           integrationEntityId: integrationEntityIdParam,
@@ -1563,6 +1623,21 @@ class ImprovisationEntity_ {
   /// See [ImprovisationEntity.order].
   static final order = obx.QueryIntegerProperty<ImprovisationEntity>(
     _entities[0].properties[11],
+  );
+
+  /// See [ImprovisationEntity.createdDate].
+  static final createdDate = obx.QueryDateProperty<ImprovisationEntity>(
+    _entities[0].properties[12],
+  );
+
+  /// See [ImprovisationEntity.modifiedDate].
+  static final modifiedDate = obx.QueryDateProperty<ImprovisationEntity>(
+    _entities[0].properties[13],
+  );
+
+  /// See [ImprovisationEntity.hasParent].
+  static final hasParent = obx.QueryBooleanProperty<ImprovisationEntity>(
+    _entities[0].properties[14],
   );
 }
 
@@ -1905,8 +1980,8 @@ class TeamEntity_ {
     _entities[7].properties[6],
   );
 
-  /// See [TeamEntity.hasMatch].
-  static final hasMatch = obx.QueryBooleanProperty<TeamEntity>(
+  /// See [TeamEntity.hasParent].
+  static final hasParent = obx.QueryBooleanProperty<TeamEntity>(
     _entities[7].properties[7],
   );
 

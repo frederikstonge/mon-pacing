@@ -156,6 +156,7 @@
   "timeBufferTooltip": "Temps supplémentaire qui sera ajouté à la durée de chaque improvisation pour compenser le vote, etc. Cette valeur ne sera utilisée que pour évaluer la durée totale d'un pacing.",
   "timerHapticFeedbackTooltip": "Le chronomètre vibrera à chaque minute, 30 secondes, 10 secondes, 5, 4, 3, 2, 1.",
   "timerIsActiveError": "Impossible de {action} l'improvisation. Le chronomètre est activé.",
+  "toasterImprovisationDeleted": "Improvisation supprimée.",
   "toasterGenericError": "Une erreur est survenue.",
   "toasterMatchDeleted": "Match supprimé.",
   "toasterMatchResultShared": "Le résultat du match a été partagé.",

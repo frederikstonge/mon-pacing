@@ -45,14 +45,14 @@ class TeamModel extends IntegrationBaseModel with TeamModelMappable implements T
     integrationAdditionalData: entity.integrationAdditionalData,
   );
 
-  TeamEntity toEntity({bool hasMatch = false}) {
+  TeamEntity toEntity({bool hasParent = false}) {
     final team = TeamEntity(
       id: id < 0 ? 0 : id,
       createdDate: createdDate,
       modifiedDate: modifiedDate,
       name: name,
       color: color,
-      hasMatch: hasMatch,
+      hasParent: hasParent,
       integrationEntityId: integrationEntityId,
       integrationAdditionalData: integrationAdditionalData,
     );
