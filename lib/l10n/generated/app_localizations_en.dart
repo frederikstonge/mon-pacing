@@ -214,6 +214,9 @@ class SEn extends S {
   String get improvisations => 'Improvisations';
 
   @override
+  String get improvs => 'Improvs';
+
+  @override
   String integrationPacingMustHaveAtLeastXImprovisations({required int count}) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

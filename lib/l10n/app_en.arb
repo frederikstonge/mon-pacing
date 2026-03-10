@@ -114,6 +114,7 @@
     }
   },
   "improvisations": "Improvisations",
+  "improvs": "Improvs",
   "integrationPacingMustHaveAtLeastXImprovisations": "Pacing must have at least {count, plural, one{{count} improvisation} other{{count} improvisations}}.",
   "@integrationPacingMustHaveAtLeastXImprovisations": {
     "placeholders": {

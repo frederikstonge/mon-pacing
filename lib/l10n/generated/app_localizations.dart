@@ -464,6 +464,12 @@ abstract class S {
   /// **'Improvisations'**
   String get improvisations;
 
+  /// No description provided for @improvs.
+  ///
+  /// In en, this message translates to:
+  /// **'Improvs'**
+  String get improvs;
+
   /// No description provided for @integrationPacingMustHaveAtLeastXImprovisations.
   ///
   /// In en, this message translates to:
