@@ -25,7 +25,7 @@ class SliverLogoAppbar extends StatelessWidget {
           : Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: InkWell(
-                onTap: theme == ThemeType.ligmaLight
+                onTap: theme == ThemeType.ligmaLight || theme == ThemeType.ligmaDark
                     ? () => MessageBoxDialog.alertShow(context, S.of(context).ligmaEasterEgg, S.of(context).close)
                     : null,
                 child: Image.asset(
