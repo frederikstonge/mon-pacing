@@ -81,7 +81,7 @@ class _MatchesPageViewState extends State<MatchesPageView> {
                           onTagDeselected: context.read<MatchesCubit>().deselectTag,
                         ),
                         pinned: true,
-                        floating: false,
+                        floating: true,
                       ),
                     ],
                     switch (matchesState.status) {

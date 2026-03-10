@@ -84,7 +84,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                           onTagDeselected: context.read<TeamsCubit>().deselectTag,
                         ),
                         pinned: true,
-                        floating: false,
+                        floating: true,
                       ),
                     ],
 

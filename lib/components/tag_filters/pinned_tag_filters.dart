@@ -20,7 +20,7 @@ class PinnedTagFilters extends SliverPersistentHeaderDelegate {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        padding: const EdgeInsets.only(top: 6.0, left: 4.0, right: 4.0),
         child: TagFilters(
           allTags: allTags,
           selectedTags: selectedTags,

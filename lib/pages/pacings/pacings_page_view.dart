@@ -119,7 +119,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
                         onTagDeselected: context.read<PacingsCubit>().deselectTag,
                       ),
                       pinned: true,
-                      floating: false,
+                      floating: true,
                     ),
                   ],
 
