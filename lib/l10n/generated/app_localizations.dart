@@ -788,6 +788,12 @@ abstract class S {
   /// **'Pacings'**
   String get pacings;
 
+  /// No description provided for @paradoxe.
+  ///
+  /// In en, this message translates to:
+  /// **'Paradoxe'**
+  String get paradoxe;
+
   /// No description provided for @pause.
   ///
   /// In en, this message translates to:

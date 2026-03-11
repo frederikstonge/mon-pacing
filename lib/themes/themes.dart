@@ -37,6 +37,24 @@ class Themes {
     );
   }
 
+  static ThemeData paradoxe() {
+    const primaryColor = Colors.deepPurple;
+    const secondaryColor = Colors.lightGreen;
+    final cardBackgroundColor = Colors.grey.shade900;
+    final cardBorderColor = Colors.grey.shade800;
+    final dividerColor = Colors.grey.shade800;
+    final shadowColor = Colors.grey.shade800;
+    return _generateTheme(
+      Brightness.dark,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
+    );
+  }
+
   static ThemeData evenementCulturel() {
     const primaryColor = Color(0xFFffd740);
     const secondaryColor = Color(0xFF145da8);

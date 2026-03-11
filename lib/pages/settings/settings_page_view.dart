@@ -101,6 +101,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 ThemeType.ligmaDark => S.of(context).ligmaDark,
                                 ThemeType.boldor => S.of(context).boldor,
                                 ThemeType.evenementCulturel => S.of(context).evenementCulturel,
+                                ThemeType.paradoxe => S.of(context).paradoxe,
                               }),
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () {

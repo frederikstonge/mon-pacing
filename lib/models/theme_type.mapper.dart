@@ -41,6 +41,8 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
         return ThemeType.boldor;
       case r'evenementCulturel':
         return ThemeType.evenementCulturel;
+      case r'paradoxe':
+        return ThemeType.paradoxe;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -63,6 +65,8 @@ class ThemeTypeMapper extends EnumMapper<ThemeType> {
         return r'boldor';
       case ThemeType.evenementCulturel:
         return r'evenementCulturel';
+      case ThemeType.paradoxe:
+        return r'paradoxe';
     }
   }
 }

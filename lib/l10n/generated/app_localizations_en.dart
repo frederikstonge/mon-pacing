@@ -407,6 +407,9 @@ class SEn extends S {
   String get pacings => 'Pacings';
 
   @override
+  String get paradoxe => 'Paradoxe';
+
+  @override
   String get pause => 'Pause';
 
   @override

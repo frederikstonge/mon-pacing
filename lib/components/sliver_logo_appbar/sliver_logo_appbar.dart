@@ -37,6 +37,7 @@ class SliverLogoAppbar extends StatelessWidget {
                     ThemeType.ligmaDark => 'assets/Ligma.png',
                     ThemeType.boldor => 'assets/Boldor.png',
                     ThemeType.evenementCulturel => 'assets/EC.png',
+                    ThemeType.paradoxe => 'assets/Paradoxe.png',
                   },
                   filterQuality: FilterQuality.high,
                   errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
