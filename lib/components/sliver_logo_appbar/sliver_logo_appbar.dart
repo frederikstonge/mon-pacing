@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/theme_type.dart';
@@ -25,9 +26,17 @@ class SliverLogoAppbar extends StatelessWidget {
           : Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: InkWell(
-                onTap: theme == ThemeType.ligmaLight
-                    ? () => MessageBoxDialog.alertShow(context, S.of(context).ligmaEasterEgg, S.of(context).close)
-                    : null,
+                onTap: switch (theme) {
+                  ThemeType.ligmaLight || ThemeType.ligmaDark => () => MessageBoxDialog.alertShow(
+                    context,
+                    S.of(context).ligmaEasterEgg,
+                    S.of(context).close,
+                  ),
+                  ThemeType.boldor => () => launchUrl(Uri.parse('https://www.facebook.com/boldordimprovisation')),
+                  ThemeType.evenementCulturel => () => launchUrl(Uri.parse('https://www.facebook.com/evenementcultu')),
+                  ThemeType.paradoxe => () => launchUrl(Uri.parse('https://www.facebook.com/ImproParadoxe')),
+                  _ => null,
+                },
                 child: Image.asset(
                   switch (theme) {
                     ThemeType.dark => 'assets/MonPacingDark.png',
