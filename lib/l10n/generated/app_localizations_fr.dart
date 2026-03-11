@@ -154,7 +154,7 @@ class SFr extends S {
   String get enableWakelockTooltip => 'Empêche l\'écran de se fermer lorsque le chronomètre est actif.';
 
   @override
-  String get evenementCulturel => 'Événement culturel';
+  String get evenementCulturel => 'Événement culturel du Patro de Jonquière';
 
   @override
   String exportMatchSheetTo({required String integrationId}) {
@@ -406,6 +406,9 @@ class SFr extends S {
 
   @override
   String get pacings => 'Pacings';
+
+  @override
+  String get paradoxe => 'Paradoxe';
 
   @override
   String get pause => 'Pause';

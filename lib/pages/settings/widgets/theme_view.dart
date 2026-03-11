@@ -60,6 +60,7 @@ class ThemeView extends StatelessWidget {
       ThemeType.ligmaDark => S.of(context).ligmaDark,
       ThemeType.boldor => S.of(context).boldor,
       ThemeType.evenementCulturel => S.of(context).evenementCulturel,
+      ThemeType.paradoxe => S.of(context).paradoxe,
     };
   }
 }

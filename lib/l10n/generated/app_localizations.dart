@@ -365,7 +365,7 @@ abstract class S {
   /// No description provided for @evenementCulturel.
   ///
   /// In en, this message translates to:
-  /// **'Événement culturel'**
+  /// **'Événement culturel du Patro de Jonquière'**
   String get evenementCulturel;
 
   /// No description provided for @exportMatchSheetTo.
@@ -787,6 +787,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Pacings'**
   String get pacings;
+
+  /// No description provided for @paradoxe.
+  ///
+  /// In en, this message translates to:
+  /// **'Paradoxe'**
+  String get paradoxe;
 
   /// No description provided for @pause.
   ///

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/generated/app_localizations.dart';
 import '../../models/theme_type.dart';
-import '../message_box_dialog/message_box_dialog.dart';
+import 'logo.dart';
 
 class SliverLogoAppbar extends StatelessWidget {
   static const toolbarHeight = kToolbarHeight + 8;
@@ -24,25 +23,7 @@ class SliverLogoAppbar extends StatelessWidget {
           ? const BackButton()
           : Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: InkWell(
-                onTap: theme == ThemeType.ligmaLight
-                    ? () => MessageBoxDialog.alertShow(context, S.of(context).ligmaEasterEgg, S.of(context).close)
-                    : null,
-                child: Image.asset(
-                  switch (theme) {
-                    ThemeType.dark => 'assets/MonPacingDark.png',
-                    ThemeType.light => 'assets/MonPacingLight.png',
-                    ThemeType.lni => 'assets/MonPacingLNI.png',
-                    ThemeType.ligmaLight => 'assets/Ligma.png',
-                    ThemeType.ligmaDark => 'assets/Ligma.png',
-                    ThemeType.boldor => 'assets/Boldor.png',
-                    ThemeType.evenementCulturel => 'assets/EC.png',
-                  },
-                  filterQuality: FilterQuality.high,
-                  errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
-                  isAntiAlias: true,
-                ),
-              ),
+              child: Logo(theme: theme),
             ),
       title: Text(
         title,

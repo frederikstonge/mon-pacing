@@ -56,6 +56,7 @@ class App extends StatelessWidget {
                   ThemeType.ligmaDark => Themes.ligmaDark(),
                   ThemeType.boldor => Themes.boldor(),
                   ThemeType.evenementCulturel => Themes.evenementCulturel(),
+                  ThemeType.paradoxe => Themes.paradoxe(),
                 },
                 // Locale
                 localizationsDelegates: S.localizationsDelegates,

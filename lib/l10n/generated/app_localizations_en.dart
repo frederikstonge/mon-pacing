@@ -154,7 +154,7 @@ class SEn extends S {
   String get enableWakelockTooltip => 'Prevent your screen from turning off when the timer is active.';
 
   @override
-  String get evenementCulturel => 'Événement culturel';
+  String get evenementCulturel => 'Événement culturel du Patro de Jonquière';
 
   @override
   String exportMatchSheetTo({required String integrationId}) {
@@ -405,6 +405,9 @@ class SEn extends S {
 
   @override
   String get pacings => 'Pacings';
+
+  @override
+  String get paradoxe => 'Paradoxe';
 
   @override
   String get pause => 'Pause';
