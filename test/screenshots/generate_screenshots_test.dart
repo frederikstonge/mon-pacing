@@ -322,6 +322,7 @@ void _screenshotWidget({
                   ThemeType.ligmaLight => Themes.ligmaLight(),
                   ThemeType.ligmaDark => Themes.ligmaDark(),
                   ThemeType.boldor => Themes.boldor(),
+                  ThemeType.evenementCulturel => Themes.evenementCulturel(),
                 },
                 localizationsDelegates: S.localizationsDelegates,
                 supportedLocales: S.supportedLocales,

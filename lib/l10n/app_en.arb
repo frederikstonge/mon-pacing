@@ -69,6 +69,7 @@
   "enableTimerHapticFeedback": "Enable timer haptic feedback",
   "enableWakelock": "Enable wakelock",
   "enableWakelockTooltip": "Prevent your screen from turning off when the timer is active.",
+  "evenementCulturel": "Événement culturel",
   "exportMatchSheetTo": "Export match sheet to {integrationId}",
   "@exportMatchSheetTo": {
     "placeholders": {

@@ -37,6 +37,28 @@ class Themes {
     );
   }
 
+  static ThemeData evenementCulturel() {
+    const primaryColor = Color(0xFFffd740);
+    const secondaryColor = Color(0xFF145da8);
+    final cardBackgroundColor = Colors.grey.shade900;
+    final cardBorderColor = Color(0xFFe8423b);
+    final dividerColor = Color(0xFFe8423b);
+    final shadowColor = Colors.grey.shade800;
+    final backgroundColor = Color(0xFF1e1e1c);
+    final onBackgroundColor = Color(0xFFf5f2eb);
+    return _generateTheme(
+      Brightness.dark,
+      primaryColor,
+      secondaryColor,
+      cardBackgroundColor,
+      cardBorderColor,
+      dividerColor,
+      shadowColor,
+      backgroundColor: backgroundColor,
+      onBackgroundColor: onBackgroundColor,
+    );
+  }
+
   static ThemeData boldor() {
     const primaryColor = Color(0xFFffef01);
     const secondaryColor = Color(0xFFffef01);
@@ -123,16 +145,22 @@ class Themes {
     Color cardBackgroundColor,
     Color cardBorderColor,
     Color dividerColor,
-    Color shadowColor,
-  ) {
-    final background = brightness == Brightness.light ? Colors.white : Colors.black;
-    final onBackground = brightness == Brightness.light ? Colors.black : Colors.white;
-    final onPrimary = ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.light
-        ? Colors.black
-        : Colors.white;
-    final onSecondary = ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light
-        ? Colors.black
-        : Colors.white;
+    Color shadowColor, {
+    Color? backgroundColor,
+    Color? onBackgroundColor,
+    Color? onPrimaryColor,
+    Color? onSecondaryColor,
+  }) {
+    final background = backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black);
+    final onBackground =
+        onBackgroundColor ??
+        (ThemeData.estimateBrightnessForColor(background) == Brightness.light ? Colors.black : Colors.white);
+    final onPrimary =
+        onPrimaryColor ??
+        (ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.light ? Colors.black : Colors.white);
+    final onSecondary =
+        onSecondaryColor ??
+        (ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light ? Colors.black : Colors.white);
     final colorScheme = ColorScheme(
       brightness: brightness,
       primary: primaryColor,

@@ -362,6 +362,12 @@ abstract class S {
   /// **'Prevent your screen from turning off when the timer is active.'**
   String get enableWakelockTooltip;
 
+  /// No description provided for @evenementCulturel.
+  ///
+  /// In en, this message translates to:
+  /// **'Événement culturel'**
+  String get evenementCulturel;
+
   /// No description provided for @exportMatchSheetTo.
   ///
   /// In en, this message translates to:
