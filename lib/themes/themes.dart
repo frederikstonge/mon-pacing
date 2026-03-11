@@ -38,8 +38,8 @@ class Themes {
   }
 
   static ThemeData paradoxe() {
-    const primaryColor = Colors.deepPurple;
-    const secondaryColor = Colors.lightGreen;
+    const primaryColor = Color(0xFF0082c0);
+    const secondaryColor = Color(0xFFed7b47);
     final cardBackgroundColor = Colors.grey.shade900;
     final cardBorderColor = Colors.grey.shade800;
     final dividerColor = Colors.grey.shade800;

@@ -365,7 +365,7 @@ abstract class S {
   /// No description provided for @evenementCulturel.
   ///
   /// In en, this message translates to:
-  /// **'Événement culturel'**
+  /// **'Événement culturel du Patro de Jonquière'**
   String get evenementCulturel;
 
   /// No description provided for @exportMatchSheetTo.
