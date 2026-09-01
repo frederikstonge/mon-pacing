@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:excel/excel.dart' as excel;
+import 'package:excel_community/excel_community.dart' as excel;
 
 import '../extensions/match_extensions.dart';
 import '../extensions/penalty_extensions.dart';

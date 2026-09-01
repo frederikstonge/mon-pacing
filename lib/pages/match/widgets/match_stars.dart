@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
@@ -33,7 +33,7 @@ class MatchStars extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       onReorderStart: (index) => onDragStart(),
-      onReorder: onDrag,
+      onReorderItem: onDrag,
       children: stars
           .asMap()
           .entries

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
 import 'cubits/settings/settings_cubit.dart';
@@ -58,8 +58,11 @@ class App extends StatelessWidget {
                   ThemeType.evenementCulturel => Themes.evenementCulturel(),
                   ThemeType.paradoxe => Themes.paradoxe(),
                 },
+                builder: (BuildContext context, Widget? child) {
+                  return MaterialUiCompatibilityBridge(child: child!);
+                },
                 // Locale
-                localizationsDelegates: S.localizationsDelegates,
+                localizationsDelegates: [S.delegate, ...GlobalMaterialLocalizations.delegates],
                 supportedLocales: S.supportedLocales,
                 locale: Locale(settingsState.language),
                 // Router

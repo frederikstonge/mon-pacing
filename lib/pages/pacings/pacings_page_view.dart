@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
@@ -285,9 +285,8 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
                 align: ContentAlign.top,
                 child: Text(
                   S.of(context).tutorialAddPacing,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
+                  style: Theme.of(context).textTheme.titleLarge!
+                      .copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
                 ),
               ),
             ],
@@ -306,9 +305,8 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
                 align: ContentAlign.bottom,
                 child: Text(
                   S.of(context).tutorialStartMatch,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
+                  style: Theme.of(context).textTheme.titleLarge!
+                      .copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
                 ),
               ),
             ],

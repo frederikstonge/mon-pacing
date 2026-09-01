@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../extensions/duration_extensions.dart';
 import '../../../extensions/pacing_extensions.dart';

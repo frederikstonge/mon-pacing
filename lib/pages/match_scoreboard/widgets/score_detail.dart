@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';

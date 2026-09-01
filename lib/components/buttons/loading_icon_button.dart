@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class LoadingIconButton extends StatefulWidget {
   final _IconButtonVariant _variant;
@@ -59,9 +59,9 @@ class LoadingIconButton extends StatefulWidget {
     required this.icon,
     required this.onPressed,
     required this.tooltip,
-    required _IconButtonVariant variant,
+    required this._variant,
     required this.size,
-  }) : _variant = variant;
+  });
 
   @override
   State<LoadingIconButton> createState() => _LoadingIconButtonState();

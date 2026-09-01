@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/improvisation_fields.dart';
@@ -22,7 +22,7 @@ class ImprovisationFieldsOrder extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
-          onReorder: _drag,
+          onReorderItem: _drag,
           children: fields
               .asMap()
               .entries

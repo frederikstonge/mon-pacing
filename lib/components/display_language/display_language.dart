@@ -1,6 +1,6 @@
 import 'package:country_flags/country_flags.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DisplayLanguage extends StatelessWidget {
   final Locale locale;
