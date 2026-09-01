@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../integrations/appimpro_integration.dart';
 import '../../integrations/citrus_integration.dart';
 import '../../integrations/integration_base.dart';
 import '../../integrations/scoreboardussy_integration.dart';
@@ -32,6 +33,7 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
       final List<IntegrationBase> integrations = [
         CitrusIntegration(client: Dio()),
         ScoreboardussyIntegration(client: Dio()),
+        AppImproIntegration(client: Dio()),
       ];
       await remoteConfig.activate();
       emit(
