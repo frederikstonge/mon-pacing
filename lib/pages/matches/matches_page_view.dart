@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';

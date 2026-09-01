@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_button.dart';
@@ -223,9 +223,8 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               leading: const Icon(Icons.timer),
                               title: Text(S.of(context).improvisationDurationInSeconds),
                               subTitle: Text(
-                                Duration(
-                                  seconds: settingsState.defaultImprovisationDurationInSeconds,
-                                ).toImprovDuration(),
+                                Duration(seconds: settingsState.defaultImprovisationDurationInSeconds)
+                                    .toImprovDuration(),
                               ),
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () async {

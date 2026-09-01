@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BottomSheetDialog {
   static Future<T?> showDialog<T>({required BuildContext context, required Widget child}) async {

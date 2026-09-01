@@ -9,6 +9,18 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+    - lib/**.freezed.dart
+    - lib/**.g.dart
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -46,9 +58,3 @@ linter:
 
 formatter:
   page_width: 120
-
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
-
-analyzer:
-  exclude: [ build/**, lib/**.freezed.dart, lib/**.g.dart ]

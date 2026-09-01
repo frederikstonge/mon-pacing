@@ -1,18 +1,12 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_file_dialog (0.0.1):
-    - Flutter
-  - flutter_foreground_task (0.0.1):
-    - Flutter
-  - ObjectBox (5.2.0)
+  - ObjectBox (5.3.0)
   - objectbox_flutter_libs (0.0.1):
     - Flutter
-    - ObjectBox (= 5.2.0)
+    - ObjectBox (= 5.3.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_file_dialog (from `.symlinks/plugins/flutter_file_dialog/ios`)
-  - flutter_foreground_task (from `.symlinks/plugins/flutter_foreground_task/ios`)
   - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
 
 SPEC REPOS:
@@ -22,20 +16,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_file_dialog:
-    :path: ".symlinks/plugins/flutter_file_dialog/ios"
-  flutter_foreground_task:
-    :path: ".symlinks/plugins/flutter_foreground_task/ios"
   objectbox_flutter_libs:
     :path: ".symlinks/plugins/objectbox_flutter_libs/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_file_dialog: ca8d7fbd1772d4f0c2777b4ab20a7787ef4e7dd8
-  flutter_foreground_task: a159d2c2173b33699ddb3e6c2a067045d7cebb89
-  ObjectBox: 946c1e8586aaa61e21b6661bab4948d06fdd51c4
-  objectbox_flutter_libs: 4d609454f39d002fc850b3019e180fc4760cdf36
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
+  ObjectBox: 2aae8ad350012cb53c6e7848064307cf68617f73
+  objectbox_flutter_libs: 42b57158b8c4869b731487f220e07d6edc6616e0
 
 PODFILE CHECKSUM: 74479ea0c03026413afeea185013f485a807d9c3
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0

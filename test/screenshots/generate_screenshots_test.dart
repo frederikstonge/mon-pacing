@@ -1,10 +1,10 @@
 @Tags(['screenshot'])
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_cubit.dart';
@@ -197,9 +197,8 @@ void main() {
     );
     when(packageInfoService.getAppVersion()).thenAnswer((_) async => '1.0.0');
     when(featureFlagsCubit.state).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success));
-    when(
-      integrationsCubit.state,
-    ).thenReturn(const IntegrationsState(status: IntegrationsStatus.success, integrations: []));
+    when(integrationsCubit.state)
+        .thenReturn(const IntegrationsState(status: IntegrationsStatus.success, integrations: []));
     when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing], hasMore: false));
     when(matchesCubit.state).thenReturn(MatchesState(status: MatchesStatus.success, matches: [match], hasMore: false));
     when(teamsCubit.state).thenReturn(TeamsState(status: TeamsStatus.success, teams: teams, hasMore: false));

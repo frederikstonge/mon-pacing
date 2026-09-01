@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../extensions/iterable_extensions.dart';
 import '../../models/tag_base_model.dart';

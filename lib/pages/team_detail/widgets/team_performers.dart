@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -46,7 +46,7 @@ class TeamPerformers extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
-          onReorder: (oldIndex, newIndex) => onDrag(oldIndex, newIndex),
+          onReorderItem: (oldIndex, newIndex) => onDrag(oldIndex, newIndex),
           children: performers
               .asMap()
               .entries

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../bottom_sheet/bottom_sheet_appbar.dart';

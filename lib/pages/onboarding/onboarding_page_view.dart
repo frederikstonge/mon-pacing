@@ -1,8 +1,8 @@
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';

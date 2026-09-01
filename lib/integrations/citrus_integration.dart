@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../extensions/color_extensions.dart';

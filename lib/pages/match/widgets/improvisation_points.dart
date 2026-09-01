@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/quantity_stepper/quantity_stepper_form_field.dart';

@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Widget Preview related
+.widget_preview/
+
+/ios/build/

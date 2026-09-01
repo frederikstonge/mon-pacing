@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../extensions/duration_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -41,7 +41,7 @@ class ImprovisationDurations extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           onReorderStart: (index) => onDragStart(),
-          onReorder: _drag,
+          onReorderItem: _drag,
           children: durations
               .asMap()
               .entries
