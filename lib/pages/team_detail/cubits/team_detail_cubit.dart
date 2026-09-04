@@ -32,7 +32,7 @@ class TeamDetailCubit extends Cubit<TeamDetailState> {
       final random = Random();
       final performers = List<PerformerModel>.from(state.team.performers);
       final newTeam = state.team.copyWith(
-        color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
+        color: Constants.colors.keys.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
         performers: [_createPerformer(performers)],
       );
       emit(state.copyWith(team: newTeam));

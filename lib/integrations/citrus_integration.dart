@@ -177,7 +177,7 @@ class CitrusIntegration implements MatchIntegrationBase {
 
   static int _getRandomTeamColor({int? except}) {
     final random = Random();
-    final colorList = Constants.colors.where((c) => c.getIntvalue != except).toList();
+    final colorList = Constants.colors.keys.where((c) => c.getIntvalue != except).toList();
     return colorList.elementAt(random.nextInt(colorList.length)).getIntvalue;
   }
 

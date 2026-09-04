@@ -1,4 +1,3 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
@@ -446,32 +445,25 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
             Stack(
               alignment: Alignment.center,
               children: [
-                DotsIndicator(
-                  dotsCount: pageLength,
-                  position: index.toDouble(),
-                  decorator: DotsDecorator(
-                    size: const Size.square(9.0),
-                    activeSize: const Size(18.0, 9.0),
-                    activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                  ),
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (index != 0) ...[
-                      TextButton(
-                        onPressed: () {
-                          if (!isPacingsValid || !isPenaltiesValid) {
-                            return;
-                          }
+                    TextButton(
+                      onPressed: index != 0
+                          ? () {
+                              if (!isPacingsValid || !isPenaltiesValid) {
+                                return;
+                              }
 
-                          _pageController.previousPage(duration: Duration(milliseconds: 200), curve: Curves.bounceIn);
-                        },
-                        child: Text(S.of(context).onboardingPrevious),
-                      ),
-                    ] else ...[
-                      const SizedBox.shrink(),
-                    ],
+                              _pageController.previousPage(
+                                duration: Duration(milliseconds: 200),
+                                curve: Curves.bounceIn,
+                              );
+                            }
+                          : null,
+                      child: Text(S.of(context).onboardingPrevious),
+                    ),
+                    Expanded(child: LinearProgressIndicator(value: (index + 1) / pageLength)),
                     if (index != pageLength - 1) ...[
                       TextButton(
                         onPressed: () {

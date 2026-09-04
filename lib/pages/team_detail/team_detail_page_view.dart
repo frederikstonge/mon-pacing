@@ -87,7 +87,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                             final teamDetailCubit = context.read<TeamDetailCubit>();
                             final newColor = await BottomSheetDialog.showDialog<Color>(
                               context: context,
-                              child: ColorPicker(
+                              child: AColorPicker(
                                 initialColor: Color(teamDetailState.team.color),
                                 title: S.of(context).color,
                               ),

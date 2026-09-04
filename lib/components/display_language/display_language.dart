@@ -1,6 +1,5 @@
-import 'package:country_flags/country_flags.dart';
-import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:world_flags/world_flags.dart';
 
 class DisplayLanguage extends StatelessWidget {
   final Locale locale;
@@ -11,30 +10,16 @@ class DisplayLanguage extends StatelessWidget {
   const DisplayLanguage({super.key, required this.locale, this.flagHeight = 14, this.flagWidth = 20, this.textStyle});
 
   @override
-  Widget build(BuildContext context) => Localizations.override(
-    context: context,
-    locale: locale,
-    delegates: const [LocaleNamesLocalizationsDelegate()],
-    child: Builder(
-      builder: (context) => Row(
-        children: [
-          FlagCode.fromLanguageCode(locale.languageCode.toLowerCase()) != null
-              ? CountryFlag.fromLanguageCode(
-                  locale.languageCode,
-                  theme: ImageTheme(height: flagHeight, width: flagWidth, shape: const RoundedRectangle(2)),
-                )
-              : CountryFlag.fromCountryCode(
-                  locale.languageCode,
-                  theme: ImageTheme(height: flagHeight, width: flagWidth, shape: const RoundedRectangle(2)),
-                ),
-          const SizedBox(width: 4),
-          Text(
-            LocaleNames.of(context)!.nameOf(locale.languageCode) ?? locale.toString(),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
-    ),
-  );
+  Widget build(BuildContext context) {
+    final language = NaturalLanguage.fromCodeShort(locale.languageCode);
+    final script = locale.scriptCode != null ? Script.fromCode(locale.scriptCode!) : null;
+    final basicLocale = BasicLocale(language, countryCode: locale.countryCode, script: script);
+    return Row(
+      children: [
+        LanguageFlag.fromFlagMap(language, height: flagHeight, width: flagWidth),
+        const SizedBox(width: 4),
+        Text(language.commonNameFor(basicLocale), maxLines: 1, overflow: TextOverflow.ellipsis),
+      ],
+    );
+  }
 }

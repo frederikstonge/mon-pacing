@@ -8,28 +8,28 @@ class Constants {
   static const int maximumTeams = 3;
   static const int minimumTeams = 1;
 
-  static List<MaterialColor> colors = [
-    Colors.blue,
-    Colors.red,
-    Colors.yellow,
-    Colors.green,
-    Colors.purple,
-    Colors.pink,
-    Colors.orange,
-    Colors.brown,
-    _toMaterialColor(Colors.white),
-    _toMaterialColor(Colors.black),
-    Colors.grey,
-    Colors.amber,
-    Colors.cyan,
-    Colors.deepOrange,
-    Colors.deepPurple,
-    Colors.indigo,
-    Colors.lightBlue,
-    Colors.lightGreen,
-    Colors.lime,
-    Colors.teal,
-  ];
+  static Map<ColorSwatch<Object>, String> colors = {
+    Colors.blue: 'Blue',
+    Colors.red: 'Red',
+    Colors.yellow: 'Yellow',
+    Colors.green: 'Green',
+    Colors.purple: 'Purple',
+    Colors.pink: 'Pink',
+    Colors.orange: 'Orange',
+    Colors.brown: 'Brown',
+    _toMaterialColor(Colors.white): 'White',
+    _toMaterialColor(Colors.black): 'Black',
+    Colors.grey: 'Grey',
+    Colors.amber: 'Amber',
+    Colors.cyan: 'Cyan',
+    Colors.deepOrange: 'Deep Orange',
+    Colors.deepPurple: 'Deep Purple',
+    Colors.indigo: 'Indigo',
+    Colors.lightBlue: 'Light Blue',
+    Colors.lightGreen: 'Light Green',
+    Colors.lime: 'Lime',
+    Colors.teal: 'Teal',
+  };
 
   static MaterialColor _toMaterialColor(Color color) => MaterialColor(color.getIntvalue, {
     50: color,

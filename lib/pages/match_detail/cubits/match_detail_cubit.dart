@@ -151,7 +151,7 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
       createdDate: null,
       modifiedDate: null,
       name: '${Localizer.current.team} ${teams.length + 1}',
-      color: Constants.colors.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
+      color: Constants.colors.keys.elementAt(random.nextInt(Constants.colors.length)).getIntvalue,
       performers: [_createPerformer(allPerformers)],
     );
   }
