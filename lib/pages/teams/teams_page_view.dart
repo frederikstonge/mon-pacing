@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
@@ -106,7 +105,7 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                           final team = teamsState.teams.elementAt(index);
                           return TeamCard(
                             team: team,
-                            onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                            onLongPress: () => context.read<SettingsCubit>().vibrate(),
                             edit: () => BottomSheetDialog.showDialog(
                               context: context,
                               child: TeamDetailPageShell(

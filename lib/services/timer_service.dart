@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../extensions/duration_extensions.dart';
@@ -190,7 +190,7 @@ class TimerTaskHandler extends TaskHandler {
 
     if (remainingDuration.inSeconds >= 0) {
       if (_vibrationMap![remainingDuration.inSeconds] == false) {
-        unawaited(vibrate(HapticsType.light));
+        unawaited(vibrate());
         _vibrationMap![remainingDuration.inSeconds] = true;
       }
     }
@@ -217,9 +217,9 @@ class TimerTaskHandler extends TaskHandler {
     }
   }
 
-  Future<void> vibrate(HapticsType type) async {
-    if ((_taskMessage?.hapticFeedback ?? false) && await Haptics.canVibrate()) {
-      await Haptics.vibrate(type);
+  Future<void> vibrate() async {
+    if ((_taskMessage?.hapticFeedback ?? false) && await Gaimon.canSupportsHaptic) {
+      Gaimon.light();
     }
   }
 }

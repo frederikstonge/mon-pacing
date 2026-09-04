@@ -4,13 +4,13 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../cubits/integrations/integrations_cubit.dart';
 import '../../../cubits/matches/matches_cubit.dart';
 import '../../../extensions/match_extensions.dart';
+import '../../../extensions/string_extensions.dart';
 import '../../../integrations/real_time_match_integration_base.dart';
 import '../../../l10n/localizer.dart';
 import '../../../models/improvisation_model.dart';
@@ -235,7 +235,7 @@ class MatchCubit extends Cubit<MatchState> {
       }
 
       final data = Uint8List.fromList(bytes);
-      final fileName = sanitizeFilename('${state.match!.name}.xlsx', replacement: '-');
+      final fileName = '${state.match!.name}.xlsx'.sanitizeFilename(replacement: '-');
       final params = ShareParams(
         title: state.match!.name,
         files: [
@@ -270,7 +270,7 @@ class MatchCubit extends Cubit<MatchState> {
       }
 
       final data = Uint8List.fromList(bytes);
-      final fileName = sanitizeFilename('${state.match!.name}.xlsx', replacement: '-');
+      final fileName = '${state.match!.name}.xlsx'.sanitizeFilename(replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       await analyticsService.logExportToExcel();
       final filePath = await FlutterFileDialog.saveFile(params: params);

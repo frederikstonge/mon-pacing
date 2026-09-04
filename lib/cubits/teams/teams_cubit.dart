@@ -5,11 +5,11 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../extensions/iterable_extensions.dart';
+import '../../extensions/string_extensions.dart';
 import '../../l10n/localizer.dart';
 import '../../models/team_model.dart';
 import '../../repositories/teams_repository.dart';
@@ -158,7 +158,7 @@ class TeamsCubit extends Cubit<TeamsState> {
   Future<bool> shareFile(TeamModel model) async {
     try {
       final data = Uint8List.fromList(utf8.encode(model.toJson()));
-      final fileName = sanitizeFilename('${Localizer.current.team}-${model.name}.json', replacement: '-');
+      final fileName = '${Localizer.current.team}-${model.name}.json'.sanitizeFilename(replacement: '-');
       final params = ShareParams(
         title: fileName,
         files: [XFile.fromData(data, mimeType: 'application/json', name: fileName)],
@@ -181,7 +181,7 @@ class TeamsCubit extends Cubit<TeamsState> {
   Future<bool> saveFile(TeamModel model) async {
     try {
       final data = Uint8List.fromList(utf8.encode(model.toJson()));
-      final fileName = sanitizeFilename('${Localizer.current.team}-${model.name}.json', replacement: '-');
+      final fileName = '${Localizer.current.team}-${model.name}.json'.sanitizeFilename(replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {

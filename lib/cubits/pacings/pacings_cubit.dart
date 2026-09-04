@@ -5,12 +5,12 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:sanitize_filename/sanitize_filename.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../extensions/iterable_extensions.dart';
 import '../../extensions/pacing_extensions.dart';
+import '../../extensions/string_extensions.dart';
 import '../../l10n/localizer.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
@@ -180,7 +180,7 @@ class PacingsCubit extends Cubit<PacingsState> {
   Future<bool> shareFile(PacingModel model) async {
     try {
       final data = Uint8List.fromList(utf8.encode(model.toJson()));
-      final fileName = sanitizeFilename('${Localizer.current.pacing}-${model.name}.json', replacement: '-');
+      final fileName = '${Localizer.current.pacing}-${model.name}.json'.sanitizeFilename(replacement: '-');
       final params = ShareParams(
         title: fileName,
         files: [XFile.fromData(data, mimeType: 'application/json', name: fileName)],
@@ -203,7 +203,7 @@ class PacingsCubit extends Cubit<PacingsState> {
   Future<bool> saveFile(PacingModel model) async {
     try {
       final data = Uint8List.fromList(utf8.encode(model.toJson()));
-      final fileName = sanitizeFilename('${Localizer.current.pacing}-${model.name}.json', replacement: '-');
+      final fileName = '${Localizer.current.pacing}-${model.name}.json'.sanitizeFilename(replacement: '-');
       final params = SaveFileDialogParams(data: data, fileName: fileName);
       final filePath = await FlutterFileDialog.saveFile(params: params);
       if (filePath != null) {

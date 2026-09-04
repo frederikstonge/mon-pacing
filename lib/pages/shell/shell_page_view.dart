@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../cubits/settings/settings_cubit.dart';
@@ -17,7 +16,7 @@ class ShellPageView extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: BottomNavBar(
         onDestinationSelected: (index) {
-          context.read<SettingsCubit>().vibrate(HapticsType.light);
+          context.read<SettingsCubit>().vibrate();
           navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
         },
         selectedIndex: navigationShell.currentIndex,

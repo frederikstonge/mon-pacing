@@ -517,6 +517,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  gaimon:
+    dependency: "direct main"
+    description:
+      name: gaimon
+      sha256: cb70dfa678f4a0cdd6cf6ad0498d82c768fbcfe02eb61db6ea1230de82f6ac8b
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
   glob:
     dependency: transitive
     description:
@@ -549,14 +557,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
-  haptic_feedback:
-    dependency: "direct main"
-    description:
-      name: haptic_feedback
-      sha256: c6b7ce370f17142cd6df1ed29add2cf50393aa967d9c5638e6fb7dbeff7414ec
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.5"
   hive_ce:
     dependency: transitive
     description:
@@ -1029,14 +1029,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  sanitize_filename:
-    dependency: "direct main"
-    description:
-      name: sanitize_filename
-      sha256: "92fc3859d86ca4d087305a52c6823a2f323fa0935b1d8d17e05e00f80b027b03"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
   sealed_countries:
     dependency: transitive
     description:

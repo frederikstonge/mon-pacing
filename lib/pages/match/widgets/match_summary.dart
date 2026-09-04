@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
@@ -54,7 +53,7 @@ class MatchSummary extends StatelessWidget {
                   onChanged: context.read<MatchCubit>().editStar,
                   onRemove: context.read<MatchCubit>().removeStar,
                   onDrag: context.read<MatchCubit>().moveStar,
-                  onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
+                  onDragStart: () => context.read<SettingsCubit>().vibrate(),
                 ),
         ),
         const SizedBox(height: 8),
