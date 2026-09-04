@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
@@ -130,7 +131,7 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                             ? context.read<TeamDetailCubit>().removePerformer
                             : null,
                         onDrag: context.read<TeamDetailCubit>().movePerformer,
-                        onDragStart: () => context.read<SettingsCubit>().vibrate(),
+                        onDragStart: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
                       ),
                     ],
                   ),

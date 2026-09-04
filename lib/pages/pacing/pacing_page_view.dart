@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
@@ -275,7 +276,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
   }
 
   Future<void> _onDragStart() async {
-    await context.read<SettingsCubit>().vibrate();
+    await context.read<SettingsCubit>().vibrate(HapticsType.selection);
   }
 
   Future<void> _showTutorials() async {

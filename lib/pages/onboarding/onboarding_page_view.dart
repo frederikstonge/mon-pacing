@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
@@ -263,7 +264,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                             settingsState.copyWith(improvisationFieldsOrder: fields),
                           ),
                           onDragStart: () {
-                            context.read<SettingsCubit>().vibrate();
+                            context.read<SettingsCubit>().vibrate(HapticsType.selection);
                           },
                         ),
                       ],

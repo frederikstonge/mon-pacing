@@ -8,40 +8,41 @@ import 'dart:async' as _i32;
 
 import 'package:firebase_analytics/firebase_analytics.dart' as _i3;
 import 'package:firebase_remote_config/firebase_remote_config.dart' as _i7;
-import 'package:hydrated_bloc/hydrated_bloc.dart' as _i35;
+import 'package:haptic_feedback/haptic_feedback.dart' as _i35;
+import 'package:hydrated_bloc/hydrated_bloc.dart' as _i36;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i33;
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_cubit.dart'
-    as _i38;
+    as _i39;
 import 'package:mon_pacing/cubits/feature_flags/feature_flags_state.dart'
     as _i9;
 import 'package:mon_pacing/cubits/integrations/integrations_cubit.dart' as _i23;
 import 'package:mon_pacing/cubits/integrations/integrations_state.dart' as _i8;
 import 'package:mon_pacing/cubits/matches/matches_cubit.dart' as _i27;
 import 'package:mon_pacing/cubits/matches/matches_state.dart' as _i17;
-import 'package:mon_pacing/cubits/onboarding/onboarding_cubit.dart' as _i37;
+import 'package:mon_pacing/cubits/onboarding/onboarding_cubit.dart' as _i38;
 import 'package:mon_pacing/cubits/onboarding/onboarding_state.dart' as _i6;
 import 'package:mon_pacing/cubits/pacings/pacings_cubit.dart' as _i25;
 import 'package:mon_pacing/cubits/pacings/pacings_state.dart' as _i13;
 import 'package:mon_pacing/cubits/settings/settings_cubit.dart' as _i11;
 import 'package:mon_pacing/cubits/settings/settings_state.dart' as _i4;
-import 'package:mon_pacing/cubits/teams/teams_cubit.dart' as _i39;
+import 'package:mon_pacing/cubits/teams/teams_cubit.dart' as _i40;
 import 'package:mon_pacing/cubits/teams/teams_state.dart' as _i20;
-import 'package:mon_pacing/cubits/timer/timer_cubit.dart' as _i40;
+import 'package:mon_pacing/cubits/timer/timer_cubit.dart' as _i41;
 import 'package:mon_pacing/cubits/timer/timer_state.dart' as _i24;
-import 'package:mon_pacing/cubits/tutorials/tutorials_cubit.dart' as _i36;
+import 'package:mon_pacing/cubits/tutorials/tutorials_cubit.dart' as _i37;
 import 'package:mon_pacing/cubits/tutorials/tutorials_state.dart' as _i5;
 import 'package:mon_pacing/integrations/integration_base.dart' as _i34;
 import 'package:mon_pacing/l10n/generated/app_localizations.dart' as _i30;
-import 'package:mon_pacing/models/improvisation_model.dart' as _i42;
+import 'package:mon_pacing/models/improvisation_model.dart' as _i43;
 import 'package:mon_pacing/models/match_model.dart' as _i18;
 import 'package:mon_pacing/models/pacing_model.dart' as _i14;
-import 'package:mon_pacing/models/penalty_model.dart' as _i44;
-import 'package:mon_pacing/models/star_model.dart' as _i45;
+import 'package:mon_pacing/models/penalty_model.dart' as _i45;
+import 'package:mon_pacing/models/star_model.dart' as _i46;
 import 'package:mon_pacing/models/team_model.dart' as _i21;
-import 'package:mon_pacing/pages/match/cubits/match_cubit.dart' as _i43;
+import 'package:mon_pacing/pages/match/cubits/match_cubit.dart' as _i44;
 import 'package:mon_pacing/pages/match/cubits/match_state.dart' as _i29;
-import 'package:mon_pacing/pages/pacing/cubits/pacing_cubit.dart' as _i41;
+import 'package:mon_pacing/pages/pacing/cubits/pacing_cubit.dart' as _i42;
 import 'package:mon_pacing/pages/pacing/cubits/pacing_state.dart' as _i26;
 import 'package:mon_pacing/repositories/matches_repository.dart' as _i15;
 import 'package:mon_pacing/repositories/pacings_repository.dart' as _i10;
@@ -425,9 +426,9 @@ class MockSettingsCubit extends _i1.Mock implements _i11.SettingsCubit {
   );
 
   @override
-  _i32.Future<void> vibrate() =>
+  _i32.Future<void> vibrate(_i35.HapticsType? type) =>
       (super.noSuchMethod(
-            Invocation.method(#vibrate, []),
+            Invocation.method(#vibrate, [type]),
             returnValue: _i32.Future<void>.value(),
             returnValueForMissingStub: _i32.Future<void>.value(),
           )
@@ -462,7 +463,7 @@ class MockSettingsCubit extends _i1.Mock implements _i11.SettingsCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i4.SettingsState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i4.SettingsState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -490,8 +491,8 @@ class MockSettingsCubit extends _i1.Mock implements _i11.SettingsCubit {
 
   @override
   void hydrate({
-    _i35.Storage? storage,
-    _i35.OnHydrationError? onError = _i35.defaultOnHydrationError,
+    _i36.Storage? storage,
+    _i36.OnHydrationError? onError = _i36.defaultOnHydrationError,
   }) => super.noSuchMethod(
     Invocation.method(#hydrate, [], {#storage: storage, #onError: onError}),
     returnValueForMissingStub: null,
@@ -510,7 +511,7 @@ class MockSettingsCubit extends _i1.Mock implements _i11.SettingsCubit {
 /// A class which mocks [TutorialsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTutorialsCubit extends _i1.Mock implements _i36.TutorialsCubit {
+class MockTutorialsCubit extends _i1.Mock implements _i37.TutorialsCubit {
   @override
   _i5.TutorialsState get state =>
       (super.noSuchMethod(
@@ -630,7 +631,7 @@ class MockTutorialsCubit extends _i1.Mock implements _i36.TutorialsCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i5.TutorialsState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i5.TutorialsState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -658,8 +659,8 @@ class MockTutorialsCubit extends _i1.Mock implements _i36.TutorialsCubit {
 
   @override
   void hydrate({
-    _i35.Storage? storage,
-    _i35.OnHydrationError? onError = _i35.defaultOnHydrationError,
+    _i36.Storage? storage,
+    _i36.OnHydrationError? onError = _i36.defaultOnHydrationError,
   }) => super.noSuchMethod(
     Invocation.method(#hydrate, [], {#storage: storage, #onError: onError}),
     returnValueForMissingStub: null,
@@ -678,7 +679,7 @@ class MockTutorialsCubit extends _i1.Mock implements _i36.TutorialsCubit {
 /// A class which mocks [OnboardingCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockOnboardingCubit extends _i1.Mock implements _i37.OnboardingCubit {
+class MockOnboardingCubit extends _i1.Mock implements _i38.OnboardingCubit {
   @override
   _i6.OnboardingState get state =>
       (super.noSuchMethod(
@@ -783,7 +784,7 @@ class MockOnboardingCubit extends _i1.Mock implements _i37.OnboardingCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i6.OnboardingState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i6.OnboardingState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -811,8 +812,8 @@ class MockOnboardingCubit extends _i1.Mock implements _i37.OnboardingCubit {
 
   @override
   void hydrate({
-    _i35.Storage? storage,
-    _i35.OnHydrationError? onError = _i35.defaultOnHydrationError,
+    _i36.Storage? storage,
+    _i36.OnHydrationError? onError = _i36.defaultOnHydrationError,
   }) => super.noSuchMethod(
     Invocation.method(#hydrate, [], {#storage: storage, #onError: onError}),
     returnValueForMissingStub: null,
@@ -906,7 +907,7 @@ class MockIntegrationsCubit extends _i1.Mock implements _i23.IntegrationsCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i8.IntegrationsState>? change) =>
+  void onChange(_i36.Change<_i8.IntegrationsState>? change) =>
       super.noSuchMethod(
         Invocation.method(#onChange, [change]),
         returnValueForMissingStub: null,
@@ -928,7 +929,7 @@ class MockIntegrationsCubit extends _i1.Mock implements _i23.IntegrationsCubit {
 /// A class which mocks [FeatureFlagsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFeatureFlagsCubit extends _i1.Mock implements _i38.FeatureFlagsCubit {
+class MockFeatureFlagsCubit extends _i1.Mock implements _i39.FeatureFlagsCubit {
   @override
   _i7.FirebaseRemoteConfig get remoteConfig =>
       (super.noSuchMethod(
@@ -1003,7 +1004,7 @@ class MockFeatureFlagsCubit extends _i1.Mock implements _i38.FeatureFlagsCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i9.FeatureFlagsState>? change) =>
+  void onChange(_i36.Change<_i9.FeatureFlagsState>? change) =>
       super.noSuchMethod(
         Invocation.method(#onChange, [change]),
         returnValueForMissingStub: null,
@@ -1211,7 +1212,7 @@ class MockPacingsCubit extends _i1.Mock implements _i25.PacingsCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i13.PacingsState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i13.PacingsState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -1391,7 +1392,7 @@ class MockMatchesCubit extends _i1.Mock implements _i27.MatchesCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i17.MatchesState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i17.MatchesState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -1421,7 +1422,7 @@ class MockMatchesCubit extends _i1.Mock implements _i27.MatchesCubit {
 /// A class which mocks [TeamsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTeamsCubit extends _i1.Mock implements _i39.TeamsCubit {
+class MockTeamsCubit extends _i1.Mock implements _i40.TeamsCubit {
   @override
   _i19.TeamsRepository get teamsRepository =>
       (super.noSuchMethod(
@@ -1583,7 +1584,7 @@ class MockTeamsCubit extends _i1.Mock implements _i39.TeamsCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i20.TeamsState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i20.TeamsState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -1613,7 +1614,7 @@ class MockTeamsCubit extends _i1.Mock implements _i39.TeamsCubit {
 /// A class which mocks [TimerCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTimerCubit extends _i1.Mock implements _i40.TimerCubit {
+class MockTimerCubit extends _i1.Mock implements _i41.TimerCubit {
   @override
   _i11.SettingsCubit get settingsCubit =>
       (super.noSuchMethod(
@@ -1754,7 +1755,7 @@ class MockTimerCubit extends _i1.Mock implements _i40.TimerCubit {
           as _i32.Future<void>);
 
   @override
-  void onChange(_i35.Change<_i24.TimerState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i24.TimerState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -1790,7 +1791,7 @@ class MockTimerCubit extends _i1.Mock implements _i40.TimerCubit {
 /// A class which mocks [PacingCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPacingCubit extends _i1.Mock implements _i41.PacingCubit {
+class MockPacingCubit extends _i1.Mock implements _i42.PacingCubit {
   @override
   _i10.PacingsRepository get pacingsRepository =>
       (super.noSuchMethod(
@@ -1904,7 +1905,7 @@ class MockPacingCubit extends _i1.Mock implements _i41.PacingCubit {
 
   @override
   _i32.Future<void> removeImprovisation(
-    _i42.ImprovisationModel? improvisation,
+    _i43.ImprovisationModel? improvisation,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#removeImprovisation, [improvisation]),
@@ -1914,7 +1915,7 @@ class MockPacingCubit extends _i1.Mock implements _i41.PacingCubit {
           as _i32.Future<void>);
 
   @override
-  _i32.Future<void> editImprovisation(_i42.ImprovisationModel? model) =>
+  _i32.Future<void> editImprovisation(_i43.ImprovisationModel? model) =>
       (super.noSuchMethod(
             Invocation.method(#editImprovisation, [model]),
             returnValue: _i32.Future<void>.value(),
@@ -1929,7 +1930,7 @@ class MockPacingCubit extends _i1.Mock implements _i41.PacingCubit {
   );
 
   @override
-  void onChange(_i35.Change<_i26.PacingState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i26.PacingState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -1959,7 +1960,7 @@ class MockPacingCubit extends _i1.Mock implements _i41.PacingCubit {
 /// A class which mocks [MatchCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
+class MockMatchCubit extends _i1.Mock implements _i44.MatchCubit {
   @override
   _i15.MatchesRepository get matchesRepository =>
       (super.noSuchMethod(
@@ -2111,7 +2112,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
 
   @override
   _i32.Future<void> addImprovisation(
-    _i42.ImprovisationModel? improvisation,
+    _i43.ImprovisationModel? improvisation,
     int? index,
   ) =>
       (super.noSuchMethod(
@@ -2123,7 +2124,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
 
   @override
   _i32.Future<void> editImprovisation(
-    _i42.ImprovisationModel? improvisation,
+    _i43.ImprovisationModel? improvisation,
     int? index,
   ) =>
       (super.noSuchMethod(
@@ -2135,7 +2136,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
 
   @override
   _i32.Future<void> removeImprovisation(
-    _i42.ImprovisationModel? improvisation,
+    _i43.ImprovisationModel? improvisation,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#removeImprovisation, [improvisation]),
@@ -2171,7 +2172,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
           as _i32.Future<void>);
 
   @override
-  _i32.Future<void> addPenalty(_i44.PenaltyModel? penalty) =>
+  _i32.Future<void> addPenalty(_i45.PenaltyModel? penalty) =>
       (super.noSuchMethod(
             Invocation.method(#addPenalty, [penalty]),
             returnValue: _i32.Future<void>.value(),
@@ -2180,7 +2181,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
           as _i32.Future<void>);
 
   @override
-  _i32.Future<void> editPenalty(_i44.PenaltyModel? penalty) =>
+  _i32.Future<void> editPenalty(_i45.PenaltyModel? penalty) =>
       (super.noSuchMethod(
             Invocation.method(#editPenalty, [penalty]),
             returnValue: _i32.Future<void>.value(),
@@ -2207,7 +2208,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
           as _i32.Future<void>);
 
   @override
-  _i32.Future<void> editStar(_i45.StarModel? star) =>
+  _i32.Future<void> editStar(_i46.StarModel? star) =>
       (super.noSuchMethod(
             Invocation.method(#editStar, [star]),
             returnValue: _i32.Future<void>.value(),
@@ -2216,7 +2217,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
           as _i32.Future<void>);
 
   @override
-  _i32.Future<void> removeStar(_i45.StarModel? star) =>
+  _i32.Future<void> removeStar(_i46.StarModel? star) =>
       (super.noSuchMethod(
             Invocation.method(#removeStar, [star]),
             returnValue: _i32.Future<void>.value(),
@@ -2252,7 +2253,7 @@ class MockMatchCubit extends _i1.Mock implements _i43.MatchCubit {
           as _i32.Future<bool>);
 
   @override
-  void onChange(_i35.Change<_i29.MatchState>? change) => super.noSuchMethod(
+  void onChange(_i36.Change<_i29.MatchState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );

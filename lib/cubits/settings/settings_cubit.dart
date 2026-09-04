@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:gaimon/gaimon.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import '../../models/theme_type.dart';
@@ -13,9 +13,9 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
     emit(model);
   }
 
-  Future<void> vibrate() async {
-    if (state.enableHapticFeedback && await Gaimon.canSupportsHaptic) {
-      Gaimon.selection();
+  Future<void> vibrate(HapticsType type) async {
+    if (state.enableHapticFeedback && await Haptics.canVibrate()) {
+      await Haptics.vibrate(type);
     }
   }
 
