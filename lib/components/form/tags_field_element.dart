@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
-import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/tag_model.dart';
 import '../../pages/tags_search/tags_search_page_view.dart';
 import '../../validators/validators.dart';
 import '../buttons/loading_icon_button.dart';
+import '../textfield_tags/textfield_tags.dart';
 
 class TagsFieldElement extends StatefulWidget {
   final String label;
