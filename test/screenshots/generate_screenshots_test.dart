@@ -7,9 +7,6 @@ import 'package:golden_screenshot/golden_screenshot.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:mon_pacing/cubits/feature_flags/feature_flags_cubit.dart';
-import 'package:mon_pacing/cubits/feature_flags/feature_flags_state.dart';
-import 'package:mon_pacing/cubits/feature_flags/feature_flags_status.dart';
 import 'package:mon_pacing/cubits/integrations/integrations_cubit.dart';
 import 'package:mon_pacing/cubits/integrations/integrations_state.dart';
 import 'package:mon_pacing/cubits/integrations/integrations_status.dart';
@@ -71,7 +68,6 @@ import 'shell_wrapper.dart';
   MockSpec<TutorialsCubit>(),
   MockSpec<OnboardingCubit>(),
   MockSpec<IntegrationsCubit>(),
-  MockSpec<FeatureFlagsCubit>(),
   MockSpec<PacingsCubit>(),
   MockSpec<MatchesCubit>(),
   MockSpec<TeamsCubit>(),
@@ -88,7 +84,6 @@ late final MockSettingsCubit settingsCubit;
 late final MockIntegrationsCubit integrationsCubit;
 late final MockOnboardingCubit onboardingCubit;
 late final MockTutorialsCubit tutorialsCubit;
-late final MockFeatureFlagsCubit featureFlagsCubit;
 late final MockPacingsCubit pacingsCubit;
 late final MockMatchesCubit matchesCubit;
 late final MockTeamsCubit teamsCubit;
@@ -109,7 +104,6 @@ void main() {
     onboardingCubit = MockOnboardingCubit();
     tutorialsCubit = MockTutorialsCubit();
     integrationsCubit = MockIntegrationsCubit();
-    featureFlagsCubit = MockFeatureFlagsCubit();
     pacingsCubit = MockPacingsCubit();
     matchesCubit = MockMatchesCubit();
     teamsCubit = MockTeamsCubit();
@@ -196,7 +190,6 @@ void main() {
       ),
     );
     when(packageInfoService.getAppVersion()).thenAnswer((_) async => '1.0.0');
-    when(featureFlagsCubit.state).thenReturn(const FeatureFlagsState(status: FeatureFlagsStatus.success));
     when(integrationsCubit.state)
         .thenReturn(const IntegrationsState(status: IntegrationsStatus.success, integrations: []));
     when(pacingsCubit.state).thenReturn(PacingsState(status: PacingsStatus.success, pacings: [pacing], hasMore: false));
@@ -305,7 +298,6 @@ void _screenshotWidget({
             child: MultiBlocProvider(
               providers: [
                 BlocProvider<SettingsCubit>(create: (context) => settingsCubit),
-                BlocProvider<FeatureFlagsCubit>(create: (context) => featureFlagsCubit),
                 BlocProvider<PacingsCubit>(create: (context) => pacingsCubit),
                 BlocProvider<MatchesCubit>(create: (context) => matchesCubit),
                 BlocProvider<TeamsCubit>(create: (context) => teamsCubit),
