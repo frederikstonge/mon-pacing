@@ -1,11 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
 import 'app.dart';
-import 'cubits/feature_flags/feature_flags_cubit.dart';
 import 'cubits/integrations/integrations_cubit.dart';
 import 'cubits/matches/matches_cubit.dart';
 import 'cubits/onboarding/onboarding_cubit.dart';
@@ -64,10 +62,7 @@ class Bootstrapper extends StatelessWidget {
           BlocProvider(create: (blocContext) => OnboardingCubit()),
           BlocProvider(create: (blocContext) => TutorialsCubit()),
           BlocProvider(create: (blocContext) => SettingsCubit()),
-          BlocProvider(
-            create: (blocContext) => IntegrationsCubit(remoteConfig: FirebaseRemoteConfig.instance)..initialize(),
-            lazy: false,
-          ),
+          BlocProvider(create: (blocContext) => IntegrationsCubit()..initialize(), lazy: false),
           BlocProvider(
             create: (blocContext) => PacingsCubit(
               pacingsRepository: blocContext.read<PacingsRepository>(),
@@ -95,10 +90,6 @@ class Bootstrapper extends StatelessWidget {
               timerService: blocContext.read<TimerService>(),
               integrationsCubit: blocContext.read<IntegrationsCubit>(),
             )..initialize(),
-          ),
-          BlocProvider(
-            create: (blocContext) => FeatureFlagsCubit(remoteConfig: FirebaseRemoteConfig.instance)..initialize(),
-            lazy: false,
           ),
         ],
         child: const App(),
