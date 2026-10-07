@@ -38,6 +38,12 @@ class SEn extends S {
   String get boldor => 'Bol d\'or';
 
   @override
+  String get cameraRear => 'Camera rear';
+
+  @override
+  String get cameraFront => 'Camera front';
+
+  @override
   String get cancel => 'Cancel';
 
   @override
@@ -575,6 +581,12 @@ class SEn extends S {
 
   @override
   String get toasterYouMustFillAllPerformersName => 'You must fill in all performers\' names.';
+
+  @override
+  String get torchOn => 'Torch on';
+
+  @override
+  String get torchOff => 'Torch off';
 
   @override
   String get total => 'Total';

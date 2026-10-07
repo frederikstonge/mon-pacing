@@ -25,6 +25,8 @@
     }
   },
   "boldor": "Bol d'or",
+  "cameraRear": "Camera rear",
+  "cameraFront": "Camera front",
   "cancel": "Cancel",
   "category": "Category",
   "categories": "Categories",
@@ -286,6 +288,8 @@
   "toasterYouCantStartAMatchWithAnEmptyTeam": "You can't start a match with an empty team.",
   "toasterYouCantStartAMatchWithoutImprovisation": "You can't start a match without improvisation.",
   "toasterYouMustFillAllPerformersName": "You must fill in all performers' names.",
+  "torchOn": "Torch on",
+  "torchOff": "Torch off",
   "total": "Total",
   "tutorialAddPacing": "To start, create your first pacing by tapping the button below.",
   "tutorialStartMatch": "Swipe right or press the play button to start a match.",

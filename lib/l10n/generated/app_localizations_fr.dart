@@ -38,6 +38,12 @@ class SFr extends S {
   String get boldor => 'Bol d\'or';
 
   @override
+  String get cameraRear => 'Caméra arrière';
+
+  @override
+  String get cameraFront => 'Caméra avant';
+
+  @override
   String get cancel => 'Annuler';
 
   @override
@@ -578,6 +584,12 @@ class SFr extends S {
 
   @override
   String get toasterYouMustFillAllPerformersName => 'Vous devez remplir tous les noms d\'interprète.';
+
+  @override
+  String get torchOn => 'Flash activée';
+
+  @override
+  String get torchOff => 'Flash désactivée';
 
   @override
   String get total => 'Total';

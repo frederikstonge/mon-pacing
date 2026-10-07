@@ -140,6 +140,18 @@ abstract class S {
   /// **'Bol d\'or'**
   String get boldor;
 
+  /// No description provided for @cameraRear.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera rear'**
+  String get cameraRear;
+
+  /// No description provided for @cameraFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera front'**
+  String get cameraFront;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
@@ -1111,6 +1123,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'You must fill in all performers\' names.'**
   String get toasterYouMustFillAllPerformersName;
+
+  /// No description provided for @torchOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Torch on'**
+  String get torchOn;
+
+  /// No description provided for @torchOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Torch off'**
+  String get torchOff;
 
   /// No description provided for @total.
   ///

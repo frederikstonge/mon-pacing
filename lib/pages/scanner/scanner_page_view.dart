@@ -7,6 +7,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
+import '../../components/buttons/loading_icon_button.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
 import '../../cubits/matches/matches_cubit.dart';
 import '../../cubits/pacings/pacings_cubit.dart';
@@ -22,6 +23,7 @@ import '../../services/analytics_service.dart';
 import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
+import 'widgets/transparent_cutout_overlay_painter.dart';
 
 class ScannerPageView extends StatefulWidget {
   const ScannerPageView({super.key});
@@ -81,10 +83,21 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(S.of(context).scanner),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
+        leading: const BackButton(),
+        title: Text(
+          S.of(context).scanner,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        centerTitle: true,
         actions: [
-          IconButton(
+          LoadingIconButton(
+            tooltip: torchEnabled ? S.of(context).torchOn : S.of(context).torchOff,
             icon: Icon(torchEnabled ? Icons.flash_on : Icons.flash_off),
             onPressed: () async {
               await controller.toggleTorch();
@@ -93,7 +106,8 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
               });
             },
           ),
-          IconButton(
+          LoadingIconButton(
+            tooltip: isBackCamera ? S.of(context).cameraRear : S.of(context).cameraFront,
             icon: Icon(isBackCamera ? Icons.camera_rear : Icons.camera_front),
             onPressed: () async {
               await controller.switchCamera();
@@ -104,11 +118,35 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          MobileScanner(controller: controller),
-          _buildLoading(),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final scanWindowWidth = constraints.maxWidth / 1.3;
+          final scanWindowHeight = constraints.maxHeight / 2;
+
+          final Rect scanWindow = Rect.fromLTWH(
+            (constraints.maxWidth - scanWindowWidth) / 2,
+            (constraints.maxHeight - scanWindowHeight) / 2,
+            scanWindowWidth,
+            scanWindowHeight,
+          );
+          return Stack(
+            children: [
+              MobileScanner(controller: controller, scanWindow: scanWindow),
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: TransparentCutoutOverlayPainter(
+                    scanWindow: scanWindow,
+                    borderRadius: 6,
+                    borderWidth: 1,
+                    borderColor: Colors.white.withValues(alpha: 0.8),
+                    backgroundColor: Colors.black.withValues(alpha: 0.6),
+                  ),
+                ),
+              ),
+              _buildLoading(),
+            ],
+          );
+        },
       ),
     );
   }
