@@ -10,7 +10,7 @@ dependencies:
   collection: ^1.18.0
   cupertino_icons: ^2.0.0
   cupertino_ui: any
-  dart_mappable: ^4.3.0
+  dart_mappable: ^4.10.0
   dio: ^5.7.0
   excel_community: ^2.3.0
   firebase_analytics: ^12.0.0
@@ -30,7 +30,7 @@ dependencies:
   html: ^0.15.5
   hydrated_bloc: ^11.0.0
   intl: any
-  material_ui: ^1.1.0
+  material_ui: any
   mobile_scanner: ^7.0.0
   objectbox: ^5.0.0
   objectbox_flutter_libs: any
@@ -46,8 +46,9 @@ dependencies:
   world_flags: ^3.3.0
 
 dev_dependencies:
+  analyzer: ^14.4.0
   build_runner: ^2.16.1
-  dart_mappable_builder: ^4.3.0
+  dart_mappable_builder: ^4.10.0
   flutter_lints: ^6.0.0
   flutter_native_splash: ^2.4.5
   flutter_test:
@@ -59,6 +60,7 @@ dev_dependencies:
   objectbox_generator: any
 
 dependency_overrides: 
+  analyzer: 14.4.0
   objectbox: 6.0.0-preview.4
   objectbox_flutter_libs: 6.0.0-preview.4
   objectbox_generator: 6.0.0-preview.4
