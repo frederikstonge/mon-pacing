@@ -62,7 +62,7 @@ class Bootstrapper extends StatelessWidget {
           BlocProvider(create: (blocContext) => OnboardingCubit()),
           BlocProvider(create: (blocContext) => TutorialsCubit()),
           BlocProvider(create: (blocContext) => SettingsCubit()),
-          BlocProvider(create: (blocContext) => IntegrationsCubit()..initialize(), lazy: false),
+          BlocProvider(create: (blocContext) => IntegrationsCubit()..initialize()),
           BlocProvider(
             create: (blocContext) => PacingsCubit(
               pacingsRepository: blocContext.read<PacingsRepository>(),
