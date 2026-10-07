@@ -58,9 +58,6 @@ class App extends StatelessWidget {
                   ThemeType.evenementCulturel => Themes.evenementCulturel(),
                   ThemeType.paradoxe => Themes.paradoxe(),
                 },
-                builder: (BuildContext context, Widget? child) {
-                  return MaterialUiCompatibilityBridge(child: child!);
-                },
                 // Locale
                 localizationsDelegates: [S.delegate, ...GlobalMaterialLocalizations.delegates],
                 supportedLocales: S.supportedLocales,
