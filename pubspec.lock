@@ -809,26 +809,26 @@ packages:
     dependency: "direct main"
     description:
       name: objectbox
-      sha256: "1179fd1b0f0fea07f89f823a5256c7ab52f811824d2b53c6453ed04a443ffccf"
+      sha256: b8b8987c24d4ecd6893e8a8e091cd59365ba4ce1a8043edb820271d5904b7bda
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-preview.2"
+    version: "6.0.0-preview.4"
   objectbox_flutter_libs:
     dependency: "direct main"
     description:
       name: objectbox_flutter_libs
-      sha256: "077e250876f2375a136583b790b023a5152b19c02230f06f687f381726e22122"
+      sha256: "95df8df33905a97f895f3ec644141dd108806450d70554803ee2d9b72ab5cbb7"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-preview.2"
+    version: "6.0.0-preview.4"
   objectbox_generator:
     dependency: "direct dev"
     description:
       name: objectbox_generator
-      sha256: "91eac7e4eee77b798c7c6d923d46d7557c44b170b3f223912da8aa27043c19df"
+      sha256: "347776ae407d7da4eccd784c9a3afce6222a7b087ea56c52f898eefd626b4d49"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-preview.2"
+    version: "6.0.0-preview.4"
   objective_c:
     dependency: transitive
     description:
