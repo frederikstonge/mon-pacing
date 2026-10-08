@@ -30,21 +30,23 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
+import '../models/improvisation_model.dart';
 import '../models/integration_base_model.dart';
 import '../models/match_model.dart';
+import '../models/pacing_model.dart';
+import '../models/penalties_impact_type.dart';
+import '../models/team_model.dart';
 import '../models/timer_model.dart';
+import 'match_integration_base.dart';
 import 'real_time_match_integration_base.dart';
 
-class AppImproIntegration implements RealTimeMatchIntegrationBase {
+class AppImproIntegration implements MatchIntegrationBase, RealTimeMatchIntegrationBase {
   final Dio client;
 
   AppImproIntegration({required this.client});
 
   @override
   String get integrationId => 'AppImpro';
-
-  @override
-  String get featureFlagName => 'FeatureFlag_EnableAppImproIntegration';
 
   @override
   FutureOr<bool> integrationIsValid(String data) {
@@ -112,5 +114,59 @@ class AppImproIntegration implements RealTimeMatchIntegrationBase {
     );
 
     return true;
+  }
+
+  @override
+  FutureOr<MatchModel> getMatch(String scanData, PacingModel pacing) {
+    final json = jsonDecode(scanData);
+    final url = json['url'].toString();
+    final id = json['id'].toString();
+    final token = json['token'].toString();
+
+    // This will be called after scanning the QR code and after selecting your pacing.
+    // It should load the match data
+    // START
+    final matchName = '';
+    final minNumberOfImprovisations = 12;
+    final maxNumberOfImprovisations = 13;
+    final List<String> penaltyTypes = [
+      // Should be a list of all supported penalty types
+    ];
+    final List<TeamModel> teams = [
+      // Should be a list of all teams participating in the match
+    ];
+
+    // END
+    final match = MatchModel(
+      id: 0,
+      name: matchName,
+      createdDate: null,
+      modifiedDate: null,
+      teams: teams,
+      improvisations: List<ImprovisationModel>.from(pacing.improvisations.map((e) => e.copyWith(id: -e.id.abs()))),
+      penalties: [],
+      points: [],
+      enableStatistics: true,
+      enablePenaltiesImpactPoints: true,
+      penaltiesImpactType: PenaltiesImpactType.addPoints,
+      penaltiesRequiredToImpactPoints: 2,
+      enableMatchExpulsion: true,
+      penaltiesRequiredToExpel: 3,
+      integrationId: integrationId,
+      integrationEntityId: id,
+      integrationAdditionalData: jsonEncode({'url': url, 'token': token}),
+      maximumPointsPerImprovisation: 1,
+      minNumberOfImprovisations: minNumberOfImprovisations,
+      maxNumberOfImprovisations: maxNumberOfImprovisations,
+      penaltyTypes: penaltyTypes,
+    );
+
+    return match;
+  }
+
+  @override
+  FutureOr<bool> exportMatch(MatchModel match) {
+    // This will be called from a button in the match summary to export the final match statistics
+    throw UnimplementedError();
   }
 }

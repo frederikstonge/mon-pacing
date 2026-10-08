@@ -34,9 +34,6 @@ class CitrusIntegration implements MatchIntegrationBase {
   String get integrationId => 'Citrus';
 
   @override
-  String get featureFlagName => 'FeatureFlag_EnableCitrusIntegration';
-
-  @override
   bool integrationIsValid(String data) {
     final url = Uri.tryParse(data);
     if (url == null) {

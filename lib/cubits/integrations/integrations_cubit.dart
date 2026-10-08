@@ -17,8 +17,8 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
       emit(state.copyWith(status: IntegrationsStatus.loading));
       final List<IntegrationBase> integrations = [
         CitrusIntegration(client: Dio()),
-        ScoreboardussyIntegration(client: Dio()),
         AppImproIntegration(client: Dio()),
+        ScoreboardussyIntegration(client: Dio()),
       ];
       emit(state.copyWith(status: IntegrationsStatus.success, integrations: integrations));
     } catch (e) {
