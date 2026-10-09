@@ -116,6 +116,18 @@ abstract class S {
   /// **'Add team'**
   String get addTeam;
 
+  /// No description provided for @appImproCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Code for AppImpro'**
+  String get appImproCode;
+
+  /// No description provided for @appImproCodeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Give this code to the AppImpro host, who enters it in “Import from Mon Pacing”. It is valid for {minutes} minutes and can only be used once.'**
+  String appImproCodeDescription({required int minutes});
+
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
@@ -967,6 +979,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @sendToAppImpro.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to AppImpro'**
+  String get sendToAppImpro;
 
   /// No description provided for @stars.
   ///

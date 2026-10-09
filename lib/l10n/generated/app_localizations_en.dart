@@ -22,6 +22,14 @@ class SEn extends S {
   String get addTeam => 'Add team';
 
   @override
+  String get appImproCode => 'Code for AppImpro';
+
+  @override
+  String appImproCodeDescription({required int minutes}) {
+    return 'Give this code to the AppImpro host, who enters it in “Import from Mon Pacing”. It is valid for $minutes minutes and can only be used once.';
+  }
+
+  @override
   String get appTitle => 'Mon Pacing';
 
   @override
@@ -500,6 +508,9 @@ class SEn extends S {
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get sendToAppImpro => 'Send to AppImpro';
 
   @override
   String get stars => 'Stars';

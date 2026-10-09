@@ -4,6 +4,15 @@
   "addImprovisation": "Add improvisation",
   "addPenalty": "Add penalty",
   "addTeam": "Add team",
+  "appImproCode": "Code for AppImpro",
+  "appImproCodeDescription": "Give this code to the AppImpro host, who enters it in “Import from Mon Pacing”. It is valid for {minutes} minutes and can only be used once.",
+  "@appImproCodeDescription": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "appTitle": "Mon Pacing",
   "areYouSureAction": "Are you sure you want to {action}?",
   "@areYouSureAction": {
@@ -255,6 +264,7 @@
   "share": "Share",
   "shareMatchSheet": "Share match sheet",
   "settings": "Settings",
+  "sendToAppImpro": "Send to AppImpro",
   "stars": "Stars",
   "start": "Start",
   "startMatch": "Start match",

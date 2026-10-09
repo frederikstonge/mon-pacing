@@ -22,6 +22,14 @@ class SFr extends S {
   String get addTeam => 'Ajouter une équipe';
 
   @override
+  String get appImproCode => 'Code pour AppImpro';
+
+  @override
+  String appImproCodeDescription({required int minutes}) {
+    return 'Donnez ce code à l\'animateur d\'AppImpro, qui l\'entre dans « Importer de Mon Pacing ». Il est valide $minutes minutes et ne sert qu\'une fois.';
+  }
+
+  @override
   String get appTitle => 'Mon Pacing';
 
   @override
@@ -501,6 +509,9 @@ class SFr extends S {
 
   @override
   String get settings => 'Paramètres';
+
+  @override
+  String get sendToAppImpro => 'Envoyer vers AppImpro';
 
   @override
   String get stars => 'Étoiles';
