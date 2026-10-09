@@ -18,9 +18,6 @@ class ScoreboardussyIntegration implements RealTimeMatchIntegrationBase {
   String get integrationId => 'Scoreboardussy';
 
   @override
-  String get featureFlagName => 'FeatureFlag_EnableScoreboardussyIntegration';
-
-  @override
   FutureOr<bool> integrationIsValid(String data) {
     final json = jsonDecode(data);
     return json['url'].toString().contains('/api/interop/mon-pacing');
