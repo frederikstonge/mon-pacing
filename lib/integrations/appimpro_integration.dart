@@ -229,7 +229,7 @@ class AppImproIntegration implements MatchIntegrationBase, RealTimeMatchIntegrat
       ['pacing'],
       token,
       queryParameters: {'matchId': matchId},
-      data: pacing.toString(),
+      data: pacing.toJson(),
     );
 
     if (response == null) {
