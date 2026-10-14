@@ -27,25 +27,17 @@ platform :android do
 
 
   # options:
-  #  - build_number
   #  - package_name
   #  - upload_screenshots
   #  - upload_images
   #  - playstore_json_key (path)
-  #     ** Requires a key.jks file in android/app directory and a key.properties file in android directory
-  desc "Deploy a new build to the Google Play"
+  #  - aab (path)
+  desc "Publish a build to Google Play"
   lane :build_deploy do |options|
-
-    # https://docs.fastlane.tools/advanced/fastlane/#directory-behavior
-    Dir.chdir("../..") do
-      # https://docs.flutter.dev/deployment/cd#fastlane
-      sh "flutter build appbundle --release --build-number=#{options[:build_number]}"
-    end
-
     # Upload to Google Play Store (Supply)
     upload_to_play_store(
       package_name: options[:package_name],
-      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      aab: options[:aab],
       json_key: options[:playstore_json_key],
       track: "production",
       release_status: "completed",

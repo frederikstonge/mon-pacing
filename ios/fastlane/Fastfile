@@ -35,17 +35,15 @@ platform :ios do
   end
 
   # options:
-  #  - build_number
   #  - bundle_id
   #  - git_url
   #  - git_basic_authorization
-  #  - upload_screenshots
   #  - apple_team_id
   #  - apple_key_id
   #  - apple_issuer_id
   #  - apple_key_filepath (path)
-  desc "Deploy a new build to the App Store"
-  lane :build_deploy do |options|
+  desc "Prepare code signing for CI"
+  lane :prepare_signing do |options|
     # Setup for CI
     setup_ci()
 
@@ -87,19 +85,26 @@ platform :ios do
       profile_name: ENV["sigh_#{options[:bundle_id]}_appstore_profile-name"],
       entitlements_file_path: "Runner/Runner.entitlements",
     )
+  end
 
-    # https://docs.fastlane.tools/advanced/fastlane/#directory-behavior
-    Dir.chdir("../..") do
-      # https://docs.flutter.dev/deployment/cd#fastlane
-      sh "flutter build ipa --release --build-number=#{options[:build_number]}"
-    end
+  # options:
+  #  - bundle_id
+  #  - upload_screenshots
+  #  - apple_team_id
+  #  - apple_key_id
+  #  - apple_issuer_id
+  #  - apple_key_filepath (path)
+  #  - ipa (path)
+  desc "Deploy a new build to the App Store"
+  lane :build_deploy do |options|
+    setup_ci()
 
-    # https://docs.flutter.dev/deployment/cd#fastlane
-    build_app(
-      skip_build_archive: true,
-      scheme: "Runner",
-      configuration: "Release",
-      archive_path: "../build/ios/archive/Runner.xcarchive",
+    app_store_connect_api_key(
+      key_id: options[:apple_key_id],
+      issuer_id: options[:apple_issuer_id],
+      key_filepath: options[:apple_key_filepath],
+      duration: 1200,
+      in_house: false,
     )
 
     # Upload to App Store (Deliver)
@@ -107,6 +112,7 @@ platform :ios do
       app_identifier: options[:bundle_id],
       api_key: lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
       team_id: options[:apple_team_id],
+      ipa: options[:ipa],
       submit_for_review: true,
       automatic_release: true,
       force: true, # Skip HTML report verification
