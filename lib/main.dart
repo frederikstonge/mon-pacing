@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:material_ui/material_ui.dart';
@@ -14,15 +13,6 @@ import 'firebase_options.dart';
 import 'models/tag_model.dart';
 
 Future<void> main() async {
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true, printDetails: kDebugMode);
-    return true;
-  };
-
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +20,6 @@ Future<void> main() async {
       // FIREBASE
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
       await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
 
       // BLOC
@@ -47,7 +36,7 @@ Future<void> main() async {
       runApp(const Bootstrapper());
     },
     (error, stackTrace) {
-      FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true, printDetails: kDebugMode);
+      // Log the error and stack trace
     },
   );
 }

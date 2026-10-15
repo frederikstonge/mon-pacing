@@ -110,10 +110,6 @@ class MatchDetailCubit extends Cubit<MatchDetailState> {
 
     final performer = performers.removeAt(oldIndex);
 
-    if (oldIndex < newIndex) {
-      newIndex--;
-    }
-
     performers.insert(newIndex, performer);
     editTeam(team.copyWith(performers: performers));
   }

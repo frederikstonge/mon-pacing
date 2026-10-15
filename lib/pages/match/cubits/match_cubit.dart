@@ -215,10 +215,6 @@ class MatchCubit extends Cubit<MatchState> {
     final stars = List<StarModel>.from(state.match!.copyWith().stars);
     final star = stars.removeAt(oldIndex);
 
-    if (oldIndex < newIndex) {
-      newIndex--;
-    }
-
     stars.insert(newIndex, star);
 
     final newMatch = await matchesCubit.edit(state.match!.copyWith(stars: stars));

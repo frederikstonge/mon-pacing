@@ -63,10 +63,6 @@ class PacingCubit extends Cubit<PacingState> {
     final improvisations = List<ImprovisationModel>.from(state.pacing!.copyWith().improvisations);
     final improvisation = improvisations.removeAt(oldIndex);
 
-    if (oldIndex < newIndex) {
-      newIndex--;
-    }
-
     improvisations.insert(newIndex, improvisation);
 
     final newPacing = await pacingsCubit.edit(state.pacing!.copyWith(improvisations: improvisations));

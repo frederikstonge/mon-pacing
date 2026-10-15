@@ -51,10 +51,6 @@ class ImprovisationFieldsOrder extends StatelessWidget {
     final newFields = List<ImprovisationFields>.from(fields);
     final field = newFields.removeAt(oldIndex);
 
-    if (oldIndex < newIndex) {
-      newIndex--;
-    }
-
     newFields.insert(newIndex, field);
     onChanged.call(newFields);
   }

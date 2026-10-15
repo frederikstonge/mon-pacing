@@ -104,10 +104,6 @@ class ImprovisationDurations extends StatelessWidget {
     final newDurations = List<int>.from(durations);
     final duration = newDurations.removeAt(oldIndex);
 
-    if (oldIndex < newIndex) {
-      newIndex--;
-    }
-
     newDurations.insert(newIndex, duration);
     onChanged.call(newDurations);
   }
