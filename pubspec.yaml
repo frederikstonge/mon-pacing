@@ -1,7 +1,7 @@
 name: mon_pacing
 description: "Mobile app for improvisation match referees, based on Robert Gravel's idea to mix improv with hockey rules."
 publish_to: "none"
-version: 1.15.0+1
+version: 1.15.1+1
 
 environment:
   sdk: ^3.13.5
@@ -13,10 +13,10 @@ dependencies:
   dart_mappable: ^4.10.0
   dio: ^5.7.0
   excel_community: ^2.3.0
-  firebase_analytics: ^13.0.0
-  firebase_core: ^5.0.0
-  firebase_crashlytics: ^6.0.0
-  firebase_performance: ^0.12.0 
+  firebase_analytics: ^12.0.0
+  firebase_core: ^4.0.0
+  firebase_crashlytics: ^5.0.0
+  firebase_performance: ^0.11.0 
   flex_color_picker: ^4.0.0
   flutter:
     sdk: flutter
