@@ -110,6 +110,29 @@ jobs:
         run: |
           bundle install
 
+      - name: Install ImageMagick
+        if: ${{ inputs.generate-screenshots }}
+        working-directory: ios
+        shell: bash
+        run: |
+          brew install ghostscript
+          brew install imagemagick
+
+      - name: Generate Screenshots
+        working-directory: ios
+        if: ${{ inputs.generate-screenshots }}
+        shell: bash
+        run: |
+          bundle exec fastlane generate_screenshots
+
+      - name: Upload Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-screenshots
+          path: ios/fastlane/screenshots
+          if-no-files-found: error
+
       - name: Prepare Code Signing
         working-directory: ios
         shell: bash
@@ -154,15 +177,18 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v4
 
-      - name: Install Flutter
-        if: ${{ inputs.generate-screenshots }}
-        uses: ./.github/actions/setup-flutter
-
       - name: Download iOS Build
         uses: actions/download-artifact@v4
         with:
           name: ios-ipa
           path: build/ios/ipa
+
+      - name: Download Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-screenshots
+          path: ios/fastlane/screenshots
 
       - name: Create Apple Required Files
         uses: gacts/run-and-post-run@v1.4.1
@@ -192,26 +218,11 @@ jobs:
         run: |
           bundle install
 
-      - name: Install ImageMagick
-        if: ${{ inputs.generate-screenshots }}
-        working-directory: ios
-        shell: bash
-        run: |
-          brew install ghostscript
-          brew install imagemagick
-
-      - name: Generate Screenshots
-        working-directory: ios
-        if: ${{ inputs.generate-screenshots }}
-        shell: bash
-        run: |
-          bundle exec fastlane generate_screenshots
-
       - name: Run Fastlane
         working-directory: ios
         shell: bash
         run: |
-          bundle exec fastlane build_deploy \
+          bundle exec fastlane deploy \
             bundle_id:'com.stongef.monpacing' \
             upload_screenshots:${{ inputs.generate-screenshots }} \
             apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
@@ -226,7 +237,7 @@ jobs:
     needs: [set_build_number, tests]
     if: ${{ !cancelled() && inputs.deploy-android && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
     environment: deploy-android
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     env:
       ANDROID_KEY_FILE: app/android-signing-key.jks
@@ -252,6 +263,46 @@ jobs:
           post: |
             rm -f ${{ env.ANDROID_KEY_FILE }}
             rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}
+
+      - name: Install Ruby
+        if: ${{ inputs.generate-screenshots }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.5'
+
+      - name: Install Bundle
+        if: ${{ inputs.generate-screenshots }}
+        working-directory: android
+        shell: bash
+        run: |
+          bundle install
+
+      - name: Install ImageMagick
+        if: ${{ inputs.generate-screenshots }}
+        working-directory: android
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install ghostscript
+          sudo apt install imagemagick
+
+      - name: Generate Screenshots
+        working-directory: android
+        if: ${{ inputs.generate-screenshots }}
+        shell: bash
+        run: |
+          bundle exec fastlane generate_screenshots
+
+      - name: Upload Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-screenshots
+          path: |
+            android/fastlane/metadata/android/*/images/phoneScreenshots
+            android/fastlane/metadata/android/*/images/sevenInchScreenshots
+            android/fastlane/metadata/android/*/images/tenInchScreenshots
+          if-no-files-found: error
 
       - name: Build Android App
         shell: bash
@@ -281,15 +332,18 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v4
 
-      - name: Install Flutter
-        if: ${{ inputs.generate-screenshots }}
-        uses: ./.github/actions/setup-flutter
-
       - name: Download Android Build
         uses: actions/download-artifact@v4
         with:
           name: android-aab
           path: build/app/outputs/bundle/release
+
+      - name: Download Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/download-artifact@v4
+        with:
+          name: android-screenshots
+          path: android/fastlane/metadata/android
 
       - name: Set Release Notes
         working-directory: android
@@ -309,15 +363,6 @@ jobs:
         run: |
           bundle install
 
-      - name: Install ImageMagick
-        if: ${{ inputs.generate-screenshots }}
-        working-directory: android
-        shell: bash
-        run: |
-          sudo apt update
-          sudo apt install ghostscript
-          sudo apt install imagemagick
-
       - name: Create Google Play Required Files
         uses: gacts/run-and-post-run@v1.4.1
         with:
@@ -328,18 +373,11 @@ jobs:
           post: |
             rm -f ${{ env.PLAYSTORE_KEY_FILE }}
 
-      - name: Generate Screenshots
-        working-directory: android
-        if: ${{ inputs.generate-screenshots }}
-        shell: bash
-        run: |
-          bundle exec fastlane generate_screenshots
-
       - name: Run Fastlane
         working-directory: android
         shell: bash
         run: |
-          bundle exec fastlane build_deploy \
+          bundle exec fastlane deploy \
             package_name:'com.stongef.monpacing' \
             upload_screenshots:${{ inputs.generate-screenshots }} \
             upload_images:${{ inputs.upload-images }} \

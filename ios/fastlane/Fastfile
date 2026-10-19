@@ -96,9 +96,7 @@ platform :ios do
   #  - apple_key_filepath (path)
   #  - ipa (path)
   desc "Deploy a new build to the App Store"
-  lane :build_deploy do |options|
-    setup_ci()
-
+  lane :deploy do |options|
     app_store_connect_api_key(
       key_id: options[:apple_key_id],
       issuer_id: options[:apple_issuer_id],

@@ -33,7 +33,7 @@ platform :android do
   #  - playstore_json_key (path)
   #  - aab (path)
   desc "Publish a build to Google Play"
-  lane :build_deploy do |options|
+  lane :deploy do |options|
     # Upload to Google Play Store (Supply)
     upload_to_play_store(
       package_name: options[:package_name],
