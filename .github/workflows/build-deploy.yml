@@ -64,8 +64,8 @@ jobs:
     uses: ./.github/workflows/tests.yml
     secrets: inherit
 
-  build_deploy_ios:
-    name: "Build & Deploy iOS"
+  build_ios:
+    name: "Build iOS"
     runs-on: macos-26
     needs: [set_build_number, tests]
     if: ${{ !cancelled() && inputs.deploy-ios && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
@@ -99,6 +99,107 @@ jobs:
           post: |
             rm -f ${{ env.APPLE_KEY_FILE }}
       
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.5'
+
+      - name: Install Bundle
+        working-directory: ios
+        shell: bash
+        run: |
+          bundle install
+
+      - name: Install ImageMagick
+        if: ${{ inputs.generate-screenshots }}
+        working-directory: ios
+        shell: bash
+        run: |
+          brew install ghostscript
+          brew install imagemagick
+
+      - name: Generate Screenshots
+        working-directory: ios
+        if: ${{ inputs.generate-screenshots }}
+        shell: bash
+        run: |
+          bundle exec fastlane generate_screenshots
+
+      - name: Upload Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-screenshots
+          path: ios/fastlane/screenshots
+          if-no-files-found: error
+
+      - name: Prepare Code Signing
+        working-directory: ios
+        shell: bash
+        run: |
+          bundle exec fastlane prepare_signing \
+            bundle_id:'com.stongef.monpacing' \
+            git_url:'${{ env.GIT_URL }}' \
+            git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
+            apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
+            apple_key_id:'${{ env.APPLE_KEY_ID }}' \
+            apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
+            apple_key_filepath:'${{ env.APPLE_KEY_FILE }}'
+
+      - name: Build iOS App
+        shell: bash
+        run: |
+          flutter build ipa --release --build-number='${{ needs.set_build_number.outputs.build_number }}'
+
+      - name: Upload iOS Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa
+          path: build/ios/ipa/Runner.ipa
+          if-no-files-found: error
+
+  deploy_ios:
+    name: "Deploy iOS"
+    runs-on: macos-26
+    needs: [build_ios]
+    if: ${{ !cancelled() && inputs.deploy-ios && needs.build_ios.result == 'success' }}
+    environment: deploy-ios
+    timeout-minutes: 45
+
+    env:
+      APPLE_KEY_FILE: apple_key.p8
+      IOS_AUTH_KEY_BASE64: ${{ secrets.IOS_AUTH_KEY_BASE64 }}
+      APPLE_KEY_ID: ${{ secrets.IOS_KEY_ID }}
+      APPLE_ISSUER_ID: ${{ secrets.IOS_ISSUER_ID }}
+      APPLE_TEAM_ID: ${{ secrets.IOS_TEAM_ID }}
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Download iOS Build
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-ipa
+          path: build/ios/ipa
+
+      - name: Download Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-screenshots
+          path: ios/fastlane/screenshots
+
+      - name: Create Apple Required Files
+        uses: gacts/run-and-post-run@v1.4.1
+        with:
+          working-directory: ios
+          shell: bash
+          run: |
+            base64 -d <<< ${{ env.IOS_AUTH_KEY_BASE64 }} > ${{ env.APPLE_KEY_FILE }}
+          post: |
+            rm -f ${{ env.APPLE_KEY_FILE }}
+
       - name: Set Release Notes
         working-directory: ios
         shell: bash
@@ -117,38 +218,21 @@ jobs:
         run: |
           bundle install
 
-      - name: Install ImageMagick
-        if: ${{ inputs.generate-screenshots }}
-        working-directory: android
-        shell: bash
-        run: |
-          brew install ghostscript
-          brew install imagemagick
-
-      - name: Generate Screenshots
-        working-directory: ios
-        if: ${{ inputs.generate-screenshots }}
-        shell: bash
-        run: |
-          bundle exec fastlane generate_screenshots
-
       - name: Run Fastlane
         working-directory: ios
         shell: bash
         run: |
-          bundle exec fastlane build_deploy \
-            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
+          bundle exec fastlane deploy \
             bundle_id:'com.stongef.monpacing' \
-            git_url:'${{ env.GIT_URL }}' \
-            git_basic_authorization:'${{ env.GIT_BASIC_AUTHORIZATION }}' \
             upload_screenshots:${{ inputs.generate-screenshots }} \
             apple_team_id:'${{ env.APPLE_TEAM_ID }}' \
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
-            apple_key_filepath:'${{ env.APPLE_KEY_FILE }}'
+            apple_key_filepath:'${{ env.APPLE_KEY_FILE }}' \
+            ipa:'../build/ios/ipa/Runner.ipa'
 
-  build_deploy_android:
-    name: "Build & Deploy Android"
+  build_android:
+    name: "Build Android"
     runs-on: ubuntu-latest
     needs: [set_build_number, tests]
     if: ${{ !cancelled() && inputs.deploy-android && needs.set_build_number.result == 'success' && (needs.tests.result == 'success' || needs.tests.result == 'skipped') }}
@@ -158,10 +242,8 @@ jobs:
     env:
       ANDROID_KEY_FILE: app/android-signing-key.jks
       ANDROID_KEY_PROPERTY_FILE: key.properties
-      PLAYSTORE_KEY_FILE: playstore_key.json
       ANDROID_SIGNING_KEY_BASE64: ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }}
       ANDROID_KEY_PROPERTIES_BASE64: ${{ secrets.ANDROID_KEY_PROPERTIES_BASE64 }}
-      ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64: ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }}
 
     steps:
       - name: Clone Repository
@@ -169,7 +251,6 @@ jobs:
 
       - name: Install Flutter
         uses: ./.github/actions/setup-flutter
-
 
       - name: Create Android Required Files
         uses: gacts/run-and-post-run@v1.4.1
@@ -179,25 +260,18 @@ jobs:
           run: |
             base64 -d <<< ${{ env.ANDROID_SIGNING_KEY_BASE64 }} > ${{ env.ANDROID_KEY_FILE }}
             base64 -d <<< ${{ env.ANDROID_KEY_PROPERTIES_BASE64 }} > ${{ env.ANDROID_KEY_PROPERTY_FILE }}
-            base64 -d <<< ${{ env.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
           post: |
             rm -f ${{ env.ANDROID_KEY_FILE }}
             rm -f ${{ env.ANDROID_KEY_PROPERTY_FILE }}
-            rm -f ${{ env.PLAYSTORE_KEY_FILE }}            
-
-      - name: Set Release Notes
-        working-directory: android
-        shell: bash
-        run: |
-          echo "${{ inputs.release_notes_en_CA }}" > fastlane/metadata/android/en-CA/changelogs/default.txt
-          echo "${{ inputs.release_notes_fr_CA }}" > fastlane/metadata/android/fr-CA/changelogs/default.txt
 
       - name: Install Ruby
+        if: ${{ inputs.generate-screenshots }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3.5'
 
       - name: Install Bundle
+        if: ${{ inputs.generate-screenshots }}
         working-directory: android
         shell: bash
         run: |
@@ -219,13 +293,93 @@ jobs:
         run: |
           bundle exec fastlane generate_screenshots
 
+      - name: Upload Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-screenshots
+          path: |
+            android/fastlane/metadata/android/*/images/phoneScreenshots
+            android/fastlane/metadata/android/*/images/sevenInchScreenshots
+            android/fastlane/metadata/android/*/images/tenInchScreenshots
+          if-no-files-found: error
+
+      - name: Build Android App
+        shell: bash
+        run: |
+          flutter build appbundle --release --build-number='${{ needs.set_build_number.outputs.build_number }}'
+
+      - name: Upload Android Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+
+  deploy_android:
+    name: "Deploy Android"
+    runs-on: ubuntu-latest
+    needs: [build_android]
+    if: ${{ !cancelled() && inputs.deploy-android && needs.build_android.result == 'success' }}
+    environment: deploy-android
+    timeout-minutes: 45
+
+    env:
+      PLAYSTORE_KEY_FILE: playstore_key.json
+      ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64: ${{ secrets.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }}
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Download Android Build
+        uses: actions/download-artifact@v4
+        with:
+          name: android-aab
+          path: build/app/outputs/bundle/release
+
+      - name: Download Screenshots
+        if: ${{ inputs.generate-screenshots }}
+        uses: actions/download-artifact@v4
+        with:
+          name: android-screenshots
+          path: android/fastlane/metadata/android
+
+      - name: Set Release Notes
+        working-directory: android
+        shell: bash
+        run: |
+          echo "${{ inputs.release_notes_en_CA }}" > fastlane/metadata/android/en-CA/changelogs/default.txt
+          echo "${{ inputs.release_notes_fr_CA }}" > fastlane/metadata/android/fr-CA/changelogs/default.txt
+
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.5'
+
+      - name: Install Bundle
+        working-directory: android
+        shell: bash
+        run: |
+          bundle install
+
+      - name: Create Google Play Required Files
+        uses: gacts/run-and-post-run@v1.4.1
+        with:
+          working-directory: android
+          shell: bash
+          run: |
+            base64 -d <<< ${{ env.ANDROID_SERVICE_ACCOUNT_API_KEY_BASE64 }} > ${{ env.PLAYSTORE_KEY_FILE }}
+          post: |
+            rm -f ${{ env.PLAYSTORE_KEY_FILE }}
+
       - name: Run Fastlane
         working-directory: android
         shell: bash
         run: |
-          bundle exec fastlane build_deploy \
-            build_number:'${{ needs.set_build_number.outputs.build_number }}' \
+          bundle exec fastlane deploy \
             package_name:'com.stongef.monpacing' \
             upload_screenshots:${{ inputs.generate-screenshots }} \
             upload_images:${{ inputs.upload-images }} \
-            playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}'
+            playstore_json_key:'${{ env.PLAYSTORE_KEY_FILE }}' \
+            aab:'../build/app/outputs/bundle/release/app-release.aab'
