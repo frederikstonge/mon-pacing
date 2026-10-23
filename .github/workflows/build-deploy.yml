@@ -83,13 +83,13 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install Flutter
         uses: ./.github/actions/setup-flutter
 
       - name: Create Apple Required Files
-        uses: gacts/run-and-post-run@v1.4.1
+        uses: gacts/run-and-post-run@v1.4.5
         with:
           working-directory: ios
           shell: bash
@@ -126,7 +126,7 @@ jobs:
 
       - name: Upload Screenshots
         if: ${{ inputs.generate-screenshots }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ios-screenshots
           path: ios/fastlane/screenshots
@@ -151,7 +151,7 @@ jobs:
           flutter build ipa --release --build-number='${{ needs.set_build_number.outputs.build_number }}'
 
       - name: Upload iOS Build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ios-ipa
           path: build/ios/ipa/*.ipa
@@ -174,10 +174,10 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Download iOS Build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ios-ipa
           path: build/ios/ipa
@@ -189,13 +189,13 @@ jobs:
 
       - name: Download Screenshots
         if: ${{ inputs.generate-screenshots }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ios-screenshots
           path: ios/fastlane/screenshots
 
       - name: Create Apple Required Files
-        uses: gacts/run-and-post-run@v1.4.1
+        uses: gacts/run-and-post-run@v1.4.5
         with:
           working-directory: ios
           shell: bash
@@ -250,13 +250,13 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install Flutter
         uses: ./.github/actions/setup-flutter
 
       - name: Create Android Required Files
-        uses: gacts/run-and-post-run@v1.4.1
+        uses: gacts/run-and-post-run@v1.4.5
         with:
           working-directory: android
           shell: bash
@@ -298,7 +298,7 @@ jobs:
 
       - name: Upload Screenshots
         if: ${{ inputs.generate-screenshots }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: android-screenshots
           path: |
@@ -313,7 +313,7 @@ jobs:
           flutter build appbundle --release --build-number='${{ needs.set_build_number.outputs.build_number }}'
 
       - name: Upload Android Build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: android-aab
           path: build/app/outputs/bundle/release/app-release.aab
@@ -333,17 +333,17 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Download Android Build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: android-aab
           path: build/app/outputs/bundle/release
 
       - name: Download Screenshots
         if: ${{ inputs.generate-screenshots }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: android-screenshots
           path: android/fastlane/metadata/android
@@ -367,7 +367,7 @@ jobs:
           bundle install
 
       - name: Create Google Play Required Files
-        uses: gacts/run-and-post-run@v1.4.1
+        uses: gacts/run-and-post-run@v1.4.5
         with:
           working-directory: android
           shell: bash

@@ -27,10 +27,10 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Create Apple Key File
-        uses: gacts/run-and-post-run@v1.4.1
+        uses: gacts/run-and-post-run@v1.4.5
         with:
           working-directory: ios
           shell: bash
