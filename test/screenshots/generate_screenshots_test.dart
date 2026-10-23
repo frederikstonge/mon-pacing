@@ -316,7 +316,7 @@ void _screenshotWidget({
                   ThemeType.evenementCulturel => Themes.evenementCulturel(),
                   ThemeType.paradoxe => Themes.paradoxe(),
                 },
-                localizationsDelegates: S.localizationsDelegates,
+                localizationsDelegates: [S.delegate, ...GlobalMaterialLocalizations.delegates],
                 supportedLocales: S.supportedLocales,
                 locale: locale,
                 device: device,
