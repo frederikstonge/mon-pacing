@@ -154,7 +154,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ios-ipa
-          path: build/ios/ipa/Runner.ipa
+          path: build/ios/ipa/*.ipa
           if-no-files-found: error
 
   deploy_ios:
@@ -181,6 +181,11 @@ jobs:
         with:
           name: ios-ipa
           path: build/ios/ipa
+
+      - name: Resolve IPA Path
+        shell: bash
+        run: |
+          echo "IPA_PATH=$(ls "$GITHUB_WORKSPACE"/build/ios/ipa/*.ipa | head -n 1)" >> $GITHUB_ENV
 
       - name: Download Screenshots
         if: ${{ inputs.generate-screenshots }}
@@ -228,7 +233,7 @@ jobs:
             apple_key_id:'${{ env.APPLE_KEY_ID }}' \
             apple_issuer_id:'${{ env.APPLE_ISSUER_ID }}' \
             apple_key_filepath:'${{ env.APPLE_KEY_FILE }}' \
-            ipa:'../build/ios/ipa/Runner.ipa'
+            ipa:'${{ env.IPA_PATH }}'
 
   build_android:
     name: "Build Android"
