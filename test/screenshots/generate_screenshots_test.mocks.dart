@@ -1396,16 +1396,18 @@ class MockTimerCubit extends _i1.Mock implements _i39.TimerCubit {
   ) as _i30.Future<void>);
 
   @override
-  void resume() => super.noSuchMethod(
+  _i30.Future<void> resume() => (super.noSuchMethod(
     Invocation.method(#resume, []),
-    returnValueForMissingStub: null,
-  );
+    returnValue: _i30.Future<void>.value(),
+    returnValueForMissingStub: _i30.Future<void>.value(),
+  ) as _i30.Future<void>);
 
   @override
-  void pause() => super.noSuchMethod(
+  _i30.Future<void> pause() => (super.noSuchMethod(
     Invocation.method(#pause, []),
-    returnValueForMissingStub: null,
-  );
+    returnValue: _i30.Future<void>.value(),
+    returnValueForMissingStub: _i30.Future<void>.value(),
+  ) as _i30.Future<void>);
 
   @override
   _i30.Future<void> stop() => (super.noSuchMethod(

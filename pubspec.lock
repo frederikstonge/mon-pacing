@@ -269,18 +269,18 @@ packages:
     dependency: transitive
     description:
       name: equatable
-      sha256: "3bce007a596ff8b3119c45d68aaef631272537c03d30e5d4534dd24bf4c5eaa2"
+      sha256: ea36e500cbf0ec18361deabca755434f73e42fe53c5130021c7e2d6b5ebe1702
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "3.0.0"
   excel_community:
     dependency: "direct main"
     description:
       name: excel_community
-      sha256: cb83aa4653f4a4e723f52b0ff77d623c1ca5f5bfcc2dc802b0400ddfc08e8ecd
+      sha256: dd702f4880fc0983955397efcd4a8d2c4f67e471a017099f8273e7236f1f7abd
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.6.2"
   fake_async:
     dependency: transitive
     description:
@@ -969,10 +969,10 @@ packages:
     dependency: transitive
     description:
       name: posix
-      sha256: bc1bad54ad2b735816e31f8d4600cfde6c7839975085ddfbca48b6c9f7c4044e
+      sha256: "6312deb534ce3812a1b454143740ffe721a17dc3a33bfc978f3a6d7bc5833edf"
       url: "https://pub.dev"
     source: hosted
-    version: "6.5.2"
+    version: "6.5.3"
   provider:
     dependency: transitive
     description:
@@ -1198,10 +1198,10 @@ packages:
     dependency: "direct main"
     description:
       name: toastification
-      sha256: "66c96678e3dece8ba24de3ea31634bd65a80aaecb8105f9bafe946e5f0d7590a"
+      sha256: e06b82a66dffb866af2923cc04012f52ae96ec50ab9215efa07be8d6ec6486fb
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.2"
   tutorial_coach_mark:
     dependency: "direct main"
     description:

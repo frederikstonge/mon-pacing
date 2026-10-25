@@ -6,12 +6,14 @@ part 'task_message.mapper.dart';
 
 @MappableClass()
 class TaskMessage with TaskMessageMappable {
+  final String runId;
   final int durationInSeconds;
   final TimerStatus status;
   final bool hapticFeedback;
   final String notificationTitle;
 
   const TaskMessage({
+    required this.runId,
     required this.durationInSeconds,
     required this.status,
     required this.hapticFeedback,
