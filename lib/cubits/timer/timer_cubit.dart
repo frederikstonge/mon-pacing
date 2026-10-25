@@ -61,7 +61,7 @@ class TimerCubit extends Cubit<TimerState> {
 
       await timerService.start(path, enableWakelock: settingsCubit.state.enableWakelock);
 
-      _updateTimer(timer, runId: runId);
+      _updateTimer(timer: timer, runId: runId);
     });
   }
 
@@ -73,7 +73,7 @@ class TimerCubit extends Cubit<TimerState> {
         return;
       }
 
-      _updateTimer(timer.copyWith(status: TimerStatus.started), runId: runId);
+      _updateTimer(timer: timer.copyWith(status: TimerStatus.started), runId: runId);
     });
   }
 
@@ -85,7 +85,7 @@ class TimerCubit extends Cubit<TimerState> {
         return;
       }
 
-      _updateTimer(timer.copyWith(status: TimerStatus.paused), runId: runId);
+      _updateTimer(timer: timer.copyWith(status: TimerStatus.paused), runId: runId);
     });
   }
 
@@ -135,14 +135,27 @@ class TimerCubit extends Cubit<TimerState> {
     }
 
     _updateTimer(
-      timer.copyWith(remainingMilliseconds: event.remainingMilliseconds, status: event.requestedStatus ?? timer.status),
+      timer: timer.copyWith(
+        remainingMilliseconds: event.remainingMilliseconds,
+        status: event.requestedStatus ?? timer.status,
+      ),
       runId: event.runId,
+      sendToTask: event.requestedStatus != null,
     );
   }
 
-  void _updateTimer(TimerModel timer, {IntegrationBaseModel? integration, required String runId}) {
+  void _updateTimer({
+    required TimerModel timer,
+    IntegrationBaseModel? integration,
+    required String runId,
+    bool sendToTask = true,
+  }) {
     if (timer != state.timer) {
       emit(TimerState(timer: timer, integration: integration ?? state.integration));
+
+      if (!sendToTask) {
+        return;
+      }
 
       final request = TaskMessage(
         runId: runId,
