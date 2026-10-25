@@ -115,8 +115,8 @@ class _TimerWidgetState extends State<TimerWidget> with AutomaticKeepAliveClient
                 LoadingIconButton.filled(
                   onPressed: isActive
                       ? timerState.timer!.status == TimerStatus.paused
-                            ? () => resumeTimer()
-                            : () => pauseTimer()
+                            ? resumeTimer
+                            : pauseTimer
                       : () async => await startTimer(currentDuration),
                   icon: isActive
                       ? timerState.timer!.status == TimerStatus.paused
@@ -156,12 +156,12 @@ class _TimerWidgetState extends State<TimerWidget> with AutomaticKeepAliveClient
     await context.read<TimerCubit>().stop();
   }
 
-  void resumeTimer() {
-    context.read<TimerCubit>().resume();
+  Future<void> resumeTimer() {
+    return context.read<TimerCubit>().resume();
   }
 
-  void pauseTimer() {
-    context.read<TimerCubit>().pause();
+  Future<void> pauseTimer() {
+    return context.read<TimerCubit>().pause();
   }
 
   @override

@@ -23,6 +23,8 @@ class TaskMessageMapper extends ClassMapperBase<TaskMessage> {
   @override
   final String id = 'TaskMessage';
 
+  static String _$runId(TaskMessage v) => v.runId;
+  static const Field<TaskMessage, String> _f$runId = Field('runId', _$runId);
   static int _$durationInSeconds(TaskMessage v) => v.durationInSeconds;
   static const Field<TaskMessage, int> _f$durationInSeconds = Field(
     'durationInSeconds',
@@ -46,6 +48,7 @@ class TaskMessageMapper extends ClassMapperBase<TaskMessage> {
 
   @override
   final MappableFields<TaskMessage> fields = const {
+    #runId: _f$runId,
     #durationInSeconds: _f$durationInSeconds,
     #status: _f$status,
     #hapticFeedback: _f$hapticFeedback,
@@ -54,6 +57,7 @@ class TaskMessageMapper extends ClassMapperBase<TaskMessage> {
 
   static TaskMessage _instantiate(DecodingData data) {
     return TaskMessage(
+      runId: data.dec(_f$runId),
       durationInSeconds: data.dec(_f$durationInSeconds),
       status: data.dec(_f$status),
       hapticFeedback: data.dec(_f$hapticFeedback),
@@ -122,6 +126,7 @@ extension TaskMessageValueCopy<$R, $Out>
 abstract class TaskMessageCopyWith<$R, $In extends TaskMessage, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   $R call({
+    String? runId,
     int? durationInSeconds,
     TimerStatus? status,
     bool? hapticFeedback,
@@ -140,12 +145,14 @@ class _TaskMessageCopyWithImpl<$R, $Out>
       TaskMessageMapper.ensureInitialized();
   @override
   $R call({
+    String? runId,
     int? durationInSeconds,
     TimerStatus? status,
     bool? hapticFeedback,
     String? notificationTitle,
   }) => $apply(
     FieldCopyWithData({
+      if (runId != null) #runId: runId,
       if (durationInSeconds != null) #durationInSeconds: durationInSeconds,
       if (status != null) #status: status,
       if (hapticFeedback != null) #hapticFeedback: hapticFeedback,
@@ -154,6 +161,7 @@ class _TaskMessageCopyWithImpl<$R, $Out>
   );
   @override
   TaskMessage $make(CopyWithData data) => TaskMessage(
+    runId: data.get(#runId, or: $value.runId),
     durationInSeconds: data.get(
       #durationInSeconds,
       or: $value.durationInSeconds,

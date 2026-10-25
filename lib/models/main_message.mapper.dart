@@ -23,6 +23,8 @@ class MainMessageMapper extends ClassMapperBase<MainMessage> {
   @override
   final String id = 'MainMessage';
 
+  static String _$runId(MainMessage v) => v.runId;
+  static const Field<MainMessage, String> _f$runId = Field('runId', _$runId);
   static int _$remainingMilliseconds(MainMessage v) => v.remainingMilliseconds;
   static const Field<MainMessage, int> _f$remainingMilliseconds = Field(
     'remainingMilliseconds',
@@ -37,12 +39,14 @@ class MainMessageMapper extends ClassMapperBase<MainMessage> {
 
   @override
   final MappableFields<MainMessage> fields = const {
+    #runId: _f$runId,
     #remainingMilliseconds: _f$remainingMilliseconds,
     #requestedStatus: _f$requestedStatus,
   };
 
   static MainMessage _instantiate(DecodingData data) {
     return MainMessage(
+      runId: data.dec(_f$runId),
       remainingMilliseconds: data.dec(_f$remainingMilliseconds),
       requestedStatus: data.dec(_f$requestedStatus),
     );
@@ -108,7 +112,11 @@ extension MainMessageValueCopy<$R, $Out>
 
 abstract class MainMessageCopyWith<$R, $In extends MainMessage, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({int? remainingMilliseconds, TimerStatus? requestedStatus});
+  $R call({
+    String? runId,
+    int? remainingMilliseconds,
+    TimerStatus? requestedStatus,
+  });
   MainMessageCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -121,16 +129,21 @@ class _MainMessageCopyWithImpl<$R, $Out>
   late final ClassMapperBase<MainMessage> $mapper =
       MainMessageMapper.ensureInitialized();
   @override
-  $R call({int? remainingMilliseconds, Object? requestedStatus = $none}) =>
-      $apply(
-        FieldCopyWithData({
-          if (remainingMilliseconds != null)
-            #remainingMilliseconds: remainingMilliseconds,
-          if (requestedStatus != $none) #requestedStatus: requestedStatus,
-        }),
-      );
+  $R call({
+    String? runId,
+    int? remainingMilliseconds,
+    Object? requestedStatus = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (runId != null) #runId: runId,
+      if (remainingMilliseconds != null)
+        #remainingMilliseconds: remainingMilliseconds,
+      if (requestedStatus != $none) #requestedStatus: requestedStatus,
+    }),
+  );
   @override
   MainMessage $make(CopyWithData data) => MainMessage(
+    runId: data.get(#runId, or: $value.runId),
     remainingMilliseconds: data.get(
       #remainingMilliseconds,
       or: $value.remainingMilliseconds,
