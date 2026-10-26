@@ -157,7 +157,9 @@ class TimerTaskHandler extends TaskHandler {
       _stopwatch = Stopwatch();
       _lastSentRemainingSecond = null;
       _timer = Timer.periodic(Duration(milliseconds: 100), onTick);
-      _stopwatch!.start();
+      if (event.status == TimerStatus.started) {
+        _stopwatch!.start();
+      }
     } else if (event.runId != _taskMessage!.runId) {
       return;
     } else if (event.status == TimerStatus.started && _taskMessage!.status != TimerStatus.started) {
