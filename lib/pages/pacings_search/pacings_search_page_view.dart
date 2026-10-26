@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/search/search_dialog.dart';
@@ -14,7 +14,7 @@ class PacingsSearchPageView extends StatelessWidget {
   const PacingsSearchPageView({super.key});
 
   static Future<PacingModel?> showDialog(BuildContext context) async {
-    return await GoRouter.of(context).pushNamed<PacingModel>(Routes.pacingsSearch);
+    return await context.router<PacingsRoute>().pushForResult<PacingModel>(const PacingsSearchRoute());
   }
 
   @override
@@ -27,7 +27,7 @@ class PacingsSearchPageView extends StatelessWidget {
       hintText: S.of(context).search(category: S.of(context).pacings),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
-          Navigator.of(context).maybePop(item);
+          context.router<PacingsRoute>().pop(item);
         },
         child: ListTile(
           leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),

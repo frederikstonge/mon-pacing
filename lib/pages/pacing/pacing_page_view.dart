@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
@@ -22,6 +21,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
+import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -40,7 +40,6 @@ class PacingPageView extends StatefulWidget {
 }
 
 class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
-  late final GoRouter? router = GoRouter.maybeOf(context);
   final GlobalKey _addImprovisationButtonKey = GlobalKey();
   final GlobalKey _firstImprovisationCardKey = GlobalKey();
   final GlobalKey _firstImprovisationDragKey = GlobalKey();
@@ -48,13 +47,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   @override
   void initState() {
-    router?.routerDelegate.addListener(_showTutorials);
     super.initState();
+    pacingsRouter.addListener(_showTutorials);
   }
 
   @override
   void dispose() {
-    router?.routerDelegate.removeListener(_showTutorials);
+    pacingsRouter.removeListener(_showTutorials);
     super.dispose();
   }
 
@@ -216,11 +215,10 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
         pacing: pacing,
         onConfirm: (pacing, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
-          final router = GoRouter.of(context);
           final pacingModel = await context.read<PacingsCubit>().add(pacing);
           if (pacingModel != null) {
             navigator.pop();
-            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+            showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -229,7 +227,6 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   Future<void> _delete(BuildContext context, PacingModel pacing) async {
     final pacingsCubit = context.read<PacingsCubit>();
-    final router = GoRouter.of(context);
     final result = await MessageBoxDialog.questionShow(
       context,
       S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: pacing.name),
@@ -238,7 +235,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     );
     if (result == true) {
       await pacingsCubit.delete(pacing);
-      router.pop();
+      await pacingsRouter.pop();
     }
   }
 
@@ -264,11 +261,10 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
         pacing: pacing,
         onConfirm: (match, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
-          final router = GoRouter.of(context);
           final matchModel = await context.read<MatchesCubit>().add(match);
           if (matchModel != null) {
             navigator.pop();
-            router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+            showMatchDetails(id: matchModel.id);
           }
         },
       ),
@@ -285,13 +281,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     final displayAddImprovisation =
-        router?.state.name == Routes.pacing &&
+        pacingsRouter.stack.last is PacingDetailsRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isEmpty &&
         !tutorialsCubit.state.addImprovisationFinished;
 
     final displayImprovisation =
-        router?.state.name == Routes.pacing &&
+        pacingsRouter.stack.last is PacingDetailsRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isNotEmpty &&
         !tutorialsCubit.state.improvisationFinished;

@@ -1,159 +1,145 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:kaisel/kaisel.dart';
 
-import '../cubits/onboarding/onboarding_cubit.dart';
-import '../pages/categories_search/categories_search_page_shell.dart';
-import '../pages/match/match_page_shell.dart';
-import '../pages/matches/matches_page_shell.dart';
-import '../pages/matches_search/matches_search_page_shell.dart';
-import '../pages/onboarding/onboarding_page_view.dart';
-import '../pages/pacing/pacing_page_shell.dart';
-import '../pages/pacings/pacings_page_shell.dart';
-import '../pages/pacings_search/pacings_search_page_shell.dart';
-import '../pages/penalties_search/penalties_search_page_shell.dart';
-import '../pages/scanner/scanner_page_shell.dart';
-import '../pages/settings/settings_page_shell.dart';
-import '../pages/shell/shell_page_shell.dart';
-import '../pages/tags_search/tags_search_page_shell.dart';
-import '../pages/teams/teams_page_shell.dart';
-import '../pages/teams_search/teams_search_page_shell.dart';
 import 'routes.dart';
 
-final rootNavigatorKey = GlobalKey<NavigatorState>();
-final router = GoRouter(
-  observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
-  navigatorKey: rootNavigatorKey,
-  redirect: (context, state) {
-    // Redirect to onboarding if the user has not completed it
-    final isOnboardingDone = context.read<OnboardingCubit>().state.onboardingFinished;
-    if (!isOnboardingDone && state.path != '/onboarding') {
-      return '/onboarding';
+late KaiselRouter<AppRoute> appRouter;
+
+final pacingsRouter = KaiselRouter<PacingsRoute>(initial: const PacingsTabRoute());
+final matchesRouter = KaiselRouter<MatchesRoute>(initial: const MatchesTabRoute());
+final teamsRouter = KaiselRouter<TeamsRoute>(initial: const TeamsTabRoute());
+final settingsRouter = KaiselRouter<SettingsRoute>(initial: const SettingsTabRoute());
+
+final appShell = BranchedShellRouter(branches: [pacingsRouter, matchesRouter, teamsRouter, settingsRouter]);
+
+void showPacingDetails(int id) {
+  appRouter.set(const [TabsRoute()]);
+  appShell.switchTo(0);
+  pacingsRouter.set([const PacingsTabRoute(), PacingDetailsRoute(id)]);
+}
+
+void showMatchDetails({required int id, int? improvisationId, int? durationIndex}) {
+  appRouter.set(const [TabsRoute()]);
+  appShell.switchTo(1);
+  matchesRouter.set([
+    const MatchesTabRoute(),
+    MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
+  ]);
+}
+
+void replaceMatchDetails({required int id, int? improvisationId, int? durationIndex}) {
+  matchesRouter.replaceTop(MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex));
+}
+
+class AppRouteCodec implements KaiselConfigCodec<AppRoute> {
+  const AppRouteCodec();
+
+  @override
+  Uri encode(KaiselConfig<AppRoute> config) {
+    return switch ((config.mainStack.last, config.nestedState)) {
+      (OnboardingRoute(), _) => Uri(path: '/onboarding'),
+      (ScannerRoute(), _) => Uri(path: '/scanner'),
+      (CategoriesSearchRoute(), _) => Uri(path: '/categories/search'),
+      (PenaltiesSearchRoute(), _) => Uri(path: '/penalties/search'),
+      (TagsSearchRoute(), _) => Uri(path: '/tags/search'),
+      (TabsRoute(), KaiselShellConfig(:final activeBranch, :final activeBranchStack)) => _encodeBranch(
+        activeBranch,
+        activeBranchStack,
+      ),
+      (TabsRoute(), null) => Uri(path: '/pacings'),
+      (TabsRoute(), _) => throw StateError('Tabs route has an unsupported nested configuration.'),
+    };
+  }
+
+  @override
+  KaiselConfig<AppRoute>? decode(Uri uri) {
+    final segments = uri.pathSegments;
+    switch (segments) {
+      case ['onboarding']:
+        return KaiselConfig<AppRoute>(mainStack: const [OnboardingRoute()]);
+      case ['scanner']:
+        return KaiselConfig<AppRoute>(mainStack: const [TabsRoute(), ScannerRoute()]);
+      case ['categories', 'search']:
+        return KaiselConfig<AppRoute>(mainStack: const [TabsRoute(), CategoriesSearchRoute()]);
+      case ['penalties', 'search']:
+        return KaiselConfig<AppRoute>(mainStack: const [TabsRoute(), PenaltiesSearchRoute()]);
+      case ['tags', 'search']:
+        return KaiselConfig<AppRoute>(mainStack: const [TabsRoute(), TagsSearchRoute()]);
+      case ['pacings']:
+        return _shellConfig(0, const [PacingsTabRoute()]);
+      case ['pacings', 'details', final rawId]:
+        final id = int.tryParse(rawId);
+        return id == null ? null : _shellConfig(0, [const PacingsTabRoute(), PacingDetailsRoute(id)]);
+      case ['pacings', 'search']:
+        return _shellConfig(0, const [PacingsTabRoute(), PacingsSearchRoute()]);
+      case ['matches']:
+        return _shellConfig(1, const [MatchesTabRoute()]);
+      case ['matches', 'details', final rawId]:
+        final id = int.tryParse(rawId);
+        final improvisationId = _optionalInt(uri, 'improvisationId');
+        final durationIndex = _optionalInt(uri, 'durationIndex');
+        if (id == null ||
+            _isInvalidOptionalInt(uri, 'improvisationId') ||
+            _isInvalidOptionalInt(uri, 'durationIndex')) {
+          return null;
+        }
+        return _shellConfig(1, [
+          const MatchesTabRoute(),
+          MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
+        ]);
+      case ['matches', 'search']:
+        return _shellConfig(1, const [MatchesTabRoute(), MatchesSearchRoute()]);
+      case ['teams']:
+        return _shellConfig(2, const [TeamsTabRoute()]);
+      case ['teams', 'search']:
+        return _shellConfig(2, const [TeamsTabRoute(), TeamsSearchRoute()]);
+      case ['settings']:
+        return _shellConfig(3, const [SettingsTabRoute()]);
+      default:
+        return null;
     }
-    return null; // No redirection needed
-  },
-  initialLocation: '/pacings',
-  routes: [
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return ShellPageShell(navigationShell: navigationShell);
-      },
-      branches: [
-        StatefulShellBranch(
-          initialLocation: '/pacings',
-          routes: [
-            GoRoute(
-              name: Routes.pacings,
-              path: '/pacings',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: PacingsPageShell(key: state.pageKey));
-              },
-              routes: [
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.pacing,
-                  path: 'details/:id',
-                  builder: (context, state) =>
-                      PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
-                ),
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.pacingsSearch,
-                  path: 'search',
-                  builder: (context, state) => PacingsSearchPageShell(key: state.pageKey),
-                ),
-              ],
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          initialLocation: '/matches',
-          routes: [
-            GoRoute(
-              name: Routes.matches,
-              path: '/matches',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: MatchesPageShell(key: state.pageKey));
-              },
-              routes: [
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.match,
-                  path: 'details/:id',
-                  builder: (context, state) {
-                    final improvisationIdQuery = state.uri.queryParameters['improvisationId'];
-                    final improvisationId = improvisationIdQuery != null ? int.parse(improvisationIdQuery) : null;
-                    final durationIndexQuery = state.uri.queryParameters['durationIndex'];
-                    final durationIndex = durationIndexQuery != null ? int.parse(durationIndexQuery) : null;
-                    return MatchPageShell(
-                      key: state.pageKey,
-                      id: int.parse(state.pathParameters['id']!),
-                      improvisationId: improvisationId,
-                      durationIndex: durationIndex,
-                    );
-                  },
-                ),
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.matchesSearch,
-                  path: 'search',
-                  builder: (context, state) => MatchesSearchPageShell(key: state.pageKey),
-                ),
-              ],
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          initialLocation: '/teams',
-          routes: [
-            GoRoute(
-              name: Routes.teams,
-              path: '/teams',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: TeamsPageShell(key: state.pageKey));
-              },
-              routes: [
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.teamsSearch,
-                  path: 'search',
-                  builder: (context, state) => TeamsSearchPageShell(key: state.pageKey),
-                ),
-              ],
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          initialLocation: '/settings',
-          routes: [
-            GoRoute(
-              name: Routes.settings,
-              path: '/settings',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: SettingsPageShell(key: state.pageKey));
-              },
-            ),
-          ],
-        ),
-      ],
-    ),
-    GoRoute(name: Routes.onboarding, path: '/onboarding', builder: (context, state) => const OnboardingPageView()),
-    GoRoute(name: Routes.scanner, path: '/scanner', builder: (context, state) => const ScannerPageShell()),
-    GoRoute(
-      name: Routes.categoriesSearch,
-      path: '/categories/search',
-      builder: (context, state) => CategoriesSearchPageShell(key: state.pageKey),
-    ),
-    GoRoute(
-      name: Routes.penaltiesSearch,
-      path: '/penalties/search',
-      builder: (context, state) => PenaltiesSearchPageShell(key: state.pageKey),
-    ),
-    GoRoute(
-      name: Routes.tagsSearch,
-      path: '/tags/search',
-      builder: (context, state) => TagsSearchPageShell(key: state.pageKey),
-    ),
-  ],
-);
+  }
+
+  KaiselConfig<AppRoute> _shellConfig(int branch, List<KaiselRoute> stack) {
+    return KaiselConfig<AppRoute>(
+      mainStack: const [TabsRoute()],
+      nestedState: KaiselShellConfig(activeBranch: branch, activeBranchStack: stack),
+    );
+  }
+
+  Uri _encodeBranch(int branch, List<KaiselRoute> stack) {
+    return switch ((branch, stack)) {
+      (0, [PacingsTabRoute()]) => Uri(path: '/pacings'),
+      (0, [PacingsTabRoute(), PacingDetailsRoute(:final id)]) => Uri(path: '/pacings/details/$id'),
+      (0, [PacingsTabRoute(), PacingsSearchRoute()]) => Uri(path: '/pacings/search'),
+      (1, [MatchesTabRoute()]) => Uri(path: '/matches'),
+      (1, [MatchesTabRoute(), MatchDetailsRoute(:final id, :final improvisationId, :final durationIndex)]) => _matchUri(
+        id,
+        improvisationId,
+        durationIndex,
+      ),
+      (1, [MatchesTabRoute(), MatchesSearchRoute()]) => Uri(path: '/matches/search'),
+      (2, [TeamsTabRoute()]) => Uri(path: '/teams'),
+      (2, [TeamsTabRoute(), TeamsSearchRoute()]) => Uri(path: '/teams/search'),
+      (3, [SettingsTabRoute()]) => Uri(path: '/settings'),
+      _ => throw StateError('Cannot encode branch $branch with stack $stack.'),
+    };
+  }
+
+  Uri _matchUri(int id, int? improvisationId, int? durationIndex) {
+    final queryParameters = {
+      if (improvisationId != null) 'improvisationId': '$improvisationId',
+      if (durationIndex != null) 'durationIndex': '$durationIndex',
+    };
+    return Uri(path: '/matches/details/$id', queryParameters: queryParameters.isEmpty ? null : queryParameters);
+  }
+
+  int? _optionalInt(Uri uri, String key) {
+    final value = uri.queryParameters[key];
+    return value == null ? null : int.tryParse(value);
+  }
+
+  bool _isInvalidOptionalInt(Uri uri, String key) {
+    final value = uri.queryParameters[key];
+    return value != null && int.tryParse(value) == null;
+  }
+}

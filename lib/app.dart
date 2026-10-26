@@ -1,19 +1,65 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:intl/intl.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
+import 'cubits/onboarding/onboarding_cubit.dart';
 import 'cubits/settings/settings_cubit.dart';
 import 'cubits/settings/settings_state.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'models/theme_type.dart';
+import 'pages/categories_search/categories_search_page_shell.dart';
+import 'pages/onboarding/onboarding_page_view.dart';
+import 'pages/penalties_search/penalties_search_page_shell.dart';
+import 'pages/scanner/scanner_page_shell.dart';
+import 'pages/shell/shell_page_shell.dart';
+import 'pages/tags_search/tags_search_page_shell.dart';
 import 'router/router.dart';
+import 'router/routes.dart';
 import 'themes/themes.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  late final KaiselRouterConfig<AppRoute> _router;
+
+  @override
+  void initState() {
+    super.initState();
+    final onboardingCubit = context.read<OnboardingCubit>();
+    _router = KaiselRouterConfig<AppRoute>(
+      initial: onboardingCubit.state.onboardingFinished ? const TabsRoute() : const OnboardingRoute(),
+      guards: [
+        (current, proposed) {
+          if (!onboardingCubit.state.onboardingFinished && proposed.any((route) => route is! OnboardingRoute)) {
+            return const [OnboardingRoute()];
+          }
+          return proposed;
+        },
+      ],
+      builder: (context, route) => switch (route) {
+        OnboardingRoute() => const OnboardingPageView(),
+        TabsRoute() => const ShellPageShell(),
+        ScannerRoute() => const ScannerPageShell(),
+        CategoriesSearchRoute() => const CategoriesSearchPageShell(),
+        PenaltiesSearchRoute() => const PenaltiesSearchPageShell(),
+        TagsSearchRoute() => const TagsSearchPageShell(),
+      },
+      observers: () => [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
+      codec: const AppRouteCodec(),
+      fallback: const [TabsRoute()],
+    );
+    appRouter = _router.router;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +109,7 @@ class App extends StatelessWidget {
                 supportedLocales: S.supportedLocales,
                 locale: Locale(settingsState.language),
                 // Router
-                routerConfig: router,
+                routerConfig: _router,
                 debugShowCheckedModeBanner: false,
               ),
             ),

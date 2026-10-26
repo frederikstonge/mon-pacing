@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/buttons/loading_icon_button.dart';
@@ -19,6 +19,7 @@ import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
+import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../matches_search/matches_search_page_view.dart';
 import 'widgets/match_card.dart';
@@ -130,18 +131,16 @@ class _MatchesPageViewState extends State<MatchesPageView> {
     );
   }
 
-  void _edit(BuildContext context, MatchModel match) =>
-      GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'});
+  void _edit(BuildContext context, MatchModel match) => showMatchDetails(id: match.id);
 
   Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
 
   Future<void> _onSearchPressed(BuildContext context) async {
-    final router = GoRouter.of(context);
     final result = await MatchesSearchPageView.showDialog(context);
     if (result != null) {
-      router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
+      showMatchDetails(id: result.id);
     }
   }
 
-  Future<void> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
+  Future<void> _onIntegrationPressed(BuildContext context) => context.router<AppRoute>().push(const ScannerRoute());
 }
