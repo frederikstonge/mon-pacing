@@ -21,7 +21,6 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
-import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../services/app_navigation_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
@@ -41,6 +40,7 @@ class PacingPageView extends StatefulWidget {
 }
 
 class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
+  late final AppNavigationService _navigationService;
   final GlobalKey _addImprovisationButtonKey = GlobalKey();
   final GlobalKey _firstImprovisationCardKey = GlobalKey();
   final GlobalKey _firstImprovisationDragKey = GlobalKey();
@@ -49,12 +49,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
   @override
   void initState() {
     super.initState();
-    pacingsRouter.addListener(_showTutorials);
+    _navigationService = context.read<AppNavigationService>();
+    _navigationService.pacingsRouter.addListener(_showTutorials);
   }
 
   @override
   void dispose() {
-    pacingsRouter.removeListener(_showTutorials);
+    _navigationService.pacingsRouter.removeListener(_showTutorials);
     super.dispose();
   }
 
@@ -237,7 +238,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     );
     if (result == true) {
       await pacingsCubit.delete(pacing);
-      await pacingsRouter.pop();
+      await _navigationService.pacingsRouter.pop();
     }
   }
 
@@ -284,13 +285,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     final displayAddImprovisation =
-        pacingsRouter.stack.last is PacingDetailsRoute &&
+        _navigationService.pacingsRouter.stack.last is PacingDetailsRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isEmpty &&
         !tutorialsCubit.state.addImprovisationFinished;
 
     final displayImprovisation =
-        pacingsRouter.stack.last is PacingDetailsRoute &&
+        _navigationService.pacingsRouter.stack.last is PacingDetailsRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isNotEmpty &&
         !tutorialsCubit.state.improvisationFinished;

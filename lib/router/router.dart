@@ -2,13 +2,6 @@ import 'package:kaisel/kaisel.dart';
 
 import 'routes.dart';
 
-final pacingsRouter = KaiselRouter<PacingsRoute>(initial: const PacingsTabRoute());
-final matchesRouter = KaiselRouter<MatchesRoute>(initial: const MatchesTabRoute());
-final teamsRouter = KaiselRouter<TeamsRoute>(initial: const TeamsTabRoute());
-final settingsRouter = KaiselRouter<SettingsRoute>(initial: const SettingsTabRoute());
-
-final appShell = BranchedShellRouter(branches: [pacingsRouter, matchesRouter, teamsRouter, settingsRouter]);
-
 class AppRouteCodec implements KaiselConfigCodec<AppRoute> {
   const AppRouteCodec();
 
