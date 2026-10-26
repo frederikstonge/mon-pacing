@@ -1,8 +1,7 @@
+import 'package:flutter/widgets.dart';
 import 'package:kaisel/kaisel.dart';
 
 import 'routes.dart';
-
-late KaiselRouter<AppRoute> appRouter;
 
 final pacingsRouter = KaiselRouter<PacingsRoute>(initial: const PacingsTabRoute());
 final matchesRouter = KaiselRouter<MatchesRoute>(initial: const MatchesTabRoute());
@@ -11,23 +10,27 @@ final settingsRouter = KaiselRouter<SettingsRoute>(initial: const SettingsTabRou
 
 final appShell = BranchedShellRouter(branches: [pacingsRouter, matchesRouter, teamsRouter, settingsRouter]);
 
-void showPacingDetails(int id) {
-  appRouter.set(const [TabsRoute()]);
-  appShell.switchTo(0);
-  pacingsRouter.set([const PacingsTabRoute(), PacingDetailsRoute(id)]);
-}
+extension AppNavigationContext on BuildContext {
+  Future<void> showPacingDetails(int id) async {
+    await router<AppRoute>().set(const [TabsRoute()]);
+    appShell.switchTo(0);
+    await pacingsRouter.set([const PacingsTabRoute(), PacingDetailsRoute(id)]);
+  }
 
-void showMatchDetails({required int id, int? improvisationId, int? durationIndex}) {
-  appRouter.set(const [TabsRoute()]);
-  appShell.switchTo(1);
-  matchesRouter.set([
-    const MatchesTabRoute(),
-    MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
-  ]);
-}
+  Future<void> showMatchDetails({required int id, int? improvisationId, int? durationIndex}) async {
+    await router<AppRoute>().set(const [TabsRoute()]);
+    appShell.switchTo(1);
+    await matchesRouter.set([
+      const MatchesTabRoute(),
+      MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
+    ]);
+  }
 
-void replaceMatchDetails({required int id, int? improvisationId, int? durationIndex}) {
-  matchesRouter.replaceTop(MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex));
+  Future<void> replaceMatchDetails({required int id, int? improvisationId, int? durationIndex}) {
+    return router<MatchesRoute>().replaceTop(
+      MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
+    );
+  }
 }
 
 class AppRouteCodec implements KaiselConfigCodec<AppRoute> {

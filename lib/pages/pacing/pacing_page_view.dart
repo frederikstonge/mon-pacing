@@ -216,9 +216,9 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
         onConfirm: (pacing, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
           final pacingModel = await context.read<PacingsCubit>().add(pacing);
-          if (pacingModel != null) {
+          if (pacingModel != null && context.mounted) {
             navigator.pop();
-            showPacingDetails(pacingModel.id);
+            await context.showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -262,9 +262,9 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
         onConfirm: (match, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
           final matchModel = await context.read<MatchesCubit>().add(match);
-          if (matchModel != null) {
+          if (matchModel != null && context.mounted) {
             navigator.pop();
-            showMatchDetails(id: matchModel.id);
+            await context.showMatchDetails(id: matchModel.id);
           }
         },
       ),

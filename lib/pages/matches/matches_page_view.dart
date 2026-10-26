@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:kaisel/kaisel.dart';
@@ -131,14 +133,14 @@ class _MatchesPageViewState extends State<MatchesPageView> {
     );
   }
 
-  void _edit(BuildContext context, MatchModel match) => showMatchDetails(id: match.id);
+  void _edit(BuildContext context, MatchModel match) => unawaited(context.showMatchDetails(id: match.id));
 
   Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
 
   Future<void> _onSearchPressed(BuildContext context) async {
     final result = await MatchesSearchPageView.showDialog(context);
-    if (result != null) {
-      showMatchDetails(id: result.id);
+    if (result != null && context.mounted) {
+      await context.showMatchDetails(id: result.id);
     }
   }
 
