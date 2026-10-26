@@ -33,8 +33,8 @@ class TimerCubit extends Cubit<TimerState> {
   }) : super(const TimerState());
 
   Future<void> initialize() async {
-    await _requestPermissions();
     timerService.initialize(taskDataCallback: _onReceiveData);
+    await _requestPermissions();
   }
 
   Future<void> start(MatchModel match, int improvisationId, int durationIndex, Duration duration) {
