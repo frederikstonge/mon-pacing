@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
@@ -24,6 +24,7 @@ import '../../cubits/timer/timer_state.dart';
 import '../../cubits/tutorials/tutorials_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/pacing_model.dart';
+import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
@@ -39,19 +40,18 @@ class PacingsPageView extends StatefulWidget {
 }
 
 class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
-  late final GoRouter? router = GoRouter.maybeOf(context);
   final GlobalKey _addPacingButtonKey = GlobalKey();
   final GlobalKey _firstPacingCardKey = GlobalKey();
 
   @override
   void initState() {
-    router?.routerDelegate.addListener(_showTutorials);
     super.initState();
+    pacingsRouter.addListener(_showTutorials);
   }
 
   @override
   void dispose() {
-    router?.routerDelegate.removeListener(_showTutorials);
+    pacingsRouter.removeListener(_showTutorials);
     super.dispose();
   }
 
@@ -167,13 +167,12 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<PacingModel?> _onImportPressed(BuildContext context) => context.read<PacingsCubit>().import();
 
-  Future<void> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
+  Future<void> _onIntegrationPressed(BuildContext context) => context.router<AppRoute>().push(const ScannerRoute());
 
   Future<void> _onSearchPressed(BuildContext context) async {
-    final router = GoRouter.of(context);
     final result = await PacingsSearchPageView.showDialog(context);
     if (result != null) {
-      router.goNamed(Routes.pacing, pathParameters: {'id': result.id.toString()});
+      showPacingDetails(result.id);
     }
   }
 
@@ -190,8 +189,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _delete(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().delete(pacing);
 
-  void _edit(BuildContext context, PacingModel pacing) =>
-      GoRouter.of(context).goNamed(Routes.pacing, pathParameters: {'id': '${pacing.id}'});
+  void _edit(BuildContext context, PacingModel pacing) => showPacingDetails(pacing.id);
 
   Future<bool?> _shouldDelete(BuildContext context, PacingModel pacing) {
     return MessageBoxDialog.questionShow(
@@ -209,11 +207,10 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
         pacing: pacing,
         onConfirm: (match, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
-          final router = GoRouter.of(context);
           final matchModel = await context.read<MatchesCubit>().add(match);
           if (matchModel != null) {
             navigator.pop();
-            router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+            showMatchDetails(id: matchModel.id);
           }
         },
       ),
@@ -228,11 +225,10 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
         pacing: pacing,
         onConfirm: (pacing, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
-          final router = GoRouter.of(context);
           final pacingModel = await context.read<PacingsCubit>().add(pacing);
           if (pacingModel != null) {
             navigator.pop();
-            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+            showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -246,11 +242,10 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
         editMode: false,
         onConfirm: (pacing, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
-          final router = GoRouter.of(context);
           final pacingModel = await context.read<PacingsCubit>().add(pacing);
           if (pacingModel != null) {
             navigator.pop();
-            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+            showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -262,13 +257,13 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     final displayAddPacing =
-        router?.state.name == Routes.pacings &&
+        pacingsRouter.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isEmpty &&
         !tutorialsCubit.state.addPacingFinished;
 
     final displayStartMatch =
-        router?.state.name == Routes.pacings &&
+        pacingsRouter.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isNotEmpty &&
         !tutorialsCubit.state.startMatchFinished;

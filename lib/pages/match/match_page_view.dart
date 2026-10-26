@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
@@ -24,6 +23,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/penalty_model.dart';
+import '../../router/router.dart';
 import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_improvisation/match_improvisation_shell.dart';
@@ -370,7 +370,6 @@ class _MatchPageViewState extends State<MatchPageView> {
 
   Future<void> _delete(BuildContext context, MatchModel match) async {
     final matchesCubit = context.read<MatchesCubit>();
-    final router = GoRouter.of(context);
     final result = await MessageBoxDialog.questionShow(
       context,
       S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
@@ -379,7 +378,7 @@ class _MatchPageViewState extends State<MatchPageView> {
     );
     if (result == true) {
       await matchesCubit.delete(match);
-      router.pop();
+      await matchesRouter.pop();
     }
   }
 

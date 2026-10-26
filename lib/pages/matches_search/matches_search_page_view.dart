@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/search/search_dialog.dart';
@@ -14,7 +14,7 @@ class MatchesSearchPageView extends StatelessWidget {
   const MatchesSearchPageView({super.key});
 
   static Future<MatchModel?> showDialog(BuildContext context) async {
-    return await GoRouter.of(context).pushNamed<MatchModel>(Routes.matchesSearch);
+    return await context.router<MatchesRoute>().pushForResult<MatchModel>(const MatchesSearchRoute());
   }
 
   @override
@@ -27,7 +27,7 @@ class MatchesSearchPageView extends StatelessWidget {
       hintText: S.of(context).search(category: S.of(context).matches),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
-          Navigator.of(context).maybePop(item);
+          context.router<MatchesRoute>().pop(item);
         },
         child: ListTile(
           leading: const SizedBox(height: double.infinity, child: Icon(Icons.search)),
