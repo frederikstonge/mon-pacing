@@ -26,7 +26,6 @@ import '../../cubits/timer/timer_state.dart';
 import '../../cubits/tutorials/tutorials_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/pacing_model.dart';
-import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../services/app_navigation_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
@@ -43,18 +42,20 @@ class PacingsPageView extends StatefulWidget {
 }
 
 class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
+  late final AppNavigationService _navigationService;
   final GlobalKey _addPacingButtonKey = GlobalKey();
   final GlobalKey _firstPacingCardKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    pacingsRouter.addListener(_showTutorials);
+    _navigationService = context.read<AppNavigationService>();
+    _navigationService.pacingsRouter.addListener(_showTutorials);
   }
 
   @override
   void dispose() {
-    pacingsRouter.removeListener(_showTutorials);
+    _navigationService.pacingsRouter.removeListener(_showTutorials);
     super.dispose();
   }
 
@@ -271,13 +272,13 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     final displayAddPacing =
-        pacingsRouter.stack.last is PacingsTabRoute &&
+        _navigationService.pacingsRouter.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isEmpty &&
         !tutorialsCubit.state.addPacingFinished;
 
     final displayStartMatch =
-        pacingsRouter.stack.last is PacingsTabRoute &&
+        _navigationService.pacingsRouter.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isNotEmpty &&
         !tutorialsCubit.state.startMatchFinished;

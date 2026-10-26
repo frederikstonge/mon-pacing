@@ -3,8 +3,8 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../cubits/settings/settings_cubit.dart';
-import '../../router/router.dart';
 import '../../router/routes.dart';
+import '../../services/app_navigation_service.dart';
 import 'widgets/bottom_nav_bar.dart';
 
 class ShellPageView extends StatelessWidget {
@@ -30,15 +30,16 @@ class ShellPageView extends StatelessWidget {
               onDestinationSelected: (index) {
                 context.read<SettingsCubit>().vibrate(HapticsType.light);
                 if (index == activeBranch) {
+                  final navigationService = context.read<AppNavigationService>();
                   switch (index) {
                     case 0:
-                      pacingsRouter.set(const [PacingsTabRoute()]);
+                      navigationService.pacingsRouter.set(const [PacingsTabRoute()]);
                     case 1:
-                      matchesRouter.set(const [MatchesTabRoute()]);
+                      navigationService.matchesRouter.set(const [MatchesTabRoute()]);
                     case 2:
-                      teamsRouter.set(const [TeamsTabRoute()]);
+                      navigationService.teamsRouter.set(const [TeamsTabRoute()]);
                     case 3:
-                      settingsRouter.set(const [SettingsTabRoute()]);
+                      navigationService.settingsRouter.set(const [SettingsTabRoute()]);
                   }
                 }
                 switchBranch(index);

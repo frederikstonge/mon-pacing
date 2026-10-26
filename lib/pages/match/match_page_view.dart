@@ -23,7 +23,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/penalty_model.dart';
-import '../../router/router.dart';
+import '../../services/app_navigation_service.dart';
 import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../match_improvisation/match_improvisation_shell.dart';
@@ -370,6 +370,7 @@ class _MatchPageViewState extends State<MatchPageView> {
 
   Future<void> _delete(BuildContext context, MatchModel match) async {
     final matchesCubit = context.read<MatchesCubit>();
+    final matchesRouter = context.read<AppNavigationService>().matchesRouter;
     final result = await MessageBoxDialog.questionShow(
       context,
       S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),

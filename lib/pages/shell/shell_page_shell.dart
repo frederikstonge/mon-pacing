@@ -1,8 +1,9 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../router/router.dart';
 import '../../router/routes.dart';
+import '../../services/app_navigation_service.dart';
 import '../match/match_page_shell.dart';
 import '../matches/matches_page_shell.dart';
 import '../matches_search/matches_search_page_shell.dart';
@@ -19,11 +20,12 @@ class ShellPageShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigationService = context.read<AppNavigationService>();
     return KaiselBranchedShell(
-      shell: appShell,
+      shell: navigationService.appShell,
       branches: [
         KaiselBranch<PacingsRoute>(
-          router: pacingsRouter,
+          router: navigationService.pacingsRouter,
           pageBuilder: (context, route) => switch (route) {
             PacingsTabRoute() => const PacingsPageShell(),
             PacingDetailsRoute(:final id) => PacingPageShell(id: id),
@@ -31,7 +33,7 @@ class ShellPageShell extends StatelessWidget {
           },
         ),
         KaiselBranch<MatchesRoute>(
-          router: matchesRouter,
+          router: navigationService.matchesRouter,
           pageBuilder: (context, route) => switch (route) {
             MatchesTabRoute() => const MatchesPageShell(),
             MatchDetailsRoute(:final id, :final improvisationId, :final durationIndex) => MatchPageShell(
@@ -43,21 +45,21 @@ class ShellPageShell extends StatelessWidget {
           },
         ),
         KaiselBranch<TeamsRoute>(
-          router: teamsRouter,
+          router: navigationService.teamsRouter,
           pageBuilder: (context, route) => switch (route) {
             TeamsTabRoute() => const TeamsPageShell(),
             TeamsSearchRoute() => const TeamsSearchPageShell(),
           },
         ),
         KaiselBranch<SettingsRoute>(
-          router: settingsRouter,
+          router: navigationService.settingsRouter,
           pageBuilder: (context, route) => switch (route) {
             SettingsTabRoute() => const SettingsPageShell(),
           },
         ),
       ],
       chromeBuilder: (context, activeBranch, branchContent, switchBranch) {
-        final showNavigation = switch ((activeBranch, appShell.current.stack.last)) {
+        final showNavigation = switch ((activeBranch, navigationService.appShell.current.stack.last)) {
           (0, PacingsTabRoute()) => true,
           (1, MatchesTabRoute()) => true,
           (2, TeamsTabRoute()) => true,
