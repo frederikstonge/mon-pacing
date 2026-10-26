@@ -1,38 +1,34 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:mon_pacing/router/router.dart';
+import 'package:mon_pacing/router/routes.dart';
 
 void main() {
-  const codec = AppRouteCodec();
+  const codec = MatchNotificationCodec();
 
-  group('AppRouteCodec', () {
-    test('round trips supported routes', () {
-      const locations = [
-        '/onboarding',
-        '/scanner',
-        '/categories/search',
-        '/penalties/search',
-        '/tags/search',
-        '/pacings',
-        '/pacings/details/12',
-        '/pacings/search',
-        '/matches',
-        '/matches/details/34?improvisationId=7&durationIndex=2',
-        '/matches/search',
-        '/teams',
-        '/teams/search',
-        '/settings',
-      ];
+  group('MatchNotificationCodec', () {
+    test('decodes match notification routes with timer state', () {
+      final config = codec.decode(Uri.parse('/matches/details/34?improvisationId=7&durationIndex=2'));
 
-      for (final location in locations) {
-        final config = codec.decode(Uri.parse(location));
-
-        expect(config, isNotNull, reason: location);
-        expect(codec.encode(config!), Uri.parse(location), reason: location);
-      }
+      expect(config, isNotNull);
+      expect((config!.nestedState as KaiselShellConfig).activeBranchStack, const [
+        MatchesTabRoute(),
+        MatchDetailsRoute(id: 34, improvisationId: 7, durationIndex: 2),
+      ]);
     });
 
-    test('rejects malformed detail identifiers and query values', () {
+    test('encodes only match detail routes', () {
+      final matchConfig = codec.decode(Uri.parse('/matches/details/34?durationIndex=2'))!;
+      final otherConfig = codec.decode(Uri.parse('/matches')) ?? KaiselConfig<AppRoute>(mainStack: const [TabsRoute()]);
+
+      expect(codec.encode(matchConfig), Uri.parse('/matches/details/34?durationIndex=2'));
+      expect(codec.encode(otherConfig), Uri.parse('/'));
+    });
+
+    test('ignores routes other than match details and rejects malformed match routes', () {
+      expect(codec.decode(Uri.parse('/pacings')), isNull);
       expect(codec.decode(Uri.parse('/pacings/details/nope')), isNull);
+      expect(codec.decode(Uri.parse('/matches/details/nope')), isNull);
       expect(codec.decode(Uri.parse('/matches/details/34?durationIndex=nope')), isNull);
     });
   });

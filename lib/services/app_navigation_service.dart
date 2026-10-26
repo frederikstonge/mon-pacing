@@ -20,8 +20,9 @@ class AppNavigationService {
     teamsRouter = KaiselRouter<TeamsRoute>(initial: const TeamsTabRoute());
     settingsRouter = KaiselRouter<SettingsRoute>(initial: const SettingsTabRoute());
     appShell = BranchedShellRouter(branches: [pacingsRouter, matchesRouter, teamsRouter, settingsRouter]);
+    final initialRoute = onboardingFinished() ? const TabsRoute() : const OnboardingRoute();
     routerConfig = KaiselRouterConfig<AppRoute>(
-      initial: onboardingFinished() ? const TabsRoute() : const OnboardingRoute(),
+      initial: initialRoute,
       guards: [
         (current, proposed) {
           if (!onboardingFinished() && proposed.any((route) => route is! OnboardingRoute)) {
@@ -32,8 +33,8 @@ class AppNavigationService {
       ],
       builder: _buildRoute,
       observers: observers,
-      codec: const AppRouteCodec(),
-      fallback: const [TabsRoute()],
+      codec: const MatchNotificationCodec(),
+      fallback: [initialRoute],
     );
   }
 
