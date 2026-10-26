@@ -178,9 +178,15 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             integration is! MatchIntegrationBase &&
             integration is! RealTimeMatchIntegrationBase) {
           final pacingModel = await pacingsCubit.add(pacing);
+          if (!mounted) {
+            return;
+          }
           if (pacingModel != null) {
             await analyticsService.logIntegration(integration);
-            showPacingDetails(pacingModel.id);
+            if (!mounted) {
+              return;
+            }
+            await context.showPacingDetails(pacingModel.id);
             return;
           } else {
             toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
@@ -198,9 +204,15 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
         }
 
         final matchModel = await matchesCubit.add(match);
+        if (!mounted) {
+          return;
+        }
         if (matchModel != null) {
           await analyticsService.logIntegration(integration);
-          showMatchDetails(id: matchModel.id);
+          if (!mounted) {
+            return;
+          }
+          await context.showMatchDetails(id: matchModel.id);
           return;
         } else {
           toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);

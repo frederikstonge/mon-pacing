@@ -58,7 +58,6 @@ class _AppState extends State<App> {
       codec: const AppRouteCodec(),
       fallback: const [TabsRoute()],
     );
-    appRouter = _router.router;
   }
 
   @override

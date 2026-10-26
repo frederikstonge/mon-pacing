@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
@@ -67,14 +69,22 @@ class TimerBanner extends StatelessWidget {
           context.read<MatchCubit>().setDurationIndex(timer.durationIndex);
         }
       } else {
-        replaceMatchDetails(
-          id: timer.matchId,
-          improvisationId: timer.improvisationId,
-          durationIndex: timer.durationIndex,
+        unawaited(
+          context.replaceMatchDetails(
+            id: timer.matchId,
+            improvisationId: timer.improvisationId,
+            durationIndex: timer.durationIndex,
+          ),
         );
       }
     } else {
-      showMatchDetails(id: timer.matchId, improvisationId: timer.improvisationId, durationIndex: timer.durationIndex);
+      unawaited(
+        context.showMatchDetails(
+          id: timer.matchId,
+          improvisationId: timer.improvisationId,
+          durationIndex: timer.durationIndex,
+        ),
+      );
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:kaisel/kaisel.dart';
@@ -171,8 +173,8 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _onSearchPressed(BuildContext context) async {
     final result = await PacingsSearchPageView.showDialog(context);
-    if (result != null) {
-      showPacingDetails(result.id);
+    if (result != null && context.mounted) {
+      await context.showPacingDetails(result.id);
     }
   }
 
@@ -189,7 +191,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _delete(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().delete(pacing);
 
-  void _edit(BuildContext context, PacingModel pacing) => showPacingDetails(pacing.id);
+  void _edit(BuildContext context, PacingModel pacing) => unawaited(context.showPacingDetails(pacing.id));
 
   Future<bool?> _shouldDelete(BuildContext context, PacingModel pacing) {
     return MessageBoxDialog.questionShow(
@@ -208,9 +210,9 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
         onConfirm: (match, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
           final matchModel = await context.read<MatchesCubit>().add(match);
-          if (matchModel != null) {
+          if (matchModel != null && context.mounted) {
             navigator.pop();
-            showMatchDetails(id: matchModel.id);
+            await context.showMatchDetails(id: matchModel.id);
           }
         },
       ),
@@ -226,9 +228,12 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
         onConfirm: (pacing, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
           final pacingModel = await context.read<PacingsCubit>().add(pacing);
+          if (!context.mounted) {
+            return;
+          }
           if (pacingModel != null) {
             navigator.pop();
-            showPacingDetails(pacingModel.id);
+            await context.showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -243,9 +248,12 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
         onConfirm: (pacing, dialogContext) async {
           final navigator = Navigator.of(dialogContext);
           final pacingModel = await context.read<PacingsCubit>().add(pacing);
+          if (!mounted) {
+            return;
+          }
           if (pacingModel != null) {
             navigator.pop();
-            showPacingDetails(pacingModel.id);
+            await context.showPacingDetails(pacingModel.id);
           }
         },
       ),
