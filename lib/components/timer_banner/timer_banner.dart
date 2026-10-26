@@ -10,7 +10,7 @@ import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/timer_model.dart';
 import '../../pages/match/cubits/match_cubit.dart';
-import '../../router/router.dart';
+import '../../services/app_navigation_service.dart';
 import '../buttons/loading_icon_button.dart';
 
 class TimerBanner extends StatelessWidget {
@@ -70,7 +70,7 @@ class TimerBanner extends StatelessWidget {
         }
       } else {
         unawaited(
-          context.replaceMatchDetails(
+          context.read<AppNavigationService>().replaceMatchDetails(
             id: timer.matchId,
             improvisationId: timer.improvisationId,
             durationIndex: timer.durationIndex,
@@ -79,7 +79,7 @@ class TimerBanner extends StatelessWidget {
       }
     } else {
       unawaited(
-        context.showMatchDetails(
+        context.read<AppNavigationService>().showMatchDetails(
           id: timer.matchId,
           improvisationId: timer.improvisationId,
           durationIndex: timer.durationIndex,

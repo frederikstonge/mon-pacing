@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:kaisel/kaisel.dart';
 
 import 'routes.dart';
@@ -9,29 +8,6 @@ final teamsRouter = KaiselRouter<TeamsRoute>(initial: const TeamsTabRoute());
 final settingsRouter = KaiselRouter<SettingsRoute>(initial: const SettingsTabRoute());
 
 final appShell = BranchedShellRouter(branches: [pacingsRouter, matchesRouter, teamsRouter, settingsRouter]);
-
-extension AppNavigationContext on BuildContext {
-  Future<void> showPacingDetails(int id) async {
-    await router<AppRoute>().set(const [TabsRoute()]);
-    appShell.switchTo(0);
-    await pacingsRouter.set([const PacingsTabRoute(), PacingDetailsRoute(id)]);
-  }
-
-  Future<void> showMatchDetails({required int id, int? improvisationId, int? durationIndex}) async {
-    await router<AppRoute>().set(const [TabsRoute()]);
-    appShell.switchTo(1);
-    await matchesRouter.set([
-      const MatchesTabRoute(),
-      MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
-    ]);
-  }
-
-  Future<void> replaceMatchDetails({required int id, int? improvisationId, int? durationIndex}) {
-    return router<MatchesRoute>().replaceTop(
-      MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
-    );
-  }
-}
 
 class AppRouteCodec implements KaiselConfigCodec<AppRoute> {
   const AppRouteCodec();
