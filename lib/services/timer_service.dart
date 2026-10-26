@@ -17,8 +17,6 @@ void startCallback() {
 }
 
 class TimerService {
-  Future<void> _pendingLifecycleOperation = Future<void>.value();
-
   void initialize({required Function(Object data) taskDataCallback}) {
     FlutterForegroundTask.init(
       androidNotificationOptions: AndroidNotificationOptions(
@@ -80,39 +78,31 @@ class TimerService {
     return true;
   }
 
-  Future<void> start(String initialRoute, {bool enableWakelock = false}) {
-    return _serializeLifecycle(() async {
-      if (await FlutterForegroundTask.isRunningService) {
-        await _stopRunningService();
-      }
+  Future<void> start(String initialRoute, {bool enableWakelock = false}) async {
+    if (await FlutterForegroundTask.isRunningService) {
+      await _stopRunningService();
+    }
 
-      await FlutterForegroundTask.startService(
-        notificationTitle: Localizer.current.notificationTitle,
-        notificationText: '',
-        notificationInitialRoute: initialRoute,
-        notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
-        callback: startCallback,
-      );
+    await FlutterForegroundTask.startService(
+      notificationTitle: Localizer.current.notificationTitle,
+      notificationText: '',
+      notificationInitialRoute: initialRoute,
+      notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
+      callback: startCallback,
+    );
 
-      if (enableWakelock) {
-        await WakelockPlus.enable();
-      }
-    });
+    if (enableWakelock) {
+      await WakelockPlus.enable();
+    }
   }
 
-  Future<void> stop() => _serializeLifecycle(_stopRunningService);
+  Future<void> stop() => _stopRunningService();
 
   Future<void> _stopRunningService() async {
     if (await FlutterForegroundTask.isRunningService) {
       await FlutterForegroundTask.stopService();
     }
     await WakelockPlus.disable();
-  }
-
-  Future<void> _serializeLifecycle(Future<void> Function() operation) {
-    final result = _pendingLifecycleOperation.then((_) => operation());
-    _pendingLifecycleOperation = result.then<void>((_) {}, onError: (Object error, StackTrace stackTrace) {});
-    return result;
   }
 }
 
@@ -122,6 +112,7 @@ class TimerTaskHandler extends TaskHandler {
   Map<int, bool>? _vibrationMap;
   TaskMessage? _taskMessage;
   TimerStatus? _requestedStatus;
+  int? _lastSentRemainingSecond;
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
@@ -164,6 +155,7 @@ class TimerTaskHandler extends TaskHandler {
         if (event.durationInSeconds > 1) ...{1: false},
       };
       _stopwatch = Stopwatch();
+      _lastSentRemainingSecond = null;
       _timer = Timer.periodic(Duration(milliseconds: 100), onTick);
       _stopwatch!.start();
     } else if (event.runId != _taskMessage!.runId) {
@@ -185,6 +177,7 @@ class TimerTaskHandler extends TaskHandler {
     _timer?.cancel();
     _timer = null;
     _vibrationMap = null;
+    _lastSentRemainingSecond = null;
   }
 
   Future<void> onTick(Timer timer) async {
@@ -194,17 +187,24 @@ class TimerTaskHandler extends TaskHandler {
 
     final duration = Duration(seconds: _taskMessage!.durationInSeconds);
     final remainingMilliseconds = duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
+    final requestedStatus = _requestedStatus;
 
     final mainMessage = MainMessage(
       runId: _taskMessage!.runId,
-      requestedStatus: _requestedStatus,
+      requestedStatus: requestedStatus,
       remainingMilliseconds: remainingMilliseconds,
     );
     _requestedStatus = null;
 
-    FlutterForegroundTask.sendDataToMain(mainMessage.toJson());
-
     final remainingDuration = Duration(milliseconds: remainingMilliseconds);
+    final isExpired = remainingMilliseconds <= 0;
+    if (remainingDuration.inSeconds != _lastSentRemainingSecond || requestedStatus != null || isExpired) {
+      FlutterForegroundTask.sendDataToMain(mainMessage.toJson());
+      _lastSentRemainingSecond = remainingDuration.inSeconds;
+    }
+    if (isExpired) {
+      timer.cancel();
+    }
 
     if (remainingDuration.inSeconds >= 0) {
       if (_vibrationMap![remainingDuration.inSeconds] == false) {
@@ -213,25 +213,23 @@ class TimerTaskHandler extends TaskHandler {
       }
     }
 
-    if (_timer!.tick % 10 == 0 || mainMessage.requestedStatus != null) {
-      final notificationStatus = mainMessage.requestedStatus ?? _taskMessage!.status;
-      if (await FlutterForegroundTask.isRunningService) {
-        unawaited(
-          FlutterForegroundTask.updateService(
-            notificationTitle: _taskMessage!.notificationTitle,
-            notificationText: remainingDuration.toImprovDuration(),
-            notificationButtons: [
-              if (notificationStatus == TimerStatus.paused) ...[
-                NotificationButton(id: 'resume', text: Localizer.current.start),
-              ],
-              if (notificationStatus == TimerStatus.started) ...[
-                NotificationButton(id: 'pause', text: Localizer.current.pause),
-              ],
-              NotificationButton(id: 'stop', text: Localizer.current.stop),
+    final notificationStatus = requestedStatus ?? _taskMessage!.status;
+    if ((timer.tick % 10 == 0 || requestedStatus != null) && await FlutterForegroundTask.isRunningService) {
+      unawaited(
+        FlutterForegroundTask.updateService(
+          notificationTitle: _taskMessage!.notificationTitle,
+          notificationText: remainingDuration.toImprovDuration(),
+          notificationButtons: [
+            if (notificationStatus == TimerStatus.paused) ...[
+              NotificationButton(id: 'resume', text: Localizer.current.start),
             ],
-          ),
-        );
-      }
+            if (notificationStatus == TimerStatus.started) ...[
+              NotificationButton(id: 'pause', text: Localizer.current.pause),
+            ],
+            NotificationButton(id: 'stop', text: Localizer.current.stop),
+          ],
+        ),
+      );
     }
   }
 
