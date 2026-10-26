@@ -20,6 +20,7 @@ import 'pages/shell/shell_page_shell.dart';
 import 'pages/tags_search/tags_search_page_shell.dart';
 import 'router/router.dart';
 import 'router/routes.dart';
+import 'services/app_navigation_service.dart';
 import 'themes/themes.dart';
 
 class App extends StatefulWidget {
@@ -31,6 +32,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   late final KaiselRouterConfig<AppRoute> _router;
+  late final AppNavigationService _navigationService;
 
   @override
   void initState() {
@@ -57,6 +59,12 @@ class _AppState extends State<App> {
       observers: () => [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
       codec: const AppRouteCodec(),
       fallback: const [TabsRoute()],
+    );
+    _navigationService = AppNavigationService(
+      rootRouter: _router.router,
+      appShell: appShell,
+      pacingsRouter: pacingsRouter,
+      matchesRouter: matchesRouter,
     );
   }
 
@@ -90,26 +98,29 @@ class _AppState extends State<App> {
                 alignment: Alignment.topCenter,
                 animationDuration: Duration(milliseconds: 300),
               ),
-              child: MaterialApp.router(
-                onGenerateTitle: (context) => S.of(context).appTitle,
-                // Theme
-                theme: switch (settingsState.theme) {
-                  ThemeType.light => Themes.light(),
-                  ThemeType.dark => Themes.dark(),
-                  ThemeType.lni => Themes.lni(),
-                  ThemeType.ligmaLight => Themes.ligmaLight(),
-                  ThemeType.ligmaDark => Themes.ligmaDark(),
-                  ThemeType.boldor => Themes.boldor(),
-                  ThemeType.evenementCulturel => Themes.evenementCulturel(),
-                  ThemeType.paradoxe => Themes.paradoxe(),
-                },
-                // Locale
-                localizationsDelegates: [S.delegate, ...GlobalMaterialLocalizations.delegates],
-                supportedLocales: S.supportedLocales,
-                locale: Locale(settingsState.language),
-                // Router
-                routerConfig: _router,
-                debugShowCheckedModeBanner: false,
+              child: RepositoryProvider.value(
+                value: _navigationService,
+                child: MaterialApp.router(
+                  onGenerateTitle: (context) => S.of(context).appTitle,
+                  // Theme
+                  theme: switch (settingsState.theme) {
+                    ThemeType.light => Themes.light(),
+                    ThemeType.dark => Themes.dark(),
+                    ThemeType.lni => Themes.lni(),
+                    ThemeType.ligmaLight => Themes.ligmaLight(),
+                    ThemeType.ligmaDark => Themes.ligmaDark(),
+                    ThemeType.boldor => Themes.boldor(),
+                    ThemeType.evenementCulturel => Themes.evenementCulturel(),
+                    ThemeType.paradoxe => Themes.paradoxe(),
+                  },
+                  // Locale
+                  localizationsDelegates: [S.delegate, ...GlobalMaterialLocalizations.delegates],
+                  supportedLocales: S.supportedLocales,
+                  locale: Locale(settingsState.language),
+                  // Router
+                  routerConfig: _router,
+                  debugShowCheckedModeBanner: false,
+                ),
               ),
             ),
           );

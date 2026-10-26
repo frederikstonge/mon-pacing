@@ -28,6 +28,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/pacing_model.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
+import '../../services/app_navigation_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
@@ -172,9 +173,10 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   Future<void> _onIntegrationPressed(BuildContext context) => context.router<AppRoute>().push(const ScannerRoute());
 
   Future<void> _onSearchPressed(BuildContext context) async {
+    final navigationService = context.read<AppNavigationService>();
     final result = await PacingsSearchPageView.showDialog(context);
     if (result != null && context.mounted) {
-      await context.showPacingDetails(result.id);
+      await navigationService.showPacingDetails(result.id);
     }
   }
 
@@ -191,7 +193,8 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _delete(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().delete(pacing);
 
-  void _edit(BuildContext context, PacingModel pacing) => unawaited(context.showPacingDetails(pacing.id));
+  void _edit(BuildContext context, PacingModel pacing) =>
+      unawaited(context.read<AppNavigationService>().showPacingDetails(pacing.id));
 
   Future<bool?> _shouldDelete(BuildContext context, PacingModel pacing) {
     return MessageBoxDialog.questionShow(
@@ -203,6 +206,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   }
 
   Future<void> _startMatch(BuildContext context, PacingModel pacing) {
+    final navigationService = context.read<AppNavigationService>();
     return BottomSheetDialog.showDialog(
       context: context,
       child: MatchDetailPageShell(
@@ -212,7 +216,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
           final matchModel = await context.read<MatchesCubit>().add(match);
           if (matchModel != null && context.mounted) {
             navigator.pop();
-            await context.showMatchDetails(id: matchModel.id);
+            await navigationService.showMatchDetails(id: matchModel.id);
           }
         },
       ),
@@ -220,6 +224,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   }
 
   Future<void> _duplicate(BuildContext context, PacingModel pacing) {
+    final navigationService = context.read<AppNavigationService>();
     return BottomSheetDialog.showDialog(
       context: context,
       child: PacingDetailPageShell(
@@ -233,7 +238,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
           }
           if (pacingModel != null) {
             navigator.pop();
-            await context.showPacingDetails(pacingModel.id);
+            await navigationService.showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -241,6 +246,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   }
 
   Future<void> _addPacing() async {
+    final navigationService = context.read<AppNavigationService>();
     await BottomSheetDialog.showDialog(
       context: context,
       child: PacingDetailPageShell(
@@ -253,7 +259,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
           }
           if (pacingModel != null) {
             navigator.pop();
-            await context.showPacingDetails(pacingModel.id);
+            await navigationService.showPacingDetails(pacingModel.id);
           }
         },
       ),
