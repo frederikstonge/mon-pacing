@@ -17,11 +17,15 @@ void startCallback() {
 }
 
 class TimerService {
-  static const _taskReadyMessage = {'type': 'timer_task_ready'};
-  static const _taskReadyTimeout = Duration(seconds: 10);
+  static const _taskDataRetryInterval = Duration(milliseconds: 200);
+  static const _maxTaskDataRetries = 50;
 
-  Completer<void>? _taskReadyCompleter;
   Function(Object data)? _taskDataCallback;
+  Timer? _taskDataRetryTimer;
+  String? _pendingTaskData;
+  String? _pendingRunId;
+  String? _acknowledgedRunId;
+  var _taskDataRetryCount = 0;
 
   void initialize({required Function(Object data) taskDataCallback}) {
     FlutterForegroundTask.init(
@@ -44,12 +48,9 @@ class TimerService {
 
     FlutterForegroundTask.initCommunicationPort();
     _taskDataCallback = (data) {
-      if (data is Map && data['type'] == _taskReadyMessage['type']) {
-        final completer = _taskReadyCompleter;
-        if (completer != null && !completer.isCompleted) {
-          completer.complete();
-        }
-        return;
+      if (data is String && _pendingRunId != null && MainMessageMapper.fromJson(data).runId == _pendingRunId) {
+        _acknowledgedRunId = _pendingRunId;
+        _cancelTaskDataRetries();
       }
 
       taskDataCallback(data);
@@ -63,10 +64,45 @@ class TimerService {
       FlutterForegroundTask.removeTaskDataCallback(registeredCallback);
       _taskDataCallback = null;
     }
+    _cancelTaskDataRetries();
   }
 
   void sendDataToTask(TaskMessage data) {
-    FlutterForegroundTask.sendDataToTask(data.toJson());
+    final taskData = data.toJson();
+    if (_acknowledgedRunId == data.runId) {
+      FlutterForegroundTask.sendDataToTask(taskData);
+      return;
+    }
+
+    _taskDataRetryTimer?.cancel();
+    _pendingTaskData = taskData;
+    _pendingRunId = data.runId;
+    _taskDataRetryCount = 0;
+    FlutterForegroundTask.sendDataToTask(taskData);
+    _taskDataRetryTimer = Timer.periodic(_taskDataRetryInterval, (timer) {
+      if (!identical(_taskDataRetryTimer, timer) || _pendingTaskData != taskData) {
+        timer.cancel();
+        return;
+      }
+
+      if (++_taskDataRetryCount >= _maxTaskDataRetries) {
+        timer.cancel();
+        _taskDataRetryTimer = null;
+        _pendingTaskData = null;
+        _pendingRunId = null;
+        return;
+      }
+
+      FlutterForegroundTask.sendDataToTask(taskData);
+    });
+  }
+
+  void _cancelTaskDataRetries() {
+    _taskDataRetryTimer?.cancel();
+    _taskDataRetryTimer = null;
+    _pendingTaskData = null;
+    _pendingRunId = null;
+    _taskDataRetryCount = 0;
   }
 
   Future<bool> requestNotificationPermission() async {
@@ -104,25 +140,15 @@ class TimerService {
       await _stopRunningService();
     }
 
-    final taskReady = Completer<void>();
-    _taskReadyCompleter = taskReady;
-    try {
-      final result = await FlutterForegroundTask.startService(
-        notificationTitle: Localizer.current.notificationTitle,
-        notificationText: '',
-        notificationInitialRoute: initialRoute,
-        notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
-        callback: startCallback,
-      );
-      if (result case ServiceRequestFailure(:final error)) {
-        throw error;
-      }
-
-      await taskReady.future.timeout(_taskReadyTimeout);
-    } finally {
-      if (identical(_taskReadyCompleter, taskReady)) {
-        _taskReadyCompleter = null;
-      }
+    final result = await FlutterForegroundTask.startService(
+      notificationTitle: Localizer.current.notificationTitle,
+      notificationText: '',
+      notificationInitialRoute: initialRoute,
+      notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
+      callback: startCallback,
+    );
+    if (result case ServiceRequestFailure(:final error)) {
+      throw error;
     }
 
     if (enableWakelock) {
@@ -133,6 +159,8 @@ class TimerService {
   Future<void> stop() => _stopRunningService();
 
   Future<void> _stopRunningService() async {
+    _cancelTaskDataRetries();
+    _acknowledgedRunId = null;
     if (await FlutterForegroundTask.isRunningService) {
       await FlutterForegroundTask.stopService();
     }
@@ -151,7 +179,7 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    FlutterForegroundTask.sendDataToMain(TimerService._taskReadyMessage);
+    // Does nothing
   }
 
   @override
