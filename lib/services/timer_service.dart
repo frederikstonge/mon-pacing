@@ -17,6 +17,12 @@ void startCallback() {
 }
 
 class TimerService {
+  static const _taskReadyMessage = {'type': 'timer_task_ready'};
+  static const _taskReadyTimeout = Duration(seconds: 10);
+
+  Completer<void>? _taskReadyCompleter;
+  Function(Object data)? _taskDataCallback;
+
   void initialize({required Function(Object data) taskDataCallback}) {
     FlutterForegroundTask.init(
       androidNotificationOptions: AndroidNotificationOptions(
@@ -37,11 +43,26 @@ class TimerService {
     );
 
     FlutterForegroundTask.initCommunicationPort();
-    FlutterForegroundTask.addTaskDataCallback(taskDataCallback);
+    _taskDataCallback = (data) {
+      if (data is Map && data['type'] == _taskReadyMessage['type']) {
+        final completer = _taskReadyCompleter;
+        if (completer != null && !completer.isCompleted) {
+          completer.complete();
+        }
+        return;
+      }
+
+      taskDataCallback(data);
+    };
+    FlutterForegroundTask.addTaskDataCallback(_taskDataCallback!);
   }
 
   void dispose({required Function(Object data) taskDataCallback}) {
-    FlutterForegroundTask.removeTaskDataCallback(taskDataCallback);
+    final registeredCallback = _taskDataCallback;
+    if (registeredCallback != null) {
+      FlutterForegroundTask.removeTaskDataCallback(registeredCallback);
+      _taskDataCallback = null;
+    }
   }
 
   void sendDataToTask(TaskMessage data) {
@@ -83,13 +104,26 @@ class TimerService {
       await _stopRunningService();
     }
 
-    await FlutterForegroundTask.startService(
-      notificationTitle: Localizer.current.notificationTitle,
-      notificationText: '',
-      notificationInitialRoute: initialRoute,
-      notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
-      callback: startCallback,
-    );
+    final taskReady = Completer<void>();
+    _taskReadyCompleter = taskReady;
+    try {
+      final result = await FlutterForegroundTask.startService(
+        notificationTitle: Localizer.current.notificationTitle,
+        notificationText: '',
+        notificationInitialRoute: initialRoute,
+        notificationIcon: NotificationIcon(metaDataName: 'com.stongef.monpacing.NOTIFICATION_ICON'),
+        callback: startCallback,
+      );
+      if (result case ServiceRequestFailure(:final error)) {
+        throw error;
+      }
+
+      await taskReady.future.timeout(_taskReadyTimeout);
+    } finally {
+      if (identical(_taskReadyCompleter, taskReady)) {
+        _taskReadyCompleter = null;
+      }
+    }
 
     if (enableWakelock) {
       await WakelockPlus.enable();
@@ -117,7 +151,7 @@ class TimerTaskHandler extends TaskHandler {
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    // Does nothing
+    FlutterForegroundTask.sendDataToMain(TimerService._taskReadyMessage);
   }
 
   @override
