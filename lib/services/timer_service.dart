@@ -113,6 +113,7 @@ class TimerTaskHandler extends TaskHandler {
   TaskMessage? _taskMessage;
   TimerStatus? _requestedStatus;
   int? _lastSentRemainingSecond;
+  bool _isTickRunning = false;
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
@@ -180,58 +181,72 @@ class TimerTaskHandler extends TaskHandler {
     _timer = null;
     _vibrationMap = null;
     _lastSentRemainingSecond = null;
+    _isTickRunning = false;
   }
 
   Future<void> onTick(Timer timer) async {
-    if (_taskMessage == null) {
+    if (_isTickRunning) {
       return;
     }
 
-    final duration = Duration(seconds: _taskMessage!.durationInSeconds);
-    final remainingMilliseconds = duration.inMilliseconds - _stopwatch!.elapsedMilliseconds;
-    final requestedStatus = _requestedStatus;
-
-    final mainMessage = MainMessage(
-      runId: _taskMessage!.runId,
-      requestedStatus: requestedStatus,
-      remainingMilliseconds: remainingMilliseconds,
-    );
-    _requestedStatus = null;
-
-    final remainingDuration = Duration(milliseconds: remainingMilliseconds);
-    final isExpired = remainingMilliseconds <= 0;
-    if (remainingDuration.inSeconds != _lastSentRemainingSecond || requestedStatus != null || isExpired) {
-      FlutterForegroundTask.sendDataToMain(mainMessage.toJson());
-      _lastSentRemainingSecond = remainingDuration.inSeconds;
-    }
-    if (isExpired) {
-      timer.cancel();
+    final taskMessage = _taskMessage;
+    final stopwatch = _stopwatch;
+    final vibrationMap = _vibrationMap;
+    if (taskMessage == null || stopwatch == null || vibrationMap == null) {
+      return;
     }
 
-    if (remainingDuration.inSeconds >= 0) {
-      if (_vibrationMap![remainingDuration.inSeconds] == false) {
-        unawaited(vibrate(HapticsType.light));
-        _vibrationMap![remainingDuration.inSeconds] = true;
-      }
-    }
-
-    final notificationStatus = requestedStatus ?? _taskMessage!.status;
-    if ((timer.tick % 10 == 0 || requestedStatus != null) && await FlutterForegroundTask.isRunningService) {
-      unawaited(
-        FlutterForegroundTask.updateService(
-          notificationTitle: _taskMessage!.notificationTitle,
-          notificationText: remainingDuration.toImprovDuration(),
-          notificationButtons: [
-            if (notificationStatus == TimerStatus.paused) ...[
-              NotificationButton(id: 'resume', text: Localizer.current.start),
-            ],
-            if (notificationStatus == TimerStatus.started) ...[
-              NotificationButton(id: 'pause', text: Localizer.current.pause),
-            ],
-            NotificationButton(id: 'stop', text: Localizer.current.stop),
-          ],
-        ),
+    _isTickRunning = true;
+    try {
+      final duration = Duration(seconds: taskMessage.durationInSeconds);
+      final remainingMilliseconds = duration.inMilliseconds - stopwatch.elapsedMilliseconds;
+      final requestedStatus = _requestedStatus;
+      final mainMessage = MainMessage(
+        runId: taskMessage.runId,
+        requestedStatus: requestedStatus,
+        remainingMilliseconds: remainingMilliseconds,
       );
+      _requestedStatus = null;
+
+      final remainingDuration = Duration(milliseconds: remainingMilliseconds);
+      final isExpired = remainingMilliseconds <= 0;
+      if (remainingDuration.inSeconds != _lastSentRemainingSecond || requestedStatus != null || isExpired) {
+        FlutterForegroundTask.sendDataToMain(mainMessage.toJson());
+        _lastSentRemainingSecond = remainingDuration.inSeconds;
+      }
+      if (isExpired) {
+        timer.cancel();
+      }
+
+      if (remainingDuration.inSeconds >= 0 && vibrationMap[remainingDuration.inSeconds] == false) {
+        unawaited(vibrate(HapticsType.light));
+        vibrationMap[remainingDuration.inSeconds] = true;
+      }
+
+      if (timer.tick % 10 == 0 || requestedStatus != null) {
+        final isRunning = await FlutterForegroundTask.isRunningService;
+        final currentTaskMessage = _taskMessage;
+        if (isRunning && currentTaskMessage != null && currentTaskMessage.runId == taskMessage.runId) {
+          final notificationStatus = requestedStatus ?? currentTaskMessage.status;
+          unawaited(
+            FlutterForegroundTask.updateService(
+              notificationTitle: currentTaskMessage.notificationTitle,
+              notificationText: remainingDuration.toImprovDuration(),
+              notificationButtons: [
+                if (notificationStatus == TimerStatus.paused) ...[
+                  NotificationButton(id: 'resume', text: Localizer.current.start),
+                ],
+                if (notificationStatus == TimerStatus.started) ...[
+                  NotificationButton(id: 'pause', text: Localizer.current.pause),
+                ],
+                NotificationButton(id: 'stop', text: Localizer.current.stop),
+              ],
+            ),
+          );
+        }
+      }
+    } finally {
+      _isTickRunning = false;
     }
   }
 
