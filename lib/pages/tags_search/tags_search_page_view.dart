@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/search/search_dialog.dart';
@@ -13,7 +13,7 @@ class TagsSearchPageView extends StatelessWidget {
   const TagsSearchPageView({super.key});
 
   static Future<String?> showDialog(BuildContext context) async {
-    return await GoRouter.of(context).pushNamed<String>(Routes.tagsSearch);
+    return await context.router<AppRoute>().pushForResult<String>(const TagsSearchRoute());
   }
 
   @override
@@ -23,7 +23,7 @@ class TagsSearchPageView extends StatelessWidget {
       hintText: S.of(context).search(category: S.of(context).tags),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
-          Navigator.of(context).maybePop(item);
+          context.router<AppRoute>().pop(item);
         },
         child: ListTile(
           leading: const Icon(Icons.search),

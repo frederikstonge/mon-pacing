@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../extensions/duration_extensions.dart';
@@ -9,7 +10,7 @@ import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/timer_model.dart';
 import '../../pages/match/cubits/match_cubit.dart';
-import '../../router/routes.dart';
+import '../../services/app_navigation_service.dart';
 import '../buttons/loading_icon_button.dart';
 
 class TimerBanner extends StatelessWidget {
@@ -68,23 +69,21 @@ class TimerBanner extends StatelessWidget {
           context.read<MatchCubit>().setDurationIndex(timer.durationIndex);
         }
       } else {
-        context.pushReplacementNamed(
-          Routes.match,
-          pathParameters: {'id': timer.matchId.toString()},
-          queryParameters: {
-            'improvisationId': timer.improvisationId.toString(),
-            'durationIndex': timer.durationIndex.toString(),
-          },
+        unawaited(
+          context.read<AppNavigationService>().replaceMatchDetails(
+            id: timer.matchId,
+            improvisationId: timer.improvisationId,
+            durationIndex: timer.durationIndex,
+          ),
         );
       }
     } else {
-      context.goNamed(
-        Routes.match,
-        pathParameters: {'id': timer.matchId.toString()},
-        queryParameters: {
-          'improvisationId': timer.improvisationId.toString(),
-          'durationIndex': timer.durationIndex.toString(),
-        },
+      unawaited(
+        context.read<AppNavigationService>().showMatchDetails(
+          id: timer.matchId,
+          improvisationId: timer.improvisationId,
+          durationIndex: timer.durationIndex,
+        ),
       );
     }
   }
