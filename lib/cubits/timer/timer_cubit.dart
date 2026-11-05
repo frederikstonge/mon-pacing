@@ -128,7 +128,13 @@ class TimerCubit extends Cubit<TimerState> {
 
   Future<void> _onReceiveData(dynamic data) {
     return _serialize(() async {
-      final event = MainMessageMapper.fromJson(data);
+      final MainMessage event;
+      try {
+        event = MainMessageMapper.fromJson(data is String ? data : data.toString());
+      } catch (_) {
+        return;
+      }
+
       final timer = state.timer;
       if (timer == null || event.runId != _activeRunId) {
         return;
