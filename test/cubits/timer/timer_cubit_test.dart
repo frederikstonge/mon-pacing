@@ -136,6 +136,111 @@ void main() {
 
     await cubit.close();
   });
+
+  test('stops active timer when remaining time expires', () async {
+    final timerService = _TimerService()..notificationPermission.complete(true);
+    final settingsCubit = _FakeSettingsCubit();
+    final cubit = TimerCubit(
+      settingsCubit: settingsCubit,
+      toasterService: _MockToasterService(),
+      timerService: timerService,
+      integrationsCubit: _MockIntegrationsCubit(),
+    );
+
+    await cubit.initialize();
+    await cubit.start(_match, 10, 0, const Duration(minutes: 2));
+    final runId = timerService.messages.single.runId;
+
+    await timerService.taskDataCallback!(
+      MainMessage(runId: runId, remainingMilliseconds: 0).toJson(),
+    );
+
+    expect(cubit.state.timer, isNull);
+    expect(timerService.stopCount, 1);
+
+    await cubit.close();
+  });
+
+  test('stops active timer when requestedStatus is stopped', () async {
+    final timerService = _TimerService()..notificationPermission.complete(true);
+    final settingsCubit = _FakeSettingsCubit();
+    final cubit = TimerCubit(
+      settingsCubit: settingsCubit,
+      toasterService: _MockToasterService(),
+      timerService: timerService,
+      integrationsCubit: _MockIntegrationsCubit(),
+    );
+
+    await cubit.initialize();
+    await cubit.start(_match, 10, 0, const Duration(minutes: 2));
+    final runId = timerService.messages.single.runId;
+
+    await timerService.taskDataCallback!(
+      MainMessage(runId: runId, remainingMilliseconds: 50000, requestedStatus: TimerStatus.stopped).toJson(),
+    );
+
+    expect(cubit.state.timer, isNull);
+    expect(timerService.stopCount, 1);
+
+    await cubit.close();
+  });
+
+  test('ignores malformed data and mismatched runIds gracefully', () async {
+    final timerService = _TimerService()..notificationPermission.complete(true);
+    final settingsCubit = _FakeSettingsCubit();
+    final cubit = TimerCubit(
+      settingsCubit: settingsCubit,
+      toasterService: _MockToasterService(),
+      timerService: timerService,
+      integrationsCubit: _MockIntegrationsCubit(),
+    );
+
+    await cubit.initialize();
+    await cubit.start(_match, 10, 0, const Duration(minutes: 2));
+
+    // Malformed JSON should not throw
+    await timerService.taskDataCallback!('not-json');
+    expect(cubit.state.timer?.remainingMilliseconds, const Duration(minutes: 2).inMilliseconds);
+
+    // Mismatched runId should be ignored
+    await timerService.taskDataCallback!(
+      MainMessage(runId: 'wrong-run-id', remainingMilliseconds: 1000).toJson(),
+    );
+    expect(cubit.state.timer?.remainingMilliseconds, const Duration(minutes: 2).inMilliseconds);
+
+    await cubit.close();
+  });
+
+  test('pauses and resumes from cubit correctly update task messages', () async {
+    final timerService = _TimerService()..notificationPermission.complete(true);
+    final settingsCubit = _FakeSettingsCubit();
+    final cubit = TimerCubit(
+      settingsCubit: settingsCubit,
+      toasterService: _MockToasterService(),
+      timerService: timerService,
+      integrationsCubit: _MockIntegrationsCubit(),
+    );
+
+    await cubit.initialize();
+    await cubit.start(_match, 10, 0, const Duration(minutes: 2));
+    expect(timerService.messages.last.status, TimerStatus.started);
+
+    await cubit.pause();
+    expect(timerService.messages, hasLength(2));
+    expect(timerService.messages.last.status, TimerStatus.paused);
+    expect(cubit.state.timer?.status, TimerStatus.paused);
+
+    // Redundant pause does not produce extra task message
+    await cubit.pause();
+    expect(timerService.messages, hasLength(2));
+
+    await cubit.resume();
+    expect(timerService.messages, hasLength(3));
+    expect(timerService.messages.last.status, TimerStatus.started);
+    expect(cubit.state.timer?.status, TimerStatus.started);
+
+    await cubit.close();
+  });
 }
 
 final _match = MatchModel(
