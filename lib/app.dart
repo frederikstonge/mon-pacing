@@ -9,7 +9,7 @@ import 'cubits/settings/settings_cubit.dart';
 import 'cubits/settings/settings_state.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'models/theme_type.dart';
-import 'router/router.dart';
+import 'services/app_navigation_service.dart';
 import 'themes/themes.dart';
 
 class App extends StatelessWidget {
@@ -63,7 +63,7 @@ class App extends StatelessWidget {
                 supportedLocales: S.supportedLocales,
                 locale: Locale(settingsState.language),
                 // Router
-                routerConfig: router,
+                routerConfig: context.read<AppNavigationService>().routerConfig,
                 debugShowCheckedModeBanner: false,
               ),
             ),

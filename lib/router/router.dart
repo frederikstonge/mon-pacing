@@ -1,159 +1,66 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:kaisel/kaisel.dart';
 
-import '../cubits/onboarding/onboarding_cubit.dart';
-import '../pages/categories_search/categories_search_page_shell.dart';
-import '../pages/match/match_page_shell.dart';
-import '../pages/matches/matches_page_shell.dart';
-import '../pages/matches_search/matches_search_page_shell.dart';
-import '../pages/onboarding/onboarding_page_view.dart';
-import '../pages/pacing/pacing_page_shell.dart';
-import '../pages/pacings/pacings_page_shell.dart';
-import '../pages/pacings_search/pacings_search_page_shell.dart';
-import '../pages/penalties_search/penalties_search_page_shell.dart';
-import '../pages/scanner/scanner_page_shell.dart';
-import '../pages/settings/settings_page_shell.dart';
-import '../pages/shell/shell_page_shell.dart';
-import '../pages/tags_search/tags_search_page_shell.dart';
-import '../pages/teams/teams_page_shell.dart';
-import '../pages/teams_search/teams_search_page_shell.dart';
 import 'routes.dart';
 
-final rootNavigatorKey = GlobalKey<NavigatorState>();
-final router = GoRouter(
-  observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
-  navigatorKey: rootNavigatorKey,
-  redirect: (context, state) {
-    // Redirect to onboarding if the user has not completed it
-    final isOnboardingDone = context.read<OnboardingCubit>().state.onboardingFinished;
-    if (!isOnboardingDone && state.path != '/onboarding') {
-      return '/onboarding';
+class MatchNotificationCodec implements KaiselConfigCodec<AppRoute> {
+  const MatchNotificationCodec();
+
+  @override
+  Uri encode(KaiselConfig<AppRoute> config) {
+    return switch ((config.mainStack.last, config.nestedState)) {
+      (
+        TabsRoute(),
+        KaiselShellConfig(
+          activeBranch: 1,
+          activeBranchStack: [
+            MatchesTabRoute(),
+            MatchDetailsRoute(:final id, :final improvisationId, :final durationIndex),
+          ],
+        ),
+      ) =>
+        _matchUri(id, improvisationId, durationIndex),
+      _ => Uri(path: '/'),
+    };
+  }
+
+  @override
+  KaiselConfig<AppRoute>? decode(Uri uri) {
+    if (uri.pathSegments case ['matches', 'details', final rawId]) {
+      final id = int.tryParse(rawId);
+      final improvisationId = _optionalInt(uri, 'improvisationId');
+      final durationIndex = _optionalInt(uri, 'durationIndex');
+      if (id == null || _isInvalidOptionalInt(uri, 'improvisationId') || _isInvalidOptionalInt(uri, 'durationIndex')) {
+        return null;
+      }
+      return KaiselConfig<AppRoute>(
+        mainStack: const [TabsRoute()],
+        nestedState: KaiselShellConfig(
+          activeBranch: 1,
+          activeBranchStack: [
+            const MatchesTabRoute(),
+            MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
+          ],
+        ),
+      );
     }
-    return null; // No redirection needed
-  },
-  initialLocation: '/pacings',
-  routes: [
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return ShellPageShell(navigationShell: navigationShell);
-      },
-      branches: [
-        StatefulShellBranch(
-          initialLocation: '/pacings',
-          routes: [
-            GoRoute(
-              name: Routes.pacings,
-              path: '/pacings',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: PacingsPageShell(key: state.pageKey));
-              },
-              routes: [
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.pacing,
-                  path: 'details/:id',
-                  builder: (context, state) =>
-                      PacingPageShell(key: state.pageKey, id: int.parse(state.pathParameters['id']!)),
-                ),
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.pacingsSearch,
-                  path: 'search',
-                  builder: (context, state) => PacingsSearchPageShell(key: state.pageKey),
-                ),
-              ],
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          initialLocation: '/matches',
-          routes: [
-            GoRoute(
-              name: Routes.matches,
-              path: '/matches',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: MatchesPageShell(key: state.pageKey));
-              },
-              routes: [
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.match,
-                  path: 'details/:id',
-                  builder: (context, state) {
-                    final improvisationIdQuery = state.uri.queryParameters['improvisationId'];
-                    final improvisationId = improvisationIdQuery != null ? int.parse(improvisationIdQuery) : null;
-                    final durationIndexQuery = state.uri.queryParameters['durationIndex'];
-                    final durationIndex = durationIndexQuery != null ? int.parse(durationIndexQuery) : null;
-                    return MatchPageShell(
-                      key: state.pageKey,
-                      id: int.parse(state.pathParameters['id']!),
-                      improvisationId: improvisationId,
-                      durationIndex: durationIndex,
-                    );
-                  },
-                ),
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.matchesSearch,
-                  path: 'search',
-                  builder: (context, state) => MatchesSearchPageShell(key: state.pageKey),
-                ),
-              ],
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          initialLocation: '/teams',
-          routes: [
-            GoRoute(
-              name: Routes.teams,
-              path: '/teams',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: TeamsPageShell(key: state.pageKey));
-              },
-              routes: [
-                GoRoute(
-                  parentNavigatorKey: rootNavigatorKey,
-                  name: Routes.teamsSearch,
-                  path: 'search',
-                  builder: (context, state) => TeamsSearchPageShell(key: state.pageKey),
-                ),
-              ],
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          initialLocation: '/settings',
-          routes: [
-            GoRoute(
-              name: Routes.settings,
-              path: '/settings',
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: SettingsPageShell(key: state.pageKey));
-              },
-            ),
-          ],
-        ),
-      ],
-    ),
-    GoRoute(name: Routes.onboarding, path: '/onboarding', builder: (context, state) => const OnboardingPageView()),
-    GoRoute(name: Routes.scanner, path: '/scanner', builder: (context, state) => const ScannerPageShell()),
-    GoRoute(
-      name: Routes.categoriesSearch,
-      path: '/categories/search',
-      builder: (context, state) => CategoriesSearchPageShell(key: state.pageKey),
-    ),
-    GoRoute(
-      name: Routes.penaltiesSearch,
-      path: '/penalties/search',
-      builder: (context, state) => PenaltiesSearchPageShell(key: state.pageKey),
-    ),
-    GoRoute(
-      name: Routes.tagsSearch,
-      path: '/tags/search',
-      builder: (context, state) => TagsSearchPageShell(key: state.pageKey),
-    ),
-  ],
-);
+    return null;
+  }
+
+  Uri _matchUri(int id, int? improvisationId, int? durationIndex) {
+    final queryParameters = {
+      if (improvisationId != null) 'improvisationId': '$improvisationId',
+      if (durationIndex != null) 'durationIndex': '$durationIndex',
+    };
+    return Uri(path: '/matches/details/$id', queryParameters: queryParameters.isEmpty ? null : queryParameters);
+  }
+
+  int? _optionalInt(Uri uri, String key) {
+    final value = uri.queryParameters[key];
+    return value == null ? null : int.tryParse(value);
+  }
+
+  bool _isInvalidOptionalInt(Uri uri, String key) {
+    final value = uri.queryParameters[key];
+    return value != null && int.tryParse(value) == null;
+  }
+}

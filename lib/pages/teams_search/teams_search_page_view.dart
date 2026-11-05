@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/search/search_dialog.dart';
@@ -15,7 +15,7 @@ class TeamsSearchPageView extends StatelessWidget {
   const TeamsSearchPageView({super.key});
 
   static Future<TeamModel?> showDialog(BuildContext context) async {
-    return await GoRouter.of(context).pushNamed<TeamModel>(Routes.teamsSearch);
+    return await context.router<TeamsRoute>().pushForResult<TeamModel>(const TeamsSearchRoute());
   }
 
   @override
@@ -28,7 +28,7 @@ class TeamsSearchPageView extends StatelessWidget {
       hintText: S.of(context).search(category: S.of(context).teams),
       itemBuilder: (context, item) => InkWell(
         onTap: () {
-          Navigator.of(context).maybePop(item);
+          context.router<TeamsRoute>().pop(item);
         },
         child: ListTile(
           leading: TeamColorAvatar(color: Color(item.color)),
