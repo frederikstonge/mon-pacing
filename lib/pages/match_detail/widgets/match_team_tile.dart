@@ -82,7 +82,7 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
                   child: AColorPicker(initialColor: Color(widget.team.color), title: S.of(context).color),
                 );
                 if (newColor != null) {
-                  widget.onChanged.call(widget.team.copyWith(color: newColor.getIntvalue));
+                  await widget.onChanged.call(widget.team.copyWith(color: newColor.getIntvalue));
                 }
               },
               child: TeamColorAvatar(color: Color(widget.team.color), height: 36, width: 36),
