@@ -18,7 +18,7 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
-    - lib/**.freezed.dart
+    - lib/**.mapper.dart
     - lib/**.g.dart
 
 linter:
