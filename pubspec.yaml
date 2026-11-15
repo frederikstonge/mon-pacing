@@ -60,10 +60,9 @@ dev_dependencies:
   objectbox_generator: any
 
 dependency_overrides: 
-  analyzer: 14.4.0
-  objectbox: 6.0.0-preview.5
-  objectbox_flutter_libs: 6.0.0-preview.5
-  objectbox_generator: 6.0.0-preview.5
+  objectbox: 6.0.0-preview.6
+  objectbox_flutter_libs: 6.0.0-preview.6
+  objectbox_generator: 6.0.0-preview.6
 
 flutter:
   uses-material-design: true
