@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../extensions/duration_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../bottom_sheet/bottom_sheet_dialog.dart';
+import '../../services/router_service.dart';
 import '../buttons/loading_icon_button.dart';
-import '../duration_picker/duration_picker.dart';
 
 class ImprovisationDurations extends StatelessWidget {
   final String label;
@@ -140,9 +140,9 @@ class _ImprovisationDurationItemState extends State<ImprovisationDurationItem> {
       readOnly: true,
       controller: _textController,
       onTap: () async {
-        final newDuration = await BottomSheetDialog.showDialog<Duration>(
-          context: context,
-          child: DurationPicker(title: S.of(context).duration, initialDuration: widget.duration),
+        final newDuration = await context.read<RouterService>().showDurationPickerModal(
+          title: S.of(context).duration,
+          initialDuration: widget.duration,
         );
 
         if (newDuration != null) {

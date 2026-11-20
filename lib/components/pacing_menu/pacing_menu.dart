@@ -1,30 +1,23 @@
-import 'dart:async';
-
 import 'package:material_ui/material_ui.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/pacing_model.dart';
+import '../../../router/routes.dart';
 import '../bottom_sheet/bottom_sheet_appbar.dart';
 import '../bottom_sheet/bottom_sheet_scaffold.dart';
 
 class PacingMenu extends StatelessWidget {
   final PacingModel pacing;
-  final FutureOr<void> Function() startMatch;
-  final FutureOr<void> Function()? edit;
-  final FutureOr<void> Function()? editDetails;
-  final FutureOr<void> Function() share;
-  final FutureOr<void> Function() duplicate;
-  final FutureOr<void> Function() delete;
+  final bool showEdit;
+  final bool showEditDetails;
+  final ValueChanged<PacingMenuAction> onSelected;
 
   const PacingMenu({
     super.key,
     required this.pacing,
-    required this.startMatch,
-    required this.share,
-    required this.duplicate,
-    required this.delete,
-    this.edit,
-    this.editDetails,
+    required this.onSelected,
+    this.showEdit = false,
+    this.showEditDetails = false,
   });
 
   @override
@@ -36,12 +29,9 @@ class PacingMenu extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
-          if (editDetails != null) ...[
+          if (showEditDetails) ...[
             InkWell(
-              onTap: () async {
-                Navigator.of(context).pop();
-                await editDetails!.call();
-              },
+              onTap: () => onSelected(PacingMenuAction.editDetails),
               child: ListTile(
                 leading: const Icon(Icons.edit_document),
                 title: Text(S.of(context).editDetails, maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -49,21 +39,15 @@ class PacingMenu extends StatelessWidget {
             ),
           ],
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await startMatch.call();
-            },
+            onTap: () => onSelected(PacingMenuAction.startMatch),
             child: ListTile(
               leading: const Icon(Icons.play_arrow),
               title: Text(S.of(context).startMatch, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
-          if (edit != null) ...[
+          if (showEdit) ...[
             InkWell(
-              onTap: () async {
-                Navigator.of(context).pop();
-                await edit!.call();
-              },
+              onTap: () => onSelected(PacingMenuAction.edit),
               child: ListTile(
                 leading: const Icon(Icons.edit),
                 title: Text(S.of(context).edit, maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -71,30 +55,21 @@ class PacingMenu extends StatelessWidget {
             ),
           ],
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await share.call();
-            },
+            onTap: () => onSelected(PacingMenuAction.share),
             child: ListTile(
               leading: const Icon(Icons.share),
               title: Text(S.of(context).share, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await duplicate.call();
-            },
+            onTap: () => onSelected(PacingMenuAction.duplicate),
             child: ListTile(
               leading: const Icon(Icons.copy),
               title: Text(S.of(context).duplicate, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await delete.call();
-            },
+            onTap: () => onSelected(PacingMenuAction.delete),
             child: ListTile(
               leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
               title: Text(

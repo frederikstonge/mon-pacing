@@ -10,14 +10,19 @@ class BottomSheetScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = PrimaryScrollController.maybeOf(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (appBar != null) ...[appBar!],
         if (isBodyExpanded) ...[
-          Expanded(child: SingleChildScrollView(child: body)),
+          Expanded(
+            child: SingleChildScrollView(controller: scrollController, child: body),
+          ),
         ] else ...[
-          Flexible(child: SingleChildScrollView(child: body)),
+          Flexible(
+            child: SingleChildScrollView(controller: scrollController, child: body),
+          ),
         ],
         if (bottom != null) ...[bottom!],
       ],

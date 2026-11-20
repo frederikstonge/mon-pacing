@@ -45,6 +45,13 @@ class TaskMessageMapper extends ClassMapperBase<TaskMessage> {
     'notificationTitle',
     _$notificationTitle,
   );
+  static int _$sequence(TaskMessage v) => v.sequence;
+  static const Field<TaskMessage, int> _f$sequence = Field(
+    'sequence',
+    _$sequence,
+    opt: true,
+    def: 0,
+  );
 
   @override
   final MappableFields<TaskMessage> fields = const {
@@ -53,6 +60,7 @@ class TaskMessageMapper extends ClassMapperBase<TaskMessage> {
     #status: _f$status,
     #hapticFeedback: _f$hapticFeedback,
     #notificationTitle: _f$notificationTitle,
+    #sequence: _f$sequence,
   };
 
   static TaskMessage _instantiate(DecodingData data) {
@@ -62,6 +70,7 @@ class TaskMessageMapper extends ClassMapperBase<TaskMessage> {
       status: data.dec(_f$status),
       hapticFeedback: data.dec(_f$hapticFeedback),
       notificationTitle: data.dec(_f$notificationTitle),
+      sequence: data.dec(_f$sequence),
     );
   }
 
@@ -131,6 +140,7 @@ abstract class TaskMessageCopyWith<$R, $In extends TaskMessage, $Out>
     TimerStatus? status,
     bool? hapticFeedback,
     String? notificationTitle,
+    int? sequence,
   });
   TaskMessageCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -150,6 +160,7 @@ class _TaskMessageCopyWithImpl<$R, $Out>
     TimerStatus? status,
     bool? hapticFeedback,
     String? notificationTitle,
+    int? sequence,
   }) => $apply(
     FieldCopyWithData({
       if (runId != null) #runId: runId,
@@ -157,6 +168,7 @@ class _TaskMessageCopyWithImpl<$R, $Out>
       if (status != null) #status: status,
       if (hapticFeedback != null) #hapticFeedback: hapticFeedback,
       if (notificationTitle != null) #notificationTitle: notificationTitle,
+      if (sequence != null) #sequence: sequence,
     }),
   );
   @override
@@ -172,6 +184,7 @@ class _TaskMessageCopyWithImpl<$R, $Out>
       #notificationTitle,
       or: $value.notificationTitle,
     ),
+    sequence: data.get(#sequence, or: $value.sequence),
   );
 
   @override

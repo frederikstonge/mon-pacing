@@ -2,10 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -17,7 +14,8 @@ import '../../cubits/teams/teams_status.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../team_detail/team_detail_page_shell.dart';
+import '../../router/routes.dart';
+import '../../services/router_service.dart';
 import 'widgets/team_card.dart';
 
 class TeamsPageView extends StatefulWidget {
@@ -37,18 +35,11 @@ class _TeamsPageViewState extends State<TeamsPageView> {
             return Scaffold(
               floatingActionButton: FloatingActionButton(
                 heroTag: 'teams_fab',
-                onPressed: () {
-                  BottomSheetDialog.showDialog(
-                    context: context,
-                    child: TeamDetailPageShell(
-                      editMode: false,
-                      onConfirm: (team, dialogContext) async {
-                        final navigator = Navigator.of(dialogContext);
-                        await context.read<TeamsCubit>().add(team);
-                        navigator.pop();
-                      },
-                    ),
-                  );
+                onPressed: () async {
+                  final team = await context.read<RouterService>().showTeamDetailModal(editMode: false);
+                  if (team != null && context.mounted) {
+                    await context.read<TeamsCubit>().add(team);
+                  }
                 },
                 tooltip: S.of(context).createNewTeamTooltip,
                 child: const Icon(Icons.add),
@@ -107,46 +98,45 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                           return TeamCard(
                             team: team,
                             onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                            edit: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: TeamDetailPageShell(
-                                team: team,
-                                editMode: true,
-                                onConfirm: (team, dialogContext) async {
-                                  final navigator = Navigator.of(dialogContext);
-                                  await context.read<TeamsCubit>().edit(team);
-                                  navigator.pop();
-                                },
-                              ),
-                            ),
-                            shouldDelete: () => MessageBoxDialog.questionShow(
-                              context,
-                              S
+                            edit: () async {
+                              final updatedTeam = await context
+                                  .read<RouterService>()
+                                  .showTeamDetailModal(team: team, editMode: true);
+                              if (updatedTeam != null && context.mounted) {
+                                await context.read<TeamsCubit>().edit(updatedTeam);
+                              }
+                            },
+                            shouldDelete: () => context.read<RouterService>().showQuestion(
+                              question: S
                                   .of(context)
                                   .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: team.name),
-                              S.of(context).delete,
-                              S.of(context).cancel,
+                              yesLabel: S.of(context).delete,
+                              noLabel: S.of(context).cancel,
                             ),
                             delete: () => context.read<TeamsCubit>().delete(team),
-                            share: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: ShareMenu(
-                                shareFile: () => context.read<TeamsCubit>().shareFile(team),
-                                saveFile: () => context.read<TeamsCubit>().saveFile(team),
-                              ),
-                            ),
-                            duplicate: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: TeamDetailPageShell(
-                                editMode: false,
-                                team: team,
-                                onConfirm: (team, dialogContext) async {
-                                  final navigator = Navigator.of(dialogContext);
-                                  await context.read<TeamsCubit>().add(team);
-                                  navigator.pop();
-                                },
-                              ),
-                            ),
+                            share: () async {
+                              final action = await context.read<RouterService>().showShareMenuModal(
+                                showShareFile: true,
+                                showSaveFile: true,
+                              );
+                              if (!context.mounted || action == null) return;
+                              switch (action) {
+                                case ShareMenuAction.shareFile:
+                                  await context.read<TeamsCubit>().shareFile(team);
+                                case ShareMenuAction.saveFile:
+                                  await context.read<TeamsCubit>().saveFile(team);
+                                case ShareMenuAction.shareText:
+                                  break;
+                              }
+                            },
+                            duplicate: () async {
+                              final duplicate = await context
+                                  .read<RouterService>()
+                                  .showTeamDetailModal(team: team, editMode: false);
+                              if (duplicate != null && context.mounted) {
+                                await context.read<TeamsCubit>().add(duplicate);
+                              }
+                            },
                           );
                         },
                       ),

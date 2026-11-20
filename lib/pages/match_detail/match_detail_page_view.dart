@@ -5,15 +5,12 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet/bottom_sheet_scaffold.dart';
 import '../../components/buttons/loading_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/form/tags_field_element.dart';
 import '../../components/form/text_field_element.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/text_header/text_header.dart';
@@ -23,6 +20,7 @@ import '../../models/constants.dart';
 import '../../models/match_model.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../repositories/tags_repository.dart';
+import '../../services/router_service.dart';
 import '../../validators/validators.dart';
 import 'cubits/match_detail_cubit.dart';
 import 'cubits/match_detail_state.dart';
@@ -144,13 +142,15 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                               !matchDetailState.editMode && matchDetailState.match.teams.length > Constants.minimumTeams
                               ? () async {
                                   final cubit = context.read<MatchDetailCubit>();
-                                  final result = await MessageBoxDialog.questionShow(
-                                    context,
-                                    S
+                                  final result = await context.read<RouterService>().showQuestion(
+                                    question: S
                                         .of(context)
-                                        .areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: e.name),
-                                    S.of(context).delete,
-                                    S.of(context).cancel,
+                                        .areYouSureActionName(
+                                          action: S.of(context).delete.toLowerCase(),
+                                          name: e.name,
+                                        ),
+                                    yesLabel: S.of(context).delete,
+                                    noLabel: S.of(context).cancel,
                                   );
 
                                   if (result == true) {
@@ -217,16 +217,15 @@ class _MatchDetailPageViewState extends State<MatchDetailPageView> {
                             PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
                           }),
                           trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            BottomSheetDialog.showDialog(
-                              context: context,
-                              child: PenaltiesImpactTypeView(
-                                currentPenaltiesImpactType: matchDetailState.match.penaltiesImpactType,
-                                onChanged: (penaltiesImpactType) => context.read<MatchDetailCubit>().edit(
-                                  matchDetailState.match.copyWith(penaltiesImpactType: penaltiesImpactType),
-                                ),
-                              ),
+                          onTap: () async {
+                            final type = await context.read<RouterService>().showPenaltiesImpactTypeModal(
+                              matchDetailState.match.penaltiesImpactType,
                             );
+                            if (type != null && context.mounted) {
+                              context.read<MatchDetailCubit>().edit(
+                                matchDetailState.match.copyWith(penaltiesImpactType: type),
+                              );
+                            }
                           },
                         ),
                         Padding(

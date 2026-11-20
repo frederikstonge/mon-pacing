@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../../components/buttons/loading_icon_button.dart';
-import '../../../components/color_picker/color_picker.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/settings_tile/settings_tile.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
@@ -12,6 +11,7 @@ import '../../../extensions/color_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/performer_model.dart';
 import '../../../models/team_model.dart';
+import '../../../services/router_service.dart';
 import '../../../validators/validators.dart';
 import '../../team_detail/widgets/team_performers.dart';
 import '../../teams_search/teams_search_page_view.dart';
@@ -77,9 +77,9 @@ class _MatchTeamTileState extends State<MatchTeamTile> {
           SettingsTile(
             leading: InkWell(
               onTap: () async {
-                final newColor = await BottomSheetDialog.showDialog<Color>(
-                  context: context,
-                  child: AColorPicker(initialColor: Color(widget.team.color), title: S.of(context).color),
+                final newColor = await context.read<RouterService>().showColorPickerModal(
+                  initialColor: Color(widget.team.color),
+                  title: S.of(context).color,
                 );
                 if (newColor != null) {
                   await widget.onChanged.call(widget.team.copyWith(color: newColor.getIntvalue));

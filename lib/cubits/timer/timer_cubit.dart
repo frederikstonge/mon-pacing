@@ -24,6 +24,9 @@ class TimerCubit extends Cubit<TimerState> {
   final IntegrationsCubit integrationsCubit;
   Future<void> _pendingOperation = Future<void>.value();
   String? _activeRunId;
+  String? _sentTaskRunId;
+  TimerStatus? _sentTaskStatus;
+  int _taskSequence = 0;
 
   TimerCubit({
     required this.settingsCubit,
@@ -33,8 +36,8 @@ class TimerCubit extends Cubit<TimerState> {
   }) : super(const TimerState());
 
   Future<void> initialize() async {
-    await _requestPermissions();
     timerService.initialize(taskDataCallback: _onReceiveData);
+    await _requestPermissions();
   }
 
   Future<void> start(MatchModel match, int improvisationId, int durationIndex, Duration duration) {
@@ -57,10 +60,13 @@ class TimerCubit extends Cubit<TimerState> {
 
       final path = '/matches/details/${match.id}?improvisationId=$improvisationId&durationIndex=$durationIndex';
       final runId = const Uuid().v4();
-      _activeRunId = runId;
 
+      _activeRunId = null;
+      _sentTaskRunId = null;
+      _sentTaskStatus = null;
       await timerService.start(path, enableWakelock: settingsCubit.state.enableWakelock);
 
+      _activeRunId = runId;
       _updateTimer(timer: timer, runId: runId);
     });
   }
@@ -73,7 +79,10 @@ class TimerCubit extends Cubit<TimerState> {
         return;
       }
 
-      _updateTimer(timer: timer.copyWith(status: TimerStatus.started), runId: runId);
+      _updateTimer(
+        timer: timer.copyWith(status: TimerStatus.started),
+        runId: runId,
+      );
     });
   }
 
@@ -85,16 +94,15 @@ class TimerCubit extends Cubit<TimerState> {
         return;
       }
 
-      _updateTimer(timer: timer.copyWith(status: TimerStatus.paused), runId: runId);
+      _updateTimer(
+        timer: timer.copyWith(status: TimerStatus.paused),
+        runId: runId,
+      );
     });
   }
 
   Future<void> stop() {
-    _activeRunId = null;
-    return _serialize(() async {
-      emit(const TimerState());
-      await timerService.stop();
-    });
+    return _serialize(_stopActiveTimer);
   }
 
   @override
@@ -117,31 +125,45 @@ class TimerCubit extends Cubit<TimerState> {
 
   @override
   Future<void> close() async {
-    timerService.dispose(taskDataCallback: _onReceiveData);
     await stop();
-    return await super.close();
+    timerService.dispose(taskDataCallback: _onReceiveData);
+    return super.close();
   }
 
-  Future<void> _onReceiveData(dynamic data) async {
-    final event = MainMessageMapper.fromJson(data);
-    final timer = state.timer;
-    if (timer == null || event.runId != _activeRunId) {
-      return;
-    }
+  Future<void> _onReceiveData(dynamic data) {
+    return _serialize(() async {
+      final MainMessage event;
+      try {
+        event = MainMessageMapper.fromJson(data is String ? data : data.toString());
+      } catch (_) {
+        return;
+      }
 
-    if (event.requestedStatus == TimerStatus.stopped || event.remainingMilliseconds <= 0) {
-      await stop();
-      return;
-    }
+      final timer = state.timer;
+      if (timer == null || event.runId != _activeRunId) {
+        return;
+      }
 
-    _updateTimer(
-      timer: timer.copyWith(
-        remainingMilliseconds: event.remainingMilliseconds,
-        status: event.requestedStatus ?? timer.status,
-      ),
-      runId: event.runId,
-      sendToTask: event.requestedStatus != null,
-    );
+      if (event.requestedStatus == TimerStatus.stopped || event.remainingMilliseconds <= 0) {
+        await _stopActiveTimer();
+        return;
+      }
+
+      final requestedStatus = event.requestedStatus;
+      if (requestedStatus != null && requestedStatus != TimerStatus.started && requestedStatus != TimerStatus.paused) {
+        return;
+      }
+
+      final remainingMilliseconds = event.remainingMilliseconds.clamp(
+        0,
+        timer.durationInSeconds * Duration.millisecondsPerSecond,
+      );
+      _updateTimer(
+        timer: timer.copyWith(remainingMilliseconds: remainingMilliseconds, status: requestedStatus ?? timer.status),
+        runId: event.runId,
+        sendToTask: requestedStatus != null,
+      );
+    });
   }
 
   void _updateTimer({
@@ -150,23 +172,35 @@ class TimerCubit extends Cubit<TimerState> {
     required String runId,
     bool sendToTask = true,
   }) {
-    if (timer != state.timer) {
+    final previousTimer = state.timer;
+    if (timer != previousTimer || integration != null) {
       emit(TimerState(timer: timer, integration: integration ?? state.integration));
-
-      if (!sendToTask) {
-        return;
-      }
-
-      final request = TaskMessage(
-        runId: runId,
-        status: timer.status,
-        durationInSeconds: timer.durationInSeconds,
-        hapticFeedback: timer.hapticFeedback,
-        notificationTitle: timer.notificationTitle,
-      );
-
-      timerService.sendDataToTask(request);
     }
+
+    if (!sendToTask || (_sentTaskRunId == runId && _sentTaskStatus == timer.status)) {
+      return;
+    }
+
+    _sentTaskRunId = runId;
+    _sentTaskStatus = timer.status;
+    final request = TaskMessage(
+      runId: runId,
+      status: timer.status,
+      durationInSeconds: timer.durationInSeconds,
+      hapticFeedback: timer.hapticFeedback,
+      notificationTitle: timer.notificationTitle,
+      sequence: ++_taskSequence,
+    );
+
+    timerService.sendDataToTask(request);
+  }
+
+  Future<void> _stopActiveTimer() async {
+    _activeRunId = null;
+    _sentTaskRunId = null;
+    _sentTaskStatus = null;
+    emit(const TimerState());
+    await timerService.stop();
   }
 
   Future<void> _serialize(Future<void> Function() operation) {

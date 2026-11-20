@@ -30,10 +30,22 @@ class MainMessageMapper extends ClassMapperBase<MainMessage> {
     'remainingMilliseconds',
     _$remainingMilliseconds,
   );
+  static TimerStatus? _$status(MainMessage v) => v.status;
+  static const Field<MainMessage, TimerStatus> _f$status = Field(
+    'status',
+    _$status,
+    opt: true,
+  );
   static TimerStatus? _$requestedStatus(MainMessage v) => v.requestedStatus;
   static const Field<MainMessage, TimerStatus> _f$requestedStatus = Field(
     'requestedStatus',
     _$requestedStatus,
+    opt: true,
+  );
+  static int? _$acknowledgedSequence(MainMessage v) => v.acknowledgedSequence;
+  static const Field<MainMessage, int> _f$acknowledgedSequence = Field(
+    'acknowledgedSequence',
+    _$acknowledgedSequence,
     opt: true,
   );
 
@@ -41,14 +53,18 @@ class MainMessageMapper extends ClassMapperBase<MainMessage> {
   final MappableFields<MainMessage> fields = const {
     #runId: _f$runId,
     #remainingMilliseconds: _f$remainingMilliseconds,
+    #status: _f$status,
     #requestedStatus: _f$requestedStatus,
+    #acknowledgedSequence: _f$acknowledgedSequence,
   };
 
   static MainMessage _instantiate(DecodingData data) {
     return MainMessage(
       runId: data.dec(_f$runId),
       remainingMilliseconds: data.dec(_f$remainingMilliseconds),
+      status: data.dec(_f$status),
       requestedStatus: data.dec(_f$requestedStatus),
+      acknowledgedSequence: data.dec(_f$acknowledgedSequence),
     );
   }
 
@@ -115,7 +131,9 @@ abstract class MainMessageCopyWith<$R, $In extends MainMessage, $Out>
   $R call({
     String? runId,
     int? remainingMilliseconds,
+    TimerStatus? status,
     TimerStatus? requestedStatus,
+    int? acknowledgedSequence,
   });
   MainMessageCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -132,13 +150,18 @@ class _MainMessageCopyWithImpl<$R, $Out>
   $R call({
     String? runId,
     int? remainingMilliseconds,
+    Object? status = $none,
     Object? requestedStatus = $none,
+    Object? acknowledgedSequence = $none,
   }) => $apply(
     FieldCopyWithData({
       if (runId != null) #runId: runId,
       if (remainingMilliseconds != null)
         #remainingMilliseconds: remainingMilliseconds,
+      if (status != $none) #status: status,
       if (requestedStatus != $none) #requestedStatus: requestedStatus,
+      if (acknowledgedSequence != $none)
+        #acknowledgedSequence: acknowledgedSequence,
     }),
   );
   @override
@@ -148,7 +171,12 @@ class _MainMessageCopyWithImpl<$R, $Out>
       #remainingMilliseconds,
       or: $value.remainingMilliseconds,
     ),
+    status: data.get(#status, or: $value.status),
     requestedStatus: data.get(#requestedStatus, or: $value.requestedStatus),
+    acknowledgedSequence: data.get(
+      #acknowledgedSequence,
+      or: $value.acknowledgedSequence,
+    ),
   );
 
   @override

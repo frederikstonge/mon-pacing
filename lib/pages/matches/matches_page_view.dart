@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -20,6 +21,7 @@ import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../router/routes.dart';
+import '../../services/router_service.dart';
 import '../matches_search/matches_search_page_view.dart';
 import 'widgets/match_card.dart';
 
@@ -122,26 +124,25 @@ class _MatchesPageViewState extends State<MatchesPageView> {
   Future<void> _delete(BuildContext context, MatchModel match) => context.read<MatchesCubit>().delete(match);
 
   Future<bool?> _shouldDelete(BuildContext context, MatchModel match) {
-    return MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
-      S.of(context).delete,
-      S.of(context).cancel,
+    return context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
   }
 
   void _edit(BuildContext context, MatchModel match) =>
-      GoRouter.of(context).goNamed(Routes.match, pathParameters: {'id': '${match.id}'});
+      unawaited(context.read<RouterService>().showMatchDetails(id: match.id));
 
   Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
 
   Future<void> _onSearchPressed(BuildContext context) async {
-    final router = GoRouter.of(context);
+    final routerService = context.read<RouterService>();
     final result = await MatchesSearchPageView.showDialog(context);
-    if (result != null) {
-      router.goNamed(Routes.match, pathParameters: {'id': result.id.toString()});
+    if (result != null && context.mounted) {
+      await routerService.showMatchDetails(id: result.id);
     }
   }
 
-  Future<void> _onIntegrationPressed(BuildContext context) => context.pushNamed(Routes.scanner);
+  Future<void> _onIntegrationPressed(BuildContext context) => context.router<AppRoute>().push(const ScannerRoute());
 }

@@ -1,14 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/display_language/display_language.dart';
-import '../../components/duration_picker/duration_picker.dart';
-import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../cubits/onboarding/onboarding_cubit.dart';
@@ -19,8 +16,8 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../router/routes.dart';
+import '../../services/router_service.dart';
 import '../settings/widgets/improvisation_fields_order.dart';
-import '../settings/widgets/language_view.dart';
 import 'onboarding_slide.dart';
 
 class OnboardingPageView extends StatefulWidget {
@@ -87,17 +84,16 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                           title: Text(S.of(context).language),
                           subTitle: DisplayLanguage(locale: Locale(settingsState.language)),
                           trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            BottomSheetDialog.showDialog(
-                              context: context,
-                              child: LanguageView(
-                                currentLocale: Locale(settingsState.language),
-                                availableLocales: S.supportedLocales,
-                                onChanged: (locale) => context.read<SettingsCubit>().edit(
-                                  settingsState.copyWith(language: locale.toLanguageTag()),
-                                ),
-                              ),
+                          onTap: () async {
+                            final locale = await context.read<RouterService>().showLanguageModal(
+                              currentLocale: Locale(settingsState.language),
+                              availableLocales: S.supportedLocales,
                             );
+                            if (locale != null && context.mounted) {
+                              context.read<SettingsCubit>().edit(
+                                settingsState.copyWith(language: locale.toLanguageTag()),
+                              );
+                            }
                           },
                         ),
                       ],
@@ -166,12 +162,9 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () async {
                             final settingsCubit = context.read<SettingsCubit>();
-                            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                              context: context,
-                              child: DurationPicker(
-                                title: S.of(context).improvisationDurationInSeconds,
-                                initialDuration: Duration(seconds: settingsState.defaultImprovisationDurationInSeconds),
-                              ),
+                            final newDuration = await context.read<RouterService>().showDurationPickerModal(
+                              title: S.of(context).improvisationDurationInSeconds,
+                              initialDuration: Duration(seconds: settingsState.defaultImprovisationDurationInSeconds),
                             );
 
                             if (newDuration != null) {
@@ -198,12 +191,9 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () async {
                             final settingsCubit = context.read<SettingsCubit>();
-                            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                              context: context,
-                              child: DurationPicker(
-                                title: S.of(context).huddleTimer,
-                                initialDuration: Duration(seconds: settingsState.defaultHuddleTimerInSeconds),
-                              ),
+                            final newDuration = await context.read<RouterService>().showDurationPickerModal(
+                              title: S.of(context).huddleTimer,
+                              initialDuration: Duration(seconds: settingsState.defaultHuddleTimerInSeconds),
                             );
 
                             if (newDuration != null) {
@@ -230,12 +220,9 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () async {
                             final settingsCubit = context.read<SettingsCubit>();
-                            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                              context: context,
-                              child: DurationPicker(
-                                title: S.of(context).timeBuffer,
-                                initialDuration: Duration(seconds: settingsState.defaultTimeBufferInSeconds),
-                              ),
+                            final newDuration = await context.read<RouterService>().showDurationPickerModal(
+                              title: S.of(context).timeBuffer,
+                              initialDuration: Duration(seconds: settingsState.defaultTimeBufferInSeconds),
                             );
 
                             if (newDuration != null) {
@@ -344,16 +331,15 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                                 PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
                               }),
                               trailing: const Icon(Icons.chevron_right),
-                              onTap: () {
-                                BottomSheetDialog.showDialog(
-                                  context: context,
-                                  child: PenaltiesImpactTypeView(
-                                    currentPenaltiesImpactType: settingsState.defaultPenaltiesImpactType,
-                                    onChanged: (penaltiesImpactType) => context.read<SettingsCubit>().edit(
-                                      settingsState.copyWith(defaultPenaltiesImpactType: penaltiesImpactType),
-                                    ),
-                                  ),
-                                );
+                              onTap: () async {
+                                final type = await context
+                                    .read<RouterService>()
+                                    .showPenaltiesImpactTypeModal(settingsState.defaultPenaltiesImpactType);
+                                if (type != null && context.mounted) {
+                                  context.read<SettingsCubit>().edit(
+                                    settingsState.copyWith(defaultPenaltiesImpactType: type),
+                                  );
+                                }
                               },
                             ),
                             Padding(
@@ -483,7 +469,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
                           }
 
                           context.read<OnboardingCubit>().finishOnboarding();
-                          context.goNamed(Routes.pacings);
+                          context.router<AppRoute>().set(const [TabsRoute()]);
                         },
                         child: Text(S.of(context).onboardingDone),
                       ),

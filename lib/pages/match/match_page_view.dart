@@ -1,15 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
-import '../../components/match_menu/match_menu.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
@@ -24,11 +20,9 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/penalty_model.dart';
+import '../../router/routes.dart';
+import '../../services/router_service.dart';
 import '../../services/toaster_service.dart';
-import '../match_detail/match_detail_page_shell.dart';
-import '../match_improvisation/match_improvisation_shell.dart';
-import '../match_penalty/match_penalty_shell.dart';
-import '../match_scoreboard/match_scoreboard_shell.dart';
 import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
 import 'cubits/match_status.dart';
@@ -130,20 +124,21 @@ class _MatchPageViewState extends State<MatchPageView> {
                                     ],
                                     LoadingIconButton(
                                       tooltip: S.of(context).more,
-                                      onPressed: () => BottomSheetDialog.showDialog(
-                                        context: context,
-                                        child: MatchMenu(
+                                      onPressed: () async {
+                                        final action = await context.read<RouterService>().showMatchMenuModal(
                                           match: match,
-                                          editDetails: match.integrationId == null
-                                              ? () async {
-                                                  await _editDetails(context, match);
-                                                }
-                                              : null,
-                                          delete: () async {
+                                          showEditDetails: match.integrationId == null,
+                                        );
+                                        if (!context.mounted || action == null) return;
+                                        switch (action) {
+                                          case MatchMenuAction.editDetails:
+                                            await _editDetails(context, match);
+                                          case MatchMenuAction.delete:
                                             await _delete(context, match);
-                                          },
-                                        ),
-                                      ),
+                                          case MatchMenuAction.edit:
+                                            break;
+                                        }
+                                      },
                                       icon: const Icon(Icons.more_vert),
                                     ),
                                   ],
@@ -255,21 +250,28 @@ class _MatchPageViewState extends State<MatchPageView> {
     );
   }
 
-  Future<void> _share(BuildContext context, MatchModel match) => BottomSheetDialog.showDialog(
-    context: context,
-    child: ShareMenu(
-      shareFile: () => context.read<MatchCubit>().shareFile(),
-      saveFile: () => context.read<MatchCubit>().saveFile(),
-    ),
-  );
+  Future<void> _share(BuildContext context, MatchModel match) async {
+    final action = await context.read<RouterService>().showShareMenuModal(
+      showShareFile: true,
+      showSaveFile: true,
+    );
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case ShareMenuAction.shareFile:
+        await context.read<MatchCubit>().shareFile();
+      case ShareMenuAction.saveFile:
+        await context.read<MatchCubit>().saveFile();
+      case ShareMenuAction.shareText:
+        break;
+    }
+  }
 
   Future<void> _removePenalty(BuildContext context, PenaltyModel penalty) async {
     final matchCubit = context.read<MatchCubit>();
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: penalty.type),
-      S.of(context).delete,
-      S.of(context).cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: penalty.type),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
     if (result ?? false) {
       await matchCubit.removePenalty(penalty.id);
@@ -281,27 +283,27 @@ class _MatchPageViewState extends State<MatchPageView> {
     MatchModel match,
     ImprovisationModel improvisation,
     PenaltyModel penalty,
-  ) async => BottomSheetDialog.showDialog(
-    context: context,
-    child: MatchPenaltyShell(
+  ) async {
+    final updatedPenalty = await context.read<RouterService>().showMatchPenaltyModal(
       improvisationId: improvisation.id,
       teams: match.teams,
       penalty: penalty,
       integrationPenaltyTypes: match.penaltyTypes,
-      onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
-    ),
-  );
+    );
+    if (updatedPenalty != null && context.mounted) {
+      await context.read<MatchCubit>().editPenalty(updatedPenalty);
+    }
+  }
 
   Future<void> _addPenalty(BuildContext context, MatchModel match, ImprovisationModel improvisation) async {
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchPenaltyShell(
-        improvisationId: improvisation.id,
-        teams: match.teams,
-        onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
-        integrationPenaltyTypes: match.penaltyTypes,
-      ),
+    final penalty = await context.read<RouterService>().showMatchPenaltyModal(
+      improvisationId: improvisation.id,
+      teams: match.teams,
+      integrationPenaltyTypes: match.penaltyTypes,
     );
+    if (penalty != null && context.mounted) {
+      await context.read<MatchCubit>().addPenalty(penalty);
+    }
   }
 
   Future<void> _deleteImprovisation(BuildContext context, ImprovisationModel improvisation, int index) async {
@@ -314,16 +316,15 @@ class _MatchPageViewState extends State<MatchPageView> {
     }
 
     final matchCubit = context.read<MatchCubit>();
-    final shouldDelete = await MessageBoxDialog.questionShow(
-      context,
-      S
+    final shouldDelete = await context.read<RouterService>().showQuestion(
+      question: S
           .of(context)
           .areYouSureActionName(
             action: S.of(context).delete.toLowerCase(),
             name: S.of(context).improvisationNumber(order: index + 1),
           ),
-      S.of(context).delete,
-      S.of(context).cancel,
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
 
     if (shouldDelete == true) {
@@ -340,78 +341,55 @@ class _MatchPageViewState extends State<MatchPageView> {
       return;
     }
 
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchImprovisationShell(
-        improvisation: improvisation,
-        match: match,
-        onConfirm: (improvisation, index, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<MatchCubit>().editImprovisation(improvisation, index);
-          navigator.pop();
-        },
-      ),
+    final result = await context.read<RouterService>().showMatchImprovisationModal(
+      improvisation: improvisation,
+      match: match,
     );
+    if (result != null && context.mounted) {
+      await context.read<MatchCubit>().editImprovisation(result.$1, result.$2);
+    }
   }
 
-  void _addImprovisation(BuildContext context, MatchModel match) {
-    BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchImprovisationShell(
-        match: match,
-        onConfirm: (improvisation, index, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<MatchCubit>().addImprovisation(improvisation, index);
-          navigator.pop();
-        },
-      ),
-    );
+  Future<void> _addImprovisation(BuildContext context, MatchModel match) async {
+    final result = await context.read<RouterService>().showMatchImprovisationModal(match: match);
+    if (result != null && context.mounted) {
+      await context.read<MatchCubit>().addImprovisation(result.$1, result.$2);
+    }
   }
 
   Future<void> _delete(BuildContext context, MatchModel match) async {
     final matchesCubit = context.read<MatchesCubit>();
-    final router = GoRouter.of(context);
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
-      S.of(context).delete,
-      S.of(context).cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
     if (result == true) {
       await matchesCubit.delete(match);
-      router.pop();
+      if (context.mounted) {
+        await context.pop();
+      }
     }
   }
 
   Future<void> _editDetails(BuildContext context, MatchModel match) async {
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchDetailPageShell(
-        match: match,
-        onConfirm: (match, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<MatchCubit>().edit(match);
-          navigator.pop();
-        },
-      ),
-    );
+    final updatedMatch = await context.read<RouterService>().showMatchDetailModal(match: match);
+    if (updatedMatch != null && context.mounted) {
+      await context.read<MatchCubit>().edit(updatedMatch);
+    }
   }
 
   Future<void> _openScoreboard(BuildContext context, MatchModel match) async {
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchScoreboardShell(match: match),
-    );
+    await context.read<RouterService>().showMatchScoreboardModal(match);
   }
 
   Future<void> _onExportIntegration(BuildContext context, MatchModel match, MatchIntegrationBase integration) async {
     final toasterService = context.read<ToasterService>();
     final localizer = S.of(context);
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      localizer.areYouSureActionName(action: localizer.shareMatchSheet.toLowerCase(), name: match.name),
-      localizer.shareMatchSheet,
-      localizer.cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: localizer.areYouSureActionName(action: localizer.shareMatchSheet.toLowerCase(), name: match.name),
+      yesLabel: localizer.shareMatchSheet,
+      noLabel: localizer.cancel,
     );
     if (result ?? false) {
       final exportResult = await integration.exportMatch(match);

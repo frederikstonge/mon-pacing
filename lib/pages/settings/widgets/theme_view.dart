@@ -23,8 +23,8 @@ class ThemeView extends StatelessWidget {
         shrinkWrap: true,
         children: [
           InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
+            onTap: () async {
+              await onChanged(currentTheme);
             },
             child: ListTile(
               title: Text(_getThemeString(context, currentTheme), maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -36,10 +36,7 @@ class ThemeView extends StatelessWidget {
               .map(
                 (e) => InkWell(
                   onTap: () async {
-                    final navigator = Navigator.of(context);
                     await onChanged.call(e);
-
-                    navigator.pop();
                   },
                   child: ListTile(
                     title: Text(_getThemeString(context, e), maxLines: 1, overflow: TextOverflow.ellipsis),

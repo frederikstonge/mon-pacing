@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
 import '../../cubits/matches/matches_cubit.dart';
@@ -18,10 +16,9 @@ import '../../integrations/real_time_match_integration_base.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
-import '../../router/routes.dart';
 import '../../services/analytics_service.dart';
+import '../../services/router_service.dart';
 import '../../services/toaster_service.dart';
-import '../match_detail/match_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
 import 'widgets/transparent_cutout_overlay_painter.dart';
 
@@ -157,7 +154,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       return;
     }
     unawaited(controller.stop());
-    final router = GoRouter.of(context);
+    final routerService = context.read<RouterService>();
     final pacingsCubit = context.read<PacingsCubit>();
     final matchesCubit = context.read<MatchesCubit>();
     final toasterService = context.read<ToasterService>();
@@ -180,9 +177,15 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             integration is! MatchIntegrationBase &&
             integration is! RealTimeMatchIntegrationBase) {
           final pacingModel = await pacingsCubit.add(pacing);
+          if (!mounted) {
+            return;
+          }
           if (pacingModel != null) {
             await analyticsService.logIntegration(integration);
-            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
+            if (!mounted) {
+              return;
+            }
+            await routerService.showPacingDetails(pacingModel.id);
             return;
           } else {
             toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
@@ -200,9 +203,15 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
         }
 
         final matchModel = await matchesCubit.add(match);
+        if (!mounted) {
+          return;
+        }
         if (matchModel != null) {
           await analyticsService.logIntegration(integration);
-          router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
+          if (!mounted) {
+            return;
+          }
+          await routerService.showMatchDetails(id: matchModel.id);
           return;
         } else {
           toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
@@ -260,16 +269,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     }
 
     if (match == null && mounted) {
-      match = await BottomSheetDialog.showDialog<MatchModel>(
-        context: context,
-        child: MatchDetailPageShell(
-          pacing: pacing,
-          onConfirm: (match, dialogContext) async {
-            final navigator = Navigator.of(dialogContext);
-            navigator.pop(match);
-          },
-        ),
-      );
+      match = await context.read<RouterService>().showMatchDetailModal(pacing: pacing);
     }
 
     if (match == null) {

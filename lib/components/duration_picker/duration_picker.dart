@@ -9,8 +9,9 @@ import '../buttons/loading_button.dart';
 class DurationPicker extends StatefulWidget {
   final Duration initialDuration;
   final String title;
+  final ValueChanged<Duration> onChanged;
 
-  const DurationPicker({super.key, required this.title, required this.initialDuration});
+  const DurationPicker({super.key, required this.title, required this.initialDuration, required this.onChanged});
 
   @override
   State<DurationPicker> createState() => _DurationPickerState();
@@ -87,7 +88,7 @@ class _DurationPickerState extends State<DurationPicker> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: LoadingButton.filled(
                 onPressed: () {
-                  Navigator.of(context).pop(selectedDuration);
+                  widget.onChanged(selectedDuration);
                 },
                 child: Text(S.of(context).save, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),

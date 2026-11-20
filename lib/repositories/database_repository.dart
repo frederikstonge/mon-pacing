@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:synchronized/synchronized.dart';
 
-import '../mutex/mutex.dart';
 import 'objectbox.g.dart';
 
 class DatabaseRepository {
   static const pageSize = 20;
   static Store? _database;
+  static final Lock _lock = Lock();
 
   DatabaseRepository();
 
@@ -17,7 +18,7 @@ class DatabaseRepository {
       return _database!;
     }
 
-    return await Mutex.protect(() async {
+    return await _lock.synchronized(() async {
       if (_database != null) {
         return _database!;
       }

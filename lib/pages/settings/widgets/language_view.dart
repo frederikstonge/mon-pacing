@@ -24,8 +24,8 @@ class LanguageView extends StatelessWidget {
         shrinkWrap: true,
         children: [
           InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
+            onTap: () async {
+              await onChanged(currentLocale);
             },
             child: ListTile(
               title: DisplayLanguage(locale: currentLocale),
@@ -37,9 +37,7 @@ class LanguageView extends StatelessWidget {
               .map(
                 (e) => InkWell(
                   onTap: () async {
-                    final navigator = Navigator.of(context);
                     await onChanged(e);
-                    navigator.pop();
                   },
                   child: ListTile(title: DisplayLanguage(locale: e)),
                 ),

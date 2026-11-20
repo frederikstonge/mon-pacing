@@ -1,19 +1,24 @@
-import 'dart:async';
-
 import 'package:material_ui/material_ui.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
+import '../../../router/routes.dart';
 import '../bottom_sheet/bottom_sheet_appbar.dart';
 import '../bottom_sheet/bottom_sheet_scaffold.dart';
 
 class MatchMenu extends StatelessWidget {
   final MatchModel match;
-  final FutureOr<void> Function()? edit;
-  final FutureOr<void> Function()? editDetails;
-  final FutureOr<void> Function() delete;
+  final bool showEdit;
+  final bool showEditDetails;
+  final ValueChanged<MatchMenuAction> onSelected;
 
-  const MatchMenu({super.key, required this.match, required this.delete, this.edit, this.editDetails});
+  const MatchMenu({
+    super.key,
+    required this.match,
+    required this.onSelected,
+    this.showEdit = false,
+    this.showEditDetails = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +29,18 @@ class MatchMenu extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
-          if (editDetails != null) ...[
+          if (showEditDetails) ...[
             InkWell(
-              onTap: () async {
-                Navigator.of(context).pop();
-                await editDetails!.call();
-              },
+              onTap: () => onSelected(MatchMenuAction.editDetails),
               child: ListTile(
                 leading: const Icon(Icons.edit_document),
                 title: Text(S.of(context).editDetails, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
           ],
-          if (edit != null) ...[
+          if (showEdit) ...[
             InkWell(
-              onTap: () async {
-                Navigator.of(context).pop();
-                await edit!.call();
-              },
+              onTap: () => onSelected(MatchMenuAction.edit),
               child: ListTile(
                 leading: const Icon(Icons.edit),
                 title: Text(S.of(context).edit, maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -49,10 +48,7 @@ class MatchMenu extends StatelessWidget {
             ),
           ],
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await delete.call();
-            },
+            onTap: () => onSelected(MatchMenuAction.delete),
             child: ListTile(
               leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
               title: Text(

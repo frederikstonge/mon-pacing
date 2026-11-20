@@ -1,14 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/pacing_menu/pacing_menu.dart';
-import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
@@ -23,8 +19,7 @@ import '../../models/improvisation_model.dart';
 import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
-import '../match_detail/match_detail_page_shell.dart';
-import '../pacing_detail/pacing_detail_page_shell.dart';
+import '../../services/router_service.dart';
 import '../tutorial_mixin.dart';
 import 'cubits/pacing_cubit.dart';
 import 'cubits/pacing_state.dart';
@@ -40,21 +35,27 @@ class PacingPageView extends StatefulWidget {
 }
 
 class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
-  late final GoRouter? router = GoRouter.maybeOf(context);
+  KaiselRouter<PacingsRoute>? _pacingsRouter;
   final GlobalKey _addImprovisationButtonKey = GlobalKey();
   final GlobalKey _firstImprovisationCardKey = GlobalKey();
   final GlobalKey _firstImprovisationDragKey = GlobalKey();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    router?.routerDelegate.addListener(_showTutorials);
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final router = context.router<PacingsRoute>();
+    if (_pacingsRouter != router) {
+      _pacingsRouter?.removeListener(_showTutorials);
+      _pacingsRouter = router;
+      _pacingsRouter?.addListener(_showTutorials);
+    }
   }
 
   @override
   void dispose() {
-    router?.routerDelegate.removeListener(_showTutorials);
+    _pacingsRouter?.removeListener(_showTutorials);
+    cancelTutorialCoachMark();
     super.dispose();
   }
 
@@ -99,32 +100,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                                       actions: [
                                         LoadingIconButton(
                                           tooltip: S.of(context).more,
-                                          onPressed: () => BottomSheetDialog.showDialog(
-                                            context: context,
-                                            child: PacingMenu(
-                                              pacing: pacing,
-                                              startMatch: () {
-                                                _startMatch(context, pacing);
-                                              },
-                                              editDetails: () async {
-                                                await _editDetails(context, pacing);
-                                              },
-                                              delete: () async {
-                                                await _delete(context, pacing);
-                                              },
-                                              share: () async => BottomSheetDialog.showDialog(
-                                                context: context,
-                                                child: ShareMenu(
-                                                  shareText: () => context.read<PacingsCubit>().shareText(pacing),
-                                                  shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
-                                                  saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
-                                                ),
-                                              ),
-                                              duplicate: () {
-                                                return _duplicate(context, pacing);
-                                              },
-                                            ),
-                                          ),
+                                          onPressed: () => _openMenu(context, pacing),
                                           icon: const Icon(Icons.more_vert),
                                         ),
                                       ],
@@ -186,16 +162,15 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
       context.read<PacingCubit>().removeImprovisation(value);
 
   Future<bool?> _onConfirmDelete(BuildContext context, int index) async {
-    return await MessageBoxDialog.questionShow(
-      context,
-      S
+    return await context.read<RouterService>().showQuestion(
+      question: S
           .of(context)
           .areYouSureActionName(
             action: S.of(context).delete.toLowerCase(),
             name: S.of(context).improvisationNumber(order: index + 1),
           ),
-      S.of(context).delete,
-      S.of(context).cancel,
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
   }
 
@@ -208,95 +183,108 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   Future<void> _onAddImprovisationPressed(BuildContext context) => context.read<PacingCubit>().addImprovisation();
 
-  Future<void> _duplicate(BuildContext context, PacingModel pacing) {
-    return BottomSheetDialog.showDialog(
-      context: context,
-      child: PacingDetailPageShell(
-        editMode: false,
-        pacing: pacing,
-        onConfirm: (pacing, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          final router = GoRouter.of(context);
-          final pacingModel = await context.read<PacingsCubit>().add(pacing);
-          if (pacingModel != null) {
-            navigator.pop();
-            router.goNamed(Routes.pacing, pathParameters: {'id': '${pacingModel.id}'});
-          }
-        },
-      ),
+  Future<void> _openMenu(BuildContext context, PacingModel pacing) async {
+    final action = await context.read<RouterService>().showPacingMenuModal(
+      pacing: pacing,
+      showEditDetails: true,
     );
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case PacingMenuAction.startMatch:
+        await _startMatch(context, pacing);
+      case PacingMenuAction.editDetails:
+        await _editDetails(context, pacing);
+      case PacingMenuAction.delete:
+        await _delete(context, pacing);
+      case PacingMenuAction.share:
+        final shareAction = await context.read<RouterService>().showShareMenuModal(
+          showShareText: true,
+          showShareFile: true,
+          showSaveFile: true,
+        );
+        if (!context.mounted || shareAction == null) break;
+        switch (shareAction) {
+          case ShareMenuAction.shareText:
+            await context.read<PacingsCubit>().shareText(pacing);
+          case ShareMenuAction.shareFile:
+            await context.read<PacingsCubit>().shareFile(pacing);
+          case ShareMenuAction.saveFile:
+            await context.read<PacingsCubit>().saveFile(pacing);
+        }
+      case PacingMenuAction.duplicate:
+        await _duplicate(context, pacing);
+      case PacingMenuAction.edit:
+        break;
+    }
+  }
+
+  Future<void> _duplicate(BuildContext context, PacingModel pacing) {
+    final routerService = context.read<RouterService>();
+    return routerService.showPacingDetailModal(pacing: pacing, editMode: false).then((pacing) async {
+      if (pacing == null || !context.mounted) {
+        return;
+      }
+      final pacingModel = await context.read<PacingsCubit>().add(pacing);
+      if (pacingModel != null && context.mounted) {
+        await routerService.showPacingDetails(pacingModel.id);
+      }
+    });
   }
 
   Future<void> _delete(BuildContext context, PacingModel pacing) async {
     final pacingsCubit = context.read<PacingsCubit>();
-    final router = GoRouter.of(context);
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: pacing.name),
-      S.of(context).delete,
-      S.of(context).cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: pacing.name),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
     if (result == true) {
       await pacingsCubit.delete(pacing);
-      router.pop();
+      await _pacingsRouter?.pop();
     }
   }
 
   Future<void> _editDetails(BuildContext context, PacingModel pacing) async {
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: PacingDetailPageShell(
-        pacing: pacing,
-        editMode: true,
-        onConfirm: (pacing, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<PacingCubit>().edit(pacing);
-          navigator.pop();
-        },
-      ),
-    );
+    final updatedPacing = await context.read<RouterService>().showPacingDetailModal(pacing: pacing, editMode: true);
+    if (updatedPacing != null && context.mounted) {
+      await context.read<PacingCubit>().edit(updatedPacing);
+    }
   }
 
-  void _startMatch(BuildContext context, PacingModel pacing) {
-    BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchDetailPageShell(
-        pacing: pacing,
-        onConfirm: (match, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          final router = GoRouter.of(context);
-          final matchModel = await context.read<MatchesCubit>().add(match);
-          if (matchModel != null) {
-            navigator.pop();
-            router.goNamed(Routes.match, pathParameters: {'id': '${matchModel.id}'});
-          }
-        },
-      ),
-    );
+  Future<void> _startMatch(BuildContext context, PacingModel pacing) async {
+    final routerService = context.read<RouterService>();
+    final match = await routerService.showMatchDetailModal(pacing: pacing);
+    if (match == null || !context.mounted) {
+      return;
+    }
+    final matchModel = await context.read<MatchesCubit>().add(match);
+    if (matchModel != null && context.mounted) {
+      await routerService.showMatchDetails(id: matchModel.id);
+    }
   }
 
   Future<void> _onDragStart() async {
     await context.read<SettingsCubit>().vibrate(HapticsType.selection);
   }
 
-  Future<void> _showTutorials() async {
+  void _showTutorials() {
     if (!mounted) return;
     final pacingCubit = context.read<PacingCubit>();
     final tutorialsCubit = context.read<TutorialsCubit>();
 
-    final displayAddImprovisation =
-        router?.state.name == Routes.pacing &&
+    bool displayAddImprovisation() =>
+        _pacingsRouter?.stack.last is PacingRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isEmpty &&
         !tutorialsCubit.state.addImprovisationFinished;
 
-    final displayImprovisation =
-        router?.state.name == Routes.pacing &&
+    bool displayImprovisation() =>
+        _pacingsRouter?.stack.last is PacingRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isNotEmpty &&
         !tutorialsCubit.state.improvisationFinished;
 
-    if (displayAddImprovisation) {
+    if (displayAddImprovisation()) {
       initTutorialCoachMark(
         targets: [
           TargetFocus(
@@ -315,8 +303,9 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
             ],
           ),
         ],
+        onFinish: tutorialsCubit.setAddImprovisationFinished,
       );
-    } else if (displayImprovisation) {
+    } else if (displayImprovisation()) {
       initTutorialCoachMark(
         targets: [
           TargetFocus(
@@ -350,20 +339,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
             ],
           ),
         ],
+        onFinish: tutorialsCubit.setImprovisationFinished,
       );
+    } else {
+      cancelTutorialCoachMark();
+      return;
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted && (displayAddImprovisation || displayImprovisation)) {
-          showTutorialCoachMark(context, () {
-            if (displayAddImprovisation) {
-              tutorialsCubit.setAddImprovisationFinished();
-            } else if (displayImprovisation) {
-              tutorialsCubit.setImprovisationFinished();
-            }
-          });
-        }
-      });
-    });
+
+    scheduleTutorialCoachMark(context, shouldShow: () => displayAddImprovisation() || displayImprovisation());
   }
 }

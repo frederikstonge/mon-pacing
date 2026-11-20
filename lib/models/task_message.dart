@@ -11,6 +11,7 @@ class TaskMessage with TaskMessageMappable {
   final TimerStatus status;
   final bool hapticFeedback;
   final String notificationTitle;
+  final int sequence;
 
   const TaskMessage({
     required this.runId,
@@ -18,5 +19,6 @@ class TaskMessage with TaskMessageMappable {
     required this.status,
     required this.hapticFeedback,
     required this.notificationTitle,
+    this.sequence = 0,
   });
 }

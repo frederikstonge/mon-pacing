@@ -23,8 +23,8 @@ class PenaltiesImpactTypeView extends StatelessWidget {
         shrinkWrap: true,
         children: [
           InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
+            onTap: () async {
+              await onChanged(currentPenaltiesImpactType);
             },
             child: ListTile(
               title: Text(
@@ -40,10 +40,7 @@ class PenaltiesImpactTypeView extends StatelessWidget {
               .map(
                 (e) => InkWell(
                   onTap: () async {
-                    final navigator = Navigator.of(context);
                     await onChanged.call(e);
-
-                    navigator.pop();
                   },
                   child: ListTile(
                     title: Text(_getPenaltiesBehaviorString(context, e), maxLines: 2, overflow: TextOverflow.ellipsis),
