@@ -19,6 +19,7 @@ class BottomSheetPage extends Page<Object?> {
         );
       },
       isScrollControlled: isScrollControlled,
+      scrollControlDisabledMaxHeightRatio: 1,
       isDismissible: true,
       enableDrag: true,
       showDragHandle: true,
