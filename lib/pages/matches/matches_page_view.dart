@@ -6,7 +6,6 @@ import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -125,11 +124,10 @@ class _MatchesPageViewState extends State<MatchesPageView> {
   Future<void> _delete(BuildContext context, MatchModel match) => context.read<MatchesCubit>().delete(match);
 
   Future<bool?> _shouldDelete(BuildContext context, MatchModel match) {
-    return MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
-      S.of(context).delete,
-      S.of(context).cancel,
+    return context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
   }
 

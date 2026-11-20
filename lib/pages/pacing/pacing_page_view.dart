@@ -5,7 +5,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../components/buttons/loading_icon_button.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
@@ -163,16 +162,15 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
       context.read<PacingCubit>().removeImprovisation(value);
 
   Future<bool?> _onConfirmDelete(BuildContext context, int index) async {
-    return await MessageBoxDialog.questionShow(
-      context,
-      S
+    return await context.read<RouterService>().showQuestion(
+      question: S
           .of(context)
           .areYouSureActionName(
             action: S.of(context).delete.toLowerCase(),
             name: S.of(context).improvisationNumber(order: index + 1),
           ),
-      S.of(context).delete,
-      S.of(context).cancel,
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
   }
 
@@ -235,11 +233,10 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   Future<void> _delete(BuildContext context, PacingModel pacing) async {
     final pacingsCubit = context.read<PacingsCubit>();
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: pacing.name),
-      S.of(context).delete,
-      S.of(context).cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: pacing.name),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
     if (result == true) {
       await pacingsCubit.delete(pacing);

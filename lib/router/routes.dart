@@ -202,6 +202,27 @@ final class MatchScoreboardModalRoute extends AppRoute implements KaiselModalRou
   List<Object?> get props => [match];
 }
 
+final class QuestionModalRoute extends AppRoute implements KaiselModalRoute<bool> {
+  const QuestionModalRoute({required this.question, required this.yesLabel, required this.noLabel});
+
+  final String question;
+  final String yesLabel;
+  final String noLabel;
+
+  @override
+  List<Object?> get props => [question, yesLabel, noLabel];
+}
+
+final class AlertModalRoute extends AppRoute implements KaiselModalRoute<void> {
+  const AlertModalRoute({required this.message, required this.closeLabel});
+
+  final String message;
+  final String closeLabel;
+
+  @override
+  List<Object?> get props => [message, closeLabel];
+}
+
 sealed class PacingsRoute extends KaiselRoute {
   const PacingsRoute();
 }

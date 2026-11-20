@@ -93,4 +93,22 @@ void main() {
 
     expect(await result, ShareMenuAction.shareFile);
   });
+
+  test('question modal returns its answer', () async {
+    final result = routerService.showQuestion(question: 'Continue?', yesLabel: 'Yes', noLabel: 'No');
+
+    await Future<void>.delayed(Duration.zero);
+    routerService.rootRouter.completeFlow(true);
+
+    expect(await result, isTrue);
+  });
+
+  test('alert modal resolves when dismissed', () async {
+    final result = routerService.showAlert(message: 'Message', closeLabel: 'Close');
+
+    await Future<void>.delayed(Duration.zero);
+    routerService.rootRouter.dismissFlow();
+
+    expect(result, completes);
+  });
 }

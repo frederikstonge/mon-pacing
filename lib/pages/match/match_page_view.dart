@@ -6,7 +6,6 @@ import 'package:toastification/toastification.dart';
 
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/integrations/integrations_cubit.dart';
@@ -269,11 +268,10 @@ class _MatchPageViewState extends State<MatchPageView> {
 
   Future<void> _removePenalty(BuildContext context, PenaltyModel penalty) async {
     final matchCubit = context.read<MatchCubit>();
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: penalty.type),
-      S.of(context).delete,
-      S.of(context).cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: penalty.type),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
     if (result ?? false) {
       await matchCubit.removePenalty(penalty.id);
@@ -318,16 +316,15 @@ class _MatchPageViewState extends State<MatchPageView> {
     }
 
     final matchCubit = context.read<MatchCubit>();
-    final shouldDelete = await MessageBoxDialog.questionShow(
-      context,
-      S
+    final shouldDelete = await context.read<RouterService>().showQuestion(
+      question: S
           .of(context)
           .areYouSureActionName(
             action: S.of(context).delete.toLowerCase(),
             name: S.of(context).improvisationNumber(order: index + 1),
           ),
-      S.of(context).delete,
-      S.of(context).cancel,
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
 
     if (shouldDelete == true) {
@@ -362,11 +359,10 @@ class _MatchPageViewState extends State<MatchPageView> {
 
   Future<void> _delete(BuildContext context, MatchModel match) async {
     final matchesCubit = context.read<MatchesCubit>();
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
-      S.of(context).delete,
-      S.of(context).cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: S.of(context).areYouSureActionName(action: S.of(context).delete.toLowerCase(), name: match.name),
+      yesLabel: S.of(context).delete,
+      noLabel: S.of(context).cancel,
     );
     if (result == true) {
       await matchesCubit.delete(match);
@@ -390,11 +386,10 @@ class _MatchPageViewState extends State<MatchPageView> {
   Future<void> _onExportIntegration(BuildContext context, MatchModel match, MatchIntegrationBase integration) async {
     final toasterService = context.read<ToasterService>();
     final localizer = S.of(context);
-    final result = await MessageBoxDialog.questionShow(
-      context,
-      localizer.areYouSureActionName(action: localizer.shareMatchSheet.toLowerCase(), name: match.name),
-      localizer.shareMatchSheet,
-      localizer.cancel,
+    final result = await context.read<RouterService>().showQuestion(
+      question: localizer.areYouSureActionName(action: localizer.shareMatchSheet.toLowerCase(), name: match.name),
+      yesLabel: localizer.shareMatchSheet,
+      noLabel: localizer.cancel,
     );
     if (result ?? false) {
       final exportResult = await integration.exportMatch(match);

@@ -5,6 +5,8 @@ import '../components/bottom_sheet/bottom_sheet_modal.dart';
 import '../components/color_picker/color_picker.dart';
 import '../components/duration_picker/duration_picker.dart';
 import '../components/match_menu/match_menu.dart';
+import '../components/message_box_dialog/message_box_modal.dart';
+import '../components/message_box_dialog/message_box_view.dart';
 import '../components/pacing_menu/pacing_menu.dart';
 import '../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../components/share_menu/share_menu.dart';
@@ -172,6 +174,15 @@ class RouterService {
 
   Future<void> showMatchScoreboardModal(MatchModel match) => rootRouter.run(MatchScoreboardModalRoute(match));
 
+  Future<bool?> showQuestion({
+    required String question,
+    required String yesLabel,
+    required String noLabel,
+  }) => rootRouter.run(QuestionModalRoute(question: question, yesLabel: yesLabel, noLabel: noLabel));
+
+  Future<void> showAlert({required String message, required String closeLabel}) =>
+      rootRouter.run(AlertModalRoute(message: message, closeLabel: closeLabel));
+
   Future<void> resetBranch(int branch) async {
     switch (branch) {
       case 0:
@@ -267,9 +278,16 @@ class RouterService {
       onSelected: (action) => context.completeFlow<ShareMenuAction>(action),
     ),
     MatchScoreboardModalRoute(:final match) => MatchScoreboardShell(match: match),
+    QuestionModalRoute(:final question, :final yesLabel, :final noLabel) =>
+      QuestionView(question: question, yesLabel: yesLabel, noLabel: noLabel),
+    AlertModalRoute(:final message, :final closeLabel) => AlertView(message: message, closeLabel: closeLabel),
   };
 
   Widget _buildModal(BuildContext context, KaiselModalRoute<Object?> route, Widget flowChild) {
-    return BottomSheetModal(onDismiss: rootRouter.dismissFlow, child: flowChild);
+    return switch (route) {
+      QuestionModalRoute() || AlertModalRoute() =>
+        MessageBoxModal(onDismiss: rootRouter.dismissFlow, child: flowChild),
+      _ => BottomSheetModal(onDismiss: rootRouter.dismissFlow, child: flowChild),
+    };
   }
 }

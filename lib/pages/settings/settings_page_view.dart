@@ -7,7 +7,6 @@ import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/display_language/display_language.dart';
-import '../../components/message_box_dialog/message_box_dialog.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -402,9 +401,9 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               }),
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () async {
-                                final type = await context
-                                    .read<RouterService>()
-                                    .showPenaltiesImpactTypeModal(settingsState.defaultPenaltiesImpactType);
+                                final type = await context.read<RouterService>().showPenaltiesImpactTypeModal(
+                                  settingsState.defaultPenaltiesImpactType,
+                                );
                                 if (type != null && context.mounted) {
                                   context.read<SettingsCubit>().edit(
                                     settingsState.copyWith(defaultPenaltiesImpactType: type),
@@ -496,13 +495,12 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                           child: Text(S.of(context).resetSettingsToDefault),
                           onPressed: () async {
                             final settingsCubit = context.read<SettingsCubit>();
-                            final response = await MessageBoxDialog.questionShow(
-                              context,
-                              S
+                            final response = await context.read<RouterService>().showQuestion(
+                              question: S
                                   .of(context)
                                   .areYouSureAction(action: S.of(context).resetSettingsToDefault.toLowerCase()),
-                              S.of(context).confirm,
-                              S.of(context).cancel,
+                              yesLabel: S.of(context).confirm,
+                              noLabel: S.of(context).cancel,
                             );
                             if (response == true) {
                               settingsCubit.reset();
