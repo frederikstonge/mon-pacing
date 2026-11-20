@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:material_ui/material_ui.dart';
 
 class MessageBoxPage extends Page<Object?> {
@@ -9,9 +11,18 @@ class MessageBoxPage extends Page<Object?> {
   Route<Object?> createRoute(BuildContext context) {
     return DialogRoute<Object?>(
       context: context,
-      builder: (_) => child,
+      builder: (context) {
+        final padding = MediaQuery.paddingOf(context);
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: math.max(padding.left, padding.right),
+            vertical: math.max(padding.top, padding.bottom),
+          ),
+          child: child,
+        );
+      },
       barrierDismissible: true,
-      useSafeArea: true,
+      useSafeArea: false,
       barrierColor: Theme.of(context).colorScheme.onSurface.withAlpha(100),
       settings: this,
     );

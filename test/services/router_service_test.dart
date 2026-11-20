@@ -1,5 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mon_pacing/cubits/settings/settings_cubit.dart';
+import 'package:mon_pacing/cubits/settings/settings_state.dart';
+import 'package:mon_pacing/l10n/generated/app_localizations.dart';
 import 'package:mon_pacing/models/improvisation_model.dart';
 import 'package:mon_pacing/models/improvisation_type.dart';
 import 'package:mon_pacing/models/match_model.dart';
@@ -23,6 +28,22 @@ void main() {
   tearDown(() {
     routerService.dispose();
   });
+
+  Future<RouterService> pumpRouter(WidgetTester tester) async {
+    final service = RouterService(onboardingFinished: () => false, observers: () => []);
+    addTearDown(service.dispose);
+    await tester.pumpWidget(
+      BlocProvider<SettingsCubit>.value(
+        value: _TestSettingsCubit(),
+        child: MaterialApp.router(
+          routerConfig: service.routerConfig,
+          localizationsDelegates: S.localizationsDelegates,
+          supportedLocales: S.supportedLocales,
+        ),
+      ),
+    );
+    return service;
+  }
 
   test('showPacingDetails resets the root and selects the pacing branch', () async {
     final rootRouter = routerService.rootRouter;
@@ -158,6 +179,64 @@ void main() {
     expect(await result, isTrue);
   });
 
+  testWidgets('pacing menu can open a confirmation immediately after selection', (tester) async {
+    final service = await pumpRouter(tester);
+    final menu = service.showPacingMenuModal(pacing: _pacing);
+    final confirmation = menu.then(
+      (_) => service.showQuestion(question: 'Delete pacing?', yesLabel: 'Yes', noLabel: 'No'),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Delete'));
+    await tester.pump();
+    expect(service.rootRouter.hasActiveFlow, isFalse);
+    await tester.pumpAndSettle();
+    expect(find.text('Delete pacing?'), findsOneWidget);
+    await tester.tap(find.text('No'));
+    await tester.pumpAndSettle();
+    expect(await menu, PacingMenuAction.delete);
+    expect(await confirmation, isFalse);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('pacing menu can open the share menu immediately after selection', (tester) async {
+    final service = await pumpRouter(tester);
+    final menu = service.showPacingMenuModal(pacing: _pacing);
+    final share = menu.then((_) => service.showShareMenuModal(showShareText: true));
+
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Share'));
+    await tester.pumpAndSettle();
+    expect(find.text('Share text'), findsOneWidget);
+    await tester.tap(find.text('Share text'));
+    await tester.pumpAndSettle();
+
+    expect(await menu, PacingMenuAction.share);
+    expect(await share, ShareMenuAction.shareText);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('a nested flow can be followed by another without closing its parent', (tester) async {
+    final service = await pumpRouter(tester);
+    final menu = service.showPacingMenuModal(pacing: _pacing);
+    await tester.pumpAndSettle();
+
+    final question = service.showQuestion(question: 'Continue?', yesLabel: 'Yes', noLabel: 'No');
+    final alert = question.then((_) => service.showAlert(message: 'Done', closeLabel: 'Close'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Yes'));
+    await tester.pumpAndSettle();
+    expect(find.text('Done'), findsOneWidget);
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    expect(await question, isTrue);
+    await alert;
+
+    await tester.tap(find.text('Delete'));
+    await tester.pumpAndSettle();
+    expect(await menu, PacingMenuAction.delete);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
   test('alert modal resolves when dismissed', () async {
     final result = routerService.showAlert(message: 'Message', closeLabel: 'Close');
 
@@ -274,6 +353,14 @@ void main() {
       expect(routerService.rootRouter.hasActiveFlow, isFalse);
     });
   });
+}
+
+class _TestSettingsCubit extends Mock implements SettingsCubit {
+  @override
+  SettingsState get state => const SettingsState(language: 'en', theme: ThemeType.light);
+
+  @override
+  Stream<SettingsState> get stream => const Stream.empty();
 }
 
 const _team = TeamModel(id: 1, createdDate: null, modifiedDate: null, name: 'Team', color: 0xff0000ff);

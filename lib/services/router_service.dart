@@ -56,7 +56,7 @@ class RouterService {
       builder: _buildRoute,
       pageWrapper: _buildPage,
       modalBuilder: _buildModal,
-      observers: observers,
+      observers: () => [...observers(), _FlowTransitionObserver(_flowTransitions)],
       codec: const MatchNotificationCodec(),
       fallback: [initialRoute],
     );
@@ -68,8 +68,20 @@ class RouterService {
   late final KaiselRouter<SettingsRoute> settingsRouter;
   late final BranchedShellRouter appShell;
   late final KaiselRouterConfig<AppRoute> routerConfig;
+  final Map<Object, Future<Object?>> _flowTransitions = Map.identity();
 
   KaiselRouter<AppRoute> get rootRouter => routerConfig.router;
+
+  Future<T?> _runFlow<T>(KaiselModalRoute<T> route) async {
+    final result = await rootRouter.run(route);
+    final transition = _flowTransitions[route];
+    if (transition != null) {
+      // Kaisel reuses flow navigator keys by stack position, so wait for the
+      // outgoing route to release its key before returning to the caller.
+      await transition;
+    }
+    return result;
+  }
 
   void dispose() {
     routerConfig.dispose();
@@ -100,34 +112,34 @@ class RouterService {
   }
 
   Future<PacingModel?> showPacingDetailModal({PacingModel? pacing, required bool editMode}) =>
-      rootRouter.run(PacingDetailModalRoute(pacing: pacing, editMode: editMode));
+      _runFlow(PacingDetailModalRoute(pacing: pacing, editMode: editMode));
 
   Future<MatchModel?> showMatchDetailModal({MatchModel? match, PacingModel? pacing}) =>
-      rootRouter.run(MatchDetailModalRoute(match: match, pacing: pacing));
+      _runFlow(MatchDetailModalRoute(match: match, pacing: pacing));
 
   Future<TeamModel?> showTeamDetailModal({TeamModel? team, required bool editMode}) =>
-      rootRouter.run(TeamDetailModalRoute(team: team, editMode: editMode));
+      _runFlow(TeamDetailModalRoute(team: team, editMode: editMode));
 
   Future<Duration?> showDurationPickerModal({required String title, required Duration initialDuration}) =>
-      rootRouter.run(DurationPickerModalRoute(title: title, initialDuration: initialDuration));
+      _runFlow(DurationPickerModalRoute(title: title, initialDuration: initialDuration));
 
   Future<Color?> showColorPickerModal({required String title, required Color initialColor}) =>
-      rootRouter.run(ColorPickerModalRoute(title: title, initialColor: initialColor));
+      _runFlow(ColorPickerModalRoute(title: title, initialColor: initialColor));
 
   Future<Locale?> showLanguageModal({required Locale currentLocale, required List<Locale> availableLocales}) =>
-      rootRouter.run(LanguageModalRoute(currentLocale: currentLocale, availableLocales: availableLocales));
+      _runFlow(LanguageModalRoute(currentLocale: currentLocale, availableLocales: availableLocales));
 
-  Future<ThemeType?> showThemeModal(ThemeType currentTheme) => rootRouter.run(ThemeModalRoute(currentTheme));
+  Future<ThemeType?> showThemeModal(ThemeType currentTheme) => _runFlow(ThemeModalRoute(currentTheme));
 
   Future<PenaltiesImpactType?> showPenaltiesImpactTypeModal(PenaltiesImpactType currentType) =>
-      rootRouter.run(PenaltiesImpactTypeModalRoute(currentType));
+      _runFlow(PenaltiesImpactTypeModalRoute(currentType));
 
   Future<PenaltyModel?> showMatchPenaltyModal({
     required int improvisationId,
     required List<TeamModel> teams,
     required List<String>? integrationPenaltyTypes,
     PenaltyModel? penalty,
-  }) => rootRouter.run(
+  }) => _runFlow(
     MatchPenaltyModalRoute(
       improvisationId: improvisationId,
       teams: teams,
@@ -139,37 +151,37 @@ class RouterService {
   Future<(ImprovisationModel, int)?> showMatchImprovisationModal({
     required MatchModel match,
     ImprovisationModel? improvisation,
-  }) => rootRouter.run(MatchImprovisationModalRoute(match: match, improvisation: improvisation));
+  }) => _runFlow(MatchImprovisationModalRoute(match: match, improvisation: improvisation));
 
   Future<PacingMenuAction?> showPacingMenuModal({
     required PacingModel pacing,
     bool showEdit = false,
     bool showEditDetails = false,
-  }) => rootRouter.run(PacingMenuModalRoute(pacing: pacing, showEdit: showEdit, showEditDetails: showEditDetails));
+  }) => _runFlow(PacingMenuModalRoute(pacing: pacing, showEdit: showEdit, showEditDetails: showEditDetails));
 
   Future<MatchMenuAction?> showMatchMenuModal({
     required MatchModel match,
     bool showEdit = false,
     bool showEditDetails = false,
-  }) => rootRouter.run(MatchMenuModalRoute(match: match, showEdit: showEdit, showEditDetails: showEditDetails));
+  }) => _runFlow(MatchMenuModalRoute(match: match, showEdit: showEdit, showEditDetails: showEditDetails));
 
-  Future<TeamMenuAction?> showTeamMenuModal(TeamModel team) => rootRouter.run(TeamMenuModalRoute(team));
+  Future<TeamMenuAction?> showTeamMenuModal(TeamModel team) => _runFlow(TeamMenuModalRoute(team));
 
   Future<ShareMenuAction?> showShareMenuModal({
     bool showShareText = false,
     bool showShareFile = false,
     bool showSaveFile = false,
-  }) => rootRouter.run(
+  }) => _runFlow(
     ShareMenuModalRoute(showShareText: showShareText, showShareFile: showShareFile, showSaveFile: showSaveFile),
   );
 
-  Future<void> showMatchScoreboardModal(MatchModel match) => rootRouter.run(MatchScoreboardModalRoute(match));
+  Future<void> showMatchScoreboardModal(MatchModel match) => _runFlow(MatchScoreboardModalRoute(match));
 
   Future<bool?> showQuestion({required String question, required String yesLabel, required String noLabel}) =>
-      rootRouter.run(QuestionModalRoute(question: question, yesLabel: yesLabel, noLabel: noLabel));
+      _runFlow(QuestionModalRoute(question: question, yesLabel: yesLabel, noLabel: noLabel));
 
   Future<void> showAlert({required String message, required String closeLabel}) =>
-      rootRouter.run(AlertModalRoute(message: message, closeLabel: closeLabel));
+      _runFlow(AlertModalRoute(message: message, closeLabel: closeLabel));
 
   Future<void> resetBranch(int branch) async {
     switch (branch) {
@@ -322,5 +334,26 @@ class RouterService {
       MatchScoreboardModalRoute() => flowChild,
       _ => Column(mainAxisSize: MainAxisSize.min, children: [flowChild]),
     };
+  }
+}
+
+class _FlowTransitionObserver extends NavigatorObserver {
+  _FlowTransitionObserver(this.transitions);
+
+  final Map<Object, Future<Object?>> transitions;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final settings = route.settings;
+    final flow = settings.arguments;
+    if ((settings is BottomSheetPage || settings is MessageBoxPage) && flow != null && route is TransitionRoute) {
+      final completed = route.completed;
+      transitions[flow] = completed;
+      completed.then((_) {
+        if (identical(transitions[flow], completed)) {
+          transitions.remove(flow);
+        }
+      });
+    }
   }
 }
