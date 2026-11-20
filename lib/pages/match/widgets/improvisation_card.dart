@@ -37,7 +37,7 @@ class ImprovisationCard extends StatelessWidget {
 
     void flushChips() {
       if (chips.isNotEmpty) {
-        fields.add(Wrap(spacing: 6, runSpacing: 4, children: chips));
+        fields.add(Wrap(spacing: 4, runSpacing: 2, children: chips));
         chips = [];
       }
     }

@@ -19,12 +19,22 @@ class ImprovisationMetadataChip extends StatelessWidget {
       ImprovisationFields.theme => Colors.blue,
       ImprovisationFields.notes => Colors.brown,
     };
-    final colors = ColorScheme.fromSeed(seedColor: seed, brightness: Theme.of(context).brightness);
+    final theme = Theme.of(context);
+    final colors = ColorScheme.fromSeed(seedColor: seed, brightness: theme.brightness);
+    final labelStyle = theme.textTheme.labelMedium;
+    final fontSize = labelStyle?.fontSize ?? 12;
+    final enlargedText = MediaQuery.textScalerOf(context).scale(fontSize) > fontSize;
     return Chip(
-      visualDensity: VisualDensity.compact,
+      // Negative vertical density can clip enlarged text.
+      visualDensity: enlargedText ? VisualDensity.standard : const VisualDensity(horizontal: -4, vertical: -4),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       padding: EdgeInsets.zero,
+      labelPadding: const EdgeInsets.symmetric(horizontal: 6),
       backgroundColor: colors.primaryContainer,
-      label: Text('$label: $value', style: TextStyle(color: colors.onPrimaryContainer)),
+      label: Text(
+        '$label: $value',
+        style: labelStyle?.copyWith(color: colors.onPrimaryContainer),
+      ),
     );
   }
 }

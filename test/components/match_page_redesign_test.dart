@@ -179,12 +179,17 @@ void main() {
         tester.view.physicalSize = const Size(360, 800);
         final longImprovisation = improvisation.copyWith(
           category: 'A very long category name that should remain readable on a narrow phone',
-          notes: List.filled(20, 'Additional notes').join(' '),
+          theme: '',
+          notes: List.filled(50, 'Additional notes').join(' '),
         );
         final longMatch = match.copyWith(improvisations: [longImprovisation]);
         when(matchCubit.state).thenReturn(MatchState(status: MatchStatus.success, match: longMatch));
         await tester.pumpWidget(app);
         await tester.pumpAndSettle();
+        expect(
+          find.descendant(of: find.byType(ImprovisationMetadataChip), matching: find.text('Theme: ')),
+          findsOneWidget,
+        );
         final overflowScroll = tester.state<ScrollableState>(
           find.ancestor(of: find.byType(ImprovisationStatistics), matching: find.byType(Scrollable)).first,
         );

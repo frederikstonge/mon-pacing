@@ -5,6 +5,39 @@ import 'package:mon_pacing/models/improvisation_fields.dart';
 import 'package:mon_pacing/themes/themes.dart';
 
 void main() {
+  testWidgets('metadata chips are compact and still show empty values', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: Themes.light(),
+        home: const Scaffold(
+          body: ImprovisationMetadataChip(field: ImprovisationFields.theme, label: 'Theme', value: ''),
+        ),
+      ),
+    );
+    expect(find.text('Theme: '), findsOneWidget);
+    expect(tester.getSize(find.byType(Chip)).height, lessThanOrEqualTo(30));
+  });
+
+  testWidgets('metadata chips expand for enlarged text', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: Themes.light(),
+        home: const MediaQuery(
+          data: MediaQueryData(textScaler: TextScaler.linear(2)),
+          child: Scaffold(
+            body: ImprovisationMetadataChip(field: ImprovisationFields.theme, label: 'Theme', value: 'Example'),
+          ),
+        ),
+      ),
+    );
+    final chip = tester.getRect(find.byType(Chip));
+    final label = tester.getRect(find.text('Theme: Example'));
+    expect(label.height, greaterThan(20));
+    expect(chip.top, lessThanOrEqualTo(label.top));
+    expect(chip.bottom, greaterThanOrEqualTo(label.bottom));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('metadata chips have readable contrast in light and dark themes', (tester) async {
     for (final theme in [
       Themes.light(),

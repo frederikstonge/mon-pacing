@@ -102,7 +102,7 @@ class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKee
                     height: !isExpanded ? null : 0.0,
                     child: Wrap(
                       spacing: 4,
-                      runSpacing: 4,
+                      runSpacing: 2,
                       children: widget.improvisationFieldsOrder
                           .map(
                             (field) => switch (field) {
