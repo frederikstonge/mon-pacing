@@ -326,6 +326,11 @@ class RouterService {
 
   Widget _buildModal(BuildContext context, KaiselModalRoute<Object?> route, Widget flowChild) {
     return switch (route) {
+      // Message boxes have no inner navigation, but still need the flow scope.
+      AppRoute box when box is QuestionModalRoute || box is AlertModalRoute => FlowScope(
+        onComplete: rootRouter.completeFlow<Object>,
+        child: _buildRoute(context, box),
+      ),
       PacingDetailModalRoute() ||
       MatchDetailModalRoute() ||
       TeamDetailModalRoute() ||

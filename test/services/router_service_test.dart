@@ -29,7 +29,11 @@ void main() {
     routerService.dispose();
   });
 
-  Future<RouterService> pumpRouter(WidgetTester tester) async {
+  Future<RouterService> pumpRouter(
+    WidgetTester tester, {
+    EdgeInsets padding = EdgeInsets.zero,
+    EdgeInsets viewInsets = EdgeInsets.zero,
+  }) async {
     final service = RouterService(onboardingFinished: () => false, observers: () => []);
     addTearDown(service.dispose);
     await tester.pumpWidget(
@@ -39,6 +43,10 @@ void main() {
           routerConfig: service.routerConfig,
           localizationsDelegates: S.localizationsDelegates,
           supportedLocales: S.supportedLocales,
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(padding: padding, viewInsets: viewInsets),
+            child: child!,
+          ),
         ),
       ),
     );
@@ -191,10 +199,86 @@ void main() {
     expect(service.rootRouter.hasActiveFlow, isFalse);
     await tester.pumpAndSettle();
     expect(find.text('Delete pacing?'), findsOneWidget);
+    final surface = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byWidgetPredicate((widget) => widget is Material && widget.type == MaterialType.card),
+    );
+    final screen = tester.getRect(find.byKey(service.routerConfig.navigatorKey));
+    final dialog = tester.getRect(surface);
+    expect(dialog.center.dx, closeTo(screen.center.dx, 0.01));
+    expect(dialog.center.dy, closeTo(screen.center.dy, 0.01));
     await tester.tap(find.text('No'));
     await tester.pumpAndSettle();
     expect(await menu, PacingMenuAction.delete);
     expect(await confirmation, isFalse);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('alert is centered on screen when opened through the router', (tester) async {
+    final service = await pumpRouter(tester, padding: const EdgeInsets.fromLTRB(30, 80, 10, 20));
+    final alert = service.showAlert(message: 'Message', closeLabel: 'Close');
+    await tester.pumpAndSettle();
+    expect(find.byType(Navigator), findsOneWidget);
+    final surface = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byWidgetPredicate((widget) => widget is Material && widget.type == MaterialType.card),
+    );
+    final screen = tester.getRect(find.byKey(service.routerConfig.navigatorKey));
+    final dialog = tester.getRect(surface);
+    expect(dialog.center.dx, closeTo(screen.center.dx, 0.01));
+    expect(dialog.center.dy, closeTo(screen.center.dy, 0.01));
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    await alert;
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('routed alert stays above the keyboard', (tester) async {
+    final service = await pumpRouter(
+      tester,
+      padding: const EdgeInsets.only(top: 40),
+      viewInsets: const EdgeInsets.only(bottom: 240),
+    );
+    final alert = service.showAlert(message: 'Message', closeLabel: 'Close');
+    await tester.pumpAndSettle();
+    final surface = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byWidgetPredicate((widget) => widget is Material && widget.type == MaterialType.card),
+    );
+    final screen = tester.getRect(find.byKey(service.routerConfig.navigatorKey));
+    final dialog = tester.getRect(surface);
+    expect(dialog.bottom, lessThanOrEqualTo(screen.bottom - 240));
+    expect(dialog.center.dy, closeTo(screen.center.dy - 120, 0.01));
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    await alert;
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('routed alert can be dismissed by tapping outside it', (tester) async {
+    final service = await pumpRouter(tester, padding: const EdgeInsets.fromLTRB(30, 80, 10, 20));
+    for (final outside in [const Offset(10, 300), const Offset(50, 300)]) {
+      final alert = service.showAlert(message: 'Message', closeLabel: 'Close');
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Message'));
+      await tester.pumpAndSettle();
+      expect(find.text('Message'), findsOneWidget);
+      await tester.tapAt(outside);
+      await tester.pumpAndSettle();
+      expect(find.text('Message'), findsNothing);
+      await alert;
+    }
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('system back dismisses a routed alert', (tester) async {
+    final service = await pumpRouter(tester);
+    final alert = service.showAlert(message: 'Message', closeLabel: 'Close');
+    await tester.pumpAndSettle();
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Message'), findsNothing);
+    await alert;
     await tester.pumpWidget(const SizedBox.shrink());
   });
 
@@ -234,6 +318,42 @@ void main() {
     await tester.tap(find.text('Delete'));
     await tester.pumpAndSettle();
     expect(await menu, PacingMenuAction.delete);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('dismissing a nested question leaves the pacing menu open', (tester) async {
+    final service = await pumpRouter(tester);
+    final menu = service.showPacingMenuModal(pacing: _pacing);
+    await tester.pumpAndSettle();
+    final question = service.showQuestion(question: 'Continue?', yesLabel: 'Yes', noLabel: 'No');
+    await tester.pumpAndSettle();
+
+    await tester.tapAt(const Offset(50, 300));
+    await tester.pumpAndSettle();
+    expect(await question, isNull);
+    expect(find.text('Continue?'), findsNothing);
+    expect(find.text('Delete'), findsOneWidget);
+
+    await tester.tap(find.text('Delete'));
+    await tester.pumpAndSettle();
+    expect(await menu, PacingMenuAction.delete);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('a message box can be shown over another message box', (tester) async {
+    final service = await pumpRouter(tester);
+    final question = service.showQuestion(question: 'Continue?', yesLabel: 'Yes', noLabel: 'No');
+    await tester.pumpAndSettle();
+    final alert = service.showAlert(message: 'Notice', closeLabel: 'Close');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    await alert;
+    expect(find.text('Continue?'), findsOneWidget);
+    await tester.tap(find.text('Yes'));
+    await tester.pumpAndSettle();
+    expect(await question, isTrue);
     await tester.pumpWidget(const SizedBox.shrink());
   });
 
