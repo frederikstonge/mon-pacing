@@ -27,7 +27,7 @@ import '../../cubits/tutorials/tutorials_cubit.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/pacing_model.dart';
 import '../../router/routes.dart';
-import '../../services/app_navigation_service.dart';
+import '../../services/router_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacing_detail/pacing_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
@@ -42,20 +42,24 @@ class PacingsPageView extends StatefulWidget {
 }
 
 class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
-  late final AppNavigationService _navigationService;
+  KaiselRouter<PacingsRoute>? _pacingsRouter;
   final GlobalKey _addPacingButtonKey = GlobalKey();
   final GlobalKey _firstPacingCardKey = GlobalKey();
 
   @override
-  void initState() {
-    super.initState();
-    _navigationService = context.read<AppNavigationService>();
-    _navigationService.pacingsRouter.addListener(_showTutorials);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final router = context.router<PacingsRoute>();
+    if (_pacingsRouter != router) {
+      _pacingsRouter?.removeListener(_showTutorials);
+      _pacingsRouter = router;
+      _pacingsRouter?.addListener(_showTutorials);
+    }
   }
 
   @override
   void dispose() {
-    _navigationService.pacingsRouter.removeListener(_showTutorials);
+    _pacingsRouter?.removeListener(_showTutorials);
     super.dispose();
   }
 
@@ -174,10 +178,10 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   Future<void> _onIntegrationPressed(BuildContext context) => context.router<AppRoute>().push(const ScannerRoute());
 
   Future<void> _onSearchPressed(BuildContext context) async {
-    final navigationService = context.read<AppNavigationService>();
+    final routerService = context.read<RouterService>();
     final result = await PacingsSearchPageView.showDialog(context);
     if (result != null && context.mounted) {
-      await navigationService.showPacingDetails(result.id);
+      await routerService.showPacingDetails(result.id);
     }
   }
 
@@ -195,7 +199,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   Future<void> _delete(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().delete(pacing);
 
   void _edit(BuildContext context, PacingModel pacing) =>
-      unawaited(context.read<AppNavigationService>().showPacingDetails(pacing.id));
+      unawaited(context.read<RouterService>().showPacingDetails(pacing.id));
 
   Future<bool?> _shouldDelete(BuildContext context, PacingModel pacing) {
     return MessageBoxDialog.questionShow(
@@ -207,7 +211,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   }
 
   Future<void> _startMatch(BuildContext context, PacingModel pacing) {
-    final navigationService = context.read<AppNavigationService>();
+    final routerService = context.read<RouterService>();
     return BottomSheetDialog.showDialog(
       context: context,
       child: MatchDetailPageShell(
@@ -217,7 +221,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
           final matchModel = await context.read<MatchesCubit>().add(match);
           if (matchModel != null && context.mounted) {
             navigator.pop();
-            await navigationService.showMatchDetails(id: matchModel.id);
+            await routerService.showMatchDetails(id: matchModel.id);
           }
         },
       ),
@@ -225,7 +229,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   }
 
   Future<void> _duplicate(BuildContext context, PacingModel pacing) {
-    final navigationService = context.read<AppNavigationService>();
+    final routerService = context.read<RouterService>();
     return BottomSheetDialog.showDialog(
       context: context,
       child: PacingDetailPageShell(
@@ -239,7 +243,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
           }
           if (pacingModel != null) {
             navigator.pop();
-            await navigationService.showPacingDetails(pacingModel.id);
+            await routerService.showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -247,7 +251,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   }
 
   Future<void> _addPacing() async {
-    final navigationService = context.read<AppNavigationService>();
+    final routerService = context.read<RouterService>();
     await BottomSheetDialog.showDialog(
       context: context,
       child: PacingDetailPageShell(
@@ -260,7 +264,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
           }
           if (pacingModel != null) {
             navigator.pop();
-            await navigationService.showPacingDetails(pacingModel.id);
+            await routerService.showPacingDetails(pacingModel.id);
           }
         },
       ),
@@ -272,13 +276,13 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     final displayAddPacing =
-        _navigationService.pacingsRouter.stack.last is PacingsTabRoute &&
+        _pacingsRouter?.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isEmpty &&
         !tutorialsCubit.state.addPacingFinished;
 
     final displayStartMatch =
-        _navigationService.pacingsRouter.stack.last is PacingsTabRoute &&
+        _pacingsRouter?.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isNotEmpty &&
         !tutorialsCubit.state.startMatchFinished;

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:kaisel/kaisel.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/onboarding/onboarding_page_view.dart';
@@ -10,8 +10,8 @@ import '../pages/tags_search/tags_search_page_shell.dart';
 import '../router/router.dart';
 import '../router/routes.dart';
 
-class AppNavigationService {
-  AppNavigationService({
+class RouterService {
+  RouterService({
     required bool Function() onboardingFinished,
     required List<NavigatorObserver> Function() observers,
   }) {
@@ -75,6 +75,19 @@ class AppNavigationService {
     return matchesRouter.replaceTop(
       MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
     );
+  }
+
+  Future<void> resetBranch(int branch) async {
+    switch (branch) {
+      case 0:
+        await pacingsRouter.set(const [PacingsTabRoute()]);
+      case 1:
+        await matchesRouter.set(const [MatchesTabRoute()]);
+      case 2:
+        await teamsRouter.set(const [TeamsTabRoute()]);
+      case 3:
+        await settingsRouter.set(const [SettingsTabRoute()]);
+    }
   }
 
   Widget _buildRoute(BuildContext context, AppRoute route) => switch (route) {

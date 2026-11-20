@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../cubits/settings/settings_cubit.dart';
-import '../../router/routes.dart';
-import '../../services/app_navigation_service.dart';
+import '../../services/router_service.dart';
 import 'widgets/bottom_nav_bar.dart';
 
 class ShellPageView extends StatelessWidget {
@@ -28,19 +29,11 @@ class ShellPageView extends StatelessWidget {
       bottomNavigationBar: showNavigation
           ? BottomNavBar(
               onDestinationSelected: (index) {
+                final routerService = context.read<RouterService>();
                 context.read<SettingsCubit>().vibrate(HapticsType.light);
                 if (index == activeBranch) {
-                  final navigationService = context.read<AppNavigationService>();
-                  switch (index) {
-                    case 0:
-                      navigationService.pacingsRouter.set(const [PacingsTabRoute()]);
-                    case 1:
-                      navigationService.matchesRouter.set(const [MatchesTabRoute()]);
-                    case 2:
-                      navigationService.teamsRouter.set(const [TeamsTabRoute()]);
-                    case 3:
-                      navigationService.settingsRouter.set(const [SettingsTabRoute()]);
-                  }
+                  unawaited(routerService.resetBranch(index));
+                  return;
                 }
                 switchBranch(index);
               },

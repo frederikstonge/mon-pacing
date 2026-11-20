@@ -18,9 +18,9 @@ import 'repositories/pacings_repository.dart';
 import 'repositories/tags_repository.dart';
 import 'repositories/teams_repository.dart';
 import 'services/analytics_service.dart';
-import 'services/app_navigation_service.dart';
 import 'services/excel_service.dart';
 import 'services/package_info_service.dart';
+import 'services/router_service.dart';
 import 'services/timer_service.dart';
 import 'services/toaster_service.dart';
 
@@ -94,7 +94,7 @@ class Bootstrapper extends StatelessWidget {
           ),
         ],
         child: RepositoryProvider(
-          create: (serviceContext) => AppNavigationService(
+          create: (serviceContext) => RouterService(
             onboardingFinished: () => serviceContext.read<OnboardingCubit>().state.onboardingFinished,
             observers: () => [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
           ),

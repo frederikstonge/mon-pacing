@@ -18,7 +18,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../models/pacing_model.dart';
 import '../../services/analytics_service.dart';
-import '../../services/app_navigation_service.dart';
+import '../../services/router_service.dart';
 import '../../services/toaster_service.dart';
 import '../match_detail/match_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
@@ -156,7 +156,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
       return;
     }
     unawaited(controller.stop());
-    final navigationService = context.read<AppNavigationService>();
+    final routerService = context.read<RouterService>();
     final pacingsCubit = context.read<PacingsCubit>();
     final matchesCubit = context.read<MatchesCubit>();
     final toasterService = context.read<ToasterService>();
@@ -187,7 +187,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
             if (!mounted) {
               return;
             }
-            await navigationService.showPacingDetails(pacingModel.id);
+            await routerService.showPacingDetails(pacingModel.id);
             return;
           } else {
             toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);
@@ -213,7 +213,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
           if (!mounted) {
             return;
           }
-          await navigationService.showMatchDetails(id: matchModel.id);
+          await routerService.showMatchDetails(id: matchModel.id);
           return;
         } else {
           toasterService.show(title: localizer.toasterGenericError, type: ToastificationType.error);

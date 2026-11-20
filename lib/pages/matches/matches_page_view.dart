@@ -22,7 +22,7 @@ import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/match_model.dart';
 import '../../router/routes.dart';
-import '../../services/app_navigation_service.dart';
+import '../../services/router_service.dart';
 import '../matches_search/matches_search_page_view.dart';
 import 'widgets/match_card.dart';
 
@@ -134,15 +134,15 @@ class _MatchesPageViewState extends State<MatchesPageView> {
   }
 
   void _edit(BuildContext context, MatchModel match) =>
-      unawaited(context.read<AppNavigationService>().showMatchDetails(id: match.id));
+      unawaited(context.read<RouterService>().showMatchDetails(id: match.id));
 
   Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
 
   Future<void> _onSearchPressed(BuildContext context) async {
-    final navigationService = context.read<AppNavigationService>();
+    final routerService = context.read<RouterService>();
     final result = await MatchesSearchPageView.showDialog(context);
     if (result != null && context.mounted) {
-      await navigationService.showMatchDetails(id: result.id);
+      await routerService.showMatchDetails(id: result.id);
     }
   }
 
