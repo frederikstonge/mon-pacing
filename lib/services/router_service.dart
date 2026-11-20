@@ -320,7 +320,7 @@ class RouterService {
       MatchPenaltyModalRoute() ||
       MatchImprovisationModalRoute() ||
       MatchScoreboardModalRoute() => flowChild,
-      _ => IntrinsicHeight(child: flowChild),
+      _ => Column(mainAxisSize: MainAxisSize.min, children: [flowChild]),
     };
   }
 }
