@@ -128,6 +128,7 @@ void main() {
     expect(timerService.startCount, 2);
     expect(timerService.messages, hasLength(2));
     expect(timerService.messages[0].runId, isNot(timerService.messages[1].runId));
+    expect(timerService.messages.map((message) => message.sequence), orderedEquals([1, 2]));
 
     await timerService.taskDataCallback!(
       MainMessage(runId: timerService.messages[0].runId, remainingMilliseconds: 1000).toJson(),
@@ -151,9 +152,7 @@ void main() {
     await cubit.start(_match, 10, 0, const Duration(minutes: 2));
     final runId = timerService.messages.single.runId;
 
-    await timerService.taskDataCallback!(
-      MainMessage(runId: runId, remainingMilliseconds: 0).toJson(),
-    );
+    await timerService.taskDataCallback!(MainMessage(runId: runId, remainingMilliseconds: 0).toJson());
 
     expect(cubit.state.timer, isNull);
     expect(timerService.stopCount, 1);
@@ -203,9 +202,7 @@ void main() {
     expect(cubit.state.timer?.remainingMilliseconds, const Duration(minutes: 2).inMilliseconds);
 
     // Mismatched runId should be ignored
-    await timerService.taskDataCallback!(
-      MainMessage(runId: 'wrong-run-id', remainingMilliseconds: 1000).toJson(),
-    );
+    await timerService.taskDataCallback!(MainMessage(runId: 'wrong-run-id', remainingMilliseconds: 1000).toJson());
     expect(cubit.state.timer?.remainingMilliseconds, const Duration(minutes: 2).inMilliseconds);
 
     await cubit.close();
@@ -237,6 +234,7 @@ void main() {
     await cubit.resume();
     expect(timerService.messages, hasLength(3));
     expect(timerService.messages.last.status, TimerStatus.started);
+    expect(timerService.messages.map((message) => message.sequence), orderedEquals([1, 2, 3]));
     expect(cubit.state.timer?.status, TimerStatus.started);
 
     await cubit.close();

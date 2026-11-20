@@ -8,7 +8,15 @@ part 'main_message.mapper.dart';
 class MainMessage with MainMessageMappable {
   final String runId;
   final int remainingMilliseconds;
+  final TimerStatus? status;
   final TimerStatus? requestedStatus;
+  final int? acknowledgedSequence;
 
-  const MainMessage({required this.runId, required this.remainingMilliseconds, this.requestedStatus});
+  const MainMessage({
+    required this.runId,
+    required this.remainingMilliseconds,
+    this.status,
+    this.requestedStatus,
+    this.acknowledgedSequence,
+  });
 }
