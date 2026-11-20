@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mon_pacing/models/theme_type.dart';
 import 'package:mon_pacing/router/routes.dart';
 import 'package:mon_pacing/services/router_service.dart';
 
@@ -57,5 +58,30 @@ void main() {
     await routerService.resetBranch(0);
 
     expect(pacingsRouter.stack, const [PacingsTabRoute()]);
+  });
+
+  test('duration picker modal returns its selected value', () async {
+    final result = routerService.showDurationPickerModal(
+      title: 'Duration',
+      initialDuration: const Duration(minutes: 1),
+    );
+
+    await Future<void>.delayed(Duration.zero);
+    routerService.rootRouter.completeFlow(const Duration(seconds: 45));
+
+    expect(await result, const Duration(seconds: 45));
+  });
+
+  test('modal flows resolve independently in nested order', () async {
+    final outer = routerService.showThemeModal(ThemeType.light);
+    await Future<void>.delayed(Duration.zero);
+    final inner = routerService.showDurationPickerModal(title: 'Duration', initialDuration: const Duration(minutes: 1));
+    await Future<void>.delayed(Duration.zero);
+
+    routerService.rootRouter.completeFlow(const Duration(seconds: 30));
+    expect(await inner, const Duration(seconds: 30));
+
+    routerService.rootRouter.completeFlow(ThemeType.dark);
+    expect(await outer, ThemeType.dark);
   });
 }

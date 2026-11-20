@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../extensions/duration_extensions.dart';
@@ -8,10 +9,9 @@ import '../../models/improvisation_fields.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/improvisation_type.dart';
 import '../../pages/categories_search/categories_search_page_view.dart';
-import '../bottom_sheet/bottom_sheet_dialog.dart';
+import '../../services/router_service.dart';
 import '../buttons/loading_icon_button.dart';
 import '../custom_tooltip/custom_tooltip.dart';
-import '../duration_picker/duration_picker.dart';
 import '../form/drop_down_element.dart';
 import '../form/text_field_element.dart';
 import '../settings_tile/settings_tile.dart';
@@ -156,12 +156,9 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           subTitle: Text(Duration(seconds: widget.improvisation.huddleTimerInSeconds).toImprovDuration()),
           trailing: const Icon(Icons.chevron_right),
           onTap: () async {
-            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-              context: context,
-              child: DurationPicker(
-                title: S.of(context).huddleTimer,
-                initialDuration: Duration(seconds: widget.improvisation.huddleTimerInSeconds),
-              ),
+            final newDuration = await context.read<RouterService>().showDurationPickerModal(
+              title: S.of(context).huddleTimer,
+              initialDuration: Duration(seconds: widget.improvisation.huddleTimerInSeconds),
             );
 
             if (newDuration != null) {
@@ -183,12 +180,9 @@ class _ImprovisationDetailState extends State<ImprovisationDetail> {
           subTitle: Text(Duration(seconds: widget.improvisation.timeBufferInSeconds).toImprovDuration()),
           trailing: const Icon(Icons.chevron_right),
           onTap: () async {
-            final newDuration = await BottomSheetDialog.showDialog<Duration>(
-              context: context,
-              child: DurationPicker(
-                title: S.of(context).timeBuffer,
-                initialDuration: Duration(seconds: widget.improvisation.timeBufferInSeconds),
-              ),
+            final newDuration = await context.read<RouterService>().showDurationPickerModal(
+              title: S.of(context).timeBuffer,
+              initialDuration: Duration(seconds: widget.improvisation.timeBufferInSeconds),
             );
 
             if (newDuration != null) {

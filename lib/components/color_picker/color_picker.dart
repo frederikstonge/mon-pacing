@@ -8,8 +8,9 @@ import '../bottom_sheet/bottom_sheet_scaffold.dart';
 class AColorPicker extends StatelessWidget {
   final Color initialColor;
   final String title;
+  final ValueChanged<Color> onChanged;
 
-  const AColorPicker({super.key, required this.initialColor, required this.title});
+  const AColorPicker({super.key, required this.initialColor, required this.title, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class AColorPicker extends StatelessWidget {
           customColorSwatchesAndNames: Constants.colors,
           color: initialColor,
           onColorChanged: (value) {
-            Navigator.of(context).pop(value);
+            onChanged(value);
           },
         ),
       ),

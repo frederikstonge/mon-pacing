@@ -26,8 +26,6 @@ import '../../models/match_model.dart';
 import '../../models/penalty_model.dart';
 import '../../services/router_service.dart';
 import '../../services/toaster_service.dart';
-import '../match_improvisation/match_improvisation_shell.dart';
-import '../match_penalty/match_penalty_shell.dart';
 import '../match_scoreboard/match_scoreboard_shell.dart';
 import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
@@ -281,27 +279,27 @@ class _MatchPageViewState extends State<MatchPageView> {
     MatchModel match,
     ImprovisationModel improvisation,
     PenaltyModel penalty,
-  ) async => BottomSheetDialog.showDialog(
-    context: context,
-    child: MatchPenaltyShell(
+  ) async {
+    final updatedPenalty = await context.read<RouterService>().showMatchPenaltyModal(
       improvisationId: improvisation.id,
       teams: match.teams,
       penalty: penalty,
       integrationPenaltyTypes: match.penaltyTypes,
-      onSave: (penalty) async => await context.read<MatchCubit>().editPenalty(penalty),
-    ),
-  );
+    );
+    if (updatedPenalty != null && context.mounted) {
+      await context.read<MatchCubit>().editPenalty(updatedPenalty);
+    }
+  }
 
   Future<void> _addPenalty(BuildContext context, MatchModel match, ImprovisationModel improvisation) async {
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchPenaltyShell(
-        improvisationId: improvisation.id,
-        teams: match.teams,
-        onSave: (penalty) async => await context.read<MatchCubit>().addPenalty(penalty),
-        integrationPenaltyTypes: match.penaltyTypes,
-      ),
+    final penalty = await context.read<RouterService>().showMatchPenaltyModal(
+      improvisationId: improvisation.id,
+      teams: match.teams,
+      integrationPenaltyTypes: match.penaltyTypes,
     );
+    if (penalty != null && context.mounted) {
+      await context.read<MatchCubit>().addPenalty(penalty);
+    }
   }
 
   Future<void> _deleteImprovisation(BuildContext context, ImprovisationModel improvisation, int index) async {
@@ -340,32 +338,20 @@ class _MatchPageViewState extends State<MatchPageView> {
       return;
     }
 
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchImprovisationShell(
-        improvisation: improvisation,
-        match: match,
-        onConfirm: (improvisation, index, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<MatchCubit>().editImprovisation(improvisation, index);
-          navigator.pop();
-        },
-      ),
+    final result = await context.read<RouterService>().showMatchImprovisationModal(
+      improvisation: improvisation,
+      match: match,
     );
+    if (result != null && context.mounted) {
+      await context.read<MatchCubit>().editImprovisation(result.$1, result.$2);
+    }
   }
 
-  void _addImprovisation(BuildContext context, MatchModel match) {
-    BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchImprovisationShell(
-        match: match,
-        onConfirm: (improvisation, index, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<MatchCubit>().addImprovisation(improvisation, index);
-          navigator.pop();
-        },
-      ),
-    );
+  Future<void> _addImprovisation(BuildContext context, MatchModel match) async {
+    final result = await context.read<RouterService>().showMatchImprovisationModal(match: match);
+    if (result != null && context.mounted) {
+      await context.read<MatchCubit>().addImprovisation(result.$1, result.$2);
+    }
   }
 
   Future<void> _delete(BuildContext context, MatchModel match) async {
@@ -385,7 +371,7 @@ class _MatchPageViewState extends State<MatchPageView> {
   }
 
   Future<void> _editDetails(BuildContext context, MatchModel match) async {
-    final updatedMatch = await context.read<RouterService>().showMatchEditor(match: match);
+    final updatedMatch = await context.read<RouterService>().showMatchDetailModal(match: match);
     if (updatedMatch != null && context.mounted) {
       await context.read<MatchCubit>().edit(updatedMatch);
     }

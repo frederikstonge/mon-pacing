@@ -2,16 +2,29 @@ import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../components/bottom_sheet/bottom_sheet_modal.dart';
+import '../components/color_picker/color_picker.dart';
+import '../components/duration_picker/duration_picker.dart';
+import '../components/penalties_impact_type/penalties_impact_type_view.dart';
+import '../models/improvisation_model.dart';
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
+import '../models/penalties_impact_type.dart';
+import '../models/penalty_model.dart';
+import '../models/team_model.dart';
+import '../models/theme_type.dart';
 import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/match_detail/match_detail_page_shell.dart';
+import '../pages/match_improvisation/match_improvisation_shell.dart';
+import '../pages/match_penalty/match_penalty_shell.dart';
 import '../pages/onboarding/onboarding_page_view.dart';
 import '../pages/pacing_detail/pacing_detail_page_shell.dart';
 import '../pages/penalties_search/penalties_search_page_shell.dart';
 import '../pages/scanner/scanner_page_shell.dart';
+import '../pages/settings/widgets/language_view.dart';
+import '../pages/settings/widgets/theme_view.dart';
 import '../pages/shell/shell_page_shell.dart';
 import '../pages/tags_search/tags_search_page_shell.dart';
+import '../pages/team_detail/team_detail_page_shell.dart';
 import '../router/router.dart';
 import '../router/routes.dart';
 
@@ -78,11 +91,49 @@ class RouterService {
     return matchesRouter.replaceTop(MatchRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex));
   }
 
-  Future<PacingModel?> showPacingEditor({PacingModel? pacing, required bool editMode}) =>
+  Future<PacingModel?> showPacingDetailModal({PacingModel? pacing, required bool editMode}) =>
       rootRouter.run(PacingDetailModalRoute(pacing: pacing, editMode: editMode));
 
-  Future<MatchModel?> showMatchEditor({MatchModel? match, PacingModel? pacing}) =>
+  Future<MatchModel?> showMatchDetailModal({MatchModel? match, PacingModel? pacing}) =>
       rootRouter.run(MatchDetailModalRoute(match: match, pacing: pacing));
+
+  Future<TeamModel?> showTeamDetailModal({TeamModel? team, required bool editMode}) =>
+      rootRouter.run(TeamDetailModalRoute(team: team, editMode: editMode));
+
+  Future<Duration?> showDurationPickerModal({required String title, required Duration initialDuration}) =>
+      rootRouter.run(DurationPickerModalRoute(title: title, initialDuration: initialDuration));
+
+  Future<Color?> showColorPickerModal({required String title, required Color initialColor}) =>
+      rootRouter.run(ColorPickerModalRoute(title: title, initialColor: initialColor));
+
+  Future<Locale?> showLanguageModal({
+    required Locale currentLocale,
+    required List<Locale> availableLocales,
+  }) => rootRouter.run(LanguageModalRoute(currentLocale: currentLocale, availableLocales: availableLocales));
+
+  Future<ThemeType?> showThemeModal(ThemeType currentTheme) => rootRouter.run(ThemeModalRoute(currentTheme));
+
+  Future<PenaltiesImpactType?> showPenaltiesImpactTypeModal(PenaltiesImpactType currentType) =>
+      rootRouter.run(PenaltiesImpactTypeModalRoute(currentType));
+
+  Future<PenaltyModel?> showMatchPenaltyModal({
+    required int improvisationId,
+    required List<TeamModel> teams,
+    required List<String>? integrationPenaltyTypes,
+    PenaltyModel? penalty,
+  }) => rootRouter.run(
+    MatchPenaltyModalRoute(
+      improvisationId: improvisationId,
+      teams: teams,
+      integrationPenaltyTypes: integrationPenaltyTypes,
+      penalty: penalty,
+    ),
+  );
+
+  Future<(ImprovisationModel, int)?> showMatchImprovisationModal({
+    required MatchModel match,
+    ImprovisationModel? improvisation,
+  }) => rootRouter.run(MatchImprovisationModalRoute(match: match, improvisation: improvisation));
 
   Future<void> resetBranch(int branch) async {
     switch (branch) {
@@ -113,6 +164,48 @@ class RouterService {
       match: match,
       pacing: pacing,
       onConfirm: (match, flowContext) => flowContext.completeFlow<MatchModel>(match),
+    ),
+    TeamDetailModalRoute(:final team, :final editMode) => TeamDetailPageShell(
+      team: team,
+      editMode: editMode,
+      onConfirm: (team, flowContext) => flowContext.completeFlow<TeamModel>(team),
+    ),
+    DurationPickerModalRoute(:final title, :final initialDuration) => DurationPicker(
+      title: title,
+      initialDuration: initialDuration,
+      onChanged: (duration) => context.completeFlow<Duration>(duration),
+    ),
+    ColorPickerModalRoute(:final title, :final initialColor) => AColorPicker(
+      title: title,
+      initialColor: initialColor,
+      onChanged: (color) => context.completeFlow<Color>(color),
+    ),
+    LanguageModalRoute(:final currentLocale, :final availableLocales) => LanguageView(
+      currentLocale: currentLocale,
+      availableLocales: availableLocales,
+      onChanged: (locale) => context.completeFlow<Locale>(locale),
+    ),
+    ThemeModalRoute(:final currentTheme) => ThemeView(
+      currentTheme: currentTheme,
+      onChanged: (theme) => context.completeFlow<ThemeType>(theme),
+    ),
+    PenaltiesImpactTypeModalRoute(:final currentType) => PenaltiesImpactTypeView(
+      currentPenaltiesImpactType: currentType,
+      onChanged: (type) => context.completeFlow<PenaltiesImpactType>(type),
+    ),
+    MatchPenaltyModalRoute(:final improvisationId, :final teams, :final integrationPenaltyTypes, :final penalty) =>
+      MatchPenaltyShell(
+        improvisationId: improvisationId,
+        teams: teams,
+        integrationPenaltyTypes: integrationPenaltyTypes,
+        penalty: penalty,
+        onSave: (penalty) => context.completeFlow<PenaltyModel>(penalty),
+      ),
+    MatchImprovisationModalRoute(:final match, :final improvisation) => MatchImprovisationShell(
+      match: match,
+      improvisation: improvisation,
+      onConfirm: (improvisation, index, flowContext) =>
+          flowContext.completeFlow<(ImprovisationModel, int)>((improvisation, index)),
     ),
   };
 

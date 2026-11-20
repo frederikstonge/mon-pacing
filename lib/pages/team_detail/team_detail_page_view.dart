@@ -5,10 +5,8 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../components/bottom_sheet/bottom_sheet_appbar.dart';
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/bottom_sheet/bottom_sheet_scaffold.dart';
 import '../../components/buttons/loading_button.dart';
-import '../../components/color_picker/color_picker.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/form/tags_field_element.dart';
 import '../../components/settings_tile/settings_tile.dart';
@@ -19,6 +17,7 @@ import '../../extensions/color_extensions.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/team_model.dart';
 import '../../repositories/tags_repository.dart';
+import '../../services/router_service.dart';
 import '../../validators/validators.dart';
 import 'cubits/team_detail_cubit.dart';
 import 'cubits/team_detail_state.dart';
@@ -85,12 +84,9 @@ class _TeamDetailPageViewState extends State<TeamDetailPageView> {
                         leading: InkWell(
                           onTap: () async {
                             final teamDetailCubit = context.read<TeamDetailCubit>();
-                            final newColor = await BottomSheetDialog.showDialog<Color>(
-                              context: context,
-                              child: AColorPicker(
-                                initialColor: Color(teamDetailState.team.color),
-                                title: S.of(context).color,
-                              ),
+                            final newColor = await context.read<RouterService>().showColorPickerModal(
+                              initialColor: Color(teamDetailState.team.color),
+                              title: S.of(context).color,
                             );
                             if (newColor != null) {
                               teamDetailCubit.edit(teamDetailState.team.copyWith(color: newColor.getIntvalue));

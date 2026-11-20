@@ -211,7 +211,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _startMatch(BuildContext context, PacingModel pacing) {
     final routerService = context.read<RouterService>();
-    return routerService.showMatchEditor(pacing: pacing).then((match) async {
+    return routerService.showMatchDetailModal(pacing: pacing).then((match) async {
       if (match == null || !context.mounted) {
         return;
       }
@@ -224,7 +224,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _duplicate(BuildContext context, PacingModel pacing) {
     final routerService = context.read<RouterService>();
-    return routerService.showPacingEditor(pacing: pacing, editMode: false).then((pacing) async {
+    return routerService.showPacingDetailModal(pacing: pacing, editMode: false).then((pacing) async {
       if (pacing == null || !context.mounted) {
         return;
       }
@@ -237,7 +237,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _addPacing() async {
     final routerService = context.read<RouterService>();
-    final pacing = await routerService.showPacingEditor(editMode: false);
+    final pacing = await routerService.showPacingDetailModal(editMode: false);
     if (pacing == null || !mounted) {
       return;
     }

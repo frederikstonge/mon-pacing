@@ -2,15 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_button.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/custom_card/custom_card.dart';
 import '../../components/custom_tooltip/custom_tooltip.dart';
 import '../../components/display_language/display_language.dart';
-import '../../components/duration_picker/duration_picker.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/penalties_impact_type/penalties_impact_type_view.dart';
 import '../../components/quantity_stepper/quantity_stepper_form_field.dart';
 import '../../components/settings_tile/settings_tile.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
@@ -26,9 +23,8 @@ import '../../models/constants.dart';
 import '../../models/penalties_impact_type.dart';
 import '../../models/theme_type.dart';
 import '../../services/package_info_service.dart';
+import '../../services/router_service.dart';
 import 'widgets/improvisation_fields_order.dart';
-import 'widgets/language_view.dart';
-import 'widgets/theme_view.dart';
 
 class SettingsPageView extends StatefulWidget {
   const SettingsPageView({super.key});
@@ -77,17 +73,16 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               title: Text(S.of(context).language),
                               subTitle: DisplayLanguage(locale: Locale(settingsState.language)),
                               trailing: const Icon(Icons.chevron_right),
-                              onTap: () {
-                                BottomSheetDialog.showDialog(
-                                  context: context,
-                                  child: LanguageView(
-                                    currentLocale: Locale(settingsState.language),
-                                    availableLocales: S.supportedLocales,
-                                    onChanged: (locale) => context.read<SettingsCubit>().edit(
-                                      settingsState.copyWith(language: locale.toLanguageTag()),
-                                    ),
-                                  ),
+                              onTap: () async {
+                                final locale = await context.read<RouterService>().showLanguageModal(
+                                  currentLocale: Locale(settingsState.language),
+                                  availableLocales: S.supportedLocales,
                                 );
+                                if (locale != null && context.mounted) {
+                                  context.read<SettingsCubit>().edit(
+                                    settingsState.copyWith(language: locale.toLanguageTag()),
+                                  );
+                                }
                               },
                             ),
                             SettingsTile(
@@ -104,15 +99,11 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 ThemeType.paradoxe => S.of(context).paradoxe,
                               }),
                               trailing: const Icon(Icons.chevron_right),
-                              onTap: () {
-                                BottomSheetDialog.showDialog(
-                                  context: context,
-                                  child: ThemeView(
-                                    currentTheme: settingsState.theme,
-                                    onChanged: (theme) =>
-                                        context.read<SettingsCubit>().edit(settingsState.copyWith(theme: theme)),
-                                  ),
-                                );
+                              onTap: () async {
+                                final theme = await context.read<RouterService>().showThemeModal(settingsState.theme);
+                                if (theme != null && context.mounted) {
+                                  context.read<SettingsCubit>().edit(settingsState.copyWith(theme: theme));
+                                }
                               },
                             ),
                             SettingsTile(
@@ -229,13 +220,10 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () async {
                                 final settingsCubit = context.read<SettingsCubit>();
-                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                                  context: context,
-                                  child: DurationPicker(
-                                    title: S.of(context).improvisationDurationInSeconds,
-                                    initialDuration: Duration(
-                                      seconds: settingsState.defaultImprovisationDurationInSeconds,
-                                    ),
+                                final newDuration = await context.read<RouterService>().showDurationPickerModal(
+                                  title: S.of(context).improvisationDurationInSeconds,
+                                  initialDuration: Duration(
+                                    seconds: settingsState.defaultImprovisationDurationInSeconds,
                                   ),
                                 );
 
@@ -265,12 +253,9 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () async {
                                 final settingsCubit = context.read<SettingsCubit>();
-                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                                  context: context,
-                                  child: DurationPicker(
-                                    title: S.of(context).huddleTimer,
-                                    initialDuration: Duration(seconds: settingsState.defaultHuddleTimerInSeconds),
-                                  ),
+                                final newDuration = await context.read<RouterService>().showDurationPickerModal(
+                                  title: S.of(context).huddleTimer,
+                                  initialDuration: Duration(seconds: settingsState.defaultHuddleTimerInSeconds),
                                 );
 
                                 if (newDuration != null) {
@@ -297,12 +282,9 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                               trailing: const Icon(Icons.chevron_right),
                               onTap: () async {
                                 final settingsCubit = context.read<SettingsCubit>();
-                                final newDuration = await BottomSheetDialog.showDialog<Duration>(
-                                  context: context,
-                                  child: DurationPicker(
-                                    title: S.of(context).timeBuffer,
-                                    initialDuration: Duration(seconds: settingsState.defaultTimeBufferInSeconds),
-                                  ),
+                                final newDuration = await context.read<RouterService>().showDurationPickerModal(
+                                  title: S.of(context).timeBuffer,
+                                  initialDuration: Duration(seconds: settingsState.defaultTimeBufferInSeconds),
                                 );
 
                                 if (newDuration != null) {
@@ -419,16 +401,15 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                 PenaltiesImpactType.substractPoints => S.of(context).penaltiesImpactTypeSubstract,
                               }),
                               trailing: const Icon(Icons.chevron_right),
-                              onTap: () {
-                                BottomSheetDialog.showDialog(
-                                  context: context,
-                                  child: PenaltiesImpactTypeView(
-                                    currentPenaltiesImpactType: settingsState.defaultPenaltiesImpactType,
-                                    onChanged: (penaltiesImpactType) => context.read<SettingsCubit>().edit(
-                                      settingsState.copyWith(defaultPenaltiesImpactType: penaltiesImpactType),
-                                    ),
-                                  ),
-                                );
+                              onTap: () async {
+                                final type = await context
+                                    .read<RouterService>()
+                                    .showPenaltiesImpactTypeModal(settingsState.defaultPenaltiesImpactType);
+                                if (type != null && context.mounted) {
+                                  context.read<SettingsCubit>().edit(
+                                    settingsState.copyWith(defaultPenaltiesImpactType: type),
+                                  );
+                                }
                               },
                             ),
                             Padding(

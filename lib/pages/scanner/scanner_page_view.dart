@@ -269,7 +269,7 @@ class _ScannerPageViewState extends State<ScannerPageView> with WidgetsBindingOb
     }
 
     if (match == null && mounted) {
-      match = await context.read<RouterService>().showMatchEditor(pacing: pacing);
+      match = await context.read<RouterService>().showMatchDetailModal(pacing: pacing);
     }
 
     if (match == null) {

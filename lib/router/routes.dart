@@ -1,7 +1,13 @@
 import 'package:kaisel/kaisel.dart';
+import 'package:material_ui/material_ui.dart';
 
+import '../models/improvisation_model.dart';
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
+import '../models/penalties_impact_type.dart';
+import '../models/penalty_model.dart';
+import '../models/team_model.dart';
+import '../models/theme_type.dart';
 
 sealed class AppRoute extends KaiselRoute {
   const AppRoute();
@@ -49,6 +55,92 @@ final class MatchDetailModalRoute extends AppRoute implements KaiselModalRoute<M
 
   @override
   List<Object?> get props => [match, pacing];
+}
+
+final class TeamDetailModalRoute extends AppRoute implements KaiselModalRoute<TeamModel> {
+  const TeamDetailModalRoute({this.team, required this.editMode});
+
+  final TeamModel? team;
+  final bool editMode;
+
+  @override
+  List<Object?> get props => [team, editMode];
+}
+
+final class DurationPickerModalRoute extends AppRoute implements KaiselModalRoute<Duration> {
+  const DurationPickerModalRoute({required this.title, required this.initialDuration});
+
+  final String title;
+  final Duration initialDuration;
+
+  @override
+  List<Object?> get props => [title, initialDuration];
+}
+
+final class ColorPickerModalRoute extends AppRoute implements KaiselModalRoute<Color> {
+  const ColorPickerModalRoute({required this.title, required this.initialColor});
+
+  final String title;
+  final Color initialColor;
+
+  @override
+  List<Object?> get props => [title, initialColor];
+}
+
+final class LanguageModalRoute extends AppRoute implements KaiselModalRoute<Locale> {
+  const LanguageModalRoute({required this.currentLocale, required this.availableLocales});
+
+  final Locale currentLocale;
+  final List<Locale> availableLocales;
+
+  @override
+  List<Object?> get props => [currentLocale, availableLocales];
+}
+
+final class ThemeModalRoute extends AppRoute implements KaiselModalRoute<ThemeType> {
+  const ThemeModalRoute(this.currentTheme);
+
+  final ThemeType currentTheme;
+
+  @override
+  List<Object?> get props => [currentTheme];
+}
+
+final class PenaltiesImpactTypeModalRoute extends AppRoute implements KaiselModalRoute<PenaltiesImpactType> {
+  const PenaltiesImpactTypeModalRoute(this.currentType);
+
+  final PenaltiesImpactType currentType;
+
+  @override
+  List<Object?> get props => [currentType];
+}
+
+final class MatchPenaltyModalRoute extends AppRoute implements KaiselModalRoute<PenaltyModel> {
+  const MatchPenaltyModalRoute({
+    required this.improvisationId,
+    required this.teams,
+    required this.integrationPenaltyTypes,
+    this.penalty,
+  });
+
+  final int improvisationId;
+  final List<TeamModel> teams;
+  final List<String>? integrationPenaltyTypes;
+  final PenaltyModel? penalty;
+
+  @override
+  List<Object?> get props => [improvisationId, teams, integrationPenaltyTypes, penalty];
+}
+
+final class MatchImprovisationModalRoute extends AppRoute
+    implements KaiselModalRoute<(ImprovisationModel, int)> {
+  const MatchImprovisationModalRoute({required this.match, this.improvisation});
+
+  final MatchModel match;
+  final ImprovisationModel? improvisation;
+
+  @override
+  List<Object?> get props => [match, improvisation];
 }
 
 sealed class PacingsRoute extends KaiselRoute {

@@ -202,9 +202,7 @@ class _MatchPenaltyViewState extends State<MatchPenaltyView> {
                   child: LoadingButton.filled(
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
-                        final navigator = Navigator.of(context);
                         await context.read<MatchPenaltyCubit>().onSave(matchPenaltyState.penalty);
-                        navigator.pop();
                       }
                     },
                     child: Text(

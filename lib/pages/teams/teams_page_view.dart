@@ -17,7 +17,7 @@ import '../../cubits/teams/teams_status.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../team_detail/team_detail_page_shell.dart';
+import '../../services/router_service.dart';
 import 'widgets/team_card.dart';
 
 class TeamsPageView extends StatefulWidget {
@@ -37,18 +37,11 @@ class _TeamsPageViewState extends State<TeamsPageView> {
             return Scaffold(
               floatingActionButton: FloatingActionButton(
                 heroTag: 'teams_fab',
-                onPressed: () {
-                  BottomSheetDialog.showDialog(
-                    context: context,
-                    child: TeamDetailPageShell(
-                      editMode: false,
-                      onConfirm: (team, dialogContext) async {
-                        final navigator = Navigator.of(dialogContext);
-                        await context.read<TeamsCubit>().add(team);
-                        navigator.pop();
-                      },
-                    ),
-                  );
+                onPressed: () async {
+                  final team = await context.read<RouterService>().showTeamDetailModal(editMode: false);
+                  if (team != null && context.mounted) {
+                    await context.read<TeamsCubit>().add(team);
+                  }
                 },
                 tooltip: S.of(context).createNewTeamTooltip,
                 child: const Icon(Icons.add),
@@ -107,18 +100,14 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                           return TeamCard(
                             team: team,
                             onLongPress: () => context.read<SettingsCubit>().vibrate(HapticsType.selection),
-                            edit: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: TeamDetailPageShell(
-                                team: team,
-                                editMode: true,
-                                onConfirm: (team, dialogContext) async {
-                                  final navigator = Navigator.of(dialogContext);
-                                  await context.read<TeamsCubit>().edit(team);
-                                  navigator.pop();
-                                },
-                              ),
-                            ),
+                            edit: () async {
+                              final updatedTeam = await context
+                                  .read<RouterService>()
+                                  .showTeamDetailModal(team: team, editMode: true);
+                              if (updatedTeam != null && context.mounted) {
+                                await context.read<TeamsCubit>().edit(updatedTeam);
+                              }
+                            },
                             shouldDelete: () => MessageBoxDialog.questionShow(
                               context,
                               S
@@ -135,18 +124,14 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                                 saveFile: () => context.read<TeamsCubit>().saveFile(team),
                               ),
                             ),
-                            duplicate: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: TeamDetailPageShell(
-                                editMode: false,
-                                team: team,
-                                onConfirm: (team, dialogContext) async {
-                                  final navigator = Navigator.of(dialogContext);
-                                  await context.read<TeamsCubit>().add(team);
-                                  navigator.pop();
-                                },
-                              ),
-                            ),
+                            duplicate: () async {
+                              final duplicate = await context
+                                  .read<RouterService>()
+                                  .showTeamDetailModal(team: team, editMode: false);
+                              if (duplicate != null && context.mounted) {
+                                await context.read<TeamsCubit>().add(duplicate);
+                              }
+                            },
                           );
                         },
                       ),
