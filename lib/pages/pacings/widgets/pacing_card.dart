@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/custom_card/custom_card.dart';
-import '../../../components/pacing_menu/pacing_menu.dart';
 import '../../../components/tags_display/tags_display.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/pacing_model.dart';
+import '../../../router/routes.dart';
+import '../../../services/router_service.dart';
 
 class PacingCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;
@@ -127,22 +128,24 @@ class PacingCard extends StatelessWidget {
     );
   }
 
-  void _openMenu(BuildContext context) {
-    BottomSheetDialog.showDialog(
-      context: context,
-      child: PacingMenu(
-        pacing: pacing,
-        startMatch: startMatch,
-        edit: edit,
-        share: share,
-        duplicate: duplicate,
-        delete: () async {
-          final result = await shouldDelete();
-          if (result == true) {
-            await delete.call();
-          }
-        },
-      ),
-    );
+  Future<void> _openMenu(BuildContext context) async {
+    final action = await context.read<RouterService>().showPacingMenuModal(pacing: pacing, showEdit: true);
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case PacingMenuAction.startMatch:
+        await startMatch();
+      case PacingMenuAction.edit:
+        await edit();
+      case PacingMenuAction.share:
+        await share();
+      case PacingMenuAction.duplicate:
+        await duplicate();
+      case PacingMenuAction.delete:
+        if (await shouldDelete() == true) {
+          await delete();
+        }
+      case PacingMenuAction.editDetails:
+        break;
+    }
   }
 }

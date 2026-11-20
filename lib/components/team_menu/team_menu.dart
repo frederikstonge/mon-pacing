@@ -1,26 +1,19 @@
-import 'dart:async';
-
 import 'package:material_ui/material_ui.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
+import '../../../router/routes.dart';
 import '../../models/team_model.dart';
 import '../bottom_sheet/bottom_sheet_appbar.dart';
 import '../bottom_sheet/bottom_sheet_scaffold.dart';
 
 class TeamMenu extends StatelessWidget {
   final TeamModel team;
-  final FutureOr<void> Function() edit;
-  final FutureOr<void> Function() share;
-  final FutureOr<void> Function() duplicate;
-  final FutureOr<void> Function() delete;
+  final ValueChanged<TeamMenuAction> onSelected;
 
   const TeamMenu({
     super.key,
     required this.team,
-    required this.edit,
-    required this.share,
-    required this.duplicate,
-    required this.delete,
+    required this.onSelected,
   });
 
   @override
@@ -33,40 +26,28 @@ class TeamMenu extends StatelessWidget {
         shrinkWrap: true,
         children: [
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await edit.call();
-            },
+            onTap: () => onSelected(TeamMenuAction.edit),
             child: ListTile(
               leading: const Icon(Icons.edit),
               title: Text(S.of(context).edit, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await share.call();
-            },
+            onTap: () => onSelected(TeamMenuAction.share),
             child: ListTile(
               leading: const Icon(Icons.share),
               title: Text(S.of(context).share, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await duplicate.call();
-            },
+            onTap: () => onSelected(TeamMenuAction.duplicate),
             child: ListTile(
               leading: const Icon(Icons.copy),
               title: Text(S.of(context).duplicate, maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           InkWell(
-            onTap: () async {
-              Navigator.of(context).pop();
-              await delete.call();
-            },
+            onTap: () => onSelected(TeamMenuAction.delete),
             child: ListTile(
               leading: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
               title: Text(

@@ -1,15 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/custom_card/custom_card.dart';
-import '../../../components/match_menu/match_menu.dart';
 import '../../../components/tags_display/tags_display.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
+import '../../../router/routes.dart';
+import '../../../services/router_service.dart';
 
 class MatchCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;
@@ -117,19 +118,18 @@ class MatchCard extends StatelessWidget {
     );
   }
 
-  void _openMenu(BuildContext context) {
-    BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchMenu(
-        match: match,
-        edit: edit,
-        delete: () async {
-          final result = await shouldDelete();
-          if (result == true) {
-            await delete.call();
-          }
-        },
-      ),
-    );
+  Future<void> _openMenu(BuildContext context) async {
+    final action = await context.read<RouterService>().showMatchMenuModal(match: match, showEdit: true);
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case MatchMenuAction.edit:
+        await edit();
+      case MatchMenuAction.delete:
+        if (await shouldDelete() == true) {
+          await delete();
+        }
+      case MatchMenuAction.editDetails:
+        break;
+    }
   }
 }

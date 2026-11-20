@@ -6,10 +6,8 @@ import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -186,14 +184,22 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _onLongPress(BuildContext context) => context.read<SettingsCubit>().vibrate(HapticsType.selection);
 
-  Future<void> _share(BuildContext context, PacingModel pacing) => BottomSheetDialog.showDialog(
-    context: context,
-    child: ShareMenu(
-      shareText: () => context.read<PacingsCubit>().shareText(pacing),
-      shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
-      saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
-    ),
-  );
+  Future<void> _share(BuildContext context, PacingModel pacing) async {
+    final action = await context.read<RouterService>().showShareMenuModal(
+      showShareText: true,
+      showShareFile: true,
+      showSaveFile: true,
+    );
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case ShareMenuAction.shareText:
+        await context.read<PacingsCubit>().shareText(pacing);
+      case ShareMenuAction.shareFile:
+        await context.read<PacingsCubit>().shareFile(pacing);
+      case ShareMenuAction.saveFile:
+        await context.read<PacingsCubit>().saveFile(pacing);
+    }
+  }
 
   Future<void> _delete(BuildContext context, PacingModel pacing) => context.read<PacingsCubit>().delete(pacing);
 

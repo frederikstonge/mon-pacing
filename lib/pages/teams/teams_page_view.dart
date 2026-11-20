@@ -2,10 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/tag_filters/pinned_tag_filters.dart';
 import '../../components/timer_banner/timer_banner.dart';
@@ -17,6 +15,7 @@ import '../../cubits/teams/teams_status.dart';
 import '../../cubits/timer/timer_cubit.dart';
 import '../../cubits/timer/timer_state.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../router/routes.dart';
 import '../../services/router_service.dart';
 import 'widgets/team_card.dart';
 
@@ -117,13 +116,21 @@ class _TeamsPageViewState extends State<TeamsPageView> {
                               S.of(context).cancel,
                             ),
                             delete: () => context.read<TeamsCubit>().delete(team),
-                            share: () => BottomSheetDialog.showDialog(
-                              context: context,
-                              child: ShareMenu(
-                                shareFile: () => context.read<TeamsCubit>().shareFile(team),
-                                saveFile: () => context.read<TeamsCubit>().saveFile(team),
-                              ),
-                            ),
+                            share: () async {
+                              final action = await context.read<RouterService>().showShareMenuModal(
+                                showShareFile: true,
+                                showSaveFile: true,
+                              );
+                              if (!context.mounted || action == null) return;
+                              switch (action) {
+                                case ShareMenuAction.shareFile:
+                                  await context.read<TeamsCubit>().shareFile(team);
+                                case ShareMenuAction.saveFile:
+                                  await context.read<TeamsCubit>().saveFile(team);
+                                case ShareMenuAction.shareText:
+                                  break;
+                              }
+                            },
                             duplicate: () async {
                               final duplicate = await context
                                   .read<RouterService>()

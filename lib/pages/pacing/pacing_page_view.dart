@@ -4,11 +4,8 @@ import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../components/buttons/loading_icon_button.dart';
 import '../../components/message_box_dialog/message_box_dialog.dart';
-import '../../components/pacing_menu/pacing_menu.dart';
-import '../../components/share_menu/share_menu.dart';
 import '../../components/sliver_logo_appbar/sliver_logo_appbar.dart';
 import '../../components/timer_banner/timer_banner.dart';
 import '../../cubits/matches/matches_cubit.dart';
@@ -104,32 +101,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
                                       actions: [
                                         LoadingIconButton(
                                           tooltip: S.of(context).more,
-                                          onPressed: () => BottomSheetDialog.showDialog(
-                                            context: context,
-                                            child: PacingMenu(
-                                              pacing: pacing,
-                                              startMatch: () {
-                                                _startMatch(context, pacing);
-                                              },
-                                              editDetails: () async {
-                                                await _editDetails(context, pacing);
-                                              },
-                                              delete: () async {
-                                                await _delete(context, pacing);
-                                              },
-                                              share: () async => BottomSheetDialog.showDialog(
-                                                context: context,
-                                                child: ShareMenu(
-                                                  shareText: () => context.read<PacingsCubit>().shareText(pacing),
-                                                  shareFile: () => context.read<PacingsCubit>().shareFile(pacing),
-                                                  saveFile: () => context.read<PacingsCubit>().saveFile(pacing),
-                                                ),
-                                              ),
-                                              duplicate: () {
-                                                return _duplicate(context, pacing);
-                                              },
-                                            ),
-                                          ),
+                                          onPressed: () => _openMenu(context, pacing),
                                           icon: const Icon(Icons.more_vert),
                                         ),
                                       ],
@@ -212,6 +184,41 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
   }
 
   Future<void> _onAddImprovisationPressed(BuildContext context) => context.read<PacingCubit>().addImprovisation();
+
+  Future<void> _openMenu(BuildContext context, PacingModel pacing) async {
+    final action = await context.read<RouterService>().showPacingMenuModal(
+      pacing: pacing,
+      showEditDetails: true,
+    );
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case PacingMenuAction.startMatch:
+        await _startMatch(context, pacing);
+      case PacingMenuAction.editDetails:
+        await _editDetails(context, pacing);
+      case PacingMenuAction.delete:
+        await _delete(context, pacing);
+      case PacingMenuAction.share:
+        final shareAction = await context.read<RouterService>().showShareMenuModal(
+          showShareText: true,
+          showShareFile: true,
+          showSaveFile: true,
+        );
+        if (!context.mounted || shareAction == null) break;
+        switch (shareAction) {
+          case ShareMenuAction.shareText:
+            await context.read<PacingsCubit>().shareText(pacing);
+          case ShareMenuAction.shareFile:
+            await context.read<PacingsCubit>().shareFile(pacing);
+          case ShareMenuAction.saveFile:
+            await context.read<PacingsCubit>().saveFile(pacing);
+        }
+      case PacingMenuAction.duplicate:
+        await _duplicate(context, pacing);
+      case PacingMenuAction.edit:
+        break;
+    }
+  }
 
   Future<void> _duplicate(BuildContext context, PacingModel pacing) {
     final routerService = context.read<RouterService>();

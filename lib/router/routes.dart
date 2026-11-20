@@ -143,6 +143,65 @@ final class MatchImprovisationModalRoute extends AppRoute
   List<Object?> get props => [match, improvisation];
 }
 
+enum PacingMenuAction { startMatch, edit, editDetails, share, duplicate, delete }
+
+final class PacingMenuModalRoute extends AppRoute implements KaiselModalRoute<PacingMenuAction> {
+  const PacingMenuModalRoute({required this.pacing, this.showEdit = false, this.showEditDetails = false});
+
+  final PacingModel pacing;
+  final bool showEdit;
+  final bool showEditDetails;
+
+  @override
+  List<Object?> get props => [pacing, showEdit, showEditDetails];
+}
+
+enum MatchMenuAction { edit, editDetails, delete }
+
+final class MatchMenuModalRoute extends AppRoute implements KaiselModalRoute<MatchMenuAction> {
+  const MatchMenuModalRoute({required this.match, this.showEdit = false, this.showEditDetails = false});
+
+  final MatchModel match;
+  final bool showEdit;
+  final bool showEditDetails;
+
+  @override
+  List<Object?> get props => [match, showEdit, showEditDetails];
+}
+
+enum TeamMenuAction { edit, share, duplicate, delete }
+
+final class TeamMenuModalRoute extends AppRoute implements KaiselModalRoute<TeamMenuAction> {
+  const TeamMenuModalRoute(this.team);
+
+  final TeamModel team;
+
+  @override
+  List<Object?> get props => [team];
+}
+
+enum ShareMenuAction { shareText, shareFile, saveFile }
+
+final class ShareMenuModalRoute extends AppRoute implements KaiselModalRoute<ShareMenuAction> {
+  const ShareMenuModalRoute({this.showShareText = false, this.showShareFile = false, this.showSaveFile = false});
+
+  final bool showShareText;
+  final bool showShareFile;
+  final bool showSaveFile;
+
+  @override
+  List<Object?> get props => [showShareText, showShareFile, showSaveFile];
+}
+
+final class MatchScoreboardModalRoute extends AppRoute implements KaiselModalRoute<void> {
+  const MatchScoreboardModalRoute(this.match);
+
+  final MatchModel match;
+
+  @override
+  List<Object?> get props => [match];
+}
+
 sealed class PacingsRoute extends KaiselRoute {
   const PacingsRoute();
 }

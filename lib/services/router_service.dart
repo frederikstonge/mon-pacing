@@ -4,7 +4,11 @@ import 'package:material_ui/material_ui.dart';
 import '../components/bottom_sheet/bottom_sheet_modal.dart';
 import '../components/color_picker/color_picker.dart';
 import '../components/duration_picker/duration_picker.dart';
+import '../components/match_menu/match_menu.dart';
+import '../components/pacing_menu/pacing_menu.dart';
 import '../components/penalties_impact_type/penalties_impact_type_view.dart';
+import '../components/share_menu/share_menu.dart';
+import '../components/team_menu/team_menu.dart';
 import '../models/improvisation_model.dart';
 import '../models/match_model.dart';
 import '../models/pacing_model.dart';
@@ -16,6 +20,7 @@ import '../pages/categories_search/categories_search_page_shell.dart';
 import '../pages/match_detail/match_detail_page_shell.dart';
 import '../pages/match_improvisation/match_improvisation_shell.dart';
 import '../pages/match_penalty/match_penalty_shell.dart';
+import '../pages/match_scoreboard/match_scoreboard_shell.dart';
 import '../pages/onboarding/onboarding_page_view.dart';
 import '../pages/pacing_detail/pacing_detail_page_shell.dart';
 import '../pages/penalties_search/penalties_search_page_shell.dart';
@@ -135,6 +140,38 @@ class RouterService {
     ImprovisationModel? improvisation,
   }) => rootRouter.run(MatchImprovisationModalRoute(match: match, improvisation: improvisation));
 
+  Future<PacingMenuAction?> showPacingMenuModal({
+    required PacingModel pacing,
+    bool showEdit = false,
+    bool showEditDetails = false,
+  }) => rootRouter.run(
+    PacingMenuModalRoute(pacing: pacing, showEdit: showEdit, showEditDetails: showEditDetails),
+  );
+
+  Future<MatchMenuAction?> showMatchMenuModal({
+    required MatchModel match,
+    bool showEdit = false,
+    bool showEditDetails = false,
+  }) => rootRouter.run(
+    MatchMenuModalRoute(match: match, showEdit: showEdit, showEditDetails: showEditDetails),
+  );
+
+  Future<TeamMenuAction?> showTeamMenuModal(TeamModel team) => rootRouter.run(TeamMenuModalRoute(team));
+
+  Future<ShareMenuAction?> showShareMenuModal({
+    bool showShareText = false,
+    bool showShareFile = false,
+    bool showSaveFile = false,
+  }) => rootRouter.run(
+    ShareMenuModalRoute(
+      showShareText: showShareText,
+      showShareFile: showShareFile,
+      showSaveFile: showSaveFile,
+    ),
+  );
+
+  Future<void> showMatchScoreboardModal(MatchModel match) => rootRouter.run(MatchScoreboardModalRoute(match));
+
   Future<void> resetBranch(int branch) async {
     switch (branch) {
       case 0:
@@ -207,6 +244,29 @@ class RouterService {
       onConfirm: (improvisation, index, flowContext) =>
           flowContext.completeFlow<(ImprovisationModel, int)>((improvisation, index)),
     ),
+    PacingMenuModalRoute(:final pacing, :final showEdit, :final showEditDetails) => PacingMenu(
+      pacing: pacing,
+      showEdit: showEdit,
+      showEditDetails: showEditDetails,
+      onSelected: (action) => context.completeFlow<PacingMenuAction>(action),
+    ),
+    MatchMenuModalRoute(:final match, :final showEdit, :final showEditDetails) => MatchMenu(
+      match: match,
+      showEdit: showEdit,
+      showEditDetails: showEditDetails,
+      onSelected: (action) => context.completeFlow<MatchMenuAction>(action),
+    ),
+    TeamMenuModalRoute(:final team) => TeamMenu(
+      team: team,
+      onSelected: (action) => context.completeFlow<TeamMenuAction>(action),
+    ),
+    ShareMenuModalRoute(:final showShareText, :final showShareFile, :final showSaveFile) => ShareMenu(
+      showShareText: showShareText,
+      showShareFile: showShareFile,
+      showSaveFile: showSaveFile,
+      onSelected: (action) => context.completeFlow<ShareMenuAction>(action),
+    ),
+    MatchScoreboardModalRoute(:final match) => MatchScoreboardShell(match: match),
   };
 
   Widget _buildModal(BuildContext context, KaiselModalRoute<Object?> route, Widget flowChild) {

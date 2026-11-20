@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../../components/buttons/loading_button.dart';
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/custom_card/custom_card.dart';
@@ -13,7 +12,7 @@ import '../../../components/text_header/text_header.dart';
 import '../../../cubits/settings/settings_cubit.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
-import '../../match_scoreboard/match_scoreboard_shell.dart';
+import '../../../services/router_service.dart';
 import '../cubits/match_cubit.dart';
 import 'match_stars.dart';
 
@@ -63,10 +62,7 @@ class MatchSummary extends StatelessWidget {
           child: LoadingButton.filledIcon(
             icon: const Icon(Icons.scoreboard),
             onPressed: () async {
-              await BottomSheetDialog.showDialog(
-                context: context,
-                child: MatchScoreboardShell(match: match),
-              );
+              await context.read<RouterService>().showMatchScoreboardModal(match);
             },
             child: Text(S.of(context).scoreboard),
           ),

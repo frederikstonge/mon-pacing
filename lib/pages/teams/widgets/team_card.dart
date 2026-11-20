@@ -1,15 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../components/bottom_sheet/bottom_sheet_dialog.dart';
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/tags_display/tags_display.dart';
 import '../../../components/team_color_avatar/team_color_avatar.dart';
-import '../../../components/team_menu/team_menu.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/team_model.dart';
+import '../../../router/routes.dart';
+import '../../../services/router_service.dart';
 
 class TeamCard extends StatelessWidget {
   final FutureOr<bool?> Function() shouldDelete;
@@ -102,21 +103,20 @@ class TeamCard extends StatelessWidget {
     );
   }
 
-  void _openMenu(BuildContext context) {
-    BottomSheetDialog.showDialog(
-      context: context,
-      child: TeamMenu(
-        team: team,
-        edit: edit,
-        share: share,
-        duplicate: duplicate,
-        delete: () async {
-          final result = await shouldDelete();
-          if (result == true) {
-            await delete.call();
-          }
-        },
-      ),
-    );
+  Future<void> _openMenu(BuildContext context) async {
+    final action = await context.read<RouterService>().showTeamMenuModal(team);
+    if (!context.mounted || action == null) return;
+    switch (action) {
+      case TeamMenuAction.edit:
+        await edit();
+      case TeamMenuAction.share:
+        await share();
+      case TeamMenuAction.duplicate:
+        await duplicate();
+      case TeamMenuAction.delete:
+        if (await shouldDelete() == true) {
+          await delete();
+        }
+    }
   }
 }

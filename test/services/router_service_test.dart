@@ -84,4 +84,13 @@ void main() {
     routerService.rootRouter.completeFlow(ThemeType.dark);
     expect(await outer, ThemeType.dark);
   });
+
+  test('menu modal returns the selected action', () async {
+    final result = routerService.showShareMenuModal(showShareFile: true);
+
+    await Future<void>.delayed(Duration.zero);
+    routerService.rootRouter.completeFlow(ShareMenuAction.shareFile);
+
+    expect(await result, ShareMenuAction.shareFile);
+  });
 }
