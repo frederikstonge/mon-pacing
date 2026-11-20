@@ -61,6 +61,7 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
   @override
   void dispose() {
     _pacingsRouter?.removeListener(_showTutorials);
+    cancelTutorialCoachMark();
     super.dispose();
   }
 
@@ -284,24 +285,24 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     await context.read<SettingsCubit>().vibrate(HapticsType.selection);
   }
 
-  Future<void> _showTutorials() async {
+  void _showTutorials() {
     if (!mounted) return;
     final pacingCubit = context.read<PacingCubit>();
     final tutorialsCubit = context.read<TutorialsCubit>();
 
-    final displayAddImprovisation =
+    bool displayAddImprovisation() =>
         _pacingsRouter?.stack.last is PacingDetailsRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isEmpty &&
         !tutorialsCubit.state.addImprovisationFinished;
 
-    final displayImprovisation =
+    bool displayImprovisation() =>
         _pacingsRouter?.stack.last is PacingDetailsRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isNotEmpty &&
         !tutorialsCubit.state.improvisationFinished;
 
-    if (displayAddImprovisation) {
+    if (displayAddImprovisation()) {
       initTutorialCoachMark(
         targets: [
           TargetFocus(
@@ -320,8 +321,9 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
             ],
           ),
         ],
+        onFinish: tutorialsCubit.setAddImprovisationFinished,
       );
-    } else if (displayImprovisation) {
+    } else if (displayImprovisation()) {
       initTutorialCoachMark(
         targets: [
           TargetFocus(
@@ -355,20 +357,16 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
             ],
           ),
         ],
+        onFinish: tutorialsCubit.setImprovisationFinished,
       );
+    } else {
+      cancelTutorialCoachMark();
+      return;
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted && (displayAddImprovisation || displayImprovisation)) {
-          showTutorialCoachMark(context, () {
-            if (displayAddImprovisation) {
-              tutorialsCubit.setAddImprovisationFinished();
-            } else if (displayImprovisation) {
-              tutorialsCubit.setImprovisationFinished();
-            }
-          });
-        }
-      });
-    });
+
+    scheduleTutorialCoachMark(
+      context,
+      shouldShow: () => displayAddImprovisation() || displayImprovisation(),
+    );
   }
 }

@@ -60,6 +60,7 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
   @override
   void dispose() {
     _pacingsRouter?.removeListener(_showTutorials);
+    cancelTutorialCoachMark();
     super.dispose();
   }
 
@@ -271,23 +272,24 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
     );
   }
 
-  Future<void> _showTutorials() async {
+  void _showTutorials() {
+    if (!mounted) return;
     final pacingsCubit = context.read<PacingsCubit>();
     final tutorialsCubit = context.read<TutorialsCubit>();
 
-    final displayAddPacing =
+    bool displayAddPacing() =>
         _pacingsRouter?.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isEmpty &&
         !tutorialsCubit.state.addPacingFinished;
 
-    final displayStartMatch =
+    bool displayStartMatch() =>
         _pacingsRouter?.stack.last is PacingsTabRoute &&
         pacingsCubit.state.status == PacingsStatus.success &&
         pacingsCubit.state.pacings.isNotEmpty &&
         !tutorialsCubit.state.startMatchFinished;
 
-    if (displayAddPacing) {
+    if (displayAddPacing()) {
       initTutorialCoachMark(
         targets: [
           TargetFocus(
@@ -306,8 +308,9 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
             ],
           ),
         ],
+        onFinish: tutorialsCubit.setAddPacingFinished,
       );
-    } else if (displayStartMatch) {
+    } else if (displayStartMatch()) {
       initTutorialCoachMark(
         targets: [
           TargetFocus(
@@ -326,20 +329,13 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
             ],
           ),
         ],
+        onFinish: tutorialsCubit.setStartMatchFinished,
       );
+    } else {
+      cancelTutorialCoachMark();
+      return;
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted && (displayAddPacing || displayStartMatch)) {
-          showTutorialCoachMark(context, () {
-            if (displayAddPacing) {
-              tutorialsCubit.setAddPacingFinished();
-            } else if (displayStartMatch) {
-              tutorialsCubit.setStartMatchFinished();
-            }
-          });
-        }
-      });
-    });
+
+    scheduleTutorialCoachMark(context, shouldShow: () => displayAddPacing() || displayStartMatch());
   }
 }
