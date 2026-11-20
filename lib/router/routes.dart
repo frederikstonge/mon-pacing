@@ -94,7 +94,7 @@ final class LanguageModalRoute extends AppRoute implements KaiselModalRoute<Loca
   final List<Locale> availableLocales;
 
   @override
-  List<Object?> get props => [currentLocale, availableLocales];
+  List<Object?> get props => [currentLocale, ...availableLocales];
 }
 
 final class ThemeModalRoute extends AppRoute implements KaiselModalRoute<ThemeType> {
@@ -129,7 +129,14 @@ final class MatchPenaltyModalRoute extends AppRoute implements KaiselModalRoute<
   final PenaltyModel? penalty;
 
   @override
-  List<Object?> get props => [improvisationId, teams, integrationPenaltyTypes, penalty];
+  List<Object?> get props => [
+    improvisationId,
+    teams.length,
+    ...teams,
+    integrationPenaltyTypes?.length,
+    ...?integrationPenaltyTypes,
+    penalty,
+  ];
 }
 
 final class MatchImprovisationModalRoute extends AppRoute
