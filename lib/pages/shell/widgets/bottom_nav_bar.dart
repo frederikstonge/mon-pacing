@@ -22,3 +22,26 @@ class BottomNavBar extends StatelessWidget {
     );
   }
 }
+
+class AppNavigationRail extends StatelessWidget {
+  final int selectedIndex;
+  final ValueChanged<int> onDestinationSelected;
+
+  const AppNavigationRail({super.key, required this.selectedIndex, required this.onDestinationSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    final localizer = S.of(context);
+    return NavigationRail(
+      selectedIndex: selectedIndex,
+      onDestinationSelected: onDestinationSelected,
+      labelType: NavigationRailLabelType.all,
+      destinations: [
+        NavigationRailDestination(icon: const Icon(Icons.list), label: Text(localizer.pacings)),
+        NavigationRailDestination(icon: const Icon(Icons.list_alt), label: Text(localizer.matches)),
+        NavigationRailDestination(icon: const Icon(Icons.group), label: Text(localizer.teams)),
+        NavigationRailDestination(icon: const Icon(Icons.settings), label: Text(localizer.settings)),
+      ],
+    );
+  }
+}

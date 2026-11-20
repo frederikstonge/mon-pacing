@@ -151,7 +151,7 @@ class Themes {
 
   static ShapeBorder getCardShapeBorder(Color borderColor) {
     return RoundedRectangleBorder(
-      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
       side: BorderSide(color: borderColor),
     );
   }
@@ -169,7 +169,8 @@ class Themes {
     Color? onPrimaryColor,
     Color? onSecondaryColor,
   }) {
-    final background = backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black);
+    final background =
+        backgroundColor ?? (brightness == Brightness.light ? const Color(0xFFF8F7FC) : const Color(0xFF15131B));
     final onBackground =
         onBackgroundColor ??
         (ThemeData.estimateBrightnessForColor(background) == Brightness.light ? Colors.black : Colors.white);
@@ -179,24 +180,14 @@ class Themes {
     final onSecondary =
         onSecondaryColor ??
         (ThemeData.estimateBrightnessForColor(secondaryColor) == Brightness.light ? Colors.black : Colors.white);
-    final colorScheme = ColorScheme(
-      brightness: brightness,
+    final generatedScheme = ColorScheme.fromSeed(seedColor: primaryColor, brightness: brightness);
+    final colorScheme = generatedScheme.copyWith(
       primary: primaryColor,
       onPrimary: onPrimary,
-      primaryContainer: primaryColor,
-      onPrimaryContainer: onPrimary,
       secondary: secondaryColor,
       onSecondary: onSecondary,
-      secondaryContainer: secondaryColor,
-      onSecondaryContainer: onSecondary,
-      error: Colors.red,
-      onError: Colors.white,
-      errorContainer: secondaryColor,
-      onErrorContainer: onSecondary,
       surface: background,
       onSurface: onBackground,
-      surfaceTint: background,
-      inverseSurface: onBackground,
       shadow: shadowColor,
     );
     final themeData = ThemeData.from(colorScheme: colorScheme);
@@ -204,10 +195,23 @@ class Themes {
       textTheme: themeData.textTheme.apply(fontFamily: 'Poppins'),
       cardTheme: CardThemeData(
         clipBehavior: Clip.antiAlias,
-        color: cardBackgroundColor,
+        color: Color.alphaBlend(
+          primaryColor.withValues(alpha: brightness == Brightness.light ? 0.035 : 0.06),
+          cardBackgroundColor,
+        ),
         margin: const EdgeInsets.all(8),
         shape: getCardShapeBorder(cardBorderColor),
-        elevation: 2,
+        elevation: 0,
+      ),
+      chipTheme: ChipThemeData(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        side: BorderSide.none,
+        backgroundColor: colorScheme.secondaryContainer,
+        labelStyle: TextStyle(color: colorScheme.onSecondaryContainer),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: colorScheme.surface,
+        indicatorColor: colorScheme.primaryContainer,
       ),
       dividerTheme: DividerThemeData(color: dividerColor),
       bottomSheetTheme: BottomSheetThemeData(
@@ -215,8 +219,8 @@ class Themes {
         showDragHandle: true,
         shadowColor: shadowColor,
       ),
-      inputDecorationTheme: const InputDecorationTheme(
-        border: OutlineInputBorder(),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         filled: true,
       ),

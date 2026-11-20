@@ -120,6 +120,8 @@
   "pacings": "Pacings",
   "paradoxe": "Paradoxe",
   "pause": "Pause",
+  "reset": "Réinitialiser",
+  "resume": "Reprendre",
   "penalties": "Pénalités",
   "penaltiesImpactPointsTooltip": "Les pénalités impacteront le résultat final du match.",
   "penaltiesImpactType": "Type d'impact des pénalités",

@@ -27,8 +27,7 @@ import 'cubits/match_cubit.dart';
 import 'cubits/match_state.dart';
 import 'cubits/match_status.dart';
 import 'widgets/improvisation_card.dart';
-import 'widgets/improvisation_penalties.dart';
-import 'widgets/improvisation_points.dart';
+import 'widgets/improvisation_statistics.dart';
 import 'widgets/match_persistent_header.dart';
 import 'widgets/match_summary.dart';
 import 'widgets/timer_widget.dart';
@@ -93,14 +92,21 @@ class _MatchPageViewState extends State<MatchPageView> {
                       builder: (context, timerState) {
                         final match = matchState.match!;
                         final selectedImprovisationIndex = matchState.selectedImprovisationIndex;
+                        final activeTimer = timerState.timer;
+                        final selectedImprovisation = match.improvisations.elementAtOrNull(selectedImprovisationIndex);
+                        final showTimerBanner =
+                            activeTimer != null &&
+                            (activeTimer.matchId != match.id ||
+                                activeTimer.improvisationId != selectedImprovisation?.id ||
+                                activeTimer.durationIndex != matchState.selectedDurationIndex);
                         final canAddImprovisation =
                             match.maxNumberOfImprovisations == null ||
                             match.improvisations.length < match.maxNumberOfImprovisations!;
                         return NestedScrollView(
                           headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                            if (timerState.timer != null) ...[
+                            if (showTimerBanner) ...[
                               TimerBanner(
-                                timer: timerState.timer!,
+                                timer: activeTimer,
                                 match: match,
                                 improvisation: match.improvisations.elementAtOrNull(selectedImprovisationIndex),
                                 selectedDurationIndex: matchState.selectedDurationIndex,
@@ -111,7 +117,7 @@ class _MatchPageViewState extends State<MatchPageView> {
                                 return SliverLogoAppbar(
                                   title: match.name,
                                   theme: settingsState.theme,
-                                  primary: timerState.timer == null,
+                                  primary: !showTimerBanner,
                                   actions: [
                                     if (match.enableStatistics) ...[
                                       LoadingIconButton(
@@ -169,70 +175,81 @@ class _MatchPageViewState extends State<MatchPageView> {
                               final improvisation = match.improvisations.elementAtOrNull(index);
                               final canRemoveImprovisation =
                                   match.improvisations.length > (match.minNumberOfImprovisations ?? 1);
-                              return SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    if (!summarySelected && improvisation != null) ...[
-                                      ImprovisationCard(
+                              final timer = !summarySelected && improvisation != null
+                                  ? CustomCard(
+                                      contentPadding: 4,
+                                      child: TimerWidget(
+                                        key: ValueKey(improvisation.id),
+                                        match: match,
                                         improvisation: improvisation,
-                                        improvisationFieldsOrder: settingsState.improvisationFieldsOrder,
-                                        index: index,
-                                        onEdit: (improvisation) async =>
-                                            await _editImprovisation(context, match, improvisation),
-                                        onDelete: canRemoveImprovisation
-                                            ? (improvisation) async =>
-                                                  await _deleteImprovisation(context, improvisation, index)
+                                        initialSelectedIndex: selectedImprovisationIndex == index
+                                            ? matchState.selectedDurationIndex
                                             : null,
+                                        onDurationIndexChanged: (durationIndex) =>
+                                            context.read<MatchCubit>().setDurationIndex(durationIndex),
                                       ),
-                                      CustomCard(
-                                        child: TimerWidget(
-                                          key: ValueKey(improvisation.id),
-                                          match: match,
-                                          improvisation: improvisation,
-                                          initialSelectedIndex: selectedImprovisationIndex == index
-                                              ? matchState.selectedDurationIndex
-                                              : null,
-                                          onDurationIndexChanged: (durationIndex) =>
-                                              context.read<MatchCubit>().setDurationIndex(durationIndex),
-                                        ),
-                                      ),
-                                      if (match.enableStatistics) ...[
-                                        ImprovisationPoints(
-                                          key: ValueKey(improvisation.hashCode),
-                                          match: match,
-                                          improvisation: improvisation,
-                                          onPointChanged: (improvisationId, teamId, value) =>
-                                              context.read<MatchCubit>().setPoint(improvisationId, teamId, value),
-                                        ),
-                                        ImprovisationPenalties(
-                                          match: match,
-                                          improvisation: improvisation,
-                                          editPenalty: _editPenalty,
-                                          addPenalty: _addPenalty,
-                                          removePenalty: _removePenalty,
-                                        ),
-                                      ],
-                                    ] else ...[
-                                      BlocBuilder<IntegrationsCubit, IntegrationsState>(
-                                        builder: (context, integrationsState) {
-                                          final integration = integrationsState.integrations
-                                              .whereType<MatchIntegrationBase>()
-                                              .firstWhereOrNull((i) => i.integrationId == match.integrationId);
-
-                                          return MatchSummary(
-                                            match: match,
-                                            onShare: () => _share(context, match),
-                                            onExportIntegration: integration != null
-                                                ? () async {
-                                                    await _onExportIntegration(context, match, integration);
-                                                  }
-                                                : null,
-                                          );
-                                        },
+                                    )
+                                  : null;
+                              final content = Column(
+                                children: [
+                                  if (!summarySelected && improvisation != null) ...[
+                                    ImprovisationCard(
+                                      improvisation: improvisation,
+                                      improvisationFieldsOrder: settingsState.improvisationFieldsOrder,
+                                      index: index,
+                                      onEdit: (improvisation) async =>
+                                          await _editImprovisation(context, match, improvisation),
+                                      onDelete: canRemoveImprovisation
+                                          ? (improvisation) async =>
+                                                await _deleteImprovisation(context, improvisation, index)
+                                          : null,
+                                    ),
+                                    if (match.enableStatistics) ...[
+                                      ImprovisationStatistics(
+                                        key: ValueKey(improvisation.hashCode),
+                                        match: match,
+                                        improvisation: improvisation,
+                                        onPointChanged: (improvisationId, teamId, value) =>
+                                            context.read<MatchCubit>().setPoint(improvisationId, teamId, value),
+                                        editPenalty: _editPenalty,
+                                        addPenalty: _addPenalty,
+                                        removePenalty: _removePenalty,
                                       ),
                                     ],
+                                  ] else ...[
+                                    BlocBuilder<IntegrationsCubit, IntegrationsState>(
+                                      builder: (context, integrationsState) {
+                                        final integration = integrationsState.integrations
+                                            .whereType<MatchIntegrationBase>()
+                                            .firstWhereOrNull((i) => i.integrationId == match.integrationId);
+
+                                        return MatchSummary(
+                                          match: match,
+                                          onShare: () => _share(context, match),
+                                          onExportIntegration: integration != null
+                                              ? () async {
+                                                  await _onExportIntegration(context, match, integration);
+                                                }
+                                              : null,
+                                        );
+                                      },
+                                    ),
                                   ],
-                                ),
+                                ],
+                              );
+                              return LayoutBuilder(
+                                builder: (context, constraints) {
+                                  final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
+                                  if (constraints.maxHeight < 200 * textScale) {
+                                    return SingleChildScrollView(child: Column(children: [?timer, content]));
+                                  }
+                                  return Column(
+                                    children: [
+                                      ?timer,
+                                      Expanded(child: SingleChildScrollView(child: content)),
+                                    ],
+                                  );
+                                },
                               );
                             },
                             itemCount: match.improvisations.length + (match.enableStatistics ? 1 : 0),
@@ -251,10 +268,7 @@ class _MatchPageViewState extends State<MatchPageView> {
   }
 
   Future<void> _share(BuildContext context, MatchModel match) async {
-    final action = await context.read<RouterService>().showShareMenuModal(
-      showShareFile: true,
-      showSaveFile: true,
-    );
+    final action = await context.read<RouterService>().showShareMenuModal(showShareFile: true, showSaveFile: true);
     if (!context.mounted || action == null) return;
     switch (action) {
       case ShareMenuAction.shareFile:

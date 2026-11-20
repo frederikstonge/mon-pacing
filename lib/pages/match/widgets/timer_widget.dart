@@ -95,22 +95,24 @@ class _TimerWidgetState extends State<TimerWidget> with AutomaticKeepAliveClient
                 ),
               ),
             ],
-            const SizedBox(height: 6),
-            Text(
-              isActive
-                  ? Duration(milliseconds: timerState.timer!.remainingMilliseconds).toImprovDuration()
-                  : currentDuration.toImprovDuration(),
-              style: Theme.of(context).textTheme.displayLarge,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Expanded(
+                  child: Text(
+                    isActive
+                        ? Duration(milliseconds: timerState.timer!.remainingMilliseconds).toImprovDuration()
+                        : currentDuration.toImprovDuration(),
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 LoadingIconButton.tonal(
                   onPressed: isActive ? () async => await startTimer(currentDuration) : null,
                   icon: const Icon(Icons.replay),
-                  tooltip: S.of(context).pause,
+                  tooltip: S.of(context).reset,
                 ),
                 LoadingIconButton.filled(
                   onPressed: isActive
@@ -124,9 +126,11 @@ class _TimerWidgetState extends State<TimerWidget> with AutomaticKeepAliveClient
                             : const Icon(Icons.pause)
                       : const Icon(Icons.play_arrow),
                   size: IconButtonSize.large,
-                  tooltip: isActive && timerState.timer!.status == TimerStatus.paused
-                      ? S.of(context).pause
-                      : S.of(context).start,
+                  tooltip: !isActive
+                      ? S.of(context).start
+                      : timerState.timer!.status == TimerStatus.paused
+                      ? S.of(context).resume
+                      : S.of(context).pause,
                 ),
                 LoadingIconButton.tonal(
                   onPressed: isActive ? () async => await stopTimer() : null,
@@ -149,6 +153,7 @@ class _TimerWidgetState extends State<TimerWidget> with AutomaticKeepAliveClient
   }
 
   Future<void> startTimer(Duration currentDuration) async {
+    widget.onDurationIndexChanged(durationIndex);
     await context.read<TimerCubit>().start(widget.match, widget.improvisation.id, durationIndex, currentDuration);
   }
 

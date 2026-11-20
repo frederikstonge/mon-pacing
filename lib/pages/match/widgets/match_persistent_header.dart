@@ -6,7 +6,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../../models/match_model.dart';
 
 class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
-  static const double height = 60;
+  static const double height = 48;
   final MatchModel match;
   final int selectedImprovisationIndex;
   final void Function(int page) changePage;
@@ -30,94 +30,43 @@ class MatchPersistentHeader extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final count = match.improvisations.length + (match.enableStatistics ? 1 : 0);
+    final localizer = S.of(context);
     return Container(
-      alignment: Alignment.topCenter,
+      height: height,
       color: Theme.of(context).colorScheme.surface,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
         children: [
-          ...match.improvisations.asMap().entries.map((improvisation) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
-              child: InkWell(
-                onTap: () {
-                  changePage(improvisation.key);
-                },
-                child: Card(
-                  margin: EdgeInsets.zero,
-                  color: selectedImprovisationIndex == improvisation.key ? Theme.of(context).primaryColor : null,
-                  child: SizedBox(
-                    width: 50,
-                    child: Tooltip(
-                      message: S.of(context).improvisationNumber(order: improvisation.key + 1),
-                      child: Center(
-                        child: Text(
-                          '${improvisation.key + 1}',
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                            color: selectedImprovisationIndex == improvisation.key
-                                ? Theme.of(context).colorScheme.onPrimary
-                                : null,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
+          IconButton(
+            tooltip: MaterialLocalizations.of(context).previousPageTooltip,
+            onPressed: selectedImprovisationIndex > 0 ? () => changePage(selectedImprovisationIndex - 1) : null,
+            icon: const Icon(Icons.chevron_left),
+          ),
+          Expanded(
+            child: DropdownButton<int>(
+              isExpanded: true,
+              value: count == 0 ? null : selectedImprovisationIndex,
+              onChanged: (value) {
+                if (value != null) changePage(value);
+              },
+              items: [
+                for (var index = 0; index < match.improvisations.length; index++)
+                  DropdownMenuItem(
+                    value: index,
+                    child: Text(localizer.improvisationNumber(order: index + 1), overflow: TextOverflow.ellipsis),
                   ),
-                ),
-              ),
-            );
-          }),
-          if (match.enableStatistics) ...[
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
-              child: InkWell(
-                onTap: () {
-                  changePage(match.improvisations.length);
-                },
-                child: Card(
-                  color: selectedImprovisationIndex == match.improvisations.length
-                      ? Theme.of(context).primaryColor
-                      : null,
-                  margin: EdgeInsets.zero,
-                  child: SizedBox(
-                    width: 50,
-                    child: Tooltip(
-                      message: S.of(context).matchSummary,
-                      child: Center(
-                        child: Icon(
-                          Icons.summarize,
-                          color: selectedImprovisationIndex == match.improvisations.length
-                              ? Theme.of(context).colorScheme.onPrimary
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                if (match.enableStatistics)
+                  DropdownMenuItem(value: match.improvisations.length, child: Text(localizer.matchSummary)),
+              ],
             ),
-          ],
-          if (onAdd != null) ...[
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 3.0),
-              child: InkWell(
-                onTap: onAdd,
-                child: Card(
-                  margin: EdgeInsets.zero,
-                  color: Theme.of(context).colorScheme.secondary,
-                  child: SizedBox(
-                    width: 50,
-                    height: 60,
-                    child: Tooltip(
-                      message: S.of(context).addImprovisation,
-                      child: Center(child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSecondary)),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
+          IconButton(
+            tooltip: MaterialLocalizations.of(context).nextPageTooltip,
+            onPressed: selectedImprovisationIndex + 1 < count ? () => changePage(selectedImprovisationIndex + 1) : null,
+            icon: const Icon(Icons.chevron_right),
+          ),
+          IconButton(tooltip: localizer.addImprovisation, onPressed: onAdd, icon: const Icon(Icons.add_circle_outline)),
         ],
       ),
     );

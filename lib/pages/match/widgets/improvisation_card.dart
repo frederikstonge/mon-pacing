@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../components/buttons/loading_icon_button.dart';
 import '../../../components/custom_card/custom_card.dart';
+import '../../../components/improvisation_metadata_chip/improvisation_metadata_chip.dart';
 import '../../../extensions/duration_extensions.dart';
 import '../../../extensions/improvisation_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -12,7 +13,6 @@ import '../../../models/improvisation_model.dart';
 import '../../../models/improvisation_type.dart';
 
 class ImprovisationCard extends StatelessWidget {
-  static const double _cellPadding = 2.0;
   final ImprovisationModel improvisation;
   final List<ImprovisationFields> improvisationFieldsOrder;
   final int index;
@@ -30,141 +30,85 @@ class ImprovisationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizer = S.of(context);
+    final theme = Theme.of(context);
+    final fields = <Widget>[];
+    var chips = <Widget>[];
+
+    void flushChips() {
+      if (chips.isNotEmpty) {
+        fields.add(Wrap(spacing: 6, runSpacing: 4, children: chips));
+        chips = [];
+      }
+    }
+
+    for (final field in improvisationFieldsOrder) {
+      switch (field) {
+        case ImprovisationFields.type:
+          chips.add(
+            ImprovisationMetadataChip(
+              field: field,
+              label: localizer.type,
+              value: improvisation.type == ImprovisationType.mixed ? localizer.mixed : localizer.compared,
+            ),
+          );
+        case ImprovisationFields.category:
+          chips.add(
+            ImprovisationMetadataChip(
+              field: field,
+              label: localizer.category,
+              value: improvisation.getCategoryString(localizer),
+            ),
+          );
+        case ImprovisationFields.performers:
+          chips.add(
+            ImprovisationMetadataChip(
+              field: field,
+              label: localizer.performers,
+              value: improvisation.getPerformersString(localizer),
+            ),
+          );
+        case ImprovisationFields.durations:
+          chips.add(
+            ImprovisationMetadataChip(
+              field: field,
+              label: localizer.duration,
+              value: improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', '),
+            ),
+          );
+        case ImprovisationFields.theme:
+          flushChips();
+          fields.add(Text('${localizer.theme}: ${improvisation.theme}', style: theme.textTheme.titleMedium));
+        case ImprovisationFields.notes:
+          flushChips();
+          fields.add(Text('${localizer.notes}: ${improvisation.notes}', style: theme.textTheme.bodyMedium));
+      }
+    }
+    flushChips();
+
     return CustomCard(
-      showIndicator: true,
-      indicatorColor: improvisation.type == ImprovisationType.compared
-          ? Theme.of(context).colorScheme.primary
-          : Theme.of(context).colorScheme.secondary,
-      contentPadding: 16,
+      contentPadding: 12,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Expanded(
-                child: Text(
-                  S.of(context).improvisationNumber(order: index + 1),
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: Text(localizer.improvisationNumber(order: index + 1), style: theme.textTheme.titleMedium),
               ),
               LoadingIconButton(
-                tooltip: S.of(context).edit,
+                tooltip: localizer.edit,
                 icon: const Icon(Icons.edit),
-                onPressed: () async {
-                  await onEdit.call(improvisation);
-                },
+                onPressed: () async => await onEdit(improvisation),
               ),
               LoadingIconButton(
-                tooltip: S.of(context).delete,
+                tooltip: localizer.delete,
                 icon: const Icon(Icons.delete),
-                onPressed: onDelete != null
-                    ? () async {
-                        await onDelete!.call(improvisation);
-                      }
-                    : null,
+                onPressed: onDelete == null ? null : () async => await onDelete!(improvisation),
               ),
             ],
           ),
-          Table(
-            columnWidths: const <int, TableColumnWidth>{0: IntrinsicColumnWidth(), 1: FlexColumnWidth()},
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: improvisationFieldsOrder
-                .map(
-                  (field) => switch (field) {
-                    ImprovisationFields.type => TableRow(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text('${S.of(context).type}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(
-                            improvisation.type == ImprovisationType.mixed
-                                ? S.of(context).mixed
-                                : S.of(context).compared,
-                          ),
-                        ),
-                      ],
-                    ),
-                    ImprovisationFields.category => TableRow(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(
-                            '${S.of(context).category}: ',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(improvisation.getCategoryString(S.of(context))),
-                        ),
-                      ],
-                    ),
-                    ImprovisationFields.performers => TableRow(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(
-                            '${S.of(context).performers}: ',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(improvisation.getPerformersString(S.of(context))),
-                        ),
-                      ],
-                    ),
-                    ImprovisationFields.durations => TableRow(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(
-                            '${S.of(context).duration}: ',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(
-                            improvisation.durationsInSeconds
-                                .map((e) => Duration(seconds: e).toImprovDuration())
-                                .join(', '),
-                          ),
-                        ),
-                      ],
-                    ),
-                    ImprovisationFields.theme => TableRow(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text('${S.of(context).theme}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(improvisation.theme),
-                        ),
-                      ],
-                    ),
-                    ImprovisationFields.notes => TableRow(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text('${S.of(context).notes}: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(ImprovisationCard._cellPadding),
-                          child: Text(improvisation.notes),
-                        ),
-                      ],
-                    ),
-                  },
-                )
-                .toList(),
-          ),
+          ...fields.map((field) => Padding(padding: const EdgeInsets.only(bottom: 2), child: field)),
         ],
       ),
     );

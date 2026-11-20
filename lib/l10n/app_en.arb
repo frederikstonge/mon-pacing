@@ -215,6 +215,8 @@
   "pacings": "Pacings",
   "paradoxe": "Paradoxe",
   "pause": "Pause",
+  "reset": "Reset",
+  "resume": "Resume",
   "penalties": "Penalties",
   "penaltiesImpactPointsTooltip": "Penalties impact the final score of the match.",
   "penaltiesImpactType": "Penalties impact type",

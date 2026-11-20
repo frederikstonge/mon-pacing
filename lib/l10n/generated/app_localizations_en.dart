@@ -420,6 +420,12 @@ class SEn extends S {
   String get pause => 'Pause';
 
   @override
+  String get reset => 'Reset';
+
+  @override
+  String get resume => 'Resume';
+
+  @override
   String get penalties => 'Penalties';
 
   @override

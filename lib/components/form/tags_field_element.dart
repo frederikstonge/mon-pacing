@@ -4,10 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../l10n/generated/app_localizations.dart';
 import '../../models/tag_model.dart';
-import '../../pages/tags_search/tags_search_page_view.dart';
 import '../../validators/validators.dart';
-import '../buttons/loading_icon_button.dart';
-import '../textfield_tags/textfield_tags.dart';
 
 class TagsFieldElement extends StatefulWidget {
   final String label;
@@ -36,106 +33,138 @@ class TagsFieldElement extends StatefulWidget {
 }
 
 class _TagsFieldElementState extends State<TagsFieldElement> {
-  late final StringTagController _tagController;
+  final _controller = TextEditingController();
+  late final FocusNode _focusNode;
+  late final List<TagModel> _tags;
+  late final List<TagModel> _originalTags;
+  Future<List<String>>? _suggestions;
+  String? _error;
 
   @override
   void initState() {
-    _tagController = StringTagController();
-    _tagController.addListener(_onChange);
     super.initState();
+    _tags = List.of(widget.initialTags);
+    _originalTags = List.of(widget.initialTags);
+    _focusNode = widget.focusNode ?? FocusNode();
+    _focusNode.addListener(_onFocusChanged);
   }
 
   @override
   void dispose() {
-    _tagController.dispose();
-    _tagController.removeListener(_onChange);
+    _focusNode.removeListener(_onFocusChanged);
+    if (widget.focusNode == null) _focusNode.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
-  void _onChange() {
-    final tags = _tagController.getTags ?? [];
-    final tagModels = widget.initialTags.where((e) => tags.contains(e.name)).toList();
-    final newTags = tags.where((e) => !widget.initialTags.any((t) => t.name == e)).toList();
-    tagModels.addAll(newTags.map((e) => TagModel(id: 0, name: e)));
-    widget.onChanged?.call(tagModels);
+  void _onFocusChanged() {
+    setState(() {});
+  }
+
+  void _onTextChanged(String value) {
+    if (value.contains(',')) {
+      final parts = value.split(',');
+      for (var index = 0; index < parts.length - 1; index++) {
+        if (!_addTag(parts[index])) {
+          _controller.text = parts.skip(index).join(',');
+          _controller.selection = TextSelection.collapsed(offset: _controller.text.length);
+          return;
+        }
+      }
+      _controller.text = parts.last;
+      _controller.selection = TextSelection.collapsed(offset: _controller.text.length);
+      value = parts.last;
+    }
+    setState(() {
+      _error = null;
+      _suggestions = value.trim().isEmpty ? null : widget.getAllTags(value.trim());
+    });
+  }
+
+  bool _addTag(String value) {
+    final name = value.trim();
+    if (name.isEmpty) return true;
+    final error =
+        Validators.minimumLength(name, 3) ?? Validators.duplicateTag(name, _tags.map((tag) => tag.name).toList());
+    if (error != null) {
+      setState(() => _error = error);
+      return false;
+    }
+    setState(() {
+      final original = _originalTags.where((tag) => tag.name == name);
+      _tags.add(original.isEmpty ? TagModel(id: 0, name: name) : original.first);
+      _error = null;
+      _controller.clear();
+      _suggestions = null;
+    });
+    widget.onChanged?.call(List.of(_tags));
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          child: Text(
-            widget.label,
-            style: Theme.of(context).textTheme.labelMedium,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+    return TextFieldTapRegion(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Text(widget.label, style: Theme.of(context).textTheme.labelMedium),
           ),
-        ),
-        TextFieldTags<String>(
-          textSeparators: const [','],
-          validator: (value) =>
-              Validators.minimumLength(value, 3) ??
-              Validators.duplicateTag(value, widget.initialTags.map((e) => e.name).toList()),
-          textfieldTagsController: _tagController,
-          initialTags: widget.initialTags.map((e) => e.name).toList(),
-          letterCase: LetterCase.normal,
-          inputFieldBuilder: (context, textFieldValues) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  suffixIcon: LoadingIconButton(
-                    tooltip: S.of(context).search(category: widget.label),
-                    icon: const Icon(Icons.search),
-                    onPressed: () async {
-                      final result = await TagsSearchPageView.showDialog(context);
-                      if (result != null) {
-                        textFieldValues.onTagSubmitted(result);
-                      }
-                    },
-                  ),
-                  hintText: widget.hintText,
-                  errorText: textFieldValues.error,
-                ),
-                autofocus: widget.autoFocus,
-                maxLines: 1,
-                keyboardType: TextInputType.text,
-                onTapOutside: (event) {
-                  if (widget.autoUnfocus) {
-                    if (textFieldValues.textEditingController.text.isNotEmpty) {
-                      textFieldValues.onTagSubmitted(textFieldValues.textEditingController.text);
-                    }
-
-                    FocusScope.of(context).unfocus();
-                  }
-                },
-                controller: textFieldValues.textEditingController,
-                focusNode: textFieldValues.focusNode,
-                onChanged: textFieldValues.onTagChanged,
-                onSubmitted: textFieldValues.onTagSubmitted,
-              ),
-              if (textFieldValues.tags.isNotEmpty) ...[
-                Wrap(
-                  spacing: 8.0,
-                  children: textFieldValues.tags.map((String tag) {
-                    return Chip(
-                      label: Text(tag),
-                      deleteIcon: const Icon(Icons.cancel, size: 20),
+          TextField(
+            controller: _controller,
+            focusNode: _focusNode,
+            autofocus: widget.autoFocus,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(hintText: widget.hintText, errorText: _error),
+            onChanged: _onTextChanged,
+            onSubmitted: _addTag,
+            onTapOutside: (_) {
+              if (widget.autoUnfocus) {
+                _addTag(_controller.text);
+                _focusNode.unfocus();
+              }
+            },
+          ),
+          if (_focusNode.hasFocus && _suggestions != null)
+            FutureBuilder<List<String>>(
+              future: _suggestions,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text(
+                    S.of(context).toasterGenericError,
+                    style: TextStyle(color: Theme.of(context).colorScheme.error),
+                  );
+                }
+                if (snapshot.connectionState != ConnectionState.done || !snapshot.hasData) {
+                  return const SizedBox.shrink();
+                }
+                final suggestions = snapshot.data!.where((name) => !_tags.any((tag) => tag.name == name)).take(5);
+                return Wrap(
+                  spacing: 8,
+                  children: suggestions
+                      .map((name) => ActionChip(label: Text(name), onPressed: () => _addTag(name)))
+                      .toList(),
+                );
+              },
+            ),
+          if (_tags.isNotEmpty)
+            Wrap(
+              spacing: 8,
+              children: _tags
+                  .map(
+                    (tag) => Chip(
+                      label: Text(tag.name),
                       onDeleted: () {
-                        textFieldValues.onTagRemoved(tag);
+                        setState(() => _tags.remove(tag));
+                        widget.onChanged?.call(List.of(_tags));
                       },
-                    );
-                  }).toList(),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ],
+                    ),
+                  )
+                  .toList(),
+            ),
+        ],
+      ),
     );
   }
 }

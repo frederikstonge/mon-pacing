@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../components/buttons/loading_button.dart';
 import '../../../components/custom_card/custom_card.dart';
 import '../../../components/improvisation_detail/improvisation_detail.dart';
+import '../../../components/improvisation_metadata_chip/improvisation_metadata_chip.dart';
 import '../../../extensions/duration_extensions.dart';
 import '../../../extensions/improvisation_extensions.dart';
 import '../../../extensions/pacing_extensions.dart';
@@ -99,35 +100,35 @@ class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKee
                   duration: const Duration(milliseconds: 200),
                   child: SizedBox(
                     height: !isExpanded ? null : 0.0,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Wrap(
+                      spacing: 4,
+                      runSpacing: 4,
                       children: widget.improvisationFieldsOrder
                           .map(
                             (field) => switch (field) {
-                              ImprovisationFields.type => Text(
-                                '${S.of(context).type}: ${widget.improvisation.type == ImprovisationType.mixed ? S.of(context).mixed : S.of(context).compared}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
+                              ImprovisationFields.type => ImprovisationMetadataChip(
+                                field: field,
+                                label: S.of(context).type,
+                                value: widget.improvisation.type == ImprovisationType.mixed
+                                    ? S.of(context).mixed
+                                    : S.of(context).compared,
                               ),
-                              ImprovisationFields.category => Text(
-                                '${S.of(context).category}: ${widget.improvisation.getCategoryString(S.of(context))}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
+                              ImprovisationFields.category => ImprovisationMetadataChip(
+                                field: field,
+                                label: S.of(context).category,
+                                value: widget.improvisation.getCategoryString(S.of(context)),
                               ),
-                              ImprovisationFields.performers => Text(
-                                '${S.of(context).performers}: ${widget.improvisation.getPerformersString(S.of(context))}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
+                              ImprovisationFields.performers => ImprovisationMetadataChip(
+                                field: field,
+                                label: S.of(context).performers,
+                                value: widget.improvisation.getPerformersString(S.of(context)),
                               ),
-                              ImprovisationFields.durations => Text(
-                                '${S.of(context).duration}: ${widget.improvisation.durationsInSeconds.map((e) => Duration(seconds: e).toImprovDuration()).join(', ')}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
+                              ImprovisationFields.durations => ImprovisationMetadataChip(
+                                field: field,
+                                label: S.of(context).duration,
+                                value: widget.improvisation.durationsInSeconds
+                                    .map((e) => Duration(seconds: e).toImprovDuration())
+                                    .join(', '),
                               ),
                               ImprovisationFields.theme => Text(
                                 '${S.of(context).theme}: ${widget.improvisation.theme}',

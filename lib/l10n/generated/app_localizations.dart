@@ -812,6 +812,18 @@ abstract class S {
   /// **'Pause'**
   String get pause;
 
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @resume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get resume;
+
   /// No description provided for @penalties.
   ///
   /// In en, this message translates to:

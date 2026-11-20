@@ -421,6 +421,12 @@ class SFr extends S {
   String get pause => 'Pause';
 
   @override
+  String get reset => 'Réinitialiser';
+
+  @override
+  String get resume => 'Reprendre';
+
+  @override
   String get penalties => 'Pénalités';
 
   @override

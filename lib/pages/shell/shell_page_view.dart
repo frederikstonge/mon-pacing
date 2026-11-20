@@ -24,22 +24,33 @@ class ShellPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: branchContent,
-      bottomNavigationBar: showNavigation
-          ? BottomNavBar(
-              onDestinationSelected: (index) {
-                final routerService = context.read<RouterService>();
-                context.read<SettingsCubit>().vibrate(HapticsType.light);
-                if (index == activeBranch) {
-                  unawaited(routerService.resetBranch(index));
-                  return;
-                }
-                switchBranch(index);
-              },
-              selectedIndex: activeBranch,
-            )
-          : null,
+    void selectDestination(int index) {
+      final routerService = context.read<RouterService>();
+      context.read<SettingsCubit>().vibrate(HapticsType.light);
+      if (index == activeBranch) {
+        unawaited(routerService.resetBranch(index));
+        return;
+      }
+      switchBranch(index);
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final useRail = showNavigation && constraints.maxWidth >= 600;
+        return Scaffold(
+          body: useRail
+              ? Row(
+                  children: [
+                    AppNavigationRail(selectedIndex: activeBranch, onDestinationSelected: selectDestination),
+                    Expanded(child: branchContent),
+                  ],
+                )
+              : branchContent,
+          bottomNavigationBar: showNavigation && !useRail
+              ? BottomNavBar(selectedIndex: activeBranch, onDestinationSelected: selectDestination)
+              : null,
+        );
+      },
     );
   }
 }
