@@ -55,7 +55,7 @@ class RouterService {
       ],
       builder: _buildRoute,
       pageWrapper: _buildPage,
-      modalBuilder: (_, _, flowChild) => flowChild,
+      modalBuilder: _buildModal,
       observers: observers,
       codec: const MatchNotificationCodec(),
       fallback: [initialRoute],
@@ -310,5 +310,17 @@ class RouterService {
       arguments: context.route,
       child: context.child,
     );
+  }
+
+  Widget _buildModal(BuildContext context, KaiselModalRoute<Object?> route, Widget flowChild) {
+    return switch (route) {
+      PacingDetailModalRoute() ||
+      MatchDetailModalRoute() ||
+      TeamDetailModalRoute() ||
+      MatchPenaltyModalRoute() ||
+      MatchImprovisationModalRoute() ||
+      MatchScoreboardModalRoute() => flowChild,
+      _ => IntrinsicHeight(child: flowChild),
+    };
   }
 }

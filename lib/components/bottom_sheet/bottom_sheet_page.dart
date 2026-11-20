@@ -1,13 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 class BottomSheetPage extends Page<Object?> {
-  const BottomSheetPage({
-    required this.child,
-    this.isScrollControlled = false,
-    super.key,
-    super.name,
-    super.arguments,
-  });
+  const BottomSheetPage({required this.child, this.isScrollControlled = false, super.key, super.name, super.arguments});
 
   final Widget child;
   final bool isScrollControlled;
@@ -15,7 +9,15 @@ class BottomSheetPage extends Page<Object?> {
   @override
   Route<Object?> createRoute(BuildContext context) {
     return ModalBottomSheetRoute<Object?>(
-      builder: (_) => child,
+      builder: (context) {
+        final mediaQuery = MediaQuery.of(context);
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: mediaQuery.viewInsets.bottom > 0 ? mediaQuery.viewInsets.bottom : mediaQuery.padding.bottom,
+          ),
+          child: child,
+        );
+      },
       isScrollControlled: isScrollControlled,
       isDismissible: true,
       enableDrag: true,
