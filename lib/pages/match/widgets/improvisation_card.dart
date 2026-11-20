@@ -77,8 +77,7 @@ class ImprovisationCard extends StatelessWidget {
             ),
           );
         case ImprovisationFields.theme:
-          flushChips();
-          fields.add(Text('${localizer.theme}: ${improvisation.theme}', style: theme.textTheme.titleMedium));
+          chips.add(ImprovisationMetadataChip(field: field, label: localizer.theme, value: improvisation.theme));
         case ImprovisationFields.notes:
           flushChips();
           fields.add(Text('${localizer.notes}: ${improvisation.notes}', style: theme.textTheme.bodyMedium));

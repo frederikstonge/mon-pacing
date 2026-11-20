@@ -25,8 +25,9 @@ Status: Approved for implementation.
   convenient interaction.
 - Replace the current text-heavy details card with a clearer hierarchy. Make
   the improvisation's theme, metadata, and notes easy to read.
-- Use colorful chips for compact metadata, including type and category, with
-  colors assigned by metadata kind rather than by individual value.
+- Use colorful chips for improvisation fields, including theme, type, and
+  category, with colors assigned by metadata kind rather than by individual
+  value. Show notes as text instead of a chip.
 - Keep play/pause, stop, and reset controls visible on the main match view.
 - When statistics are enabled, present points and penalties in compact
   team-oriented rows. Do not show these controls when statistics are disabled.

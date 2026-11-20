@@ -19,7 +19,7 @@ class QuantityStepperFormField extends FormField<int> {
     required super.initialValue,
     required this.onChanged,
     this.inputWidth = 48,
-    this.inputHeight = 42,
+    this.inputHeight = 48,
     this.minValue,
     this.maxValue,
     this.multiple = 1,
@@ -57,9 +57,8 @@ class QuantityStepperFormField extends FormField<int> {
                    state.errorText!,
                    maxLines: 1,
                    overflow: TextOverflow.ellipsis,
-                   style: Theme.of(
-                     state.context,
-                   ).textTheme.labelSmall!.copyWith(color: Theme.of(state.context).colorScheme.error),
+                   style: Theme.of(state.context).textTheme.labelSmall!
+                       .copyWith(color: Theme.of(state.context).colorScheme.error),
                  ),
                ),
              ],

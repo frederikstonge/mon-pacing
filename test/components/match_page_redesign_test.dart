@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:mockito/mockito.dart';
+import 'package:mon_pacing/components/improvisation_metadata_chip/improvisation_metadata_chip.dart';
 import 'package:mon_pacing/cubits/settings/settings_cubit.dart';
 import 'package:mon_pacing/cubits/settings/settings_state.dart';
 import 'package:mon_pacing/cubits/timer/timer_cubit.dart';
@@ -120,6 +121,17 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
       expect(find.text('Delay'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(ImprovisationMetadataChip),
+          matching: find.text('${lookupS(locale).theme}: A new beginning'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.ancestor(of: find.text('${lookupS(locale).notes}: One line of notes'), matching: find.byType(Chip)),
+        findsNothing,
+      );
       final scrollable = tester.state<ScrollableState>(
         find.ancestor(of: find.byType(ImprovisationStatistics), matching: find.byType(Scrollable)).first,
       );

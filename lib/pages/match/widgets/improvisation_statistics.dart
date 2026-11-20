@@ -69,6 +69,7 @@ class ImprovisationStatistics extends StatelessWidget {
                           ?.value ??
                       0,
                   inputWidth: 32,
+                  inputHeight: 42,
                   onChanged: (value) {
                     if (value != null) unawaited(onPointChanged(improvisation.id, team.id, value));
                   },

@@ -21,7 +21,7 @@ class QuantityStepper extends StatefulWidget {
     required this.initialValue,
     required this.onChanged,
     this.inputWidth = 48,
-    this.inputHeight = 42,
+    this.inputHeight = 48,
     this.minValue,
     this.maxValue,
     this.multiple = 1,
@@ -49,67 +49,86 @@ class _QuantityStepperState extends State<QuantityStepper> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textScale = MediaQuery.textScalerOf(context).scale(14) / 14;
+    final height = widget.inputHeight * (textScale > 1 ? textScale : 1);
     return Container(
-      height: widget.inputHeight,
+      height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        border: Border.all(
-          color: widget.hasError ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.primary,
-          width: 2,
-        ),
-        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: widget.hasError ? colors.error : colors.outlineVariant),
+        color: colors.primaryContainer,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          LoadingIconButton(
-            tooltip: S.of(context).remove,
-            onPressed: canRemove()
-                ? () async {
-                    var value = int.tryParse(_controller.text);
-                    if (value != null) {
-                      value = value - widget.multiple;
+          SizedBox(
+            width: 48,
+            height: height,
+            child: LoadingIconButton(
+              tooltip: S.of(context).remove,
+              onPressed: canRemove()
+                  ? () async {
+                      final current = int.tryParse(_controller.text);
+                      final value = _correct(current == null ? null : current - widget.multiple);
+                      setState(() => _controller.text = value.toString());
+                      await widget.onChanged(value);
                     }
-
-                    value = _correct(value);
-                    _controller.text = value.toString();
-                    await widget.onChanged(value);
-                  }
-                : null,
-            icon: const Icon(Icons.remove),
+                  : null,
+              icon: Icon(
+                Icons.remove,
+                color: canRemove() ? colors.onPrimaryContainer : colors.onPrimaryContainer.withValues(alpha: 0.38),
+              ),
+            ),
           ),
           Flexible(
-            child: SizedBox(
-              width: widget.inputWidth,
+            child: Container(
+              width: widget.inputWidth * (textScale > 1 ? textScale : 1),
+              height: height > 8 ? height - 8 : height,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(color: colors.surface, borderRadius: BorderRadius.circular(8)),
               child: TextField(
                 controller: _controller,
-                decoration: const InputDecoration(border: InputBorder.none, isDense: true),
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  filled: false,
+                  isDense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+                style: Theme.of(context).textTheme.titleSmall,
                 textAlign: TextAlign.center,
+                textAlignVertical: TextAlignVertical.center,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                onChanged: (value) async => await widget.onChanged(int.tryParse(value)),
+                onChanged: (value) async {
+                  setState(() {});
+                  await widget.onChanged(int.tryParse(value));
+                },
                 onTapOutside: (event) {
                   FocusScope.of(context).unfocus();
                 },
               ),
             ),
           ),
-          LoadingIconButton(
-            tooltip: S.of(context).add,
-            onPressed: canAdd()
-                ? () async {
-                    var value = int.tryParse(_controller.text);
-                    if (value != null) {
-                      value = value + widget.multiple;
+          SizedBox(
+            width: 48,
+            height: height,
+            child: LoadingIconButton(
+              tooltip: S.of(context).add,
+              onPressed: canAdd()
+                  ? () async {
+                      final current = int.tryParse(_controller.text);
+                      final value = _correct(current == null ? null : current + widget.multiple);
+                      setState(() => _controller.text = value.toString());
+                      await widget.onChanged(value);
                     }
-
-                    value = _correct(value);
-                    _controller.text = value.toString();
-                    await widget.onChanged(value);
-                  }
-                : null,
-            icon: const Icon(Icons.add),
+                  : null,
+              icon: Icon(
+                Icons.add,
+                color: canAdd() ? colors.onPrimaryContainer : colors.onPrimaryContainer.withValues(alpha: 0.38),
+              ),
+            ),
           ),
         ],
       ),
@@ -147,23 +166,16 @@ class _QuantityStepperState extends State<QuantityStepper> {
       return widget.initialValue;
     }
 
-    if (widget.minValue != null && number < widget.minValue!) {
-      return widget.minValue!;
-    }
-
-    if (widget.maxValue != null && number > widget.maxValue!) {
-      return widget.maxValue!;
-    }
-
     final difference = number % widget.multiple;
     if (difference != 0) {
       if (difference < widget.multiple / 2) {
-        return number - (widget.multiple - difference);
+        number -= difference;
       } else {
-        return number + difference;
+        number += widget.multiple - difference;
       }
     }
-
+    if (widget.minValue != null && number < widget.minValue!) return widget.minValue!;
+    if (widget.maxValue != null && number > widget.maxValue!) return widget.maxValue!;
     return number;
   }
 }

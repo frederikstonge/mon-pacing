@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:mon_pacing/components/improvisation_metadata_chip/improvisation_metadata_chip.dart';
 import 'package:mon_pacing/l10n/generated/app_localizations.dart';
 import 'package:mon_pacing/models/constants.dart';
 import 'package:mon_pacing/models/improvisation_model.dart';
@@ -76,6 +77,10 @@ void main() {
       ),
     );
     expect(find.text('Category: Comedy'), findsOneWidget);
+    expect(
+      find.descendant(of: find.byType(ImprovisationMetadataChip), matching: find.text('Theme: Theme')),
+      findsOneWidget,
+    );
     await tester.tap(find.byType(ExpansionTile));
     await tester.pumpAndSettle();
     expect(find.byType(TextFormField), findsWidgets);

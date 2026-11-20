@@ -130,11 +130,10 @@ class _ImprovisationTileState extends State<ImprovisationTile> with AutomaticKee
                                     .map((e) => Duration(seconds: e).toImprovDuration())
                                     .join(', '),
                               ),
-                              ImprovisationFields.theme => Text(
-                                '${S.of(context).theme}: ${widget.improvisation.theme}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.labelSmall,
+                              ImprovisationFields.theme => ImprovisationMetadataChip(
+                                field: field,
+                                label: S.of(context).theme,
+                                value: widget.improvisation.theme,
                               ),
                               _ => const SizedBox.shrink(),
                             },
