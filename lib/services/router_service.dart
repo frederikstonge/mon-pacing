@@ -113,10 +113,8 @@ class RouterService {
   Future<Color?> showColorPickerModal({required String title, required Color initialColor}) =>
       rootRouter.run(ColorPickerModalRoute(title: title, initialColor: initialColor));
 
-  Future<Locale?> showLanguageModal({
-    required Locale currentLocale,
-    required List<Locale> availableLocales,
-  }) => rootRouter.run(LanguageModalRoute(currentLocale: currentLocale, availableLocales: availableLocales));
+  Future<Locale?> showLanguageModal({required Locale currentLocale, required List<Locale> availableLocales}) =>
+      rootRouter.run(LanguageModalRoute(currentLocale: currentLocale, availableLocales: availableLocales));
 
   Future<ThemeType?> showThemeModal(ThemeType currentTheme) => rootRouter.run(ThemeModalRoute(currentTheme));
 
@@ -146,17 +144,13 @@ class RouterService {
     required PacingModel pacing,
     bool showEdit = false,
     bool showEditDetails = false,
-  }) => rootRouter.run(
-    PacingMenuModalRoute(pacing: pacing, showEdit: showEdit, showEditDetails: showEditDetails),
-  );
+  }) => rootRouter.run(PacingMenuModalRoute(pacing: pacing, showEdit: showEdit, showEditDetails: showEditDetails));
 
   Future<MatchMenuAction?> showMatchMenuModal({
     required MatchModel match,
     bool showEdit = false,
     bool showEditDetails = false,
-  }) => rootRouter.run(
-    MatchMenuModalRoute(match: match, showEdit: showEdit, showEditDetails: showEditDetails),
-  );
+  }) => rootRouter.run(MatchMenuModalRoute(match: match, showEdit: showEdit, showEditDetails: showEditDetails));
 
   Future<TeamMenuAction?> showTeamMenuModal(TeamModel team) => rootRouter.run(TeamMenuModalRoute(team));
 
@@ -165,20 +159,13 @@ class RouterService {
     bool showShareFile = false,
     bool showSaveFile = false,
   }) => rootRouter.run(
-    ShareMenuModalRoute(
-      showShareText: showShareText,
-      showShareFile: showShareFile,
-      showSaveFile: showSaveFile,
-    ),
+    ShareMenuModalRoute(showShareText: showShareText, showShareFile: showShareFile, showSaveFile: showSaveFile),
   );
 
   Future<void> showMatchScoreboardModal(MatchModel match) => rootRouter.run(MatchScoreboardModalRoute(match));
 
-  Future<bool?> showQuestion({
-    required String question,
-    required String yesLabel,
-    required String noLabel,
-  }) => rootRouter.run(QuestionModalRoute(question: question, yesLabel: yesLabel, noLabel: noLabel));
+  Future<bool?> showQuestion({required String question, required String yesLabel, required String noLabel}) =>
+      rootRouter.run(QuestionModalRoute(question: question, yesLabel: yesLabel, noLabel: noLabel));
 
   Future<void> showAlert({required String message, required String closeLabel}) =>
       rootRouter.run(AlertModalRoute(message: message, closeLabel: closeLabel));
@@ -278,15 +265,27 @@ class RouterService {
       onSelected: (action) => context.completeFlow<ShareMenuAction>(action),
     ),
     MatchScoreboardModalRoute(:final match) => MatchScoreboardShell(match: match),
-    QuestionModalRoute(:final question, :final yesLabel, :final noLabel) =>
-      QuestionView(question: question, yesLabel: yesLabel, noLabel: noLabel),
+    QuestionModalRoute(:final question, :final yesLabel, :final noLabel) => QuestionView(
+      question: question,
+      yesLabel: yesLabel,
+      noLabel: noLabel,
+    ),
     AlertModalRoute(:final message, :final closeLabel) => AlertView(message: message, closeLabel: closeLabel),
   };
 
   Widget _buildModal(BuildContext context, KaiselModalRoute<Object?> route, Widget flowChild) {
     return switch (route) {
-      QuestionModalRoute() || AlertModalRoute() =>
-        MessageBoxModal(onDismiss: rootRouter.dismissFlow, child: flowChild),
+      QuestionModalRoute() || AlertModalRoute() => MessageBoxModal(onDismiss: rootRouter.dismissFlow, child: flowChild),
+      PacingDetailModalRoute() ||
+      MatchDetailModalRoute() ||
+      TeamDetailModalRoute() ||
+      MatchPenaltyModalRoute() ||
+      MatchImprovisationModalRoute() ||
+      MatchScoreboardModalRoute() => BottomSheetModal(
+        onDismiss: rootRouter.dismissFlow,
+        draggable: true,
+        child: flowChild,
+      ),
       _ => BottomSheetModal(onDismiss: rootRouter.dismissFlow, child: flowChild),
     };
   }
