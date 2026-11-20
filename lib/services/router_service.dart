@@ -1,11 +1,11 @@
 import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../components/bottom_sheet/bottom_sheet_modal.dart';
+import '../components/bottom_sheet/bottom_sheet_page.dart';
 import '../components/color_picker/color_picker.dart';
 import '../components/duration_picker/duration_picker.dart';
 import '../components/match_menu/match_menu.dart';
-import '../components/message_box_dialog/message_box_modal.dart';
+import '../components/message_box_dialog/message_box_page.dart';
 import '../components/message_box_dialog/message_box_view.dart';
 import '../components/pacing_menu/pacing_menu.dart';
 import '../components/penalties_impact_type/penalties_impact_type_view.dart';
@@ -54,7 +54,8 @@ class RouterService {
         },
       ],
       builder: _buildRoute,
-      modalBuilder: _buildModal,
+      pageWrapper: _buildPage,
+      modalBuilder: (_, _, flowChild) => flowChild,
       observers: observers,
       codec: const MatchNotificationCodec(),
       fallback: [initialRoute],
@@ -273,20 +274,41 @@ class RouterService {
     AlertModalRoute(:final message, :final closeLabel) => AlertView(message: message, closeLabel: closeLabel),
   };
 
-  Widget _buildModal(BuildContext context, KaiselModalRoute<Object?> route, Widget flowChild) {
-    return switch (route) {
-      QuestionModalRoute() || AlertModalRoute() => MessageBoxModal(onDismiss: rootRouter.dismissFlow, child: flowChild),
-      PacingDetailModalRoute() ||
-      MatchDetailModalRoute() ||
-      TeamDetailModalRoute() ||
-      MatchPenaltyModalRoute() ||
-      MatchImprovisationModalRoute() ||
-      MatchScoreboardModalRoute() => BottomSheetModal(
-        onDismiss: rootRouter.dismissFlow,
-        draggable: true,
-        child: flowChild,
-      ),
-      _ => BottomSheetModal(onDismiss: rootRouter.dismissFlow, child: flowChild),
-    };
+  Page<Object?> _buildPage(KaiselPageWrapperContext<AppRoute> context) {
+    if (context.isFlow) {
+      return switch (context.route) {
+        QuestionModalRoute() || AlertModalRoute() => MessageBoxPage(
+          key: context.key,
+          name: context.route.routeName,
+          arguments: context.route,
+          child: context.child,
+        ),
+        PacingDetailModalRoute() ||
+        MatchDetailModalRoute() ||
+        TeamDetailModalRoute() ||
+        MatchPenaltyModalRoute() ||
+        MatchImprovisationModalRoute() ||
+        MatchScoreboardModalRoute() => BottomSheetPage(
+          key: context.key,
+          name: context.route.routeName,
+          arguments: context.route,
+          isScrollControlled: true,
+          child: context.child,
+        ),
+        _ => BottomSheetPage(
+          key: context.key,
+          name: context.route.routeName,
+          arguments: context.route,
+          child: context.child,
+        ),
+      };
+    }
+
+    return MaterialPage<Object?>(
+      key: context.key,
+      name: context.route.routeName,
+      arguments: context.route,
+      child: context.child,
+    );
   }
 }
