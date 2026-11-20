@@ -24,8 +24,8 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/improvisation_model.dart';
 import '../../models/match_model.dart';
 import '../../models/penalty_model.dart';
+import '../../services/router_service.dart';
 import '../../services/toaster_service.dart';
-import '../match_detail/match_detail_page_shell.dart';
 import '../match_improvisation/match_improvisation_shell.dart';
 import '../match_penalty/match_penalty_shell.dart';
 import '../match_scoreboard/match_scoreboard_shell.dart';
@@ -385,17 +385,10 @@ class _MatchPageViewState extends State<MatchPageView> {
   }
 
   Future<void> _editDetails(BuildContext context, MatchModel match) async {
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchDetailPageShell(
-        match: match,
-        onConfirm: (match, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<MatchCubit>().edit(match);
-          navigator.pop();
-        },
-      ),
-    );
+    final updatedMatch = await context.read<RouterService>().showMatchEditor(match: match);
+    if (updatedMatch != null && context.mounted) {
+      await context.read<MatchCubit>().edit(updatedMatch);
+    }
   }
 
   Future<void> _openScoreboard(BuildContext context, MatchModel match) async {

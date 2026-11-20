@@ -25,7 +25,7 @@ void main() {
 
     expect(rootRouter.stack, const [TabsRoute()]);
     expect(shell.activeBranch, 0);
-    expect(pacingsRouter.stack, const [PacingsTabRoute(), PacingDetailsRoute(42)]);
+    expect(pacingsRouter.stack, const [PacingsTabRoute(), PacingRoute(42)]);
   });
 
   test('showMatchDetails selects the match branch and preserves timer details', () async {
@@ -38,24 +38,21 @@ void main() {
 
     expect(rootRouter.stack, const [TabsRoute()]);
     expect(shell.activeBranch, 1);
-    expect(matchesRouter.stack, const [
-      MatchesTabRoute(),
-      MatchDetailsRoute(id: 21, improvisationId: 4, durationIndex: 2),
-    ]);
+    expect(matchesRouter.stack, const [MatchesTabRoute(), MatchRoute(id: 21, improvisationId: 4, durationIndex: 2)]);
   });
 
   test('replaceMatchDetails replaces only the current match detail', () async {
     final matchesRouter = routerService.matchesRouter;
-    await matchesRouter.set(const [MatchesTabRoute(), MatchDetailsRoute(id: 3)]);
+    await matchesRouter.set(const [MatchesTabRoute(), MatchRoute(id: 3)]);
 
     await routerService.replaceMatchDetails(id: 7, improvisationId: 1);
 
-    expect(matchesRouter.stack, const [MatchesTabRoute(), MatchDetailsRoute(id: 7, improvisationId: 1)]);
+    expect(matchesRouter.stack, const [MatchesTabRoute(), MatchRoute(id: 7, improvisationId: 1)]);
   });
 
   test('resetBranch resets the specified branch to its root', () async {
     final pacingsRouter = routerService.pacingsRouter;
-    await pacingsRouter.set(const [PacingsTabRoute(), PacingDetailsRoute(12)]);
+    await pacingsRouter.set(const [PacingsTabRoute(), PacingRoute(12)]);
 
     await routerService.resetBranch(0);
 

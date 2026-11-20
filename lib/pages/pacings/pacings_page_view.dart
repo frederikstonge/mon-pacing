@@ -28,8 +28,6 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../models/pacing_model.dart';
 import '../../router/routes.dart';
 import '../../services/router_service.dart';
-import '../match_detail/match_detail_page_shell.dart';
-import '../pacing_detail/pacing_detail_page_shell.dart';
 import '../pacings_search/pacings_search_page_view.dart';
 import '../tutorial_mixin.dart';
 import 'widgets/pacing_card.dart';
@@ -213,63 +211,40 @@ class _PacingsPageViewState extends State<PacingsPageView> with TutorialMixin {
 
   Future<void> _startMatch(BuildContext context, PacingModel pacing) {
     final routerService = context.read<RouterService>();
-    return BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchDetailPageShell(
-        pacing: pacing,
-        onConfirm: (match, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          final matchModel = await context.read<MatchesCubit>().add(match);
-          if (matchModel != null && context.mounted) {
-            navigator.pop();
-            await routerService.showMatchDetails(id: matchModel.id);
-          }
-        },
-      ),
-    );
+    return routerService.showMatchEditor(pacing: pacing).then((match) async {
+      if (match == null || !context.mounted) {
+        return;
+      }
+      final matchModel = await context.read<MatchesCubit>().add(match);
+      if (matchModel != null && context.mounted) {
+        await routerService.showMatchDetails(id: matchModel.id);
+      }
+    });
   }
 
   Future<void> _duplicate(BuildContext context, PacingModel pacing) {
     final routerService = context.read<RouterService>();
-    return BottomSheetDialog.showDialog(
-      context: context,
-      child: PacingDetailPageShell(
-        editMode: false,
-        pacing: pacing,
-        onConfirm: (pacing, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          final pacingModel = await context.read<PacingsCubit>().add(pacing);
-          if (!context.mounted) {
-            return;
-          }
-          if (pacingModel != null) {
-            navigator.pop();
-            await routerService.showPacingDetails(pacingModel.id);
-          }
-        },
-      ),
-    );
+    return routerService.showPacingEditor(pacing: pacing, editMode: false).then((pacing) async {
+      if (pacing == null || !context.mounted) {
+        return;
+      }
+      final pacingModel = await context.read<PacingsCubit>().add(pacing);
+      if (pacingModel != null && context.mounted) {
+        await routerService.showPacingDetails(pacingModel.id);
+      }
+    });
   }
 
   Future<void> _addPacing() async {
     final routerService = context.read<RouterService>();
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: PacingDetailPageShell(
-        editMode: false,
-        onConfirm: (pacing, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          final pacingModel = await context.read<PacingsCubit>().add(pacing);
-          if (!mounted) {
-            return;
-          }
-          if (pacingModel != null) {
-            navigator.pop();
-            await routerService.showPacingDetails(pacingModel.id);
-          }
-        },
-      ),
-    );
+    final pacing = await routerService.showPacingEditor(editMode: false);
+    if (pacing == null || !mounted) {
+      return;
+    }
+    final pacingModel = await context.read<PacingsCubit>().add(pacing);
+    if (pacingModel != null && mounted) {
+      await routerService.showPacingDetails(pacingModel.id);
+    }
   }
 
   void _showTutorials() {

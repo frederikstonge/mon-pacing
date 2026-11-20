@@ -28,7 +28,7 @@ class ShellPageShell extends StatelessWidget {
           router: routerService.pacingsRouter,
           pageBuilder: (context, route) => switch (route) {
             PacingsTabRoute() => const PacingsPageShell(),
-            PacingDetailsRoute(:final id) => PacingPageShell(id: id),
+            PacingRoute(:final id) => PacingPageShell(id: id),
             PacingsSearchRoute() => const PacingsSearchPageShell(),
           },
         ),
@@ -36,7 +36,7 @@ class ShellPageShell extends StatelessWidget {
           router: routerService.matchesRouter,
           pageBuilder: (context, route) => switch (route) {
             MatchesTabRoute() => const MatchesPageShell(),
-            MatchDetailsRoute(:final id, :final improvisationId, :final durationIndex) => MatchPageShell(
+            MatchRoute(:final id, :final improvisationId, :final durationIndex) => MatchPageShell(
               id: id,
               improvisationId: improvisationId,
               durationIndex: durationIndex,

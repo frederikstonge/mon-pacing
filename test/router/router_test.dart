@@ -13,7 +13,7 @@ void main() {
       expect(config, isNotNull);
       expect((config!.nestedState as KaiselShellConfig).activeBranchStack, const [
         MatchesTabRoute(),
-        MatchDetailsRoute(id: 34, improvisationId: 7, durationIndex: 2),
+        MatchRoute(id: 34, improvisationId: 7, durationIndex: 2),
       ]);
     });
 

@@ -24,8 +24,6 @@ import '../../models/pacing_model.dart';
 import '../../repositories/pacings_repository.dart';
 import '../../router/routes.dart';
 import '../../services/router_service.dart';
-import '../match_detail/match_detail_page_shell.dart';
-import '../pacing_detail/pacing_detail_page_shell.dart';
 import '../tutorial_mixin.dart';
 import 'cubits/pacing_cubit.dart';
 import 'cubits/pacing_state.dart';
@@ -217,21 +215,15 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
 
   Future<void> _duplicate(BuildContext context, PacingModel pacing) {
     final routerService = context.read<RouterService>();
-    return BottomSheetDialog.showDialog(
-      context: context,
-      child: PacingDetailPageShell(
-        editMode: false,
-        pacing: pacing,
-        onConfirm: (pacing, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          final pacingModel = await context.read<PacingsCubit>().add(pacing);
-          if (pacingModel != null && context.mounted) {
-            navigator.pop();
-            await routerService.showPacingDetails(pacingModel.id);
-          }
-        },
-      ),
-    );
+    return routerService.showPacingEditor(pacing: pacing, editMode: false).then((pacing) async {
+      if (pacing == null || !context.mounted) {
+        return;
+      }
+      final pacingModel = await context.read<PacingsCubit>().add(pacing);
+      if (pacingModel != null && context.mounted) {
+        await routerService.showPacingDetails(pacingModel.id);
+      }
+    });
   }
 
   Future<void> _delete(BuildContext context, PacingModel pacing) async {
@@ -249,36 +241,22 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
   }
 
   Future<void> _editDetails(BuildContext context, PacingModel pacing) async {
-    await BottomSheetDialog.showDialog(
-      context: context,
-      child: PacingDetailPageShell(
-        pacing: pacing,
-        editMode: true,
-        onConfirm: (pacing, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          await context.read<PacingCubit>().edit(pacing);
-          navigator.pop();
-        },
-      ),
-    );
+    final updatedPacing = await context.read<RouterService>().showPacingEditor(pacing: pacing, editMode: true);
+    if (updatedPacing != null && context.mounted) {
+      await context.read<PacingCubit>().edit(updatedPacing);
+    }
   }
 
-  void _startMatch(BuildContext context, PacingModel pacing) {
+  Future<void> _startMatch(BuildContext context, PacingModel pacing) async {
     final routerService = context.read<RouterService>();
-    BottomSheetDialog.showDialog(
-      context: context,
-      child: MatchDetailPageShell(
-        pacing: pacing,
-        onConfirm: (match, dialogContext) async {
-          final navigator = Navigator.of(dialogContext);
-          final matchModel = await context.read<MatchesCubit>().add(match);
-          if (matchModel != null && context.mounted) {
-            navigator.pop();
-            await routerService.showMatchDetails(id: matchModel.id);
-          }
-        },
-      ),
-    );
+    final match = await routerService.showMatchEditor(pacing: pacing);
+    if (match == null || !context.mounted) {
+      return;
+    }
+    final matchModel = await context.read<MatchesCubit>().add(match);
+    if (matchModel != null && context.mounted) {
+      await routerService.showMatchDetails(id: matchModel.id);
+    }
   }
 
   Future<void> _onDragStart() async {
@@ -291,13 +269,13 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
     final tutorialsCubit = context.read<TutorialsCubit>();
 
     bool displayAddImprovisation() =>
-        _pacingsRouter?.stack.last is PacingDetailsRoute &&
+        _pacingsRouter?.stack.last is PacingRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isEmpty &&
         !tutorialsCubit.state.addImprovisationFinished;
 
     bool displayImprovisation() =>
-        _pacingsRouter?.stack.last is PacingDetailsRoute &&
+        _pacingsRouter?.stack.last is PacingRoute &&
         pacingCubit.state.status == PacingStatus.success &&
         pacingCubit.state.pacing!.improvisations.isNotEmpty &&
         !tutorialsCubit.state.improvisationFinished;
@@ -364,9 +342,6 @@ class _PacingPageViewState extends State<PacingPageView> with TutorialMixin {
       return;
     }
 
-    scheduleTutorialCoachMark(
-      context,
-      shouldShow: () => displayAddImprovisation() || displayImprovisation(),
-    );
+    scheduleTutorialCoachMark(context, shouldShow: () => displayAddImprovisation() || displayImprovisation());
   }
 }

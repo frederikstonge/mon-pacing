@@ -1,8 +1,13 @@
 import 'package:kaisel/kaisel.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../components/bottom_sheet/bottom_sheet_modal.dart';
+import '../models/match_model.dart';
+import '../models/pacing_model.dart';
 import '../pages/categories_search/categories_search_page_shell.dart';
+import '../pages/match_detail/match_detail_page_shell.dart';
 import '../pages/onboarding/onboarding_page_view.dart';
+import '../pages/pacing_detail/pacing_detail_page_shell.dart';
 import '../pages/penalties_search/penalties_search_page_shell.dart';
 import '../pages/scanner/scanner_page_shell.dart';
 import '../pages/shell/shell_page_shell.dart';
@@ -11,10 +16,7 @@ import '../router/router.dart';
 import '../router/routes.dart';
 
 class RouterService {
-  RouterService({
-    required bool Function() onboardingFinished,
-    required List<NavigatorObserver> Function() observers,
-  }) {
+  RouterService({required bool Function() onboardingFinished, required List<NavigatorObserver> Function() observers}) {
     pacingsRouter = KaiselRouter<PacingsRoute>(initial: const PacingsTabRoute());
     matchesRouter = KaiselRouter<MatchesRoute>(initial: const MatchesTabRoute());
     teamsRouter = KaiselRouter<TeamsRoute>(initial: const TeamsTabRoute());
@@ -32,6 +34,7 @@ class RouterService {
         },
       ],
       builder: _buildRoute,
+      modalBuilder: _buildModal,
       observers: observers,
       codec: const MatchNotificationCodec(),
       fallback: [initialRoute],
@@ -59,7 +62,7 @@ class RouterService {
   Future<void> showPacingDetails(int id) async {
     await rootRouter.set(const [TabsRoute()]);
     appShell.switchTo(0);
-    await pacingsRouter.set([const PacingsTabRoute(), PacingDetailsRoute(id)]);
+    await pacingsRouter.set([const PacingsTabRoute(), PacingRoute(id)]);
   }
 
   Future<void> showMatchDetails({required int id, int? improvisationId, int? durationIndex}) async {
@@ -67,15 +70,19 @@ class RouterService {
     appShell.switchTo(1);
     await matchesRouter.set([
       const MatchesTabRoute(),
-      MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
+      MatchRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
     ]);
   }
 
   Future<void> replaceMatchDetails({required int id, int? improvisationId, int? durationIndex}) {
-    return matchesRouter.replaceTop(
-      MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
-    );
+    return matchesRouter.replaceTop(MatchRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex));
   }
+
+  Future<PacingModel?> showPacingEditor({PacingModel? pacing, required bool editMode}) =>
+      rootRouter.run(PacingDetailModalRoute(pacing: pacing, editMode: editMode));
+
+  Future<MatchModel?> showMatchEditor({MatchModel? match, PacingModel? pacing}) =>
+      rootRouter.run(MatchDetailModalRoute(match: match, pacing: pacing));
 
   Future<void> resetBranch(int branch) async {
     switch (branch) {
@@ -97,5 +104,19 @@ class RouterService {
     CategoriesSearchRoute() => const CategoriesSearchPageShell(),
     PenaltiesSearchRoute() => const PenaltiesSearchPageShell(),
     TagsSearchRoute() => const TagsSearchPageShell(),
+    PacingDetailModalRoute(:final pacing, :final editMode) => PacingDetailPageShell(
+      pacing: pacing,
+      editMode: editMode,
+      onConfirm: (pacing, flowContext) => flowContext.completeFlow<PacingModel>(pacing),
+    ),
+    MatchDetailModalRoute(:final match, :final pacing) => MatchDetailPageShell(
+      match: match,
+      pacing: pacing,
+      onConfirm: (match, flowContext) => flowContext.completeFlow<MatchModel>(match),
+    ),
   };
+
+  Widget _buildModal(BuildContext context, KaiselModalRoute<Object?> route, Widget flowChild) {
+    return BottomSheetModal(onDismiss: rootRouter.dismissFlow, child: flowChild);
+  }
 }

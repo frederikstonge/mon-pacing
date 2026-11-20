@@ -1,5 +1,8 @@
 import 'package:kaisel/kaisel.dart';
 
+import '../models/match_model.dart';
+import '../models/pacing_model.dart';
+
 sealed class AppRoute extends KaiselRoute {
   const AppRoute();
 }
@@ -28,6 +31,26 @@ final class TagsSearchRoute extends AppRoute {
   const TagsSearchRoute();
 }
 
+final class PacingDetailModalRoute extends AppRoute implements KaiselModalRoute<PacingModel> {
+  const PacingDetailModalRoute({this.pacing, required this.editMode});
+
+  final PacingModel? pacing;
+  final bool editMode;
+
+  @override
+  List<Object?> get props => [pacing, editMode];
+}
+
+final class MatchDetailModalRoute extends AppRoute implements KaiselModalRoute<MatchModel> {
+  const MatchDetailModalRoute({this.match, this.pacing});
+
+  final MatchModel? match;
+  final PacingModel? pacing;
+
+  @override
+  List<Object?> get props => [match, pacing];
+}
+
 sealed class PacingsRoute extends KaiselRoute {
   const PacingsRoute();
 }
@@ -36,8 +59,8 @@ final class PacingsTabRoute extends PacingsRoute {
   const PacingsTabRoute();
 }
 
-final class PacingDetailsRoute extends PacingsRoute {
-  const PacingDetailsRoute(this.id);
+final class PacingRoute extends PacingsRoute {
+  const PacingRoute(this.id);
 
   final int id;
 
@@ -57,8 +80,8 @@ final class MatchesTabRoute extends MatchesRoute {
   const MatchesTabRoute();
 }
 
-final class MatchDetailsRoute extends MatchesRoute {
-  const MatchDetailsRoute({required this.id, this.improvisationId, this.durationIndex});
+final class MatchRoute extends MatchesRoute {
+  const MatchRoute({required this.id, this.improvisationId, this.durationIndex});
 
   final int id;
   final int? improvisationId;

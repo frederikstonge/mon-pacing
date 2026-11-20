@@ -12,10 +12,7 @@ class MatchNotificationCodec implements KaiselConfigCodec<AppRoute> {
         TabsRoute(),
         KaiselShellConfig(
           activeBranch: 1,
-          activeBranchStack: [
-            MatchesTabRoute(),
-            MatchDetailsRoute(:final id, :final improvisationId, :final durationIndex),
-          ],
+          activeBranchStack: [MatchesTabRoute(), MatchRoute(:final id, :final improvisationId, :final durationIndex)],
         ),
       ) =>
         _matchUri(id, improvisationId, durationIndex),
@@ -38,7 +35,7 @@ class MatchNotificationCodec implements KaiselConfigCodec<AppRoute> {
           activeBranch: 1,
           activeBranchStack: [
             const MatchesTabRoute(),
-            MatchDetailsRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
+            MatchRoute(id: id, improvisationId: improvisationId, durationIndex: durationIndex),
           ],
         ),
       );
